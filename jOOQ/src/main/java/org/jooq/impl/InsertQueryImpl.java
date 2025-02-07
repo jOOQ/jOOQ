@@ -77,6 +77,7 @@ import static org.jooq.impl.ConditionProviderImpl.extractCondition;
 import static org.jooq.impl.DSL.constraint;
 import static org.jooq.impl.DSL.default_;
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.selectOne;
@@ -865,6 +866,7 @@ implements
 
 
 
+
                 case DERBY:
                 case MARIADB:
                 case MYSQL:
@@ -969,7 +971,7 @@ implements
 
                 rows = (Select<Record>) selectFrom(select.asTable(DSL.table(name("t")), names))
                     .whereNotExists(
-                        selectOne()
+                        select(one())
                         .from(table())
                         .where(matchByConflictingKeys(ctx, map))
                     );
@@ -984,7 +986,7 @@ implements
                     Select<Record> row =
                         select(aliasedFields(map.entrySet().stream().filter(e -> fields.contains(e.getKey())).map(Entry::getValue).collect(toList())))
                         .whereNotExists(
-                            selectOne()
+                            select(one())
                             .from(table())
                             .where(matchByConflictingKeys(ctx, map))
                         );

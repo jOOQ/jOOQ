@@ -138,7 +138,7 @@ implements
             case POSTGRES:
             case YUGABYTEDB:
                 ctx.visit(ifNotNull(array, notExists(
-                    selectOne()
+                    select(one())
                     .from(unnest(array).as(N_T, predicate.$arg1().getUnqualifiedName()))
                     .where(DSL.not(predicate.$result()))
                 )));

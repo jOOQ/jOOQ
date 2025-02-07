@@ -123,6 +123,7 @@ final class Names {
     static final Name N_ELT                         = systemName("elt");
     static final Name N_ENCODE                      = systemName("encode");
     static final Name N_EVERY                       = systemName("every");
+    static final Name N_EXPLODE                     = systemName("explode");
     static final Name N_EXTRACT                     = systemName("extract");
     static final Name N_FIRST_VALUE                 = systemName("first_value");
     static final Name N_FLASHBACK                   = systemName("flashback");
@@ -260,6 +261,7 @@ final class Names {
     static final Name N_SECONDS_BETWEEN             = systemName("seconds_between");
     static final Name N_SEQ4                        = systemName("seq4");
     static final Name N_SEQ8                        = systemName("seq8");
+    static final Name N_SEQUENCE                    = systemName("sequence");
     static final Name N_SHL                         = systemName("shl");
     static final Name N_SHR                         = systemName("shr");
     static final Name N_SQL_TSI_DAY                 = systemName("sql_tsi_day");

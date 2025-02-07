@@ -5318,7 +5318,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public boolean fetchExists(Table<?> table, Condition condition) {
-        return fetchExists(selectOne().from(table).where(condition));
+        return fetchExists(select(one()).from(table).where(condition));
     }
 
     @Override

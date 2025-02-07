@@ -146,7 +146,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * Add a T-SQL style <code>INTO</code> clause to the <code>SELECT</code>
      * statement to create a new table from a <code>SELECT</code> statement.
      */
-    @Support({ CUBRID, DERBY, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, DERBY, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     void setInto(Table<?> table);
 
 

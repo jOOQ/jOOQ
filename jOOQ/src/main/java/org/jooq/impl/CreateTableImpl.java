@@ -368,6 +368,8 @@ implements
 
 
 
+
+
     final QOM.UnmodifiableList<? extends Field<?>> $columns() {
         return QOM.unmodifiable(map(filter(tableElements, e -> e instanceof Field<?>), e -> (Field<?>) e));
     }
@@ -461,8 +463,13 @@ implements
         else {
             toSQLCreateTable(ctx);
             toSQLOnCommit(ctx);
+            toSQLTableClauses(ctx);
         }
 
+        ctx.end(Clause.CREATE_TABLE);
+    }
+
+    private final void toSQLTableClauses(Context<?> ctx) {
         // [#7539] ClickHouse has a mandatory ENGINE clause. We default to the two most popular engines for now.
         if (ctx.family() == CLICKHOUSE) {
             ctx.formatSeparator().visit(K_ENGINE).sql(' ');
@@ -505,8 +512,6 @@ implements
 
 
 
-
-        ctx.end(Clause.CREATE_TABLE);
     }
 
     private void toSQLCreateTable(Context<?> ctx) {
@@ -669,6 +674,12 @@ implements
     private final void acceptCreateTableAsSelect(Context<?> ctx) {
         toSQLCreateTable(ctx);
         toSQLOnCommit(ctx);
+
+
+
+
+
+
         ctx.formatSeparator()
            .visit(K_AS);
 
@@ -705,7 +716,13 @@ implements
         else if (REQUIRES_WITH_DATA.contains(ctx.dialect()))
             ctx.formatSeparator()
                .visit(K_WITH_DATA);
+
+
+
+
+        toSQLTableClauses(ctx);
     }
+
 
 
 

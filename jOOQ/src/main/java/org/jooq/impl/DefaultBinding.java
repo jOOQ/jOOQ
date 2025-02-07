@@ -5215,6 +5215,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
+
                 default:
 
 
@@ -5241,10 +5242,17 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final void set0(BindingSetStatementContext<U> ctx, Time value) throws SQLException {
             switch (ctx.family()) {
+
+
+
+
+
+
                 case DUCKDB:
                 case SQLITE:
                     ctx.statement().setString(ctx.index(), value.toString());
                     break;
+
                 default:
                     ctx.statement().setTime(ctx.index(), value);
                     break;
@@ -5258,8 +5266,13 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final Time get0(BindingGetResultSetContext<U> ctx) throws SQLException {
-
             switch (ctx.family()) {
+
+
+
+
+
+
 
                 // ResultSet.getTime() isn't implemented correctly, see: https://github.com/duckdb/duckdb/issues/10682
                 case DUCKDB: {

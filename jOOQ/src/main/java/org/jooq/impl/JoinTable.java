@@ -109,6 +109,8 @@ import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.lateral;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.notExists;
+import static org.jooq.impl.DSL.one;
+import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.Keywords.K_ANTI_JOIN;
@@ -315,11 +317,11 @@ abstract class JoinTable<J extends JoinTable<J>> extends AbstractJoinTable<J> {
 
                     switch (translatedType) {
                         case LEFT_SEMI_JOIN:
-                            semiAntiJoinPredicates.add(exists(selectOne().from(rhs).where(condition())));
+                            semiAntiJoinPredicates.add(exists(select(one()).from(rhs).where(condition())));
                             break;
 
                         case LEFT_ANTI_JOIN:
-                            semiAntiJoinPredicates.add(notExists(selectOne().from(rhs).where(condition())));
+                            semiAntiJoinPredicates.add(notExists(select(one()).from(rhs).where(condition())));
                             break;
                     }
 

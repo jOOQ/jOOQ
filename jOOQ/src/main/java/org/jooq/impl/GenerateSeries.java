@@ -43,6 +43,7 @@ import static org.jooq.SQLDialect.CLICKHOUSE;
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
@@ -75,13 +76,14 @@ import static org.jooq.impl.Internal.idiv;
 import static org.jooq.impl.Internal.imul;
 import static org.jooq.impl.Internal.isub;
 import static org.jooq.impl.Keywords.K_TABLE;
+import static org.jooq.impl.Names.N_EXPLODE;
 import static org.jooq.impl.Names.N_GENERATE_ARRAY;
 import static org.jooq.impl.Names.N_GENERATE_SERIES;
 import static org.jooq.impl.Names.N_GENERATOR;
 import static org.jooq.impl.Names.N_NUMBERS;
+import static org.jooq.impl.Names.N_SEQUENCE;
 import static org.jooq.impl.Names.N_SYSTEM_RANGE;
 import static org.jooq.impl.Names.N_UNNEST;
-import static org.jooq.impl.SQLDataType.BIGINT;
 import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SubqueryCharacteristics.DERIVED_TABLE;
 import static org.jooq.impl.Tools.visitSubquery;
@@ -113,6 +115,8 @@ implements
     private static final Set<SQLDialect> EMULATE_WITH_RECURSIVE = SQLDialect.supportedUntil(FIREBIRD, HSQLDB, MARIADB, MYSQL, SQLITE, TRINO);
     private static final Set<SQLDialect> EMULATE_SYSTEM_RANGE   = SQLDialect.supportedBy(H2);
     private static final Set<SQLDialect> EMULATE_NUMBERS        = SQLDialect.supportedBy(CLICKHOUSE);
+
+
 
 
 
@@ -239,6 +243,12 @@ implements
 
 
 
+
+
+
+
+
+
         else {
             if (step == null)
                 ctx.visit(N_GENERATE_SERIES).sql('(').visit(from).sql(", ").visit(to).sql(')');
@@ -271,6 +281,8 @@ implements
             return t.as(name, name);
         else if (EMULATE_NUMBERS.contains(ctx.dialect()))
             return t.as(name, name);
+
+
 
 
 

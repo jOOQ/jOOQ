@@ -40,6 +40,8 @@ package org.jooq.impl;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.notExists;
+import static org.jooq.impl.DSL.one;
+import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectDistinct;
 import static org.jooq.impl.DSL.selectOne;
 
@@ -121,10 +123,10 @@ implements
         return selectDistinct(select)
               .from(outer)
               .whereNotExists(
-                   selectOne()
+                   select(one())
                   .from(divisor)
                   .whereNotExists(
-                       selectOne()
+                       select(one())
                       .from(dividend)
                       .where(selfJoin)
                       .and(condition)))

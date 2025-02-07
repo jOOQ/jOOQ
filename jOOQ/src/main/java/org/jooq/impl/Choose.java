@@ -40,6 +40,7 @@ package org.jooq.impl;
 import static org.jooq.impl.DSL.choose;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.Names.*;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.nullSafeDataType;
@@ -119,6 +120,12 @@ final class Choose<T> extends AbstractField<T> implements QOM.Choose<T> {
                 ctx.visit(when);
                 break;
             }
+
+
+
+
+
+
 
 
 

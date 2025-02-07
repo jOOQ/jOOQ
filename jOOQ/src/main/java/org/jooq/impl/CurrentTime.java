@@ -93,6 +93,7 @@ final class CurrentTime<T> extends AbstractField<T> implements QOM.CurrentTime<T
 
 
 
+
             case CLICKHOUSE:
                 ctx.visit(N_CURRENT_TIMESTAMP).sql("()");
                 break;

@@ -1587,6 +1587,12 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+
+
+
+
+
+
         else if (withReadOnly && NO_SUPPORT_WITH_READ_ONLY.contains(ctx.dialect())) {
             ctx.visit(copy(s -> {
                 s.withReadOnly = false;
@@ -2642,19 +2648,12 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-
-
-
-
             tablelist = transformInlineDerivedTables(context, tablelist, where);
 
             context.formatSeparator()
                    .visit(K_FROM)
                    .separatorRequired(true)
                    .visit(tablelist);
-
-
-
 
 
 
@@ -3079,6 +3078,21 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         return r;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

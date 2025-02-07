@@ -40,7 +40,6 @@ package org.jooq.impl;
 import static java.lang.Boolean.TRUE;
 import static org.jooq.ExecuteType.DDL;
 // ...
-import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.SettingsTools.executePreparedStatements;
 import static org.jooq.conf.SettingsTools.renderLocale;
@@ -58,11 +57,8 @@ import static org.jooq.impl.Tools.SimpleDataKey.DATA_PREPEND_SQL;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Deque;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.regex.Pattern;
 
 import org.jooq.BindContext;
@@ -71,7 +67,6 @@ import org.jooq.Constants;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteContext.BatchMode;
 import org.jooq.Field;
-import org.jooq.ForeignKey;
 import org.jooq.Param;
 import org.jooq.Query;
 import org.jooq.QueryPart;
@@ -89,6 +84,7 @@ import org.jooq.conf.SettingsTools;
 import org.jooq.exception.ControlFlowSignal;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.ScopeMarker.ScopeContent;
+import org.jooq.impl.Tools.ExtendedDataKey;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 
@@ -331,7 +327,17 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
                        .formatIndentStart()
                        .formatNewLine();
 
-                ctx.visit(e1.joinNode.joinTree());
+                Table<?> tree = e1.joinNode.joinTree();
+
+
+
+
+
+
+
+
+
+                ctx.visit(tree);
 
                 if (noNesting)
                     ctx.formatNewLine()

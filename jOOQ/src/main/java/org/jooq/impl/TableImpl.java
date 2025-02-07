@@ -392,11 +392,6 @@ implements
             else
                 accept0(ctx);
         }
-
-
-
-
-
     }
 
     private final void accept0(Context<?> ctx) {

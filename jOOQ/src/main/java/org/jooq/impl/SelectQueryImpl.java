@@ -1536,6 +1536,13 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+
+
+
+
+
+
+
         else
             accept0(ctx);
     }
@@ -2416,18 +2423,12 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-
-
-
             tablelist = transformInlineDerivedTables(tablelist, where);
 
             context.formatSeparator()
                    .visit(K_FROM)
                    .separatorRequired(true)
                    .visit(tablelist);
-
-
-
 
 
 
@@ -2729,6 +2730,20 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         else
             return table;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

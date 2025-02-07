@@ -82,6 +82,7 @@ import org.jooq.conf.SettingsTools;
 import org.jooq.exception.ControlFlowSignal;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.ScopeMarker.ScopeContent;
+import org.jooq.impl.Tools.ExtendedDataKey;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 
@@ -304,15 +305,25 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
             // [#11367] TODO: Move this logic into a ScopeMarker as well
             //          TODO: subqueryLevel() is lower than scopeLevel if we use implicit join in procedural logic
             else if (e1.joinNode != null && !e1.joinNode.children.isEmpty()) {
-                replacedSQL = configuration
-                    .dsl()
-                    .renderContext()
-                    .declareTables(true)
+                DefaultRenderContext ctx = new DefaultRenderContext(this, false);
+                ctx.declareTables(true)
                     .sql('(')
                     .formatIndentStart(e1.indent)
                     .formatIndentStart()
-                    .formatNewLine()
-                    .visit(e1.joinNode.joinTree())
+                    .formatNewLine();
+
+                Table<?> tree = e1.joinNode.joinTree();
+
+
+
+
+
+
+
+
+
+                replacedSQL = ctx
+                    .visit(tree)
                     .formatNewLine()
                     .sql(')')
                     .render();

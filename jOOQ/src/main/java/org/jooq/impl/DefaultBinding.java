@@ -184,6 +184,7 @@ import static org.jooq.impl.Tools.needsBackslashEscaping;
 import static org.jooq.impl.Tools.newRecord;
 import static org.jooq.impl.Tools.rtrim;
 import static org.jooq.impl.Tools.uncoerce;
+import static org.jooq.impl.Tools.BooleanDataKey.DATA_MULTISET_CONTENT;
 import static org.jooq.impl.Tools.ExtendedDataKey.DATA_OMIT_DATETIME_LITERAL_PREFIX;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 import static org.jooq.tools.StringUtils.isEmpty;
@@ -4405,12 +4406,18 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
                 case POSTGRES:
-                case YUGABYTEDB:
-                    return pgNewRecord(ctx,
-                        dataType.getType(),
-                        (AbstractRow<Record>) dataType.getRow(),
-                        ctx.resultSet().getObject(ctx.index())
-                    );
+                case YUGABYTEDB: {
+
+                    // [#17979] Native ROW support may be overridden for various reasons
+                    if (TRUE.equals(ctx.executeContext().data(DATA_MULTISET_CONTENT)))
+                        return readMultiset(ctx, dataType, true);
+                    else
+                        return pgNewRecord(ctx,
+                            dataType.getType(),
+                            (AbstractRow<Record>) dataType.getRow(),
+                            ctx.resultSet().getObject(ctx.index())
+                        );
+                }
 
                 case CLICKHOUSE:
                 case DUCKDB: {

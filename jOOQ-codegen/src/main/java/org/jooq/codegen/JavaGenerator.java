@@ -5289,7 +5289,7 @@ public class JavaGenerator extends AbstractGenerator {
             generatePojoEqualsAndHashCode(tableUdtOrEmbeddable, out);
 
         if (generatePojosToString())
-            generatePojoToString(tableUdtOrEmbeddable, out);
+            generatePojoToString(tableUdtOrEmbeddable, out, generatePojosToStringWithFieldNames());
 
         if (generateInterfaces() && !generateImmutablePojos())
             printFromAndInto(out, tableUdtOrEmbeddable, Mode.POJO);
@@ -5869,7 +5869,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
     }
 
-    protected void generatePojoToString(Definition tableOrUDT, JavaWriter out) {
+    protected void generatePojoToString(Definition tableOrUDT, JavaWriter out, boolean includeFieldNames) {
         final String className = getStrategy().getJavaClassName(tableOrUDT, Mode.POJO);
 
         out.println();
@@ -5885,6 +5885,9 @@ public class JavaGenerator extends AbstractGenerator {
                 final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
                 final String columnType = getJavaType(column.getType(resolver(out)), out);
                 final boolean array = isArrayType(columnType);
+                if (includeFieldNames) {
+                    out.println("sb.append(\"%s: \")", columnMember);
+                }
 
                 if (columnType.equals("scala.Array[scala.Byte]"))
                     out.println("sb%s.append(\"[binary...]\")", separator);
@@ -5912,6 +5915,9 @@ public class JavaGenerator extends AbstractGenerator {
                 final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
                 final String columnType = getJavaType(column.getType(resolver(out)), out);
                 final boolean array = isArrayType(columnType);
+                if (includeFieldNames) {
+                    out.println("sb.append(\"%s: \")", columnMember);
+                }
 
                 if (array && columnType.equals("kotlin.ByteArray"))
                     out.println("sb%s.append(\"[binary...]\")", separator);
@@ -5939,6 +5945,9 @@ public class JavaGenerator extends AbstractGenerator {
                 final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
                 final String columnType = getJavaType(column.getType(resolver(out)), out);
                 final boolean array = isArrayType(columnType);
+                if (includeFieldNames) {
+                    out.println("sb.append(\"%s: \")", columnMember);
+                }
 
                 if (array && columnType.equals("byte[]"))
                     out.println("sb%s.append(\"[binary...]\");", separator);

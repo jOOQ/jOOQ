@@ -100,6 +100,7 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generatePojosAsKotlinDataClasses                 = true;
     boolean                            generatePojosEqualsAndHashCode                   = true;
     boolean                            generatePojosToString                            = true;
+    boolean                            generatePojosToStringWithFieldNames              = false;
     boolean                            generateImmutablePojos                           = false;
     boolean                            generateSerializablePojos                        = true;
     boolean                            generateInterfaces                               = false;
@@ -1158,6 +1159,16 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGeneratePojosToString(boolean generatePojosToString) {
         this.generatePojosToString = generatePojosToString;
+    }
+
+    @Override
+    public boolean generatePojosToStringWithFieldNames() {
+        return generatePojosToStringWithFieldNames;
+    }
+
+    @Override
+    public void setGeneratePojosToStringWithFieldNames(boolean generatePojosToStringWithFieldNames) {
+        this.generatePojosToStringWithFieldNames = generatePojosToStringWithFieldNames;
     }
 
     @Override

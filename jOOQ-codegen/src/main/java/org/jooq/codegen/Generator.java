@@ -1052,6 +1052,18 @@ public interface Generator {
      */
     void setGeneratePojosToString(boolean generatePojosToString);
 
+
+    /**
+     * Whether a <code>toString()</code> method should be generated on POJOs with field names
+     * to make use of this feature, {@link #generatePojosToString()} must be enabled
+     */
+    boolean generatePojosToStringWithFieldNames();
+
+    /**
+     * Whether a <code>toString()</code> method should be generated on POJOs with field names
+     */
+    void setGeneratePojosToStringWithFieldNames(boolean generatePojosToStringWithFieldNames);
+
     /**
      * A regular expression matching all the types in generated code that should
      * be fully qualified.

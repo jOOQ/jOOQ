@@ -84,6 +84,7 @@ import static org.jooq.impl.Tools.prependSQL;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_LOCK_WAIT_TIMEOUT_SET;
 
 import java.util.Set;
+import java.util.function.Function;
 
 import org.jooq.Context;
 import org.jooq.Field;
@@ -210,6 +211,18 @@ final class ForLock extends AbstractQueryPart implements UNotYetImplemented {
             }
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

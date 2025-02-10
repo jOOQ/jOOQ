@@ -207,6 +207,7 @@ final class Keywords {
     static final Keyword K_GROUP_BY                 = keyword("group by");
     static final Keyword K_HAVING                   = keyword("having");
     static final Keyword K_HIDDEN                   = keyword("hidden");
+    static final Keyword K_HOLDLOCK                 = keyword("holdlock");
     static final Keyword K_HOUR                     = keyword("hour");
     static final Keyword K_HOUR_TO_SECOND           = keyword("hour to second");
     static final Keyword K_IDENTITY                 = keyword("identity");

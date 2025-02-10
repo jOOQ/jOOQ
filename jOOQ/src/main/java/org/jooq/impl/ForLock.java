@@ -69,6 +69,7 @@ import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.sql;
 import static org.jooq.impl.Keywords.K_FOR;
+import static org.jooq.impl.Keywords.K_HOLDLOCK;
 import static org.jooq.impl.Keywords.K_LOCK_IN_SHARE_MODE;
 import static org.jooq.impl.Keywords.K_NOWAIT;
 import static org.jooq.impl.Keywords.K_OF;
@@ -211,6 +212,11 @@ final class ForLock extends AbstractQueryPart implements UNotYetImplemented {
             }
         }
     }
+
+
+
+
+
 
 
 

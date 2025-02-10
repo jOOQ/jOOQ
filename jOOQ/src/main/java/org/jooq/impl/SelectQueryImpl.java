@@ -572,7 +572,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-
     private final SelectQueryImpl<R> copyTo(CopyClause clause, boolean scalarSelect, SelectQueryImpl<R> result) {
         return copyBetween(CopyClause.START, clause, scalarSelect, result);
     }
@@ -1342,6 +1341,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+    @SuppressWarnings("unchecked")
     private final Select<?> distinctOnEmulation() {
 
         // [#3564] TODO: Extract and merge this with getSelectResolveSomeAsterisks0()
@@ -1356,6 +1356,28 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         SelectQueryImpl<R> copy = copy(x -> {
             x.distinctOn.clear();
             x.select.add(rn);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             x.orderBy.clear();
             x.limit.clear();
             x.unionOp.clear();
@@ -1369,7 +1391,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             x.select.addAll(new QualifiedSelectFieldList(table(N_T), select));
             x.from.add(copy.asTable(N_T));
             x.condition.addConditions(rn.eq(one()));
-            x.orderBy.addAll(map(orderBy, (SortField<?> o) -> unqualified(o)));
+            x.orderBy.addAll(map(orderBy, (SortField<?> s) -> unqualified(s)));
             x.limit.from(limit);
         });
     }
@@ -1530,16 +1552,16 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             ctx.visit(DSL.select(asterisk()).from(asTable("t")));
         }
 
-        // [#3564] Emulate DISTINCT ON queries at the top level
-        else if (Tools.isNotEmpty(distinctOn) && EMULATE_DISTINCT_ON.contains(ctx.dialect())) {
-            ctx.visit(distinctOnEmulation());
-        }
-
         // [#5810] Emulate the Teradata QUALIFY clause
         else if (qualify.hasWhere() && transformQualify(ctx.configuration())) {
 
 
 
+        }
+
+        // [#3564] Emulate DISTINCT ON queries at the top level
+        else if (Tools.isNotEmpty(distinctOn) && EMULATE_DISTINCT_ON.contains(ctx.dialect())) {
+            ctx.visit(distinctOnEmulation());
         }
 
 

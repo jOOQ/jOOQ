@@ -2496,21 +2496,21 @@ extends
      * Inverse of {@link #contains(Field)}.
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support
     Condition notContains(Field<T> value);
 
     /**
      * Inverse of {@link #containsIgnoreCase(Object)}
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support
     Condition notContainsIgnoreCase(T value);
 
     /**
      * Inverse of {@link #containsIgnoreCase(Field)}
      */
     @NotNull
-    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support
     Condition notContainsIgnoreCase(Field<T> value);
 
     // ------------------------------------------------------------------------

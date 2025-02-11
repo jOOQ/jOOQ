@@ -178,6 +178,7 @@ import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.SelectField;
 import org.jooq.Table;
+import org.jooq.TableField;
 import org.jooq.TableLike;
 import org.jooq.UniqueKey;
 import org.jooq.exception.DataTypeException;
@@ -1342,6 +1343,15 @@ implements
 
         if (t instanceof InlineDerivedTable<?> i) {
             ctx.configuration().requireCommercial(() -> "InlineDerivedTable emulation for MERGE clauses is available in the commercial jOOQ editions only");
+
+
+
+
+
+
+
+
+
 
 
 

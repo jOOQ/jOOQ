@@ -46,8 +46,12 @@ import org.jooq.impl.AbstractConverter;
  */
 public class CitextConverter extends AbstractConverter<Object, String> {
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     public CitextConverter() {
-        super(Object.class, String.class);
+
+        // [#17958] citext is really a String type, though we need to continue declaring Object
+        //          as that's what generated code is expecting.
+        super((Class) String.class, String.class);
     }
 
     @Override

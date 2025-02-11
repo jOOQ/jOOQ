@@ -80,7 +80,7 @@ final class ArrayComponentConverter<T, U> extends AbstractContextConverter<T, U>
         if (u == null)
             return null;
 
-        U[] a = (U[]) Array.newInstance(fromType(), 1);
+        U[] a = (U[]) Array.newInstance(toType(), 1);
         a[0] = u;
         return converter.to(a, scope)[0];
     }

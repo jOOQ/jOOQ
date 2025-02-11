@@ -70,7 +70,7 @@ final class ArrayComponentConverter<T, U> extends AbstractConverter<T, U> {
         if (u == null)
             return null;
 
-        U[] a = (U[]) Array.newInstance(fromType(), 1);
+        U[] a = (U[]) Array.newInstance(toType(), 1);
         a[0] = u;
         return converter.to(a)[0];
     }

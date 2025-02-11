@@ -198,6 +198,7 @@ import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.SelectField;
 import org.jooq.Table;
+import org.jooq.TableField;
 import org.jooq.TableLike;
 // ...
 import org.jooq.impl.FieldMapForUpdate.SetClause;
@@ -1508,6 +1509,15 @@ implements
 
 
 
+
+
+
+
+
+
+
+
+
         }
         else
             accept0(ctx);
@@ -1530,8 +1540,6 @@ implements
 
         if (with != null)
             ctx.visit(with);
-
-        Table<?> t = InlineDerivedTable.inlineDerivedTable(ctx, table);
 
         ctx.start(MERGE_MERGE_INTO)
            .visit(K_MERGE_INTO).sql(' ')

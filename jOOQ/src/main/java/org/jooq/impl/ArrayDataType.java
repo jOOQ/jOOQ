@@ -52,8 +52,6 @@ import org.jooq.SQLDialect;
 import org.jooq.impl.QOM.GenerationLocation;
 import org.jooq.impl.QOM.GenerationOption;
 
-import org.jetbrains.annotations.Nullable;
-
 /**
  * A wrapper for anonymous array data types
  *
@@ -189,7 +187,11 @@ final class ArrayDataType<T> extends DefaultDataType<T[]> {
     }
 
     private static String getArrayType(Configuration configuration, String dataType) {
-        switch (configuration.family()) {
+        if (DefaultDataType.SUPPORT_POSTGRES_SUFFIX_ARRAY_NOTATION.contains(configuration.dialect()))
+            return dataType + "[]";
+
+        else if (DefaultDataType.SUPPORT_TRINO_ARRAY_NOTATION.contains(configuration.dialect()))
+            return "Array(" + dataType + ")";
 
 
 
@@ -197,25 +199,9 @@ final class ArrayDataType<T> extends DefaultDataType<T[]> {
 
 
 
-            case DUCKDB:
-            case POSTGRES:
-            case YUGABYTEDB:
-                return dataType + "[]";
-
-            case CLICKHOUSE:
-                return "Array(" + dataType + ")";
-
-            case H2:
 
 
-
-
-
-                return dataType + " array";
-
-            // Default implementation is needed for hash-codes and toString()
-            default:
-                return dataType + " array";
-        }
+        else
+            return dataType + " array";
     }
 }

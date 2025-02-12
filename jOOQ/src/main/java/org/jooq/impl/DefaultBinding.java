@@ -145,6 +145,7 @@ import static org.jooq.impl.Names.N_JSON_PARSE;
 import static org.jooq.impl.Names.N_PARSE_JSON;
 import static org.jooq.impl.Names.N_ST_GEOMFROMTEXT;
 import static org.jooq.impl.Names.N_ST_GEOMFROMWKB;
+import static org.jooq.impl.Names.N_TO_BINARY;
 import static org.jooq.impl.R2DBC.isR2dbc;
 import static org.jooq.impl.SQLDataType.BIGINT;
 import static org.jooq.impl.SQLDataType.BLOB;
@@ -232,6 +233,7 @@ import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.SignStyle;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -1423,6 +1425,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
+
+
         DefaultArrayBinding(DataType<Object[]> dataType, Converter<Object[], U> converter) {
             super(dataType, converter);
         }
@@ -1496,14 +1500,21 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                         super.sqlBind0(ctx, value);
                         ctx.render().sql(' ').visit(K_AS).sql(' ').visit(K_JSON).sql(')');
                     }
+
+
+
+
+
+
+
+
+
                     else
                         super.sqlBind0(ctx, value);
                 },
                 c -> {
-
-                    if (REQUIRES_JSON_CAST.contains(ctx.dialect())) {
+                    if (REQUIRES_JSON_CAST.contains(ctx.dialect()))
                         ctx.render().sql(dataType.getCastTypeName(ctx.render().configuration()));
-                    }
 
                     // Postgres needs explicit casting for enum (array) types
                     else if (EnumType.class.isAssignableFrom(dataType.getType().getComponentType()))
@@ -1516,6 +1527,9 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                 // In Postgres, some additional casting must be done in some cases...
                 () -> REQUIRES_ARRAY_CAST.contains(ctx.dialect())
+
+
+
                    || REQUIRES_JSON_CAST.contains(ctx.dialect())
             );
         }
@@ -1524,6 +1538,15 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final void set0(BindingSetStatementContext<U> ctx, Object[] value) throws SQLException {
             switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
                 case POSTGRES: {
 
                     // [#12485] Passing the array string as OTHER (OID = unspecified) may prevent poor
@@ -1598,6 +1621,25 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final Object[] get0(BindingGetResultSetContext<U> ctx) throws SQLException {
             switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2455,8 +2497,28 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
+
+
+
                 default:
                     super.setNull0(ctx);
+                    break;
+            }
+        }
+
+        @Override
+        void sqlBind0(org.jooq.BindingSQLContext<U> ctx, byte[] value) throws SQLException {
+            switch (ctx.family()) {
+
+
+
+
+
+
+
+
+                default:
+                    super.sqlBind0(ctx, value);
                     break;
             }
         }
@@ -2466,21 +2528,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             // [#1154] Binary data cannot always be inlined
 
             switch (ctx.family()) {
-
-
-
-                case H2:
-                case HSQLDB:
-                case MARIADB:
-                case MYSQL:
-                case SQLITE:
-                    ctx.render()
-                       .sql("X'")
-                       .sql(convertBytesToHex(value))
-                       .sql('\'');
-
-                    break;
-
                 case DUCKDB:
                     ctx.render()
                        .visit(K_CAST)

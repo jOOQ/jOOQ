@@ -1387,13 +1387,13 @@ implements
             ctx.qualify(false, c -> c.visit(Tools.uncollate(addColumn))).sql(' ');
             toSQLDDLTypeDeclarationForAddition(ctx, table, addColumnType);
             CreateTableImpl.acceptColumnComment(ctx, addColumn);
-
-
-
-
-
-
             acceptFirstBeforeAfter(ctx);
+
+
+
+
+
+
             ctx.end(ALTER_TABLE_ADD);
         }
         else if (addConstraint != null) {

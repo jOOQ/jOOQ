@@ -151,10 +151,10 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
 
     private static final Set<SQLDialect>                        ENCODED_TIMESTAMP_PRECISION            = SQLDialect.supportedBy(HSQLDB, MARIADB);
     private static final Set<SQLDialect>                        NO_SUPPORT_TIMESTAMP_PRECISION         = SQLDialect.supportedBy(FIREBIRD, MYSQL, SQLITE);
-    private static final Set<SQLDialect>                        SUPPORT_POSTGRES_PREFIX_ARRAY_NOTATION = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
-    private static final Set<SQLDialect>                        SUPPORT_POSTGRES_SUFFIX_ARRAY_NOTATION = SQLDialect.supportedBy(DUCKDB, POSTGRES, YUGABYTEDB);
-    private static final Set<SQLDialect>                        SUPPORT_HSQLDB_ARRAY_NOTATION          = SQLDialect.supportedBy(H2, HSQLDB, POSTGRES, YUGABYTEDB);
-    private static final Set<SQLDialect>                        SUPPORT_TRINO_ARRAY_NOTATION           = SQLDialect.supportedBy(CLICKHOUSE, TRINO);
+    static final Set<SQLDialect>                                SUPPORT_POSTGRES_PREFIX_ARRAY_NOTATION = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
+    static final Set<SQLDialect>                                SUPPORT_POSTGRES_SUFFIX_ARRAY_NOTATION = SQLDialect.supportedBy(DUCKDB, POSTGRES, YUGABYTEDB);
+    static final Set<SQLDialect>                                SUPPORT_HSQLDB_ARRAY_NOTATION          = SQLDialect.supportedBy(H2, HSQLDB, POSTGRES, YUGABYTEDB);
+    static final Set<SQLDialect>                                SUPPORT_TRINO_ARRAY_NOTATION           = SQLDialect.supportedBy(CLICKHOUSE, TRINO);
 
 
 

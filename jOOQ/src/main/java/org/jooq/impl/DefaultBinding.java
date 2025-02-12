@@ -817,6 +817,14 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             if (ctx.render().paramType() == INLINED) {
                 if (converted == null) {
                     switch (ctx.family()) {
+
+
+
+
+
+
+
+
                         case DERBY:
                             return true;
                     }
@@ -977,7 +985,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                         return true;
                 }
             }
-
 
 
 
@@ -1532,6 +1539,21 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                    || REQUIRES_JSON_CAST.contains(ctx.dialect())
             );
+        }
+
+        @Override
+        final void setNull0(BindingSetStatementContext<U> ctx) throws SQLException {
+            switch (ctx.family()) {
+
+
+
+
+
+
+                default:
+                    super.setNull0(ctx);
+                    break;
+            }
         }
 
         @SuppressWarnings({ "rawtypes", "unchecked" })

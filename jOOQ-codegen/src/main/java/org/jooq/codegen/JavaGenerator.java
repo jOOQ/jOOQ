@@ -10208,7 +10208,8 @@ public class JavaGenerator extends AbstractGenerator {
     private boolean effectivelyNotNull(DataTypeDefinition type) {
         return !type.isNullable()
             && !type.isDefaulted()
-            && !type.isIdentity();
+            && !type.isIdentity()
+            && !type.isComputed();
     }
 
     private boolean writeOnlyNullable(JavaWriter out, TypedElementDefinition<?> column) {
@@ -10217,7 +10218,7 @@ public class JavaGenerator extends AbstractGenerator {
 
     private boolean writeOnlyNullable(DataTypeDefinition type) {
         return !type.isNullable()
-            && (type.isDefaulted() || type.isIdentity());
+            && (type.isDefaulted() || type.isIdentity() || type.isComputed());
     }
 
     private static final Pattern P_IS = Pattern.compile("^is[A-Z].*$");

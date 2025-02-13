@@ -531,6 +531,7 @@ implements
 
 
 
+
                     return executeSelect();
 
                 // [#773] If JDBC escape syntax is available for functions, use
@@ -2282,7 +2283,7 @@ implements
     /**
      * The {@link Field} representation of this {@link Routine}
      */
-    private class RoutineField extends AbstractField<T> implements UNotYetImplemented {
+    class RoutineField extends AbstractField<T> implements UNotYetImplemented {
 
         @SuppressWarnings("unchecked")
         RoutineField() {

@@ -310,6 +310,7 @@ final class Names {
     static final Name N_TRUNCATE                    = systemName("truncate");
     static final Name N_TRUNCNUM                    = systemName("truncnum");
     static final Name N_TUPLE                       = systemName("tuple");
+    static final Name N_U                           = systemName("u");
     static final Name N_UNNEST                      = systemName("unnest");
     static final Name N_UUID_TO_CHAR                = systemName("uuid_to_char");
     static final Name N_VALUE                       = systemName("value");

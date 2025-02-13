@@ -39,10 +39,20 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.systemName;
+import static org.jooq.impl.DSL.table;
+import static org.jooq.impl.Keywords.K_AS;
+import static org.jooq.impl.Keywords.K_EXPLODE;
+import static org.jooq.impl.Keywords.K_FROM;
+import static org.jooq.impl.Keywords.K_LATERAL;
+import static org.jooq.impl.Keywords.K_SELECT;
 import static org.jooq.impl.Keywords.K_TABLE;
 import static org.jooq.impl.Keywords.K_UNNEST;
+import static org.jooq.impl.Keywords.K_VIEW;
 import static org.jooq.impl.Names.N_ARRAY_TABLE;
 import static org.jooq.impl.Names.N_COLUMN_VALUE;
+import static org.jooq.impl.Names.N_T;
+import static org.jooq.impl.Names.N_U;
+import static org.jooq.impl.SubqueryCharacteristics.DERIVED_TABLE;
 import static org.jooq.impl.Tools.getRecordQualifier;
 import static org.jooq.impl.Tools.isEmpty;
 import static org.jooq.impl.Tools.map;
@@ -59,6 +69,7 @@ import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableOptions;
 import org.jooq.exception.DataTypeException;
+import org.jooq.impl.AbstractRoutine.RoutineField;
 import org.jooq.impl.QOM.UNotYetImplemented;
 import org.jooq.impl.QOM.UTransient;
 
@@ -193,6 +204,9 @@ implements
 
 
 
+
+
+
             // Most dialects can simulate unnested arrays using UNION ALL
 
 
@@ -260,6 +274,31 @@ implements
             ctx.visit(K_UNNEST).sql('(').visit(array).sql(")");
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

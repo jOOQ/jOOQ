@@ -192,6 +192,15 @@ class GeneratorStrategyWrapper extends AbstractDelegatingGeneratorStrategy {
 
 
 
+
+
+
+
+
+
+
+
+
         }
         else if (definition instanceof ColumnDefinition c) {
             if (c.getContainer().getPrimaryKey() != null)

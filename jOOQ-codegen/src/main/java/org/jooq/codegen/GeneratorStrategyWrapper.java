@@ -161,7 +161,7 @@ class GeneratorStrategyWrapper extends AbstractDelegatingGeneratorStrategy {
         methodName = overload(definition, mode, methodName);
         methodName = convertToIdentifier(methodName, getTargetLanguage());
 
-        return disambiguateMethod(definition, methodName);
+        return disambiguateMethod(definition, mode, methodName);
     }
 
     /**
@@ -178,11 +178,29 @@ class GeneratorStrategyWrapper extends AbstractDelegatingGeneratorStrategy {
      * [#182] Method name disambiguation is important to avoid name clashes due
      * to pre-existing getters / setters in super classes
      */
-    private String disambiguateMethod(Definition definition, String method) {
+    private String disambiguateMethod(Definition definition, Mode mode, String method) {
         Set<String> reserved = null;
 
-        if (definition instanceof AttributeDefinition) {
-            reserved = reservedColumns(UDTRecordImpl.class, 0);
+        if (definition instanceof AttributeDefinition a) {
+            reserved = new HashSet<>(reservedColumns(UDTRecordImpl.class, 0));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         }
         else if (definition instanceof ColumnDefinition) {
             if (((ColumnDefinition) definition).getContainer().getPrimaryKey() != null)

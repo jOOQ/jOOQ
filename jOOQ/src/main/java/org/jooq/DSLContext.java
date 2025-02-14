@@ -12249,7 +12249,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    Query startTransaction();
+    RowCountQuery startTransaction();
 
     /**
      * The <code>SAVEPOINT</code> statement.
@@ -12260,7 +12260,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    Query savepoint(@Stringly.Name String name);
+    RowCountQuery savepoint(@Stringly.Name String name);
 
     /**
      * The <code>SAVEPOINT</code> statement.
@@ -12271,7 +12271,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    Query savepoint(Name name);
+    RowCountQuery savepoint(Name name);
 
     /**
      * The <code>RELEASE SAVEPOINT</code> statement.
@@ -12282,7 +12282,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    Query releaseSavepoint(@Stringly.Name String name);
+    RowCountQuery releaseSavepoint(@Stringly.Name String name);
 
     /**
      * The <code>RELEASE SAVEPOINT</code> statement.
@@ -12293,7 +12293,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    Query releaseSavepoint(Name name);
+    RowCountQuery releaseSavepoint(Name name);
 
     /**
      * The <code>COMMIT</code> statement.
@@ -12304,7 +12304,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    Query commit();
+    RowCountQuery commit();
 
     /**
      * The <code>ROLLBACK</code> statement.

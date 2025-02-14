@@ -4541,32 +4541,32 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
 
     @Override
-    public org.jooq.Query startTransaction() {
+    public org.jooq.RowCountQuery startTransaction() {
         return new StartTransaction(configuration());
     }
 
     @Override
-    public org.jooq.Query savepoint(@Stringly.Name String name) {
+    public org.jooq.RowCountQuery savepoint(@Stringly.Name String name) {
         return new Savepoint(configuration(), DSL.name(name));
     }
 
     @Override
-    public org.jooq.Query savepoint(Name name) {
+    public org.jooq.RowCountQuery savepoint(Name name) {
         return new Savepoint(configuration(), name);
     }
 
     @Override
-    public org.jooq.Query releaseSavepoint(@Stringly.Name String name) {
+    public org.jooq.RowCountQuery releaseSavepoint(@Stringly.Name String name) {
         return new ReleaseSavepoint(configuration(), DSL.name(name));
     }
 
     @Override
-    public org.jooq.Query releaseSavepoint(Name name) {
+    public org.jooq.RowCountQuery releaseSavepoint(Name name) {
         return new ReleaseSavepoint(configuration(), name);
     }
 
     @Override
-    public org.jooq.Query commit() {
+    public org.jooq.RowCountQuery commit() {
         return new Commit(configuration());
     }
 

@@ -12027,7 +12027,7 @@ public class DSL {
      */
     @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    public static org.jooq.Query startTransaction() {
+    public static org.jooq.RowCountQuery startTransaction() {
         return dsl().startTransaction();
     }
 
@@ -12044,7 +12044,7 @@ public class DSL {
      */
     @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    public static org.jooq.Query savepoint(@Stringly.Name String name) {
+    public static org.jooq.RowCountQuery savepoint(@Stringly.Name String name) {
         return dsl().savepoint(name);
     }
 
@@ -12061,7 +12061,7 @@ public class DSL {
      */
     @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    public static org.jooq.Query savepoint(Name name) {
+    public static org.jooq.RowCountQuery savepoint(Name name) {
         return dsl().savepoint(name);
     }
 
@@ -12078,7 +12078,7 @@ public class DSL {
      */
     @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    public static org.jooq.Query releaseSavepoint(@Stringly.Name String name) {
+    public static org.jooq.RowCountQuery releaseSavepoint(@Stringly.Name String name) {
         return dsl().releaseSavepoint(name);
     }
 
@@ -12095,7 +12095,7 @@ public class DSL {
      */
     @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    public static org.jooq.Query releaseSavepoint(Name name) {
+    public static org.jooq.RowCountQuery releaseSavepoint(Name name) {
         return dsl().releaseSavepoint(name);
     }
 
@@ -12112,7 +12112,7 @@ public class DSL {
      */
     @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    public static org.jooq.Query commit() {
+    public static org.jooq.RowCountQuery commit() {
         return dsl().commit();
     }
 

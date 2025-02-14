@@ -68,19 +68,19 @@ import org.jetbrains.annotations.*;
  * </ul>
  */
 @SuppressWarnings({ "unused" })
-public interface RollbackToSavepointStep extends Query {
+public interface RollbackToSavepointStep extends RowCountQuery {
 
     /**
      * Add the <code>TO SAVEPOINT</code> clause to the <code>ROLLBACK</code> statement.
      */
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     @NotNull @CheckReturnValue
-    Query toSavepoint(@Stringly.Name String toSavepoint);
+    RowCountQuery toSavepoint(@Stringly.Name String toSavepoint);
 
     /**
      * Add the <code>TO SAVEPOINT</code> clause to the <code>ROLLBACK</code> statement.
      */
     @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     @NotNull @CheckReturnValue
-    Query toSavepoint(Name toSavepoint);
+    RowCountQuery toSavepoint(Name toSavepoint);
 }

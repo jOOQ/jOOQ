@@ -2880,7 +2880,7 @@ public final class QOM {
     public /*sealed*/ interface StartTransaction
         extends
             UEmpty,
-            org.jooq.Query
+            org.jooq.RowCountQuery
         //permits
         //    StartTransaction
     {}
@@ -2892,7 +2892,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Savepoint
         extends
-            org.jooq.Query
+            org.jooq.RowCountQuery
         //permits
         //    Savepoint
     {
@@ -2908,7 +2908,7 @@ public final class QOM {
      */
     public /*sealed*/ interface ReleaseSavepoint
         extends
-            org.jooq.Query
+            org.jooq.RowCountQuery
         //permits
         //    ReleaseSavepoint
     {
@@ -2925,7 +2925,7 @@ public final class QOM {
     public /*sealed*/ interface Commit
         extends
             UEmpty,
-            org.jooq.Query
+            org.jooq.RowCountQuery
         //permits
         //    Commit
     {}

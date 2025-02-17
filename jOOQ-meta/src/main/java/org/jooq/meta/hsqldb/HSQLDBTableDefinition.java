@@ -92,6 +92,8 @@ public class HSQLDBTableDefinition extends AbstractTableDefinition {
                 COLUMNS.IS_NULLABLE,
                 COLUMNS.COLUMN_DEFAULT,
                 COLUMNS.GENERATION_EXPRESSION,
+                COLUMNS.IS_SYSTEM_TIME_PERIOD_START,
+                COLUMNS.IS_SYSTEM_TIME_PERIOD_END,
                 nvl(ELEMENT_TYPES.CHARACTER_MAXIMUM_LENGTH, COLUMNS.CHARACTER_MAXIMUM_LENGTH).as(COLUMNS.CHARACTER_MAXIMUM_LENGTH),
                 coalesce(
                     ELEMENT_TYPES.DATETIME_PRECISION,
@@ -117,7 +119,12 @@ public class HSQLDBTableDefinition extends AbstractTableDefinition {
                 .and(COLUMNS.TABLE_NAME.equal(getName()))
             .orderBy(COLUMNS.ORDINAL_POSITION)
         ) {
-            String generated = record.get(COLUMNS.GENERATION_EXPRESSION);
+            String generated =
+                  record.get(COLUMNS.IS_SYSTEM_TIME_PERIOD_START, boolean.class)
+                ? "ROW START"
+                : record.get(COLUMNS.IS_SYSTEM_TIME_PERIOD_END, boolean.class)
+                ? "ROW END"
+                : record.get(COLUMNS.GENERATION_EXPRESSION);
 
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                 getDatabase(),

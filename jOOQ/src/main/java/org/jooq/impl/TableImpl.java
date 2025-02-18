@@ -115,6 +115,7 @@ import org.jooq.TableOptions;
 // ...
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.QOM.UEmptyField;
+import org.jooq.impl.QOM.UEmpty;
 import org.jooq.impl.QOM.UNotYetImplemented;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.reflect.Reflect;
@@ -137,7 +138,7 @@ implements
     ScopeMappable,
     ScopeNestable,
     SimpleQueryPart,
-    UNotYetImplemented
+    UEmpty
 {
 
     private static final Clause[]        CLAUSES_TABLE_REFERENCE           = { TABLE, TABLE_REFERENCE };
@@ -547,20 +548,6 @@ implements
     public final Name $alias() {
         return alias == null ? null : alias.alias;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // ------------------------------------------------------------------------
     // XXX: Object API

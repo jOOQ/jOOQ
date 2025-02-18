@@ -71,7 +71,7 @@ import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.Update;
-import org.jooq.impl.QOM.UNotYetImplemented;
+import org.jooq.impl.QOM.UEmpty;
 import org.jooq.impl.Tools.SimpleDataKey;
 import org.jooq.tools.StringUtils;
 
@@ -86,9 +86,9 @@ extends
 implements
     TableField<R, T>,
     SimpleQueryPart,
-    UNotYetImplemented,
     TypedReference<T>,
-    ScopeMappable
+    ScopeMappable,
+    UEmpty
 {
 
     private static final Clause[]        CLAUSES                           = { FIELD, FIELD_REFERENCE };

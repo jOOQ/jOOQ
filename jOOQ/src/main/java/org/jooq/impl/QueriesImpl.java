@@ -44,7 +44,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.function.Predicate;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
@@ -53,7 +52,6 @@ import org.jooq.Block;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DSLContext;
-import org.jooq.Function1;
 import org.jooq.Queries;
 import org.jooq.Query;
 import org.jooq.QueryPart;
@@ -109,11 +107,6 @@ final class QueriesImpl extends AbstractAttachableQueryPart implements Queries {
     @Override
     public final Iterator<Query> iterator() {
         return queries.iterator();
-    }
-
-    @Override
-    public final Stream<Query> stream() {
-        return queryStream();
     }
 
     @Override

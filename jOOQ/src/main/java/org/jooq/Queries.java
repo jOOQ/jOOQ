@@ -89,15 +89,6 @@ public interface Queries extends AttachableQueryPart, Iterable<Query> {
 
     /**
      * The wrapped collection of queries.
-     *
-     * @deprecated - 3.10 - [#6143] - Use {@link #queryStream()} instead.
-     */
-    @NotNull
-    @Deprecated(forRemoval = true, since = "3.10")
-    Stream<Query> stream();
-
-    /**
-     * The wrapped collection of queries.
      */
     @NotNull
     Stream<Query> queryStream();

@@ -75,6 +75,7 @@ import org.jooq.DDLQuery;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Identity;
 import org.jooq.InverseForeignKey;
 import org.jooq.JoinType;
 import org.jooq.Name;
@@ -405,10 +406,19 @@ implements
             return fields;
     }
 
-    // [#8489] this override is necessary due to a Scala compiler bug (versions 2.10 and 2.11)
+    // [#8489] [#18033] [#12180] these overrides are necessary due to a Scala compiler bug (versions 2.10, 2.11, 3.5, 3.6)
+    // See:
+    // - https://github.com/scala/bug/issues/7936
+    // - https://github.com/scala/scala3/issues/22628
+
     @Override
     public Row fieldsRow() {
         return super.fieldsRow();
+    }
+
+    @Override
+    public Identity<R, ?> getIdentity() {
+        return super.getIdentity();
     }
 
     @Override

@@ -90,6 +90,7 @@ import org.jooq.Insert;
 import org.jooq.InsertQuery;
 // ...
 import org.jooq.Record;
+import org.jooq.Row;
 import org.jooq.SQLDialect;
 import org.jooq.StoreQuery;
 import org.jooq.Table;
@@ -126,6 +127,21 @@ implements
 
     public TableRecordImpl(Table<R> table) {
         super(table);
+    }
+
+    // [#8489] [#18033] [#12180] these overrides are necessary due to a Scala compiler bug (versions 2.10, 2.11, 3.5, 3.6)
+    // See:
+    // - https://github.com/scala/bug/issues/7936
+    // - https://github.com/scala/scala3/issues/22628
+
+    @Override
+    public /* non-final */ Row fieldsRow() {
+        return super.fieldsRow();
+    }
+
+    @Override
+    public /* non-final */ Row valuesRow() {
+        return super.valuesRow();
     }
 
     @Override

@@ -37,8 +37,11 @@
  */
 package org.jooq.impl;
 
+import org.jooq.Row;
 import org.jooq.UDT;
 import org.jooq.UDTRecord;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A record implementation for a record originating from a single UDT
@@ -62,5 +65,20 @@ public class UDTRecordImpl<R extends UDTRecord<R>> extends AbstractQualifiedReco
     @Override
     public String toString() {
         return DSL.using(configuration()).renderInlined(DSL.inline(this));
+    }
+
+    // [#8489] [#18033] [#12180] these overrides are necessary due to a Scala compiler bug (versions 2.10, 2.11, 3.5, 3.6)
+    // See:
+    // - https://github.com/scala/bug/issues/7936
+    // - https://github.com/scala/scala3/issues/22628
+
+    @Override
+    public /* non-final */ Row fieldsRow() {
+        return super.fieldsRow();
+    }
+
+    @Override
+    public /* non-final */ Row valuesRow() {
+        return super.valuesRow();
     }
 }

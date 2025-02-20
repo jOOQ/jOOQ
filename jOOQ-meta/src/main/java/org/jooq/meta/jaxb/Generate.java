@@ -29,7 +29,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class Generate implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 32000L;
+    private final static long serialVersionUID = 32001L;
     @XmlElement(defaultValue = "true")
     protected Boolean indexes = true;
     @XmlElement(defaultValue = "true")
@@ -126,8 +126,8 @@ public class Generate implements Serializable, XMLAppendable
     protected String pojosExcludes;
     @XmlElement(defaultValue = "true")
     protected Boolean pojosEqualsAndHashCode = true;
-    @XmlElement(defaultValue = "true")
-    protected Boolean pojosEqualsAndHashCodeIncludePrimaryKeyOnly = true;
+    @XmlElement(defaultValue = "false")
+    protected Boolean pojosEqualsAndHashCodeIncludePrimaryKeyOnly = false;
     @XmlElement(defaultValue = "")
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String pojosEqualsAndHashCodeColumnIncludeExpression = "";

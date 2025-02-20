@@ -43,7 +43,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class MatcherRule implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 32000L;
+    private final static long serialVersionUID = 32001L;
     @XmlSchemaType(name = "string")
     protected MatcherTransformType transform;
     @XmlElement(required = true)

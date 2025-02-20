@@ -42,7 +42,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class EmbeddableField implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 32000L;
+    private final static long serialVersionUID = 32001L;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String name;
     @XmlElement(required = true)

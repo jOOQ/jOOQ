@@ -42,7 +42,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class EnumType implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 32000L;
+    private final static long serialVersionUID = 32001L;
     @XmlElement(required = true)
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String name;

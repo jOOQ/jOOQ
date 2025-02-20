@@ -2827,7 +2827,7 @@ Whitespace is ignored and comments are possible unless overridden in {@link #get
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate basic equals() and hashCode() methods in POJOs.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
-      <element name="pojosEqualsAndHashCodeIncludePrimaryKeyOnly" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+      <element name="pojosEqualsAndHashCodeIncludePrimaryKeyOnly" type="boolean" default="false" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Include primary key columns only in generated equals() and hashCode() methods in POJOs.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema xmlns="http://www.w3.org/2001/XMLSchema"
-  xmlns:tns="http://www.jooq.org/xsd/jooq-codegen-3.20.0.xsd"
+  xmlns:tns="http://www.jooq.org/xsd/jooq-codegen-3.20.1.xsd"
   xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
   xmlns:annox="http://annox.dev.java.net"
-  targetNamespace="http://www.jooq.org/xsd/jooq-codegen-3.20.0.xsd"
+  targetNamespace="http://www.jooq.org/xsd/jooq-codegen-3.20.1.xsd"
   elementFormDefault="qualified"
   jxb:extensionBindingPrefixes="annox"
   jxb:version="2.1">
@@ -3150,7 +3150,7 @@ This may lead to compilation warnings in current Java versions.]]></jxb:javadoc>
       </element>
       
       <element name="generatedSerialVersionUID" type="tns:GeneratedSerialVersionUID" default="CONSTANT" minOccurs="0" maxOccurs="1">
-      	<annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The serial version UID to be generated in all files.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The serial version UID to be generated in all files.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
       <element name="maxMembersPerInitialiser" type="int" default="500" minOccurs="0" maxOccurs="1">

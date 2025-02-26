@@ -429,6 +429,12 @@ final class Convert {
 
         if (ct1 == null && ct2 == null)
             return true;
+
+        // [#18059] binary data of type byte[] is not considered an array type
+        else if (ct1 == null && ct2 == byte.class)
+            return true;
+        else if (ct2 == null && ct1 == byte.class)
+            return true;
         else if (ct1 == null || ct2 == null)
             return false;
         else

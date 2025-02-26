@@ -1592,6 +1592,16 @@ implements
 
 
 
+                    // [#18043] Assuming users provide explicit data types of the existing column, we can reference it again
+
+
+                    case MARIADB:
+                    case MYSQL:
+                        ctx.sql(' ');
+                        toSQLDDLTypeDeclaration(ctx, alterColumn.getDataType());
+                        ctx.sql(' ').visit(alterColumnNullability.nullable() ? K_NULL : K_NOT_NULL);
+                        break;
+
                     default:
                         ctx.sql(' ').visit(alterColumnNullability.nullable() ? K_DROP_NOT_NULL : K_SET_NOT_NULL);
                         break;

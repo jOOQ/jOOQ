@@ -162,13 +162,13 @@ public interface AlterTableAlterStep<T> {
      * Make the column <code>NOT NULL</code>.
      */
     @NotNull @CheckReturnValue
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     AlterTableFinalStep setNotNull();
 
     /**
      * Make the column nullable.
      */
     @NotNull @CheckReturnValue
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     AlterTableFinalStep dropNotNull();
 }

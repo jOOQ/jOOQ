@@ -246,6 +246,10 @@ public interface AlterTableStep {
      * Add an <code>ALTER COLUMN</code> clause to the <code>ALTER TABLE</code>
      * statement.
      * <p>
+     * Note that in some RDBMS, the current column type is required in order to
+     * alter a column, so for best results, better pass it explicitly with
+     * {@link #alter(Field)}.
+     * <p>
      * This is an alias for {@link #alterColumn(Name)}
      */
     @NotNull @CheckReturnValue
@@ -255,6 +259,10 @@ public interface AlterTableStep {
     /**
      * Add an <code>ALTER COLUMN</code> clause to the <code>ALTER TABLE</code>
      * statement.
+     * <p>
+     * Note that in some RDBMS, the current column type is required in order to
+     * alter a column, so for best results, better pass it explicitly with
+     * {@link #alter(Field)}.
      * <p>
      * This is an alias for {@link #alterColumn(String)}
      */
@@ -273,6 +281,10 @@ public interface AlterTableStep {
     /**
      * Add an <code>ALTER COLUMN</code> clause to the <code>ALTER TABLE</code>
      * statement.
+     * <p>
+     * Note that in some RDBMS, the current column type is required in order to
+     * alter a column, so for best results, better pass it explicitly with
+     * {@link #alterColumn(Field)}.
      */
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
@@ -281,6 +293,10 @@ public interface AlterTableStep {
     /**
      * Add an <code>ALTER COLUMN</code> clause to the <code>ALTER TABLE</code>
      * statement.
+     * <p>
+     * Note that in some RDBMS, the current column type is required in order to
+     * alter a column, so for best results, better pass it explicitly with
+     * {@link #alterColumn(Field)}.
      */
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })

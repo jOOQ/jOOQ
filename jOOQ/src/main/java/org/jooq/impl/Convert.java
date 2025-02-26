@@ -498,15 +498,14 @@ final class Convert {
         Class<?> ct1 = c1.getComponentType();
         Class<?> ct2 = c2.getComponentType();
 
-        if (ct1 == null && ct2 == null)
+        // [#18059] The check isn't symmetric as we'll wrap only the right type
+        if (ct1 == null)
             return true;
 
         // [#18059] binary data of type byte[] is not considered an array type
-        else if (ct1 == null && ct2 == byte.class)
-            return true;
         else if (ct2 == null && ct1 == byte.class)
             return true;
-        else if (ct1 == null || ct2 == null)
+        else if (ct2 == null)
             return false;
         else
             return equalArrayDegree(ct1, ct2);

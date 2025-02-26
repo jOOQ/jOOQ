@@ -135,6 +135,8 @@ import org.jooq.types.YearToSecond;
 import org.jooq.util.postgres.PostgresUtils;
 import org.jooq.util.xml.jaxb.InformationSchema;
 
+import org.jetbrains.annotations.NotNull;
+
 import jakarta.xml.bind.JAXB;
 
 /**
@@ -400,7 +402,7 @@ final class Convert {
     static final Object[] convertArray(Object[] from, Class<?> toClass) throws DataTypeException {
         if (from == null)
             return null;
-        else if (!toClass.isArray())
+        else if (!equalArrayDegree(from.getClass(), toClass))
             return convertArray(from, arrayType(toClass));
         else if (toClass == from.getClass())
             return from;
@@ -422,7 +424,19 @@ final class Convert {
         }
     }
 
-    static final <U> U[] convertCollection(Collection from, Class<? extends U[]> to){
+    private static boolean equalArrayDegree(Class<?> c1, Class<?> c2) {
+        Class<?> ct1 = c1.getComponentType();
+        Class<?> ct2 = c2.getComponentType();
+
+        if (ct1 == null && ct2 == null)
+            return true;
+        else if (ct1 == null || ct2 == null)
+            return false;
+        else
+            return equalArrayDegree(ct1, ct2);
+    }
+
+    static final <U> U[] convertCollection(Collection from, Class<? extends U[]> to) {
         return new ConvertAll<U[]>(to).from(from, converterContext());
     }
 

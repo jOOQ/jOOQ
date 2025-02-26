@@ -38,9 +38,10 @@
 package org.jooq;
 
 import static org.jooq.impl.Internal.arrayType;
+import static org.jooq.tools.reflect.Reflect.wrapper;
 
 import org.jooq.impl.AbstractContextConverter;
-import org.jooq.tools.Convert;
+import org.jooq.impl.Internal;
 
 /**
  * A {@link Converter} that can convert arrays based on a delegate converter
@@ -54,7 +55,10 @@ final class ArrayConverter<T, U> extends AbstractContextConverter<T[], U[]> {
     final ContextConverter<U, T> inverse;
 
     public ArrayConverter(ContextConverter<T, U> converter) {
-        super(arrayType(converter.fromType()), arrayType(converter.toType()));
+
+        // [#18059] Work with wrapper types, as we cannot represent Converter<int, U>,
+        //          so we shouldn't work with Converter<int[], U[]> either
+        super(arrayType(wrapper(converter.fromType())), arrayType(wrapper(converter.toType())));
 
         this.converter = converter;
         this.inverse = Converters.inverse(converter);
@@ -72,11 +76,11 @@ final class ArrayConverter<T, U> extends AbstractContextConverter<T[], U[]> {
 
     @Override
     public final U[] from(T[] t, ConverterContext scope) {
-        return Convert.convertArray(t, converter);
+        return Internal.convertArray(t, converter);
     }
 
     @Override
     public final T[] to(U[] t, ConverterContext scope) {
-        return Convert.convertArray(t, inverse);
+        return Internal.convertArray(t, inverse);
     }
 }

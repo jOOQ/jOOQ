@@ -106,6 +106,8 @@ import org.jooq.Sequence;
 import org.jooq.Table;
 import org.jooq.TableOptions.TableType;
 import org.jooq.UniqueKey;
+import org.jooq.impl.QOM.DropDatabase;
+import org.jooq.impl.QOM.DropIndex;
 import org.jooq.tools.StringUtils;
 
 /**
@@ -368,14 +370,18 @@ final class Diff {
             }
             else {
 
-                // TODO: The order of dropping / adding these objects might be incorrect
-                //       as there could be inter-dependencies.
-                appendColumns(r, t1, t2, asList(t1.fields()), asList(t2.fields()));
-                appendPrimaryKey(r, t1, asList(t1.getPrimaryKey()), asList(t2.getPrimaryKey()));
-                appendUniqueKeys(r, t1, removePrimary(t1.getKeys()), removePrimary(t2.getKeys()));
-                appendForeignKeys(r, t1, t1.getReferences(), t2.getReferences());
-                appendChecks(r, t1, t1.getChecks(), t2.getChecks());
-                appendIndexes(r, t1, t1.getIndexes(), t2.getIndexes());
+                // [#18044] Ensure constraint / column drop / add order
+                DiffResult temp = new DiffResult(new ArrayList<>(), r.droppedFks);
+
+                appendColumns(temp, t1, t2, asList(t1.fields()), asList(t2.fields()));
+                appendPrimaryKey(temp, t1, asList(t1.getPrimaryKey()), asList(t2.getPrimaryKey()));
+                appendUniqueKeys(temp, t1, removePrimary(t1.getKeys()), removePrimary(t2.getKeys()));
+                appendForeignKeys(temp, t1, t1.getReferences(), t2.getReferences());
+                appendChecks(temp, t1, t1.getChecks(), t2.getChecks());
+                appendIndexes(temp, t1, t1.getIndexes(), t2.getIndexes());
+
+                temp.queries.sort(this::sortOrder);
+                r.addAll(temp);
             }
 
             String c1 = defaultString(t1.getComment());
@@ -388,6 +394,28 @@ final class Diff {
                     r.queries.add(ctx.commentOnMaterializedView(t2).is(c2));
                 else
                     r.queries.add(ctx.commentOnTable(t2).is(c2));
+        }
+
+        private int sortOrder(Query q1, Query q2) {
+            return sortIndex(q1) - sortIndex(q2);
+        }
+
+        private int sortIndex(Query q) {
+
+            // [#18044] DROP CONSTRAINT / INDEX before everything, ADD CONSTRAINT / INDEX after everything
+            if (q instanceof AlterTableImpl a) {
+                return a.$dropConstraint() != null
+                    ? -1
+                    : a.$addConstraint() != null
+                    ? 1
+                    : 0;
+            }
+            else if (q instanceof QOM.DropIndex)
+                return -1;
+            else if (q instanceof QOM.CreateIndex)
+                return 1;
+            else
+                return 0;
         }
 
         private void replaceView(DiffResult r, Table<?> v1, Table<?> v2, boolean canReplace) {

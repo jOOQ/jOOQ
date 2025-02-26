@@ -376,8 +376,9 @@ final class Convert {
         if (from == null)
             return null;
 
-        Object[] arrayOfT = (Object[]) convertArray(from, converter.fromType());
-        Object[] arrayOfU = (Object[]) Array.newInstance(converter.toType(), from.length);
+        // [#18052] Use wrapper types here, because we guarantee a U[] array typed result (i.e. Object[])
+        Object[] arrayOfT = (Object[]) convertArray(from, wrapper(converter.fromType()));
+        Object[] arrayOfU = (Object[]) Array.newInstance(wrapper(converter.toType()), from.length);
 
         for (int i = 0; i < arrayOfT.length; i++)
             arrayOfU[i] = convert(arrayOfT[i], converter);

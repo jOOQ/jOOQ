@@ -75,7 +75,7 @@ public interface TableSampleRowsStep<R extends Record> extends TableSampleRepeat
      * <p>
      * The sampling size is a specific number of rows.
      */
-    @Support
+    @Support({ CLICKHOUSE, DUCKDB })
     @NotNull @CheckReturnValue
     TableSampleRepeatableStep<R> rows();
 

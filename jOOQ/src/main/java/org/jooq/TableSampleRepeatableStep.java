@@ -75,7 +75,7 @@ public interface TableSampleRepeatableStep<R extends Record> extends Table<R> {
      * <p>
      * A seed value for repeatable sampling.
      */
-    @Support
+    @Support({ CLICKHOUSE, DUCKDB, POSTGRES })
     @NotNull @CheckReturnValue
     Table<R> repeatable(int seed);
 
@@ -84,7 +84,7 @@ public interface TableSampleRepeatableStep<R extends Record> extends Table<R> {
      * <p>
      * A seed value for repeatable sampling.
      */
-    @Support
+    @Support({ CLICKHOUSE, DUCKDB, POSTGRES })
     @NotNull @CheckReturnValue
     Table<R> repeatable(Field<? extends Number> seed);
 }

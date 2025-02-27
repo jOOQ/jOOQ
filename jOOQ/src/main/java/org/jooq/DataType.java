@@ -85,6 +85,7 @@ import java.util.function.Function;
 import org.jooq.Converters.UnknownType;
 import org.jooq.conf.Settings;
 import org.jooq.exception.DataTypeException;
+import org.jooq.impl.AutoConverter;
 import org.jooq.impl.DSL;
 import org.jooq.impl.QOM.GenerationLocation;
 import org.jooq.impl.QOM.GenerationOption;
@@ -296,6 +297,14 @@ public interface DataType<T> extends Named {
      */
     @NotNull
     <U> DataType<U> asConvertedDataType(Converter<? super T, U> converter);
+
+    /**
+     * Convenience method for converting this type using {@link AutoConverter}.
+     */
+    @NotNull
+    default <U> DataType<U> asConvertedDataType(Class<U> toType) {
+        return asConvertedDataType(new AutoConverter<>(getType(), toType));
+    }
 
     /**
      * Convenience method for converting this type using

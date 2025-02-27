@@ -173,6 +173,7 @@ implements
         switch (ctx.family()) {
 
 
+
             case DUCKDB:
                 ctx.paramType(ParamType.INLINED, this::accept0);
                 break;
@@ -228,6 +229,7 @@ implements
                     ctx.visit(K_RESERVOIR).sql(' ');
 
                 break;
+
 
             case POSTGRES:
                 ctx.visit((method != null ? method : SampleMethod.BERNOULLI).keyword).sql(' ');

@@ -1099,32 +1099,32 @@ implements
 
     @Override
     public final TableSampleRowsStep<R> tablesample(Number size) {
-        return tablesampleBernoulli(size);
+        return new SampleTable(this, Tools.field(size), null);
     }
 
     @Override
     public final TableSampleRowsStep<R> tablesample(Field<? extends Number> size) {
-        return tablesampleBernoulli(size);
+        return new SampleTable(this, size, null);
     }
 
     @Override
     public final TableSampleRowsStep<R> tablesampleBernoulli(Number size) {
-        return new TableSample(this, Tools.field(size), SampleMethod.BERNOULLI);
+        return new SampleTable(this, Tools.field(size), SampleMethod.BERNOULLI);
     }
 
     @Override
     public final TableSampleRowsStep<R> tablesampleBernoulli(Field<? extends Number> size) {
-        return new TableSample(this, size, SampleMethod.BERNOULLI);
+        return new SampleTable(this, size, SampleMethod.BERNOULLI);
     }
 
     @Override
     public final TableSampleRowsStep<R> tablesampleSystem(Number size) {
-        return new TableSample(this, Tools.field(size), SampleMethod.SYSTEM);
+        return new SampleTable(this, Tools.field(size), SampleMethod.SYSTEM);
     }
 
     @Override
     public final TableSampleRowsStep<R> tablesampleSystem(Field<? extends Number> size) {
-        return new TableSample(this, size, SampleMethod.SYSTEM);
+        return new SampleTable(this, size, SampleMethod.SYSTEM);
     }
 
 

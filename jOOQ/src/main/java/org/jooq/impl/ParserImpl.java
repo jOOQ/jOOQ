@@ -7745,6 +7745,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         else if (parseKeywordIf("SAMPLE", "TABLESAMPLE", "USING SAMPLE")) {
             boolean bernoulli = parseKeywordIf("BERNOULLI", "ROW");
             boolean system = !bernoulli && parseKeywordIf("SYSTEM", "BLOCK");
+            boolean reservoir = !bernoulli && !system && parseKeywordIf("RESERVOIR");
 
             parse('(');
             Field<Number> size = parseFieldUnsignedNumericLiteral(Sign.NONE);

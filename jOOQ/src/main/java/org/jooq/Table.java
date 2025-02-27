@@ -3407,9 +3407,10 @@ extends
     Field<RowId> rowid();
 
     /**
-     * The <code>TABLESAMPLE</code> operator, an alias for the <code>TABLESAMPLE_BERNOULLI</code> operator.
+     * The <code>TABLESAMPLE</code> operator.
      * <p>
-     * Get a <code>TABLESAMPLE</code> expression for this table.
+     * Get a <code>TABLESAMPLE</code> expression for this table using the default sample
+     * method.
      *
      * @param size is wrapped as {@link DSL#val(Object)}.
      */
@@ -3418,9 +3419,10 @@ extends
     TableSampleRowsStep<R> tablesample(Number size);
 
     /**
-     * The <code>TABLESAMPLE</code> operator, an alias for the <code>TABLESAMPLE_BERNOULLI</code> operator.
+     * The <code>TABLESAMPLE</code> operator.
      * <p>
-     * Get a <code>TABLESAMPLE</code> expression for this table.
+     * Get a <code>TABLESAMPLE</code> expression for this table using the default sample
+     * method.
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, POSTGRES, TRINO })
@@ -3429,7 +3431,8 @@ extends
     /**
      * The <code>TABLESAMPLE_BERNOULLI</code> operator.
      * <p>
-     * Get a <code>TABLESAMPLE</code> expression for this table.
+     * Get a <code>TABLESAMPLE</code> expression for this table using the <code>BERNOULLI</code>
+     * sample method.
      *
      * @param size is wrapped as {@link DSL#val(Object)}.
      */
@@ -3440,7 +3443,8 @@ extends
     /**
      * The <code>TABLESAMPLE_BERNOULLI</code> operator.
      * <p>
-     * Get a <code>TABLESAMPLE</code> expression for this table.
+     * Get a <code>TABLESAMPLE</code> expression for this table using the <code>BERNOULLI</code>
+     * sample method.
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, POSTGRES, TRINO })
@@ -3449,7 +3453,8 @@ extends
     /**
      * The <code>TABLESAMPLE_SYSTEM</code> operator.
      * <p>
-     * Get a <code>TABLESAMPLE</code> expression for this table.
+     * Get a <code>TABLESAMPLE</code> expression for this table using the <code>SYSTEM</code>
+     * sample method.
      *
      * @param size is wrapped as {@link DSL#val(Object)}.
      */
@@ -3460,7 +3465,8 @@ extends
     /**
      * The <code>TABLESAMPLE_SYSTEM</code> operator.
      * <p>
-     * Get a <code>TABLESAMPLE</code> expression for this table.
+     * Get a <code>TABLESAMPLE</code> expression for this table using the <code>SYSTEM</code>
+     * sample method.
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, POSTGRES, TRINO })

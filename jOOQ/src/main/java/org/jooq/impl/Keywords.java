@@ -366,6 +366,7 @@ final class Keywords {
     static final Keyword K_REPEAT                   = keyword("repeat");
     static final Keyword K_REPEATABLE               = keyword("repeatable");
     static final Keyword K_REPLACE                  = keyword("replace");
+    static final Keyword K_RESERVOIR                = keyword("reservoir");
     static final Keyword K_RESPECT_NULLS            = keyword("respect nulls");
     static final Keyword K_RESTART                  = keyword("restart");
     static final Keyword K_RESTART_WITH             = keyword("restart with");

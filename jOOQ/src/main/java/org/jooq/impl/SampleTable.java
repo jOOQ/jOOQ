@@ -67,14 +67,14 @@ import java.util.Set;
 
 
 /**
- * The <code>TABLESAMPLE BERNOULLI</code> statement.
+ * The <code>TABLESAMPLE</code> statement.
  */
 @SuppressWarnings({ "hiding", "rawtypes", "unchecked", "unused" })
-final class TableSample<R extends Record>
+final class SampleTable<R extends Record>
 extends
     AbstractDelegatingTable<R>
 implements
-    QOM.TableSample<R>,
+    QOM.SampleTable<R>,
     TableSampleRowsStep<R>,
     TableSampleRepeatableStep<R>
 {
@@ -85,7 +85,7 @@ implements
           SampleSizeType          sizeType;
           Field<? extends Number> seed;
 
-    TableSample(
+    SampleTable(
         Table<R> table,
         Field<? extends Number> size,
         SampleMethod method
@@ -99,7 +99,20 @@ implements
         );
     }
 
-    TableSample(
+    SampleTable(
+        Table<R> table,
+        Field<? extends Number> size
+    ) {
+        super(
+            (AbstractTable<R>) table
+        );
+
+        this.table = table;
+        this.size = nullSafeNotNull(size, INTEGER);
+        this.method = null;
+    }
+
+    SampleTable(
         Table<R> table,
         Field<? extends Number> size,
         SampleMethod method,
@@ -118,8 +131,8 @@ implements
     }
 
     @Override
-    final <R extends Record> TableSample<R> construct(AbstractTable<R> newDelegate) {
-        return new TableSample<>(newDelegate, size, method, sizeType, seed);
+    final <R extends Record> SampleTable<R> construct(AbstractTable<R> newDelegate) {
+        return new SampleTable<>(newDelegate, size, method, sizeType, seed);
     }
 
     // -------------------------------------------------------------------------
@@ -127,24 +140,24 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final TableSample<R> rows() {
+    public final SampleTable<R> rows() {
         this.sizeType = SampleSizeType.ROWS;
         return this;
     }
 
     @Override
-    public final TableSample<R> percent() {
+    public final SampleTable<R> percent() {
         this.sizeType = SampleSizeType.PERCENT;
         return this;
     }
 
     @Override
-    public final TableSample<R> repeatable(int seed) {
+    public final SampleTable<R> repeatable(int seed) {
         return repeatable(Tools.field(seed));
     }
 
     @Override
-    public final TableSample<R> repeatable(Field<? extends Number> seed) {
+    public final SampleTable<R> repeatable(Field<? extends Number> seed) {
         this.seed = seed;
         return this;
     }
@@ -157,6 +170,20 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
+        switch (ctx.family()) {
+
+
+            case DUCKDB:
+                ctx.paramType(ParamType.INLINED, this::accept0);
+                break;
+
+            default:
+                accept0(ctx);
+                break;
+        }
+    }
+
+    final void accept0(Context<?> ctx) {
         ctx.visit(table).sql(' ');
 
         switch (ctx.family()) {
@@ -197,11 +224,19 @@ implements
             case DUCKDB:
                 if (method == SampleMethod.BERNOULLI)
                     ctx.visit(method.keyword).sql(' ');
+                else if (sizeType == SampleSizeType.ROWS)
+                    ctx.visit(K_RESERVOIR).sql(' ');
 
                 break;
 
+            case POSTGRES:
+                ctx.visit((method != null ? method : SampleMethod.BERNOULLI).keyword).sql(' ');
+                break;
+
             default:
-                ctx.visit(method.keyword).sql(' ');
+                if (method != null)
+                    ctx.visit(method.keyword).sql(' ');
+
                 break;
         }
 
@@ -281,33 +316,33 @@ implements
     }
 
     @Override
-    public final QOM.TableSample<R> $arg1(Table<R> newValue) {
+    public final QOM.SampleTable<R> $arg1(Table<R> newValue) {
         return $constructor().apply(newValue, $arg2(), $arg3(), $arg4(), $arg5());
     }
 
     @Override
-    public final QOM.TableSample<R> $arg2(Field<? extends Number> newValue) {
+    public final QOM.SampleTable<R> $arg2(Field<? extends Number> newValue) {
         return $constructor().apply($arg1(), newValue, $arg3(), $arg4(), $arg5());
     }
 
     @Override
-    public final QOM.TableSample<R> $arg3(SampleMethod newValue) {
+    public final QOM.SampleTable<R> $arg3(SampleMethod newValue) {
         return $constructor().apply($arg1(), $arg2(), newValue, $arg4(), $arg5());
     }
 
     @Override
-    public final QOM.TableSample<R> $arg4(SampleSizeType newValue) {
+    public final QOM.SampleTable<R> $arg4(SampleSizeType newValue) {
         return $constructor().apply($arg1(), $arg2(), $arg3(), newValue, $arg5());
     }
 
     @Override
-    public final QOM.TableSample<R> $arg5(Field<? extends Number> newValue) {
+    public final QOM.SampleTable<R> $arg5(Field<? extends Number> newValue) {
         return $constructor().apply($arg1(), $arg2(), $arg3(), $arg4(), newValue);
     }
 
     @Override
-    public final Function5<? super Table<R>, ? super Field<? extends Number>, ? super SampleMethod, ? super SampleSizeType, ? super Field<? extends Number>, ? extends QOM.TableSample<R>> $constructor() {
-        return (a1, a2, a3, a4, a5) -> new TableSample<>(a1, a2, a3, a4, a5);
+    public final Function5<? super Table<R>, ? super Field<? extends Number>, ? super SampleMethod, ? super SampleSizeType, ? super Field<? extends Number>, ? extends QOM.SampleTable<R>> $constructor() {
+        return (a1, a2, a3, a4, a5) -> new SampleTable<>(a1, a2, a3, a4, a5);
     }
 
     // -------------------------------------------------------------------------
@@ -316,7 +351,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.TableSample<?> o) {
+        if (that instanceof QOM.SampleTable<?> o) {
             return
                 StringUtils.equals($table(), o.$table()) &&
                 StringUtils.equals($size(), o.$size()) &&

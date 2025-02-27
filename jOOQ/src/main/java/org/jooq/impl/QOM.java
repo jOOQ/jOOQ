@@ -3876,32 +3876,33 @@ public final class QOM {
     }
 
     /**
-     * The <code>TABLESAMPLE BERNOULLI</code> operator.
+     * The <code>TABLESAMPLE</code> operator.
      * <p>
-     * Get a <code>TABLESAMPLE</code> expression for this table.
+     * Get a <code>TABLESAMPLE</code> expression for this table using the default sample
+     * method.
      */
-    public /*sealed*/ interface TableSample<R extends Record>
+    public /*sealed*/ interface SampleTable<R extends Record>
         extends
-            UOperator5<Table<R>, Field<? extends Number>, SampleMethod, SampleSizeType, Field<? extends Number>, TableSample<R>>,
+            UOperator5<Table<R>, Field<? extends Number>, SampleMethod, SampleSizeType, Field<? extends Number>, SampleTable<R>>,
             Table<R>
         //permits
-        //    TableSample
+        //    SampleTable
     {
         @NotNull default Table<R> $table() { return $arg1(); }
         @CheckReturnValue
-        @NotNull default TableSample<R> $table(Table<R> newTable) { return $arg1(newTable); }
+        @NotNull default SampleTable<R> $table(Table<R> newTable) { return $arg1(newTable); }
         @NotNull default Field<? extends Number> $size() { return $arg2(); }
         @CheckReturnValue
-        @NotNull default TableSample<R> $size(Field<? extends Number> newSize) { return $arg2(newSize); }
-        @NotNull default SampleMethod $method() { return $arg3(); }
+        @NotNull default SampleTable<R> $size(Field<? extends Number> newSize) { return $arg2(newSize); }
+        @Nullable default SampleMethod $method() { return $arg3(); }
         @CheckReturnValue
-        @NotNull default TableSample<R> $method(SampleMethod newMethod) { return $arg3(newMethod); }
+        @NotNull default SampleTable<R> $method(SampleMethod newMethod) { return $arg3(newMethod); }
         @Nullable default SampleSizeType $sizeType() { return $arg4(); }
         @CheckReturnValue
-        @NotNull default TableSample<R> $sizeType(SampleSizeType newSizeType) { return $arg4(newSizeType); }
+        @NotNull default SampleTable<R> $sizeType(SampleSizeType newSizeType) { return $arg4(newSizeType); }
         @Nullable default Field<? extends Number> $seed() { return $arg5(); }
         @CheckReturnValue
-        @NotNull default TableSample<R> $seed(Field<? extends Number> newSeed) { return $arg5(newSeed); }
+        @NotNull default SampleTable<R> $seed(Field<? extends Number> newSeed) { return $arg5(newSeed); }
     }
 
     /**

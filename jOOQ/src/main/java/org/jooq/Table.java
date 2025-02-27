@@ -3406,6 +3406,66 @@ extends
     @Support({ H2, POSTGRES, SQLITE })
     Field<RowId> rowid();
 
+    /**
+     * The <code>TABLESAMPLE</code> operator, an alias for the <code>TABLESAMPLE_BERNOULLI</code> operator.
+     * <p>
+     * Get a <code>TABLESAMPLE</code> expression for this table.
+     *
+     * @param size is wrapped as {@link DSL#val(Object)}.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, POSTGRES, TRINO })
+    TableSampleRowsStep<R> tablesample(Number size);
+
+    /**
+     * The <code>TABLESAMPLE</code> operator, an alias for the <code>TABLESAMPLE_BERNOULLI</code> operator.
+     * <p>
+     * Get a <code>TABLESAMPLE</code> expression for this table.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, POSTGRES, TRINO })
+    TableSampleRowsStep<R> tablesample(Field<? extends Number> size);
+
+    /**
+     * The <code>TABLESAMPLE_BERNOULLI</code> operator.
+     * <p>
+     * Get a <code>TABLESAMPLE</code> expression for this table.
+     *
+     * @param size is wrapped as {@link DSL#val(Object)}.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, POSTGRES, TRINO })
+    TableSampleRowsStep<R> tablesampleBernoulli(Number size);
+
+    /**
+     * The <code>TABLESAMPLE_BERNOULLI</code> operator.
+     * <p>
+     * Get a <code>TABLESAMPLE</code> expression for this table.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, POSTGRES, TRINO })
+    TableSampleRowsStep<R> tablesampleBernoulli(Field<? extends Number> size);
+
+    /**
+     * The <code>TABLESAMPLE_SYSTEM</code> operator.
+     * <p>
+     * Get a <code>TABLESAMPLE</code> expression for this table.
+     *
+     * @param size is wrapped as {@link DSL#val(Object)}.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, POSTGRES, TRINO })
+    TableSampleRowsStep<R> tablesampleSystem(Number size);
+
+    /**
+     * The <code>TABLESAMPLE_SYSTEM</code> operator.
+     * <p>
+     * Get a <code>TABLESAMPLE</code> expression for this table.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, POSTGRES, TRINO })
+    TableSampleRowsStep<R> tablesampleSystem(Field<? extends Number> size);
+
 
 
     /**

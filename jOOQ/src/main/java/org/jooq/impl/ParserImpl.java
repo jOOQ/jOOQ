@@ -513,6 +513,7 @@ import static org.jooq.impl.Tools.EMPTY_STRING;
 import static org.jooq.impl.Tools.EMPTY_TABLE;
 import static org.jooq.impl.Tools.aliased;
 import static org.jooq.impl.Tools.anyMatch;
+import static org.jooq.impl.Tools.apply;
 import static org.jooq.impl.Tools.asInt;
 import static org.jooq.impl.Tools.deleteQueryImpl;
 import static org.jooq.impl.Tools.map;
@@ -730,6 +731,8 @@ import org.jooq.TableOnStep;
 import org.jooq.TableOptionalOnStep;
 import org.jooq.TableOuterJoinStep;
 import org.jooq.TablePartitionByStep;
+import org.jooq.TableSampleRepeatableStep;
+import org.jooq.TableSampleRowsStep;
 import org.jooq.Truncate;
 import org.jooq.TruncateCascadeStep;
 import org.jooq.TruncateIdentityStep;
@@ -7738,6 +7741,37 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
 
+        }
+        else if (parseKeywordIf("SAMPLE", "TABLESAMPLE", "USING SAMPLE")) {
+            boolean bernoulli = parseKeywordIf("BERNOULLI", "ROW");
+            boolean system = !bernoulli && parseKeywordIf("SYSTEM", "BLOCK");
+
+            parse('(');
+            Field<Number> size = parseFieldUnsignedNumericLiteral(Sign.NONE);
+            boolean percent = parseKeywordIf("PERCENT");
+            boolean rows = !percent && parseKeywordIf("ROWS");
+            parse(')');
+            Field<Number> seed = null;
+
+            if (parseKeywordIf("REPEATABLE", "SEED")) {
+                parse('(');
+                seed = parseFieldUnsignedNumericLiteral(Sign.NONE);
+                parse(')');
+            }
+
+            TableSampleRowsStep<?> s1 =
+                  bernoulli
+                ? t(result).tablesampleBernoulli(size)
+                : system
+                ? t(result).tablesampleSystem(size)
+                : t(result).tablesample(size);
+            TableSampleRepeatableStep<?> s2 =
+                  percent
+                ? s1.percent()
+                : rows
+                ? s1.rows()
+                : s1;
+            result = seed != null ? s2.repeatable(seed) : s2;
         }
 
         if (parseKeywordIf("WITH ORDINALITY"))

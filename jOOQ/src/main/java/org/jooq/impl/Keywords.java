@@ -79,6 +79,7 @@ final class Keywords {
     static final Keyword K_BETWEEN                  = keyword("between");
     static final Keyword K_BINARY                   = keyword("binary");
     static final Keyword K_BLOB                     = keyword("blob");
+    static final Keyword K_BLOCK                    = keyword("block");
     static final Keyword K_BOOLEAN                  = keyword("boolean");
     static final Keyword K_BOTH                     = keyword("both");
     static final Keyword K_BREAK                    = keyword("break");
@@ -363,6 +364,7 @@ final class Keywords {
     static final Keyword K_RENAME_TABLE             = keyword("rename table");
     static final Keyword K_RENAME_TO                = keyword("rename to");
     static final Keyword K_REPEAT                   = keyword("repeat");
+    static final Keyword K_REPEATABLE               = keyword("repeatable");
     static final Keyword K_REPLACE                  = keyword("replace");
     static final Keyword K_RESPECT_NULLS            = keyword("respect nulls");
     static final Keyword K_RESTART                  = keyword("restart");
@@ -384,12 +386,14 @@ final class Keywords {
     static final Keyword K_ROWS_FROM                = keyword("rows from");
     static final Keyword K_ROWS_ONLY                = keyword("rows only");
     static final Keyword K_ROWS_WITH_TIES           = keyword("rows with ties");
+    static final Keyword K_SAMPLE                   = keyword("sample");
     static final Keyword K_SAVE                     = keyword("save");
     static final Keyword K_SAVEPOINT                = keyword("savepoint");
     static final Keyword K_SCHEMA                   = keyword("schema");
     static final Keyword K_SCN                      = keyword("scn");
     static final Keyword K_SEARCH_PATH              = keyword("search_path");
     static final Keyword K_SECOND                   = keyword("second");
+    static final Keyword K_SEED                     = keyword("seed");
     static final Keyword K_SELECT                   = keyword("select");
     static final Keyword K_SEMI_JOIN                = keyword("semi join");
     static final Keyword K_SEPARATOR                = keyword("separator");
@@ -423,6 +427,7 @@ final class Keywords {
     static final Keyword K_SYMMETRIC                = keyword("symmetric");
     static final Keyword K_SYSTEM                   = keyword("system");
     static final Keyword K_TABLE                    = keyword("table");
+    static final Keyword K_TABLESAMPLE              = keyword("tablesample");
     static final Keyword K_TARGET                   = keyword("target");
     static final Keyword K_TBLPROPERTIES            = keyword("tblproperties");
     static final Keyword K_TEMPORARY                = keyword("temporary");

@@ -3876,6 +3876,35 @@ public final class QOM {
     }
 
     /**
+     * The <code>TABLESAMPLE BERNOULLI</code> operator.
+     * <p>
+     * Get a <code>TABLESAMPLE</code> expression for this table.
+     */
+    public /*sealed*/ interface TableSample<R extends Record>
+        extends
+            UOperator5<Table<R>, Field<? extends Number>, SampleMethod, SampleSizeType, Field<? extends Number>, TableSample<R>>,
+            Table<R>
+        //permits
+        //    TableSample
+    {
+        @NotNull default Table<R> $table() { return $arg1(); }
+        @CheckReturnValue
+        @NotNull default TableSample<R> $table(Table<R> newTable) { return $arg1(newTable); }
+        @NotNull default Field<? extends Number> $size() { return $arg2(); }
+        @CheckReturnValue
+        @NotNull default TableSample<R> $size(Field<? extends Number> newSize) { return $arg2(newSize); }
+        @NotNull default SampleMethod $method() { return $arg3(); }
+        @CheckReturnValue
+        @NotNull default TableSample<R> $method(SampleMethod newMethod) { return $arg3(newMethod); }
+        @Nullable default SampleSizeType $sizeType() { return $arg4(); }
+        @CheckReturnValue
+        @NotNull default TableSample<R> $sizeType(SampleSizeType newSizeType) { return $arg4(newSizeType); }
+        @Nullable default Field<? extends Number> $seed() { return $arg5(); }
+        @CheckReturnValue
+        @NotNull default TableSample<R> $seed(Field<? extends Number> newSeed) { return $arg5(newSeed); }
+    }
+
+    /**
      * The <code>ABS</code> function.
      */
     public /*sealed*/ interface Abs<T extends Number>
@@ -10449,6 +10478,40 @@ public final class QOM {
         }
     }
 
+    /**
+     * The <code>SampleMethod</code> type.
+     * <p>
+     * The table sampling method.
+     */
+    public enum SampleMethod {
+        BERNOULLI(keyword("bernoulli")),
+        SYSTEM(keyword("system")),
+        ;
+
+        final Keyword keyword;
+
+        private SampleMethod(Keyword keyword) {
+            this.keyword = keyword;
+        }
+    }
+
+    /**
+     * The <code>SampleSizeType</code> type.
+     * <p>
+     * The table sampling size type.
+     */
+    public enum SampleSizeType {
+        ROWS(keyword("rows")),
+        PERCENT(keyword("percent")),
+        ;
+
+        final Keyword keyword;
+
+        private SampleSizeType(Keyword keyword) {
+            this.keyword = keyword;
+        }
+    }
+
 
 
     // -------------------------------------------------------------------------
@@ -10633,6 +10696,58 @@ public final class QOM {
         default List<?> $args() {
             return unmodifiableList(asList($arg1(), $arg2(), $arg3(), $arg4()));
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
+
+    interface UOperator5<Q1, Q2, Q3, Q4, Q5, R extends UOperator5<Q1, Q2, Q3, Q4, Q5, R>> extends UOperator<R> {
+        Q1 $arg1();
+        Q2 $arg2();
+        Q3 $arg3();
+        Q4 $arg4();
+        Q5 $arg5();
+
+        @CheckReturnValue
+        @NotNull default R $arg1(Q1 newArg1) { return $constructor().apply(newArg1, $arg2(), $arg3(), $arg4(), $arg5()); }
+        @CheckReturnValue
+        @NotNull default R $arg2(Q2 newArg2) { return $constructor().apply($arg1(), newArg2, $arg3(), $arg4(), $arg5()); }
+        @CheckReturnValue
+        @NotNull default R $arg3(Q3 newArg3) { return $constructor().apply($arg1(), $arg2(), newArg3, $arg4(), $arg5()); }
+        @CheckReturnValue
+        @NotNull default R $arg4(Q4 newArg4) { return $constructor().apply($arg1(), $arg2(), $arg3(), newArg4, $arg5()); }
+        @CheckReturnValue
+        @NotNull default R $arg5(Q5 newArg5) { return $constructor().apply($arg1(), $arg2(), $arg3(), $arg4(), newArg5); }
+
+        @NotNull
+        Function5<? super Q1, ? super Q2, ? super Q3, ? super Q4, ? super Q5, ? extends R> $constructor();
+
+        @NotNull
+        @Override
+        default List<?> $args() {
+            return unmodifiableList(asList($arg1(), $arg2(), $arg3(), $arg4(), $arg5()));
+        }
+
 
 
 

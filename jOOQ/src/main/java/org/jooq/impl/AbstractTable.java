@@ -63,6 +63,7 @@ import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.QOM.JoinHint.HASH;
 import static org.jooq.impl.QOM.JoinHint.LOOP;
 import static org.jooq.impl.QOM.JoinHint.MERGE;
+import static org.jooq.impl.QOM.SampleMethod.BERNOULLI;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_NAME;
 import static org.jooq.impl.Tools.EMPTY_TABLE_FIELD;
@@ -126,6 +127,7 @@ import org.jooq.TableOptions;
 import org.jooq.TableOptions.TableType;
 import org.jooq.TableOuterJoinStep;
 import org.jooq.TablePartitionByStep;
+import org.jooq.TableSampleRowsStep;
 // ...
 import org.jooq.UniqueKey;
 // ...
@@ -133,6 +135,7 @@ import org.jooq.UniqueKey;
 import org.jooq.impl.QOM.Aliasable;
 import org.jooq.impl.QOM.GenerationLocation;
 import org.jooq.impl.QOM.JoinHint;
+import org.jooq.impl.QOM.SampleMethod;
 import org.jooq.tools.JooqLogger;
 
 
@@ -1092,6 +1095,36 @@ implements
     @Override
     public /* non-final */ Field<RowId> rowid() {
         return new QualifiedRowid(this);
+    }
+
+    @Override
+    public final TableSampleRowsStep<R> tablesample(Number size) {
+        return tablesampleBernoulli(size);
+    }
+
+    @Override
+    public final TableSampleRowsStep<R> tablesample(Field<? extends Number> size) {
+        return tablesampleBernoulli(size);
+    }
+
+    @Override
+    public final TableSampleRowsStep<R> tablesampleBernoulli(Number size) {
+        return new TableSample(this, Tools.field(size), SampleMethod.BERNOULLI);
+    }
+
+    @Override
+    public final TableSampleRowsStep<R> tablesampleBernoulli(Field<? extends Number> size) {
+        return new TableSample(this, size, SampleMethod.BERNOULLI);
+    }
+
+    @Override
+    public final TableSampleRowsStep<R> tablesampleSystem(Number size) {
+        return new TableSample(this, Tools.field(size), SampleMethod.SYSTEM);
+    }
+
+    @Override
+    public final TableSampleRowsStep<R> tablesampleSystem(Field<? extends Number> size) {
+        return new TableSample(this, size, SampleMethod.SYSTEM);
     }
 
 

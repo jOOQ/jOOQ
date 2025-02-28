@@ -289,8 +289,10 @@ implements
         if (seed != null) {
             switch (ctx.family()) {
 
-                    ctx.sql(' ').visit(K_SEED).sql(" (").visit(seed).sql(')');
-                    break;
+
+
+
+
 
                 default:
                     ctx.sql(' ').visit(K_REPEATABLE).sql(" (").visit(seed).sql(')');

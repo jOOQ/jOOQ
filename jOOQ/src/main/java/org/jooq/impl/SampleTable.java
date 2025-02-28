@@ -175,6 +175,7 @@ implements
 
 
 
+
             case DUCKDB:
             case TRINO:
                 ctx.paramType(ParamType.INLINED, this::accept0);
@@ -224,6 +225,10 @@ implements
 
 
 
+
+
+
+
             case DUCKDB:
                 if (method == SampleMethod.BERNOULLI)
                     ctx.visit(method.keyword).sql(' ');
@@ -255,6 +260,10 @@ implements
             case TRINO:
                 ctx.sql('(').visit(size).sql(')');
                 break;
+
+
+
+
 
 
 

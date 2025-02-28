@@ -110,6 +110,10 @@ final class Tips {
         "When it comes to using Converter or Binding, only the first UNION subquery is relevant. Learn more about this here: https://blog.jooq.org/how-to-use-jooqs-converters-with-union-operations/",
         "Want to upgrade your jOOQ experience? Check out these commercial only features of the jOOQ Professional and Enterprise Editions: https://www.jooq.org/commercial-only-features/",
         "Should you use jOOQ's DAOs? They're convenient, but don't overuse them. SQL is often more powerful: https://blog.jooq.org/to-dao-or-not-to-dao/",
+        "Want to hide some legacy columns from your queries? Use jOOQ's hidden column support: https://www.jooq.org/doc/latest/manual/code-generation/codegen-advanced/codegen-config-database/codegen-database-hidden-columns/",
+        "Different jOOQ editions support multiple JDK versions. Check out the complete list here: https://www.jooq.org/download/support-matrix-jdk",
+        "Different jOOQ editions support multiple RDBMS versions. Check out the complete list here: https://www.jooq.org/download/support-matrix",
+        "By default, jOOQ's UpdatableRecords track \"touched\" dirty state. You can switch them to track \"modified\" dirty state instead: https://www.jooq.org/doc/latest/manual/sql-building/dsl-context/custom-settings/settings-dirty-tracking/",
         ""
     };
 

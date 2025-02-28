@@ -174,7 +174,9 @@ implements
 
 
 
+
             case DUCKDB:
+            case TRINO:
                 ctx.paramType(ParamType.INLINED, this::accept0);
                 break;
 
@@ -231,7 +233,9 @@ implements
                 break;
 
 
+
             case POSTGRES:
+            case TRINO:
                 ctx.visit((method != null ? method : SampleMethod.BERNOULLI).keyword).sql(' ');
                 break;
 

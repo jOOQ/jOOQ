@@ -239,6 +239,7 @@ implements
 
 
 
+
             case POSTGRES:
             case TRINO:
                 ctx.visit((method != null ? method : SampleMethod.BERNOULLI).keyword).sql(' ');
@@ -252,6 +253,7 @@ implements
         }
 
         switch (ctx.family()) {
+
 
 
 

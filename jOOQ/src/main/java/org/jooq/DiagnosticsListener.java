@@ -181,7 +181,8 @@ public interface DiagnosticsListener {
      * </pre>
      * <p>
      * This is a system-wide diagnostic that is not specific to individual
-     * {@link Connection} instances.
+     * {@link Connection} instances. Its caches are located in the
+     * {@link Configuration} that this listener pertains to.
      * <p>
      * This diagnostic can be turned off using
      * {@link Settings#isDiagnosticsDuplicateStatements()}.
@@ -215,20 +216,31 @@ public interface DiagnosticsListener {
      * <p>
      * Repeated statements may or may not be "identical". In the following
      * example, there are two repeated <em>and</em> identical statements:
-     * <pre><code>
+     *
+     * <pre>
+     * <code>
      * SELECT * FROM actor WHERE id = ?;
      * SELECT * FROM actor WHERE id = ?;
-     * </code></pre>
+     * </code>
+     * </pre>
      * <p>
      * In this example, we have three repeated statements, only some of which
-     * are also identical: <pre><code>
+     * are also identical:
+     *
+     * <pre>
+     * <code>
      * SELECT * FROM actor WHERE id = ?;
      * SELECT * FROM actor WHERE id = ?;
      * SELECT * FROM actor WHERE id =  ?;
-     * </code></pre>
+     * </code>
+     * </pre>
      * <p>
      * This is a {@link Connection}-specific diagnostic that is reset every time
-     * {@link Connection#close()} is called.
+     * {@link Connection#close()} is called for explicitly created
+     * {@link DSLContext#diagnosticsConnection()}, or if
+     * {@link DiagnosticsConnection#ON} is specified, also globally on a
+     * {@link TransactionContext} level (if available), or {@link Configuration}
+     * level.
      * <p>
      * This diagnostic can be turned off using
      * {@link Settings#isDiagnosticsRepeatedStatements()}.
@@ -236,6 +248,11 @@ public interface DiagnosticsListener {
      * @param ctx The context containing information about the diagnostic.
      */
     default void repeatedStatements(DiagnosticsContext ctx) {}
+
+
+
+
+
 
 
 

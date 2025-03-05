@@ -46,9 +46,11 @@ import org.jooq.TransactionContext;
  */
 class DefaultTransactionContext extends AbstractScope implements TransactionContext {
 
-    Transaction transaction;
-    Throwable   cause;
-    Object      result;
+    static final String DATA_KEY = "org.jooq.transaction-context";
+
+    Transaction         transaction;
+    Throwable           cause;
+    Object              result;
 
     DefaultTransactionContext(Configuration configuration) {
         super(configuration);

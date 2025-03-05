@@ -74,6 +74,7 @@ import org.jooq.QueryPart;
 import org.jooq.RenderContext;
 // ...
 import org.jooq.Select;
+import org.jooq.TransactionContext;
 import org.jooq.conf.Settings;
 import org.jooq.impl.QOM.CompareCondition;
 import org.jooq.impl.QOM.Concat;
@@ -96,8 +97,6 @@ final class DiagnosticsConnection extends DefaultConnection {
     static final int                LRU_SIZE_LOCAL  = 500;
     static final int                DUP_SIZE        = 500;
 
-    final Map<String, List<String>> repeatedSQL     = new LRU<>(LRU_SIZE_LOCAL);
-    final Map<String, List<String>> consecutiveAgg  = new LRU<>(LRU_SIZE_LOCAL);
     final Configuration             configuration;
     final Configuration             configurationTranformPatterns;
     final RenderContext             normalisingRenderer;
@@ -192,10 +191,12 @@ final class DiagnosticsConnection extends DefaultConnection {
 
     @Override
     public final void close() throws SQLException {
-        repeatedSQL.clear();
+        if (release) {
+            repeatedSql().clear();
+            consecutiveAgg().clear();
 
-        if (release)
             configuration.connectionProvider().release(getDelegate());
+        }
     }
 
     final boolean checkPattern(Predicate<? super Settings> test) {
@@ -216,6 +217,35 @@ final class DiagnosticsConnection extends DefaultConnection {
             "org.jooq.diagnostics.duplicate-sql",
             k -> synchronizedMap(new LRU<>(LRU_SIZE_GLOBAL))
         );
+    }
+
+    final Map<String, List<String>> repeatedSql() {
+        return repeatedSql0(configuration);
+    }
+
+    static final Map<String, List<String>> repeatedSql0(Configuration configuration) {
+        return repetition0(configuration, "org.jooq.diagnostics.repeated-sql");
+    }
+
+    final Map<String, List<String>> consecutiveAgg() {
+        return consecutiveAgg0(configuration);
+    }
+
+    static final Map<String, List<String>> consecutiveAgg0(Configuration configuration) {
+        return repetition0(configuration, "org.jooq.diagnostics.consecutive-agg");
+    }
+
+    @SuppressWarnings("unchecked")
+    private static final Map<String, List<String>> repetition0(Configuration configuration, String cacheKey) {
+        return (Map<String, List<String>>) repetitionData(configuration).computeIfAbsent(
+            cacheKey,
+            k -> synchronizedMap(new LRU<>(LRU_SIZE_LOCAL))
+        );
+    }
+
+    private static final Map<Object, Object> repetitionData(Configuration configuration) {
+        TransactionContext trx = (TransactionContext) configuration.data(DefaultTransactionContext.DATA_KEY);
+        return trx != null ? trx.data() : configuration.data();
     }
 
     final boolean disabled() {
@@ -263,7 +293,8 @@ final class DiagnosticsConnection extends DefaultConnection {
             }
 
             if (check(Settings::isDiagnosticsRepeatedStatements)) {
-                List<String> repetitions = repetitions(repeatedSQL, sql, normalised);
+                List<String> repetitions = repetitions(repeatedSql(), sql, normalised);
+
                 if (repetitions != null)
                     listeners.repeatedStatements(new DefaultDiagnosticsContext(
                         configuration,
@@ -273,6 +304,7 @@ final class DiagnosticsConnection extends DefaultConnection {
             }
 
             if (queries != null) {
+
 
 
 

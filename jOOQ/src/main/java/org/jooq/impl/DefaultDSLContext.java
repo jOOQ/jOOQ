@@ -515,6 +515,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
             T result;
 
             DefaultTransactionContext ctx = new DefaultTransactionContext(configuration.derive());
+            ctx.configuration().data(DefaultTransactionContext.DATA_KEY, ctx);
             TransactionProvider provider = ctx.configuration().transactionProvider();
             TransactionListeners listeners = new TransactionListeners(ctx.configuration());
             boolean committed = false;

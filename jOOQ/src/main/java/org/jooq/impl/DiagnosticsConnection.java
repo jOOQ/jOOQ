@@ -206,8 +206,12 @@ final class DiagnosticsConnection extends DefaultConnection {
         return DiagnosticsListeners.check(configuration.settings(), test);
     }
 
-    @SuppressWarnings("unchecked")
     final Map<String, Set<String>> duplicateSql() {
+        return duplicateSql0(configuration);
+    }
+
+    @SuppressWarnings("unchecked")
+    static final Map<String, Set<String>> duplicateSql0(Configuration configuration) {
         return (Map<String, Set<String>>) configuration.data().computeIfAbsent(
             "org.jooq.diagnostics.duplicate-sql",
             k -> synchronizedMap(new LRU<>(LRU_SIZE_GLOBAL))

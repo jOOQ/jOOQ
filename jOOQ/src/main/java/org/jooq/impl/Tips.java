@@ -107,6 +107,8 @@ final class Tips {
         "Thinking of building a query with jOOQ and executing it elsewhere? Think again: https://blog.jooq.org/why-you-should-execute-jooq-queries-with-jooq/",
         "Want to upgrade your jOOQ experience? Check out these commercial only features of the jOOQ Professional and Enterprise Editions: https://www.jooq.org/commercial-only-features/",
         "Should you use jOOQ's DAOs? They're convenient, but don't overuse them. SQL is often more powerful: https://blog.jooq.org/to-dao-or-not-to-dao/",
+        "Different jOOQ editions support multiple JDK versions. Check out the complete list here: https://www.jooq.org/download/support-matrix-jdk",
+        "Different jOOQ editions support multiple RDBMS versions. Check out the complete list here: https://www.jooq.org/download/support-matrix",
         ""
     };
 

@@ -375,9 +375,14 @@ class DefaultExecuteContext implements ExecuteContext {
      */
     private static Configuration initCaches(Configuration configuration) {
         if (configuration.settings().getDiagnosticsConnection() == DiagnosticsConnection.ON) {
-            if (!FALSE.equals(configuration.settings().isDiagnosticsDuplicateStatements())) {
+            if (!FALSE.equals(configuration.settings().isDiagnosticsDuplicateStatements()))
                 org.jooq.impl.DiagnosticsConnection.duplicateSql0(configuration);
-            }
+
+            if (!FALSE.equals(configuration.settings().isDiagnosticsRepeatedStatements()))
+                org.jooq.impl.DiagnosticsConnection.repeatedSql0(configuration);
+
+            if (!FALSE.equals(configuration.settings().isDiagnosticsConsecutiveAggregation()))
+                org.jooq.impl.DiagnosticsConnection.consecutiveAgg0(configuration);
         }
 
         return configuration;

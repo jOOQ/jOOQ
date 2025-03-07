@@ -100,7 +100,12 @@ import org.jooq.tools.StringUtils;
  * @author Lukas Eder
  */
 @org.jooq.Internal
-public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableRecordImpl<R> implements UpdatableRecord<R> {
+public class UpdatableRecordImpl<R extends UpdatableRecord<R>>
+extends TableRecordImpl<R>
+implements
+    UpdatableRecord<R>
+{
+
     private static final JooqLogger      log                        = JooqLogger.getLogger(UpdatableRecordImpl.class);
     private static final Set<SQLDialect> NO_SUPPORT_FOR_UPDATE      = SQLDialect.supportedBy(SQLITE);
     private static final Set<SQLDialect> NO_SUPPORT_MERGE_RETURNING = SQLDialect.supportedBy(DERBY, IGNITE);
@@ -111,7 +116,13 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
 
     @Override
     public Record key() {
-        AbstractRecord result = Tools.newRecord(fetched, AbstractRecord.class, (AbstractRow<AbstractRecord>) Tools.row0(getPrimaryKey().getFieldsArray())).operate(null);
+        AbstractRecord result = Tools.newRecord(
+            fetched,
+            configuration(),
+            AbstractRecord.class,
+            (AbstractRow<AbstractRecord>) Tools.row0(getPrimaryKey().getFieldsArray())
+        ).operate(null);
+
         result.setValues(result.fields.fields.fields, this);
         return result;
     }
@@ -465,7 +476,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
         // [#3359] The "fetched" flag must be set to false to enforce INSERT statements on
         // subsequent store() calls - when Settings.updatablePrimaryKeys is set.
         // R vs Record casting is needed in Java 8 it seems
-        return (R) Tools.newRecord(false, (Table<Record>) (Table) getTable(), configuration())
+        return (R) Tools.newRecord(false, configuration(), (Table<Record>) (Table) getTable())
                     .operate((Record copy) -> {
 
                         // Copy all fields. This marks them all as isChanged, which is important

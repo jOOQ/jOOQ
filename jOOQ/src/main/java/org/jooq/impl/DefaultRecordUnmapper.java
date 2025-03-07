@@ -116,7 +116,7 @@ public class DefaultRecordUnmapper<E, R extends Record> implements RecordUnmappe
     }
 
     private final Record newRecord() {
-        return Tools.newRecord(false, recordType, row, configuration).operate(null);
+        return Tools.newRecord(false, configuration, recordType, row).operate(null);
     }
 
     private static final void setValue(Record record, Object source, java.lang.reflect.Field member, Field<?> field, ConverterContext converterContext)

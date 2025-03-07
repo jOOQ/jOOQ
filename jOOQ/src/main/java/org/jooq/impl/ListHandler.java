@@ -71,7 +71,7 @@ final class ListHandler<R extends Record> {
         Result<R> result = new ResultImpl<>(ctx.configuration(), row);
 
         for (Object o : list)
-            result.add(newRecord(true, recordType, row, ctx.configuration()).operate(r -> {
+            result.add(newRecord(true, ctx.configuration(), recordType, row).operate(r -> {
                 Object[] attributes =
                     o instanceof Struct s
                   ? s.getAttributes()

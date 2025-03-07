@@ -288,7 +288,7 @@ final class XMLHandler<R extends Record> extends DefaultHandler {
             s.inRecord--;
 
             initResult();
-            s.result.add(newRecord(true, s.recordType, s.row, ctx.configuration()).operate(s::into));
+            s.result.add(newRecord(true, ctx.configuration(), s.recordType, s.row).operate(s::into));
             s.values.clear();
             s.column = 0;
         }
@@ -304,7 +304,7 @@ final class XMLHandler<R extends Record> extends DefaultHandler {
                 Field<?> f = peek.row.field(peek.column);
 
                 if ("record".equalsIgnoreCase(qName) && f.getDataType().isRecord()) {
-                    peek.values.add(newRecord(true, s.recordType, s.row, ctx.configuration()).operate(s::into));
+                    peek.values.add(newRecord(true, ctx.configuration(), s.recordType, s.row).operate(s::into));
                     s = states.pop();
                     s.inRecord--;
                     break x;

@@ -845,7 +845,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                 nestedMappedFields.forEach((prefix, list) -> {
                     NestedMappingInfo nestedMappingInfo = nestedMappingInfos.get(prefix);
                     nestedMappingInfo.row = Tools.row0(list);
-                    nestedMappingInfo.recordDelegate = newRecord(true, recordType(nestedMappingInfo.row.size()), nestedMappingInfo.row, configuration);
+                    nestedMappingInfo.recordDelegate = newRecord(true, configuration, recordType(nestedMappingInfo.row.size()), nestedMappingInfo.row);
 
                     for (java.lang.reflect.Field member : getMatchingMembers(configuration, type, prefix, true))
                         nestedMappingInfo.mappers.add(
@@ -1128,7 +1128,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
 
                     if (nestedMappedFields[i] != null) {
                         nestedMappingInfo[i].row = row0(nestedMappedFields[i].toArray(EMPTY_FIELD));
-                        nestedMappingInfo[i].recordDelegate = newRecord(true, recordType(nestedMappingInfo[i].row.size()), nestedMappingInfo[i].row, configuration);
+                        nestedMappingInfo[i].recordDelegate = newRecord(true, configuration, recordType(nestedMappingInfo[i].row.size()), nestedMappingInfo[i].row);
                         nestedMappingInfo[i].mappers.add(
                             nestedMappingInfo[i].row.fields.mapper(configuration, parameterTypes[propertyIndexes[nestedMappingInfo[i].indexLookup.get(0)]])
                         );

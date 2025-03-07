@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 // ...
 import static org.jooq.conf.SettingsTools.renderLocale;
@@ -352,7 +353,7 @@ class DefaultExecuteContext implements ExecuteContext {
         // [#7569] The original configuration is attached to Record and Result instances
         this.creationTime = configuration.clock().instant();
         this.connectionProvider = configuration.connectionProvider();
-        this.originalConfiguration = configuration;
+        this.originalConfiguration = initCaches(configuration);
         this.derivedConfiguration = configuration.derive(new ExecuteContextConnectionProvider());
         this.data = new DataMap();
         this.batchMode = batchMode;
@@ -366,6 +367,25 @@ class DefaultExecuteContext implements ExecuteContext {
 
         batchQueries0(batchQueries);
         clean();
+    }
+
+    /**
+     * [#18078] Some caches may have to be initialised in the global
+     * configuration, prior to creating the per-execution derived configuration.
+     */
+    private static Configuration initCaches(Configuration configuration) {
+        if (configuration.settings().getDiagnosticsConnection() == DiagnosticsConnection.ON) {
+            if (!FALSE.equals(configuration.settings().isDiagnosticsDuplicateStatements()))
+                org.jooq.impl.DiagnosticsConnection.duplicateSql0(configuration);
+
+            if (!FALSE.equals(configuration.settings().isDiagnosticsRepeatedStatements()))
+                org.jooq.impl.DiagnosticsConnection.repeatedSql0(configuration);
+
+            if (!FALSE.equals(configuration.settings().isDiagnosticsConsecutiveAggregation()))
+                org.jooq.impl.DiagnosticsConnection.consecutiveAgg0(configuration);
+        }
+
+        return configuration;
     }
 
     @Override

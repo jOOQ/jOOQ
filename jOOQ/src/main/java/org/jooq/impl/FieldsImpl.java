@@ -185,7 +185,7 @@ implements
     public final RecordMapper<R, Record> mapper(Field<?>[] f) {
         AbstractRow<?> row = Tools.row0(f == null ? EMPTY_FIELD : f);
 
-        return r -> newRecord(false, AbstractRecord.class, row, r.configuration()).operate(x -> {
+        return r -> newRecord(false, r.configuration(), AbstractRecord.class, row).operate(x -> {
             for (Field<?> field : row.fields.fields)
                 Tools.copyValue((AbstractRecord) x, field, r, field);
 

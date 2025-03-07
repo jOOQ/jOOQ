@@ -191,7 +191,7 @@ final class JSONReader<R extends Record> {
                         )
                         : null;
 
-                    result.add(newRecord(true, recordType, actualRow, ctx.configuration()).operate(r -> {
+                    result.add(newRecord(true, ctx.configuration(), recordType, actualRow).operate(r -> {
                         if (multiset)
                             r.from(list);
                         else
@@ -218,7 +218,7 @@ final class JSONReader<R extends Record> {
                     if (record == null)
                         result.add(null);
                     else
-                        result.add(newRecord(true, recordType, actualRow, ctx.configuration()).operate(r -> {
+                        result.add(newRecord(true, ctx.configuration(), recordType, actualRow).operate(r -> {
                             r.from(record);
                             r.changed(false);
                             return r;
@@ -297,7 +297,7 @@ final class JSONReader<R extends Record> {
                 List<Object> l = (List<Object>) record.get(i);
                 patchRecord(ctx, multiset, actualRow, l);
 
-                record.set(i, newRecord(true, recordType, actualRow, ctx.configuration()).operate(r -> {
+                record.set(i, newRecord(true, ctx.configuration(), recordType, actualRow).operate(r -> {
                     r.from(l);
                     r.changed(false);
                     return r;

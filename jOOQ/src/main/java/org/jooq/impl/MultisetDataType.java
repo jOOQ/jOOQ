@@ -161,7 +161,7 @@ final class MultisetDataType<R extends Record> extends DefaultDataType<Result<R>
             ResultImpl<R> result = new ResultImpl<>(CONFIG.get(), row);
 
             for (Object record : l)
-                result.add(newRecord(true, recordType, row, CONFIG.get())
+                result.add(newRecord(true, CONFIG.get(), recordType, row)
                     .operate(r -> {
 
                         // [#12014] TODO: Fix this and remove workaround

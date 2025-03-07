@@ -1359,53 +1359,40 @@ final class Tools {
 
 
 
+
     /**
      * Create a new record
      */
-    static final <R extends Record> RecordDelegate<R> newRecord(boolean fetched, Class<R> type) {
-        return newRecord(fetched, type, null);
-    }
-
-    /**
-     * Create a new record.
-     */
-    static final <R extends Record> RecordDelegate<R> newRecord(boolean fetched, Class<R> type, AbstractRow<R> fields) {
-        return newRecord(fetched, type, fields, null);
+    static final <R extends Record> RecordDelegate<R> newRecord(boolean fetched, Configuration configuration, Class<R> type) {
+        return newRecord(fetched, configuration, type, null);
     }
 
     /**
      * Create a new {@link Table} or {@link UDT} record.
      */
-    static final <R extends Record> RecordDelegate<R> newRecord(boolean fetched, RecordQualifier<R> type) {
-        return newRecord(fetched, type, null);
-    }
-
-    /**
-     * Create a new {@link Table} or {@link UDT} record.
-     */
-    static final <R extends Record> RecordDelegate<R> newRecord(boolean fetched, RecordQualifier<R> type, Configuration configuration) {
+    static final <R extends Record> RecordDelegate<R> newRecord(boolean fetched, Configuration configuration, RecordQualifier<R> type) {
         return newRecord(
             fetched,
+            configuration,
             recordFactory(
                 type,
                 type.getRecordType(),
                 (AbstractRow<R>) type.fieldsRow()
-            ),
-            configuration
+            )
         );
     }
 
     /**
      * Create a new record.
      */
-    static final <R extends Record> RecordDelegate<R> newRecord(boolean fetched, Class<? extends R> type, AbstractRow<? extends R> fields, Configuration configuration) {
-        return newRecord(fetched, recordFactory(null, type, fields), configuration);
+    static final <R extends Record> RecordDelegate<R> newRecord(boolean fetched, Configuration configuration, Class<? extends R> type, AbstractRow<? extends R> fields) {
+        return newRecord(fetched, configuration, recordFactory(null, type, fields));
     }
 
     /**
      * Create a new record.
      */
-    static final <R extends Record> RecordDelegate<R> newRecord(boolean fetched, Supplier<R> factory, Configuration configuration) {
+    static final <R extends Record> RecordDelegate<R> newRecord(boolean fetched, Configuration configuration, Supplier<R> factory) {
         return new RecordDelegate<>(configuration, factory, fetched);
     }
 
@@ -3781,7 +3768,7 @@ final class Tools {
      */
     @SuppressWarnings("unchecked")
     static final String getMappedUDTName(Scope scope, Class<? extends QualifiedRecord<?>> type) {
-        return getMappedUDTName(scope, Tools.newRecord(false, (Class<QualifiedRecord<?>>) type).operate(null));
+        return getMappedUDTName(scope, Tools.newRecord(false, scope.configuration(), (Class<QualifiedRecord<?>>) type).operate(null));
     }
 
     /**

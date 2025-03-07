@@ -172,7 +172,7 @@ final class RecordDataType<R extends Record> extends DefaultDataType<R> {
          || object instanceof List
          || object instanceof Struct
         ) {
-            return newRecord(true, getRecordType(), row, CONFIG.get())
+            return newRecord(true, CONFIG.get(), getRecordType(), row)
                 .operate(r -> {
 
                     // [#12014] TODO: Fix this and remove workaround

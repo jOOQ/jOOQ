@@ -1342,7 +1342,7 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> {
         );
 
         @SuppressWarnings("unchecked")
-        private final RecordDelegate<AbstractRecord> recordDelegate = Tools.newRecord(true, (Supplier<AbstractRecord>) factory, ((DefaultExecuteContext) ctx).originalConfiguration());
+        private final RecordDelegate<AbstractRecord> recordDelegate = Tools.newRecord(true, ((DefaultExecuteContext) ctx).originalConfiguration(), (Supplier<AbstractRecord>) factory);
 
         @Override
         public final boolean hasNext() {
@@ -1547,7 +1547,7 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> {
 
 
                     );
-                    value = (T) Tools.newRecord(true, (Class<AbstractRecord>) recordType, (AbstractRow<AbstractRecord>) nested, ((DefaultExecuteContext) ctx).originalConfiguration())
+                    value = (T) Tools.newRecord(true, ((DefaultExecuteContext) ctx).originalConfiguration(), (Class<AbstractRecord>) recordType, (AbstractRow<AbstractRecord>) nested)
                                      .operate(operation);
 
                     // [#7100] TODO: Is there a more elegant way to do this?

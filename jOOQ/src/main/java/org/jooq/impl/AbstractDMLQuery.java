@@ -1434,9 +1434,9 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
                         ((Result) getResult()).add(
                         Tools.newRecord(
                                 true,
+                                originalConfiguration,
                                 AbstractRecord.class,
-                                fields,
-                                originalConfiguration)
+                                fields)
                              .operate(record -> {
                                 record.values[0] = id;
                                 record.originals[0] = id;

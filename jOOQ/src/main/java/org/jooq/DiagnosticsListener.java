@@ -60,6 +60,10 @@ import org.jooq.impl.ParserException;
  * {@link Settings#getDiagnosticsConnection()} is not turned
  * {@link DiagnosticsConnection#OFF}. Use {@link DiagnosticsConnection#ON} to
  * turn diagnostics on for all of jOOQ's {@link ConnectionProvider} usage.
+ * <p>
+ * For more information about individual diagnostics, please also check out the
+ * manual pages: <a href=
+ * "https://www.jooq.org/doc/dev/manual/sql-execution/diagnostics/">https://www.jooq.org/doc/dev/manual/sql-execution/diagnostics/</a>.
  *
  * @author Lukas Eder
  */

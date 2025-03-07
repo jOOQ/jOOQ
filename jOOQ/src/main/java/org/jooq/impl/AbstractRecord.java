@@ -330,7 +330,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
             return (T) get(index);
         else if (nonReplacingEmbeddable(field))
             return (T) Tools
-                .newRecord(fetched, ((EmbeddableTableField<?, ?>) field).recordType)
+                .newRecord(fetched, configuration(), ((EmbeddableTableField<?, ?>) field).recordType)
                 .operate(new TransferRecordState<>(embeddedFields(field)));
         else
             throw Tools.indexFail(fields, field);
@@ -538,7 +538,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
      */
     @Override
     public Record original() {
-        return Tools.newRecord(fetched, (Class<AbstractRecord>) getClass(), fields, configuration())
+        return Tools.newRecord(fetched, configuration(), (Class<AbstractRecord>) getClass(), fields)
                     .operate(record -> {
                         for (int i = 0; i < originals.length; i++)
                             record.values[i] = record.originals[i] = originals[i];
@@ -555,7 +555,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
             return (T) original(index);
         else if (nonReplacingEmbeddable(field))
             return (T) Tools
-                .newRecord(fetched, ((EmbeddableTableField<?, ?>) field).recordType)
+                .newRecord(fetched, configuration(), ((EmbeddableTableField<?, ?>) field).recordType)
                 .operate(((AbstractRecord) original()).new TransferRecordState<>(embeddedFields(field)));
         else
             throw Tools.indexFail(fields, field);
@@ -725,7 +725,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final Record into(Field<?>... f) {
-        return Tools.newRecord(fetched, Record.class, Tools.row0(f), configuration()).operate(new TransferRecordState<Record>(f));
+        return Tools.newRecord(fetched, configuration(), Record.class, Tools.row0(f)).operate(new TransferRecordState<Record>(f));
     }
 
 
@@ -873,15 +873,15 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final <R extends Record> R into(Table<R> table) {
-        return Tools.newRecord(fetched, table, configuration()).operate(new TransferRecordState<>(table.fields()));
+        return Tools.newRecord(fetched, configuration(), table).operate(new TransferRecordState<>(table.fields()));
     }
 
     final <R extends Record> R intoRecord(R record) {
-        return Tools.newRecord(fetched, () -> record, configuration()).operate(new TransferRecordState<>(null));
+        return Tools.newRecord(fetched, configuration(), () -> record).operate(new TransferRecordState<>(null));
     }
 
     final <R extends Record> R intoRecord(Class<R> type) {
-        return (R) Tools.newRecord(fetched, type, fields, configuration()).operate(new TransferRecordState<>(null));
+        return (R) Tools.newRecord(fetched, configuration(), type, fields).operate(new TransferRecordState<>(null));
     }
 
     class TransferRecordState<R extends Record> implements ThrowingFunction<R, R, MappingException> {

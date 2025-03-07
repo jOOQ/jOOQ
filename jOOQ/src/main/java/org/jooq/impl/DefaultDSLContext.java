@@ -4385,7 +4385,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public Record newRecord(Field<?>... fields) {
-        return Tools.newRecord(false, RecordImplN.class, Tools.row0(fields), configuration()).operate(null);
+        return Tools.newRecord(false, configuration(), RecordImplN.class, Tools.row0(fields)).operate(null);
     }
 
     @Override
@@ -4509,17 +4509,17 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <R extends UDTRecord<R>> R newRecord(UDT<R> type) {
-        return Tools.newRecord(false, type, configuration()).operate(null);
+        return Tools.newRecord(false, configuration(), type).operate(null);
     }
 
     @Override
     public <R extends Record> R newRecord(Table<R> table) {
-        return Tools.newRecord(false, table, configuration()).operate(null);
+        return Tools.newRecord(false, configuration(), table).operate(null);
     }
 
     @Override
     public <R extends Record> R newRecord(Table<R> table, final Object source) {
-        return Tools.newRecord(false, table, configuration())
+        return Tools.newRecord(false, configuration(), table)
                     .operate(record -> {
                         record.from(source);
                         return record;

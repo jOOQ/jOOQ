@@ -4111,7 +4111,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             // [#12930] AbstractRowAsField doesn't unnecessarily nest Row1
             if (row.size() == 1 && emulateMultiset(ctx.configuration()) != NestedCollectionEmulation.NATIVE) {
                 result = new ResultImpl<>(ctx.configuration(), row);
-                result.add(newRecord(true, (Class<R>) type.getRecordType(), row, ctx.configuration()).operate(r -> {
+                result.add(newRecord(true, ctx.configuration(), (Class<R>) type.getRecordType(), row).operate(r -> {
                     DefaultBindingGetResultSetContext<?> c = new DefaultBindingGetResultSetContext<>(ctx.executeContext(), ctx.resultSet(), ctx.index());
                     r.field(0).getBinding().get((BindingGetResultSetContext) c);
                     r.fromArray(c.value());
@@ -4296,7 +4296,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             if (fields == null && Record.class.isAssignableFrom(type))
                 fields = Tools.row0(Tools.fields(values.size(), SQLDataType.VARCHAR));
 
-            return Tools.newRecord(true, (Class<Record>) type, (AbstractRow<Record>) fields)
+            return Tools.newRecord(true, originalConfiguration(ctx), (Class<Record>) type, (AbstractRow<Record>) fields)
                         .operate(r -> {
                             Row row = r.fieldsRow();
 
@@ -4448,7 +4448,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             Configuration c = originalConfiguration(ctx);
             Result<R> result = new ResultImpl<>(c, row);
 
-            result.add(newRecord(true, recordType, row, c).operate(r -> {
+            result.add(newRecord(true, c, recordType, row).operate(r -> {
                 r.from(asList(s));
                 return r;
             }));

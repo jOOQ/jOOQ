@@ -199,7 +199,7 @@ implements
         if (!TRUE.equals(ctx.data(DATA_STORE_ASSIGNMENT)) && q instanceof UDTPathFieldImpl.UDTPathFieldImplAsQualifier && ((UDTPathFieldImpl<?, ?, ?>.UDTPathFieldImplAsQualifier) q).getQualifier() instanceof Table)
             ctx.sql('(').visit(q).sql(").").visit(getUnqualifiedName());
         else if (q instanceof Table<?> t)
-            TableFieldImpl.accept2(ctx, t, getUnqualifiedName());
+            TableFieldImpl.accept2(ctx, t, getUnqualifiedName(), getDataType());
         else
             ctx.visit(q).sql('.').visit(getUnqualifiedName());
     }

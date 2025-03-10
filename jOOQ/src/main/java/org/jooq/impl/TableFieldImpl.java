@@ -45,6 +45,7 @@ import static org.jooq.Clause.FIELD;
 import static org.jooq.Clause.FIELD_REFERENCE;
 // ...
 // ...
+// ...
 import static org.jooq.conf.RenderImplicitJoinType.DEFAULT;
 import static org.jooq.conf.RenderImplicitJoinType.SCALAR_SUBQUERY;
 import static org.jooq.impl.DSL.select;
@@ -80,6 +81,8 @@ import org.jooq.Update;
 import org.jooq.impl.QOM.UEmpty;
 import org.jooq.impl.Tools.SimpleDataKey;
 import org.jooq.tools.StringUtils;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A common base type for table fields.
@@ -246,28 +249,30 @@ implements
     }
 
     private final void accept1(Context<?> ctx) {
-        accept2(ctx, getTable(), getUnqualifiedName());
+        accept2(ctx, getTable(), getUnqualifiedName(), getDataType());
     }
 
-    static final void accept2(Context<?> ctx, Table<?> table, Name unqualifiedName) {
+    static final void accept2(Context<?> ctx, Table<?> table, Name unqualifiedName, DataType<?> type) {
         ctx.data(DATA_OMIT_CLAUSE_EVENT_EMISSION, true, c -> {
             if (c.qualify() && table != null && !FALSE.equals(ctx.data(DATA_RENDER_TABLE))) {
 
                 // [#15629] In some cases (e.g. outer joins), where an InlineDerivedTable can't be
                 //          inlined and must generate a derived table, we mustn't fully qualify fields.
-                if (table instanceof TableImpl && ((TableImpl<?>) table).where != null)
+                if (table instanceof TableImpl && ((TableImpl<?>) table).where != null
+
+
+
+
+
+
+
+
+
+
+
+
+                )
                     c.qualify(false, c2 -> c2.visit(table).sql('.'));
-
-
-
-
-
-
-
-
-
-
-
                 else
                     c.visit(table).sql('.');
             }

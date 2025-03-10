@@ -8504,7 +8504,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.javadocAndAnnotations(child, isBlank(comment) ? "The object <code>" + child.getQualifiedOutputName() + "</code>." : comment);
 
             if (scala)
-                out.println("%sdef %s = \"%s\"", visibility(), id, escapeString(child.getOutputName()));
+                out.println("%sfinal val %s = \"%s\"", visibility(), id, escapeString(child.getOutputName()));
             else if (kotlin)
                 out.println("%sconst val %s: String = \"%s\"", visibility(), id, escapeString(child.getOutputName()));
             else

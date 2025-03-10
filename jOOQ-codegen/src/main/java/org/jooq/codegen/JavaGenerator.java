@@ -8506,7 +8506,7 @@ public class JavaGenerator extends AbstractGenerator {
             if (scala)
                 out.println("%sdef %s = \"%s\"", visibility(), id, escapeString(child.getOutputName()));
             else if (kotlin)
-                out.println("%sval %s = \"%s\"", visibility(), id, escapeString(child.getOutputName()));
+                out.println("%sconst val %s: String = \"%s\"", visibility(), id, escapeString(child.getOutputName()));
             else
                 out.println("%sstatic final String %s = \"%s\";", visibility(), id, escapeString(child.getOutputName()));
         }

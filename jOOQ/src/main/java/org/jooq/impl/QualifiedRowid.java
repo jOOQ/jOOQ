@@ -102,12 +102,12 @@ implements
 
 
             case H2: {
-                TableFieldImpl.accept2(ctx, table, systemName("_rowid_"));
+                TableFieldImpl.accept2(ctx, table, systemName("_rowid_"), getDataType());
                 break;
             }
 
             case POSTGRES: {
-                TableFieldImpl.accept2(ctx, table, systemName("ctid"));
+                TableFieldImpl.accept2(ctx, table, systemName("ctid"), getDataType());
                 break;
             }
 
@@ -119,7 +119,7 @@ implements
 
 
             default:
-                TableFieldImpl.accept2(ctx, table, systemName("rowid"));
+                TableFieldImpl.accept2(ctx, table, systemName("rowid"), getDataType());
                 break;
         }
     }

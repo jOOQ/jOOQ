@@ -49,6 +49,7 @@ import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.impl.DSL.case_;
 import static org.jooq.impl.DSL.cast;
 import static org.jooq.impl.DSL.count;
+import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.length;
@@ -92,8 +93,10 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.jooq.CommonTableExpression;
+import org.jooq.Condition;
 import org.jooq.DSLContext;
 import org.jooq.Field;
+import org.jooq.Internal;
 import org.jooq.Record;
 import org.jooq.Record12;
 import org.jooq.Record14;
@@ -320,6 +323,14 @@ public class MySQLDatabase extends AbstractDatabase implements ResultQueryDataba
         }
 
         return is5_5;
+    }
+
+    /**
+     * Subclasses can override this to implement a custom JSON field check in {@link MySQLTableDefinition}.
+     */
+    @Internal
+    protected Condition jsonCheck(Field<String> schemaName, Field<String> tableName, Field<String> fieldName) {
+        return falseCondition();
     }
 
     @Override

@@ -41,8 +41,10 @@ package org.jooq.meta.mysql;
 import static java.util.Arrays.asList;
 // ...
 import static org.jooq.impl.DSL.coalesce;
+import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.noCondition;
+import static org.jooq.impl.DSL.when;
 import static org.jooq.meta.mysql.information_schema.Tables.COLUMNS;
 
 import java.sql.SQLException;
@@ -57,7 +59,6 @@ import org.jooq.TableOptions.TableType;
 import org.jooq.impl.QOM.GenerationOption;
 import org.jooq.meta.AbstractTableDefinition;
 import org.jooq.meta.ColumnDefinition;
-import org.jooq.meta.DataTypeDefinition;
 import org.jooq.meta.DefaultColumnDefinition;
 import org.jooq.meta.DefaultDataTypeDefinition;
 import org.jooq.meta.SchemaDefinition;
@@ -88,7 +89,9 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
                     COLUMNS.COLUMN_NAME,
                     COLUMNS.COLUMN_COMMENT,
                     COLUMNS.COLUMN_TYPE,
-                    COLUMNS.DATA_TYPE,
+                    when(database.jsonCheck(COLUMNS.TABLE_SCHEMA, COLUMNS.TABLE_NAME, COLUMNS.COLUMN_NAME), inline("json"))
+                        .else_(COLUMNS.DATA_TYPE)
+                        .as(COLUMNS.DATA_TYPE),
                     COLUMNS.IS_NULLABLE,
                     COLUMNS.COLUMN_DEFAULT,
                     COLUMNS.EXTRA,

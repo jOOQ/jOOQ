@@ -44,6 +44,8 @@ import static org.jooq.Clause.FIELD;
 import static org.jooq.Clause.FIELD_REFERENCE;
 // ...
 // ...
+// ...
+import static org.jooq.conf.RenderImplicitJoinType.DEFAULT;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DefaultMetaProvider.meta;
 import static org.jooq.impl.QualifiedName.hashCode0;
@@ -75,6 +77,8 @@ import org.jooq.Update;
 import org.jooq.impl.QOM.UEmpty;
 import org.jooq.impl.Tools.SimpleDataKey;
 import org.jooq.tools.StringUtils;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A common base type for table fields.
@@ -213,6 +217,10 @@ implements
     private final void accept1(Context<?> ctx) {
         ctx.data(DATA_OMIT_CLAUSE_EVENT_EMISSION, true, c -> {
             if (c.qualify() && getTable() != null && !FALSE.equals(ctx.data(DATA_RENDER_TABLE))) {
+
+
+
+
 
 
 

@@ -32,7 +32,7 @@
         <!-- JDBC drivers for jOOQ-xyz-extensions modules and vendor-specific API access -->
         <postgres.version>42.7.5</postgres.version>
         <sqlserver.version>12.9.0.jre11-preview</sqlserver.version>
-        <oracle.version>23.6.0.24.10</oracle.version>
+        <oracle.version>23.7.0.25.01</oracle.version>
 
         <!-- R2DBC SPI version and some matching driver versions -->
         <io.r2dbc.version>1.0.0.RELEASE</io.r2dbc.version>
@@ -41,8 +41,8 @@
         <xtend.version>2.32.0</xtend.version>
 
         <!-- From JDK 11 onwards, we need to depend on the JAXB API explicitly -->
-        <jaxb.version>4.0.1</jaxb.version>
-        <jaxb.impl.version>4.0.4</jaxb.impl.version>
+        <jaxb.version>4.0.2</jaxb.version>
+        <jaxb.impl.version>4.0.5</jaxb.impl.version>
 
         <!-- Java version -->
         <java.version>21</java.version>
@@ -65,10 +65,10 @@
         <checkerframework.version>3.44.0</checkerframework.version>
         <spring.version>6.2.1</spring.version>
         <errorprone.version>2.36.0</errorprone.version>
-        <testcontainers.version>1.20.4</testcontainers.version>
-        <jackson.version>2.16.1</jackson.version>
+        <testcontainers.version>1.20.6</testcontainers.version>
+        <jackson.version>2.18.3</jackson.version>
         <jackson.version.databind>2.16.1</jackson.version.databind>
-        <jetbrains.annotations.version>24.1.0</jetbrains.annotations.version>
+        <jetbrains.annotations.version>26.0.2</jetbrains.annotations.version>
     </properties>
 
     <licenses>
@@ -197,12 +197,12 @@
             <dependency>
                 <groupId>io.projectreactor</groupId>
                 <artifactId>reactor-core</artifactId>
-                <version>3.6.1</version>
+                <version>3.7.4</version>
             </dependency>
             <dependency>
                 <groupId>io.projectreactor</groupId>
                 <artifactId>reactor-test</artifactId>
-                <version>3.6.1</version>
+                <version>3.7.4</version>
             </dependency>
 
             <!-- Data binding -->
@@ -699,7 +699,7 @@
                         <dependency>
                             <groupId>org.ow2.asm</groupId>
                             <artifactId>asm</artifactId>
-                            <version>9.6</version>
+                            <version>9.7.1</version>
                         </dependency>
                     </dependencies>
                 </plugin>

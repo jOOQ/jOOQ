@@ -225,7 +225,6 @@ extends AbstractRowCountQuery
 implements
 
     // Cascading interface implementations for Merge behaviour
-    UNotYetImplemented,
     MergeUsingStep<R>,
 
 

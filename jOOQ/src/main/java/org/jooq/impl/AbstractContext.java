@@ -222,6 +222,13 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
             else
                 return new DefaultScopeStackElement(k, v);
         });
+
+        if (TRUE.equals(configuration.settings().isEmulateNestedRecordProjectionsUsingMultisetEmulation())) {
+            data(DATA_MULTISET_CONTENT, true);
+
+            if (ctx != null)
+                ctx.data(DATA_MULTISET_CONTENT, true);
+        }
     }
 
     // ------------------------------------------------------------------------

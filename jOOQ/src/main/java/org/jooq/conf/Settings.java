@@ -449,6 +449,8 @@ public class Settings
     @XmlSchemaType(name = "string")
     protected NestedCollectionEmulation emulateMultiset = NestedCollectionEmulation.DEFAULT;
     @XmlElement(defaultValue = "false")
+    protected Boolean emulateNestedRecordProjectionsUsingMultisetEmulation = false;
+    @XmlElement(defaultValue = "false")
     protected Boolean emulateComputedColumns = false;
     @XmlElement(defaultValue = "true")
     protected Boolean computedOnClientVirtual = true;
@@ -5894,6 +5896,30 @@ public class Settings
     }
 
     /**
+     * [#13598] Whether nested record projections at the top level should be emulated using the <code>MULTISET</code> emulation rather than the flattening emulation, if supported by the dialect.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isEmulateNestedRecordProjectionsUsingMultisetEmulation() {
+        return emulateNestedRecordProjectionsUsingMultisetEmulation;
+    }
+
+    /**
+     * [#13598] Whether nested record projections at the top level should be emulated using the <code>MULTISET</code> emulation rather than the flattening emulation, if supported by the dialect.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setEmulateNestedRecordProjectionsUsingMultisetEmulation(Boolean value) {
+        this.emulateNestedRecordProjectionsUsingMultisetEmulation = value;
+    }
+
+    /**
      * [#13418] Whether computed columns should be emulated in the client.
      * <p>
      * This can be useful if a schema was generated using a dialect that supports computed columns, but it is
@@ -9294,6 +9320,15 @@ public class Settings
     }
 
     /**
+     * [#13598] Whether nested record projections at the top level should be emulated using the <code>MULTISET</code> emulation rather than the flattening emulation, if supported by the dialect.
+     * 
+     */
+    public Settings withEmulateNestedRecordProjectionsUsingMultisetEmulation(Boolean value) {
+        setEmulateNestedRecordProjectionsUsingMultisetEmulation(value);
+        return this;
+    }
+
+    /**
      * [#13418] Whether computed columns should be emulated in the client.
      * <p>
      * This can be useful if a schema was generated using a dialect that supports computed columns, but it is
@@ -10007,6 +10042,7 @@ public class Settings
         builder.append("delimiter", delimiter);
         builder.append("emulateOnDuplicateKeyUpdateOnPrimaryKeyOnly", emulateOnDuplicateKeyUpdateOnPrimaryKeyOnly);
         builder.append("emulateMultiset", emulateMultiset);
+        builder.append("emulateNestedRecordProjectionsUsingMultisetEmulation", emulateNestedRecordProjectionsUsingMultisetEmulation);
         builder.append("emulateComputedColumns", emulateComputedColumns);
         builder.append("computedOnClientVirtual", computedOnClientVirtual);
         builder.append("computedOnClientStored", computedOnClientStored);
@@ -11736,6 +11772,15 @@ public class Settings
                 return false;
             }
         }
+        if (emulateNestedRecordProjectionsUsingMultisetEmulation == null) {
+            if (other.emulateNestedRecordProjectionsUsingMultisetEmulation!= null) {
+                return false;
+            }
+        } else {
+            if (!emulateNestedRecordProjectionsUsingMultisetEmulation.equals(other.emulateNestedRecordProjectionsUsingMultisetEmulation)) {
+                return false;
+            }
+        }
         if (emulateComputedColumns == null) {
             if (other.emulateComputedColumns!= null) {
                 return false;
@@ -12395,6 +12440,7 @@ public class Settings
         result = ((prime*result)+((delimiter == null)? 0 :delimiter.hashCode()));
         result = ((prime*result)+((emulateOnDuplicateKeyUpdateOnPrimaryKeyOnly == null)? 0 :emulateOnDuplicateKeyUpdateOnPrimaryKeyOnly.hashCode()));
         result = ((prime*result)+((emulateMultiset == null)? 0 :emulateMultiset.hashCode()));
+        result = ((prime*result)+((emulateNestedRecordProjectionsUsingMultisetEmulation == null)? 0 :emulateNestedRecordProjectionsUsingMultisetEmulation.hashCode()));
         result = ((prime*result)+((emulateComputedColumns == null)? 0 :emulateComputedColumns.hashCode()));
         result = ((prime*result)+((computedOnClientVirtual == null)? 0 :computedOnClientVirtual.hashCode()));
         result = ((prime*result)+((computedOnClientStored == null)? 0 :computedOnClientStored.hashCode()));

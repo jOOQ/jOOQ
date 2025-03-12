@@ -653,17 +653,21 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
                 map(fields.fields(), (f, i) -> {
                     Field<?> v = castForXML(ctx, agg ? f : DSL.field(fieldName(i), f.getDataType()));
                     String n = fieldNameString(i);
-                    DataType<?> t = v.getDataType();
-
-                    // [#13181] We must make the '' vs NULL distinction explicit in XML
-                    // [#13872] Same with ARRAY[] vs NULL
-                    if (t.isString() || t.isArray())
-                        return xmlelement(n, xmlattributes(when(v.isNull(), inline("true")).as(xsiNil(ctx))), v);
-                    else
-                        return xmlelement(n, v);
+                    return wrapXmlelement(ctx, v, n);
                 })
             )
         );
+    }
+
+    static final Field<XML> wrapXmlelement(Context<?> ctx, Field<?> v, String n) {
+        DataType<?> t = v.getDataType();
+
+        // [#13181] We must make the '' vs NULL distinction explicit in XML
+        // [#13872] Same with ARRAY[] vs NULL
+        if (t.isString() || t.isArray())
+            return xmlelement(n, xmlattributes(when(v.isNull(), inline("true")).as(xsiNil(ctx))), v);
+        else
+            return xmlelement(n, v);
     }
 
     static final ArrayAggOrderByStep<?> arrayAggEmulation(Fields fields, boolean agg) {

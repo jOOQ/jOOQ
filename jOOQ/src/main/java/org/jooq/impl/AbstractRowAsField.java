@@ -124,6 +124,7 @@ implements
 
             // All types of row expressions must be emulated using MULTISET
             // emulations if nested in some sort of MULTISET content
+            // [#13598] Users can also override the default behaviour
             TRUE.equals(ctx.data(DATA_MULTISET_CONTENT))
 
             // Row expressions of degree > 1 must also be emulated using MULTISET

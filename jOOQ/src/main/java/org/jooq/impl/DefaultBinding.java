@@ -4471,6 +4471,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final Record get0(BindingGetResultSetContext<U> ctx) throws SQLException {
+            boolean skipDegree1 = !TRUE.equals(ctx.settings().isEmulateNestedRecordProjectionsUsingMultisetEmulation());
+
             switch (ctx.family()) {
 
 
@@ -4479,7 +4481,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                     // [#17979] Native ROW support may be overridden for various reasons
                     if (TRUE.equals(ctx.executeContext().data(DATA_MULTISET_CONTENT)))
-                        return readMultiset(ctx, dataType, true);
+                        return readMultiset(ctx, dataType, skipDegree1);
                     else
                         return pgNewRecord(ctx,
                             dataType.getType(),
@@ -4495,14 +4497,14 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     if (object == null)
                         return null;
 
-                    return readMultiset(ctx, dataType, !(object instanceof Struct));
+                    return readMultiset(ctx, dataType, skipDegree1 && !(object instanceof Struct));
                 }
 
                 default:
                     if (UDTRecord.class.isAssignableFrom(dataType.getType()))
                         return localExecuteContext(ctx.executeContext(), () -> (Record) ctx.resultSet().getObject(ctx.index(), typeMap(dataType.getType(), ctx)));
                     else
-                        return readMultiset(ctx, dataType, true);
+                        return readMultiset(ctx, dataType, skipDegree1);
             }
         }
 

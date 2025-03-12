@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema
   xmlns="http://www.w3.org/2001/XMLSchema"
-  xmlns:jooq-runtime="http://www.jooq.org/xsd/jooq-runtime-3.20.0.xsd"
+  xmlns:jooq-runtime="http://www.jooq.org/xsd/jooq-runtime-3.20.3.xsd"
   xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
   xmlns:annox="http://annox.dev.java.net"
-  targetNamespace="http://www.jooq.org/xsd/jooq-runtime-3.20.0.xsd"
+  targetNamespace="http://www.jooq.org/xsd/jooq-runtime-3.20.3.xsd"
   elementFormDefault="qualified"
   jxb:extensionBindingPrefixes="annox"
   jxb:version="2.1">
@@ -1472,6 +1472,10 @@ jOOQ queries, for which no specific fetchSize value was specified.]]></jxb:javad
 
       <element name="emulateMultiset" type="jooq-runtime:NestedCollectionEmulation" minOccurs="0" maxOccurs="1" default="DEFAULT">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#3884] How <code>MULTISET</code> support should be emulated.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="emulateNestedRecordProjectionsUsingMultisetEmulation" type="boolean" minOccurs="0" maxOccurs="1" default="false">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#13598] Whether nested record projections at the top level should be emulated using the <code>MULTISET</code> emulation rather than the flattening emulation, if supported by the dialect.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
       <element name="emulateComputedColumns" type="boolean" minOccurs="0" maxOccurs="1" default="false">

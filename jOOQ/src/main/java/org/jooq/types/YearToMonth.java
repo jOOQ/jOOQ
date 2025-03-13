@@ -141,6 +141,13 @@ public final class YearToMonth extends Number implements Interval, Comparable<Ye
                 int years = group2 == null ? 0 : Integer.parseInt(group2);
                 int months = group3 == null ? 0 : Integer.parseInt(group3);
 
+                // [#18165] ISO intervals can be negative in 2 ways: -P1Y or P-1Y
+                if (years < 0) {
+                    negative = !negative;
+                    years = -years;
+                    months = -months;
+                }
+
                 return new YearToMonth(years, months, negative);
             }
 

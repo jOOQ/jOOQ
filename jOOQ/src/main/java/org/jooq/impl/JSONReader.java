@@ -249,12 +249,11 @@ final class JSONReader<R extends Record> {
     private static final List<Object> patchRecord(DSLContext ctx, boolean multiset, Fields result, List<Object> record) {
         for (int i = 0; i < result.fields().length; i++) {
             Field<?> field = result.field(i);
+            Object value = record.get(i);
 
             // [#8829] LoaderImpl expects binary data to be encoded in base64,
             //         not according to org.jooq.tools.Convert
-            if (field.getDataType().isBinary() && record.get(i) instanceof String) {
-                String s = (String) record.get(i);
-
+            if (field.getDataType().isBinary() && value instanceof String s) {
                 if (multiset) {
 
                     // [#12134] PostgreSQL encodes binary data as hex
@@ -286,16 +285,24 @@ final class JSONReader<R extends Record> {
                     (AbstractRow) field.getDataType().getRow(),
                     (Class) field.getDataType().getRecordType(),
                     multiset,
-                    record.get(i)
+                    value
                 ));
             }
 
             // [#14657] Recurse for nested ROW
-            else if (multiset && field.getDataType().isRecord() && record.get(i) instanceof List) {
+            // [#18152] Handle also the Map encoding of nested ROW values
+            else if (multiset && field.getDataType().isRecord() && (value instanceof List || value instanceof Map)) {
                 AbstractRow<? extends Record> actualRow = (AbstractRow) field.getDataType().getRow();
                 Class<? extends Record> recordType = field.getDataType().getRecordType();
-                List<Object> l = (List<Object>) record.get(i);
-                patchRecord(ctx, multiset, actualRow, l);
+
+                List<Object> l;
+
+                if (value instanceof List)
+                    l = patchRecord(ctx, multiset, actualRow, (List<Object>) value);
+                else if (value instanceof Map)
+                    l = patchRecord(ctx, multiset, actualRow, new ArrayList<>(((Map<?, ?>) value).values()));
+                else
+                    throw new IllegalStateException();
 
                 record.set(i, newRecord(true, ctx.configuration(), recordType, actualRow).operate(r -> {
                     r.from(l);

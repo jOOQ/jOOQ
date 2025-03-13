@@ -1482,6 +1482,7 @@ final class R2DBC {
             public final <T> T get(int index, Class<T> uType) {
                 return wrapExceptions(() -> {
                     switch (c.family()) {
+
                         case H2:
                         case MYSQL:
                             return get0(r.get(index), uType);
@@ -1496,6 +1497,7 @@ final class R2DBC {
             public final <T> T get(String name, Class<T> uType) {
                 return wrapExceptions(() -> {
                     switch (c.family()) {
+
                         case H2:
                         case MYSQL:
                             return get0(r.get(name), uType);

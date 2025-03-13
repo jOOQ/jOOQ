@@ -68,6 +68,7 @@ import java.nio.ByteBuffer;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLXML;
 import java.sql.Struct;
 import java.sql.Time;
 import java.sql.Timestamp;
@@ -810,14 +811,24 @@ final class Convert {
 
                 // All types can be converted into String
                 else if (toClass == String.class) {
-                    if (from instanceof EnumType e)
-                        return (U) e.getLiteral();
+                    try {
+                        if (from instanceof EnumType e)
+                            return (U) e.getLiteral();
 
-                    // [#17497] Avoid potentially costly Data::toString call
-                    else if (from instanceof Data d)
-                        return (U) d.data();
+                        // [#17497] Avoid potentially costly Data::toString call
+                        else if (from instanceof Data d)
+                            return (U) d.data();
 
-                    return (U) from.toString();
+                        // [#18157] In case the driver (e.g. oracle-r2dbc) can't do the conversion itself
+                        else if (from instanceof SQLXML s)
+                            return (U) s.getString();
+
+                        else
+                            return (U) from.toString();
+                    }
+                    catch (SQLException e) {
+                        throw new DataTypeException("Cannot convert to String: ", e);
+                    }
                 }
 
                 // [#5569] It should be possible, at least, to convert an empty string to an empty (var)binary.

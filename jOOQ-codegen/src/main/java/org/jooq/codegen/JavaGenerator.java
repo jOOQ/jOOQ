@@ -1663,6 +1663,7 @@ public class JavaGenerator extends AbstractGenerator {
             }
             catch (Exception e) {
                 log.error("Error while generating table record " + table, e);
+                throw new RuntimeException("Error while generating table record " + table, e);
             }
         }
 

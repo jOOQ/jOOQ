@@ -76,7 +76,7 @@ import org.jooq.SQLDialect;
 public final class YearToMonth extends Number implements Interval, Comparable<YearToMonth> {
 
     private static final Pattern PATTERN_SQL = Pattern.compile("^([+-])?(\\d+)-(\\d+)$");
-    private static final Pattern PATTERN_ISO = Pattern.compile("^([+-])?P(?:([+-]?\\d+)Y)?(?:([+-]?\\d+)M)?$", Pattern.CASE_INSENSITIVE);
+    private static final Pattern PATTERN_ISO = Pattern.compile("^([+-])?P(?:([+-]?\\d+)Y)?(?:([+-]?\\d+)M)?(?:0D)?$", Pattern.CASE_INSENSITIVE);
 
     private final boolean        negative;
     private final int            years;

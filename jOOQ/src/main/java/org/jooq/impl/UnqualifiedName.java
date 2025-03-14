@@ -47,8 +47,6 @@ import static org.jooq.impl.Tools.EMPTY_STRING;
 import static org.jooq.impl.Tools.stringLiteral;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
-import java.util.Arrays;
-
 import org.jooq.Context;
 import org.jooq.Name;
 import org.jooq.Scope;
@@ -101,12 +99,14 @@ final class UnqualifiedName extends AbstractName {
     }
 
     final boolean quoted(Scope ctx) {
-        RenderQuotedNames q = SettingsTools.getRenderQuotedNames(ctx.settings());
+        return quoted(SettingsTools.getRenderQuotedNames(ctx.settings()), quoted);
+    }
 
+    static final boolean quoted(RenderQuotedNames q, Quoted quoted) {
         return quoted != SYSTEM && (
-            q == RenderQuotedNames.ALWAYS
-         || q == RenderQuotedNames.EXPLICIT_DEFAULT_QUOTED && (quoted == DEFAULT || quoted == QUOTED)
-         || q == RenderQuotedNames.EXPLICIT_DEFAULT_UNQUOTED && quoted == QUOTED
+              q == RenderQuotedNames.ALWAYS
+           || q == RenderQuotedNames.EXPLICIT_DEFAULT_QUOTED && (quoted == DEFAULT || quoted == QUOTED)
+           || q == RenderQuotedNames.EXPLICIT_DEFAULT_UNQUOTED && quoted == QUOTED
         );
     }
 

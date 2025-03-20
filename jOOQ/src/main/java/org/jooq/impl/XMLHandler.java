@@ -44,6 +44,7 @@ import static org.jooq.impl.DefaultDataType.getDataType;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.allMatch;
+import static org.jooq.impl.Tools.converterContext;
 import static org.jooq.impl.Tools.fields;
 import static org.jooq.impl.Tools.newRecord;
 import static org.jooq.impl.Tools.row0;
@@ -60,6 +61,9 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import org.jooq.ContextConverter;
+import org.jooq.Converter;
+import org.jooq.ConverterContext;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.Field;
@@ -108,17 +112,32 @@ final class XMLHandler<R extends Record> extends DefaultHandler {
         }
 
         final R into(R r) {
+            ConverterContext cc = null;
 
             // [#12134] Patch base64 encoded binary values
             for (int i = 0; i < fields.size(); i++) {
-                if (fields.get(i).getDataType().isBinary()) {
-                    if (values.get(i) instanceof String s) {
+                Object v = values.get(i);
+                DataType<?> t = fields.get(i).getDataType();
+
+                if (v instanceof String s) {
+                    if (t.isBinary()) {
 
 
 
 
 
                         values.set(i, Base64.getDecoder().decode(s));
+                    }
+                }
+
+                // [#18190] For historic reasons, Record.from() will not apply Converter<T, T>, so any potential
+                //          Converter<String, String> should be applied eagerly, before loading data into the record.
+                if (v == null || v instanceof String) {
+                    if (t instanceof ConvertedDataType && t.getFromType() == String.class && t.getToType() == String.class) {
+                        values.set(i, ((ContextConverter<String, String>) t.getConverter()).from(
+                            (String) v,
+                            cc == null ? (cc = converterContext(ctx.configuration())) : cc
+                        ));
                     }
                 }
             }

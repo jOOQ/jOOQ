@@ -54,6 +54,7 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DefaultDataType.getDataType;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.convertHexToBytes;
+import static org.jooq.impl.Tools.converterContext;
 import static org.jooq.impl.Tools.fields;
 import static org.jooq.impl.Tools.newRecord;
 import static org.jooq.tools.StringUtils.defaultIfBlank;
@@ -68,7 +69,10 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.jooq.ContextConverter;
+import org.jooq.ConverterContext;
 import org.jooq.DSLContext;
+import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Fields;
 import org.jooq.Record;
@@ -247,13 +251,16 @@ final class JSONReader<R extends Record> {
     private static final Set<SQLDialect> ENCODE_BINARY_AS_TEXT = SQLDialect.supportedBy(MARIADB);
 
     private static final List<Object> patchRecord(DSLContext ctx, boolean multiset, Fields result, List<Object> record) {
+        ConverterContext cc = null;
+
         for (int i = 0; i < result.fields().length; i++) {
             Field<?> field = result.field(i);
             Object value = record.get(i);
+            DataType<?> t = field.getDataType();
 
             // [#8829] LoaderImpl expects binary data to be encoded in base64,
             //         not according to org.jooq.tools.Convert
-            if (field.getDataType().isBinary() && value instanceof String s) {
+            if (t.isBinary() && value instanceof String s) {
                 if (multiset) {
 
                     // [#12134] PostgreSQL encodes binary data as hex
@@ -278,12 +285,26 @@ final class JSONReader<R extends Record> {
                     record.set(i, Base64.getDecoder().decode(s));
             }
 
+            // [#18190] For historic reasons, Record.from() will not apply Converter<T, T>, so any potential
+            //          Converter<String, String> should be applied eagerly, before loading data into the record.
+            else if (multiset
+                && t instanceof ConvertedDataType
+                && t.getFromType() == String.class
+                && t.getToType() == String.class
+                && (value == null || value instanceof String)
+            ) {
+                record.set(i, ((ContextConverter<String, String>) t.getConverter()).from(
+                    (String) value,
+                    cc == null ? (cc = converterContext(ctx.configuration())) : cc
+                ));
+            }
+
             // [#12155] Recurse for nested MULTISET
-            else if (multiset && field.getDataType().isMultiset()) {
+            else if (multiset && t.isMultiset()) {
                 record.set(i, read(
                     ctx,
-                    (AbstractRow) field.getDataType().getRow(),
-                    (Class) field.getDataType().getRecordType(),
+                    (AbstractRow) t.getRow(),
+                    (Class) t.getRecordType(),
                     multiset,
                     value
                 ));
@@ -291,9 +312,9 @@ final class JSONReader<R extends Record> {
 
             // [#14657] Recurse for nested ROW
             // [#18152] Handle also the Map encoding of nested ROW values
-            else if (multiset && field.getDataType().isRecord() && (value instanceof List || value instanceof Map)) {
-                AbstractRow<? extends Record> actualRow = (AbstractRow) field.getDataType().getRow();
-                Class<? extends Record> recordType = field.getDataType().getRecordType();
+            else if (multiset && t.isRecord() && (value instanceof List || value instanceof Map)) {
+                AbstractRow<? extends Record> actualRow = (AbstractRow) t.getRow();
+                Class<? extends Record> recordType = t.getRecordType();
 
                 List<Object> l;
 

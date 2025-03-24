@@ -91,7 +91,7 @@ public final class XMLBuilder {
     }
 
     public XMLBuilder append(String wrappingElementName, String elementName, List<?> list) {
-        if (list != null) {
+        if (list != null && !list.isEmpty()) {
             openTag(wrappingElementName).newLine().indent();
             for (Object o : list) {
                 if (o instanceof XMLAppendable x)

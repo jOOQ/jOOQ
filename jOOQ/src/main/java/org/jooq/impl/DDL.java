@@ -61,11 +61,9 @@ import static org.jooq.impl.DSL.constraint;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.tools.StringUtils.isEmpty;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -90,11 +88,9 @@ import org.jooq.CreateTableOnCommitStep;
 // ...
 // ...
 // ...
-// ...
-// ...
-// ...
 import org.jooq.CreateViewAsStep;
 import org.jooq.DDLExportConfiguration;
+import org.jooq.DDLExportConfiguration.InlineForeignKeyConstraints;
 import org.jooq.DDLFlag;
 import org.jooq.DSLContext;
 import org.jooq.Domain;
@@ -124,14 +120,9 @@ import org.jooq.TableOptions.TableType;
 // ...
 // ...
 import org.jooq.UniqueKey;
-import org.jooq.impl.QOM.CreateView;
 import org.jooq.impl.QOM.ForeignKeyRule;
-import org.jooq.DDLExportConfiguration.InlineForeignKeyConstraints;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
-
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * @author Lukas Eder
@@ -323,7 +314,7 @@ final class DDL {
     }
 
     final List<Query> createTableOrView(Table<?> table) {
-        return createTableOrView(table, constraints(table, true));
+        return createTableOrView(table, constraints(table, true, true, true, true));
     }
 
     final List<Query> createIndex(Table<?> table) {
@@ -445,21 +436,33 @@ final class DDL {
 
 
     final List<Query> alterTableAddConstraints(Table<?> table) {
-        return alterTableAddConstraints(table, constraints(table, true));
+        return alterTableAddConstraints(table, constraints(table, true, true, true, true));
     }
 
     final List<Query> alterTableAddConstraints(Table<?> table, List<Constraint> constraints) {
         return map(constraints, c -> ctx.alterTable(table).add(c));
     }
 
-    final List<Constraint> constraints(Table<?> table, boolean includeForeignKeys) {
+    final List<Constraint> constraints(
+        Table<?> table,
+        boolean includePrimaryKeys,
+        boolean includeUniqueKeys,
+        boolean includeCheckConstraints,
+        boolean includeForeignKeys
+    ) {
         List<Constraint> result = new ArrayList<>();
 
-        result.addAll(primaryKeys(table));
-        result.addAll(uniqueKeys(table));
+        if (includePrimaryKeys)
+            result.addAll(primaryKeys(table));
+
+        if (includeUniqueKeys)
+            result.addAll(uniqueKeys(table));
+
         if (includeForeignKeys)
             result.addAll(foreignKeys(table));
-        result.addAll(checks(table));
+
+        if (includeCheckConstraints)
+            result.addAll(checks(table));
 
         return result;
     }
@@ -578,13 +581,22 @@ final class DDL {
             for (Schema schema : schemas) {
                 for (Table<?> table : sortTablesIf(schema.getTables(), !configuration.respectTableOrder())) {
                     List<Constraint> constraints = new ArrayList<>();
+                    boolean pk = configuration.inlinePrimaryKeyConstraints();
+                    boolean uk = configuration.inlineUniqueConstraints();
+                    boolean check = configuration.inlineCheckConstraints();
 
                     if (!hasConstraintsUsingIndexes(table)) {
                         tablesWithInlineConstraints.add(table);
-                        constraints.addAll(constraints(table, inlineForeignKeyDefinitions()));
+                        constraints.addAll(constraints(table, pk, uk, check, inlineForeignKeyDefinitions()));
                     }
 
                     queries.addAll(createTableOrView(table, constraints));
+
+                    if (!pk || !uk || !check) {
+                        constraints.clear();
+                        constraints.addAll(constraints(table, !pk, !uk, !check, false));
+                        queries.addAll(alterTableAddConstraints(table, constraints));
+                    }
                 }
             }
         }

@@ -1855,6 +1855,17 @@ final class Convert {
         int sx = Math.max(ss, st);
         int c1 = s.indexOf(':', sx + 1);
         int c2 = s.indexOf(':', c1 + 1);
+        int cx = Math.max(c1, c2);
+
+        // [#18197] Maintain timezone suffixes, if any
+        int z =
+            Math.max(
+                s.indexOf('Z', cx + 1),
+                Math.max(
+                    s.indexOf('+', cx + 1),
+                    s.indexOf('-', cx + 1)
+                )
+            );
 
         if (d1 == -1 || d2 == -1)
             return s;
@@ -1872,7 +1883,8 @@ final class Convert {
                  + padMid2(s, d2, sx)
                  + (t ? 'T' : ' ')
                  + padMid2(s, sx, c1) + ':'
-                 + padMid2(s, c1) + ":00";
+                 + (z == -1 ? padMid2(s, c1) : padMid2(s, c1, z)) + ":00"
+                 + (z == -1 ? "" : s.substring(z));
 
         // [#13786] TODO: This doesn't pad seconds in the presence of fractional seconds or time zones
         else if (t == (st == -1) || l - c2 < 3 || c2 - c1 < 3 || c1 - sx < 3 || sx - d2 < 3 || d2 - d1 < 3)
@@ -1882,7 +1894,8 @@ final class Convert {
                  + (t ? 'T' : ' ')
                  + padMid2(s, sx, c1) + ':'
                  + padMid2(s, c1, c2) + ':'
-                 + padMid2(s, c2);
+                 + (z == -1 ? padMid2(s, c2) : padMid2(s, c2, z))
+                 + (z == -1 ? "" : s.substring(z));
         else
             return s;
     }

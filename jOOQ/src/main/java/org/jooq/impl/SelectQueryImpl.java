@@ -1617,9 +1617,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-
-
-
         else if (withReadOnly && NO_SUPPORT_WITH_READ_ONLY.contains(ctx.dialect()))
             ctx.visit(copy(s -> {
                 s.withReadOnly = false;
@@ -1817,6 +1814,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // [#2791] [#9981] TODO: We have an automatic way of pushing / popping
         //                 these values onto the scope stack. Use that, instead
         Object renderTrailingLimit = context.data(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE);
+        Object transformRownumToLimit = context.data(DATA_TRANSFORM_ROWNUM_TO_LIMIT);
         Name[] selectAliases = (Name[]) context.data(DATA_SELECT_ALIASES);
 
         try {
@@ -1836,6 +1834,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
             if (TRUE.equals(renderTrailingLimit))
                 context.data().remove(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE);
+            if (TRUE.equals(transformRownumToLimit))
+                context.data().remove(DATA_TRANSFORM_ROWNUM_TO_LIMIT);
 
             if (intoTable != null
                     && !TRUE.equals(context.data(DATA_OMIT_INTO_CLAUSE))
@@ -2100,6 +2100,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         }
         finally {
+            if (transformRownumToLimit != null)
+                context.data(DATA_TRANSFORM_ROWNUM_TO_LIMIT, transformRownumToLimit);
             if (renderTrailingLimit != null)
                 context.data(DATA_RENDER_TRAILING_LIMIT_IF_APPLICABLE, renderTrailingLimit);
             if (selectAliases != null)

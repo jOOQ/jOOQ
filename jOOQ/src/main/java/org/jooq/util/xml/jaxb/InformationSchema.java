@@ -735,8 +735,8 @@ public class InformationSchema implements Serializable, XMLAppendable
             return false;
         }
         InformationSchema other = ((InformationSchema) that);
-        if (catalogs == null) {
-            if (other.catalogs!= null) {
+        if ((catalogs == null)||catalogs.isEmpty()) {
+            if ((other.catalogs!= null)&&(!other.catalogs.isEmpty())) {
                 return false;
             }
         } else {
@@ -744,8 +744,8 @@ public class InformationSchema implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (schemata == null) {
-            if (other.schemata!= null) {
+        if ((schemata == null)||schemata.isEmpty()) {
+            if ((other.schemata!= null)&&(!other.schemata.isEmpty())) {
                 return false;
             }
         } else {
@@ -753,8 +753,8 @@ public class InformationSchema implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (sequences == null) {
-            if (other.sequences!= null) {
+        if ((sequences == null)||sequences.isEmpty()) {
+            if ((other.sequences!= null)&&(!other.sequences.isEmpty())) {
                 return false;
             }
         } else {
@@ -762,8 +762,8 @@ public class InformationSchema implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (tables == null) {
-            if (other.tables!= null) {
+        if ((tables == null)||tables.isEmpty()) {
+            if ((other.tables!= null)&&(!other.tables.isEmpty())) {
                 return false;
             }
         } else {
@@ -771,8 +771,8 @@ public class InformationSchema implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (views == null) {
-            if (other.views!= null) {
+        if ((views == null)||views.isEmpty()) {
+            if ((other.views!= null)&&(!other.views.isEmpty())) {
                 return false;
             }
         } else {
@@ -780,8 +780,8 @@ public class InformationSchema implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (columns == null) {
-            if (other.columns!= null) {
+        if ((columns == null)||columns.isEmpty()) {
+            if ((other.columns!= null)&&(!other.columns.isEmpty())) {
                 return false;
             }
         } else {
@@ -789,8 +789,8 @@ public class InformationSchema implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (tableConstraints == null) {
-            if (other.tableConstraints!= null) {
+        if ((tableConstraints == null)||tableConstraints.isEmpty()) {
+            if ((other.tableConstraints!= null)&&(!other.tableConstraints.isEmpty())) {
                 return false;
             }
         } else {
@@ -798,8 +798,8 @@ public class InformationSchema implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (keyColumnUsages == null) {
-            if (other.keyColumnUsages!= null) {
+        if ((keyColumnUsages == null)||keyColumnUsages.isEmpty()) {
+            if ((other.keyColumnUsages!= null)&&(!other.keyColumnUsages.isEmpty())) {
                 return false;
             }
         } else {
@@ -807,8 +807,8 @@ public class InformationSchema implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (referentialConstraints == null) {
-            if (other.referentialConstraints!= null) {
+        if ((referentialConstraints == null)||referentialConstraints.isEmpty()) {
+            if ((other.referentialConstraints!= null)&&(!other.referentialConstraints.isEmpty())) {
                 return false;
             }
         } else {
@@ -816,8 +816,8 @@ public class InformationSchema implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (checkConstraints == null) {
-            if (other.checkConstraints!= null) {
+        if ((checkConstraints == null)||checkConstraints.isEmpty()) {
+            if ((other.checkConstraints!= null)&&(!other.checkConstraints.isEmpty())) {
                 return false;
             }
         } else {
@@ -825,8 +825,8 @@ public class InformationSchema implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (domains == null) {
-            if (other.domains!= null) {
+        if ((domains == null)||domains.isEmpty()) {
+            if ((other.domains!= null)&&(!other.domains.isEmpty())) {
                 return false;
             }
         } else {
@@ -834,8 +834,8 @@ public class InformationSchema implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (domainConstraints == null) {
-            if (other.domainConstraints!= null) {
+        if ((domainConstraints == null)||domainConstraints.isEmpty()) {
+            if ((other.domainConstraints!= null)&&(!other.domainConstraints.isEmpty())) {
                 return false;
             }
         } else {
@@ -843,8 +843,8 @@ public class InformationSchema implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (indexes == null) {
-            if (other.indexes!= null) {
+        if ((indexes == null)||indexes.isEmpty()) {
+            if ((other.indexes!= null)&&(!other.indexes.isEmpty())) {
                 return false;
             }
         } else {
@@ -852,8 +852,8 @@ public class InformationSchema implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (indexColumnUsages == null) {
-            if (other.indexColumnUsages!= null) {
+        if ((indexColumnUsages == null)||indexColumnUsages.isEmpty()) {
+            if ((other.indexColumnUsages!= null)&&(!other.indexColumnUsages.isEmpty())) {
                 return false;
             }
         } else {
@@ -861,8 +861,8 @@ public class InformationSchema implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (routines == null) {
-            if (other.routines!= null) {
+        if ((routines == null)||routines.isEmpty()) {
+            if ((other.routines!= null)&&(!other.routines.isEmpty())) {
                 return false;
             }
         } else {
@@ -870,8 +870,8 @@ public class InformationSchema implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (parameters == null) {
-            if (other.parameters!= null) {
+        if ((parameters == null)||parameters.isEmpty()) {
+            if ((other.parameters!= null)&&(!other.parameters.isEmpty())) {
                 return false;
             }
         } else {
@@ -879,8 +879,8 @@ public class InformationSchema implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (elementTypes == null) {
-            if (other.elementTypes!= null) {
+        if ((elementTypes == null)||elementTypes.isEmpty()) {
+            if ((other.elementTypes!= null)&&(!other.elementTypes.isEmpty())) {
                 return false;
             }
         } else {
@@ -888,8 +888,8 @@ public class InformationSchema implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (triggers == null) {
-            if (other.triggers!= null) {
+        if ((triggers == null)||triggers.isEmpty()) {
+            if ((other.triggers!= null)&&(!other.triggers.isEmpty())) {
                 return false;
             }
         } else {
@@ -904,24 +904,24 @@ public class InformationSchema implements Serializable, XMLAppendable
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = ((prime*result)+((catalogs == null)? 0 :catalogs.hashCode()));
-        result = ((prime*result)+((schemata == null)? 0 :schemata.hashCode()));
-        result = ((prime*result)+((sequences == null)? 0 :sequences.hashCode()));
-        result = ((prime*result)+((tables == null)? 0 :tables.hashCode()));
-        result = ((prime*result)+((views == null)? 0 :views.hashCode()));
-        result = ((prime*result)+((columns == null)? 0 :columns.hashCode()));
-        result = ((prime*result)+((tableConstraints == null)? 0 :tableConstraints.hashCode()));
-        result = ((prime*result)+((keyColumnUsages == null)? 0 :keyColumnUsages.hashCode()));
-        result = ((prime*result)+((referentialConstraints == null)? 0 :referentialConstraints.hashCode()));
-        result = ((prime*result)+((checkConstraints == null)? 0 :checkConstraints.hashCode()));
-        result = ((prime*result)+((domains == null)? 0 :domains.hashCode()));
-        result = ((prime*result)+((domainConstraints == null)? 0 :domainConstraints.hashCode()));
-        result = ((prime*result)+((indexes == null)? 0 :indexes.hashCode()));
-        result = ((prime*result)+((indexColumnUsages == null)? 0 :indexColumnUsages.hashCode()));
-        result = ((prime*result)+((routines == null)? 0 :routines.hashCode()));
-        result = ((prime*result)+((parameters == null)? 0 :parameters.hashCode()));
-        result = ((prime*result)+((elementTypes == null)? 0 :elementTypes.hashCode()));
-        result = ((prime*result)+((triggers == null)? 0 :triggers.hashCode()));
+        result = ((prime*result)+(((catalogs == null)||catalogs.isEmpty())? 0 :catalogs.hashCode()));
+        result = ((prime*result)+(((schemata == null)||schemata.isEmpty())? 0 :schemata.hashCode()));
+        result = ((prime*result)+(((sequences == null)||sequences.isEmpty())? 0 :sequences.hashCode()));
+        result = ((prime*result)+(((tables == null)||tables.isEmpty())? 0 :tables.hashCode()));
+        result = ((prime*result)+(((views == null)||views.isEmpty())? 0 :views.hashCode()));
+        result = ((prime*result)+(((columns == null)||columns.isEmpty())? 0 :columns.hashCode()));
+        result = ((prime*result)+(((tableConstraints == null)||tableConstraints.isEmpty())? 0 :tableConstraints.hashCode()));
+        result = ((prime*result)+(((keyColumnUsages == null)||keyColumnUsages.isEmpty())? 0 :keyColumnUsages.hashCode()));
+        result = ((prime*result)+(((referentialConstraints == null)||referentialConstraints.isEmpty())? 0 :referentialConstraints.hashCode()));
+        result = ((prime*result)+(((checkConstraints == null)||checkConstraints.isEmpty())? 0 :checkConstraints.hashCode()));
+        result = ((prime*result)+(((domains == null)||domains.isEmpty())? 0 :domains.hashCode()));
+        result = ((prime*result)+(((domainConstraints == null)||domainConstraints.isEmpty())? 0 :domainConstraints.hashCode()));
+        result = ((prime*result)+(((indexes == null)||indexes.isEmpty())? 0 :indexes.hashCode()));
+        result = ((prime*result)+(((indexColumnUsages == null)||indexColumnUsages.isEmpty())? 0 :indexColumnUsages.hashCode()));
+        result = ((prime*result)+(((routines == null)||routines.isEmpty())? 0 :routines.hashCode()));
+        result = ((prime*result)+(((parameters == null)||parameters.isEmpty())? 0 :parameters.hashCode()));
+        result = ((prime*result)+(((elementTypes == null)||elementTypes.isEmpty())? 0 :elementTypes.hashCode()));
+        result = ((prime*result)+(((triggers == null)||triggers.isEmpty())? 0 :triggers.hashCode()));
         return result;
     }
 

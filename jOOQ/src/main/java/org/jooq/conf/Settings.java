@@ -11641,8 +11641,8 @@ public class Settings
                 return false;
             }
         }
-        if (interpreterSearchPath == null) {
-            if (other.interpreterSearchPath!= null) {
+        if ((interpreterSearchPath == null)||interpreterSearchPath.isEmpty()) {
+            if ((other.interpreterSearchPath!= null)&&(!other.interpreterSearchPath.isEmpty())) {
                 return false;
             }
         } else {
@@ -11650,8 +11650,8 @@ public class Settings
                 return false;
             }
         }
-        if (migrationSchemata == null) {
-            if (other.migrationSchemata!= null) {
+        if ((migrationSchemata == null)||migrationSchemata.isEmpty()) {
+            if ((other.migrationSchemata!= null)&&(!other.migrationSchemata.isEmpty())) {
                 return false;
             }
         } else {
@@ -11659,8 +11659,8 @@ public class Settings
                 return false;
             }
         }
-        if (parseSearchPath == null) {
-            if (other.parseSearchPath!= null) {
+        if ((parseSearchPath == null)||parseSearchPath.isEmpty()) {
+            if ((other.parseSearchPath!= null)&&(!other.parseSearchPath.isEmpty())) {
                 return false;
             }
         } else {
@@ -11896,9 +11896,9 @@ public class Settings
         result = ((prime*result)+((readonlyUpdate == null)? 0 :readonlyUpdate.hashCode()));
         result = ((prime*result)+((applyWorkaroundFor7962 == null)? 0 :applyWorkaroundFor7962 .hashCode()));
         result = ((prime*result)+((warnOnStaticTypeRegistryAccess == null)? 0 :warnOnStaticTypeRegistryAccess.hashCode()));
-        result = ((prime*result)+((interpreterSearchPath == null)? 0 :interpreterSearchPath.hashCode()));
-        result = ((prime*result)+((migrationSchemata == null)? 0 :migrationSchemata.hashCode()));
-        result = ((prime*result)+((parseSearchPath == null)? 0 :parseSearchPath.hashCode()));
+        result = ((prime*result)+(((interpreterSearchPath == null)||interpreterSearchPath.isEmpty())? 0 :interpreterSearchPath.hashCode()));
+        result = ((prime*result)+(((migrationSchemata == null)||migrationSchemata.isEmpty())? 0 :migrationSchemata.hashCode()));
+        result = ((prime*result)+(((parseSearchPath == null)||parseSearchPath.isEmpty())? 0 :parseSearchPath.hashCode()));
         return result;
     }
 

@@ -259,8 +259,8 @@ public class SyntheticDaoType implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (methods == null) {
-            if (other.methods!= null) {
+        if ((methods == null)||methods.isEmpty()) {
+            if ((other.methods!= null)&&(!other.methods.isEmpty())) {
                 return false;
             }
         } else {
@@ -279,7 +279,7 @@ public class SyntheticDaoType implements Serializable, XMLAppendable
         result = ((prime*result)+((schema == null)? 0 :schema.hashCode()));
         result = ((prime*result)+((name == null)? 0 :name.hashCode()));
         result = ((prime*result)+((comment == null)? 0 :comment.hashCode()));
-        result = ((prime*result)+((methods == null)? 0 :methods.hashCode()));
+        result = ((prime*result)+(((methods == null)||methods.isEmpty())? 0 :methods.hashCode()));
         return result;
     }
 

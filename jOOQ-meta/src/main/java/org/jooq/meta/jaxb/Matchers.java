@@ -559,8 +559,8 @@ public class Matchers implements Serializable, XMLAppendable
             return false;
         }
         Matchers other = ((Matchers) that);
-        if (catalogs == null) {
-            if (other.catalogs!= null) {
+        if ((catalogs == null)||catalogs.isEmpty()) {
+            if ((other.catalogs!= null)&&(!other.catalogs.isEmpty())) {
                 return false;
             }
         } else {
@@ -568,8 +568,8 @@ public class Matchers implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (schemas == null) {
-            if (other.schemas!= null) {
+        if ((schemas == null)||schemas.isEmpty()) {
+            if ((other.schemas!= null)&&(!other.schemas.isEmpty())) {
                 return false;
             }
         } else {
@@ -577,8 +577,8 @@ public class Matchers implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (tables == null) {
-            if (other.tables!= null) {
+        if ((tables == null)||tables.isEmpty()) {
+            if ((other.tables!= null)&&(!other.tables.isEmpty())) {
                 return false;
             }
         } else {
@@ -586,8 +586,8 @@ public class Matchers implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (indexes == null) {
-            if (other.indexes!= null) {
+        if ((indexes == null)||indexes.isEmpty()) {
+            if ((other.indexes!= null)&&(!other.indexes.isEmpty())) {
                 return false;
             }
         } else {
@@ -595,8 +595,8 @@ public class Matchers implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (primaryKeys == null) {
-            if (other.primaryKeys!= null) {
+        if ((primaryKeys == null)||primaryKeys.isEmpty()) {
+            if ((other.primaryKeys!= null)&&(!other.primaryKeys.isEmpty())) {
                 return false;
             }
         } else {
@@ -604,8 +604,8 @@ public class Matchers implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (uniqueKeys == null) {
-            if (other.uniqueKeys!= null) {
+        if ((uniqueKeys == null)||uniqueKeys.isEmpty()) {
+            if ((other.uniqueKeys!= null)&&(!other.uniqueKeys.isEmpty())) {
                 return false;
             }
         } else {
@@ -613,8 +613,8 @@ public class Matchers implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (foreignKeys == null) {
-            if (other.foreignKeys!= null) {
+        if ((foreignKeys == null)||foreignKeys.isEmpty()) {
+            if ((other.foreignKeys!= null)&&(!other.foreignKeys.isEmpty())) {
                 return false;
             }
         } else {
@@ -622,8 +622,8 @@ public class Matchers implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (fields == null) {
-            if (other.fields!= null) {
+        if ((fields == null)||fields.isEmpty()) {
+            if ((other.fields!= null)&&(!other.fields.isEmpty())) {
                 return false;
             }
         } else {
@@ -631,8 +631,8 @@ public class Matchers implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (routines == null) {
-            if (other.routines!= null) {
+        if ((routines == null)||routines.isEmpty()) {
+            if ((other.routines!= null)&&(!other.routines.isEmpty())) {
                 return false;
             }
         } else {
@@ -640,8 +640,8 @@ public class Matchers implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (sequences == null) {
-            if (other.sequences!= null) {
+        if ((sequences == null)||sequences.isEmpty()) {
+            if ((other.sequences!= null)&&(!other.sequences.isEmpty())) {
                 return false;
             }
         } else {
@@ -649,8 +649,8 @@ public class Matchers implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (enums == null) {
-            if (other.enums!= null) {
+        if ((enums == null)||enums.isEmpty()) {
+            if ((other.enums!= null)&&(!other.enums.isEmpty())) {
                 return false;
             }
         } else {
@@ -658,8 +658,8 @@ public class Matchers implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (embeddables == null) {
-            if (other.embeddables!= null) {
+        if ((embeddables == null)||embeddables.isEmpty()) {
+            if ((other.embeddables!= null)&&(!other.embeddables.isEmpty())) {
                 return false;
             }
         } else {
@@ -667,8 +667,8 @@ public class Matchers implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (udts == null) {
-            if (other.udts!= null) {
+        if ((udts == null)||udts.isEmpty()) {
+            if ((other.udts!= null)&&(!other.udts.isEmpty())) {
                 return false;
             }
         } else {
@@ -676,8 +676,8 @@ public class Matchers implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (attributes == null) {
-            if (other.attributes!= null) {
+        if ((attributes == null)||attributes.isEmpty()) {
+            if ((other.attributes!= null)&&(!other.attributes.isEmpty())) {
                 return false;
             }
         } else {
@@ -692,20 +692,20 @@ public class Matchers implements Serializable, XMLAppendable
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = ((prime*result)+((catalogs == null)? 0 :catalogs.hashCode()));
-        result = ((prime*result)+((schemas == null)? 0 :schemas.hashCode()));
-        result = ((prime*result)+((tables == null)? 0 :tables.hashCode()));
-        result = ((prime*result)+((indexes == null)? 0 :indexes.hashCode()));
-        result = ((prime*result)+((primaryKeys == null)? 0 :primaryKeys.hashCode()));
-        result = ((prime*result)+((uniqueKeys == null)? 0 :uniqueKeys.hashCode()));
-        result = ((prime*result)+((foreignKeys == null)? 0 :foreignKeys.hashCode()));
-        result = ((prime*result)+((fields == null)? 0 :fields.hashCode()));
-        result = ((prime*result)+((routines == null)? 0 :routines.hashCode()));
-        result = ((prime*result)+((sequences == null)? 0 :sequences.hashCode()));
-        result = ((prime*result)+((enums == null)? 0 :enums.hashCode()));
-        result = ((prime*result)+((embeddables == null)? 0 :embeddables.hashCode()));
-        result = ((prime*result)+((udts == null)? 0 :udts.hashCode()));
-        result = ((prime*result)+((attributes == null)? 0 :attributes.hashCode()));
+        result = ((prime*result)+(((catalogs == null)||catalogs.isEmpty())? 0 :catalogs.hashCode()));
+        result = ((prime*result)+(((schemas == null)||schemas.isEmpty())? 0 :schemas.hashCode()));
+        result = ((prime*result)+(((tables == null)||tables.isEmpty())? 0 :tables.hashCode()));
+        result = ((prime*result)+(((indexes == null)||indexes.isEmpty())? 0 :indexes.hashCode()));
+        result = ((prime*result)+(((primaryKeys == null)||primaryKeys.isEmpty())? 0 :primaryKeys.hashCode()));
+        result = ((prime*result)+(((uniqueKeys == null)||uniqueKeys.isEmpty())? 0 :uniqueKeys.hashCode()));
+        result = ((prime*result)+(((foreignKeys == null)||foreignKeys.isEmpty())? 0 :foreignKeys.hashCode()));
+        result = ((prime*result)+(((fields == null)||fields.isEmpty())? 0 :fields.hashCode()));
+        result = ((prime*result)+(((routines == null)||routines.isEmpty())? 0 :routines.hashCode()));
+        result = ((prime*result)+(((sequences == null)||sequences.isEmpty())? 0 :sequences.hashCode()));
+        result = ((prime*result)+(((enums == null)||enums.isEmpty())? 0 :enums.hashCode()));
+        result = ((prime*result)+(((embeddables == null)||embeddables.isEmpty())? 0 :embeddables.hashCode()));
+        result = ((prime*result)+(((udts == null)||udts.isEmpty())? 0 :udts.hashCode()));
+        result = ((prime*result)+(((attributes == null)||attributes.isEmpty())? 0 :attributes.hashCode()));
         return result;
     }
 

@@ -213,8 +213,8 @@ public class CatalogMappingType implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (schemata == null) {
-            if (other.schemata!= null) {
+        if ((schemata == null)||schemata.isEmpty()) {
+            if ((other.schemata!= null)&&(!other.schemata.isEmpty())) {
                 return false;
             }
         } else {
@@ -232,7 +232,7 @@ public class CatalogMappingType implements Serializable, XMLAppendable
         result = ((prime*result)+((inputCatalog == null)? 0 :inputCatalog.hashCode()));
         result = ((prime*result)+((outputCatalog == null)? 0 :outputCatalog.hashCode()));
         result = ((prime*result)+((outputCatalogToDefault == null)? 0 :outputCatalogToDefault.hashCode()));
-        result = ((prime*result)+((schemata == null)? 0 :schemata.hashCode()));
+        result = ((prime*result)+(((schemata == null)||schemata.isEmpty())? 0 :schemata.hashCode()));
         return result;
     }
 

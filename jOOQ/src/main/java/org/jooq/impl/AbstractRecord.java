@@ -102,6 +102,7 @@ import org.jooq.RecordMapper;
 import org.jooq.Result;
 import org.jooq.TXTFormat;
 import org.jooq.Table;
+import org.jooq.UDTRecord;
 import org.jooq.UniqueKey;
 import org.jooq.XMLFormat;
 import org.jooq.exception.IOException;
@@ -1047,9 +1048,8 @@ implements
     }
 
     /**
-     * @deprecated - 3.20.0 - [#16815] - Do not reuse this method.
+     * Load {@link UDTRecord} content into this record, e.g. after member procedure calls.
      */
-    @Deprecated(forRemoval = true)
     protected final void from(Record source) {
         ConverterContext cc = Tools.converterContext(this);
 

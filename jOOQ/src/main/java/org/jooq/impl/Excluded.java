@@ -121,17 +121,11 @@ implements
             default:
                 // [#7552] When emulating INSERT .. ON DUPLICATE KEY UPDATE using
                 //         MERGE, the EXCLUDED pseudo table is called "t", instead
-                // [#18202] Don't render the EXCLUDED name here in case it needs to be enclosed
-                //          in parentheses, e.g. in a UDTPathField
-                Table<?> t = (Table<?>) ctx.data(SimpleDataKey.DATA_DML_TARGET_TABLE);
-                Table<?> e = ctx.data(ExtendedDataKey.DATA_INSERT_ON_DUPLICATE_KEY_UPDATE) != null
-                    ? table(name("t"))
-                    : table(N_EXCLUDED);
-
-                if (field instanceof UDTPathField)
-                    ctx.scopeRegister(t, false, e).visit(field).scopeRegister(t, false, null);
-                else
-                    ctx.visit(e).sql('.').qualify(false, c -> c.visit(field));
+                ctx.visit(ctx.data(ExtendedDataKey.DATA_INSERT_ON_DUPLICATE_KEY_UPDATE) != null
+                        ? name("t")
+                        : N_EXCLUDED)
+                   .sql('.')
+                   .qualify(false, c -> c.visit(field));
                 break;
         }
     }

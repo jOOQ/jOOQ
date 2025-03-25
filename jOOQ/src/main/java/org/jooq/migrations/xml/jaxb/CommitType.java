@@ -192,8 +192,8 @@ public class CommitType implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (parents == null) {
-            if (other.parents!= null) {
+        if ((parents == null)||parents.isEmpty()) {
+            if ((other.parents!= null)&&(!other.parents.isEmpty())) {
                 return false;
             }
         } else {
@@ -201,8 +201,8 @@ public class CommitType implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (files == null) {
-            if (other.files!= null) {
+        if ((files == null)||files.isEmpty()) {
+            if ((other.files!= null)&&(!other.files.isEmpty())) {
                 return false;
             }
         } else {
@@ -219,8 +219,8 @@ public class CommitType implements Serializable, XMLAppendable
         int result = 1;
         result = ((prime*result)+((id == null)? 0 :id.hashCode()));
         result = ((prime*result)+((message == null)? 0 :message.hashCode()));
-        result = ((prime*result)+((parents == null)? 0 :parents.hashCode()));
-        result = ((prime*result)+((files == null)? 0 :files.hashCode()));
+        result = ((prime*result)+(((parents == null)||parents.isEmpty())? 0 :parents.hashCode()));
+        result = ((prime*result)+(((files == null)||files.isEmpty())? 0 :files.hashCode()));
         return result;
     }
 

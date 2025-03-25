@@ -104,8 +104,8 @@ public class MigrationsType implements Serializable, XMLAppendable
             return false;
         }
         MigrationsType other = ((MigrationsType) that);
-        if (commits == null) {
-            if (other.commits!= null) {
+        if ((commits == null)||commits.isEmpty()) {
+            if ((other.commits!= null)&&(!other.commits.isEmpty())) {
                 return false;
             }
         } else {
@@ -120,7 +120,7 @@ public class MigrationsType implements Serializable, XMLAppendable
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = ((prime*result)+((commits == null)? 0 :commits.hashCode()));
+        result = ((prime*result)+(((commits == null)||commits.isEmpty())? 0 :commits.hashCode()));
         return result;
     }
 

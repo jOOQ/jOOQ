@@ -296,8 +296,8 @@ public class SyntheticForeignKeyType implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (fields == null) {
-            if (other.fields!= null) {
+        if ((fields == null)||fields.isEmpty()) {
+            if ((other.fields!= null)&&(!other.fields.isEmpty())) {
                 return false;
             }
         } else {
@@ -305,8 +305,8 @@ public class SyntheticForeignKeyType implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (referencedFields == null) {
-            if (other.referencedFields!= null) {
+        if ((referencedFields == null)||referencedFields.isEmpty()) {
+            if ((other.referencedFields!= null)&&(!other.referencedFields.isEmpty())) {
                 return false;
             }
         } else {
@@ -325,8 +325,8 @@ public class SyntheticForeignKeyType implements Serializable, XMLAppendable
         result = ((prime*result)+((tables == null)? 0 :tables.hashCode()));
         result = ((prime*result)+((referencedTable == null)? 0 :referencedTable.hashCode()));
         result = ((prime*result)+((referencedKey == null)? 0 :referencedKey.hashCode()));
-        result = ((prime*result)+((fields == null)? 0 :fields.hashCode()));
-        result = ((prime*result)+((referencedFields == null)? 0 :referencedFields.hashCode()));
+        result = ((prime*result)+(((fields == null)||fields.isEmpty())? 0 :fields.hashCode()));
+        result = ((prime*result)+(((referencedFields == null)||referencedFields.isEmpty())? 0 :referencedFields.hashCode()));
         return result;
     }
 

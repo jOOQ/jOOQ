@@ -266,8 +266,8 @@ public class SyntheticPrimaryKeyType implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (fields == null) {
-            if (other.fields!= null) {
+        if ((fields == null)||fields.isEmpty()) {
+            if ((other.fields!= null)&&(!other.fields.isEmpty())) {
                 return false;
             }
         } else {
@@ -286,7 +286,7 @@ public class SyntheticPrimaryKeyType implements Serializable, XMLAppendable
         result = ((prime*result)+((tables == null)? 0 :tables.hashCode()));
         result = ((prime*result)+((key == null)? 0 :key.hashCode()));
         result = ((prime*result)+((ignoreUnused == null)? 0 :ignoreUnused.hashCode()));
-        result = ((prime*result)+((fields == null)? 0 :fields.hashCode()));
+        result = ((prime*result)+(((fields == null)||fields.isEmpty())? 0 :fields.hashCode()));
         return result;
     }
 

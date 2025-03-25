@@ -268,8 +268,8 @@ public class MappedSchema
                 return false;
             }
         }
-        if (tables == null) {
-            if (other.tables!= null) {
+        if ((tables == null)||tables.isEmpty()) {
+            if ((other.tables!= null)&&(!other.tables.isEmpty())) {
                 return false;
             }
         } else {
@@ -277,8 +277,8 @@ public class MappedSchema
                 return false;
             }
         }
-        if (udts == null) {
-            if (other.udts!= null) {
+        if ((udts == null)||udts.isEmpty()) {
+            if ((other.udts!= null)&&(!other.udts.isEmpty())) {
                 return false;
             }
         } else {
@@ -296,8 +296,8 @@ public class MappedSchema
         result = ((prime*result)+((input == null)? 0 :input.hashCode()));
         result = ((prime*result)+((inputExpression == null)? 0 :inputExpression.pattern().hashCode()));
         result = ((prime*result)+((output == null)? 0 :output.hashCode()));
-        result = ((prime*result)+((tables == null)? 0 :tables.hashCode()));
-        result = ((prime*result)+((udts == null)? 0 :udts.hashCode()));
+        result = ((prime*result)+(((tables == null)||tables.isEmpty())? 0 :tables.hashCode()));
+        result = ((prime*result)+(((udts == null)||udts.isEmpty())? 0 :udts.hashCode()));
         return result;
     }
 

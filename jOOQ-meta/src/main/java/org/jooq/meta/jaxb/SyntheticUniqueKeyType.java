@@ -228,8 +228,8 @@ public class SyntheticUniqueKeyType implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (fields == null) {
-            if (other.fields!= null) {
+        if ((fields == null)||fields.isEmpty()) {
+            if ((other.fields!= null)&&(!other.fields.isEmpty())) {
                 return false;
             }
         } else {
@@ -247,7 +247,7 @@ public class SyntheticUniqueKeyType implements Serializable, XMLAppendable
         result = ((prime*result)+((name == null)? 0 :name.hashCode()));
         result = ((prime*result)+((tables == null)? 0 :tables.hashCode()));
         result = ((prime*result)+((ignoreUnused == null)? 0 :ignoreUnused.hashCode()));
-        result = ((prime*result)+((fields == null)? 0 :fields.hashCode()));
+        result = ((prime*result)+(((fields == null)||fields.isEmpty())? 0 :fields.hashCode()));
         return result;
     }
 

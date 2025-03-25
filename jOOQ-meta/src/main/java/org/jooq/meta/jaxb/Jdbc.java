@@ -473,8 +473,8 @@ public class Jdbc implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (properties == null) {
-            if (other.properties!= null) {
+        if ((properties == null)||properties.isEmpty()) {
+            if ((other.properties!= null)&&(!other.properties.isEmpty())) {
                 return false;
             }
         } else {
@@ -499,7 +499,7 @@ public class Jdbc implements Serializable, XMLAppendable
         result = ((prime*result)+((autoCommit == null)? 0 :autoCommit.hashCode()));
         result = ((prime*result)+((initScript == null)? 0 :initScript.hashCode()));
         result = ((prime*result)+((initSeparator == null)? 0 :initSeparator.hashCode()));
-        result = ((prime*result)+((properties == null)? 0 :properties.hashCode()));
+        result = ((prime*result)+(((properties == null)||properties.isEmpty())? 0 :properties.hashCode()));
         return result;
     }
 

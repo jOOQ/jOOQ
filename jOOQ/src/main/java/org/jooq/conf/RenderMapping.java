@@ -213,8 +213,8 @@ public class RenderMapping
                 return false;
             }
         }
-        if (catalogs == null) {
-            if (other.catalogs!= null) {
+        if ((catalogs == null)||catalogs.isEmpty()) {
+            if ((other.catalogs!= null)&&(!other.catalogs.isEmpty())) {
                 return false;
             }
         } else {
@@ -222,8 +222,8 @@ public class RenderMapping
                 return false;
             }
         }
-        if (schemata == null) {
-            if (other.schemata!= null) {
+        if ((schemata == null)||schemata.isEmpty()) {
+            if ((other.schemata!= null)&&(!other.schemata.isEmpty())) {
                 return false;
             }
         } else {
@@ -240,8 +240,8 @@ public class RenderMapping
         int result = 1;
         result = ((prime*result)+((defaultCatalog == null)? 0 :defaultCatalog.hashCode()));
         result = ((prime*result)+((defaultSchema == null)? 0 :defaultSchema.hashCode()));
-        result = ((prime*result)+((catalogs == null)? 0 :catalogs.hashCode()));
-        result = ((prime*result)+((schemata == null)? 0 :schemata.hashCode()));
+        result = ((prime*result)+(((catalogs == null)||catalogs.isEmpty())? 0 :catalogs.hashCode()));
+        result = ((prime*result)+(((schemata == null)||schemata.isEmpty())? 0 :schemata.hashCode()));
         return result;
     }
 

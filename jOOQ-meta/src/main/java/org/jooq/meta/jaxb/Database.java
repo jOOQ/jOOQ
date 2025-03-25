@@ -3315,8 +3315,8 @@ public class Database implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (regexFlags == null) {
-            if (other.regexFlags!= null) {
+        if ((regexFlags == null)||regexFlags.isEmpty()) {
+            if ((other.regexFlags!= null)&&(!other.regexFlags.isEmpty())) {
                 return false;
             }
         } else {
@@ -3918,8 +3918,8 @@ public class Database implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (properties == null) {
-            if (other.properties!= null) {
+        if ((properties == null)||properties.isEmpty()) {
+            if ((other.properties!= null)&&(!other.properties.isEmpty())) {
                 return false;
             }
         } else {
@@ -3927,8 +3927,8 @@ public class Database implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (comments == null) {
-            if (other.comments!= null) {
+        if ((comments == null)||comments.isEmpty()) {
+            if ((other.comments!= null)&&(!other.comments.isEmpty())) {
                 return false;
             }
         } else {
@@ -3936,8 +3936,8 @@ public class Database implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (catalogs == null) {
-            if (other.catalogs!= null) {
+        if ((catalogs == null)||catalogs.isEmpty()) {
+            if ((other.catalogs!= null)&&(!other.catalogs.isEmpty())) {
                 return false;
             }
         } else {
@@ -3945,8 +3945,8 @@ public class Database implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (schemata == null) {
-            if (other.schemata!= null) {
+        if ((schemata == null)||schemata.isEmpty()) {
+            if ((other.schemata!= null)&&(!other.schemata.isEmpty())) {
                 return false;
             }
         } else {
@@ -3954,8 +3954,8 @@ public class Database implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (embeddables == null) {
-            if (other.embeddables!= null) {
+        if ((embeddables == null)||embeddables.isEmpty()) {
+            if ((other.embeddables!= null)&&(!other.embeddables.isEmpty())) {
                 return false;
             }
         } else {
@@ -3963,8 +3963,8 @@ public class Database implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (customTypes == null) {
-            if (other.customTypes!= null) {
+        if ((customTypes == null)||customTypes.isEmpty()) {
+            if ((other.customTypes!= null)&&(!other.customTypes.isEmpty())) {
                 return false;
             }
         } else {
@@ -3972,8 +3972,8 @@ public class Database implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (enumTypes == null) {
-            if (other.enumTypes!= null) {
+        if ((enumTypes == null)||enumTypes.isEmpty()) {
+            if ((other.enumTypes!= null)&&(!other.enumTypes.isEmpty())) {
                 return false;
             }
         } else {
@@ -3981,8 +3981,8 @@ public class Database implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (forcedTypes == null) {
-            if (other.forcedTypes!= null) {
+        if ((forcedTypes == null)||forcedTypes.isEmpty()) {
+            if ((other.forcedTypes!= null)&&(!other.forcedTypes.isEmpty())) {
                 return false;
             }
         } else {
@@ -3999,7 +3999,7 @@ public class Database implements Serializable, XMLAppendable
         int result = 1;
         result = ((prime*result)+((name == null)? 0 :name.hashCode()));
         result = ((prime*result)+((java == null)? 0 :java.hashCode()));
-        result = ((prime*result)+((regexFlags == null)? 0 :regexFlags.hashCode()));
+        result = ((prime*result)+(((regexFlags == null)||regexFlags.isEmpty())? 0 :regexFlags.hashCode()));
         result = ((prime*result)+((regexMatchesPartialQualification == null)? 0 :regexMatchesPartialQualification.hashCode()));
         result = ((prime*result)+((sqlMatchesPartialQualification == null)? 0 :sqlMatchesPartialQualification.hashCode()));
         result = ((prime*result)+((includes == null)? 0 :includes.hashCode()));
@@ -4066,14 +4066,14 @@ public class Database implements Serializable, XMLAppendable
         result = ((prime*result)+((oracleUseDBAViews == null)? 0 :oracleUseDBAViews.hashCode()));
         result = ((prime*result)+((logSlowQueriesAfterSeconds == null)? 0 :logSlowQueriesAfterSeconds.hashCode()));
         result = ((prime*result)+((logSlowResultsAfterSeconds == null)? 0 :logSlowResultsAfterSeconds.hashCode()));
-        result = ((prime*result)+((properties == null)? 0 :properties.hashCode()));
-        result = ((prime*result)+((comments == null)? 0 :comments.hashCode()));
-        result = ((prime*result)+((catalogs == null)? 0 :catalogs.hashCode()));
-        result = ((prime*result)+((schemata == null)? 0 :schemata.hashCode()));
-        result = ((prime*result)+((embeddables == null)? 0 :embeddables.hashCode()));
-        result = ((prime*result)+((customTypes == null)? 0 :customTypes.hashCode()));
-        result = ((prime*result)+((enumTypes == null)? 0 :enumTypes.hashCode()));
-        result = ((prime*result)+((forcedTypes == null)? 0 :forcedTypes.hashCode()));
+        result = ((prime*result)+(((properties == null)||properties.isEmpty())? 0 :properties.hashCode()));
+        result = ((prime*result)+(((comments == null)||comments.isEmpty())? 0 :comments.hashCode()));
+        result = ((prime*result)+(((catalogs == null)||catalogs.isEmpty())? 0 :catalogs.hashCode()));
+        result = ((prime*result)+(((schemata == null)||schemata.isEmpty())? 0 :schemata.hashCode()));
+        result = ((prime*result)+(((embeddables == null)||embeddables.isEmpty())? 0 :embeddables.hashCode()));
+        result = ((prime*result)+(((customTypes == null)||customTypes.isEmpty())? 0 :customTypes.hashCode()));
+        result = ((prime*result)+(((enumTypes == null)||enumTypes.isEmpty())? 0 :enumTypes.hashCode()));
+        result = ((prime*result)+(((forcedTypes == null)||forcedTypes.isEmpty())? 0 :forcedTypes.hashCode()));
         return result;
     }
 

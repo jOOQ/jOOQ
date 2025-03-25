@@ -232,8 +232,8 @@ public class MappedCatalog
                 return false;
             }
         }
-        if (schemata == null) {
-            if (other.schemata!= null) {
+        if ((schemata == null)||schemata.isEmpty()) {
+            if ((other.schemata!= null)&&(!other.schemata.isEmpty())) {
                 return false;
             }
         } else {
@@ -251,7 +251,7 @@ public class MappedCatalog
         result = ((prime*result)+((input == null)? 0 :input.hashCode()));
         result = ((prime*result)+((inputExpression == null)? 0 :inputExpression.pattern().hashCode()));
         result = ((prime*result)+((output == null)? 0 :output.hashCode()));
-        result = ((prime*result)+((schemata == null)? 0 :schemata.hashCode()));
+        result = ((prime*result)+(((schemata == null)||schemata.isEmpty())? 0 :schemata.hashCode()));
         return result;
     }
 

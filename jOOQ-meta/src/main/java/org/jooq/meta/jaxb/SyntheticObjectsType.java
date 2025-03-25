@@ -487,8 +487,8 @@ public class SyntheticObjectsType implements Serializable, XMLAppendable
             return false;
         }
         SyntheticObjectsType other = ((SyntheticObjectsType) that);
-        if (readonlyColumns == null) {
-            if (other.readonlyColumns!= null) {
+        if ((readonlyColumns == null)||readonlyColumns.isEmpty()) {
+            if ((other.readonlyColumns!= null)&&(!other.readonlyColumns.isEmpty())) {
                 return false;
             }
         } else {
@@ -496,8 +496,8 @@ public class SyntheticObjectsType implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (readonlyRowids == null) {
-            if (other.readonlyRowids!= null) {
+        if ((readonlyRowids == null)||readonlyRowids.isEmpty()) {
+            if ((other.readonlyRowids!= null)&&(!other.readonlyRowids.isEmpty())) {
                 return false;
             }
         } else {
@@ -505,8 +505,8 @@ public class SyntheticObjectsType implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (columns == null) {
-            if (other.columns!= null) {
+        if ((columns == null)||columns.isEmpty()) {
+            if ((other.columns!= null)&&(!other.columns.isEmpty())) {
                 return false;
             }
         } else {
@@ -514,8 +514,8 @@ public class SyntheticObjectsType implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (identities == null) {
-            if (other.identities!= null) {
+        if ((identities == null)||identities.isEmpty()) {
+            if ((other.identities!= null)&&(!other.identities.isEmpty())) {
                 return false;
             }
         } else {
@@ -523,8 +523,8 @@ public class SyntheticObjectsType implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (defaults == null) {
-            if (other.defaults!= null) {
+        if ((defaults == null)||defaults.isEmpty()) {
+            if ((other.defaults!= null)&&(!other.defaults.isEmpty())) {
                 return false;
             }
         } else {
@@ -532,8 +532,8 @@ public class SyntheticObjectsType implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (enums == null) {
-            if (other.enums!= null) {
+        if ((enums == null)||enums.isEmpty()) {
+            if ((other.enums!= null)&&(!other.enums.isEmpty())) {
                 return false;
             }
         } else {
@@ -541,8 +541,8 @@ public class SyntheticObjectsType implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (primaryKeys == null) {
-            if (other.primaryKeys!= null) {
+        if ((primaryKeys == null)||primaryKeys.isEmpty()) {
+            if ((other.primaryKeys!= null)&&(!other.primaryKeys.isEmpty())) {
                 return false;
             }
         } else {
@@ -550,8 +550,8 @@ public class SyntheticObjectsType implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (uniqueKeys == null) {
-            if (other.uniqueKeys!= null) {
+        if ((uniqueKeys == null)||uniqueKeys.isEmpty()) {
+            if ((other.uniqueKeys!= null)&&(!other.uniqueKeys.isEmpty())) {
                 return false;
             }
         } else {
@@ -559,8 +559,8 @@ public class SyntheticObjectsType implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (foreignKeys == null) {
-            if (other.foreignKeys!= null) {
+        if ((foreignKeys == null)||foreignKeys.isEmpty()) {
+            if ((other.foreignKeys!= null)&&(!other.foreignKeys.isEmpty())) {
                 return false;
             }
         } else {
@@ -568,8 +568,8 @@ public class SyntheticObjectsType implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (synonyms == null) {
-            if (other.synonyms!= null) {
+        if ((synonyms == null)||synonyms.isEmpty()) {
+            if ((other.synonyms!= null)&&(!other.synonyms.isEmpty())) {
                 return false;
             }
         } else {
@@ -577,8 +577,8 @@ public class SyntheticObjectsType implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (views == null) {
-            if (other.views!= null) {
+        if ((views == null)||views.isEmpty()) {
+            if ((other.views!= null)&&(!other.views.isEmpty())) {
                 return false;
             }
         } else {
@@ -586,8 +586,8 @@ public class SyntheticObjectsType implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (daos == null) {
-            if (other.daos!= null) {
+        if ((daos == null)||daos.isEmpty()) {
+            if ((other.daos!= null)&&(!other.daos.isEmpty())) {
                 return false;
             }
         } else {
@@ -602,18 +602,18 @@ public class SyntheticObjectsType implements Serializable, XMLAppendable
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = ((prime*result)+((readonlyColumns == null)? 0 :readonlyColumns.hashCode()));
-        result = ((prime*result)+((readonlyRowids == null)? 0 :readonlyRowids.hashCode()));
-        result = ((prime*result)+((columns == null)? 0 :columns.hashCode()));
-        result = ((prime*result)+((identities == null)? 0 :identities.hashCode()));
-        result = ((prime*result)+((defaults == null)? 0 :defaults.hashCode()));
-        result = ((prime*result)+((enums == null)? 0 :enums.hashCode()));
-        result = ((prime*result)+((primaryKeys == null)? 0 :primaryKeys.hashCode()));
-        result = ((prime*result)+((uniqueKeys == null)? 0 :uniqueKeys.hashCode()));
-        result = ((prime*result)+((foreignKeys == null)? 0 :foreignKeys.hashCode()));
-        result = ((prime*result)+((synonyms == null)? 0 :synonyms.hashCode()));
-        result = ((prime*result)+((views == null)? 0 :views.hashCode()));
-        result = ((prime*result)+((daos == null)? 0 :daos.hashCode()));
+        result = ((prime*result)+(((readonlyColumns == null)||readonlyColumns.isEmpty())? 0 :readonlyColumns.hashCode()));
+        result = ((prime*result)+(((readonlyRowids == null)||readonlyRowids.isEmpty())? 0 :readonlyRowids.hashCode()));
+        result = ((prime*result)+(((columns == null)||columns.isEmpty())? 0 :columns.hashCode()));
+        result = ((prime*result)+(((identities == null)||identities.isEmpty())? 0 :identities.hashCode()));
+        result = ((prime*result)+(((defaults == null)||defaults.isEmpty())? 0 :defaults.hashCode()));
+        result = ((prime*result)+(((enums == null)||enums.isEmpty())? 0 :enums.hashCode()));
+        result = ((prime*result)+(((primaryKeys == null)||primaryKeys.isEmpty())? 0 :primaryKeys.hashCode()));
+        result = ((prime*result)+(((uniqueKeys == null)||uniqueKeys.isEmpty())? 0 :uniqueKeys.hashCode()));
+        result = ((prime*result)+(((foreignKeys == null)||foreignKeys.isEmpty())? 0 :foreignKeys.hashCode()));
+        result = ((prime*result)+(((synonyms == null)||synonyms.isEmpty())? 0 :synonyms.hashCode()));
+        result = ((prime*result)+(((views == null)||views.isEmpty())? 0 :views.hashCode()));
+        result = ((prime*result)+(((daos == null)||daos.isEmpty())? 0 :daos.hashCode()));
         return result;
     }
 

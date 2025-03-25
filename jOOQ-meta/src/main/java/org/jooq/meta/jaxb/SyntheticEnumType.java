@@ -432,8 +432,8 @@ public class SyntheticEnumType implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (literals == null) {
-            if (other.literals!= null) {
+        if ((literals == null)||literals.isEmpty()) {
+            if ((other.literals!= null)&&(!other.literals.isEmpty())) {
                 return false;
             }
         } else {
@@ -456,7 +456,7 @@ public class SyntheticEnumType implements Serializable, XMLAppendable
         result = ((prime*result)+((literalsFromCheckConstraints == null)? 0 :literalsFromCheckConstraints.hashCode()));
         result = ((prime*result)+((comment == null)? 0 :comment.hashCode()));
         result = ((prime*result)+((ignoreUnused == null)? 0 :ignoreUnused.hashCode()));
-        result = ((prime*result)+((literals == null)? 0 :literals.hashCode()));
+        result = ((prime*result)+(((literals == null)||literals.isEmpty())? 0 :literals.hashCode()));
         return result;
     }
 

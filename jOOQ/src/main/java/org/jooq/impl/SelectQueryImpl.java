@@ -2181,6 +2181,9 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
            .visit(K_FROM).sqlIndentStart(" (")
            .subquery(true);
 
+        // [#18234] Re-push window specifications to the new subquery scope
+        pushWindow(ctx);
+
         // [#13560] [#17947] Communicate the enforcement of MULTISET content to the CursorImpl.
         if (ctx.executeContext() != null)
             ctx.executeContext().data(DATA_MULTISET_CONTENT, true);

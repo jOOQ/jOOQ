@@ -47,6 +47,7 @@ import org.jooq.ExecuteListener;
 import org.jooq.Query;
 import org.jooq.conf.SettingsTools;
 import org.jooq.exception.ControlFlowSignal;
+import org.jooq.impl.DefaultRenderContext.Rendered;
 import org.jooq.impl.R2DBC.BatchMultipleSubscriber;
 import org.jooq.impl.R2DBC.BatchSubscription;
 
@@ -106,8 +107,10 @@ final class BatchMultiple extends AbstractBatch {
             for (int i = 0; i < ctx.batchQueries().length; i++) {
                 ctx.sql(null);
                 listener.renderStart(ctx);
-                batchSQL[i] = DSL.using(configuration).renderInlined(ctx.batchQueries()[i]);
-                ctx.sql(batchSQL[i]);
+
+                Rendered r = Rendered.rendered(configuration, ctx, ctx.batchQueries()[i], false, true);
+                r.setSQLAndParams(ctx);
+                ctx.sql(batchSQL[i] = r.sql);
                 listener.renderEnd(ctx);
             }
 

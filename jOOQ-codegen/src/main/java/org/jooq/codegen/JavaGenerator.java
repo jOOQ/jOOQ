@@ -94,6 +94,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -134,7 +135,6 @@ import org.jooq.PlainSQL;
 import org.jooq.Query;
 import org.jooq.QueryPart;
 import org.jooq.Record;
-import org.jooq.Record2;
 import org.jooq.RecordQualifier;
 import org.jooq.Records;
 import org.jooq.Result;
@@ -565,15 +565,16 @@ public class JavaGenerator extends AbstractGenerator {
 
         StopWatch w = new StopWatch();
         for (CatalogDefinition catalog : database.getCatalogs()) {
-            try {
-                if (generateCatalogIfEmpty(catalog))
-                    generate(catalog);
-                else
-                    log.info("Excluding empty catalog", catalog);
-            }
-            catch (Exception e) {
-                throw new GeneratorException("Error generating code for catalog " + catalog, e);
-            }
+            GenerationUtil.run(
+                database.onError(),
+                () -> {
+                    if (generateCatalogIfEmpty(catalog))
+                        generate(catalog);
+                    else
+                        log.info("Excluding empty catalog", catalog);
+                },
+                () -> "Error generating code for catalog " + catalog
+            );
         }
 
         long time = w.split();
@@ -661,15 +662,16 @@ public class JavaGenerator extends AbstractGenerator {
 
         log.info("Generating schemata", "Total: " + catalog.getSchemata().size());
         for (SchemaDefinition schema : catalog.getSchemata()) {
-            try {
-                if (generateSchemaIfEmpty(schema))
-                    generate(schema);
-                else
-                    log.info("Excluding empty schema", schema);
-            }
-            catch (Exception e) {
-                throw new GeneratorException("Error generating code for schema " + schema, e);
-            }
+            GenerationUtil.run(
+                database.onError(),
+                () -> {
+                    if (generateSchemaIfEmpty(schema))
+                        generate(schema);
+                    else
+                        log.info("Excluding empty schema", schema);
+                },
+                () -> "Error generating code for schema " + schema
+            );
         }
     }
 
@@ -1052,7 +1054,7 @@ public class JavaGenerator extends AbstractGenerator {
     protected void generateRelations(SchemaDefinition schema) {
         log.info("Generating Keys");
 
-        boolean empty = true;
+        AtomicBoolean empty = new AtomicBoolean(true);
         JavaWriter out = newJavaWriter(getStrategy().getGlobalReferencesFile(schema, ConstraintDefinition.class));
         out.refConflicts(getStrategy().getJavaIdentifiers(database.getKeys(schema)));
         out.refConflicts(getStrategy().getJavaIdentifiers(database.getForeignKeys(schema)));
@@ -1080,69 +1082,72 @@ public class JavaGenerator extends AbstractGenerator {
         List<ForeignKeyDefinition> allForeignKeys = new ArrayList<>();
 
         // Unique keys
-        try {
-            for (UniqueKeyDefinition uniqueKey : database.getKeys(schema)) {
-                empty = false;
+        GenerationUtil.run(
+            database.onError(),
+            () -> {
+                for (UniqueKeyDefinition uniqueKey : database.getKeys(schema)) {
+                    empty.set(false);
 
-                final String keyType = out.ref(getStrategy().getFullJavaClassName(uniqueKey.getTable(), Mode.RECORD));
-                final String keyId = getStrategy().getJavaIdentifier(uniqueKey);
-                final int block = allUniqueKeys.size() / maxMembersPerInitialiser();
+                    final String keyType = out.ref(getStrategy().getFullJavaClassName(uniqueKey.getTable(), Mode.RECORD));
+                    final String keyId = getStrategy().getJavaIdentifier(uniqueKey);
+                    final int block = allUniqueKeys.size() / maxMembersPerInitialiser();
 
-                // [#10480] Print header before first key
-                if (allUniqueKeys.isEmpty()) {
-                    out.header("UNIQUE and PRIMARY KEY definitions");
-                    out.println();
-                }
+                    // [#10480] Print header before first key
+                    if (allUniqueKeys.isEmpty()) {
+                        out.header("UNIQUE and PRIMARY KEY definitions");
+                        out.println();
+                    }
 
-                if (distributeUniqueKeys)
-                    if (scala)
-                        out.println("%sval %s = UniqueKeys%s.%s", visibility(), keyId, block, keyId);
-                    else if (kotlin)
-                        out.println("%sval %s: %s<%s> = UniqueKeys%s.%s", visibility(), keyId, UniqueKey.class, keyType, block, keyId);
+                    if (distributeUniqueKeys)
+                        if (scala)
+                            out.println("%sval %s = UniqueKeys%s.%s", visibility(), keyId, block, keyId);
+                        else if (kotlin)
+                            out.println("%sval %s: %s<%s> = UniqueKeys%s.%s", visibility(), keyId, UniqueKey.class, keyType, block, keyId);
+                        else
+                            out.println("%sstatic final %s<%s> %s = UniqueKeys%s.%s;", visibility(), UniqueKey.class, keyType, keyId, block, keyId);
                     else
-                        out.println("%sstatic final %s<%s> %s = UniqueKeys%s.%s;", visibility(), UniqueKey.class, keyType, keyId, block, keyId);
-                else
-                    printUniqueKey(out, -1, uniqueKey, distributeUniqueKeys);
+                        printUniqueKey(out, -1, uniqueKey, distributeUniqueKeys);
 
-                allUniqueKeys.add(uniqueKey);
-            }
-        }
-        catch (Exception e) {
-            log.error("Error while generating unique keys for schema " + schema, e);
-        }
+                    allUniqueKeys.add(uniqueKey);
+                }
+            },
+            () -> "Error while generating unique keys for schema " + schema
+        );
+
 
         // Foreign keys
-        try {
-            for (ForeignKeyDefinition foreignKey : database.getForeignKeys(schema)) {
-                empty = false;
+        GenerationUtil.run(
+            database.onError(),
+            () -> {
+                for (ForeignKeyDefinition foreignKey : database.getForeignKeys(schema)) {
+                    empty.set(false);
 
-                final String keyType = out.ref(getStrategy().getFullJavaClassName(foreignKey.getKeyTable(), Mode.RECORD));
-                final String referencedType = out.ref(getStrategy().getFullJavaClassName(foreignKey.getReferencedTable(), Mode.RECORD));
-                final String keyId = getStrategy().getJavaIdentifier(foreignKey);
-                final int block = allForeignKeys.size() / maxMembersPerInitialiser();
+                    final String keyType = out.ref(getStrategy().getFullJavaClassName(foreignKey.getKeyTable(), Mode.RECORD));
+                    final String referencedType = out.ref(getStrategy().getFullJavaClassName(foreignKey.getReferencedTable(), Mode.RECORD));
+                    final String keyId = getStrategy().getJavaIdentifier(foreignKey);
+                    final int block = allForeignKeys.size() / maxMembersPerInitialiser();
 
-                // [#10480] Print header before first key
-                if (allForeignKeys.isEmpty()) {
-                    out.header("FOREIGN KEY definitions");
-                    out.println();
-                }
+                    // [#10480] Print header before first key
+                    if (allForeignKeys.isEmpty()) {
+                        out.header("FOREIGN KEY definitions");
+                        out.println();
+                    }
 
-                if (distributeForeignKeys)
-                    if (scala)
-                        out.println("%sval %s = ForeignKeys%s.%s", visibility(), keyId, block, keyId);
-                    else if (kotlin)
-                        out.println("%sval %s: %s<%s, %s> = ForeignKeys%s.%s", visibility(), keyId, ForeignKey.class, keyType, referencedType, block, keyId);
+                    if (distributeForeignKeys)
+                        if (scala)
+                            out.println("%sval %s = ForeignKeys%s.%s", visibility(), keyId, block, keyId);
+                        else if (kotlin)
+                            out.println("%sval %s: %s<%s, %s> = ForeignKeys%s.%s", visibility(), keyId, ForeignKey.class, keyType, referencedType, block, keyId);
+                        else
+                            out.println("%sstatic final %s<%s, %s> %s = ForeignKeys%s.%s;", visibility(), ForeignKey.class, keyType, referencedType, keyId, block, keyId);
                     else
-                        out.println("%sstatic final %s<%s, %s> %s = ForeignKeys%s.%s;", visibility(), ForeignKey.class, keyType, referencedType, keyId, block, keyId);
-                else
-                    printForeignKey(out, -1, foreignKey, distributeForeignKeys);
+                        printForeignKey(out, -1, foreignKey, distributeForeignKeys);
 
-                allForeignKeys.add(foreignKey);
-            }
-        }
-        catch (Exception e) {
-            log.error("Error while generating foreign keys for schema " + schema, e);
-        }
+                    allForeignKeys.add(foreignKey);
+                }
+            },
+            () -> "Error while generating foreign keys for schema " + schema
+        );
 
         // [#1459] [#10554] [#10653] Print nested classes for actual static field initialisations
         // keeping top-level initialiser small
@@ -1180,7 +1185,7 @@ public class JavaGenerator extends AbstractGenerator {
         if (!kotlin)
             out.println("}");
 
-        if (empty) {
+        if (empty.get()) {
             log.info("Skipping empty keys");
         }
         else {
@@ -1229,25 +1234,26 @@ public class JavaGenerator extends AbstractGenerator {
         out.println();
 
         for (IndexDefinition index : database.getIndexes(schema)) {
-            try {
-                final String keyId = getStrategy().getJavaIdentifier(index);
-                final int block = allIndexes.size() / maxMembersPerInitialiser();
+            GenerationUtil.run(
+                database.onError(),
+                () -> {
+                    final String keyId = getStrategy().getJavaIdentifier(index);
+                    final int block = allIndexes.size() / maxMembersPerInitialiser();
 
-                if (distributeIndexes)
-                    if (scala)
-                        out.println("%sval %s = Indexes%s.%s", visibility(), keyId, block, keyId);
-                    else if (kotlin)
-                        out.println("%sval %s: %s = Indexes%s.%s", visibility(), keyId, Index.class, block, keyId);
+                    if (distributeIndexes)
+                        if (scala)
+                            out.println("%sval %s = Indexes%s.%s", visibility(), keyId, block, keyId);
+                        else if (kotlin)
+                            out.println("%sval %s: %s = Indexes%s.%s", visibility(), keyId, Index.class, block, keyId);
+                        else
+                            out.println("%sstatic final %s %s = Indexes%s.%s;", visibility(), Index.class, keyId, block, keyId);
                     else
-                        out.println("%sstatic final %s %s = Indexes%s.%s;", visibility(), Index.class, keyId, block, keyId);
-                else
-                    printIndex(out, -1, index, distributeIndexes);
+                        printIndex(out, -1, index, distributeIndexes);
 
-                allIndexes.add(index);
-            }
-            catch (Exception e) {
-                log.error("Error while generating index " + index, e);
-            }
+                    allIndexes.add(index);
+                },
+                () -> "Error while generating index " + index
+            );
         }
 
         // [#1459] [#10554] [#10653] Print nested classes for actual static field initialisations
@@ -1653,17 +1659,16 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("Generating table records");
 
         for (TableDefinition table : database.getTables(schema)) {
-            try {
-                if (generateRecordsIncluded(table)) {
-                    if (table.isTableValuedFunction() && table.getReferencedTableOrUDT() != table)
-                        continue;
-
-                    generateRecord(table);
-                }
-            }
-            catch (Exception e) {
-                log.error("Error while generating table record " + table, e);
-            }
+            GenerationUtil.run(
+                database.onError(),
+                () -> {
+                    if (generateRecordsIncluded(table)) {
+                        if (!table.isTableValuedFunction() || table.getReferencedTableOrUDT() == table)
+                            generateRecord(table);
+                    }
+                },
+                () -> "Error while generating table record " + table
+            );
         }
 
         watch.splitInfo("Table records generated");
@@ -1873,22 +1878,22 @@ public class JavaGenerator extends AbstractGenerator {
                 boolean instance = routine.getInParameters().size() > 0
                                 && routine.getInParameters().get(0).getInputName().toUpperCase(getStrategy().getTargetLocale()).equals("SELF");
 
-                try {
-                    if (!routine.isSQLUsable()) {
-                        // Instance execute() convenience method
-                        printConvenienceMethodProcedure(out, routine, instance);
-                    }
-                    else {
-                        // Instance execute() convenience method
-                        if (!routine.isAggregate()) {
-                            printConvenienceMethodFunction(out, routine, instance);
+                GenerationUtil.run(
+                    database.onError(),
+                    () -> {
+                        if (!routine.isSQLUsable()) {
+                            // Instance execute() convenience method
+                            printConvenienceMethodProcedure(out, routine, instance);
                         }
-                    }
-
-                }
-                catch (Exception e) {
-                    log.error("Error while generating routine " + routine, e);
-                }
+                        else {
+                            // Instance execute() convenience method
+                            if (!routine.isAggregate()) {
+                                printConvenienceMethodFunction(out, routine, instance);
+                            }
+                        }
+                    },
+                    () -> "Error while generating routine " + routine
+                );
             }
         }
 
@@ -3337,12 +3342,13 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("Generating table interfaces");
 
         for (TableDefinition table : database.getTables(schema)) {
-            try {
-                generateInterface(table);
-            }
-            catch (Exception e) {
-                log.error("Error while generating table interface " + table, e);
-            }
+            GenerationUtil.run(
+                database.onError(),
+                () -> {
+                    generateInterface(table);
+                },
+                () -> "Error while generating table interface " + table
+            );
         }
 
         watch.splitInfo("Table interfaces generated");
@@ -3614,21 +3620,22 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("Generating UDTs");
 
         for (UDTDefinition udt : database.getUDTs(schema)) {
-            try {
-                if (generateUDTs()) {
-                    generateUDT(schema, udt);
+            GenerationUtil.run(
+                database.onError(),
+                () -> {
+                    if (generateUDTs()) {
+                        generateUDT(schema, udt);
 
-                    // [#228] Package UDTs can't be used as path expressions in SQL
-                    if (generateUDTPaths() && udt.getPackage() == null)
-                        generateUDTPath(schema, udt);
-                }
+                        // [#228] Package UDTs can't be used as path expressions in SQL
+                        if (generateUDTPaths() && udt.getPackage() == null)
+                            generateUDTPath(schema, udt);
+                    }
 
-                if (generateGlobalObjectNames())
-                    generateGlobalObjectNames(udt, AttributeDefinition.class);
-            }
-            catch (Exception e) {
-                log.error("Error while generating udt " + udt, e);
-            }
+                    if (generateGlobalObjectNames())
+                        generateGlobalObjectNames(udt, AttributeDefinition.class);
+                },
+                () -> "Error while generating udt " + udt
+            );
         }
 
         watch.splitInfo("UDTs generated");
@@ -3735,26 +3742,27 @@ public class JavaGenerator extends AbstractGenerator {
 
         // [#799] Oracle UDT's can have member procedures
         for (RoutineDefinition routine : udt.getRoutines()) {
-            try {
-                if (!routine.isSQLUsable()) {
+            GenerationUtil.run(
+                database.onError(),
+                () -> {
+                    if (!routine.isSQLUsable()) {
 
-                    // Static execute() convenience method
-                    printConvenienceMethodProcedure(out, routine, false);
-                }
-                else {
+                        // Static execute() convenience method
+                        printConvenienceMethodProcedure(out, routine, false);
+                    }
+                    else {
 
-                    // Static execute() convenience method
-                    if (!routine.isAggregate())
-                        printConvenienceMethodFunction(out, routine, false);
+                        // Static execute() convenience method
+                        if (!routine.isAggregate())
+                            printConvenienceMethodFunction(out, routine, false);
 
-                    // Static asField() convenience method
-                    printConvenienceMethodFunctionAsField(out, routine, false);
-                    printConvenienceMethodFunctionAsField(out, routine, true);
-                }
-            }
-            catch (Exception e) {
-                log.error("Error while generating routine " + routine, e);
-            }
+                        // Static asField() convenience method
+                        printConvenienceMethodFunctionAsField(out, routine, false);
+                        printConvenienceMethodFunctionAsField(out, routine, true);
+                    }
+                },
+                () -> "Error while generating routine " + routine
+            );
         }
 
         if (scala || kotlin) {
@@ -3977,12 +3985,13 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("Generating UDT POJOs");
 
         for (UDTDefinition udt : database.getUDTs(schema)) {
-            try {
-                generateUDTPojo(udt);
-            }
-            catch (Exception e) {
-                log.error("Error while generating UDT POJO " + udt, e);
-            }
+            GenerationUtil.run(
+                database.onError(),
+                () -> {
+                    generateUDTPojo(udt);
+                },
+                () -> "Error while generating UDT POJO " + udt
+            );
         }
 
         watch.splitInfo("UDT POJOs generated");
@@ -4008,12 +4017,13 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("Generating UDT interfaces");
 
         for (UDTDefinition udt : database.getUDTs(schema)) {
-            try {
-                generateUDTInterface(udt);
-            }
-            catch (Exception e) {
-                log.error("Error while generating UDT interface " + udt, e);
-            }
+            GenerationUtil.run(
+                database.onError(),
+                () -> {
+                    generateUDTInterface(udt);
+                },
+                () -> "Error while generating UDT interface " + udt
+            );
         }
 
         watch.splitInfo("UDT interfaces generated");
@@ -4042,12 +4052,13 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("Generating UDT records");
 
         for (UDTDefinition udt : database.getUDTs(schema)) {
-            try {
-                generateUDTRecord(udt);
-            }
-            catch (Exception e) {
-                log.error("Error while generating UDT record " + udt, e);
-            }
+            GenerationUtil.run(
+                database.onError(),
+                () -> {
+                    generateUDTRecord(udt);
+                },
+                () -> "Error while generating UDT record " + udt
+            );
         }
 
         watch.splitInfo("UDT records generated");
@@ -4076,13 +4087,14 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("Generating UDT record types");
 
         for (UDTDefinition udt : database.getUDTs(schema)) {
-            try {
-                if (udt.isInTypeHierarchy())
-                    generateUDTRecordType(udt);
-            }
-            catch (Exception e) {
-                log.error("Error while generating UDT record types " + udt, e);
-            }
+            GenerationUtil.run(
+                database.onError(),
+                () -> {
+                    if (udt.isInTypeHierarchy())
+                        generateUDTRecordType(udt);
+                },
+                () -> "Error while generating UDT record types " + udt
+            );
         }
 
         watch.splitInfo("UDT record types generated");
@@ -4107,20 +4119,16 @@ public class JavaGenerator extends AbstractGenerator {
     protected void generateUDTRoutines(SchemaDefinition schema) {
         for (UDTDefinition udt : database.getUDTs(schema)) {
             if (udt.getRoutines().size() > 0) {
-                try {
-                    log.info("Generating member routines");
+                log.info("Generating member routines");
 
-                    for (RoutineDefinition routine : udt.getRoutines()) {
-                        try {
+                for (RoutineDefinition routine : udt.getRoutines()) {
+                    GenerationUtil.run(
+                        database.onError(),
+                        () -> {
                             generateRoutine(schema, routine);
-                        }
-                        catch (Exception e) {
-                            log.error("Error while generating member routines " + routine, e);
-                        }
-                    }
-                }
-                catch (Exception e) {
-                    log.error("Error while generating UDT " + udt, e);
+                        },
+                        () -> "Error while generating member routines " + routine
+                    );
                 }
 
                 watch.splitInfo("Member procedures routines");
@@ -4323,12 +4331,13 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("Generating ARRAYs");
 
         for (ArrayDefinition array : database.getArrays(schema)) {
-            try {
-                generateArray(schema, array);
-            }
-            catch (Exception e) {
-                log.error("Error while generating ARRAY record " + array, e);
-            }
+            GenerationUtil.run(
+                database.onError(),
+                () -> {
+                    generateArray(schema, array);
+                },
+                () -> "Error while generating ARRAY record " + array
+            );
         }
 
         watch.splitInfo("ARRAYs generated");
@@ -4477,15 +4486,16 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("Generating ENUMs");
 
         for (EnumDefinition e : database.getEnums(schema)) {
-            try {
-                generateEnum(e);
+            GenerationUtil.run(
+                database.onError(),
+                () -> {
+                    generateEnum(e);
 
-                if (generateGlobalObjectNames())
-                    generateGlobalObjectNames(e, EnumLiteralDefinition.class);
-            }
-            catch (Exception ex) {
-                log.error("Error while generating enum " + e, ex);
-            }
+                    if (generateGlobalObjectNames())
+                        generateGlobalObjectNames(e, EnumLiteralDefinition.class);
+                },
+                () -> "Error while generating enum " + e
+            );
         }
 
         watch.splitInfo("Enums generated");
@@ -4747,16 +4757,17 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("Generating routines and table-valued functions");
 
         for (RoutineDefinition routine : database.getRoutines(schema)) {
-            try {
-                if (generateRoutines())
-                    generateRoutine(schema, routine);
+            GenerationUtil.run(
+                database.onError(),
+                () -> {
+                    if (generateRoutines())
+                        generateRoutine(schema, routine);
 
-                if (generateGlobalObjectNames())
-                    generateGlobalObjectNames(routine, ParameterDefinition.class);
-            }
-            catch (Exception e) {
-                log.error("Error while generating routine " + routine, e);
-            }
+                    if (generateGlobalObjectNames())
+                        generateGlobalObjectNames(routine, ParameterDefinition.class);
+                },
+                () -> "Error while generating routine " + routine
+            );
         }
 
         if (generateGlobalRoutineReferences()) {
@@ -4872,6 +4883,7 @@ public class JavaGenerator extends AbstractGenerator {
 
 
 
+
     }
 
     @SuppressWarnings("unused")
@@ -4885,6 +4897,7 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     protected void generatePackage(PackageDefinition pkg, JavaWriter out) {
+
 
 
 
@@ -5041,12 +5054,13 @@ public class JavaGenerator extends AbstractGenerator {
 
         for (SyntheticDaoType dao : database.getConfiguredSyntheticDaos()) {
             if (schema.getQualifiedInputNamePart().equals(name(dao.getCatalog(), dao.getSchema()))) {
-                try {
-                    generateSyntheticDao(new DefaultSyntheticDaoDefinition(database, schema, dao));
-                }
-                catch (Exception e) {
-                    log.error("Error while generating synthetic DAO " + dao, e);
-                }
+                GenerationUtil.run(
+                    database.onError(),
+                    () -> {
+                        generateSyntheticDao(new DefaultSyntheticDaoDefinition(database, schema, dao));
+                    },
+                    () -> "Error while generating synthetic DAO " + dao
+                );
             }
         }
 
@@ -5225,13 +5239,14 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("Generating DAOs");
 
         for (TableDefinition table : database.getTables(schema)) {
-            try {
-                if (generateDaosIncluded(table))
-                    generateDao(table);
-            }
-            catch (Exception e) {
-                log.error("Error while generating table DAO " + table, e);
-            }
+            GenerationUtil.run(
+                database.onError(),
+                () -> {
+                    if (generateDaosIncluded(table))
+                        generateDao(table);
+                },
+                () -> "Error while generating table DAO " + table
+            );
         }
 
         watch.splitInfo("Table DAOs generated");
@@ -5865,13 +5880,14 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("Generating table POJOs");
 
         for (TableDefinition table : database.getTables(schema)) {
-            try {
-                if (generatePojosIncluded(table))
-                    generatePojo(table);
-            }
-            catch (Exception e) {
-                log.error("Error while generating table POJO " + table, e);
-            }
+            GenerationUtil.run(
+                database.onError(),
+                () -> {
+                    if (generatePojosIncluded(table))
+                        generatePojo(table);
+                },
+                () -> "Error while generating table POJO " + table
+            );
         }
 
         watch.splitInfo("Table POJOs generated");
@@ -7180,16 +7196,17 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("Generating tables");
 
         for (TableDefinition table : database.getTables(schema)) {
-            try {
-                if (generateTables())
-                    generateTable(schema, table);
+            GenerationUtil.run(
+                database.onError(),
+                () -> {
+                    if (generateTables())
+                        generateTable(schema, table);
 
-                if (generateGlobalObjectNames())
-                    generateGlobalObjectNames(table, ColumnDefinition.class);
-            }
-            catch (Exception e) {
-                log.error("Error while generating table " + table, e);
-            }
+                    if (generateGlobalObjectNames())
+                        generateGlobalObjectNames(table, ColumnDefinition.class);
+                },
+                () -> "Error while generating table " + table
+            );
         }
 
         watch.splitInfo("Tables generated");
@@ -8786,17 +8803,18 @@ public class JavaGenerator extends AbstractGenerator {
 
         Set<File> duplicates = new HashSet<>();
         for (EmbeddableDefinition embeddable : embeddables(schema)) {
-            try {
+            GenerationUtil.run(
+                database.onError(),
+                () -> {
 
-                // [#6124] [#10481] <embeddableKeys/> map to the same embeddable for PKs/FKs.
-                //                  The FKs are always listed after the PKs, so we can simply skip
-                //                  unnecessary re-generations
-                if (duplicates.add(getFile(embeddable, Mode.RECORD)))
-                    generateEmbeddable(schema, embeddable);
-            }
-            catch (Exception e) {
-                log.error("Error while generating embeddable " + embeddable, e);
-            }
+                    // [#6124] [#10481] <embeddableKeys/> map to the same embeddable for PKs/FKs.
+                    //                  The FKs are always listed after the PKs, so we can simply skip
+                    //                  unnecessary re-generations
+                    if (duplicates.add(getFile(embeddable, Mode.RECORD)))
+                        generateEmbeddable(schema, embeddable);
+                },
+                () -> "Error while generating embeddable " + embeddable
+            );
         }
 
         watch.splitInfo("Tables generated");
@@ -8814,12 +8832,13 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("Generating embeddable POJOs");
 
         for (EmbeddableDefinition embeddable : embeddables(schema)) {
-            try {
-                generateEmbeddablePojo(embeddable);
-            }
-            catch (Exception e) {
-                log.error("Error while generating embeddable POJO " + embeddable, e);
-            }
+            GenerationUtil.run(
+                database.onError(),
+                () -> {
+                    generateEmbeddablePojo(embeddable);
+                },
+                () -> "Error while generating embeddable POJO " + embeddable
+            );
         }
 
         watch.splitInfo("Embeddable POJOs generated");
@@ -8845,12 +8864,13 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("Generating embeddable interfaces");
 
         for (EmbeddableDefinition embeddable : embeddables(schema)) {
-            try {
-                generateEmbeddableInterface(embeddable);
-            }
-            catch (Exception e) {
-                log.error("Error while generating embeddable interface " + embeddable, e);
-            }
+            GenerationUtil.run(
+                database.onError(),
+                () -> {
+                    generateEmbeddableInterface(embeddable);
+                },
+                () -> "Error while generating embeddable interface " + embeddable
+            );
         }
 
         watch.splitInfo("embeddable interfaces generated");

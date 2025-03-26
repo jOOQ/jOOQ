@@ -39,11 +39,9 @@ package org.jooq.codegen;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
-import static java.util.Arrays.asList;
 import static java.util.Comparator.comparing;
 import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toList;
-// ...
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.tools.StringUtils.defaultIfBlank;
@@ -61,7 +59,6 @@ import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.Driver;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -78,7 +75,6 @@ import javax.sql.DataSource;
 import org.jooq.Constants;
 import org.jooq.DSLContext;
 import org.jooq.Log.Level;
-import org.jooq.SQLDialect;
 import org.jooq.Source;
 import org.jooq.impl.DSL;
 import org.jooq.meta.CatalogVersionProvider;
@@ -248,24 +244,7 @@ public class GenerationTool {
     }
 
     public void run(Configuration configuration) throws Exception {
-        try {
-            run0(configuration);
-        }
-        catch (Exception e) {
-            OnError onError = configuration.getOnError();
-            if (onError == null) {
-                onError = OnError.FAIL;
-            }
-            switch (onError) {
-                case SILENT:
-                    break;
-                case LOG:
-                    log.warn("Code generation failed", e);
-                    break;
-                case FAIL:
-                    throw e;
-            }
-        }
+        GenerationUtil.run(configuration.getOnError(), () -> run0(configuration));
     }
 
     @SuppressWarnings({ "unchecked", "unused" })

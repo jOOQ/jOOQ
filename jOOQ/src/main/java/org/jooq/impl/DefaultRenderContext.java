@@ -1074,10 +1074,13 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
             this.skipUpdateCounts = skipUpdateCounts;
         }
 
-        static Rendered rendered(Configuration c, DefaultExecuteContext ctx, boolean countBindValues) {
-            Query query = ctx.batchMode() == BatchMode.SINGLE
-                ? ctx.batchQueries()[0]
-                : ctx.query();
+        static Rendered rendered(
+            Configuration c,
+            DefaultExecuteContext ctx,
+            Query query,
+            boolean countBindValues,
+            boolean forceStaticStatement
+        ) {
 
             // [#3542] [#4977] Some dialects do not support bind values in DDL statements
             // [#6474] [#6929] Can this be communicated in a leaner way?
@@ -1086,7 +1089,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
                 DefaultRenderContext render = new DefaultRenderContext(c, ctx);
                 return new Rendered(render.paramType(INLINED).visit(query).render(), null, render.skipUpdateCounts());
             }
-            else if (executePreparedStatements(c.settings())) {
+            else if (executePreparedStatements(c.settings()) && !forceStaticStatement) {
                 try {
                     DefaultRenderContext render = new DefaultRenderContext(c, ctx);
                     render.data(DATA_COUNT_BIND_VALUES, countBindValues);

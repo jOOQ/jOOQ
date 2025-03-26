@@ -204,7 +204,7 @@ final class BatchSingle extends AbstractBatch implements BatchBindStep {
             ctx.transformQueries(listener);
 
             listener.renderStart(ctx);
-            Rendered.rendered(configuration, ctx, false).setSQLAndParams(ctx);
+            Rendered.rendered(configuration, ctx, ctx.batchQueries()[0], false, false).setSQLAndParams(ctx);
             listener.renderEnd(ctx);
 
             listener.prepareStart(ctx);

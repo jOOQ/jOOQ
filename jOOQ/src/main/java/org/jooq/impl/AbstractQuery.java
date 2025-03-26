@@ -495,7 +495,7 @@ abstract class AbstractQuery<R extends Record> extends AbstractAttachableQueryPa
     }
 
     private static final Rendered getSQL0(DefaultExecuteContext ctx) {
-        Rendered rendered = Rendered.rendered(ctx.originalConfiguration(), ctx, true);
+        Rendered rendered = Rendered.rendered(ctx.originalConfiguration(), ctx, ctx.query(), true, false);
 
 
 

@@ -2241,7 +2241,7 @@ extends
      * @see #likeRegex(String)
      */
     @NotNull
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     Condition likeRegex(String pattern);
 
     /**
@@ -2252,7 +2252,7 @@ extends
      * @see #likeRegex(String)
      */
     @NotNull
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     Condition likeRegex(Field<String> pattern);
 
     /**
@@ -2263,7 +2263,7 @@ extends
      * @see #likeRegex(String)
      */
     @NotNull
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     Condition notLikeRegex(String pattern);
 
     /**
@@ -2274,7 +2274,7 @@ extends
      * @see #likeRegex(Field)
      */
     @NotNull
-    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CUBRID, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     Condition notLikeRegex(Field<String> pattern);
 
     // ------------------------------------------------------------------------

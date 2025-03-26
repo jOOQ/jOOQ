@@ -80,6 +80,7 @@ import org.jooq.OrderField;
 import org.jooq.ParamMode;
 import org.jooq.Parameter;
 // ...
+// ...
 import org.jooq.Queries;
 import org.jooq.Query;
 import org.jooq.QueryPart;
@@ -1122,6 +1123,17 @@ public final class Internal {
     public static final ConverterContext converterContext() {
         return CONVERTER_SCOPE.get();
     }
+
+
+
+
+
+
+
+
+
+
+
 
     private static final Lazy<Integer> JAVA_VERSION = Lazy.of(() -> {
         try {

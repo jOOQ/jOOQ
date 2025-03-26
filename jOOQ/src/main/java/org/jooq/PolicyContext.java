@@ -37,18 +37,6 @@
  */
 package org.jooq;
 
-import org.jetbrains.annotations.Nullable;
-
-/**
- * A {@link Scope} that knows its {@link ExecuteContext}.
- */
-public interface ExecuteScope extends Scope {
-
-    /**
-     * Get the {@link ConverterContext} from the context of this
-     * {@link ExecuteScope}.
-     */
-    ConverterContext converterContext();
 
 
 
@@ -61,12 +49,5 @@ public interface ExecuteScope extends Scope {
 
 
 
-    /**
-     * The {@link ExecuteContext} that created this scope.
-     *
-     * @return The execute context. Can be <code>null</code> e.g. when running
-     *         in an R2DBC context, see [#11717].
-     */
-    @Nullable
-    ExecuteContext executeContext();
-}
+
+

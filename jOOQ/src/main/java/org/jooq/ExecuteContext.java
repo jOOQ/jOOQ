@@ -79,6 +79,16 @@ public interface ExecuteContext extends Scope {
      */
     ConverterContext converterContext();
 
+
+
+
+
+
+
+
+
+
+
     /**
      * The connection to be used in this execute context.
      * <p>

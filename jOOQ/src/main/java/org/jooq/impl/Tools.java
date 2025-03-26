@@ -320,6 +320,7 @@ import org.jooq.Name;
 import org.jooq.OrderField;
 import org.jooq.Param;
 // ...
+// ...
 import org.jooq.QualifiedAsterisk;
 import org.jooq.QualifiedRecord;
 import org.jooq.QuantifiedSelect;
@@ -7738,6 +7739,15 @@ final class Tools {
     static final ConverterContext converterContext(Configuration configuration) {
         return new DefaultConverterContext(configuration(configuration));
     }
+
+
+
+
+
+
+
+
+
 
     /**
      * Wrap an expression in a derived table to allow for simplifying

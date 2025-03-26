@@ -78,6 +78,7 @@ import org.jooq.Insert;
 import org.jooq.Merge;
 import org.jooq.Param;
 // ...
+// ...
 import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.Result;
@@ -113,6 +114,8 @@ class DefaultExecuteContext implements ExecuteContext {
     private final Configuration                           originalConfiguration;
     private final Configuration                           derivedConfiguration;
     private final Map<Object, Object>                     data;
+
+
 
 
 
@@ -358,11 +361,12 @@ class DefaultExecuteContext implements ExecuteContext {
         this.data = new DataMap();
         this.batchMode = batchMode;
         this.query = query;
-
-
-
-
         this.routine = routine;
+
+
+
+
+
         this.converterContext = new DefaultConverterContext(derivedConfiguration, data);
 
         batchQueries0(batchQueries);
@@ -392,6 +396,15 @@ class DefaultExecuteContext implements ExecuteContext {
     public final ConverterContext converterContext() {
         return converterContext;
     }
+
+
+
+
+
+
+
+
+
 
     @Override
     public final Instant creationTime() {

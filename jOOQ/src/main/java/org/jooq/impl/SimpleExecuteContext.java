@@ -50,6 +50,7 @@ import org.jooq.ConverterContext;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteType;
 import org.jooq.Param;
+// ...
 import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.Result;
@@ -72,6 +73,15 @@ final class SimpleExecuteContext extends AbstractScope implements ExecuteContext
     public final ConverterContext converterContext() {
         return Tools.converterContext(configuration);
     }
+
+
+
+
+
+
+
+
+
 
     @Override
     public final Connection connection() {

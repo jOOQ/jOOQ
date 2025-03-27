@@ -2779,6 +2779,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
     private final Query parseUse() {
         parseKeyword("USE");
+        if (parseKeywordIf("SCHEMA"))
+            return dsl.setSchema(parseSchemaName());
+
         parseKeywordIf("DATABASE");
         return dsl.setCatalog(parseCatalogName());
     }

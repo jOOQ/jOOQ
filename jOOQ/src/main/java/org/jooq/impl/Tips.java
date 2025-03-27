@@ -112,6 +112,7 @@ final class Tips {
         "Should you use jOOQ's DAOs? They're convenient, but don't overuse them. SQL is often more powerful: https://blog.jooq.org/to-dao-or-not-to-dao/",
         "Different jOOQ editions support multiple JDK versions. Check out the complete list here: https://www.jooq.org/download/support-matrix-jdk",
         "Different jOOQ editions support multiple RDBMS versions. Check out the complete list here: https://www.jooq.org/download/support-matrix",
+        "Your schema may encode ENUM semantics into a column using a CHECK constraint. Turn that into a generated enum, easily: https://www.jooq.org/doc/latest/manual/code-generation/codegen-advanced/codegen-config-database/codegen-database-synthetic-objects/codegen-database-synthetic-enums/",
         ""
     };
 

@@ -540,6 +540,9 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
             || IndexDefinition.class.isAssignableFrom(objectType)
             || ParameterDefinition.class.isAssignableFrom(objectType)
             || SequenceDefinition.class.isAssignableFrom(objectType)
+
+
+
             ? "names"
             : ""
         );

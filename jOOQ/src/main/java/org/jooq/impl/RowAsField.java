@@ -91,7 +91,7 @@ import org.jooq.SQLDialect;
 final class RowAsField<ROW extends Row, REC extends Record> extends AbstractRowAsField<REC> implements QOM.RowAsField<REC> {
 
     // [#11485] Trino supports this, but their JDBC driver doesn't expose Structs yet: https://github.com/trinodb/trino/issues/16479
-    static final Set<SQLDialect> NO_NATIVE_SUPPORT = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, SQLITE, TRINO);
+    static final Set<SQLDialect> NO_NATIVE_SUPPORT = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, HSQLDB, IGNITE, MARIADB, MYSQL, SQLITE, TRINO);
 
     final ROW                    row;
 

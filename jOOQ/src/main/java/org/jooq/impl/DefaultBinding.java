@@ -4491,13 +4491,14 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 }
 
                 case CLICKHOUSE:
-                case DUCKDB: {
+                case DUCKDB:
+                case H2: {
                     Object object = ctx.resultSet().getObject(ctx.index());
 
                     if (object == null)
                         return null;
 
-                    return readMultiset(ctx, dataType, skipDegree1 && !(object instanceof Struct));
+                    return readMultiset(ctx, dataType, skipDegree1 && !(object instanceof Struct) && !(object instanceof ResultSet));
                 }
 
                 default:
@@ -4548,7 +4549,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 result = DefaultResultBinding.readMultiset(ctx, row, type.getType(),
                     s -> s != null && (s.startsWith("[") || s.startsWith("{")) ? "[" + s + "]" : null,
                     s -> s != null && (s.startsWith("<")) ? "<result>" + s + "</result>" : null,
-                    s -> s instanceof Struct x
+
+                    // [#18175] H2 uses nested ResultSet values instead of Struct to model ROW expressions
+                    s -> s instanceof ResultSet rs
+                         ? asList(rs)
+                         : s instanceof Struct x
                          ? asList(x)
                          : s instanceof List<?> l
                          ? asList(l)
@@ -4841,6 +4846,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                         emulation = NestedCollectionEmulation.NATIVE;
 
                     break;
+
+                case H2:
+                    if (ctx.resultSet().getObject(ctx.index()) instanceof ResultSet)
+                        emulation = NestedCollectionEmulation.NATIVE;
+
+                    break;
             }
 
             switch (emulation) {
@@ -4876,8 +4887,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             throw new UnsupportedOperationException("Multiset emulation not yet supported: " + emulation);
         }
 
-        static final <R extends Record> Result<R> readMultisetList(Scope ctx, AbstractRow<R> row, Class<R> recordType, List<?> l) throws SQLException {
-            return new ListHandler<>(originalScope(ctx), row, recordType).read(l);
+        static final <R extends Record> Result<R> readMultisetList(BindingGetResultSetContext<?> ctx, AbstractRow<R> row, Class<R> recordType, List<?> l) throws SQLException {
+            return new ListHandler<>(originalScope(ctx), ctx.executeContext(), row, recordType).read(l);
         }
 
         static final <R extends Record> Result<R> readMultisetXML(Scope ctx, AbstractRow<R> row, Class<R> recordType, String s) {

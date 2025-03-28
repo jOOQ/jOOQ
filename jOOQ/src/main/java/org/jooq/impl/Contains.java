@@ -117,7 +117,6 @@ implements
 
             case CLICKHOUSE:
             case CUBRID:
-            case DERBY:
             case FIREBIRD:
             case H2:
             case HSQLDB:
@@ -130,9 +129,8 @@ implements
 
 
 
-
-
-
+            case DERBY:
+                return false;
 
             default:
                 return true;
@@ -180,7 +178,6 @@ implements
 
             case CLICKHOUSE:
             case CUBRID:
-            case DERBY:
             case FIREBIRD:
             case H2:
             case HSQLDB:
@@ -195,11 +192,10 @@ implements
 
 
 
-
-
-
-
-
+            case DERBY: {
+                acceptPosition(ctx);
+                break;
+            }
 
             default:
                 ctx.visit(function(N_CONTAINS, BOOLEAN, value, content));

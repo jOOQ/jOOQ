@@ -112,7 +112,6 @@ implements
 
 
             case CUBRID:
-            case DERBY:
             case FIREBIRD:
             case H2:
             case HSQLDB:
@@ -126,7 +125,8 @@ implements
 
 
 
-
+            case DERBY:
+                return false;
 
 
 
@@ -172,7 +172,6 @@ implements
 
 
             case CUBRID:
-            case DERBY:
             case FIREBIRD:
             case H2:
             case HSQLDB:
@@ -188,9 +187,10 @@ implements
 
 
 
-
-
-
+            case DERBY: {
+                acceptPosition(ctx);
+                break;
+            }
 
 
 

@@ -20125,7 +20125,7 @@ public class DSL {
      * @param value is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<String> digits(Number value) {
         return new Digits(Tools.field(value));
     }
@@ -20134,7 +20134,7 @@ public class DSL {
      * The <code>DIGITS</code> function.
      */
     @NotNull
-    @Support
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<String> digits(Field<? extends Number> value) {
         return new Digits(value);
     }

@@ -132,6 +132,6 @@ public interface Sequence<T extends Number> extends Qualified, Typed<T> {
      * This is done using {@link DSL#generateSeries(int, int)}.
      */
     @NotNull
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
+    @Support({ CUBRID, FIREBIRD, H2, HSQLDB, MARIADB, POSTGRES, YUGABYTEDB })
     Select<Record1<T>> nextvals(int size);
 }

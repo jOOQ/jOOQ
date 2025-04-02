@@ -86,6 +86,7 @@ import org.jooq.TableRecord;
 import org.jooq.UniqueKey;
 import org.jooq.UpdatableRecord;
 import org.jooq.conf.UpdateUnchangedRecords;
+import org.jooq.exception.ControlFlowSignal;
 import org.jooq.exception.DataChangedException;
 import org.jooq.exception.NoDataFoundException;
 import org.jooq.impl.BatchCRUD.QueryCollectorSignal;
@@ -407,6 +408,7 @@ implements
 
     private final int delete0() {
         TableField<R, ?>[] keys = getPrimaryKey().getFieldsArray();
+        Throwable t = null;
 
         try {
             DeleteQuery<R> delete1 = create().deleteQuery(getTable());
@@ -429,12 +431,21 @@ implements
             return result;
         }
 
+        catch (Throwable t0) {
+            t = t0;
+            throw t0;
+        }
+
         // [#673] [#3363] If store() is called after delete(), a new INSERT should
         // be executed and the record should be recreated
         finally {
-            touched(true);
-            asList(originals).replaceAll(e -> null);
-            fetched = false;
+
+            // [#18261] These state changes must happen only on successful deletion
+            if (t == null || t instanceof ControlFlowSignal) {
+                touched(true);
+                asList(originals).replaceAll(e -> null);
+                fetched = false;
+            }
         }
     }
 

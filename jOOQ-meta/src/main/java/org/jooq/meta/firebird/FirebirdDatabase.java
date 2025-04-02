@@ -541,7 +541,7 @@ public class FirebirdDatabase extends AbstractDatabase implements ResultQueryDat
 
                     // "selectable" procedures
                     .where(RDB$PROCEDURES.RDB$PROCEDURE_TYPE.eq((short) 1))
-                    .and(tableValuedFunctions()
+                    .and(tableValuedFunctionsAsTables()
                         ? noCondition()
                         : falseCondition())
                 )

@@ -995,17 +995,15 @@ public class GenerationTool {
                 generator.setUseSchemaVersionProvider(true);
             if (!isBlank(d.getCatalogVersionProvider()))
                 generator.setUseCatalogVersionProvider(true);
-            if (d.isTableValuedFunctions() != null)
-                generator.setGenerateTableValuedFunctions(d.isTableValuedFunctions());
-            else {
-                generator.setGenerateTableValuedFunctions(true);
+            if (d.isTableValuedFunctionsAsTables() != null)
+                generator.setGenerateTableValuedFunctionsAsTables(d.isTableValuedFunctionsAsTables());
+            if (d.isTableValuedFunctionsAsRoutines() != null)
+                generator.setGenerateTableValuedFunctionsAsRoutines(d.isTableValuedFunctionsAsRoutines());
+            if (d.isTableValuedFunctions() != null) {
+                log.warn("DEPRECATED", "The configuration property /configuration/generator/database/tableValuedFunctions is deprecated and will be removed in the future. Use tableValuedFunctionsAsRoutines and/or tableValuedFunctionsAsTables, instead");
 
-
-
-
-
-
-
+                generator.setGenerateTableValuedFunctionsAsTables(d.isTableValuedFunctions());
+                generator.setGenerateTableValuedFunctionsAsRoutines(!d.isTableValuedFunctions());
             }
 
             // Generator properties that should in fact be strategy properties

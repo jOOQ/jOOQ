@@ -209,14 +209,41 @@ public interface Generator {
     void setGenerateImplicitJoinPathsAsKotlinProperties(boolean generateImplicitJoinPathsAsKotlinProperties);
 
     /**
-     * Whether table-valued functions should be generated as tables.
+     * @deprecated - 3.21.0 - [#17713] Use
+     *             {@link #generateTableValuedFunctionsAsRoutines()} or
+     *             {@link #generateTableValuedFunctionsAsTables()} instead.
      */
+    @Deprecated
     boolean generateTableValuedFunctions();
+
+    /**
+     * @deprecated - 3.21.0 - [#17713] Use
+     *             {@link #setGenerateTableValuedFunctionsAsRoutines(boolean)}
+     *             or {@link #setGenerateTableValuedFunctionsAsTables(boolean)}
+     *             instead.
+     */
+    @Deprecated
+    void setGenerateTableValuedFunctions(boolean generateTableValuedFunctions);
+
+    /**
+     * Whether table-valued functions should be generated as routines.
+     */
+    boolean generateTableValuedFunctionsAsRoutines();
+
+    /**
+     * Whether table-valued functions should be generated as routines.
+     */
+    void setGenerateTableValuedFunctionsAsRoutines(boolean generateTableValuedFunctionsAsRoutines);
 
     /**
      * Whether table-valued functions should be generated as tables.
      */
-    void setGenerateTableValuedFunctions(boolean generateTableValuedFunctions);
+    boolean generateTableValuedFunctionsAsTables();
+
+    /**
+     * Whether table-valued functions should be generated as tables.
+     */
+    void setGenerateTableValuedFunctionsAsTables(boolean generateTableValuedFunctionsAsTables);
 
     /**
      * Whether instance fields should be generated (as opposed to static fields).

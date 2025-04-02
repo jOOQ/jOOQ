@@ -198,6 +198,8 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateIntervalTypes                                 = true;
     boolean                            generateDecfloatTypes                                 = true;
     boolean                            generateTableValuedFunctions                          = false;
+    boolean                            generateTableValuedFunctionsAsTables                  = true;
+    boolean                            generateTableValuedFunctionsAsRoutines                = true;
     boolean                            generateEmptyCatalogs                                 = false;
     boolean                            generateEmptySchemas                                  = false;
     String                             generateNewline                                       = "\n";
@@ -225,6 +227,8 @@ abstract class AbstractGenerator implements Generator {
 
         this.database.setIncludeRelations(generateRelations());
         this.database.setTableValuedFunctions(generateTableValuedFunctions());
+        this.database.setTableValuedFunctionsAsTables(generateTableValuedFunctionsAsTables());
+        this.database.setTableValuedFunctionsAsRoutines(generateTableValuedFunctionsAsRoutines());
 
         generate0(db);
     }
@@ -404,13 +408,35 @@ abstract class AbstractGenerator implements Generator {
     }
 
     @Override
+    @Deprecated
     public boolean generateTableValuedFunctions() {
         return generateTableValuedFunctions;
     }
 
     @Override
+    @Deprecated
     public void setGenerateTableValuedFunctions(boolean generateTableValuedFunctions) {
         this.generateTableValuedFunctions = generateTableValuedFunctions;
+    }
+
+    @Override
+    public boolean generateTableValuedFunctionsAsRoutines() {
+        return generateTableValuedFunctionsAsRoutines;
+    }
+
+    @Override
+    public void setGenerateTableValuedFunctionsAsRoutines(boolean generateTableValuedFunctionsAsRoutines) {
+        this.generateTableValuedFunctionsAsRoutines = generateTableValuedFunctionsAsRoutines;
+    }
+
+    @Override
+    public boolean generateTableValuedFunctionsAsTables() {
+        return generateTableValuedFunctionsAsTables;
+    }
+
+    @Override
+    public void setGenerateTableValuedFunctionsAsTables(boolean generateTableValuedFunctionsAsTables) {
+        this.generateTableValuedFunctionsAsTables = generateTableValuedFunctionsAsTables;
     }
 
     @Override

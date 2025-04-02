@@ -528,7 +528,8 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("  routines", generateRoutines());
         log.info("  sequences", generateSequences());
         log.info("  sequenceFlags", generateSequenceFlags());
-        log.info("  table-valued functions", generateTableValuedFunctions());
+        log.info("  table-valued functions as routines", generateTableValuedFunctionsAsRoutines());
+        log.info("  table-valued functions as tables", generateTableValuedFunctionsAsTables());
         log.info("  tables", generateTables()
               + ((!generateTables && generateRecords) ? " (forced to true because of <records/>)" :
                 ((!generateTables && generateDaos) ? " (forced to true because of <daos/>)" :

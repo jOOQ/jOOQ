@@ -550,7 +550,7 @@ public class HSQLDBDatabase extends AbstractDatabase implements ResultQueryDatab
                     .on(SYSTEM_TABLES.TABLE_SCHEM.eq(VIEWS.TABLE_SCHEMA))
                     .and(SYSTEM_TABLES.TABLE_NAME.eq(VIEWS.TABLE_NAME))
                 .where(SYSTEM_TABLES.TABLE_SCHEM.in(getInputSchemata()))
-                .unionAll(tableValuedFunctions()
+                .unionAll(tableValuedFunctionsAsTables()
                     ? select(
                         ROUTINES.ROUTINE_SCHEMA,
                         ROUTINES.ROUTINE_NAME,
@@ -751,13 +751,13 @@ public class HSQLDBDatabase extends AbstractDatabase implements ResultQueryDatab
                 .and(ROUTINES.ROUTINE_NAME.equal(ELEMENT_TYPES.OBJECT_NAME))
                 .and(ROUTINES.DTD_IDENTIFIER.equal(ELEMENT_TYPES.COLLECTION_TYPE_IDENTIFIER))
                 .where(ROUTINES.ROUTINE_SCHEMA.in(getInputSchemata()))
-                .and(tableValuedFunctions()
-                    ? ROUTINES.DATA_TYPE.isNull().or(ROUTINES.DATA_TYPE.notLike(inline("ROW(%")))
-                    : noCondition())
+                .and(tableValuedFunctionsAsRoutines()
+                    ? noCondition()
+                    : ROUTINES.DATA_TYPE.isNull().or(ROUTINES.DATA_TYPE.notLike(inline("ROW(%"))))
                 .orderBy(
                     ROUTINES.ROUTINE_SCHEMA,
                     ROUTINES.ROUTINE_NAME)
-                .fetch()) {
+        ) {
 
             String datatype = record.get("datatype", String.class);
 

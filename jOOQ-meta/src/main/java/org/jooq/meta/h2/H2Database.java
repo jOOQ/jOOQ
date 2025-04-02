@@ -871,9 +871,9 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
                 .and(ROUTINES.ROUTINE_NAME.equal(ELEMENT_TYPES.OBJECT_NAME))
                 .and(ROUTINES.DTD_IDENTIFIER.equal(ELEMENT_TYPES.COLLECTION_TYPE_IDENTIFIER))
                 .where(ROUTINES.ROUTINE_SCHEMA.in(getInputSchemata()))
-                .and(tableValuedFunctions()
-                    ? ROUTINES.DATA_TYPE.isNull().or(ROUTINES.DATA_TYPE.notLike(inline("ROW(%")))
-                    : noCondition())
+                .and(tableValuedFunctionsAsRoutines()
+                    ? noCondition()
+                    : ROUTINES.DATA_TYPE.isNull().or(ROUTINES.DATA_TYPE.notLike(inline("ROW(%"))))
                 .orderBy(
                     ROUTINES.ROUTINE_SCHEMA,
                     ROUTINES.ROUTINE_NAME)

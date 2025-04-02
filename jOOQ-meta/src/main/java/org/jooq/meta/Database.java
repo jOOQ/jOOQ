@@ -1670,14 +1670,40 @@ public interface Database extends AutoCloseable {
     boolean includeRelations();
 
     /**
-     * [#4838] Whether table-valued functions should be reported as tables.
+     * @deprecated - 3.21.0 - [#17713] Use
+     *             {@link #setTableValuedFunctionsAsTables(boolean)} or
+     *             {@link #setTableValuedFunctionsAsRoutines(boolean)} instead.
      */
+    @Deprecated
     void setTableValuedFunctions(boolean tableValuedFunctions);
 
     /**
-     * [#4838] Whether table-valued functions should be reported as tables.
+     * @deprecated - 3.21.0 - [#17713] Use
+     *             {@link #tableValuedFunctionsAsTables()} or
+     *             {@link #tableValuedFunctionsAsRoutines()} instead.
      */
+    @Deprecated
     boolean tableValuedFunctions();
+
+    /**
+     * [#4838] [#17713] Whether table-valued functions should be reported as routines.
+     */
+    void setTableValuedFunctionsAsRoutines(boolean tableValuedFunctionsAsRoutines);
+
+    /**
+     * [#4838] [#17713] Whether table-valued functions should be reported as routines.
+     */
+    boolean tableValuedFunctionsAsRoutines();
+
+    /**
+     * [#4838] [#17713] Whether table-valued functions should be reported as tables.
+     */
+    void setTableValuedFunctionsAsTables(boolean tableValuedFunctionsAsTables);
+
+    /**
+     * [#4838] [#17713] Whether table-valued functions should be reported as tables.
+     */
+    boolean tableValuedFunctionsAsTables();
 
     /**
      * Check for the existence of a table field in the dictionary views.

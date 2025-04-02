@@ -579,7 +579,7 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
 
                 // [#3375] [#3376] Include table-valued functions in the set of tables
                 .unionAll(
-                    tableValuedFunctions()
+                    tableValuedFunctionsAsTables()
 
                     ?   select(
                             ROUTINES.ROUTINE_SCHEMA,
@@ -1198,9 +1198,9 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                 .and(nameconcatoid(r1))
             .leftJoin(retT).on(PG_PROC.PRORETTYPE.eq(retT.OID))
             .where(r1.ROUTINE_SCHEMA.in(getInputSchemata()))
-            .and(tableValuedFunctions()
-                    ? condition(not(PG_PROC.PRORETSET))
-                    : noCondition())
+            .and(tableValuedFunctionsAsRoutines()
+                    ? noCondition()
+                    : condition(not(PG_PROC.PRORETSET)))
             .and(!getIncludeTriggerRoutines()
                     ? r1.DATA_TYPE.isDistinctFrom(inline("trigger"))
                     : noCondition())

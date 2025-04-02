@@ -175,6 +175,10 @@ public class Database implements Serializable, XMLAppendable
     @XmlElement(defaultValue = "true")
     protected Boolean forceIntegerTypesOnZeroScaleDecimals = true;
     protected Boolean tableValuedFunctions;
+    @XmlElement(defaultValue = "true")
+    protected Boolean tableValuedFunctionsAsRoutines = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean tableValuedFunctionsAsTables = true;
     @XmlElement(defaultValue = "false")
     protected Boolean oracleUseDBAViews = false;
     @XmlElement(defaultValue = "5")
@@ -1968,43 +1972,77 @@ public class Database implements Serializable, XMLAppendable
     }
 
     /**
-     * Whether table valued functions should be reported as tables.
-     * <p>
-     * If this is deactivated, such functions are not generated as tables, but
-     * as ordinary routines. This is particularly useful for backwards-
-     * compatibility between jOOQ 3.8 and previous versions, when using TABLE
-     * and VARRAY types in Oracle.
-     * <p>
-     * While this flag defaults to true for most databases, it defaults to false
-     * for Oracle.
+     * @deprecated Use tableValuedFunctionsAsRoutines and/or tableValuedFunctionsAsTables
      * 
      * @return
      *     possible object is
      *     {@link Boolean }
      *     
      */
+    @Deprecated
     public Boolean isTableValuedFunctions() {
         return tableValuedFunctions;
     }
 
     /**
-     * Whether table valued functions should be reported as tables.
-     * <p>
-     * If this is deactivated, such functions are not generated as tables, but
-     * as ordinary routines. This is particularly useful for backwards-
-     * compatibility between jOOQ 3.8 and previous versions, when using TABLE
-     * and VARRAY types in Oracle.
-     * <p>
-     * While this flag defaults to true for most databases, it defaults to false
-     * for Oracle.
+     * @deprecated Use tableValuedFunctionsAsRoutines and/or tableValuedFunctionsAsTables
      * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
      *     
      */
+    @Deprecated
     public void setTableValuedFunctions(Boolean value) {
         this.tableValuedFunctions = value;
+    }
+
+    /**
+     * Whether table valued functions should be reported as routines.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTableValuedFunctionsAsRoutines() {
+        return tableValuedFunctionsAsRoutines;
+    }
+
+    /**
+     * Whether table valued functions should be reported as routines.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTableValuedFunctionsAsRoutines(Boolean value) {
+        this.tableValuedFunctionsAsRoutines = value;
+    }
+
+    /**
+     * Whether table valued functions should be reported as tables.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTableValuedFunctionsAsTables() {
+        return tableValuedFunctionsAsTables;
+    }
+
+    /**
+     * Whether table valued functions should be reported as tables.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTableValuedFunctionsAsTables(Boolean value) {
+        this.tableValuedFunctionsAsTables = value;
     }
 
     /**
@@ -2980,19 +3018,29 @@ public class Database implements Serializable, XMLAppendable
     }
 
     /**
-     * Whether table valued functions should be reported as tables.
-     * <p>
-     * If this is deactivated, such functions are not generated as tables, but
-     * as ordinary routines. This is particularly useful for backwards-
-     * compatibility between jOOQ 3.8 and previous versions, when using TABLE
-     * and VARRAY types in Oracle.
-     * <p>
-     * While this flag defaults to true for most databases, it defaults to false
-     * for Oracle.
+     * @deprecated Use tableValuedFunctionsAsRoutines and/or tableValuedFunctionsAsTables
      * 
      */
     public Database withTableValuedFunctions(Boolean value) {
         setTableValuedFunctions(value);
+        return this;
+    }
+
+    /**
+     * Whether table valued functions should be reported as routines.
+     * 
+     */
+    public Database withTableValuedFunctionsAsRoutines(Boolean value) {
+        setTableValuedFunctionsAsRoutines(value);
+        return this;
+    }
+
+    /**
+     * Whether table valued functions should be reported as tables.
+     * 
+     */
+    public Database withTableValuedFunctionsAsTables(Boolean value) {
+        setTableValuedFunctionsAsTables(value);
         return this;
     }
 
@@ -3265,6 +3313,8 @@ public class Database implements Serializable, XMLAppendable
         builder.append("forcedTypesForXMLSchemaCollections", forcedTypesForXMLSchemaCollections);
         builder.append("forceIntegerTypesOnZeroScaleDecimals", forceIntegerTypesOnZeroScaleDecimals);
         builder.append("tableValuedFunctions", tableValuedFunctions);
+        builder.append("tableValuedFunctionsAsRoutines", tableValuedFunctionsAsRoutines);
+        builder.append("tableValuedFunctionsAsTables", tableValuedFunctionsAsTables);
         builder.append("oracleUseDBAViews", oracleUseDBAViews);
         builder.append("logSlowQueriesAfterSeconds", logSlowQueriesAfterSeconds);
         builder.append("logSlowResultsAfterSeconds", logSlowResultsAfterSeconds);
@@ -3891,6 +3941,24 @@ public class Database implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (tableValuedFunctionsAsRoutines == null) {
+            if (other.tableValuedFunctionsAsRoutines!= null) {
+                return false;
+            }
+        } else {
+            if (!tableValuedFunctionsAsRoutines.equals(other.tableValuedFunctionsAsRoutines)) {
+                return false;
+            }
+        }
+        if (tableValuedFunctionsAsTables == null) {
+            if (other.tableValuedFunctionsAsTables!= null) {
+                return false;
+            }
+        } else {
+            if (!tableValuedFunctionsAsTables.equals(other.tableValuedFunctionsAsTables)) {
+                return false;
+            }
+        }
         if (oracleUseDBAViews == null) {
             if (other.oracleUseDBAViews!= null) {
                 return false;
@@ -4063,6 +4131,8 @@ public class Database implements Serializable, XMLAppendable
         result = ((prime*result)+((forcedTypesForXMLSchemaCollections == null)? 0 :forcedTypesForXMLSchemaCollections.hashCode()));
         result = ((prime*result)+((forceIntegerTypesOnZeroScaleDecimals == null)? 0 :forceIntegerTypesOnZeroScaleDecimals.hashCode()));
         result = ((prime*result)+((tableValuedFunctions == null)? 0 :tableValuedFunctions.hashCode()));
+        result = ((prime*result)+((tableValuedFunctionsAsRoutines == null)? 0 :tableValuedFunctionsAsRoutines.hashCode()));
+        result = ((prime*result)+((tableValuedFunctionsAsTables == null)? 0 :tableValuedFunctionsAsTables.hashCode()));
         result = ((prime*result)+((oracleUseDBAViews == null)? 0 :oracleUseDBAViews.hashCode()));
         result = ((prime*result)+((logSlowQueriesAfterSeconds == null)? 0 :logSlowQueriesAfterSeconds.hashCode()));
         result = ((prime*result)+((logSlowResultsAfterSeconds == null)? 0 :logSlowResultsAfterSeconds.hashCode()));

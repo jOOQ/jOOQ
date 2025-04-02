@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema xmlns="http://www.w3.org/2001/XMLSchema"
-  xmlns:tns="http://www.jooq.org/xsd/jooq-codegen-3.20.1.xsd"
+  xmlns:tns="http://www.jooq.org/xsd/jooq-codegen-3.21.0.xsd"
   xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
   xmlns:annox="http://annox.dev.java.net"
-  targetNamespace="http://www.jooq.org/xsd/jooq-codegen-3.20.1.xsd"
+  targetNamespace="http://www.jooq.org/xsd/jooq-codegen-3.21.0.xsd"
   elementFormDefault="qualified"
   jxb:extensionBindingPrefixes="annox"
   jxb:version="2.1">
@@ -1461,15 +1461,23 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
       </element>
 
       <element name="tableValuedFunctions" type="boolean" minOccurs="0" maxOccurs="1">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether table valued functions should be reported as tables.
-<p>
-If this is deactivated, such functions are not generated as tables, but
-as ordinary routines. This is particularly useful for backwards-
-compatibility between jOOQ 3.8 and previous versions, when using TABLE
-and VARRAY types in Oracle.
-<p>
-While this flag defaults to true for most databases, it defaults to false
-for Oracle.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        <annotation>
+          <appinfo>
+            <jxb:property>
+              <jxb:javadoc><![CDATA[@deprecated Use tableValuedFunctionsAsRoutines and/or tableValuedFunctionsAsTables]]></jxb:javadoc>
+            </jxb:property>
+            <annox:annotate target="getter">@java.lang.Deprecated</annox:annotate>
+            <annox:annotate target="setter">@java.lang.Deprecated</annox:annotate>
+          </appinfo>
+        </annotation>
+      </element>
+
+      <element name="tableValuedFunctionsAsRoutines" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether table valued functions should be reported as routines.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="tableValuedFunctionsAsTables" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether table valued functions should be reported as tables.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
       <element name="oracleUseDBAViews" type="boolean" minOccurs="0" maxOccurs="1" default="false">

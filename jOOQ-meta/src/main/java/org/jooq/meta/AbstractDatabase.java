@@ -283,6 +283,8 @@ public abstract class AbstractDatabase implements Database {
     private Comparator<Definition>                                               orderProvider;
     private boolean                                                              includeRelations                        = true;
     private boolean                                                              tableValuedFunctions                    = true;
+    private boolean                                                              tableValuedFunctionsAsRoutines          = true;
+    private boolean                                                              tableValuedFunctionsAsTables            = true;
     private int                                                                  logSlowQueriesAfterSeconds;
     private int                                                                  logSlowResultsAfterSeconds;
 
@@ -1884,13 +1886,35 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
+    @Deprecated
     public final void setTableValuedFunctions(boolean tableValuedFunctions) {
         this.tableValuedFunctions = tableValuedFunctions;
     }
 
     @Override
+    @Deprecated
     public final boolean tableValuedFunctions() {
         return tableValuedFunctions;
+    }
+
+    @Override
+    public void setTableValuedFunctionsAsRoutines(boolean tableValuedFunctionsAsRoutines) {
+        this.tableValuedFunctionsAsRoutines = tableValuedFunctionsAsRoutines;
+    }
+
+    @Override
+    public boolean tableValuedFunctionsAsRoutines() {
+        return tableValuedFunctionsAsRoutines;
+    }
+
+    @Override
+    public void setTableValuedFunctionsAsTables(boolean tableValuedFunctionsAsTables) {
+        this.tableValuedFunctionsAsTables = tableValuedFunctionsAsTables;
+    }
+
+    @Override
+    public boolean tableValuedFunctionsAsTables() {
+        return tableValuedFunctionsAsTables;
     }
 
     @Override

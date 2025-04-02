@@ -750,10 +750,8 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         //         collected the bind variable. The same is true if custom data
         //         type bindings use Context.visit(Param), in case of which we
         //         must not collect the current Param
-        if (after == before && paramType != INLINED && internal instanceof Param) {
-            Param<?> param = (Param<?>) internal;
-
-            if (!param.isInline()) {
+        if (after == before && paramType != INLINED && internal instanceof AbstractParam<?> param) {
+            if (!param.isInline(this)) {
 
                 // [#16340] Increment index even if we don't need it internally, while rendering
                 nextIndex();

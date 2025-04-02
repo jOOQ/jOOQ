@@ -89,6 +89,7 @@ import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.mergeInto;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.row;
+// ...
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.systemName;
 import static org.jooq.impl.DSL.trueCondition;
@@ -422,7 +423,16 @@ implements
         boolean noSupportParametersInWhere = false;
         boolean noQualifyInWhere = NO_SUPPORT_QUALIFY_IN_WHERE.contains(ctx.dialect());
 
+        limitEmulation:
         if (limitEmulation(ctx)) {
+
+
+
+
+
+
+
+
 
             // [#16632] Push down USING table list here
             TableList t0 = new TableList();

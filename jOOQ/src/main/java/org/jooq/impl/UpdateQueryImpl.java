@@ -88,6 +88,7 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.noField;
 import static org.jooq.impl.DSL.row;
+// ...
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.trueCondition;
@@ -785,7 +786,16 @@ implements
 
         acceptFrom(ctx, where0, f);
 
+        limitEmulation:
         if (limitEmulation(ctx)) {
+
+
+
+
+
+
+
+
 
             // [#16632] Push down USING table list here
             TableList t1 = new TableList();

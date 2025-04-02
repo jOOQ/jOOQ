@@ -138,9 +138,32 @@ final class QualifiedRecordConstant<R extends QualifiedRecord<R>> extends Abstra
             ctx.paramType(paramType);
     }
 
+    @Override
+    final boolean isInline(Context<?> ctx) {
+        switch (ctx.family()) {
+
+
+
+
+
+
+
+            // [#18274] NULL values are inlined, not bound in these dialects
+
+
+            case POSTGRES:
+            case YUGABYTEDB:
+            default:
+                return value == null
+                    || super.isInline(ctx);
+        }
+    }
+
     private final void toSQLInline(RenderContext ctx) {
         Cast.renderCastIf(ctx,
             c -> {
+
+                // [#18274] NULL values are inlined, not bound in these dialects
                 if (value == null) {
                     c.visit(K_NULL);
                 }

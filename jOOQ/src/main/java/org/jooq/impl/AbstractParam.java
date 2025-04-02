@@ -193,7 +193,7 @@ abstract class AbstractParam<T> extends AbstractParamX<T> implements SimpleQuery
         return inline;
     }
 
-    final boolean isInline(Context<?> ctx) {
+    /* non-final */ boolean isInline(Context<?> ctx) {
         return isInline()
             || (ctx.paramType() == INLINED)
             || (ctx.paramType() == NAMED_OR_INLINED && StringUtils.isBlank(paramName))

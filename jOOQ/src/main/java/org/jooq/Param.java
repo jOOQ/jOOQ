@@ -151,7 +151,13 @@ public non-sealed interface Param<T> extends ParamOrVariable<T> {
     void setInline(boolean inline);
 
     /**
-     * A flag on the bind value to force it to be inlined in rendered SQL
+     * A flag on the bind value to force it to be inlined in rendered SQL.
+     * <p>
+     * Please note that despite this flag returning <code>false</code>, jOOQ
+     * internals may decide to inline a {@link Param} at their own discretion,
+     * e.g. because of a limitation in the dialect's syntactic capabilities
+     * (e.g. some functions may require literals as arguments), or of the JDBC
+     * driver.
      */
     boolean isInline();
 

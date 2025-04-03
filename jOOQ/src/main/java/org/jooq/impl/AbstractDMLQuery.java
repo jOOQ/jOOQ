@@ -64,6 +64,7 @@ import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
@@ -75,6 +76,7 @@ import static org.jooq.SQLDialect.TRINO;
 import static org.jooq.conf.SettingsTools.renderLocale;
 import static org.jooq.impl.AbstractDataType.convert0;
 import static org.jooq.impl.CommonTableExpressionList.markTopLevelCteAndAccept;
+import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.unquotedName;
@@ -96,6 +98,8 @@ import static org.jooq.impl.Keywords.K_SQL;
 import static org.jooq.impl.Keywords.K_TABLE;
 import static org.jooq.impl.Names.N_DELETED;
 import static org.jooq.impl.Names.N_INSERTED;
+import static org.jooq.impl.Names.N_JSON;
+import static org.jooq.impl.SQLDataType.JSON;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_STRING;
 import static org.jooq.impl.Tools.anyMatch;
@@ -390,6 +394,14 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
                 ));
             });
         }
+
+
+
+
+
+
+
+
 
 
 

@@ -52,9 +52,9 @@ import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.conf.ParamType.INLINED;
-// ...
 // ...
 // ...
 // ...
@@ -84,11 +84,8 @@ import static org.jooq.impl.Tools.BooleanDataKey.DATA_FORCE_STATIC_STATEMENT;
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_BLOCK_NESTING;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -119,6 +116,8 @@ import org.jooq.impl.Tools.ExtendedDataKey;
 final class BlockImpl extends AbstractRowCountQuery implements Block {
 
     private static final Set<SQLDialect>  SUPPORTS_NULL_STATEMENT            = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
+
+
 
 
 
@@ -356,9 +355,14 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
         if (wrapInBeginEnd) {
             boolean topLevel = ctx.scopeLevel() == -1;
             LanguageContext language = ctx.languageContext();
+            ParamType paramType = ctx.paramType();
 
             if (topLevel && language == LanguageContext.QUERY)
                 ctx.languageContext(LanguageContext.BLOCK);
+
+
+
+
 
 
 
@@ -396,6 +400,11 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
 
             if (topLevel && language == LanguageContext.QUERY)
                 ctx.languageContext(language);
+
+
+
+
+
         }
         else
             accept1(ctx);
@@ -406,6 +415,7 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
 
             // TODO: Replace this switch by SUPPORTS_NULL_STATEMENT usage
             switch (ctx.family()) {
+
 
 
 

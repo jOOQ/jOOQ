@@ -40,7 +40,6 @@ package org.jooq.impl;
 
 
 
-import static java.util.Arrays.asList;
 
 
 

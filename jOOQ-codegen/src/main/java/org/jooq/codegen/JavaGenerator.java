@@ -1476,7 +1476,7 @@ public class JavaGenerator extends AbstractGenerator {
                 out.ref(getStrategy().getFullJavaIdentifier(uniqueKey.getTable()), 2),
                 DSL.class,
                 escapeString(uniqueKey.getOutputName()),
-                out.ref(getStrategy().getFullJavaIdentifiers(keyColumns), colRefSegments(null)),
+                castToTableFieldIfNecessary(out, uniqueKey.getTable(), out.ref(getStrategy().getFullJavaIdentifiers(keyColumns), colRefSegments(null))),
                 TableField.class,
                 out.ref(getStrategy().getFullJavaClassName(uniqueKey.getTable(), Mode.RECORD)),
                 wildcard(),
@@ -1487,7 +1487,7 @@ public class JavaGenerator extends AbstractGenerator {
                 out.ref(getStrategy().getFullJavaIdentifier(uniqueKey.getTable()), 2),
                 DSL.class,
                 escapeString(uniqueKey.getOutputName()),
-                out.ref(getStrategy().getFullJavaIdentifiers(keyColumns), colRefSegments(null)),
+                castToTableFieldIfNecessary(out, uniqueKey.getTable(), out.ref(getStrategy().getFullJavaIdentifiers(keyColumns), colRefSegments(null))),
                 uniqueKey.enforced());
         else
             out.print("%s.createUniqueKey(%s, %s.name(\"%s\"), new %s[] { [[%s]] }, %s)",
@@ -1496,8 +1496,24 @@ public class JavaGenerator extends AbstractGenerator {
                 DSL.class,
                 escapeString(uniqueKey.getOutputName()),
                 TableField.class,
-                out.ref(getStrategy().getFullJavaIdentifiers(keyColumns), colRefSegments(null)),
+                castToTableFieldIfNecessary(out, uniqueKey.getTable(), out.ref(getStrategy().getFullJavaIdentifiers(keyColumns), colRefSegments(null))),
                 uniqueKey.enforced());
+    }
+
+    private List<String> castToTableFieldIfNecessary(
+        JavaWriter out,
+        TableDefinition table,
+        List<String> ref
+    ) {
+        return ref.stream()
+            .map(r -> r.contains("fieldsIncludingHidden().field(")
+                ? scala
+                    ? (r + ".asInstanceOf[" + out.ref(TableField.class) + " [" + out.ref(getStrategy().getJavaClassName(table, Mode.RECORD)) + ", " + wildcard() + "] ]")
+                    : kotlin
+                    ? (r + " as " + out.ref(TableField.class) + "<" + out.ref(getStrategy().getJavaClassName(table, Mode.RECORD)) + ", *>")
+                    : ("(" + out.ref(TableField.class) + "<" + out.ref(getStrategy().getJavaClassName(table, Mode.RECORD)) + ", ?>) " + r)
+                : r)
+            .collect(toList());
     }
 
 

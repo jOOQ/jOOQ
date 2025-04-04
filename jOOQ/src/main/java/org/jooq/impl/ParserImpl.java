@@ -415,6 +415,7 @@ import static org.jooq.impl.DSL.trunc;
 import static org.jooq.impl.DSL.tryCast;
 import static org.jooq.impl.DSL.unique;
 import static org.jooq.impl.DSL.unnest;
+import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.impl.DSL.user;
 import static org.jooq.impl.DSL.uuid;
 import static org.jooq.impl.DSL.values0;
@@ -6192,6 +6193,11 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
            ? s1.restrict()
            : s1;
     }
+
+
+
+
+
 
 
 

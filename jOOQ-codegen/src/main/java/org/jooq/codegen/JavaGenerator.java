@@ -8449,7 +8449,7 @@ public class JavaGenerator extends AbstractGenerator {
                 };
 
                 // [#15760] super.aliased() is necessary in Scala 3
-                idt.accept(() -> out.println("%soverride def where(condition: %s): %s = new %s(getQualifiedName(), if (super.aliased()) this else null, condition)", visibilityPublic(), Condition.class, className, className));
+                idt.accept(() -> out.println("%soverride def where(condition: %s): %s = new %s(getQualifiedName(), if (super.aliased()) this else null, %s.condition(this, condition))", visibilityPublic(), Condition.class, className, className, Internal.class));
                 idt.accept(() -> out.println("%soverride def where(conditions: %s[%s <: %s]): %s = where(%s.and(conditions))", visibilityPublic(), Collection.class, wildcard(), Condition.class, className, DSL.class));
                 idt.accept(() -> out.println("%soverride def where(conditions: %s*): %s = where(%s.and(conditions%s))", visibilityPublic(), Condition.class, className, DSL.class, varargSplice()));
                 idt.accept(() -> out.println("%soverride def where(condition: %s[%s]): %s = where(%s.condition(condition))", visibilityPublic(), Field.class, Boolean.class, className, DSL.class));
@@ -8497,7 +8497,7 @@ public class JavaGenerator extends AbstractGenerator {
                     r.run();
                 };
 
-                idt.accept(() -> out.println("%soverride fun where(condition: %s?): %s = %s(qualifiedName, if (aliased()) this else null, condition)", visibilityPublic(), Condition.class, className, className));
+                idt.accept(() -> out.println("%soverride fun where(condition: %s?): %s = %s(qualifiedName, if (aliased()) this else null, %s.condition(this, condition))", visibilityPublic(), Condition.class, className, className, Internal.class));
                 idt.accept(() -> out.println("%soverride fun where(conditions: %s<%s>): %s = where(%s.and(conditions))", visibilityPublic(), out.ref("kotlin.collections.Collection"), Condition.class, className, DSL.class));
                 idt.accept(() -> out.println("%soverride fun where(vararg conditions: %s?): %s = where(%s.and(*conditions))", visibilityPublic(), Condition.class, className, DSL.class));
                 idt.accept(() -> out.println("%soverride fun where(condition: %s<%s?>?): %s = where(%s.condition(condition))", visibilityPublic(), Field.class, Boolean.class, className, DSL.class));
@@ -8560,7 +8560,7 @@ public class JavaGenerator extends AbstractGenerator {
 
                 idt.accept(() -> {
                     out.println("%s%s where(%s condition) {", visibilityPublic(), className, Condition.class);
-                    out.println("return new %s(getQualifiedName(), aliased() ? this : null, null, condition);", className);
+                    out.println("return new %s(getQualifiedName(), aliased() ? this : null, null, %s.condition(this, condition));", className, Internal.class);
                     out.println("}");
                 });
                 idt.accept(() -> {

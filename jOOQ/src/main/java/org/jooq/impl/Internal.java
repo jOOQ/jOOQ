@@ -1299,4 +1299,12 @@ public final class Internal {
 
         return result;
     }
+
+    /**
+     * A utility to combine a possibly pre-existing condition on a
+     * {@link TableImpl} with a new one.
+     */
+    public static final Condition condition(TableImpl<?> table, Condition condition) {
+        return DSL.and(table.where, condition);
+    }
 }

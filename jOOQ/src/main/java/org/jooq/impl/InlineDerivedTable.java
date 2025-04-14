@@ -256,6 +256,11 @@ final class InlineDerivedTable<R extends Record> extends DerivedTable<R> {
             return new FieldsImpl<>(Tools.qualify(table(table.getUnqualifiedName()), table.as(table).fields()));
     }
 
+    @Override
+    public final Table<R> where(Condition c) {
+        return new InlineDerivedTable<>(table, DSL.and(condition, c), policyGenerated);
+    }
+
 
 
 

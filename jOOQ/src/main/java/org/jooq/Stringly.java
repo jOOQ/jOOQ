@@ -58,7 +58,7 @@ import org.jooq.impl.DSL;
  * <li>A plain SQL template (i.e. a {@link org.jooq.SQL})</li>
  * <li>An identifier (i.e. a {@link org.jooq.Name})</li>
  * <li>A keyword (i.e. a {@link org.jooq.Keyword})</li>
- * <li>A comment (i.e. a {@link org.jooq.Comment}</li>
+ * <li>A comment (i.e. a {@link org.jooq.Comment})</li>
  * </ul>
  * <p>
  * While the jOOQ API applies conventions consistently, it may not always be

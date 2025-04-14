@@ -11582,10 +11582,10 @@ public class JavaGenerator extends AbstractGenerator {
 
 
                 case SCALA_3:
-                    return "new " + out.ref(rawtype) + typeParams.replace("<", "[").replace(">", "]");
+                    return "new " + out.ref(rawtype) + typeParams.replace("<", "[").replace(">", "]").replace("[]", "");
 
                 case KOTLIN:
-                    return out.ref(rawtype) + typeParams;
+                    return out.ref(rawtype) + typeParams.replace("<>", "");
 
                 case JAVA:
                 default:

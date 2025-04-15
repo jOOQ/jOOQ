@@ -44,9 +44,9 @@ import static org.jooq.codegen.GenerationTool.DEFAULT_TARGET_DIRECTORY;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.codegen.GenerationTool;
@@ -54,6 +54,7 @@ import org.jooq.meta.jaxb.Configuration;
 import org.jooq.meta.jaxb.Target;
 import org.jooq.util.jaxb.tools.MiniJAXB;
 
+import org.apache.maven.model.PluginExecution;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Mojo;
@@ -173,13 +174,38 @@ public class Plugin extends AbstractMojo {
         // [#5286] There are a variety of reasons why the generator isn't set up
         //         correctly at this point. We'll log them all here.
         if (generator == null) {
+            List<String> executions = new ArrayList<>();
+
+            // [#18319] Help the poor souls who get trapped by Maven's weird stance on lifecycles and default executions
+            for (org.apache.maven.model.Plugin p : project.getModel().getBuild().getPlugins())
+                if (p.getGroupId().startsWith("org.jooq") && p.getArtifactId().equals("jooq-codegen-maven"))
+                    for (PluginExecution e : p.getExecutions())
+                        if (e.getConfiguration() != null)
+                            executions.add(e.getId());
+
             getLog().error("Incorrect configuration of jOOQ code generation tool");
-            getLog().error(
-                  "\n"
-                + "The jOOQ-codegen-maven module's generator configuration is not set up correctly.\n"
-                + "This can have a variety of reasons, among which:\n"
-                + "- Your pom.xml's <configuration> contains invalid XML according to " + XSD_CODEGEN + "\n"
-                + "- There is a version or artifact mismatch between your pom.xml and your commandline");
+
+            if (!executions.isEmpty())
+                getLog().error("""
+
+                    The jOOQ-codegen-maven module's generator configuration is not set up correctly.
+                    This can have a variety of reasons, among which:
+                    - Your pom.xml's <configuration> contains invalid XML according to {XSD_CODEGEN}
+                    - There is a version or artifact mismatch between your pom.xml and your commandline
+                    - You've configured execution configurations (as opposed to plugin configurations) and
+                      are running the plugin from the command line, but didn't specify the execution ID
+                      explicitly, see https://stackoverflow.com/a/79574560/521799.
+                      Available execution IDs are: {executions}
+                    """.replace("{XSD_CODEGEN}", XSD_CODEGEN)
+                       .replace("{executions}", "" + executions));
+            else
+                getLog().error("""
+
+                    The jOOQ-codegen-maven module's generator configuration is not set up correctly.
+                    This can have a variety of reasons, among which:
+                    - Your pom.xml's <configuration> contains invalid XML according to {XSD_CODEGEN}
+                    - There is a version or artifact mismatch between your pom.xml and your commandline
+                    """.replace("{XSD_CODEGEN}", XSD_CODEGEN));
 
             throw new MojoExecutionException("Incorrect configuration of jOOQ code generation tool. See error above for details.");
         }

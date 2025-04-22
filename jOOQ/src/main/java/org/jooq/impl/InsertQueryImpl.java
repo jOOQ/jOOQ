@@ -134,6 +134,7 @@ import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.FieldOrRow;
 import org.jooq.FieldOrRowOrSelect;
+import org.jooq.Fields;
 import org.jooq.GeneratorStatementType;
 import org.jooq.Identity;
 import org.jooq.InsertQuery;
@@ -967,6 +968,7 @@ implements
                 Map<Field<?>, Field<?>> map = new HashMap<>();
                 Field<?>[] names = Tools.fields(degree(select));
                 List<Field<?>> f = new ArrayList<>(fields);
+                FieldsImpl<?> lookup = new FieldsImpl<Record>(f);
                 for (int i = 0; i < fields.size() && i < names.length; i++)
                     map.put(f.get(i), names[i]);
 
@@ -974,7 +976,7 @@ implements
                     .whereNotExists(
                         select(one())
                         .from(table())
-                        .where(matchByConflictingKeys(ctx, map))
+                        .where(matchByConflictingKeys(ctx, lookup, map))
                     );
             }
 
@@ -989,7 +991,7 @@ implements
                         .whereNotExists(
                             select(one())
                             .from(table())
-                            .where(matchByConflictingKeys(ctx, map))
+                            .where(matchByConflictingKeys(ctx, table(), map))
                         );
 
                     if (rows == null)
@@ -1061,7 +1063,7 @@ implements
                            .on(matchByConflictingKeys(ctx, t))
                 : ctx.dsl().mergeInto(table())
                            .usingDual()
-                           .on(matchByConflictingKeys(ctx, insertMaps.lastMap()));
+                           .on(matchByConflictingKeys(ctx, table(), insertMaps.lastMap()));
 
             // [#1295] Use UPDATE clause only when with ON DUPLICATE KEY UPDATE,
             //         not with ON DUPLICATE KEY IGNORE
@@ -1132,7 +1134,7 @@ implements
      * updated primary key values.
      */
     @SuppressWarnings("unchecked")
-    private final Condition matchByConflictingKeys(Context<?> ctx, Map<Field<?>, Field<?>> map) {
+    private final Condition matchByConflictingKeys(Context<?> ctx, Fields lookup, Map<Field<?>, Field<?>> map) {
         Condition or = null;
 
         // [#7365] The ON CONFLICT clause can be emulated using MERGE by joining
@@ -1148,7 +1150,7 @@ implements
             Condition and = null;
 
             for (Field<?> field : fields) {
-                Field<Object> f = (Field<Object>) orElse(table().field(field), () -> field);
+                Field<Object> f = (Field<Object>) orElse(lookup.field(field), () -> field);
                 Condition other = matchByConflictingKey(f, (Field<Object>) map.get(f));
                 and = (and == null) ? other : and.and(other);
             }

@@ -62,7 +62,6 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Base64;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -77,8 +76,7 @@ import org.jooq.Fields;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
-import org.jooq.tools.json.ContainerFactory;
-import org.jooq.tools.json.JSONParser;
+import org.jooq.Source;
 
 /**
  * A very simple JSON reader based on Simple JSON.
@@ -111,19 +109,9 @@ final class JSONReader<R extends Record> {
 
     final Result<R> read(final Reader reader, boolean multiset) {
         try {
-            Object root = new JSONParser().parse(reader, new ContainerFactory() {
-                @Override
-                public Map createObjectContainer() {
-                    return new LinkedHashMap();
-                }
-
-                @Override
-                public List createArrayContainer() {
-                    return new ArrayList();
-                }
-            });
-
-            return read(ctx, row, recordType, multiset, root);
+            DefaultJSONContentHandler handler = new DefaultJSONContentHandler();
+            new JSONParser(ctx, Source.of(reader).readString(), handler).parse();
+            return read(ctx, row, recordType, multiset, handler.result());
         }
         catch (Exception e) {
             throw new RuntimeException(e);

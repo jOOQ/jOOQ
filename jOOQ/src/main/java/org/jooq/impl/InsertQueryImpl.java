@@ -404,6 +404,8 @@ implements
 
 
 
+
+
                         if ((onDuplicateKeyIgnore || onDuplicateKeyUpdate) && ctx.configuration().requireCommercial(() -> "InlineDerivedTable emulation for INSERT .. ON DUPLICATE KEY clauses is available in the commercial jOOQ editions only")) {
 
 

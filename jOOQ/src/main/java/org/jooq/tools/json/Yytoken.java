@@ -1,5 +1,11 @@
 package org.jooq.tools.json;
 
+/**
+ * @deprecated - 3.21.0 - [#18329] - This shaded third party dependency will be
+ *             removed without replacement. Please use any other JSON parser,
+ *             instead - e.g. Jackson.
+ */
+@Deprecated(forRemoval = true)
 public class Yytoken {
     public static final int TYPE_VALUE=0;//JSON primitive value: string,number,boolean,null
     public static final int TYPE_LEFT_BRACE=1;

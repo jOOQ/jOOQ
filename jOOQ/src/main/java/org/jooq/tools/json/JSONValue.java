@@ -30,7 +30,11 @@ import java.util.Map;
 
 /**
  * @author FangYidong&lt;fangyidong@yahoo.com.cn&gt;
+ * @deprecated - 3.21.0 - [#18329] - This shaded third party dependency will be
+ *             removed without replacement. Please use any other JSON parser,
+ *             instead - e.g. Jackson.
  */
+@Deprecated(forRemoval = true)
 public class JSONValue {
 
     /**

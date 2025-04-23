@@ -12,7 +12,11 @@ import java.util.Map;
  * Parser for JSON text. Please note that JSONParser is NOT thread-safe.
  *
  * @author FangYidong&lt;fangyidong@yahoo.com.cn&gt;
+ * @deprecated - 3.21.0 - [#18329] - This shaded third party dependency will be
+ *             removed without replacement. Please use any other JSON parser,
+ *             instead - e.g. Jackson.
  */
+@Deprecated(forRemoval = true)
 @SuppressWarnings({ "hiding", "javadoc", "rawtypes", "unchecked" })
 public class JSONParser {
     public static final int S_INIT=0;

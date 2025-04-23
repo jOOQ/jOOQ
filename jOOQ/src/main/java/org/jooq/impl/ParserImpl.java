@@ -68,7 +68,6 @@ import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.VisitListener.onVisitStart;
 import static org.jooq.conf.ParseWithMetaLookups.IGNORE_ON_FAILURE;
 import static org.jooq.conf.ParseWithMetaLookups.THROW_ON_FAILURE;
-import static org.jooq.conf.SettingsTools.parseLocale;
 import static org.jooq.impl.AbstractName.NO_NAME;
 import static org.jooq.impl.DSL.abs;
 import static org.jooq.impl.DSL.acos;
@@ -419,7 +418,6 @@ import static org.jooq.impl.Keywords.K_DELETE;
 import static org.jooq.impl.Keywords.K_INSERT;
 import static org.jooq.impl.Keywords.K_SELECT;
 import static org.jooq.impl.Keywords.K_UPDATE;
-import static org.jooq.impl.Names.N_DUAL;
 import static org.jooq.impl.QOM.JSONOnNull.ABSENT_ON_NULL;
 import static org.jooq.impl.QOM.JSONOnNull.NULL_ON_NULL;
 // ...
@@ -508,7 +506,6 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -884,7 +881,7 @@ final class ParserImpl implements Parser {
 }
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
-final class DefaultParseContext extends AbstractScope implements ParseContext {
+final class DefaultParseContext extends AbstractParseContext implements ParseContext {
 
 
 
@@ -7979,10 +7976,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 int i = position();
 
                 loop:
-                while (i < sql.length) {
-                    switch (sql[i]) {
+                while (i < chars.length) {
+                    switch (chars[i]) {
                         case '*':
-                            if (i + 1 < sql.length && sql[i + 1] == '/')
+                            if (i + 1 < chars.length && chars[i + 1] == '/')
                                 break loop;
                     }
 
@@ -13582,7 +13579,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         }
 
         StringBuilder sb = new StringBuilder();
-        for (int i = position(); i < sql.length; i++) {
+        for (int i = position(); i < chars.length; i++) {
             char c = character(i);
 
             if (c == end)
@@ -13616,7 +13613,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         int closeTokenEnd = -1;
 
         tokenLoop:
-        for (int i = position(); i < sql.length; i++) {
+        for (int i = position(); i < chars.length; i++) {
             char c = character(i);
 
             // "Good enough" approximation of PostgreSQL's syntax requirements
@@ -13635,7 +13632,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         position(openTokenEnd + 1);
 
         literalLoop:
-        for (int i = position(); i < sql.length; i++) {
+        for (int i = position(); i < chars.length; i++) {
             char c = character(i);
 
             if (c == '$')
@@ -13664,7 +13661,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         StringBuilder sb = new StringBuilder();
 
         characterLoop:
-        for (int i = position(); i < sql.length; i++) {
+        for (int i = position(); i < chars.length; i++) {
             char c1 = character(i);
 
             // TODO MySQL string escaping...
@@ -14251,7 +14248,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         int start = position();
         int stop = start;
 
-        for (; stop < sql.length; stop++) {
+        for (; stop < chars.length; stop++) {
             char c = character(stop);
 
             if (c == '\r') {
@@ -14270,115 +14267,6 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         position(stop);
         parseWhitespaceIf();
         return substring(start, stop);
-    }
-
-    private final boolean parseTokens(char... tokens) {
-        boolean result = parseTokensIf(tokens);
-
-        if (!result)
-            throw expected(new String(tokens));
-
-        return result;
-    }
-
-    private final boolean parseTokensIf(char... tokens) {
-        int p = position();
-
-        for (char token : tokens) {
-            if (!parseIf(token)) {
-                position(p);
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    private final boolean peekTokens(char... tokens) {
-        int p = position();
-
-        for (char token : tokens) {
-            if (!parseIf(token)) {
-                position(p);
-                return false;
-            }
-        }
-
-        position(p);
-        return true;
-    }
-
-    @Override
-    public final boolean parse(String string) {
-        boolean result = parseIf(string);
-
-        if (!result)
-            throw expected(string);
-
-        return result;
-    }
-
-    @Override
-    public final boolean parseIf(String string) {
-        return parseIf(string, true);
-    }
-
-    private final boolean parseIf(String string, boolean skipAfterWhitespace) {
-        boolean result = peek(string);
-
-        if (result) {
-            positionInc(string.length());
-
-            if (skipAfterWhitespace)
-                parseWhitespaceIf();
-        }
-
-        return result;
-    }
-
-    @Override
-    public final boolean parse(char c) {
-        return parse(c, true);
-    }
-
-    private final boolean parse(char c, boolean skipAfterWhitespace) {
-        if (!parseIf(c, skipAfterWhitespace))
-            throw expected("Token '" + c + "'");
-
-        return true;
-    }
-
-    @Override
-    public final boolean parseIf(char c) {
-        return parseIf(c, true);
-    }
-
-    private final boolean parseIf(char c, boolean skipAfterWhitespace) {
-        boolean result = peek(c);
-
-        if (result) {
-            positionInc();
-
-            if (skipAfterWhitespace)
-                parseWhitespaceIf();
-        }
-
-        return result;
-    }
-
-    private final boolean parseIf(char c, char peek, boolean skipAfterWhitespace) {
-        if (character() != c)
-            return false;
-
-        if (characterNext() != peek)
-            return false;
-
-        positionInc();
-
-        if (skipAfterWhitespace)
-            parseWhitespaceIf();
-
-        return true;
     }
 
     private final boolean peekFunctionNameIf(String name) {
@@ -14438,13 +14326,13 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         int length = operator.length();
         int p = position();
 
-        if (sql.length < p + length)
+        if (chars.length < p + length)
             return false;
 
         int pos = afterWhitespace(p, false);
 
         for (int i = 0; i < length; i++, pos++)
-            if (sql[pos] != operator.charAt(i))
+            if (chars[pos] != operator.charAt(i))
                 return false;
 
         // [#9888] An operator that is followed by a special character is very likely another, more complex operator
@@ -14539,29 +14427,6 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     }
 
     @Override
-    public final boolean peek(char c) {
-        return character() == c;
-    }
-
-    @Override
-    public final boolean peek(String string) {
-        return peek(string, position());
-    }
-
-    private final boolean peek(String string, int p) {
-        int length = string.length();
-
-        if (sql.length < p + length)
-            return false;
-
-        for (int i = 0; i < length; i++)
-            if (sql[p + i] != string.charAt(i))
-                return false;
-
-        return true;
-    }
-
-    @Override
     public final boolean peekKeyword(String... keywords) {
         return anyMatch(keywords, k -> peekKeyword(k));
     }
@@ -14583,7 +14448,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         int length = keyword.length();
         int p = position();
 
-        if (sql.length < p + length)
+        if (chars.length < p + length)
             return false;
 
         int skip = afterWhitespace(p, peekIntoParens) - p;
@@ -14626,13 +14491,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         return true;
     }
 
-    private final boolean parseWhitespaceIf() {
-        positionBeforeWhitespace = position();
-        position(afterWhitespace(positionBeforeWhitespace));
-        return positionBeforeWhitespace != position();
-    }
-
-    private final int afterWhitespace(int p) {
+    @Override
+    final int afterWhitespace(int p) {
         return afterWhitespace(p, false);
     }
 
@@ -14647,8 +14507,8 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         final boolean checkIgnoreComment = !FALSE.equals(settings().isParseIgnoreComments());
 
         loop:
-        for (int i = p; i < sql.length; i++) {
-            switch (sql[i]) {
+        for (int i = p; i < chars.length; i++) {
+            switch (chars[i]) {
                 case ' ':
                 case '\t':
                 case '\r':
@@ -14663,15 +14523,15 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                         break loop;
 
                 case '/':
-                    if (i + 1 < sql.length && sql[i + 1] == '*') {
+                    if (i + 1 < chars.length && chars[i + 1] == '*') {
                         i = i + 2;
                         blockCommentNestLevel++;
 
-                        while (i < sql.length) {
+                        while (i < chars.length) {
                             if (!(ignoreComment = peekIgnoreComment(ignoreComment, ignoreCommentStart, ignoreCommentStop, checkIgnoreComment, i))) {
-                                switch (sql[i]) {
+                                switch (chars[i]) {
                                     case '/':
-                                        if (i + 1 < sql.length && sql[i + 1] == '*') {
+                                        if (i + 1 < chars.length && chars[i + 1] == '*') {
                                             i = i + 2;
                                             blockCommentNestLevel++;
                                         }
@@ -14679,7 +14539,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                                         break;
 
                                     case '+':
-                                        if (!ignoreHints() && i + 1 < sql.length && ((sql[i + 1] >= 'A' && sql[i + 1] <= 'Z') || (sql[i + 1] >= 'a' && sql[i + 1] <= 'z'))) {
+                                        if (!ignoreHints() && i + 1 < chars.length && ((chars[i + 1] >= 'A' && chars[i + 1] <= 'Z') || (chars[i + 1] >= 'a' && chars[i + 1] <= 'z'))) {
                                             blockCommentNestLevel = 0;
                                             break loop;
                                         }
@@ -14687,7 +14547,7 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                                         break;
 
                                     case '*':
-                                        if (i + 1 < sql.length && sql[i + 1] == '/') {
+                                        if (i + 1 < chars.length && chars[i + 1] == '/') {
                                             p = (i = i + 1) + 1;
 
                                             if (--blockCommentNestLevel == 0)
@@ -14703,12 +14563,12 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                     }
 
                     // [#9651] H2 and Snowflake's c-style single line comments
-                    else if (i + 1 < sql.length && sql[i + 1] == '/') {
+                    else if (i + 1 < chars.length && chars[i + 1] == '/') {
                         i = i + 2;
 
-                        while (i < sql.length) {
+                        while (i < chars.length) {
                             if (!(ignoreComment = peekIgnoreComment(ignoreComment, ignoreCommentStart, ignoreCommentStop, checkIgnoreComment, i))) {
-                                switch (sql[i]) {
+                                switch (chars[i]) {
                                     case '\r':
                                     case '\n':
                                         p = i + 1;
@@ -14726,17 +14586,17 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
                 case '-':
                 case '#':
-                    if (sql[i] == '-' && i + 1 < sql.length && sql[i + 1] == '-' ||
-                        sql[i] == '#' && SUPPORTS_HASH_COMMENT_SYNTAX.contains(parseDialect())) {
+                    if (chars[i] == '-' && i + 1 < chars.length && chars[i + 1] == '-' ||
+                        chars[i] == '#' && SUPPORTS_HASH_COMMENT_SYNTAX.contains(parseDialect())) {
 
-                        if (sql[i] == '-')
+                        if (chars[i] == '-')
                             i = i + 2;
                         else
                             i++;
 
-                        while (i < sql.length) {
+                        while (i < chars.length) {
                             if (!(ignoreComment = peekIgnoreComment(ignoreComment, ignoreCommentStart, ignoreCommentStop, checkIgnoreComment, i))) {
-                                switch (sql[i]) {
+                                switch (chars[i]) {
                                     case '\r':
                                     case '\n':
                                         p = i + 1;
@@ -14782,10 +14642,6 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
                 ignoreComment = !peek(ignoreCommentStop, i);
 
         return ignoreComment;
-    }
-
-    private final char upper(char c) {
-        return c >= 'a' && c <= 'z' ? (char) (c - ('a' - 'A')) : c;
     }
 
     private enum TruthValue {
@@ -15016,15 +14872,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
 
 
 
-    private final DSLContext            dsl;
-    private final Locale                locale;
     private final Meta                  meta;
-    private char[]                      sql;
     private final ParseWithMetaLookups  metaLookups;
     private boolean                     metaLookupsForceIgnore;
     private final Consumer<Param<?>>    bindParamListener;
-    private int                         positionBeforeWhitespace;
-    private int                         position        = 0;
     private boolean                     ignoreHints     = true;
     private final Object[]              bindings;
     private int                         bindIndex       = 0;
@@ -15052,16 +14903,13 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         DSLContext dsl,
         Meta meta,
         ParseWithMetaLookups metaLookups,
-        String sqlString,
+        String chars,
         Object[] bindings
     ) {
-        super(dsl.configuration());
+        super(dsl, chars);
 
-        this.dsl = dsl;
-        this.locale = parseLocale(dsl.settings());
         this.meta = meta;
         this.metaLookups = metaLookups;
-        this.sql = sqlString != null ? sqlString.toCharArray() : new char[0];
         this.bindings = bindings;
 
         // [#8722] This is an undocumented flag that allows for collecting parameters from the parser
@@ -15144,64 +14992,6 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         return true;
     }
 
-    private final double parseDouble(String string) {
-        try {
-            return Double.parseDouble(string);
-        }
-        catch (NumberFormatException e) {
-            throw expected("Double literal");
-        }
-    }
-
-    private final int parseInt(String string) {
-        try {
-            return Integer.parseInt(string);
-        }
-        catch (NumberFormatException e) {
-            throw expected("Integer literal");
-        }
-    }
-
-    private final int parseInt(String string, int base) {
-        try {
-            return Integer.parseInt(string, base);
-        }
-        catch (NumberFormatException e) {
-            throw expected("Integer literal of base: " + base);
-        }
-    }
-
-    private final String substring(int startPosition, int endPosition) {
-        startPosition = Math.max(0, startPosition);
-        endPosition = Math.min(sql.length, endPosition);
-        return new String(sql, startPosition, Math.min(endPosition - startPosition, sql.length - startPosition));
-    }
-
-    private final ParserException internalError() {
-        return exception("Internal Error");
-    }
-
-    private final ParserException expected(String object) {
-        return init(new ParserException(mark(), object + " expected"));
-    }
-
-    private final ParserException expected(String... objects) {
-        StringBuilder sb = new StringBuilder();
-
-        for (int i = 0; i < objects.length; i++)
-            if (i == 0)
-                sb.append(objects[i]);
-            // [#10169] Correct application of Oxford comma 🧐
-            else if (i == 1 && objects.length == 2)
-                sb.append(" or ").append(objects[i]);
-            else if (i == objects.length - 1)
-                sb.append(", or ").append(objects[i]);
-            else
-                sb.append(", ").append(objects[i]);
-
-        return init(new ParserException(mark(), sb.toString() + " expected"));
-    }
-
     private final ParserException notImplemented(String feature) {
         return notImplemented(feature, "https://github.com/jOOQ/jOOQ/issues/10171");
     }
@@ -15214,16 +15004,6 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
         return init(new ParserException(mark(), "Unsupported clause"));
     }
 
-    @Override
-    public final ParserException exception(String message) {
-        return init(new ParserException(mark(), message));
-    }
-
-    private final ParserException init(ParserException e) {
-        int[] line = line();
-        return e.position(position).line(line[0]).column(line[1]);
-    }
-
     private final Object nextBinding() {
         if (bindIndex++ < bindings.length)
             return bindings[bindIndex - 1];
@@ -15233,80 +15013,10 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
             throw exception("No binding provided for bind index " + bindIndex);
     }
 
-    private final int[] line() {
-        int line = 1;
-        int column = 1;
-
-        for (int i = 0; i < position; i++) {
-            if (sql[i] == '\r') {
-                line++;
-                column = 1;
-
-                if (i + 1 < sql.length && sql[i + 1] == '\n')
-                    i++;
-            }
-            else if (sql[i] == '\n') {
-                line++;
-                column = 1;
-            }
-            else {
-                column++;
-            }
-        }
-
-        return new int[] { line, column };
-    }
-
-    private final char characterUpper() {
-        return Character.toUpperCase(character());
-    }
-
-    @Override
-    public final char character() {
-        return character(position);
-    }
-
-    @Override
-    public final char character(int pos) {
-        return pos >= 0 && pos < sql.length ? sql[pos] : ' ';
-    }
-
-    private final char characterNextUpper() {
-        return Character.toUpperCase(characterNext());
-    }
-
-    private final char characterNext() {
-        return character(position + 1);
-    }
-
-    @Override
-    public final char[] characters() {
-        return sql;
-    }
-
     @Override
     public final ParseContext characters(char[] newCharacters) {
-        this.sql = newCharacters;
+        this.chars = newCharacters;
         return this;
-    }
-
-    @Override
-    public final int position() {
-        return position;
-    }
-
-    @Override
-    public final boolean position(int newPosition) {
-        position = newPosition;
-        return true;
-    }
-
-    private final boolean positionInc() {
-        return positionInc(1);
-    }
-
-    private final boolean positionInc(int inc) {
-        return position(position + inc);
     }
 
     private final String delimiter() {
@@ -15386,16 +15096,9 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
            &&   character != delimiter.charAt(0));
     }
 
-    private final boolean hasMore() {
-        return position < sql.length;
-    }
-
-    private final boolean hasMore(int offset) {
-        return position + offset < sql.length;
-    }
-
-    private final boolean done() {
-        return position >= sql.length && (bindings.length == 0 || bindings.length == bindIndex);
+    @Override
+    final boolean done() {
+        return super.done() && (bindings.length == 0 || bindings.length == bindIndex);
     }
 
     private final <Q extends QueryPart> Q done(String message, Q result) {
@@ -15460,16 +15163,6 @@ final class DefaultParseContext extends AbstractScope implements ParseContext {
     @SuppressWarnings("unused")
     private final boolean asTrue(Object o) {
         return true;
-    }
-
-    private final String mark() {
-        int[] line = line();
-        return "[" + line[0] + ":" + line[1] + "] "
-              + (position > 50 ? "..." : "")
-              + substring(Math.max(0, position - 50), position)
-              + "[*]"
-              + substring(position, Math.min(sql.length, position + 80))
-              + (sql.length > position + 80 ? "..." : "");
     }
 
     private final <T> T newScope(Supplier<T> scoped) {

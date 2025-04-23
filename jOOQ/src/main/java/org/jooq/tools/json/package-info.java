@@ -12,5 +12,4 @@
  *             removed without replacement. Please use any other JSON parser,
  *             instead - e.g. Jackson.
  */
-@Deprecated(forRemoval = true)
 package org.jooq.tools.json;

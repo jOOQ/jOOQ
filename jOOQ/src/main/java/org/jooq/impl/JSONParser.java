@@ -149,6 +149,7 @@ final class JSONParser extends AbstractParseContext {
         }
 
         position(i);
+        parseWhitespaceIf();
         return new String(chars, p, i - p);
     }
 

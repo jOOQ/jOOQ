@@ -1233,11 +1233,15 @@ implements
     // -------------------------------------------------------------------------
 
     final InsertQueryImpl<R> copy(Consumer<? super InsertQueryImpl<R>> finisher) {
-        return copy(finisher, table);
+        return copy(finisher, with, table);
     }
 
     final <O extends Record> InsertQueryImpl<O> copy(Consumer<? super InsertQueryImpl<O>> finisher, Table<O> t) {
-        InsertQueryImpl<O> i = new InsertQueryImpl<>(configuration(), with, t);
+        return copy(finisher, with, t);
+    }
+
+    final <O extends Record> InsertQueryImpl<O> copy(Consumer<? super InsertQueryImpl<O>> finisher, WithImpl w, Table<O> t) {
+        InsertQueryImpl<O> i = new InsertQueryImpl<>(configuration(), w, t);
 
         if (!returning.isEmpty())
             i.setReturning(returning);

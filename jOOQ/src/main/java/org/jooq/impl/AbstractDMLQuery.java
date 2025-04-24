@@ -112,6 +112,7 @@ import static org.jooq.impl.Tools.newRecord;
 import static org.jooq.impl.Tools.reference;
 import static org.jooq.impl.Tools.removeGenerator;
 import static org.jooq.impl.Tools.row0;
+import static org.jooq.impl.Tools.selectQueryImpl;
 import static org.jooq.impl.Tools.setValue;
 import static org.jooq.impl.Tools.unalias;
 import static org.jooq.impl.Tools.updateQueryImpl;
@@ -199,6 +200,8 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
     private static final Set<SQLDialect>         NATIVE_SUPPORT_DATA_CHANGE_DELTA_TABLE = SQLDialect.supportedBy(H2);
     private static final Set<SQLDialect>         NO_SUPPORT_FETCHING_KEYS               = SQLDialect.supportedBy(CLICKHOUSE, IGNITE, TRINO);
     private static final Set<SQLDialect>         NO_SUPPORT_RETURNING_ASTERISK          = SQLDialect.supportedUntil(MARIADB);
+
+
 
 
 
@@ -370,6 +373,22 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
         ctx.data(DATA_DML_TARGET_TABLE, table);
         ctx.data(DATA_DML_USING_TABLES, this instanceof DeleteQueryImpl<?> d ? d.$using() : null);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

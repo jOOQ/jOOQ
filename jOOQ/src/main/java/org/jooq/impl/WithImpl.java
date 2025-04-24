@@ -199,6 +199,15 @@ implements
         this.ctes = new CommonTableExpressionList();
     }
 
+    static final WithImpl merge(WithImpl w1, WithImpl w2) {
+        if (w1 == null)
+            return w2;
+        else if (w2 == null)
+            return w1;
+        else
+            return new WithImpl(w1.configuration(), w1.recursive || w2.recursive).with(w1.ctes).with(w2.ctes);
+    }
+
     // -------------------------------------------------------------------------
     // XXX QueryPart API
     // -------------------------------------------------------------------------

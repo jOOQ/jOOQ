@@ -657,11 +657,11 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         return result;
     }
 
-    private final SelectQueryImpl<R> copy(Consumer<? super SelectQueryImpl<R>> finisher) {
+    final SelectQueryImpl<R> copy(Consumer<? super SelectQueryImpl<R>> finisher) {
         return copy(finisher, with);
     }
 
-    private final SelectQueryImpl<R> copy(Consumer<? super SelectQueryImpl<R>> finisher, WithImpl newWith) {
+    final SelectQueryImpl<R> copy(Consumer<? super SelectQueryImpl<R>> finisher, WithImpl newWith) {
         SelectQueryImpl<R> result = copyTo(CopyClause.END, false, new SelectQueryImpl<>(configuration(), newWith));
         finisher.accept(result);
         return result;

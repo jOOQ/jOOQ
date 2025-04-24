@@ -2718,6 +2718,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+
+
         if (hasWhere) {
             ConditionProviderImpl actual = new ConditionProviderImpl();
 

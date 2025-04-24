@@ -1108,17 +1108,6 @@ public enum SQLDialect {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
     ;
 
     private static final SQLDialect[] FAMILIES;
@@ -1290,7 +1279,6 @@ public enum SQLDialect {
      * <ul>
      * <li>{@link #DEFAULT}: A hypothetical dialect used for
      * {@link QueryPart#toString()} calls of unattached query parts.</li>
-     * <li>{@link #POSTGRESPLUS}: A not yet supported dialect.</li>
      * </ul>
      */
     public final boolean supported() {

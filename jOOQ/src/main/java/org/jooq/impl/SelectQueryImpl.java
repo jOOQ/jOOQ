@@ -2705,8 +2705,18 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // WHERE clause
         // ------------
         context.start(SELECT_WHERE);
+        boolean hasWhere = where.hasWhere() || semiAntiJoinPredicates != null || TRUE.equals(context.data().get(BooleanDataKey.DATA_MANDATORY_WHERE_CLAUSE));
+        boolean hasQualify = additionalQualify != null || getQualify().hasWhere();
 
-        if (where.hasWhere() || semiAntiJoinPredicates != null || TRUE.equals(context.data().get(BooleanDataKey.DATA_MANDATORY_WHERE_CLAUSE))) {
+
+
+
+
+
+
+
+
+        if (hasWhere) {
             ConditionProviderImpl actual = new ConditionProviderImpl();
 
             if (semiAntiJoinPredicates != null)
@@ -2814,7 +2824,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // QUALIFY clause
         // -------------
 
-        if (additionalQualify != null || getQualify().hasWhere())
+        if (hasQualify)
             context.formatSeparator()
                    .visit(K_QUALIFY)
                    .sql(' ')

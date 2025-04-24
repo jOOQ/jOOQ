@@ -2046,6 +2046,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+
                 case FIREBIRD:
                 case MYSQL: {
                     if (getLimit().isApplicable() && (getLimit().withTies() || getLimit().isExpression()))
@@ -2064,7 +2065,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
                     break;
                 }
-
 
 
 
@@ -2707,6 +2707,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         context.start(SELECT_WHERE);
         boolean hasWhere = where.hasWhere() || semiAntiJoinPredicates != null || TRUE.equals(context.data().get(BooleanDataKey.DATA_MANDATORY_WHERE_CLAUSE));
         boolean hasQualify = additionalQualify != null || getQualify().hasWhere();
+
+
 
 
 

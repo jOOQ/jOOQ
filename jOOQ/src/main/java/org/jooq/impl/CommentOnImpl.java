@@ -297,6 +297,10 @@ implements
                 ctx.visit(K_VIEW).sql(' ');
             else if (isMaterializedView && !NO_SUPPORT_COMMENT_ON_MATERIALIZED_VIEW.contains(ctx.dialect()))
                 ctx.visit(K_MATERIALIZED).sql(' ').visit(K_VIEW).sql(' ');
+
+
+
+
             else
                 ctx.visit(K_TABLE).sql(' ');
 

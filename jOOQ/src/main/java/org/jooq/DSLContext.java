@@ -8370,10 +8370,6 @@ public interface DSLContext extends Scope {
      *       .values(value1, value2)
      *       .execute();
      * </code></pre>
-     * <p>
-     * Note: Using this method, you can also create an H2-specific MERGE
-     * statement without field specification. See also
-     * {@link #mergeInto(Table, Field...)}
      */
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })

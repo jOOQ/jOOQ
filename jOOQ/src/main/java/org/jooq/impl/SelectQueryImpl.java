@@ -1981,6 +1981,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+
                 case FIREBIRD:
                 case MYSQL: {
                     if (getLimit().isApplicable() && (getLimit().withTies() || getLimit().isExpression()))
@@ -1990,7 +1991,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
                     break;
                 }
-
 
 
 

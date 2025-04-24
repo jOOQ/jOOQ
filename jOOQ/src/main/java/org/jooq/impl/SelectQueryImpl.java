@@ -1970,6 +1970,15 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
+
+
+
+
+
+
+
+
+
                 case MARIADB: {
                     if (getLimit().isApplicable() && getLimit().isExpression())
                         toSQLReferenceLimitWithWindowFunctions(context, aliasOverride);
@@ -2014,7 +2023,6 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
                     break;
                 }
-
 
 
 

@@ -103,7 +103,7 @@ final class QualifiedAsteriskImpl extends AbstractQueryPart implements Qualified
 
 
 
-                        ctx.sql(' ').visit(K_EXCEPT).sql(" (").visit(fields).sql(')');
+                        ctx.sql(' ').visit(AsteriskImpl.keyword(ctx)).sql(" (").visit(fields).sql(')');
 
                 break;
         }

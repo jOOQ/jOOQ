@@ -8263,7 +8263,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
             QualifiedAsterisk qa;
 
             if (parseIf('*')) {
-                if (parseKeywordIf("EXCEPT")) {
+                if (parseKeywordIf("EXCEPT", "EXCLUDE")) {
                     parse('(');
                     result.add(DSL.asterisk().except(parseList(',', c -> parseFieldName()).toArray(EMPTY_FIELD)));
                     parse(')');
@@ -8272,7 +8272,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                     result.add(DSL.asterisk());
             }
             else if ((qa = parseQualifiedAsteriskIf()) != null) {
-                if (parseKeywordIf("EXCEPT")) {
+                if (parseKeywordIf("EXCEPT", "EXCLUDE")) {
                     parse('(');
                     result.add(qa.except(parseList(',', c -> parseFieldName()).toArray(EMPTY_FIELD)));
                     parse(')');

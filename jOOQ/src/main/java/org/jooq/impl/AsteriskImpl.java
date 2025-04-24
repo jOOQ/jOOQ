@@ -131,14 +131,16 @@ final class AsteriskImpl extends AbstractQueryPart implements Asterisk {
 
 
 
-                ctx.sql(' ').visit(K_EXCEPT).sql(" (").visit(fields).sql(')');
+                ctx.sql(' ').visit(keyword(ctx)).sql(" (").visit(fields).sql(')');
     }
 
     static final Keyword keyword(Context<?> ctx) {
         switch (ctx.family()) {
 
+
             case DUCKDB:
                 return K_EXCLUDE;
+
             default:
                 return K_EXCEPT;
         }

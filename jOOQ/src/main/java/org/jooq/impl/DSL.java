@@ -5989,10 +5989,6 @@ public class DSL {
      *   .whenNotMatchedThenInsert(field1, field2)
      *   .values(value1, value2)
      * </code></pre>
-     * <p>
-     * Note: Using this method, you can also create an H2-specific MERGE
-     * statement without field specification. See also
-     * {@link #mergeInto(Table, Field...)}
      *
      * @see DSLContext#mergeInto(Table)
      */

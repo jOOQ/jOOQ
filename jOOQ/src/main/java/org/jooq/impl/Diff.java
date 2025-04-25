@@ -58,7 +58,12 @@ import static org.jooq.impl.ConstraintType.PRIMARY_KEY;
 import static org.jooq.impl.ConstraintType.UNIQUE;
 import static org.jooq.impl.Tools.NO_SUPPORT_TIMESTAMP_PRECISION;
 import static org.jooq.impl.Tools.allMatch;
+import static org.jooq.impl.Tools.anyMatch;
+import static org.jooq.impl.Tools.filter;
+import static org.jooq.impl.Tools.findAny;
+import static org.jooq.impl.Tools.flatMap;
 import static org.jooq.impl.Tools.isVal1;
+import static org.jooq.impl.Tools.map;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 import static org.jooq.tools.StringUtils.defaultString;
 import static org.jooq.tools.StringUtils.isEmpty;
@@ -73,9 +78,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.Function;
-import java.util.function.LongFunction;
-import java.util.function.LongSupplier;
-import java.util.function.Supplier;
 import java.util.function.ToLongFunction;
 
 import org.jooq.AlterSequenceFlagsStep;
@@ -103,9 +105,8 @@ import org.jooq.Sequence;
 import org.jooq.Table;
 import org.jooq.TableOptions.TableType;
 import org.jooq.UniqueKey;
-import org.jooq.DDLExportConfiguration.InlineForeignKeyConstraints;
-import org.jooq.impl.QOM.DropDatabase;
-import org.jooq.impl.QOM.DropIndex;
+import org.jooq.impl.QOM.DropTable;
+import org.jooq.impl.QOM.PrimaryKey;
 import org.jooq.tools.StringUtils;
 
 /**
@@ -137,7 +138,62 @@ final class Diff {
     }
 
     final Queries queries() {
-        return ctx.queries(appendCatalogs(new DiffResult(), meta1.getCatalogs(), meta2.getCatalogs()).queries);
+        return ctx.queries(patch(appendCatalogs(new DiffResult(), meta1.getCatalogs(), meta2.getCatalogs())).queries);
+    }
+
+    private final DiffResult patch(DiffResult result) {
+
+        // [#18388] The final outcome of a diff may have to be patched with additional statements, for example,
+        //          when a child table is dropped and its parent PK or UK is dropped as well, we must drop
+        //          the child table's FK explicitly in order to ensure that happens first, before the PK or UK is dropped.
+        //          A better solution would be to detect an "ideal" drop order among tables, but that would require a more
+        //          sophisticated dependency anylsis, and it would still not always be possible.
+        if (anyMatch(result.queries, q -> droppingPKorUK(q)) && anyMatch(result.queries, q -> q instanceof QOM.DropTable)) {
+            List<ForeignKey<?, ?>> fks = flatMap(
+                filter(result.queries, q -> q instanceof QOM.DropTable),
+                q -> ((QOM.DropTable) q).$table().getReferences()
+            );
+
+            Set<UniqueKey<?>> uks = new HashSet<>(map(
+                filter(result.queries, q -> droppingPKorUK(q)),
+                q -> droppedPKorUK((AlterTableImpl) q)
+            ));
+
+            boolean sort = false;
+            for (ForeignKey<?, ?> x : filter(fks, fk -> uks.contains(fk.getKey()) && !result.droppedFks.contains(fk))) {
+                result.queries.add(ctx.alterTable(x.getTable()).dropForeignKey(x.constraint()));
+                sort = true;
+            }
+
+            if (sort)
+                result.queries.sort(Diff::sortOrder);
+        }
+
+        return result;
+    }
+
+    private final boolean droppingPKorUK(Query q) {
+        if (q instanceof AlterTableImpl a) {
+            if (a.$dropConstraintType() == PRIMARY_KEY)
+                return true;
+            else if (a.$dropConstraintType() == UNIQUE)
+                return true;
+            else
+                return droppedPKorUK(a) != null;
+        }
+
+        return false;
+    }
+
+    private final UniqueKey<?> droppedPKorUK(AlterTableImpl a) {
+
+        // [#18388] TODO: Is there a case where meta data isn't available on the Table?
+        if (a.$dropConstraintType() == PRIMARY_KEY)
+            return a.$table().getPrimaryKey();
+
+        // [#18388] TODO: Is there a case where we're comparing structural and nominal constraints, which should match?
+        else
+            return findAny(a.$table().getUniqueKeys(), u -> u.constraint().equals(a.$dropConstraint()));
     }
 
     private final DiffResult appendCatalogs(DiffResult result, List<Catalog> l1, List<Catalog> l2) {
@@ -860,11 +916,11 @@ final class Diff {
         // [#18044] DROP CONSTRAINT / INDEX before everything, ADD CONSTRAINT / INDEX after everything
         // [#18383] FOREIGN KEY must be dropped before other constraints, or added after other constraints
         if (q instanceof AlterTableImpl a) {
-            return a.$dropConstraint() instanceof QOM.ForeignKey
+            return a.$dropConstraint() instanceof QOM.ForeignKey || a.$dropConstraintType() == FOREIGN_KEY
                 ? -2
                 : a.$dropConstraint() != null
                 ? -1
-                : a.$addConstraint() instanceof QOM.ForeignKey
+                : a.$addConstraint() instanceof QOM.ForeignKey || a.$dropConstraintType() == FOREIGN_KEY
                 ? 2
                 : a.$addConstraint() != null
                 ? 1

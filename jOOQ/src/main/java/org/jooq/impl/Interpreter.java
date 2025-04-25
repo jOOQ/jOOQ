@@ -744,8 +744,10 @@ final class Interpreter {
                 throw notExists(query.$dropConstraint());
         }
         else if (query.$dropConstraintType() == PRIMARY_KEY) {
-            if (existing.primaryKey != null)
+            if (existing.primaryKey != null) {
+                cascade(existing.primaryKey, null, query.$dropCascade());
                 existing.primaryKey = null;
+            }
             else
                 throw primaryKeyNotExists(table);
         }

@@ -5795,7 +5795,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                         );
                     }
                     else if (parseKeywordIf("PRIMARY KEY")) {
-                        Name identifier = parseIdentifierIf();
+                        Name identifier = !peekKeyword("CASCADE", "RESTRICT") ? parseIdentifierIf() : null;
                         return parseCascadeRestrictIf(
                             identifier == null ? s1.dropPrimaryKey() : s1.dropPrimaryKey(identifier),
                             AlterTableDropStep::cascade,

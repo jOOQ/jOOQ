@@ -847,9 +847,14 @@ final class Diff {
     static final int sortIndex(Query q) {
 
         // [#18044] DROP CONSTRAINT / INDEX before everything, ADD CONSTRAINT / INDEX after everything
+        // [#18383] FOREIGN KEY must be dropped before other constraints, or added after other constraints
         if (q instanceof AlterTableImpl a) {
-            return a.$dropConstraint() != null
+            return a.$dropConstraint() instanceof QOM.ForeignKey
+                ? -2
+                : a.$dropConstraint() != null
                 ? -1
+                : a.$addConstraint() instanceof QOM.ForeignKey
+                ? 2
                 : a.$addConstraint() != null
                 ? 1
                 : 0;

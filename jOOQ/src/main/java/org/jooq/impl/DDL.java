@@ -126,7 +126,7 @@ final class DDL {
         this.configuration = configuration;
     }
 
-    final List<Query> createTableOrView(Table<?> table, Collection<? extends Constraint> constraints) {
+    private final List<Query> createTableOrViewWithInlineConstraints(Table<?> table, Collection<? extends Constraint> constraints) {
         boolean temporary = table.getTableType() == TableType.TEMPORARY;
         boolean view = table.getTableType().isView();
         OnCommit onCommit = table.getOptions().onCommit();
@@ -274,7 +274,20 @@ final class DDL {
     }
 
     final List<Query> createTableOrView(Table<?> table) {
-        return createTableOrView(table, constraints(table, true));
+        return createTableOrView(table, new HashSet<Table<?>>());
+    }
+
+    private final List<Query> createTableOrView(Table<?> table, Set<Table<?>> tablesWithInlineConstraints) {
+        List<Query> queries = new ArrayList<>();
+        List<Constraint> constraints = new ArrayList<>();
+
+        if (!hasConstraintsUsingIndexes(table)) {
+            tablesWithInlineConstraints.add(table);
+            constraints.addAll(constraints(table, inlineForeignKeyDefinitions()));
+        }
+
+        queries.addAll(createTableOrViewWithInlineConstraints(table, constraints));
+        return queries;
     }
 
     final List<Query> createIndex(Table<?> table) {
@@ -299,6 +312,16 @@ final class DDL {
             .on(i.getTable(), i.getFields());
 
         return i.getWhere() != null ? s1.where(i.getWhere()) : s1;
+    }
+
+    final List<Query> createForeignKey(Table<?> table) {
+        List<Query> result = new ArrayList<>();
+
+        if (configuration.flags().contains(DDLFlag.FOREIGN_KEY))
+            for (Constraint constraint : foreignKeys(table))
+                result.add(ctx.alterTable(table).add(constraint));
+
+        return result;
     }
 
     final List<Query> alterTableAddConstraints(Table<?> table) {
@@ -372,6 +395,9 @@ final class DDL {
             else
                 queries.addAll(alterTableAddConstraints(table));
 
+            if (!inlineForeignKeyDefinitions())
+                queries.addAll(createForeignKey(table));
+
             queries.addAll(createIndex(table));
             queries.addAll(commentOn(table));
         }
@@ -418,20 +444,10 @@ final class DDL {
         //          the constraint.
         Set<Table<?>> tablesWithInlineConstraints = new HashSet<>();
 
-        if (configuration.flags().contains(TABLE)) {
-            for (Schema schema : schemas) {
-                for (Table<?> table : sortTablesIf(schema.getTables(), !configuration.respectTableOrder())) {
-                    List<Constraint> constraints = new ArrayList<>();
-
-                    if (!hasConstraintsUsingIndexes(table)) {
-                        tablesWithInlineConstraints.add(table);
-                        constraints.addAll(constraints(table, inlineForeignKeyDefinitions()));
-                    }
-
-                    queries.addAll(createTableOrView(table, constraints));
-                }
-            }
-        }
+        if (configuration.flags().contains(TABLE))
+            for (Schema schema : schemas)
+                for (Table<?> table : sortTablesIf(schema.getTables(), !configuration.respectTableOrder()))
+                    queries.addAll(createTableOrView(table, tablesWithInlineConstraints));
 
         if (configuration.flags().contains(INDEX))
             for (Schema schema : schemas)

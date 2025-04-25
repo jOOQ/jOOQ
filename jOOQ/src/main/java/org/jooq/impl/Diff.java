@@ -103,6 +103,7 @@ import org.jooq.Sequence;
 import org.jooq.Table;
 import org.jooq.TableOptions.TableType;
 import org.jooq.UniqueKey;
+import org.jooq.DDLExportConfiguration.InlineForeignKeyConstraints;
 import org.jooq.impl.QOM.DropDatabase;
 import org.jooq.impl.QOM.DropIndex;
 import org.jooq.tools.StringUtils;
@@ -367,8 +368,8 @@ final class Diff {
             }
             else {
 
-                // [#18044] Ensure constraint / column drop / add order
-                DiffResult temp = new DiffResult(new ArrayList<>(), r.droppedFks);
+                // [#18044] [#18327] Ensure constraint / column drop / add order
+                DiffResult temp = new DiffResult(new ArrayList<>(), r.addedFks, r.droppedFks);
 
                 appendColumns(temp, t1, asList(t1.fields()), asList(t2.fields()));
                 appendPrimaryKey(temp, t1, asList(t1.getPrimaryKey()), asList(t2.getPrimaryKey()));
@@ -377,7 +378,7 @@ final class Diff {
                 appendChecks(temp, t1, t1.getChecks(), t2.getChecks());
                 appendIndexes(temp, t1, t1.getIndexes(), t2.getIndexes());
 
-                temp.queries.sort(this::sortOrder);
+                temp.queries.sort(Diff::sortOrder);
                 r.addAll(temp);
             }
 
@@ -389,28 +390,6 @@ final class Diff {
                     r.queries.add(ctx.commentOnView(t2).is(c2));
                 else
                     r.queries.add(ctx.commentOnTable(t2).is(c2));
-        }
-
-        private int sortOrder(Query q1, Query q2) {
-            return sortIndex(q1) - sortIndex(q2);
-        }
-
-        private int sortIndex(Query q) {
-
-            // [#18044] DROP CONSTRAINT / INDEX before everything, ADD CONSTRAINT / INDEX after everything
-            if (q instanceof AlterTableImpl a) {
-                return a.$dropConstraint() != null
-                    ? -1
-                    : a.$addConstraint() != null
-                    ? 1
-                    : 0;
-            }
-            else if (q instanceof QOM.DropIndex)
-                return -1;
-            else if (q instanceof QOM.CreateIndex)
-                return 1;
-            else
-                return 0;
         }
 
         private void replaceView(DiffResult r, Table<?> v1, Table<?> v2, boolean canReplace) {
@@ -692,7 +671,10 @@ final class Diff {
     }
 
     private final DiffResult appendForeignKeys(DiffResult result, final Table<?> t1, List<? extends ForeignKey<?, ?>> fk1, List<? extends ForeignKey<?, ?>> fk2) {
-        final Create<ForeignKey<?, ?>> create = (r, fk) -> r.queries.add(ctx.alterTable(t1).add(fk.constraint()));
+        final Create<ForeignKey<?, ?>> create = (r, fk) -> {
+            if (r.addedFks.add(fk))
+                r.queries.add(ctx.alterTable(t1).add(fk.constraint()));
+        };
         final Drop<ForeignKey<?, ?>> drop = (r, fk) -> {
             if (r.droppedFks.add(fk))
                 r.queries.add(ctx.alterTable(t1).dropForeignKey(fk.constraint()));
@@ -780,9 +762,9 @@ final class Diff {
         Iterator<? extends N> i1 = sorted(l1, comp);
         Iterator<? extends N> i2 = sorted(l2, comp);
 
-        DiffResult dropped = dropMergeCreate ? new DiffResult(new ArrayList<>(), result.droppedFks) : result;
-        DiffResult merged = dropMergeCreate ? new DiffResult(new ArrayList<>(), result.droppedFks) : result;
-        DiffResult created = dropMergeCreate ? new DiffResult(new ArrayList<>(), result.droppedFks) : result;
+        DiffResult dropped = dropMergeCreate ? new DiffResult(new ArrayList<>(), result.addedFks, result.droppedFks) : result;
+        DiffResult merged = dropMergeCreate ? new DiffResult(new ArrayList<>(), result.addedFks, result.droppedFks) : result;
+        DiffResult created = dropMergeCreate ? new DiffResult(new ArrayList<>(), result.addedFks, result.droppedFks) : result;
 
         for (;;) {
             if (s1 == null && i1.hasNext())
@@ -826,6 +808,7 @@ final class Diff {
             result.addAll(created);
         }
 
+        result.queries.sort(Diff::sortOrder);
         return result;
     }
 
@@ -847,13 +830,18 @@ final class Diff {
         return result.iterator();
     }
 
-    private static final record DiffResult(List<Query> queries, Set<ForeignKey<?, ?>> droppedFks) {
+    private static final record DiffResult(
+        List<Query> queries,
+        Set<ForeignKey<?, ?>> addedFks,
+        Set<ForeignKey<?, ?>> droppedFks
+    ) {
         DiffResult() {
-            this(new ArrayList<>(), new HashSet<>());
+            this(new ArrayList<>(), new HashSet<>(), new HashSet<>());
         }
 
         void addAll(DiffResult other) {
             queries.addAll(other.queries);
+            addedFks.addAll(other.addedFks);
             droppedFks.addAll(other.droppedFks);
         }
 
@@ -861,5 +849,27 @@ final class Diff {
         public String toString() {
             return queries.toString();
         }
+    }
+
+    static final int sortOrder(Query q1, Query q2) {
+        return sortIndex(q1) - sortIndex(q2);
+    }
+
+    static final int sortIndex(Query q) {
+
+        // [#18044] DROP CONSTRAINT / INDEX before everything, ADD CONSTRAINT / INDEX after everything
+        if (q instanceof AlterTableImpl a) {
+            return a.$dropConstraint() != null
+                ? -1
+                : a.$addConstraint() != null
+                ? 1
+                : 0;
+        }
+        else if (q instanceof QOM.DropIndex)
+            return -1;
+        else if (q instanceof QOM.CreateIndex)
+            return 1;
+        else
+            return 0;
     }
 }

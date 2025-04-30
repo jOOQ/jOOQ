@@ -237,11 +237,6 @@ abstract class AbstractBindContext extends AbstractContext<BindContext> implemen
         return this;
     }
 
-    @Override
-    public final BindContext literal(String literal) {
-        return this;
-    }
-
     // ------------------------------------------------------------------------
     // AbstractBindContext template methods
     // ------------------------------------------------------------------------

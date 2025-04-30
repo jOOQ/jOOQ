@@ -94,7 +94,7 @@ final class UnqualifiedName extends AbstractName {
         boolean previous = ctx.quote();
 
         ctx.quote(quoted(ctx));
-        ctx.literal(defaultIfNull(name, ""));
+        DefaultRenderContext.literal(ctx, defaultIfNull(name, ""));
         ctx.quote(previous);
     }
 

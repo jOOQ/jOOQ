@@ -1590,7 +1590,8 @@ implements
                             ? "dummy_" + hash + "_" + Internal.hash(field)
                             : field.getName();
 
-                        ctx.sql(separator).literal(name);
+                        ctx.sql(separator);
+                        DefaultRenderContext.literal(ctx, name);
                         separator = ", ";
                     }
 

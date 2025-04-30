@@ -74,6 +74,6 @@ final class UDTFieldImpl<R extends UDTRecord<R>, T> extends AbstractField<T> imp
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.literal(getName());
+        DefaultRenderContext.literal(ctx, getName());
     }
 }

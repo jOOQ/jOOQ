@@ -64,6 +64,7 @@ import java.util.regex.Pattern;
 import org.jooq.BindContext;
 import org.jooq.Configuration;
 import org.jooq.Constants;
+import org.jooq.Context;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteContext.BatchMode;
 import org.jooq.Field;
@@ -664,45 +665,44 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         return this;
     }
 
-    @Override
-    public final RenderContext literal(String literal) {
+    static final void literal(Context<?> ctx, String literal) {
+
         // Literal usually originates from NamedQueryPart.getName(). This could
         // be null for CustomTable et al.
         if (literal == null)
-            return this;
+            return;
 
-        SQLDialect family = family();
+        SQLDialect family = ctx.family();
 
-        literal = applyNameCase(literal);
-
-
-
+        if (ctx instanceof AbstractContext<?> c)
+            literal = c.applyNameCase(literal);
 
 
 
 
-        if (quote()) {
+
+
+
+        if (ctx.quote()) {
             char[][][] quotes = QUOTES.get(family);
 
             char start = quotes[QUOTE_START_DELIMITER][0][0];
             char end = quotes[QUOTE_END_DELIMITER][0][0];
 
-            sql(start);
+            ctx.sql(start);
 
             // [#4922] This micro optimisation does seem to have a significant
             //         effect as the replace call can be avoided in almost all
             //         situations
             if (literal.indexOf(end) > -1)
-                sql(StringUtils.replace(literal, new String(quotes[QUOTE_END_DELIMITER][0]), new String(quotes[QUOTE_END_DELIMITER_ESCAPED][0])), true);
+                ctx.sql(StringUtils.replace(literal, new String(quotes[QUOTE_END_DELIMITER][0]), new String(quotes[QUOTE_END_DELIMITER_ESCAPED][0])), true);
             else
-                sql(literal, true);
+                ctx.sql(literal, true);
 
-            sql(end);
+            ctx.sql(end);
         }
         else
-            sql(literal, true);
-
-        return this;
+            ctx.sql(literal, true);
     }
 
     @Override

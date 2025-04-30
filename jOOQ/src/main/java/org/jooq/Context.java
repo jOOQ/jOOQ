@@ -809,18 +809,7 @@ public interface Context<C extends Context<C>> extends ExecuteScope {
     C formatPrintMargin(int margin);
 
     /**
-     * Append some literal to the context's contained {@link StringBuilder}.
-     *
-     * @deprecated - 3.10.0 - [#4990] - Use any of {@link DSL#name(String)},
-     *             {@link DSL#quotedName(String)} or
-     *             {@link DSL#unquotedName(String)} instead.
-     */
-    @NotNull
-    @Deprecated(forRemoval = true, since = "3.10")
-    C literal(String literal);
-
-    /**
-     * Whether {@link Name} parts (and {@link #literal(String)}) should be quoted.
+     * Whether {@link Name} parts should be quoted.
      */
     boolean quote();
 

@@ -786,7 +786,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * Indexes start at <code>1</code> in SQL!
      * <p>
      * Note, you can use <code>addOrderBy(DSL.val(1).desc())</code> or
-     * <code>addOrderBy(DSL.literal(1).desc())</code> to apply descending
+     * <code>addOrderBy(DSL.inline(1).desc())</code> to apply descending
      * ordering
      *
      * @param fieldIndexes The ordering fields

@@ -45,9 +45,8 @@ import static org.jooq.tools.StringUtils.isEmpty;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.ArrayList;
+import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -354,7 +353,7 @@ implements
 
             if (name != null || uType != null) {
                 db.markUsed(forcedType);
-                log.info("Forcing type", child + " to " + forcedType);
+                db.doOnce(new SimpleImmutableEntry<>(child, forcedType), () -> log.info("Forcing type", child + " to " + forcedType));
 
                 if (customType != null) {
                     l = result.getLength();

@@ -5143,7 +5143,7 @@ public class JavaGenerator extends AbstractGenerator {
             if (query instanceof Select<?> select) {
                 final String namespace = StringUtils.toUC(method.getName(), getTargetLocale());
                 final List<Field<?>> fields = select.getSelect();
-                final TableDefinition table = new DefaultMetaTableDefinition(dao.getSchema(), new TableImpl<Record>("t") {{
+                final TableDefinition table = new DefaultMetaTableDefinition(dao.getSchema(), new TableImpl<Record>(name("t")) {{
                     for (Field<?> field : fields)
                         createField(field.getUnqualifiedName(), field.getDataType());
                 }});

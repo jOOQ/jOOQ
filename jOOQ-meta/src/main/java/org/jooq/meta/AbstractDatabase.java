@@ -344,6 +344,7 @@ public abstract class AbstractDatabase implements Database {
     private final Map<TableField<?, ?>, Boolean>                                 existFields;
     private final Patterns                                                       patterns;
     private final Statements                                                     statements;
+    private final Set<Object>                                                    doOnce;
 
     protected AbstractDatabase() {
         existTables = new HashMap<>();
@@ -355,6 +356,13 @@ public abstract class AbstractDatabase implements Database {
         included = new ArrayList<>();
         excluded = new ArrayList<>();
         orderProvider = new DefaultOrderProvider();
+        doOnce = new HashSet<>();
+    }
+
+    @Override
+    public final void doOnce(Object key, Runnable runnable) {
+        if (doOnce.add(key))
+            runnable.run();
     }
 
     @Override

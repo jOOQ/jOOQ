@@ -1613,4 +1613,9 @@ public interface Database extends AutoCloseable {
          */
         boolean exclude(Definition definition);
     }
+
+    /**
+     * Do something (e.g. log a message) only once per key.
+     */
+    void doOnce(Object key, Runnable runnable);
 }

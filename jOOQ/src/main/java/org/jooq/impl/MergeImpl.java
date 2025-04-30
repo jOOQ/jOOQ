@@ -91,6 +91,7 @@ import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.notExists;
+import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.Keywords.K_AND;
@@ -112,6 +113,7 @@ import static org.jooq.impl.Keywords.K_VALUES;
 import static org.jooq.impl.Keywords.K_WHEN;
 import static org.jooq.impl.Keywords.K_WHERE;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
+import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.concat;
 import static org.jooq.impl.Tools.isEmpty;
 import static org.jooq.impl.Tools.nullSafe;
@@ -295,6 +297,8 @@ implements
     private static final JooqLogger      log                                     = JooqLogger.getLogger(MergeImpl.class);
 
     private static final Clause[]        CLAUSES                                 = { MERGE };
+
+
 
 
 
@@ -1479,6 +1483,56 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
+
+
+
+
+
+
+
+        accept0(ctx);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private final void accept0(Context<?> ctx) {
         Table<?> t = InlineDerivedTable.inlineDerivedTable(ctx, table);
 
         if (t instanceof InlineDerivedTable<?> i) {
@@ -1519,10 +1573,10 @@ implements
 
         }
         else
-            accept0(ctx);
+            accept1(ctx);
     }
 
-    private final void accept0(Context<?> ctx) {
+    private final void accept1(Context<?> ctx) {
 
 
 
@@ -1685,71 +1739,7 @@ implements
         }
 
         if (emulateMatched) {
-            MatchedClause update = null;
-            MatchedClause delete = null;
-            NotMatchedClause insert = null;
-
-            Condition negate = noCondition();
-
-            for (MatchedClause m : concat(matched, notMatchedBySource)) {
-                Condition condition = negate.and(m.condition);
-
-                if (m.delete) {
-                    if (delete == null)
-                        delete = new MatchedClause(table, noCondition(), true, false);
-
-                    delete.condition = delete.condition.or(condition);
-                }
-                else {
-                    if (update == null)
-                        update = new MatchedClause(table, noCondition());
-
-                    for (Entry<FieldOrRow, FieldOrRowOrSelect> e : m.updateMap.entrySet()) {
-                        FieldOrRowOrSelect exp = update.updateMap.get(e.getKey());
-
-                        if (exp instanceof CaseSearched c)
-                            c.when(negate.and(condition), e.getValue());
-
-                        // [#10523] [#13325] TODO: ClassCastException when we're using Row here, once supported
-                        else
-                            update.updateMap.put(e.getKey(), when(negate.and(condition), (Field) e.getValue()).else_(e.getKey()));
-                    }
-
-                    update.condition = update.condition.or(condition);
-                }
-
-                if (REQUIRE_NEGATION.contains(ctx.dialect()))
-                    negate = negate.andNot(m.condition instanceof NoCondition ? trueCondition() : m.condition);
-            }
-
-            for (NotMatchedClause m : notMatched) {
-                Condition condition = negate.and(m.condition);
-
-                if (insert == null)
-                    insert = new NotMatchedClause(table, noCondition(), m.byTarget);
-
-                for (Entry<Field<?>, List<Field<?>>> e : m.insertMap.values.entrySet()) {
-                    List<Field<?>> l = insert.insertMap.values.get(e.getKey());
-                    Field<?> exp = !isEmpty(l) ? l.get(0) : null;
-
-                    if (exp instanceof CaseSearched c)
-                        c.when(negate.and(condition), e.getValue().get(0));
-                    else
-                        insert.insertMap.values.put(e.getKey(), asList(when(negate.and(condition), (Field) e.getValue().get(0)).else_(e.getKey())));
-                }
-
-                insert.condition = insert.condition.or(condition);
-
-                if (REQUIRE_NEGATION.contains(ctx.dialect()))
-                    negate = negate.andNot(m.condition instanceof NoCondition ? trueCondition() : m.condition);
-            }
-
-
-
-
-
-
-
+            AllMatched mm = allMatched(ctx);
 
 
 
@@ -1758,11 +1748,11 @@ implements
 
 
             {
-                if (delete != null)
-                    toSQLMatched(ctx, delete, requireMatchedConditions);
+                if (mm.delete != null)
+                    toSQLMatched(ctx, mm.delete, requireMatchedConditions);
 
-                if (update != null)
-                    toSQLMatched(ctx, update, requireMatchedConditions);
+                if (mm.update != null)
+                    toSQLMatched(ctx, mm.update, requireMatchedConditions);
             }
         }
 
@@ -1845,6 +1835,83 @@ implements
 
 
 
+    }
+
+    private final AllMatched allMatched(Context<?> ctx) {
+        AllMatched mm = new AllMatched();
+        Condition negate = noCondition();
+
+        for (MatchedClause m : concat(matched, notMatchedBySource)) {
+            Condition condition = negate.and(m.condition);
+
+            if (m.delete) {
+                if (mm.delete == null)
+                    mm.delete = new MatchedClause(table, noCondition(), true, false);
+
+                mm.delete.condition = mm.delete.condition.or(condition);
+            }
+            else {
+                if (mm.update == null)
+                    mm.update = new MatchedClause(table, noCondition());
+
+                for (Entry<FieldOrRow, FieldOrRowOrSelect> e : m.updateMap.entrySet()) {
+                    FieldOrRowOrSelect exp = mm.update.updateMap.get(e.getKey());
+
+                    if (exp instanceof CaseSearched c)
+                        c.when(negate.and(condition), e.getValue());
+
+                    // [#10523] [#13325] TODO: ClassCastException when we're using Row here, once supported
+                    else
+                        mm.update.updateMap.put(e.getKey(), when(negate.and(condition), (Field) e.getValue()).else_(e.getKey()));
+                }
+
+                mm.update.condition = mm.update.condition.or(condition);
+            }
+
+            if (REQUIRE_NEGATION.contains(ctx.dialect()))
+                negate = negate.andNot(m.condition instanceof NoCondition ? trueCondition() : m.condition);
+        }
+
+        for (NotMatchedClause m : notMatched) {
+            Condition condition = negate.and(m.condition);
+
+            if (mm.insert == null)
+                mm.insert = new NotMatchedClause(table, noCondition(), m.byTarget);
+
+            for (Entry<Field<?>, List<Field<?>>> e : m.insertMap.values.entrySet()) {
+                List<Field<?>> l = mm.insert.insertMap.values.get(e.getKey());
+                Field<?> exp = !isEmpty(l) ? l.get(0) : null;
+
+                if (exp instanceof CaseSearched c)
+                    c.when(negate.and(condition), e.getValue().get(0));
+                else
+                    mm.insert.insertMap.values.put(e.getKey(), asList(when(negate.and(condition), (Field) e.getValue().get(0)).else_(e.getKey())));
+            }
+
+            mm.insert.condition = mm.insert.condition.or(condition);
+
+            if (REQUIRE_NEGATION.contains(ctx.dialect()))
+                negate = negate.andNot(m.condition instanceof NoCondition ? trueCondition() : m.condition);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+        return mm;
+    }
+
+    static final class AllMatched {
+        MatchedClause update;
+        MatchedClause delete;
+        NotMatchedClause insert;
     }
 
     static final void toSQLMatched(Context<?> ctx, MatchedClause m, boolean requireMatchedConditions) {

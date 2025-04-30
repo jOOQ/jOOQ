@@ -127,51 +127,6 @@ implements
     final ForeignKey<?, R>               childPath;
     final InverseForeignKey<?, R>        parentPath;
 
-    /**
-     * @deprecated - 3.10 - [#5996] - Use {@link #TableImpl(Name)} instead (or
-     *             re-generated your code).
-     */
-    @Deprecated
-    public TableImpl(String name) {
-        this(DSL.name(name));
-    }
-
-    /**
-     * @deprecated - 3.10 - [#5996] - Use {@link #TableImpl(Name, Schema)}
-     *             instead (or re-generated your code).
-     */
-    @Deprecated
-    public TableImpl(String name, Schema schema) {
-        this(DSL.name(name), schema);
-    }
-
-    /**
-     * @deprecated - 3.10 - [#5996] - Use {@link #TableImpl(Name, Schema, Table)}
-     *             instead (or re-generated your code).
-     */
-    @Deprecated
-    public TableImpl(String name, Schema schema, Table<R> aliased) {
-        this(DSL.name(name), schema, aliased);
-    }
-
-    /**
-     * @deprecated - 3.10 - [#5996] - Use {@link #TableImpl(Name, Schema, Table, Field[])}
-     *             instead (or re-generated your code).
-     */
-    @Deprecated
-    public TableImpl(String name, Schema schema, Table<R> aliased, Field<?>[] parameters) {
-        this(DSL.name(name), schema, aliased, parameters);
-    }
-
-    /**
-     * @deprecated - 3.10 - [#5996] - Use {@link #TableImpl(Name, Schema, Table, Field[], String)}
-     *             instead (or re-generated your code).
-     */
-    @Deprecated
-    public TableImpl(String name, Schema schema, Table<R> aliased, Field<?>[] parameters, String comment) {
-        this(DSL.name(name), schema, aliased, parameters, comment);
-    }
-
     public TableImpl(Name name) {
         this(name, null, null, null, null, null, null, (Comment) null);
     }

@@ -90,22 +90,6 @@ implements
         super(name, schema);
     }
 
-    /**
-     * @deprecated - 3.10 - [#5996] - Use {@link #CustomTable(Name)} instead.
-     */
-    @Deprecated
-    protected CustomTable(String name) {
-        super(name);
-    }
-
-    /**
-     * @deprecated - 3.10 - [#5996] - Use {@link #CustomTable(Name, Schema)} instead.
-     */
-    @Deprecated
-    protected CustomTable(String name, Schema schema) {
-        super(name, schema);
-    }
-
     // -------------------------------------------------------------------------
     // Implementation required
     // -------------------------------------------------------------------------

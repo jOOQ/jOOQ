@@ -1356,7 +1356,11 @@ public final class StringUtils {
     // -------------------------------------------------------------------------
 
     /**
-     * Convert a string to camel case
+     * Convert a string from <code>snake_case</code> to <code>PascalCase</code>.
+     * <p>
+     * [#18412] For historic reasons, the method claims the result is in
+     * <code>camelCase</code> because it is often used with a prefix making the
+     * result camel case, e.g. "set" + "PascalCase" => "setPascalCase".
      */
     public static String toCamelCase(String string) {
         StringBuilder result = new StringBuilder();
@@ -1388,7 +1392,8 @@ public final class StringUtils {
     }
 
     /**
-     * Convert a string to camel case starting with a lower case letter
+     * Convert a string from <code>snake_case</code> to <code>camelCase</code>
+     * (LC = lower-case first letter).
      */
     public static String toCamelCaseLC(String string) {
         return toLC(toCamelCase(string));

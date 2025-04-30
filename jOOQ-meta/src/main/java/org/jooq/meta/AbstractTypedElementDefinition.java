@@ -45,6 +45,7 @@ import static org.jooq.tools.StringUtils.isEmpty;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -55,7 +56,6 @@ import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.GeneratorStatementType;
 import org.jooq.Name;
-// ...
 import org.jooq.exception.SQLDialectNotSupportedException;
 // ...
 import org.jooq.impl.AutoConverter;
@@ -304,7 +304,7 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
 
             if (uType != null) {
                 db.markUsed(forcedType);
-                log.info("Forcing type", child + " to " + forcedType);
+                db.doOnce(new SimpleImmutableEntry<>(child, forcedType), () -> log.info("Forcing type", child + " to " + forcedType));
 
                 DataType<?> forcedDataType = null;
 

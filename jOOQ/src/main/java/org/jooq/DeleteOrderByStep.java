@@ -95,7 +95,7 @@ public interface DeleteOrderByStep<R extends Record> extends DeleteLimitStep<R> 
      * Indexes start at <code>1</code> in SQL!
      * <p>
      * Note, you can use <code>orderBy(DSL.val(1).desc())</code> or
-     * <code>orderBy(DSL.literal(1).desc())</code> to apply descending
+     * <code>orderBy(DSL.inline(1).desc())</code> to apply descending
      * ordering
      */
     @NotNull @CheckReturnValue

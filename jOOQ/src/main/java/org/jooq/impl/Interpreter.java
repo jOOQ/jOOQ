@@ -2187,7 +2187,6 @@ final class Interpreter {
                     MutableSequence.this.dataType != null
                         ? MutableSequence.this.dataType
                         : (DataType<T>) SQLDataType.BIGINT,
-                    false,
                     MutableSequence.this.startWith,
                     MutableSequence.this.incrementBy,
                     MutableSequence.this.minvalue,

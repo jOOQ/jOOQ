@@ -946,7 +946,6 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
                 schema,
                 comment,
                 type,
-                false,
                 startWith != null ? Tools.field(startWith, type) : null,
                 incrementBy != null ? Tools.field(incrementBy, type) : null,
                 minvalue != null ? Tools.field(minvalue, type) : null,

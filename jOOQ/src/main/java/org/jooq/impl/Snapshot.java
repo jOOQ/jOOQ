@@ -316,7 +316,6 @@ final class Snapshot extends AbstractMeta {
                 schema,
                 sequence.getCommentPart(),
                 sequence.getDataType(),
-                false,
                 sequence.getStartWith(),
                 sequence.getIncrementBy(),
                 sequence.getMinvalue(),

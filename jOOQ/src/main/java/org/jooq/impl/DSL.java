@@ -14124,8 +14124,7 @@ public class DSL {
             name.unqualifiedName(),
             name.qualified() ? schema(name.qualifier()) : null,
             CommentImpl.NO_COMMENT,
-            type,
-            false
+            type
         );
     }
 

@@ -1155,6 +1155,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                 case 'A':
                     if (!parseResultQuery && peekKeyword("ALTER"))
                         return result = metaLookupsForceIgnore(true).parseAlter();
+                    else if (!parseResultQuery && peekKeyword("ANALYZE"))
+                        throw notImplemented("ANALYZE statement");
 
                     break;
 
@@ -1200,6 +1202,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                         return result = metaLookupsForceIgnore(true).parseDrop();
                     else if (!parseResultQuery && peekKeyword("DO"))
                         return result = parseDo();
+                    else if (!parseResultQuery && peekKeyword("DESC", "DESCRIBE"))
+                        throw notImplemented("DESCRIBE statement");
 
                     break;
 
@@ -1215,6 +1219,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                         ;
                     else if (!parseResultQuery && parseKeywordIf("ET", "END TRANSACTION"))
                         return dsl.commit();
+                    else if (!parseResultQuery && peekKeyword("EXPLAIN"))
+                        throw notImplemented("EXPLAIN statement");
 
                     break;
 
@@ -1233,6 +1239,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                 case 'L':
                     if (parseKeywordIf("LOAD"))
                         throw notImplemented("LOAD");
+                    else if (!parseResultQuery && peekKeyword("LOCK"))
+                        throw notImplemented("LOCK statement");
 
                     break;
 
@@ -1248,6 +1256,12 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
                     break;
 
+                case 'P':
+                    if (!parseResultQuery && peekKeyword("PREPARE"))
+                        throw notImplemented("PREPARE statement");
+
+                    break;
+
                 case 'R':
                     if (!parseResultQuery && peekKeyword("RENAME"))
                         return result = metaLookupsForceIgnore(true).parseRename();
@@ -1259,6 +1273,10 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                         return result = parseReleaseSavepoint();
                     else if (!parseResultQuery && peekKeyword("ROLLBACK"))
                         return result = parseRollback();
+                    else if (!parseResultQuery && peekKeyword("REFRESH"))
+                        throw notImplemented("REFRESH statement", "https://github.com/jOOQ/jOOQ/issues/15533");
+                    else if (!parseResultQuery && peekKeyword("RESET"))
+                        throw notImplemented("RESET statement");
 
                     break;
 
@@ -1271,6 +1289,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                         return result = parseSavepoint();
                     else if (!parseResultQuery && peekKeyword("START"))
                         return result = parseStartTransaction();
+                    else if (!parseResultQuery && peekKeyword("SHOW"))
+                        throw notImplemented("SHOW statement");
 
                     break;
 

@@ -54,7 +54,6 @@ import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -120,8 +119,6 @@ import org.jooq.tools.reflect.ReflectException;
 // ...
 
 import org.jetbrains.annotations.NotNull;
-import org.reactivestreams.Subscriber;
-import org.reactivestreams.Subscription;
 
 /**
  * A utility class that grants access to internal API, to be used only by
@@ -548,7 +545,7 @@ public final class Internal {
      */
     @NotNull
     public static final <T extends Number> Sequence<T> createSequence(String name, Schema schema, Comment comment, DataType<T> type) {
-        return new SequenceImpl<>(name, schema, comment, type, false);
+        return new SequenceImpl<>(DSL.name(name), schema, comment, type);
     }
 
     /**
@@ -561,7 +558,6 @@ public final class Internal {
             schema,
             comment,
             type,
-            false,
             startWith != null ? Tools.field(startWith, type) : null,
             incrementBy != null ? Tools.field(incrementBy, type) : null,
             minvalue != null ? Tools.field(minvalue, type) : null,

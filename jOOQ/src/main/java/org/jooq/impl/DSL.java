@@ -15737,78 +15737,30 @@ public class DSL {
     }
 
     /**
-     * Create a "plain SQL" sequence.
-     * <p>
-     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
-     * guarantee syntax integrity. You may also create the possibility of
-     * malicious SQL injection. Be sure to properly use bind variables and/or
-     * escape literals when concatenated into SQL clauses!
-     *
-     * @param sql The SQL
-     * @return A field wrapping the plain SQL
-     * @see SQL
-     * @deprecated - 3.10 - [#6162] - Use {@link #sequence(Name)} instead.
+     * [#18030] This method has been removed from public API in jOOQ 3.21. Do
+     * not reuse (or re-declare).
      */
-    @Deprecated(forRemoval = true, since = "3.10")
-    @NotNull
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTEDB })
-    @PlainSQL
-    public static Sequence<BigInteger> sequence(String sql) {
-        return sequence(sql, BigInteger.class);
+    @Deprecated
+    private static Sequence<BigInteger> sequence(String sql) {
+        return null;
     }
 
     /**
-     * Create a "plain SQL" sequence.
-     * <p>
-     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
-     * guarantee syntax integrity. You may also create the possibility of
-     * malicious SQL injection. Be sure to properly use bind variables and/or
-     * escape literals when concatenated into SQL clauses!
-     * <p>
-     * <b>NOTE [#15286]</b>: It is strongly recommended to pass only {@link Class}
-     * references of types supported by jOOQ internally, i.e. types from
-     * {@link SQLDataType}. If you're using any custom data types by means of a
-     * {@link Converter} or {@link Binding}, it's better to pass that converted
-     * {@link DataType} reference explicitly to
-     * {@link #sequence(String, DataType)}.
-     *
-     * @param sql The sequence name
-     * @param type The sequence type (a type that is supported by
-     *            {@link SQLDataType})
-     * @return A field wrapping the plain SQL
-     * @see SQL
-     * @deprecated - 3.10 - [#6162] - Use {@link #sequence(Name, Class)}
-     *             instead.
+     * [#18030] This method has been removed from public API in jOOQ 3.21. Do
+     * not reuse (or re-declare).
      */
-    @Deprecated(forRemoval = true, since = "3.10")
-    @NotNull
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTEDB })
-    @PlainSQL
-    public static <T extends Number> Sequence<T> sequence(String sql, Class<T> type) {
-        return sequence(sql, getDataType(type));
+    @Deprecated
+    private static <T extends Number> Sequence<T> sequence(String sql, Class<T> type) {
+        return null;
     }
 
     /**
-     * Create a "plain SQL" sequence.
-     * <p>
-     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
-     * guarantee syntax integrity. You may also create the possibility of
-     * malicious SQL injection. Be sure to properly use bind variables and/or
-     * escape literals when concatenated into SQL clauses!
-     *
-     * @param sql The SQL
-     * @param type The field type
-     * @return A field wrapping the plain SQL
-     * @see SQL
-     * @deprecated - 3.10 - [#6162] - Use {@link #sequence(Name, DataType)}
-     *             instead.
+     * [#18030] This method has been removed from public API in jOOQ 3.21. Do
+     * not reuse (or re-declare).
      */
-    @Deprecated(forRemoval = true, since = "3.10")
-    @NotNull
-    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTEDB })
-    @PlainSQL
-    public static <T extends Number> Sequence<T> sequence(String sql, DataType<T> type) {
-        return new SequenceImpl<>(sql, null, CommentImpl.NO_COMMENT, type, true);
+    @Deprecated
+    private static <T extends Number> Sequence<T> sequence(String sql, DataType<T> type) {
+        return null;
     }
 
     /**

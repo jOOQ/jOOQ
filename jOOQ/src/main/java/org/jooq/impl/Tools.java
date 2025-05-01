@@ -5725,7 +5725,7 @@ final class Tools {
 
     static final Sequence<?> identitySequence(Table<?> table) {
         if (table == null)
-            return DSL.sequence("id");
+            return DSL.sequence(unquotedName("id"));
 
         Name n = table.getQualifiedName();
 

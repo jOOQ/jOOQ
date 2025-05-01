@@ -39,7 +39,6 @@ package org.jooq.impl;
 
 import static org.jooq.Clause.SEQUENCE;
 import static org.jooq.Clause.SEQUENCE_REFERENCE;
-import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 // ...
@@ -59,7 +58,6 @@ import static org.jooq.impl.Names.N_CURRVAL;
 import static org.jooq.impl.Names.N_GENERATE_SERIES;
 import static org.jooq.impl.Names.N_GEN_ID;
 import static org.jooq.impl.Names.N_NEXTVAL;
-import static org.jooq.impl.Tools.getMappedSchema;
 
 import org.jooq.Catalog;
 import org.jooq.Clause;
@@ -75,12 +73,7 @@ import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Select;
 import org.jooq.Sequence;
-import org.jooq.exception.SQLDialectNotSupportedException;
-import org.jooq.impl.QOM.UEmpty;
 import org.jooq.impl.QOM.UNotYetImplemented;
-import org.jooq.impl.QOM.UTransient;
-
-import org.jetbrains.annotations.Nullable;
 
 /**
  * A common base class for sequences
@@ -100,7 +93,6 @@ implements
 
     private static final Clause[]     CLAUSES          = { SEQUENCE, SEQUENCE_REFERENCE };
 
-    private final boolean             nameIsPlainSQL;
     private final Schema              schema;
     private final Field<T>            startWith;
     private final Field<T>            incrementBy;
@@ -111,17 +103,8 @@ implements
     private final SequenceFunction<T> currval;
     private final SequenceFunction<T> nextval;
 
-    @Deprecated
-    public SequenceImpl(String name, Schema schema, DataType<T> type) {
-        this(name, schema, null, type, false);
-    }
-
-    SequenceImpl(String name, Schema schema, Comment comment, DataType<T> type, boolean nameIsPlainSQL) {
-        this(DSL.name(name), schema, comment, type, nameIsPlainSQL);
-    }
-
-    SequenceImpl(Name name, Schema schema, Comment comment, DataType<T> type, boolean nameIsPlainSQL) {
-        this(name, schema, comment, type, nameIsPlainSQL, null, null, null, null, false, null);
+    SequenceImpl(Name name, Schema schema, Comment comment, DataType<T> type) {
+        this(name, schema, comment, type, null, null, null, null, false, null);
     }
 
     SequenceImpl(
@@ -129,7 +112,6 @@ implements
         Schema schema,
         Comment comment,
         DataType<T> type,
-        boolean nameIsPlainSQL,
         Field<T> startWith,
         Field<T> incrementBy,
         Field<T> minvalue,
@@ -140,8 +122,6 @@ implements
         super(qualify(schema, name), comment, type);
 
         this.schema = schema;
-        this.nameIsPlainSQL = nameIsPlainSQL;
-
         this.startWith = startWith;
         this.incrementBy = incrementBy;
         this.minvalue = minvalue;
@@ -348,10 +328,7 @@ implements
 
         QualifiedImpl.acceptMappedSchemaPrefix(ctx, getSchema());
 
-        if (nameIsPlainSQL)
-            ctx.sql(getName());
-        else
-            ctx.visit(getUnqualifiedName());
+        ctx.visit(getUnqualifiedName());
     }
 
     @Override

@@ -2254,6 +2254,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     private final Condition limitWindowFunctionCondition(Field<Integer> limitWindowFunction) {
         return getLimit().limitAbsent()
             ? limitWindowFunction.gt((Field<Integer>) getLimit().getLowerRownum())
+            : getLimit().offsetAbsent()
+            ? limitWindowFunction.le((Field<Integer>) getLimit().getUpperRownum())
             : limitWindowFunction
                     .between((Field<Integer>) getLimit().getLowerRownum().add(inline(1)))
                     .and((Field<Integer>) getLimit().getUpperRownum());

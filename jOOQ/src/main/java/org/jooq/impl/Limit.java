@@ -408,10 +408,17 @@ final class Limit extends AbstractQueryPart implements UTransient {
     }
 
     /**
+     * Whether the offset is absent
+     */
+    final boolean offsetAbsent() {
+        return offset == null;
+    }
+
+    /**
      * Whether this limit has an offset of zero
      */
     final boolean offsetZero() {
-        return offset == null;
+        return offsetAbsent();
     }
 
     /**

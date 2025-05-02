@@ -6,7 +6,7 @@
 
     <groupId>org.jooq</groupId>
     <artifactId>jooq-parent</artifactId>
-    <version>3.20.4</version>
+    <version>3.20.5-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>jOOQ Parent</name>
@@ -889,7 +889,9 @@
 
 
 
+        <!-- 
         <module>jOOQ-xtend</module>
+          -->
 
 
 
@@ -959,6 +961,17 @@
 
             </modules>
         </profile>
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -184,6 +184,7 @@ import static org.jooq.impl.Keywords.K_INVISIBLE;
 import static org.jooq.impl.Keywords.K_LIKE;
 import static org.jooq.impl.Keywords.K_MATERIALIZED;
 import static org.jooq.impl.Keywords.K_NOT;
+import static org.jooq.impl.Keywords.K_NOT_IN;
 import static org.jooq.impl.Keywords.K_NOT_NULL;
 import static org.jooq.impl.Keywords.K_NULL;
 import static org.jooq.impl.Keywords.K_NVARCHAR;
@@ -5531,6 +5532,7 @@ final class Tools {
 
 
 
+
             case FIREBIRD: {
                 begin(ctx, c -> {
                     executeImmediate(c, runnable);
@@ -5550,7 +5552,7 @@ final class Tools {
             }
 
             case MARIADB: {
-                tryCatchMySQL(ctx, type, runnable);
+                tryCatchMySQL(ctx, type, container, element, runnable);
                 break;
             }
 
@@ -5608,7 +5610,7 @@ final class Tools {
         }
     }
 
-    private static final void tryCatchMySQL(Context<?> ctx, DDLStatementType type, Consumer<? super Context<?>> runnable) {
+    private static final void tryCatchMySQL(Context<?> ctx, DDLStatementType type, Boolean container, Boolean element, Consumer<? super Context<?>> runnable) {
         List<String> sqlstates = new ArrayList<>();
 
         switch (ctx.family()) {
@@ -5630,6 +5632,18 @@ final class Tools {
                     case CREATE_INDEX:
                     case DROP_INDEX:
                         sqlstates.add("42000");
+                        break;
+
+                    case ALTER_TABLE:
+                        if (TRUE.equals(container))
+                            sqlstates.add("42S02");
+
+                        if (TRUE.equals(element))
+                            sqlstates.add("42S22");
+
+                        if (sqlstates.isEmpty())
+                            sqlstates.add("42S02");
+
                         break;
 
                     case ALTER_VIEW:

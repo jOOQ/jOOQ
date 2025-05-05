@@ -233,10 +233,10 @@ implements
 {
 
     private static final Clause[]        CLAUSES                               = { ALTER_TABLE };
-    private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS                  = SQLDialect.supportedUntil(CUBRID, DERBY, FIREBIRD, MARIADB);
+    private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS                  = SQLDialect.supportedUntil(CUBRID, DERBY, FIREBIRD, MARIADB, MYSQL);
     private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS_COLUMN           = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD);
-    private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS_COLUMN_ALTER     = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, POSTGRES, YUGABYTEDB);
-    private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS_COLUMN_RENAME    = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, POSTGRES, YUGABYTEDB);
+    private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS_COLUMN_ALTER     = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, MYSQL, POSTGRES, YUGABYTEDB);
+    private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS_COLUMN_RENAME    = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, MYSQL, POSTGRES, YUGABYTEDB);
     private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS_CONSTRAINT       = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, YUGABYTEDB);
     private static final Set<SQLDialect> NO_SUPPORT_IF_NOT_EXISTS_COLUMN       = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD);
     private static final Set<SQLDialect> SUPPORT_RENAME_COLUMN                 = SQLDialect.supportedBy(DERBY);

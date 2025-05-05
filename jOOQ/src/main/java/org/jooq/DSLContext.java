@@ -12690,7 +12690,7 @@ public interface DSLContext extends Scope {
      * @see DSL#alterTableIfExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, H2, IGNITE, MARIADB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ DUCKDB, H2, IGNITE, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     AlterTableStep alterTableIfExists(String table);
 
     /**
@@ -12699,7 +12699,7 @@ public interface DSLContext extends Scope {
      * @see DSL#alterTableIfExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, H2, IGNITE, MARIADB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ DUCKDB, H2, IGNITE, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     AlterTableStep alterTableIfExists(Name table);
 
     /**
@@ -12708,7 +12708,7 @@ public interface DSLContext extends Scope {
      * @see DSL#alterTableIfExists(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, H2, IGNITE, MARIADB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ DUCKDB, H2, IGNITE, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     AlterTableStep alterTableIfExists(Table<?> table);
 
     // -------------------------------------------------------------------------

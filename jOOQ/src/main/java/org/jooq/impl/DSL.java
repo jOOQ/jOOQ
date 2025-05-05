@@ -12359,7 +12359,7 @@ public class DSL {
      * @see DSLContext#alterTableIfExists(String)
      */
     @NotNull
-    @Support({ DUCKDB, H2, IGNITE, MARIADB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ DUCKDB, H2, IGNITE, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     public static AlterTableStep alterTableIfExists(String table) {
         return dsl().alterTableIfExists(table);
     }
@@ -12370,7 +12370,7 @@ public class DSL {
      * @see DSLContext#alterTableIfExists(Name)
      */
     @NotNull
-    @Support({ DUCKDB, H2, IGNITE, MARIADB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ DUCKDB, H2, IGNITE, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     public static AlterTableStep alterTableIfExists(Name table) {
         return dsl().alterTableIfExists(table);
     }
@@ -12381,7 +12381,7 @@ public class DSL {
      * @see DSLContext#alterTableIfExists(Table)
      */
     @NotNull
-    @Support({ DUCKDB, H2, IGNITE, MARIADB, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ DUCKDB, H2, IGNITE, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     public static AlterTableStep alterTableIfExists(Table<?> table) {
         return dsl().alterTableIfExists(table);
     }

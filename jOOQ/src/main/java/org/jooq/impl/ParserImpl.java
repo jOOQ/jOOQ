@@ -6131,50 +6131,68 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         switch (characterUpper()) {
             case 'C':
                 if (parseKeywordIf("COLUMN")) {
+                    boolean ifExists = parseKeywordIf("IF EXISTS");
                     TableField<?, ?> oldName = parseFieldName();
                     parseKeyword("AS", "TO");
-                    return dsl.alterTable(oldName.getTable()).renameColumn(oldName).to(parseFieldName());
+                    return ifExists
+                        ? dsl.alterTableIfExists(oldName.getTable()).renameColumnIfExists(oldName).to(parseFieldName())
+                        : dsl.alterTable(oldName.getTable()).renameColumn(oldName).to(parseFieldName());
                 }
 
                 break;
 
             case 'D':
                 if (parseKeywordIf("DATABASE")) {
+                    boolean ifExists = parseKeywordIf("IF EXISTS");
                     Catalog oldName = parseCatalogName();
                     parseKeyword("AS", "TO");
-                    return dsl.alterDatabase(oldName).renameTo(parseCatalogName());
+                    return ifExists
+                        ? dsl.alterDatabaseIfExists(oldName).renameTo(parseCatalogName())
+                        : dsl.alterDatabase(oldName).renameTo(parseCatalogName());
                 }
 
                 break;
 
             case 'I':
                 if (parseKeywordIf("INDEX")) {
+                    boolean ifExists = parseKeywordIf("IF EXISTS");
                     Name oldName = parseIndexName();
                     parseKeyword("AS", "TO");
-                    return dsl.alterIndex(oldName).renameTo(parseIndexName());
+                    return ifExists
+                        ? dsl.alterIndexIfExists(oldName).renameTo(parseIndexName())
+                        : dsl.alterIndex(oldName).renameTo(parseIndexName());
                 }
 
                 break;
 
             case 'S':
                 if (parseKeywordIf("SCHEMA")) {
+                    boolean ifExists = parseKeywordIf("IF EXISTS");
                     Schema oldName = parseSchemaName();
                     parseKeyword("AS", "TO");
-                    return dsl.alterSchema(oldName).renameTo(parseSchemaName());
+                    return ifExists
+                        ? dsl.alterSchemaIfExists(oldName).renameTo(parseSchemaName())
+                        : dsl.alterSchema(oldName).renameTo(parseSchemaName());
                 }
                 else if (parseKeywordIf("SEQUENCE")) {
+                    boolean ifExists = parseKeywordIf("IF EXISTS");
                     Sequence<?> oldName = parseSequenceName();
                     parseKeyword("AS", "TO");
-                    return dsl.alterSequence(oldName).renameTo(parseSequenceName());
+                    return ifExists
+                        ? dsl.alterSequenceIfExists(oldName).renameTo(parseSequenceName())
+                        : dsl.alterSequence(oldName).renameTo(parseSequenceName());
                 }
 
                 break;
 
             case 'V':
                 if (parseKeywordIf("VIEW")) {
+                    boolean ifExists = parseKeywordIf("IF EXISTS");
                     Table<?> oldName = parseTableName();
                     parseKeyword("AS", "TO");
-                    return dsl.alterView(oldName).renameTo(parseTableName());
+                    return ifExists
+                        ? dsl.alterViewIfExists(oldName).renameTo(parseTableName())
+                        : dsl.alterView(oldName).renameTo(parseTableName());
                 }
 
                 break;
@@ -6182,9 +6200,12 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
         // If all of the above fails, we can assume we're renaming a table.
         parseKeywordIf("TABLE");
+        boolean ifExists = parseKeywordIf("IF EXISTS");
         Table<?> oldName = parseTableName();
         parseKeyword("AS", "TO");
-        return dsl.alterTable(oldName).renameTo(parseTableName());
+        return ifExists
+            ? dsl.alterTableIfExists(oldName).renameTo(parseTableName())
+            : dsl.alterTable(oldName).renameTo(parseTableName());
     }
 
     private final DDLQuery parseDropTable(boolean temporary) {

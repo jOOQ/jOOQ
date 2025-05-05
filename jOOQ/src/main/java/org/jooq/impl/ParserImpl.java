@@ -5892,11 +5892,12 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                         return s1.renameTo(newName);
                     }
                     else if (parseKeywordIf("COLUMN")) {
+                        boolean ifExists = parseKeywordIf("IF EXISTS");
                         Name oldName = parseIdentifier();
                         parseKeyword("AS", "TO");
                         Name newName = parseIdentifier();
 
-                        return s1.renameColumn(oldName).to(newName);
+                        return (ifExists ? s1.renameColumnIfExists(oldName) : s1.renameColumn(oldName)).to(newName);
                     }
                     else if (parseKeywordIf("INDEX")) {
                         Name oldName = parseIdentifier();
@@ -6044,6 +6045,9 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
     private final DDLQuery parseAlterTableAlterColumn(Table<?> table, AlterTableStep s1) {
         boolean paren = parseIf('(');
+
+        // [#5316] TODO: Support this also for non-renames
+        boolean ifExists = !paren && parseKeywordIf("IF EXISTS");
         TableField<?, ?> field = parseFieldName();
 
         if (!paren)
@@ -6065,7 +6069,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
             else if (peekKeyword("SET OPTIONS") && parseKeywordIf("SET"))
                 return dsl.commentOnColumn(field(table.getQualifiedName().append(field.getUnqualifiedName()))).is(parseOptionsDescription());
             else if (parseKeywordIf("TO", "RENAME TO", "RENAME AS"))
-                return s1.renameColumn(field).to(parseFieldName());
+                return (ifExists ? s1.renameColumnIfExists(field) : s1.renameColumn(field)).to(parseFieldName());
             else if (parseKeywordIf("TYPE", "SET DATA TYPE"))
                 ;
 

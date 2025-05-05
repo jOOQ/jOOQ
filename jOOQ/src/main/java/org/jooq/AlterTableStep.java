@@ -180,6 +180,30 @@ public interface AlterTableStep {
     AlterTableRenameColumnToStep renameColumn(String oldName);
 
     /**
+     * Add a <code>RENAME COLUMN</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, POSTGRES, YUGABYTEDB })
+    AlterTableRenameColumnToStep renameColumnIfExists(Field<?> oldName);
+
+    /**
+     * Add a <code>RENAME COLUMN</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    AlterTableRenameColumnToStep renameColumnIfExists(Name oldName);
+
+    /**
+     * Add a <code>RENAME COLUMN</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, POSTGRES, YUGABYTEDB })
+    AlterTableRenameColumnToStep renameColumnIfExists(String oldName);
+
+    /**
      * Add a <code>RENAME INDEX</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */

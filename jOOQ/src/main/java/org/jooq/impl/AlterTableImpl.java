@@ -235,6 +235,7 @@ implements
     private static final Clause[]        CLAUSES                               = { ALTER_TABLE };
     private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS                  = SQLDialect.supportedUntil(CUBRID, DERBY, FIREBIRD, MARIADB);
     private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS_COLUMN           = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD);
+    private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS_COLUMN_RENAME    = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD);
     private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS_CONSTRAINT       = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, YUGABYTEDB);
     private static final Set<SQLDialect> NO_SUPPORT_IF_NOT_EXISTS_COLUMN       = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD);
     private static final Set<SQLDialect> SUPPORT_RENAME_COLUMN                 = SQLDialect.supportedBy(DERBY);
@@ -384,6 +385,24 @@ implements
     @Override
     public final AlterTableImpl renameColumn(String oldName) {
         return renameColumn(name(oldName));
+    }
+
+    @Override
+    public final AlterTableImpl renameColumnIfExists(Field<?> oldName) {
+        ifExistsColumn = true;
+        return renameColumn(oldName);
+    }
+
+    @Override
+    public final AlterTableImpl renameColumnIfExists(Name oldName) {
+        ifExistsColumn = true;
+        return renameColumn(oldName);
+    }
+
+    @Override
+    public final AlterTableImpl renameColumnIfExists(String oldName) {
+        ifExistsColumn = true;
+        return renameColumn(oldName);
     }
 
     @Override
@@ -992,6 +1011,10 @@ implements
         return !NO_SUPPORT_IF_EXISTS_COLUMN.contains(ctx.dialect());
     }
 
+    private final boolean supportsIfExistsColumnRename(Context<?> ctx) {
+        return !NO_SUPPORT_IF_EXISTS_COLUMN_RENAME.contains(ctx.dialect());
+    }
+
     private final boolean supportsIfExistsConstraint(Context<?> ctx) {
         return !NO_SUPPORT_IF_EXISTS_CONSTRAINT.contains(ctx.dialect());
     }
@@ -1003,7 +1026,8 @@ implements
     @Override
     public final void accept(Context<?> ctx) {
         if ((ifExists && !supportsIfExists(ctx))
-            || (ifExistsColumn && !supportsIfExistsColumn(ctx))
+            || (ifExistsColumn && renameColumn == null && !supportsIfExistsColumn(ctx))
+            || (ifExistsColumn && renameColumn != null && !supportsIfExistsColumnRename(ctx))
             || (ifExistsConstraint && !supportsIfExistsConstraint(ctx))
             || (ifNotExistsColumn && !supportsIfNotExistsColumn(ctx))
         ) {
@@ -1262,7 +1286,12 @@ implements
 
                 case H2:
                 case HSQLDB:
-                    ctx.visit(K_ALTER_COLUMN).sql(' ').qualify(false, c -> c.visit(renameColumn)).sql(' ')
+                    ctx.visit(K_ALTER_COLUMN).sql(' ');
+
+                    if (ifExistsColumn && supportsIfExistsColumnRename(ctx))
+                        ctx.visit(K_IF_EXISTS).sql(' ');
+
+                    ctx.qualify(false, c -> c.visit(renameColumn)).sql(' ')
                        .visit(K_RENAME_TO).sql(' ').qualify(false, c -> c.visit(renameColumnTo));
 
                     break;
@@ -1290,7 +1319,12 @@ implements
 
 
                 default:
-                    ctx.visit(K_RENAME_COLUMN).sql(' ').qualify(false, c -> c.visit(renameColumn)).sql(' ')
+                    ctx.visit(K_RENAME_COLUMN).sql(' ');
+
+                    if (ifExistsColumn && supportsIfExistsColumnRename(ctx))
+                        ctx.visit(K_IF_EXISTS).sql(' ');
+
+                    ctx.qualify(false, c -> c.visit(renameColumn)).sql(' ')
                        .visit(K_TO).sql(' ').qualify(false, c -> c.visit(renameColumnTo));
 
                     break;

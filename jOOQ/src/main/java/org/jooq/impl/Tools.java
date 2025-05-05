@@ -5558,23 +5558,46 @@ final class Tools {
             case POSTGRES:
             case YUGABYTEDB: {
                 begin(ctx, c -> {
-                    String sqlstate;
+                    Set<String> sqlstates = new LinkedHashSet<>();
 
                     switch (type) {
-                        case ALTER_DATABASE: sqlstate = "3D000"; break;
-                        case ALTER_DOMAIN  :
-                        case ALTER_TABLE   :
-                        case ALTER_TYPE    : sqlstate = "42704"; break;
-                        case CREATE_DOMAIN :
-                        case CREATE_TYPE   : sqlstate = "42710"; break;
-                        default            : sqlstate = "42P07"; break;
+                        case ALTER_DATABASE:
+                            sqlstates.add("3D000");
+                            break;
+
+                        case ALTER_DOMAIN:
+                        case ALTER_TABLE:
+                        case ALTER_TYPE:
+                            if (TRUE.equals(container))
+                                sqlstates.add("42704");
+
+                            if (TRUE.equals(element))
+                                sqlstates.add("42703");
+
+                            if (sqlstates.isEmpty())
+                                sqlstates.add("42704");
+
+                            break;
+
+                        case CREATE_DOMAIN:
+                        case CREATE_TYPE:
+                            sqlstates.add("42710");
+                            break;
+
+                        default:
+                            sqlstates.add("42P07");
+                            break;
                     }
 
                     runnable.accept(c);
 
                     c.sql(';').formatIndentEnd().formatSeparator()
-                     .visit(K_EXCEPTION).formatIndentStart().formatSeparator()
-                     .visit(K_WHEN).sql(' ').visit(K_SQLSTATE).sql(' ').visit(DSL.inline(sqlstate)).sql(' ').visit(K_THEN).sql(' ').visit(K_NULL).sql(';').formatIndentEnd();
+                     .visit(K_EXCEPTION).formatIndentStart().formatSeparator();
+
+                    for (String sqlstate : sqlstates)
+                        c.visit(K_WHEN).sql(' ').visit(K_SQLSTATE).sql(' ').visit(DSL.inline(sqlstate)).sql(' ').visit(K_THEN).sql(' ').visit(K_NULL).sql(';').formatSeparator();
+
+                    c.formatIndentEnd();
                 });
                 break;
             }

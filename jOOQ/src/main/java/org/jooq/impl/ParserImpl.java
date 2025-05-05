@@ -6053,19 +6053,19 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         if (!paren)
             if (parseKeywordIf("CONSTRAINT") && parseIdentifier() != null)
                 if (parseKeywordIf("NULL"))
-                    return s1.alter(field).dropNotNull();
+                    return (ifExists ? s1.alterIfExists(field) : s1.alter(field)).dropNotNull();
                 else if (parseNotNullOptionalEnable())
-                    return s1.alter(field).setNotNull();
+                    return (ifExists ? s1.alterIfExists(field) : s1.alter(field)).setNotNull();
                 else
                     throw expected("NOT NULL", "NULL");
             else if (parseKeywordIf("DROP NOT NULL", "SET NULL", "NULL"))
-                return s1.alter(field).dropNotNull();
+                return (ifExists ? s1.alterIfExists(field) : s1.alter(field)).dropNotNull();
             else if (parseKeywordIf("DROP DEFAULT"))
-                return s1.alter(field).dropDefault();
+                return (ifExists ? s1.alterIfExists(field) : s1.alter(field)).dropDefault();
             else if (parseKeywordIf("SET NOT NULL") || parseNotNullOptionalEnable())
-                return s1.alter(field).setNotNull();
+                return (ifExists ? s1.alterIfExists(field) : s1.alter(field)).setNotNull();
             else if (parseKeywordIf("SET DEFAULT", "DEFAULT"))
-                return s1.alter(field).default_((Field) toField(parseConcat()));
+                return (ifExists ? s1.alterIfExists(field) : s1.alter(field)).default_((Field) toField(parseConcat()));
             else if (peekKeyword("SET OPTIONS") && parseKeywordIf("SET"))
                 return dsl.commentOnColumn(field(table.getQualifiedName().append(field.getUnqualifiedName()))).is(parseOptionsDescription());
             else if (parseKeywordIf("TO", "RENAME TO", "RENAME AS"))
@@ -6083,7 +6083,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         if (paren)
             parse(')');
 
-        return s1.alter(field).set(type);
+        return (ifExists ? s1.alterIfExists(field) : s1.alter(field)).set(type);
     }
 
     private final boolean parseNotNullOptionalEnable() {

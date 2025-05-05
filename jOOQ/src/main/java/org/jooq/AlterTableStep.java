@@ -300,6 +300,44 @@ public interface AlterTableStep {
     AlterTableAlterStep<Object> alter(String field);
 
     /**
+     * Add an <code>ALTER COLUMN IF EXISTS</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     * <p>
+     * This is an alias for {@link #alterColumnIfExists(Field)}.
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, POSTGRES, YUGABYTEDB })
+    <T> AlterTableAlterStep<T> alterIfExists(Field<T> field);
+
+    /**
+     * Add an <code>ALTER COLUMN IF EXISTS</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     * <p>
+     * Note that in some RDBMS, the current column type is required in order to
+     * alter a column, so for best results, better pass it explicitly with
+     * {@link #alterIfExists(Field)}.
+     * <p>
+     * This is an alias for {@link #alterColumnIfExists(Name)}
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, POSTGRES, YUGABYTEDB })
+    AlterTableAlterStep<Object> alterIfExists(Name field);
+
+    /**
+     * Add an <code>ALTER COLUMN IF EXISTS</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     * <p>
+     * Note that in some RDBMS, the current column type is required in order to
+     * alter a column, so for best results, better pass it explicitly with
+     * {@link #alterIfExists(Field)}.
+     * <p>
+     * This is an alias for {@link #alterColumnIfExists(String)}
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, POSTGRES, YUGABYTEDB })
+    AlterTableAlterStep<Object> alterIfExists(String field);
+
+    /**
      * Add an <code>ALTER COLUMN</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */
@@ -330,6 +368,38 @@ public interface AlterTableStep {
     @NotNull @CheckReturnValue
     @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     AlterTableAlterStep<Object> alterColumn(String field);
+
+    /**
+     * Add an <code>ALTER COLUMN IF EXISTS</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, POSTGRES, YUGABYTEDB })
+    <T> AlterTableAlterStep<T> alterColumnIfExists(Field<T> field);
+
+    /**
+     * Add an <code>ALTER COLUMN IF EXISTS</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     * <p>
+     * Note that in some RDBMS, the current column type is required in order to
+     * alter a column, so for best results, better pass it explicitly with
+     * {@link #alterColumnIfExists(Field)}.
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, POSTGRES, YUGABYTEDB })
+    AlterTableAlterStep<Object> alterColumnIfExists(Name field);
+
+    /**
+     * Add an <code>ALTER COLUMN IF EXISTS</code> clause to the <code>ALTER TABLE</code>
+     * statement.
+     * <p>
+     * Note that in some RDBMS, the current column type is required in order to
+     * alter a column, so for best results, better pass it explicitly with
+     * {@link #alterColumnIfExists(Field)}.
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, POSTGRES, YUGABYTEDB })
+    AlterTableAlterStep<Object> alterColumnIfExists(String field);
 
     /**
      * Add an <code>ALTER CONSTRAINT</code> clause to the <code>ALTER TABLE</code>

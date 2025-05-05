@@ -235,7 +235,8 @@ implements
     private static final Clause[]        CLAUSES                               = { ALTER_TABLE };
     private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS                  = SQLDialect.supportedUntil(CUBRID, DERBY, FIREBIRD, MARIADB);
     private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS_COLUMN           = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD);
-    private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS_COLUMN_RENAME    = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD);
+    private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS_COLUMN_ALTER     = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, POSTGRES, YUGABYTEDB);
+    private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS_COLUMN_RENAME    = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, POSTGRES, YUGABYTEDB);
     private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS_CONSTRAINT       = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, YUGABYTEDB);
     private static final Set<SQLDialect> NO_SUPPORT_IF_NOT_EXISTS_COLUMN       = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD);
     private static final Set<SQLDialect> SUPPORT_RENAME_COLUMN                 = SQLDialect.supportedBy(DERBY);
@@ -395,14 +396,12 @@ implements
 
     @Override
     public final AlterTableImpl renameColumnIfExists(Name oldName) {
-        ifExistsColumn = true;
-        return renameColumn(oldName);
+        return renameColumnIfExists(field(oldName));
     }
 
     @Override
     public final AlterTableImpl renameColumnIfExists(String oldName) {
-        ifExistsColumn = true;
-        return renameColumn(oldName);
+        return renameColumnIfExists(name(oldName));
     }
 
     @Override
@@ -678,6 +677,21 @@ implements
     }
 
     @Override
+    public final <T> AlterTableImpl alterIfExists(Field<T> field) {
+        return alterColumnIfExists(field);
+    }
+
+    @Override
+    public final AlterTableImpl alterIfExists(Name field) {
+        return alterColumnIfExists(field);
+    }
+
+    @Override
+    public final AlterTableImpl alterIfExists(String field) {
+        return alterColumnIfExists(field);
+    }
+
+    @Override
     public final AlterTableImpl alterColumn(Name field) {
         return alterColumn(field(field));
     }
@@ -691,6 +705,22 @@ implements
     public final <T> AlterTableImpl alterColumn(Field<T> field) {
         alterColumn = field;
         return this;
+    }
+
+    @Override
+    public final AlterTableImpl alterColumnIfExists(Name field) {
+        return alterColumnIfExists(field(field));
+    }
+
+    @Override
+    public final AlterTableImpl alterColumnIfExists(String field) {
+        return alterColumnIfExists(name(field));
+    }
+
+    @Override
+    public final <T> AlterTableImpl alterColumnIfExists(Field<T> field) {
+        ifExistsColumn = true;
+        return alterColumn(field);
     }
 
     @Override
@@ -1011,6 +1041,10 @@ implements
         return !NO_SUPPORT_IF_EXISTS_COLUMN.contains(ctx.dialect());
     }
 
+    private final boolean supportsIfExistsColumnAlter(Context<?> ctx) {
+        return !NO_SUPPORT_IF_EXISTS_COLUMN_ALTER.contains(ctx.dialect());
+    }
+
     private final boolean supportsIfExistsColumnRename(Context<?> ctx) {
         return !NO_SUPPORT_IF_EXISTS_COLUMN_RENAME.contains(ctx.dialect());
     }
@@ -1026,7 +1060,8 @@ implements
     @Override
     public final void accept(Context<?> ctx) {
         if ((ifExists && !supportsIfExists(ctx))
-            || (ifExistsColumn && renameColumn == null && !supportsIfExistsColumn(ctx))
+            || (ifExistsColumn && dropColumns  != null && !supportsIfExistsColumn(ctx))
+            || (ifExistsColumn && alterColumn  != null && !supportsIfExistsColumnAlter(ctx))
             || (ifExistsColumn && renameColumn != null && !supportsIfExistsColumnRename(ctx))
             || (ifExistsConstraint && !supportsIfExistsConstraint(ctx))
             || (ifNotExistsColumn && !supportsIfNotExistsColumn(ctx))
@@ -1512,16 +1547,28 @@ implements
                 case MYSQL: {
 
                     // MySQL's CHANGE COLUMN clause has a mandatory RENAMING syntax...
-                    if (alterColumnDefault == null && !alterColumnDropDefault)
-                        ctx.visit(K_CHANGE_COLUMN).sql(' ').qualify(false, c -> c.visit(alterColumn));
+                    boolean change = alterColumnDefault == null && !alterColumnDropDefault;
+
+                    if (change)
+                        ctx.visit(K_CHANGE_COLUMN);
                     else
                         ctx.visit(K_ALTER_COLUMN);
+
+                    if (ifExistsColumn && supportsIfExistsColumnAlter(ctx))
+                        ctx.sql(' ').visit(K_IF_EXISTS);
+
+                    if (change)
+                        ctx.sql(' ').qualify(false, c -> c.visit(alterColumn));
 
                     break;
                 }
 
                 case CLICKHOUSE:
                     ctx.visit(K_MODIFY).sql(' ').visit(K_COLUMN);
+
+                    if (ifExistsColumn && supportsIfExistsColumnAlter(ctx))
+                        ctx.sql(' ').visit(K_IF_EXISTS);
+
                     break;
 
 
@@ -1535,6 +1582,10 @@ implements
 
                 default:
                     ctx.visit(K_ALTER);
+
+                    if (ifExistsColumn && supportsIfExistsColumnAlter(ctx))
+                        ctx.sql(' ').visit(K_IF_EXISTS);
+
                     break;
             }
 

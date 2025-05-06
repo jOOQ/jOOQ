@@ -5574,7 +5574,7 @@ final class Tools {
                                 sqlstates.add("42704");
 
                             if (TRUE.equals(element))
-                                sqlstates.add("42703");
+                                sqlstates.addAll(asList("42703", "42704"));
 
                             if (sqlstates.isEmpty())
                                 sqlstates.add("42704");

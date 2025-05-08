@@ -68,6 +68,9 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.SQLITE;
+// ...
+// ...
 // ...
 import static org.jooq.SQLDialect.TRINO;
 // ...
@@ -176,4 +179,19 @@ public interface AlterTableAlterStep<T> {
     @NotNull @CheckReturnValue
     @Support({ DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     AlterTableFinalStep dropNotNull();
+
+    /**
+     * Make the column an <code>IDENTITY</code> column.
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    AlterTableFinalStep setGeneratedByDefaultAsIdentity();
+
+    /**
+     * Drop the <code>IDENTITY</code> property from the column.
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    AlterTableFinalStep dropIdentity();
+
 }

@@ -10120,6 +10120,24 @@ public final class QOM {
     }
 
     /**
+     * The <code>GenerationMode</code> type.
+     * <p>
+     * Specify whether an identity values is always generated, or only if an explicit value
+     * is absent.
+     */
+    public enum GenerationMode {
+        ALWAYS(keyword("always")),
+        BY_DEFAULT(keyword("by default")),
+        ;
+
+        final Keyword keyword;
+
+        private GenerationMode(Keyword keyword) {
+            this.keyword = keyword;
+        }
+    }
+
+    /**
      * The <code>GenerationLocation</code> type.
      * <p>
      * Specify where a computed column should be computed, i.e. in the client or on the

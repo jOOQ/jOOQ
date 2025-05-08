@@ -103,7 +103,9 @@ import static org.jooq.impl.Keywords.K_ALTER;
 import static org.jooq.impl.Keywords.K_ALTER_COLUMN;
 import static org.jooq.impl.Keywords.K_ALTER_CONSTRAINT;
 import static org.jooq.impl.Keywords.K_ALTER_TABLE;
+import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_BEFORE;
+import static org.jooq.impl.Keywords.K_BY;
 import static org.jooq.impl.Keywords.K_CASCADE;
 import static org.jooq.impl.Keywords.K_CHANGE;
 import static org.jooq.impl.Keywords.K_CHANGE_COLUMN;
@@ -123,6 +125,8 @@ import static org.jooq.impl.Keywords.K_EXCEPTION;
 import static org.jooq.impl.Keywords.K_EXEC;
 import static org.jooq.impl.Keywords.K_FIRST;
 import static org.jooq.impl.Keywords.K_FOREIGN_KEY;
+import static org.jooq.impl.Keywords.K_GENERATED;
+import static org.jooq.impl.Keywords.K_IDENTITY;
 import static org.jooq.impl.Keywords.K_IF;
 import static org.jooq.impl.Keywords.K_IF_EXISTS;
 import static org.jooq.impl.Keywords.K_IF_NOT_EXISTS;
@@ -142,6 +146,7 @@ import static org.jooq.impl.Keywords.K_RENAME_OBJECT;
 import static org.jooq.impl.Keywords.K_RENAME_TABLE;
 import static org.jooq.impl.Keywords.K_RENAME_TO;
 import static org.jooq.impl.Keywords.K_REPLACE;
+import static org.jooq.impl.Keywords.K_SET;
 import static org.jooq.impl.Keywords.K_SET_DATA_TYPE;
 import static org.jooq.impl.Keywords.K_SET_DEFAULT;
 import static org.jooq.impl.Keywords.K_SET_NOT_NULL;
@@ -209,6 +214,7 @@ import org.jooq.TableElement;
 // ...
 import org.jooq.conf.RenderQuotedNames;
 import org.jooq.impl.QOM.Cascade;
+import org.jooq.impl.QOM.GenerationMode;
 import org.jooq.impl.QOM.UNotYetImplemented;
 import org.jooq.impl.Tools.ExtendedDataKey;
 
@@ -296,6 +302,8 @@ implements
     private DataType<?>                  alterColumnType;
     private Field<?>                     alterColumnDefault;
     private boolean                      alterColumnDropDefault;
+    private GenerationMode               alterColumnSetIdentity;
+    private boolean                      alterColumnDropIdentity;
     private QueryPartList<Field<?>>      dropColumns;
     private Constraint                   dropConstraint;
     private ConstraintType               dropConstraintType;
@@ -329,6 +337,8 @@ implements
     final DataType<?>              $alterColumnType()         { return alterColumnType; }
     final Field<?>                 $alterColumnDefault()      { return alterColumnDefault; }
     final boolean                  $alterColumnDropDefault()  { return alterColumnDropDefault; }
+    final GenerationMode           $alterColumnSetIdentity()  { return alterColumnSetIdentity; }
+    final boolean                  $alterColumnDropIdentity() { return alterColumnDropIdentity; }
     final Constraint               $alterConstraint()         { return alterConstraint; }
     final boolean                  $alterConstraintEnforced() { return alterConstraintEnforced; }
     final Table<?>                 $renameTo()                { return renameTo; }
@@ -808,6 +818,18 @@ implements
     @Override
     public final AlterTableImpl dropDefault() {
         alterColumnDropDefault = true;
+        return this;
+    }
+
+    @Override
+    public final AlterTableImpl setGeneratedByDefaultAsIdentity() {
+        alterColumnSetIdentity = GenerationMode.BY_DEFAULT;
+        return this;
+    }
+
+    @Override
+    public final AlterTableImpl dropIdentity() {
+        alterColumnDropIdentity = true;
         return this;
     }
 
@@ -1542,6 +1564,10 @@ implements
 
 
 
+
+
+
+
                 case CUBRID:
                 case MARIADB:
                 case MYSQL: {
@@ -1695,6 +1721,43 @@ implements
                 }
 
                 ctx.end(ALTER_TABLE_ALTER_DEFAULT);
+            }
+            else if (alterColumnSetIdentity != null) {
+                switch (ctx.family()) {
+
+
+
+
+
+
+
+
+                    case POSTGRES:
+                    case YUGABYTEDB:
+                        ctx.sql(' ').visit(K_ADD).sql(' ').visit(K_GENERATED).sql(' ').visit(K_BY).sql(' ').visit(K_DEFAULT).sql(' ').visit(K_AS).sql(' ').visit(K_IDENTITY);
+                        break;
+
+                    case H2:
+                        ctx.sql(' ').visit(K_SET).sql(' ').visit(K_GENERATED).sql(' ').visit(K_BY).sql(' ').visit(K_DEFAULT);
+                        break;
+
+                    default:
+                        ctx.sql(' ').visit(K_SET).sql(' ').visit(K_GENERATED).sql(' ').visit(K_BY).sql(' ').visit(K_DEFAULT).sql(' ').visit(K_AS).sql(' ').visit(K_IDENTITY);
+                        break;
+                }
+            }
+            else if (alterColumnDropIdentity) {
+                switch (ctx.family()) {
+
+
+
+
+
+
+                    default:
+                        ctx.sql(' ').visit(K_DROP).sql(' ').visit(K_IDENTITY);
+                        break;
+                }
             }
             else if (alterColumnNullability != null) {
                 ctx.start(ALTER_TABLE_ALTER_NULL);

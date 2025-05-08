@@ -627,6 +627,10 @@ final class Interpreter {
                 existingField.type = existingField.type.default_((Field) query.$alterColumnDefault());
             else if (query.$alterColumnDropDefault())
                 existingField.type = existingField.type.default_((Field) null);
+            else if (query.$alterColumnSetIdentity() != null)
+                existingField.type = existingField.type.generatedByDefaultAsIdentity();
+            else if (query.$alterColumnDropIdentity())
+                existingField.type = existingField.type.identity(false);
             else
                 throw unsupportedQuery(query);
         }

@@ -566,6 +566,11 @@ final class Diff {
                     else if (type2.defaulted() && (!type1.defaulted() || !equivalent(d2, d1)))
                         r.queries.add(ctx.alterTable(t1).alter(f1).setDefault((Field) d2));
 
+                    if (type1.identity() && !type2.identity())
+                        r.queries.add(ctx.alterTable(t1).alter(f1).dropIdentity());
+                    else if (type2.identity() && !type1.identity())
+                        r.queries.add(ctx.alterTable(t1).alter(f1).setGeneratedByDefaultAsIdentity());
+
                     if ((type1.hasLength() && type2.hasLength() && (type1.lengthDefined() != type2.lengthDefined() || type1.length() != type2.length()))
                         || (type1.hasPrecision() && type2.hasPrecision() && precisionDifference(type1, type2))
                         || (type1.hasScale() && type2.hasScale() && (type1.scaleDefined() != type2.scaleDefined() || type1.scale() != type2.scale())))

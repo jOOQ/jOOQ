@@ -184,7 +184,7 @@ public interface AlterTableAlterStep<T> {
      * Make the column an <code>IDENTITY</code> column.
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTEDB })
+    @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })
     AlterTableFinalStep setGeneratedByDefaultAsIdentity();
 
     /**

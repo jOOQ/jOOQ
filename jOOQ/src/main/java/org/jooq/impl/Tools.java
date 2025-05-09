@@ -55,6 +55,7 @@ import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.DUCKDB;
 // ...
@@ -5800,6 +5801,7 @@ final class Tools {
 
                 case HSQLDB:    ctx.sql(' ').visit(K_GENERATED).sql(' ').visit(K_BY).sql(' ').visit(K_DEFAULT).sql(' ').visit(K_AS).sql(' ').visit(K_IDENTITY).sql('(').visit(K_START_WITH).sql(" 1)"); break;
                 case SQLITE:    ctx.sql(' ').visit(K_PRIMARY_KEY).sql(' ').visit(K_AUTOINCREMENT); break;
+
                 case POSTGRES:
                     if (SUPPORT_PG_IDENTITY.contains(ctx.dialect()))
                         ctx.sql(' ').visit(K_GENERATED).sql(' ').visit(K_BY).sql(' ').visit(K_DEFAULT).sql(' ').visit(K_AS).sql(' ').visit(K_IDENTITY);
@@ -6082,9 +6084,6 @@ final class Tools {
 
     static final void toSQLDDLTypeDeclaration0(Context<?> ctx, DataType<?> type) {
 
-        // In some databases, identity is a type, not a flag.
-        if (type.identity()) {
-            switch (ctx.family()) {
 
 
 
@@ -6115,8 +6114,16 @@ final class Tools {
 
 
 
-            }
-        }
+
+
+
+
+
+
+
+
+
+
 
         // [#5299] MySQL enum types
         if (EnumType.class.isAssignableFrom(type.getType())) {

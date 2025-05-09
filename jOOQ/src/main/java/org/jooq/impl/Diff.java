@@ -56,9 +56,11 @@ import static org.jooq.impl.ConstraintType.CHECK;
 import static org.jooq.impl.ConstraintType.FOREIGN_KEY;
 import static org.jooq.impl.ConstraintType.PRIMARY_KEY;
 import static org.jooq.impl.ConstraintType.UNIQUE;
+import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.impl.Tools.NO_SUPPORT_TIMESTAMP_PRECISION;
 import static org.jooq.impl.Tools.allMatch;
 import static org.jooq.impl.Tools.anyMatch;
+import static org.jooq.impl.Tools.autoAlias;
 import static org.jooq.impl.Tools.filter;
 import static org.jooq.impl.Tools.findAny;
 import static org.jooq.impl.Tools.flatMap;
@@ -90,6 +92,8 @@ import org.jooq.DataType;
 import org.jooq.Domain;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Function2;
+import org.jooq.Function3;
 import org.jooq.Index;
 import org.jooq.Key;
 import org.jooq.Meta;
@@ -105,8 +109,6 @@ import org.jooq.Sequence;
 import org.jooq.Table;
 import org.jooq.TableOptions.TableType;
 import org.jooq.UniqueKey;
-import org.jooq.impl.QOM.DropTable;
-import org.jooq.impl.QOM.PrimaryKey;
 import org.jooq.tools.StringUtils;
 
 /**
@@ -425,7 +427,7 @@ final class Diff {
             else {
 
                 // [#18044] [#18327] Ensure constraint / column drop / add order
-                DiffResult temp = new DiffResult(new ArrayList<>(), r.addedFks, r.droppedFks);
+                DiffResult temp = new DiffResult(new ArrayList<>(), new ArrayList<>(), r.addedFks, r.droppedFks);
 
                 appendColumns(temp, t1, asList(t1.fields()), asList(t2.fields()));
                 appendPrimaryKey(temp, t1, asList(t1.getPrimaryKey()), asList(t2.getPrimaryKey()));
@@ -690,11 +692,15 @@ final class Diff {
                 return;
             }
 
-            if (UNQUALIFIED_COMP.compare(k1, k2) != 0)
+            if (UNQUALIFIED_COMP.compare(k1, k2) != 0) {
 
                 // [#10813] Don't rename constraints in MySQL
-                if (type != PRIMARY_KEY || !NO_SUPPORT_PK_NAMES.contains(ctx.dialect()))
-                    r.queries.add(ctx.alterTable(t1).renameConstraint(n1).to(n2));
+                if (type != PRIMARY_KEY || !NO_SUPPORT_PK_NAMES.contains(ctx.dialect())) {
+                    rename(r, type == CHECK ? t1.getChecks() : t1.getKeys(), n1, n2,
+                        (_n1, _n2) -> ctx.alterTable(t1).renameConstraint(_n1).to(_n2)
+                    );
+                }
+            }
 
 
 
@@ -707,6 +713,28 @@ final class Diff {
 
 
         };
+    }
+
+    private final void rename(
+        DiffResult r,
+        List<? extends Named> existing,
+        Name n1,
+        Name n2,
+        Function2<? super Name, ? super Name, ? extends Query> renameQuery
+    ) {
+
+        // [#18441] Handle name swaps
+        if (anyMatch(existing, k -> k.getName().equals(n2.last()))) {
+            Name temp = unquotedName(autoAlias(ctx.configuration(), n1.append(n2)));
+
+            if (n1.qualified())
+                temp = n1.qualifier().append(temp);
+
+            r.queries.add(renameQuery.apply(n1, temp));
+            r.cleanup.add(renameQuery.apply(temp, n2));
+        }
+        else
+            r.queries.add(renameQuery.apply(n1, n2));
     }
 
     private final <K extends Named> Merge<K> keyMerge(Domain<?> d1, Create<K> create, Drop<K> drop) {
@@ -780,8 +808,11 @@ final class Diff {
                     drop.drop(r, ix1);
                     create.create(r, ix2);
                 }
-                else if (UNQUALIFIED_COMP.compare(ix1, ix2) != 0)
-                    r.queries.add(ctx.alterTable(t1).renameIndex(ix1).to(ix2));
+                else if (UNQUALIFIED_COMP.compare(ix1, ix2) != 0) {
+                    rename(r, t1.getIndexes(), ix1.getUnqualifiedName(), ix2.getUnqualifiedName(),
+                        (_i1, _i2) -> ctx.alterTable(t1).renameIndex(_i1).to(_i2)
+                    );
+                }
             },
             true
         );
@@ -818,9 +849,9 @@ final class Diff {
         Iterator<? extends N> i1 = sorted(l1, comp);
         Iterator<? extends N> i2 = sorted(l2, comp);
 
-        DiffResult dropped = dropMergeCreate ? new DiffResult(new ArrayList<>(), result.addedFks, result.droppedFks) : result;
-        DiffResult merged = dropMergeCreate ? new DiffResult(new ArrayList<>(), result.addedFks, result.droppedFks) : result;
-        DiffResult created = dropMergeCreate ? new DiffResult(new ArrayList<>(), result.addedFks, result.droppedFks) : result;
+        DiffResult dropped = dropMergeCreate ? new DiffResult(new ArrayList<>(), new ArrayList<>(), result.addedFks, result.droppedFks) : result;
+        DiffResult merged = dropMergeCreate ? new DiffResult(new ArrayList<>(), new ArrayList<>(), result.addedFks, result.droppedFks) : result;
+        DiffResult created = dropMergeCreate ? new DiffResult(new ArrayList<>(), new ArrayList<>(), result.addedFks, result.droppedFks) : result;
 
         for (;;) {
             if (s1 == null && i1.hasNext())
@@ -888,22 +919,24 @@ final class Diff {
 
     private static final record DiffResult(
         List<Query> queries,
+        List<Query> cleanup,
         Set<ForeignKey<?, ?>> addedFks,
         Set<ForeignKey<?, ?>> droppedFks
     ) {
         DiffResult() {
-            this(new ArrayList<>(), new HashSet<>(), new HashSet<>());
+            this(new ArrayList<>(), new ArrayList<>(), new HashSet<>(), new HashSet<>());
         }
 
         void addAll(DiffResult other) {
             queries.addAll(other.queries);
+            queries.addAll(other.cleanup);
             addedFks.addAll(other.addedFks);
             droppedFks.addAll(other.droppedFks);
         }
 
         @Override
         public String toString() {
-            return queries.toString();
+            return Tools.concat(queries, cleanup).toString();
         }
     }
 

@@ -4027,6 +4027,17 @@ final class Tools {
      * Stability is important to profit from execution plan caching. Equal query
      * parts must produce the same alias every time.
      */
+    static final String autoAlias(Configuration configuration, QueryPart part) {
+        return normaliseNameCase(configuration, autoAlias(part), false);
+    }
+
+    /**
+     * A possibly inefficient but stable way to generate an alias for any
+     * {@link QueryPart}.
+     * <p>
+     * Stability is important to profit from execution plan caching. Equal query
+     * parts must produce the same alias every time.
+     */
     static final String autoAlias(QueryPart part) {
         return "alias_" + Internal.hash(part);
     }
@@ -7157,6 +7168,14 @@ final class Tools {
                 sb.append('.');
         }
         return sb.toString();
+    }
+
+    /**
+     * Normalise a name case depending on the dialect and the setting for
+     * {@link ParseNameCase}.
+     */
+    static final String normaliseNameCase(Configuration configuration, String name, boolean quoted) {
+        return normaliseNameCase(configuration, name, quoted, SettingsTools.parseLocale(configuration.settings()));
     }
 
     /**

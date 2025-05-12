@@ -986,14 +986,20 @@ final class Diff {
 
         // [#18044] DROP CONSTRAINT / INDEX before everything, ADD CONSTRAINT / INDEX after everything
         // [#18383] FOREIGN KEY must be dropped before other constraints, or added after other constraints
+        // [#18450] DROP NOT NULL must happen after dropping constraints, SET NOT NULL before adding constraints
         if (q instanceof AlterTableImpl a) {
-            return a.$dropConstraint() instanceof QOM.ForeignKey || a.$dropConstraintType() == FOREIGN_KEY
+            return
+                  a.$dropConstraint() instanceof QOM.ForeignKey || a.$dropConstraintType() == FOREIGN_KEY
+                ? -3
+                : a.$dropConstraint() != null || a.$dropConstraintType() != null
                 ? -2
-                : a.$dropConstraint() != null
+                : a.$alterColumnNullability() == Nullability.NULL
                 ? -1
                 : a.$addConstraint() instanceof QOM.ForeignKey || a.$dropConstraintType() == FOREIGN_KEY
-                ? 2
+                ? 3
                 : a.$addConstraint() != null
+                ? 2
+                : a.$alterColumnNullability() == Nullability.NOT_NULL
                 ? 1
                 : 0;
         }

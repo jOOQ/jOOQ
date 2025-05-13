@@ -46,6 +46,7 @@ import org.jooq.MigrationContext;
 import org.jooq.Queries;
 import org.jooq.Query;
 import org.jooq.Schema;
+import org.jooq.impl.MigrationImpl.CurrentCommit;
 
 /**
  * A default implementation for {@link MigrationContext}.
@@ -54,18 +55,18 @@ import org.jooq.Schema;
  */
 final class DefaultMigrationContext extends AbstractScope implements MigrationContext {
 
-    final Set<Schema> migratedSchemas;
-    final Commit      migrationFrom;
-    final Commit      migrationTo;
-    final Queries     migrationQueries;
-    final Queries     revertUntrackedQueries;
+    final Set<Schema>   migratedSchemas;
+    final CurrentCommit migrationFrom;
+    final Commit        migrationTo;
+    final Queries       migrationQueries;
+    final Queries       revertUntrackedQueries;
 
     Query             query;
 
     DefaultMigrationContext(
         Configuration configuration,
         Set<Schema> migratedSchemas,
-        Commit migrationFrom,
+        CurrentCommit migrationFrom,
         Commit migrationTo,
         Queries migrationQueries,
         Queries revertUntrackedQueries
@@ -86,7 +87,7 @@ final class DefaultMigrationContext extends AbstractScope implements MigrationCo
 
     @Override
     public final Commit migrationFrom() {
-        return migrationFrom;
+        return migrationFrom.commit();
     }
 
     @Override
@@ -101,7 +102,7 @@ final class DefaultMigrationContext extends AbstractScope implements MigrationCo
 
     @Override
     public final Commit queriesFrom() {
-        return migrationFrom;
+        return migrationFrom.commit();
     }
 
     @Override

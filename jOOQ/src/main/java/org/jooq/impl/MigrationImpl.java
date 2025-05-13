@@ -103,7 +103,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
     static final JooqLogger log = JooqLogger.getLogger(MigrationImpl.class);
     final HistoryImpl       history;
     final Commit            to;
-    Commit                  from;
+    CurrentCommit           from;
     Queries                 queries;
     Commits                 commits;
 
@@ -123,14 +123,18 @@ final class MigrationImpl extends AbstractScope implements Migration {
 
     @Override
     public final Commit from() {
-        return from0(false);
+        return from0(null).commit();
     }
 
-    final Commit from0(boolean baseline) {
-        if (from == null)
+    final CurrentCommit from0(Commit baseline) {
+        if (from == null) {
+            if (baseline != null)
+                from = new CurrentCommit(baseline, false);
 
             // TODO: Use pessimistic locking so no one else can migrate in between
-            from = currentCommit(baseline);
+            else
+                from = currentCommit(baseline);
+        }
 
         return from;
     }
@@ -171,20 +175,25 @@ final class MigrationImpl extends AbstractScope implements Migration {
 
     @Override
     public final Queries untracked() {
-        return untracked(false, history.schemas()).apply();
+        return untracked(null, history.schemas()).apply();
     }
 
     @Override
     public final void verify() {
-        verify0(migrationContext(false));
+        verify0(migrationContext(null));
     }
 
     @Override
     public void baseline() {
+        baseline(commits().current());
+    }
+
+    @Override
+    public void baseline(Commit commit) {
         if (history.existsHistory())
             throw new DataMigrationVerificationException("Cannot create a baseline when a history already exists");
         else
-            execute0(true);
+            execute0(commit);
     }
 
     private final void verify0(DefaultMigrationContext ctx) {
@@ -256,7 +265,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
         }
     }
 
-    private final Untracked untracked(boolean baseline, Set<Schema> includedSchemas) {
+    private final Untracked untracked(Commit baseline, Set<Schema> includedSchemas) {
         if (scriptsOnly())
             return new Untracked(configuration(), null, null);
 
@@ -270,7 +279,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
         else
             historyTables.addAll(map(includedSchemas, s -> table(s.getQualifiedName().append(HISTORY.getUnqualifiedName()))));
 
-        Commit currentCommit = currentCommit(baseline);
+        Commit currentCommit = currentCommit(baseline).commit();
         Meta currentMeta = currentCommit.meta();
         Meta existingMeta = dsl().meta()
             .filterSchemas(includedSchemas::contains)
@@ -352,7 +361,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
                 execute(ctx, listener, ctx.revertUntrackedQueries);
     }
 
-    final DefaultMigrationContext migrationContext(boolean baseline) {
+    final DefaultMigrationContext migrationContext(Commit baseline) {
         Set<Schema> schemas = history.schemas();
 
         return new DefaultMigrationContext(
@@ -367,10 +376,10 @@ final class MigrationImpl extends AbstractScope implements Migration {
 
     @Override
     public final void execute() {
-        execute0(false);
+        execute0(null);
     }
 
-    void execute0(boolean baseline) {
+    void execute0(Commit baseline) {
 
         // TODO: Transactions don't really make sense in most dialects. In some, they do
         //       e.g. PostgreSQL supports transactional DDL. Check if we're getting this right.
@@ -385,6 +394,14 @@ final class MigrationImpl extends AbstractScope implements Migration {
 
             try {
                 listener.migrationStart(ctx);
+
+                // [#9506] Can't use baseline here, because it can be null when Settings.migrationAutoBaseline is set
+                if (!ctx.migrationFrom.fromHistory) {
+                    if (log.isInfoEnabled())
+                        log.info("Setting baseline to " + ctx.migrationFrom.commit().id());
+
+                    createRecord(SUCCESS, commits().root(), ctx.migrationFrom.commit());
+                }
 
                 if (from().equals(to())) {
                     if (log.isInfoEnabled())
@@ -424,8 +441,12 @@ final class MigrationImpl extends AbstractScope implements Migration {
                     StringWriter s = new StringWriter();
                     e.printStackTrace(new PrintWriter(s));
 
-                    if (log.isErrorEnabled())
+                    if (log.isErrorEnabled()) {
                         log.error("Version " + from().id() + " migration to " + to().id() + " failed: " + e.getMessage());
+
+                        if (!ctx.migrationFrom.fromHistory)
+                            log.error("Couldn't migrate from baseline version: " + ctx.migrationFrom.commit().id() + ". Consider specifying an alternative baseline version, instead.");
+                    }
 
                     log(watch, record, FAILURE, OPEN, s.toString());
                     throw new DataMigrationRedoLogException(record, e);
@@ -453,6 +474,10 @@ final class MigrationImpl extends AbstractScope implements Migration {
     }
 
     private final HistoryRecord createRecord(HistoryStatus status) {
+        return createRecord(status, from(), to());
+    }
+
+    private final HistoryRecord createRecord(HistoryStatus status, Commit from0, Commit to0) {
         HistoryRecord record = history.historyCtx.newRecord(HISTORY);
         String hostName;
 
@@ -466,10 +491,10 @@ final class MigrationImpl extends AbstractScope implements Migration {
         record
             .setJooqVersion(Constants.VERSION)
             .setMigratedAt(new Timestamp(dsl().configuration().clock().instant().toEpochMilli()))
-            .setMigratedFrom(from().id())
-            .setMigratedTo(to().id())
-            .setMigratedToMessage(to().message())
-            .setMigratedToTags(new JSONArray(map(to().tags(), Tag::id)).toString())
+            .setMigratedFrom(from0.id())
+            .setMigratedTo(to0.id())
+            .setMigratedToMessage(to0.message())
+            .setMigratedToTags(new JSONArray(map(to0.tags(), Tag::id)).toString())
             .setMigrationTime(0L)
             .setClientUserName(System.getProperty("user.name"))
             .setClientHostName(hostName)
@@ -517,20 +542,26 @@ final class MigrationImpl extends AbstractScope implements Migration {
     final void init() {
         history.init();
 
-        MigrationContext ctx = migrationContext(false);
+        MigrationContext ctx = migrationContext(null);
         if (TRUE.equals(ctx.settings().isMigrationSchemataCreateSchemaIfNotExists()))
             for (Schema schema : ctx.migratedSchemas())
                 dsl().createSchemaIfNotExists(schema).execute();
     }
 
-    final Commit currentCommit(boolean baseline) {
+    static final record CurrentCommit(Commit commit, boolean fromHistory) {}
+
+    final CurrentCommit currentCommit(Commit baseline) {
         HistoryRecord currentRecord = history.currentHistoryRecord(true);
 
         if (currentRecord == null) {
-            Commit result = baseline || TRUE.equals(settings().isMigrationAutoBaseline()) ? to() : to().root();
+            CurrentCommit result = baseline != null
+                ? new CurrentCommit(baseline, false)
+                : TRUE.equals(settings().isMigrationAutoBaseline())
+                ? new CurrentCommit(to(), false)
+                : new CurrentCommit(to().root(), true);
 
             if (result == null)
-                throw new DataMigrationVerificationException("CommitProvider did not provide a root version for " + to().id());
+                throw new DataMigrationVerificationException("CommitProvider did not provide a current version for " + to().id());
 
             return result;
         }
@@ -538,9 +569,9 @@ final class MigrationImpl extends AbstractScope implements Migration {
             Commit result = commits().get(currentRecord.getMigratedTo());
 
             if (result == null)
-                throw new DataMigrationVerificationException("CommitProvider did not provide a version for " + currentRecord.getMigratedTo());
+                throw new DataMigrationVerificationException("CommitProvider did not provide a current version for " + currentRecord.getMigratedTo());
 
-            return result;
+            return new CurrentCommit(result, true);
         }
     }
 

@@ -112,19 +112,26 @@ public interface Migration extends Scope {
     /**
      * Verify the correctness of a migration.
      *
-     * @throws DataMigrationVerificationException When something went wrong during
-     *             the verification of the migration.
+     * @throws DataMigrationVerificationException When something went wrong
+     *             during the verification of the migration.
      */
     void verify() throws DataMigrationVerificationException;
 
     /**
-     * Create a baseline from the current schema using the pending changes, if
-     * they match.
+     * Set the migration baseline to {@link #to()}.
      *
-     * @throws DataMigrationVerificationException When something went wrong during
-     *             the creation of the baseline.
+     * @throws DataMigrationVerificationException When something went wrong
+     *             during the creation of the baseline.
      */
     void baseline() throws DataMigrationVerificationException;
+
+    /**
+     * Set the migration baseline to the the argument {@link Commit}.
+     *
+     * @throws DataMigrationVerificationException When something went wrong
+     *             during the creation of the baseline.
+     */
+    void baseline(Commit commit) throws DataMigrationVerificationException;
 
     /**
      * Apply the migration.

@@ -43,6 +43,7 @@ import static org.apache.maven.plugins.annotations.ResolutionScope.TEST;
 import org.jooq.Migration;
 
 import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
 
 /**
  * Create a baseline from the current schema using the pending changes, if they
@@ -58,8 +59,19 @@ import org.apache.maven.plugins.annotations.Mojo;
 )
 public class BaselineMojo extends AbstractMigrateMojo {
 
+    static final String P_VERSION   = "jooq.migrate.baseline.version";
+
+    /**
+     * The version to set the baseline to, defaulting to <code>root</code>.
+     */
+    @Parameter(property = P_VERSION)
+    String version;
+
     @Override
     final void execute1(Migration migration) throws Exception {
-        migration.baseline();
+        if (version != null)
+            migration.baseline(migration.configuration().commitProvider().provide().get(version));
+        else
+            migration.baseline();
     }
 }

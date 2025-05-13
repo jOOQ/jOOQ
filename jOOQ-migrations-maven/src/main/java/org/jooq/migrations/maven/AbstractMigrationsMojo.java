@@ -152,6 +152,10 @@ abstract class AbstractMigrationsMojo extends AbstractMojo {
             return;
         }
 
+        getLog().warn("----------------------------------------------------------------------------------------------------------");
+        getLog().warn("WARNING: jOOQ-migrations is an experimental set of features, and not yet documented. USE AT YOUR OWN RISK.");
+        getLog().warn("----------------------------------------------------------------------------------------------------------");
+
         ClassLoader oldCL = Thread.currentThread().getContextClassLoader();
         URLClassLoader pluginClassLoader = getClassLoader();
 

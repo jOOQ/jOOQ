@@ -44,12 +44,12 @@ import static org.apache.maven.plugins.annotations.ResolutionScope.TEST;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
-import java.util.Arrays;
 
 import org.jooq.Commit;
 import org.jooq.History;
 import org.jooq.Migration;
 import org.jooq.Queries;
+import org.jooq.exception.DataMigrationVerificationException;
 
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
@@ -67,11 +67,20 @@ import org.apache.maven.plugins.annotations.Parameter;
 )
 public class AddUntrackedMojo extends AbstractMigrateMojo {
 
+    static final String P_FILE_NAME = "jooq.migrate.addUntracked.fileName";
+    static final String P_VERSION   = "jooq.migrate.addUntracked.version";
+
     /**
      * The file name to add untracked objects to, defaulting to <code>[version]-added.sql</code>.
      */
-    @Parameter(property = "jooq.migrate.addUntracked.fileName")
+    @Parameter(property = P_FILE_NAME)
     String fileName;
+
+    /**
+     * The version to add untracked objects to, defaulting to the last migrated version.
+     */
+    @Parameter(property = P_VERSION)
+    String version;
 
     @Override
     final void execute1(Migration migration) throws Exception {
@@ -79,8 +88,16 @@ public class AddUntrackedMojo extends AbstractMigrateMojo {
 
         if (untracked.queries().length > 0) {
             History history = migration.dsl().migrations().history();
-            String id = history.available() ? history.current().version().id() : migration.from().id();
-            File file = new File(file(directory), id + "/increments/" + fileName(id, fileName, "added"));
+            String id = version != null
+                ? version
+                : history.available()
+                ? history.current().version().id()
+                : migration.from().id();
+
+            if (Commit.ROOT.equals(id))
+                throw new DataMigrationVerificationException("Cannot add untracked files to root version. Specify the version property explicitly.");
+
+            File file = new File(file(directory), id + "/increments/" + fileName(id, fileName, "untracked"));
             file.getParentFile().mkdirs();
 
             StringBuilder sb = new StringBuilder();
@@ -89,11 +106,6 @@ public class AddUntrackedMojo extends AbstractMigrateMojo {
                 getLog().info("Writing untracked objects to: " + file + "\n" + untracked);
 
             sb.append("-- Untracked objects of version: " + id + "\n");
-
-            if (Commit.ROOT.equals(id)) {
-                sb.append("-- Objects that were present before the root version will not be created during migration on any databases.\n");
-                sb.append("-- They are added to this file only as a baseline.\n");
-            }
 
             sb.append(untracked);
             sb.append("\n");

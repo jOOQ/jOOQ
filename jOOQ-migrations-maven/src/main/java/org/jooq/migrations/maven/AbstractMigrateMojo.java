@@ -62,6 +62,8 @@ public abstract class AbstractMigrateMojo extends AbstractMigrationsMojo {
             throw new MojoExecutionException("Directory was not provided");
 
         CommitProvider cp = configuration.commitProvider();
+
+        // TODO: We cannot assume this is equivalent to users not providing custom implementations
         if (cp instanceof DefaultCommitProvider) {
             Migrations migrations = configuration.dsl().migrations();
             Commits commits = migrations.commits();

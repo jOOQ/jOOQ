@@ -284,7 +284,7 @@ abstract class AbstractMigrationsMojo extends AbstractMojo {
             }
         }
         catch (Exception ex) {
-            throw new MojoExecutionException("Error running jOOQ code generation tool", ex);
+            throw new MojoExecutionException("Error running jOOQ migration tool", ex);
         }
         finally {
 

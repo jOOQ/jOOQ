@@ -64,6 +64,15 @@ public interface History extends Iterable<HistoryVersion>, Scope {
     boolean available();
 
     /**
+     * Whether a version is contained in this history.
+     * <p>
+     * This is EXPERIMENTAL functionality and subject to change in future jOOQ
+     * versions.
+     */
+    @Experimental
+    boolean contains(String id);
+
+    /**
      * The root {@link Version}.
      * <p>
      * This corresponds to the {@link Configuration#commitProvider()}'s

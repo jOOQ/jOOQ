@@ -127,14 +127,12 @@ final class MigrationImpl extends AbstractScope implements Migration {
     }
 
     final CurrentCommit from0(Commit baseline) {
-        if (from == null) {
-            if (baseline != null)
-                from = new CurrentCommit(baseline, false);
+        if (baseline != null)
+            return new CurrentCommit(baseline, false);
 
-            // TODO: Use pessimistic locking so no one else can migrate in between
-            else
-                from = currentCommit(baseline);
-        }
+        // TODO: Use pessimistic locking so no one else can migrate in between
+        if (from == null)
+            from = currentCommit(baseline);
 
         return from;
     }
@@ -158,12 +156,15 @@ final class MigrationImpl extends AbstractScope implements Migration {
 
     @Override
     public final Queries queries() {
-        if (queries == null) {
-            Files files = from().migrateTo(to());
-            queries = files.from().migrateTo(files.to());
-        }
+        if (queries == null)
+            queries = queries0(from());
 
         return queries;
+    }
+
+    final Queries queries0(Commit baseline) {
+        Files files = (baseline != null ? baseline : from()).migrateTo(to());
+        return files.from().migrateTo(files.to());
     }
 
     private final Commits commits() {
@@ -190,10 +191,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
 
     @Override
     public void baseline(Commit commit) {
-        if (history.existsHistory())
-            throw new DataMigrationVerificationException("Cannot create a baseline when a history already exists");
-        else
-            execute0(commit);
+        execute0(commit);
     }
 
     private final void verify0(DefaultMigrationContext ctx) {
@@ -369,7 +367,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
             schemas,
             from0(baseline),
             to(),
-            queries(),
+            queries0(baseline),
             untracked(baseline, schemas).revert()
         );
     }
@@ -400,11 +398,11 @@ final class MigrationImpl extends AbstractScope implements Migration {
                     if (log.isInfoEnabled())
                         log.info("Setting baseline to " + ctx.migrationFrom.commit().id());
 
-                    createRecord(SUCCESS, commits().root(), ctx.migrationFrom.commit());
+                    createRecord(SUCCESS, commits().root(), ctx.migrationFrom.commit(), "New baseline");
                 }
 
-                if (from().equals(to())) {
-                    if (log.isInfoEnabled())
+                if (ctx.migrationFrom.commit().equals(to())) {
+                    if (!ctx.migrationFrom.fromHistory && log.isInfoEnabled())
                         log.info("Version " + to().id() + " is already installed as the current version.");
 
                     return;
@@ -478,6 +476,10 @@ final class MigrationImpl extends AbstractScope implements Migration {
     }
 
     private final HistoryRecord createRecord(HistoryStatus status, Commit from0, Commit to0) {
+        return createRecord(status, from0, to0, null);
+    }
+
+    private final HistoryRecord createRecord(HistoryStatus status, Commit from0, Commit to0, String message) {
         HistoryRecord record = history.historyCtx.newRecord(HISTORY);
         String hostName;
 
@@ -501,6 +503,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
             .setSql(queries().toString())
             .setSqlCount(queries().queries().length)
             .setStatus(status)
+            .setStatusMessage(message)
             .insert();
 
         return record;
@@ -551,16 +554,17 @@ final class MigrationImpl extends AbstractScope implements Migration {
     static final record CurrentCommit(Commit commit, boolean fromHistory) {}
 
     final CurrentCommit currentCommit(Commit baseline) {
+        if (baseline != null)
+            return new CurrentCommit(baseline, false);
+
         HistoryRecord currentRecord = history.currentHistoryRecord(true);
 
         if (currentRecord == null) {
-            CurrentCommit result = baseline != null
-                ? new CurrentCommit(baseline, false)
-                : TRUE.equals(settings().isMigrationAutoBaseline())
+            CurrentCommit result = TRUE.equals(settings().isMigrationAutoBaseline())
                 ? new CurrentCommit(to(), false)
                 : new CurrentCommit(to().root(), true);
 
-            if (result == null)
+            if (result.commit() == null)
                 throw new DataMigrationVerificationException("CommitProvider did not provide a current version for " + to().id());
 
             return result;

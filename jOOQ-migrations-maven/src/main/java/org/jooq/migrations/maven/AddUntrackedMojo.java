@@ -90,9 +90,13 @@ public class AddUntrackedMojo extends AbstractMigrateMojo {
             History history = migration.dsl().migrations().history();
             String id = version != null
                 ? version
-                : history.available()
-                ? history.current().version().id()
-                : migration.from().id();
+                : migration.to().id();
+
+            if (history.available() && history.contains(id))
+                if (version != null)
+                    throw new DataMigrationVerificationException("Cannot add untracked files to a version that has already been applied to the history: " + id);
+                else
+                    throw new DataMigrationVerificationException("Cannot add untracked files to a version that has already been applied to the history: " + id + ". Specify the version property explicitly.");
 
             if (Commit.ROOT.equals(id))
                 throw new DataMigrationVerificationException("Cannot add untracked files to root version. Specify the version property explicitly.");

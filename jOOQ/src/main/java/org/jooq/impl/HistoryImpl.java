@@ -105,6 +105,11 @@ class HistoryImpl extends AbstractScope implements History {
     }
 
     @Override
+    public final boolean contains(String id) {
+        return Tools.anyMatch(versions, v -> v.version().id().equals(id));
+    }
+
+    @Override
     public final Iterator<HistoryVersion> iterator() {
         return unmodifiableList(versions).iterator();
     }

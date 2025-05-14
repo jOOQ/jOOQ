@@ -163,7 +163,7 @@ final class RecordDataType<R extends Record> extends DefaultDataType<R> {
 
         // [#12116] TODO: Move this logic into JSONReader to make it more generally useful
         else if (object instanceof Record || object instanceof Map || object instanceof List) {
-            return newRecord(true, CONFIG.get(), getRecordType(), row)
+            return newRecord(true, cc.configuration(), getRecordType(), row)
                 .operate(r -> {
 
                     // [#12014] TODO: Fix this and remove workaround

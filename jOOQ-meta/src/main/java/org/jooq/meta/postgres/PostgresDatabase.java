@@ -745,12 +745,7 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                 ? row(SEQUENCES.SEQUENCE_SCHEMA, SEQUENCES.SEQUENCE_NAME).notIn(
                     select(COLUMNS.TABLE_SCHEMA, COLUMNS.TABLE_NAME.concat(inline("_")).concat(COLUMNS.COLUMN_NAME).concat(inline("_seq")))
                     .from(COLUMNS)
-                    .where(COLUMNS.COLUMN_DEFAULT.eq(
-                        inline("nextval('").concat(COLUMNS.TABLE_NAME.concat(inline("_")).concat(COLUMNS.COLUMN_NAME)).concat(inline("_seq'::regclass)"))
-                    ))
-                    .or(COLUMNS.COLUMN_DEFAULT.eq(
-                        inline("nextval('").concat(COLUMNS.TABLE_SCHEMA.concat(inline(".")).concat(COLUMNS.TABLE_NAME).concat(inline("_")).concat(COLUMNS.COLUMN_NAME)).concat(inline("_seq'::regclass)"))
-                    ))
+                    .where(columnDefaultFromIdentityExpression())
                   )
                 : noCondition())
             .unionAll(is10() && getIncludeSystemSequences()
@@ -781,6 +776,15 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
             :   select(inline(""), inline(""), inline(""), inline(""), inline(0), inline(0), inline(0L), inline(0L), inline(BigDecimal.ZERO), inline(BigDecimal.ZERO), inline(false), inline(0L))
                 .where(falseCondition()))
             .orderBy(2, 3);
+    }
+
+    protected Condition columnDefaultFromIdentityExpression() {
+        return COLUMNS.COLUMN_DEFAULT.eq(
+            inline("nextval('").concat(COLUMNS.TABLE_NAME.concat(inline("_")).concat(COLUMNS.COLUMN_NAME)).concat(inline("_seq'::regclass)"))
+        )
+        .or(COLUMNS.COLUMN_DEFAULT.eq(
+            inline("nextval('").concat(COLUMNS.TABLE_SCHEMA.concat(inline(".")).concat(COLUMNS.TABLE_NAME).concat(inline("_")).concat(COLUMNS.COLUMN_NAME)).concat(inline("_seq'::regclass)"))
+        ));
     }
 
     @Override

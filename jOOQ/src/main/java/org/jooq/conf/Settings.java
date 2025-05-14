@@ -490,6 +490,16 @@ public class Settings
     protected Boolean migrationAllowUndo = false;
     @XmlElement(defaultValue = "false")
     protected Boolean migrationAllowInvalidCommits = false;
+    @XmlElement(defaultValue = "true")
+    protected Boolean migrationAllowRename = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean migrationAllowRenameConstraints = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean migrationAllowRenameIndexes = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean migrationAllowRenameTables = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean migrationAllowRenameColumns = true;
     @XmlElement(defaultValue = "false")
     protected Boolean migrationRevertUntracked = false;
     @XmlElement(defaultValue = "false")
@@ -6270,7 +6280,7 @@ public class Settings
     }
 
     /**
-     * Whether migrations to invalid commits ({@link org.jooq.Commit#valid()}) are allowed.<p><strong>This is a potentially destructive feature, which should not be turned on in production</strong>. It is useful mostly to quickly test uncommited or inconsistent changes in development.
+     * Whether migrations to invalid commits ({@link org.jooq.Commit#valid()}) are allowed. <p><strong>This is a potentially destructive feature, which should not be turned on in production</strong>. It is useful mostly to quickly test uncommited or inconsistent changes in development.
      * 
      * @return
      *     possible object is
@@ -6282,7 +6292,7 @@ public class Settings
     }
 
     /**
-     * Whether migrations to invalid commits ({@link org.jooq.Commit#valid()}) are allowed.<p><strong>This is a potentially destructive feature, which should not be turned on in production</strong>. It is useful mostly to quickly test uncommited or inconsistent changes in development.
+     * Whether migrations to invalid commits ({@link org.jooq.Commit#valid()}) are allowed. <p><strong>This is a potentially destructive feature, which should not be turned on in production</strong>. It is useful mostly to quickly test uncommited or inconsistent changes in development.
      * 
      * @param value
      *     allowed object is
@@ -6291,6 +6301,126 @@ public class Settings
      */
     public void setMigrationAllowInvalidCommits(Boolean value) {
         this.migrationAllowInvalidCommits = value;
+    }
+
+    /**
+     * Whether migrations are allowed to rename objects based on heuristics. <p><strong>Turning this flag off is potentially destructive. Please always check your generated migration output with integration tests!</strong>
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isMigrationAllowRename() {
+        return migrationAllowRename;
+    }
+
+    /**
+     * Whether migrations are allowed to rename objects based on heuristics. <p><strong>Turning this flag off is potentially destructive. Please always check your generated migration output with integration tests!</strong>
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setMigrationAllowRename(Boolean value) {
+        this.migrationAllowRename = value;
+    }
+
+    /**
+     * Whether migrations are allowed to rename constraints based on heuristics.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isMigrationAllowRenameConstraints() {
+        return migrationAllowRenameConstraints;
+    }
+
+    /**
+     * Whether migrations are allowed to rename constraints based on heuristics.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setMigrationAllowRenameConstraints(Boolean value) {
+        this.migrationAllowRenameConstraints = value;
+    }
+
+    /**
+     * Whether migrations are allowed to rename indexes based on heuristics.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isMigrationAllowRenameIndexes() {
+        return migrationAllowRenameIndexes;
+    }
+
+    /**
+     * Whether migrations are allowed to rename indexes based on heuristics.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setMigrationAllowRenameIndexes(Boolean value) {
+        this.migrationAllowRenameIndexes = value;
+    }
+
+    /**
+     * Whether migrations are allowed to rename tables based on heuristics. <p><strong>Turning this flag off is potentially destructive. Please always check your generated migration output with integration tests!</strong>
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isMigrationAllowRenameTables() {
+        return migrationAllowRenameTables;
+    }
+
+    /**
+     * Whether migrations are allowed to rename tables based on heuristics. <p><strong>Turning this flag off is potentially destructive. Please always check your generated migration output with integration tests!</strong>
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setMigrationAllowRenameTables(Boolean value) {
+        this.migrationAllowRenameTables = value;
+    }
+
+    /**
+     * Whether migrations are allowed to rename columns based on heuristics. <p><strong>Turning this flag off is potentially destructive. Please always check your generated migration output with integration tests!</strong>
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isMigrationAllowRenameColumns() {
+        return migrationAllowRenameColumns;
+    }
+
+    /**
+     * Whether migrations are allowed to rename columns based on heuristics. <p><strong>Turning this flag off is potentially destructive. Please always check your generated migration output with integration tests!</strong>
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setMigrationAllowRenameColumns(Boolean value) {
+        this.migrationAllowRenameColumns = value;
     }
 
     /**
@@ -9485,11 +9615,56 @@ public class Settings
     }
 
     /**
-     * Whether migrations to invalid commits ({@link org.jooq.Commit#valid()}) are allowed.<p><strong>This is a potentially destructive feature, which should not be turned on in production</strong>. It is useful mostly to quickly test uncommited or inconsistent changes in development.
+     * Whether migrations to invalid commits ({@link org.jooq.Commit#valid()}) are allowed. <p><strong>This is a potentially destructive feature, which should not be turned on in production</strong>. It is useful mostly to quickly test uncommited or inconsistent changes in development.
      * 
      */
     public Settings withMigrationAllowInvalidCommits(Boolean value) {
         setMigrationAllowInvalidCommits(value);
+        return this;
+    }
+
+    /**
+     * Whether migrations are allowed to rename objects based on heuristics. <p><strong>Turning this flag off is potentially destructive. Please always check your generated migration output with integration tests!</strong>
+     * 
+     */
+    public Settings withMigrationAllowRename(Boolean value) {
+        setMigrationAllowRename(value);
+        return this;
+    }
+
+    /**
+     * Whether migrations are allowed to rename constraints based on heuristics.
+     * 
+     */
+    public Settings withMigrationAllowRenameConstraints(Boolean value) {
+        setMigrationAllowRenameConstraints(value);
+        return this;
+    }
+
+    /**
+     * Whether migrations are allowed to rename indexes based on heuristics.
+     * 
+     */
+    public Settings withMigrationAllowRenameIndexes(Boolean value) {
+        setMigrationAllowRenameIndexes(value);
+        return this;
+    }
+
+    /**
+     * Whether migrations are allowed to rename tables based on heuristics. <p><strong>Turning this flag off is potentially destructive. Please always check your generated migration output with integration tests!</strong>
+     * 
+     */
+    public Settings withMigrationAllowRenameTables(Boolean value) {
+        setMigrationAllowRenameTables(value);
+        return this;
+    }
+
+    /**
+     * Whether migrations are allowed to rename columns based on heuristics. <p><strong>Turning this flag off is potentially destructive. Please always check your generated migration output with integration tests!</strong>
+     * 
+     */
+    public Settings withMigrationAllowRenameColumns(Boolean value) {
+        setMigrationAllowRenameColumns(value);
         return this;
     }
 
@@ -10061,6 +10236,11 @@ public class Settings
         builder.append("migrationDefaultContentType", migrationDefaultContentType);
         builder.append("migrationAllowUndo", migrationAllowUndo);
         builder.append("migrationAllowInvalidCommits", migrationAllowInvalidCommits);
+        builder.append("migrationAllowRename", migrationAllowRename);
+        builder.append("migrationAllowRenameConstraints", migrationAllowRenameConstraints);
+        builder.append("migrationAllowRenameIndexes", migrationAllowRenameIndexes);
+        builder.append("migrationAllowRenameTables", migrationAllowRenameTables);
+        builder.append("migrationAllowRenameColumns", migrationAllowRenameColumns);
         builder.append("migrationRevertUntracked", migrationRevertUntracked);
         builder.append("migrationAutoBaseline", migrationAutoBaseline);
         builder.append("migrationAutoVerification", migrationAutoVerification);
@@ -11943,6 +12123,51 @@ public class Settings
                 return false;
             }
         }
+        if (migrationAllowRename == null) {
+            if (other.migrationAllowRename!= null) {
+                return false;
+            }
+        } else {
+            if (!migrationAllowRename.equals(other.migrationAllowRename)) {
+                return false;
+            }
+        }
+        if (migrationAllowRenameConstraints == null) {
+            if (other.migrationAllowRenameConstraints!= null) {
+                return false;
+            }
+        } else {
+            if (!migrationAllowRenameConstraints.equals(other.migrationAllowRenameConstraints)) {
+                return false;
+            }
+        }
+        if (migrationAllowRenameIndexes == null) {
+            if (other.migrationAllowRenameIndexes!= null) {
+                return false;
+            }
+        } else {
+            if (!migrationAllowRenameIndexes.equals(other.migrationAllowRenameIndexes)) {
+                return false;
+            }
+        }
+        if (migrationAllowRenameTables == null) {
+            if (other.migrationAllowRenameTables!= null) {
+                return false;
+            }
+        } else {
+            if (!migrationAllowRenameTables.equals(other.migrationAllowRenameTables)) {
+                return false;
+            }
+        }
+        if (migrationAllowRenameColumns == null) {
+            if (other.migrationAllowRenameColumns!= null) {
+                return false;
+            }
+        } else {
+            if (!migrationAllowRenameColumns.equals(other.migrationAllowRenameColumns)) {
+                return false;
+            }
+        }
         if (migrationRevertUntracked == null) {
             if (other.migrationRevertUntracked!= null) {
                 return false;
@@ -12459,6 +12684,11 @@ public class Settings
         result = ((prime*result)+((migrationDefaultContentType == null)? 0 :migrationDefaultContentType.hashCode()));
         result = ((prime*result)+((migrationAllowUndo == null)? 0 :migrationAllowUndo.hashCode()));
         result = ((prime*result)+((migrationAllowInvalidCommits == null)? 0 :migrationAllowInvalidCommits.hashCode()));
+        result = ((prime*result)+((migrationAllowRename == null)? 0 :migrationAllowRename.hashCode()));
+        result = ((prime*result)+((migrationAllowRenameConstraints == null)? 0 :migrationAllowRenameConstraints.hashCode()));
+        result = ((prime*result)+((migrationAllowRenameIndexes == null)? 0 :migrationAllowRenameIndexes.hashCode()));
+        result = ((prime*result)+((migrationAllowRenameTables == null)? 0 :migrationAllowRenameTables.hashCode()));
+        result = ((prime*result)+((migrationAllowRenameColumns == null)? 0 :migrationAllowRenameColumns.hashCode()));
         result = ((prime*result)+((migrationRevertUntracked == null)? 0 :migrationRevertUntracked.hashCode()));
         result = ((prime*result)+((migrationAutoBaseline == null)? 0 :migrationAutoBaseline.hashCode()));
         result = ((prime*result)+((migrationAutoVerification == null)? 0 :migrationAutoVerification.hashCode()));

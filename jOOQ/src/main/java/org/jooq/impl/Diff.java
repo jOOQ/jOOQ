@@ -82,7 +82,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.BooleanSupplier;
 import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.function.ToLongFunction;
 
 import org.jooq.AlterSequenceFlagsStep;
@@ -112,6 +114,7 @@ import org.jooq.Sequence;
 import org.jooq.Table;
 import org.jooq.TableOptions.TableType;
 import org.jooq.UniqueKey;
+import org.jooq.conf.Settings;
 import org.jooq.tools.StringUtils;
 
 /**
@@ -713,11 +716,18 @@ final class Diff {
         );
     }
 
+    private final boolean allowRenames(Function<Settings, Boolean> setting) {
+        return
+            !FALSE.equals(ctx.settings().isMigrationAllowRename())
+         && !FALSE.equals(setting.apply(ctx.settings()));
+    }
+
     private final <K extends Named> Merge<K> keyMerge(Table<?> t1, Create<K> create, Drop<K> drop, ConstraintType type) {
         return (r, k1, k2) -> {
             Name n1 = k1.getUnqualifiedName();
             Name n2 = k2.getUnqualifiedName();
-            boolean allowRenames = true;
+            boolean ignoreRenames = false;
+            boolean allowRenames = allowRenames(Settings::isMigrationAllowRenameConstraints);
 
             if (n1.empty() ^ n2.empty()) {
                 if (!TRUE.equals(ctx.settings().isMigrationIgnoreUnnamedConstraintDiffs())) {
@@ -727,16 +737,22 @@ final class Diff {
                     return;
                 }
                 else
-                    allowRenames = false;
+                    allowRenames = !(ignoreRenames = true);
             }
 
-            if (allowRenames && UNQUALIFIED_COMP.compare(k1, k2) != 0) {
+            if (UNQUALIFIED_COMP.compare(k1, k2) != 0) {
+                if (allowRenames) {
 
-                // [#10813] Don't rename constraints in MySQL
-                if (type != PRIMARY_KEY || !NO_SUPPORT_PK_NAMES.contains(ctx.dialect())) {
-                    rename(r, type == CHECK ? t1.getChecks() : t1.getKeys(), n1, n2,
-                        (_n1, _n2) -> ctx.alterTable(t1).renameConstraint(_n1).to(_n2)
-                    );
+                    // [#10813] Don't rename constraints in MySQL
+                    if (type != PRIMARY_KEY || !NO_SUPPORT_PK_NAMES.contains(ctx.dialect())) {
+                        rename(r, type == CHECK ? t1.getChecks() : t1.getKeys(), n1, n2,
+                            (_n1, _n2) -> ctx.alterTable(t1).renameConstraint(_n1).to(_n2)
+                        );
+                    }
+                }
+                else if (!ignoreRenames) {
+                    drop.drop(r, k1);
+                    create.create(r, k2);
                 }
             }
 
@@ -848,9 +864,15 @@ final class Diff {
                     create.create(r, ix2);
                 }
                 else if (UNQUALIFIED_COMP.compare(ix1, ix2) != 0) {
-                    rename(r, t1.getIndexes(), ix1.getUnqualifiedName(), ix2.getUnqualifiedName(),
-                        (_i1, _i2) -> ctx.alterTable(t1).renameIndex(_i1).to(_i2)
-                    );
+                    if (allowRenames(Settings::isMigrationAllowRenameIndexes)) {
+                        rename(r, t1.getIndexes(), ix1.getUnqualifiedName(), ix2.getUnqualifiedName(),
+                            (_i1, _i2) -> ctx.alterTable(t1).renameIndex(_i1).to(_i2)
+                        );
+                    }
+                    else {
+                        drop.drop(r, ix1);
+                        create.create(r, ix2);
+                    }
                 }
             },
             true

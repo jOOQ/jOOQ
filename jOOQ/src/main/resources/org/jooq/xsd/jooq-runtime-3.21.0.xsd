@@ -1558,7 +1558,27 @@ deployed on an RDBMS that does not.]]></jxb:javadoc></jxb:property></appinfo></a
       </element>
       
       <element name="migrationAllowInvalidCommits" type="boolean" minOccurs="0" maxOccurs="1" default="false">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether migrations to invalid commits ({@link org.jooq.Commit#valid()}) are allowed.<p><strong>This is a potentially destructive feature, which should not be turned on in production</strong>. It is useful mostly to quickly test uncommited or inconsistent changes in development.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether migrations to invalid commits ({@link org.jooq.Commit#valid()}) are allowed. <p><strong>This is a potentially destructive feature, which should not be turned on in production</strong>. It is useful mostly to quickly test uncommited or inconsistent changes in development.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="migrationAllowRename" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether migrations are allowed to rename objects based on heuristics. <p><strong>Turning this flag off is potentially destructive. Please always check your generated migration output with integration tests!</strong>]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="migrationAllowRenameConstraints" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether migrations are allowed to rename constraints based on heuristics.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="migrationAllowRenameIndexes" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether migrations are allowed to rename indexes based on heuristics.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="migrationAllowRenameTables" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether migrations are allowed to rename tables based on heuristics. <p><strong>Turning this flag off is potentially destructive. Please always check your generated migration output with integration tests!</strong>]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="migrationAllowRenameColumns" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether migrations are allowed to rename columns based on heuristics. <p><strong>Turning this flag off is potentially destructive. Please always check your generated migration output with integration tests!</strong>]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
       <element name="migrationRevertUntracked" type="boolean" minOccurs="0" maxOccurs="1" default="false">

@@ -64,6 +64,7 @@ import static org.jooq.impl.Tools.autoAlias;
 import static org.jooq.impl.Tools.filter;
 import static org.jooq.impl.Tools.findAny;
 import static org.jooq.impl.Tools.flatMap;
+import static org.jooq.impl.Tools.isEmpty;
 import static org.jooq.impl.Tools.isVal1;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.tools.StringUtils.defaultIfNull;
@@ -945,30 +946,44 @@ final class Diff {
     }
 
     static final int sortIndex(Query q) {
+        final int FKEY = 4;
+        final int CONS = 3;
+        final int NULL = 2;
+        final int COL = 1;
 
-        // [#18044] DROP CONSTRAINT / INDEX before everything, ADD CONSTRAINT / INDEX after everything
-        // [#18383] FOREIGN KEY must be dropped before other constraints, or added after other constraints
-        // [#18450] DROP NOT NULL must happen after dropping constraints, SET NOT NULL before adding constraints
         if (q instanceof AlterTableImpl a) {
             return
+
+                // [#18383] FOREIGN KEY must be dropped before other constraints, or added after other constraints
                   a.$dropConstraint() instanceof QOM.ForeignKey || a.$dropConstraintType() == FOREIGN_KEY
-                ? -3
-                : a.$dropConstraint() != null || a.$dropConstraintType() != null
-                ? -2
-                : a.$alterColumnNullability() == Nullability.NULL
-                ? -1
+                ? -FKEY
                 : a.$addConstraint() instanceof QOM.ForeignKey || a.$dropConstraintType() == FOREIGN_KEY
-                ? 3
+                ? FKEY
+
+                // [#18044] DROP CONSTRAINT / INDEX before everything, ADD CONSTRAINT / INDEX after everything
+                : a.$dropConstraint() != null || a.$dropConstraintType() != null
+                ? -CONS
                 : a.$addConstraint() != null
-                ? 2
+                ? CONS
+
+                // [#18450] DROP NOT NULL must happen after dropping constraints, SET NOT NULL before adding constraints
+                : a.$alterColumnNullability() == Nullability.NULL
+                ? -NULL
                 : a.$alterColumnNullability() == Nullability.NOT_NULL
-                ? 1
+                ? NULL
+
+                // [#18462] To prevent tables from being without columns, adding columns must happen before dropping them
+                : a.$addColumn() != null || anyMatch(a.$add(), c -> c instanceof Field)
+                ? -COL
+                : !isEmpty(a.$dropColumns())
+                ? COL
+
                 : 0;
         }
         else if (q instanceof QOM.DropIndex)
-            return -1;
+            return -CONS;
         else if (q instanceof QOM.CreateIndex)
-            return 1;
+            return CONS;
         else
             return 0;
     }

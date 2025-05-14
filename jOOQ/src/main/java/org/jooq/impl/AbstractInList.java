@@ -300,7 +300,24 @@ abstract class AbstractInList<T> extends AbstractCondition {
 
             this.delegate = delegate;
             this.realSize = delegate.size();
-            this.padSize = Math.min(maxPadding, (int) Math.round(Math.pow(b, Math.ceil(Math.log(realSize) / Math.log(b)))));
+            this.padSize = Math.min(maxPadding, padSize(Math.min(maxPadding, realSize), b));
+        }
+
+        static final int padSize(int max, int b) {
+            int n, r = 1;
+
+            // [#18449] Use a loop instead of the previous, simpler log arithmetic to avoid floating point rounding issues:
+            //          Math.min(maxPadding, (int) Math.round(Math.pow(b, Math.ceil(Math.log(realSize) / Math.log(b)))));
+            //          We'll iterate at most 31 times for huge lists and base 2.
+            //          n > 0 is to handle the unlikely event of an overflow.
+            while ((n = r * b) < max && n > 0)
+                r = n;
+
+            return n < 0
+                 ? Integer.MAX_VALUE
+                 : r == max
+                 ? max
+                 : n;
         }
 
         @Override

@@ -762,6 +762,7 @@ final class Diff {
     ) {
 
         // [#18441] Handle name swaps
+        // [#18454] TODO: Handle case sensitivity according to dialect
         if (anyMatch(existing, k -> k.getName().equals(n2.last()))) {
             Name temp = unquotedName(autoAlias(ctx.configuration(), n1.append(n2)));
 

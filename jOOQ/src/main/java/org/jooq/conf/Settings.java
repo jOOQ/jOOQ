@@ -502,8 +502,6 @@ public class Settings
     protected Boolean migrationAllowRenameColumns = true;
     @XmlElement(defaultValue = "false")
     protected Boolean migrationRevertUntracked = false;
-    @XmlElement(defaultValue = "false")
-    protected Boolean migrationAutoBaseline = false;
     @XmlElement(defaultValue = "true")
     protected Boolean migrationAutoVerification = true;
     @XmlElement(defaultValue = "true")
@@ -6448,30 +6446,6 @@ public class Settings
     }
 
     /**
-     * Whether to automatically existing schemas that are not yet managed by jOOQ Migrations.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
-     */
-    public Boolean isMigrationAutoBaseline() {
-        return migrationAutoBaseline;
-    }
-
-    /**
-     * Whether to automatically existing schemas that are not yet managed by jOOQ Migrations.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
-     */
-    public void setMigrationAutoBaseline(Boolean value) {
-        this.migrationAutoBaseline = value;
-    }
-
-    /**
      * Whether a migration automatically runs a verification first.
      * 
      * @return
@@ -9678,15 +9652,6 @@ public class Settings
     }
 
     /**
-     * Whether to automatically existing schemas that are not yet managed by jOOQ Migrations.
-     * 
-     */
-    public Settings withMigrationAutoBaseline(Boolean value) {
-        setMigrationAutoBaseline(value);
-        return this;
-    }
-
-    /**
      * Whether a migration automatically runs a verification first.
      * 
      */
@@ -10242,7 +10207,6 @@ public class Settings
         builder.append("migrationAllowRenameTables", migrationAllowRenameTables);
         builder.append("migrationAllowRenameColumns", migrationAllowRenameColumns);
         builder.append("migrationRevertUntracked", migrationRevertUntracked);
-        builder.append("migrationAutoBaseline", migrationAutoBaseline);
         builder.append("migrationAutoVerification", migrationAutoVerification);
         builder.append("migrationIgnoreDefaultTimestampPrecisionDiffs", migrationIgnoreDefaultTimestampPrecisionDiffs);
         builder.append("migrationIgnoreUnnamedConstraintDiffs", migrationIgnoreUnnamedConstraintDiffs);
@@ -12177,15 +12141,6 @@ public class Settings
                 return false;
             }
         }
-        if (migrationAutoBaseline == null) {
-            if (other.migrationAutoBaseline!= null) {
-                return false;
-            }
-        } else {
-            if (!migrationAutoBaseline.equals(other.migrationAutoBaseline)) {
-                return false;
-            }
-        }
         if (migrationAutoVerification == null) {
             if (other.migrationAutoVerification!= null) {
                 return false;
@@ -12690,7 +12645,6 @@ public class Settings
         result = ((prime*result)+((migrationAllowRenameTables == null)? 0 :migrationAllowRenameTables.hashCode()));
         result = ((prime*result)+((migrationAllowRenameColumns == null)? 0 :migrationAllowRenameColumns.hashCode()));
         result = ((prime*result)+((migrationRevertUntracked == null)? 0 :migrationRevertUntracked.hashCode()));
-        result = ((prime*result)+((migrationAutoBaseline == null)? 0 :migrationAutoBaseline.hashCode()));
         result = ((prime*result)+((migrationAutoVerification == null)? 0 :migrationAutoVerification.hashCode()));
         result = ((prime*result)+((migrationIgnoreDefaultTimestampPrecisionDiffs == null)? 0 :migrationIgnoreDefaultTimestampPrecisionDiffs.hashCode()));
         result = ((prime*result)+((migrationIgnoreUnnamedConstraintDiffs == null)? 0 :migrationIgnoreUnnamedConstraintDiffs.hashCode()));

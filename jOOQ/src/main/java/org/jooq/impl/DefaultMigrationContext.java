@@ -46,7 +46,7 @@ import org.jooq.MigrationContext;
 import org.jooq.Queries;
 import org.jooq.Query;
 import org.jooq.Schema;
-import org.jooq.impl.MigrationImpl.CurrentCommit;
+import org.jooq.impl.MigrationImpl.Untracked;
 
 /**
  * A default implementation for {@link MigrationContext}.
@@ -55,21 +55,24 @@ import org.jooq.impl.MigrationImpl.CurrentCommit;
  */
 final class DefaultMigrationContext extends AbstractScope implements MigrationContext {
 
-    final Set<Schema>   migratedSchemas;
-    final CurrentCommit migrationFrom;
-    final Commit        migrationTo;
-    final Queries       migrationQueries;
-    final Queries       revertUntrackedQueries;
+    final Set<Schema> migratedSchemas;
+    final Commit      migrationFrom;
+    final Commit      migrationTo;
+    final Queries     migrationQueries;
+    final Queries     untrackedQueries;
+    final Queries     revertUntrackedQueries;
+    final boolean     baseline;
 
     Query             query;
 
     DefaultMigrationContext(
         Configuration configuration,
         Set<Schema> migratedSchemas,
-        CurrentCommit migrationFrom,
+        Commit migrationFrom,
         Commit migrationTo,
         Queries migrationQueries,
-        Queries revertUntrackedQueries
+        Untracked untracked,
+        boolean baseline
     ) {
         super(configuration);
 
@@ -77,7 +80,9 @@ final class DefaultMigrationContext extends AbstractScope implements MigrationCo
         this.migrationFrom = migrationFrom;
         this.migrationTo = migrationTo;
         this.migrationQueries = migrationQueries;
-        this.revertUntrackedQueries = revertUntrackedQueries;
+        this.untrackedQueries = untracked.apply();
+        this.revertUntrackedQueries = untracked.revert();
+        this.baseline = baseline;
     }
 
     @Override
@@ -87,7 +92,7 @@ final class DefaultMigrationContext extends AbstractScope implements MigrationCo
 
     @Override
     public final Commit migrationFrom() {
-        return migrationFrom.commit();
+        return migrationFrom;
     }
 
     @Override
@@ -102,7 +107,7 @@ final class DefaultMigrationContext extends AbstractScope implements MigrationCo
 
     @Override
     public final Commit queriesFrom() {
-        return migrationFrom.commit();
+        return migrationFrom;
     }
 
     @Override
@@ -122,6 +127,11 @@ final class DefaultMigrationContext extends AbstractScope implements MigrationCo
 
     final void query(Query q) {
         this.query = q;
+    }
+
+    @Override
+    public final boolean baseline() {
+        return baseline;
     }
 
     @Override

@@ -75,7 +75,7 @@ public abstract class AbstractMigrateMojo extends AbstractMigrationsMojo {
             .derive(cp)
             .dsl()
             .migrations()
-            .migrateTo(cp.provide().latest());
+            .migrateTo(migrateTo(cp));
 
         if (getLog().isInfoEnabled()) {
             Commit snapshot = migration.fromSnapshot();
@@ -88,6 +88,10 @@ public abstract class AbstractMigrateMojo extends AbstractMigrationsMojo {
         }
 
         execute1(migration);
+    }
+
+    /* non-final */ Commit migrateTo(CommitProvider cp) {
+        return cp.provide().latest();
     }
 
     abstract void execute1(Migration migration) throws Exception;

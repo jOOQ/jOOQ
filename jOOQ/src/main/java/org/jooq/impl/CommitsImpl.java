@@ -147,7 +147,7 @@ final class CommitsImpl implements Commits {
 
     @Override
     public final Commit current() {
-        return new MigrationImpl(configuration, root).currentCommit(null).commit();
+        return new MigrationImpl(configuration, root).currentCommit();
     }
 
     @Override

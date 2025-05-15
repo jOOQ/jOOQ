@@ -1585,10 +1585,6 @@ deployed on an RDBMS that does not.]]></jxb:javadoc></jxb:property></appinfo></a
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether migrations revert any untracked changes in the schemas that are being migrated.<p><strong>This is a potentially destructive feature, which should not be turned on in production</strong>. It is useful mostly to quickly revert any elements created in a development environment. This feature is available only in commercial distributions.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
-      <element name="migrationAutoBaseline" type="boolean" minOccurs="0" maxOccurs="1" default="false">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether to automatically existing schemas that are not yet managed by jOOQ Migrations.]]></jxb:javadoc></jxb:property></appinfo></annotation>
-      </element>
-      
       <element name="migrationAutoVerification" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether a migration automatically runs a verification first.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>

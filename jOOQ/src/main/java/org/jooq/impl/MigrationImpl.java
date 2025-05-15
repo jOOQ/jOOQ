@@ -94,8 +94,6 @@ import org.jooq.tools.StopWatch;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.json.JSONArray;
 
-import org.jetbrains.annotations.NotNull;
-
 
 /**
  * @author Lukas Eder
@@ -105,7 +103,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
     static final JooqLogger log = JooqLogger.getLogger(MigrationImpl.class);
     final HistoryImpl       history;
     final Commit            to;
-    CurrentCommit           from;
+    Commit                  from;
     Queries                 queries;
     Commits                 commits;
 
@@ -125,16 +123,10 @@ final class MigrationImpl extends AbstractScope implements Migration {
 
     @Override
     public final Commit from() {
-        return from0(null).commit();
-    }
-
-    final CurrentCommit from0(Commit baseline) {
-        if (baseline != null)
-            return new CurrentCommit(baseline, false);
 
         // TODO: Use pessimistic locking so no one else can migrate in between
         if (from == null)
-            from = currentCommit(baseline);
+            from = currentCommit();
 
         return from;
     }
@@ -159,13 +151,16 @@ final class MigrationImpl extends AbstractScope implements Migration {
     @Override
     public final Queries queries() {
         if (queries == null)
-            queries = queries0(from());
+            queries = queries0(false);
 
         return queries;
     }
 
-    final Queries queries0(Commit baseline) {
-        Files files = (baseline != null ? baseline : from()).migrateTo(to());
+    final Queries queries0(boolean baseline) {
+        if (baseline)
+            return dsl().queries();
+
+        Files files = from().migrateTo(to());
         return files.from().migrateTo(files.to());
     }
 
@@ -178,27 +173,22 @@ final class MigrationImpl extends AbstractScope implements Migration {
 
     @Override
     public final Queries untracked() {
-        return untracked(null, history.schemas()).apply();
+        return untracked(false, history.schemas()).apply();
     }
 
     @Override
     public final Queries revertUntracked() {
-        return untracked(null, history.schemas()).revert();
+        return untracked(false, history.schemas()).revert();
     }
 
     @Override
     public final void verify() {
-        verify0(migrationContext(null));
+        verify0(migrationContext(false));
     }
 
     @Override
     public void baseline() {
-        baseline(commits().current());
-    }
-
-    @Override
-    public void baseline(Commit commit) {
-        execute0(commit);
+        execute0(true);
     }
 
     private final void verify0(DefaultMigrationContext ctx) {
@@ -254,23 +244,23 @@ final class MigrationImpl extends AbstractScope implements Migration {
                 );
     }
 
-    static final record Untracked(Configuration configuration, Meta current, Meta existing) {
+    static final record Untracked(Configuration configuration, Meta target, Meta existing) {
         Queries revert() {
             if (existing() == null)
                 return configuration().dsl().queries();
             else
-                return existing().migrateTo(current());
+                return existing().migrateTo(target());
         }
 
         Queries apply() {
-            if (current() == null)
+            if (target() == null)
                 return configuration().dsl().queries();
             else
-                return current().migrateTo(existing());
+                return target().migrateTo(existing());
         }
     }
 
-    private final Untracked untracked(Commit baseline, Set<Schema> includedSchemas) {
+    private final Untracked untracked(boolean baseline, Set<Schema> includedSchemas) {
         if (scriptsOnly())
             return new Untracked(configuration(), null, null);
 
@@ -284,9 +274,8 @@ final class MigrationImpl extends AbstractScope implements Migration {
         else
             historyTables.addAll(map(includedSchemas, s -> table(s.getQualifiedName().append(HISTORY.getUnqualifiedName()))));
 
-        Commit currentCommit = currentCommit(baseline).commit();
-        Meta currentMeta = currentCommit.meta();
-        Meta existingMeta = dsl().meta()
+        Meta target = (baseline ? to() : from()).meta();
+        Meta existing = dsl().meta()
             .filterSchemas(includedSchemas::contains)
             .filterTables(t -> !historyTables.contains(t));
 
@@ -303,17 +292,17 @@ final class MigrationImpl extends AbstractScope implements Migration {
         }
 
         schemaLoop:
-        for (Schema schema : existingMeta.getSchemas()) {
+        for (Schema schema : existing.getSchemas()) {
             if (!includedSchemas.contains(schema))
                 continue schemaLoop;
 
             if (!expectedSchemas.contains(schema))
-                existingMeta = existingMeta.apply(dropSchemaIfExists(schema).cascade());
+                existing = existing.apply(dropSchemaIfExists(schema).cascade());
             else
-                currentMeta = currentMeta.apply(createSchemaIfNotExists(schema));
+                target = target.apply(createSchemaIfNotExists(schema));
         }
 
-        return new Untracked(configuration(), currentMeta, existingMeta);
+        return new Untracked(configuration(), target, existing);
     }
 
     private final boolean scriptsOnly() {
@@ -330,7 +319,11 @@ final class MigrationImpl extends AbstractScope implements Migration {
         return result;
     }
 
-    private final void revertUntracked(DefaultMigrationContext ctx, MigrationListener listener, HistoryRecord currentRecord) {
+    private final void revertUntracked(
+        DefaultMigrationContext ctx,
+        MigrationListener listener,
+        HistoryRecord currentRecord
+    ) {
         if (ctx.revertUntrackedQueries.queries().length > 0)
             if (!TRUE.equals(dsl().settings().isMigrationRevertUntracked())) {
                 if (currentRecord == null) {
@@ -340,11 +333,11 @@ final class MigrationImpl extends AbstractScope implements Migration {
                         {queries}
 
                         Possible remedies:
-                        - Use Settings.migrationAutoBaseline or the baseline command to automatically set a baseline.
-                        """.replace("{queries}", "" + ctx.revertUntrackedQueries)
+                        - Use the baseline command to automatically set a baseline.
+                        """.replace("{queries}", "" + ctx.untrackedQueries)
                     );
                 }
-                else if (!ctx.migrationFrom.fromHistory) {
+                else if (ctx.baseline()) {
                     throw new DataMigrationVerificationException(
                         """
                         Non-empty difference between actual schema and migration from schema:
@@ -367,8 +360,8 @@ final class MigrationImpl extends AbstractScope implements Migration {
                         - Use Settings.migrationRevertUntracked to automatically drop unknown objects (at your own risk!)
                         - Manually drop or move unknown objects outside of managed schemas.
                         - Update migration scripts to track missing objects (including adding them automatically).
-                        """.replace("{queries}", "" + ctx.revertUntrackedQueries)
-                           .replace("{from}", "" + ctx.migrationFrom.commit().id())
+                        """.replace("{queries}", "" + ctx.untrackedQueries)
+                           .replace("{from}", "" + ctx.migrationFrom.id())
                     );
                 }
                 else {
@@ -390,7 +383,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
                         - Use Settings.migrationRevertUntracked to automatically drop unknown objects (at your own risk!)
                         - Manually drop or move unknown objects outside of managed schemas.
                         - Update migration scripts to track missing objects (including adding them automatically).
-                        """.replace("{queries}", "" + ctx.revertUntrackedQueries)
+                        """.replace("{queries}", "" + ctx.untrackedQueries)
                     );
                 }
             }
@@ -398,31 +391,31 @@ final class MigrationImpl extends AbstractScope implements Migration {
                 execute(ctx, listener, ctx.revertUntrackedQueries);
     }
 
-    final DefaultMigrationContext migrationContext(Commit baseline) {
+    final DefaultMigrationContext migrationContext(boolean baseline) {
         Set<Schema> schemas = history.schemas();
 
         return new DefaultMigrationContext(
             configuration(),
             schemas,
-            from0(baseline),
+            from(),
             to(),
             queries0(baseline),
-            untracked(baseline, schemas).revert()
+            untracked(baseline, schemas),
+            baseline
         );
     }
 
     @Override
     public final void execute() {
-        execute0(null);
+        execute0(false);
     }
 
-    void execute0(Commit baseline) {
+    void execute0(boolean baseline) {
 
         // TODO: Transactions don't really make sense in most dialects. In some, they do
         //       e.g. PostgreSQL supports transactional DDL. Check if we're getting this right.
         run(() -> {
             DefaultMigrationContext ctx = migrationContext(baseline);
-            Commit from0 = ctx.migrationFrom.commit();
             MigrationListener listener = new MigrationListeners(configuration);
 
             if (!FALSE.equals(dsl().settings().isMigrationAutoVerification()))
@@ -434,29 +427,43 @@ final class MigrationImpl extends AbstractScope implements Migration {
                 listener.migrationStart(ctx);
                 int untracked = ctx.revertUntrackedQueries.queries().length;
 
-                // [#9506] Can't use baseline here, because it can be null when Settings.migrationAutoBaseline is set
-                if (!ctx.migrationFrom.fromHistory) {
+                if (baseline) {
                     if (history.available()
-                        && history.current().version().id().equals(from0.id())
+                        && history.current().version().id().equals(to().id())
                         && untracked == 0
                     ) {
                         if (log.isInfoEnabled())
-                            log.info("Current version is already set to baseline version: " + from0.id());
+                            log.info("Current version is already set to baseline version: " + to().id());
 
                         return;
                     }
 
                     if (log.isInfoEnabled())
-                        log.info("Setting baseline to " + from0.id());
+                        log.info("Setting baseline to " + from().id());
 
-                    createRecord(SUCCESS, from(), from0, "New baseline");
+                    StopWatch watch = new StopWatch();
+                    HistoryRecord record = createRecord(STARTING, from(), to(), "New baseline");
 
-                    if (untracked == 0)
+                    try {
+                        log(watch, record, REVERTING);
+                        revertUntracked(ctx, listener, record);
+                        log(watch, record, SUCCESS);
                         return;
+                    }
+                    catch (Exception e) {
+                        StringWriter s = new StringWriter();
+                        e.printStackTrace(new PrintWriter(s));
+
+                        if (log.isErrorEnabled())
+                            log.error("Setting " + to().id() + " as baseline failed: " + e.getMessage());
+
+                        log(watch, record, FAILURE, OPEN, s.toString());
+                        throw new DataMigrationRedoLogException(record, e);
+                    }
                 }
 
-                if (from0.equals(to())) {
-                    if (!ctx.migrationFrom.fromHistory && log.isInfoEnabled())
+                if (from().equals(to())) {
+                    if (log.isInfoEnabled())
                         log.info("Version " + to().id() + " is already installed as the current version.");
 
                     if (untracked == 0)
@@ -473,7 +480,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
 
                 else if (log.isInfoEnabled()) {
                     Commit snapshot = fromSnapshot();
-                    log.info("Version " + from0.id() + " is being migrated to " + to().id() + (snapshot != null ? " (from snapshot: " + snapshot.id() + ")" : ""));
+                    log.info("Version " + from().id() + " is being migrated to " + to().id() + (snapshot != null ? " (from snapshot: " + snapshot.id() + ")" : ""));
                 }
 
                 StopWatch watch = new StopWatch();
@@ -496,12 +503,8 @@ final class MigrationImpl extends AbstractScope implements Migration {
                     StringWriter s = new StringWriter();
                     e.printStackTrace(new PrintWriter(s));
 
-                    if (log.isErrorEnabled()) {
-                        log.error("Version " + from0.id() + " migration to " + to().id() + " failed: " + e.getMessage());
-
-                        if (!ctx.migrationFrom.fromHistory)
-                            log.error("Couldn't migrate from baseline version: " + ctx.migrationFrom.commit().id() + ". Consider specifying an alternative baseline version, instead.");
-                    }
+                    if (log.isErrorEnabled())
+                        log.error("Version " + from().id() + " migration to " + to().id() + " failed: " + e.getMessage());
 
                     log(watch, record, FAILURE, OPEN, s.toString());
                     throw new DataMigrationRedoLogException(record, e);
@@ -615,29 +618,17 @@ final class MigrationImpl extends AbstractScope implements Migration {
     final void init() {
         history.init();
 
-        MigrationContext ctx = migrationContext(null);
+        MigrationContext ctx = migrationContext(false);
         if (TRUE.equals(ctx.settings().isMigrationSchemataCreateSchemaIfNotExists()))
             for (Schema schema : ctx.migratedSchemas())
                 dsl().createSchemaIfNotExists(schema).execute();
     }
 
-    static final record CurrentCommit(Commit commit, boolean fromHistory) {}
-
-    final CurrentCommit currentCommit(Commit baseline) {
-        if (baseline != null)
-            return new CurrentCommit(baseline, false);
-
+    final Commit currentCommit() {
         HistoryRecord currentRecord = history.currentHistoryRecord(true);
 
         if (currentRecord == null) {
-            CurrentCommit result = TRUE.equals(settings().isMigrationAutoBaseline())
-                ? new CurrentCommit(to(), false)
-                : new CurrentCommit(to().root(), true);
-
-            if (result.commit() == null)
-                throw new DataMigrationVerificationException("CommitProvider did not provide a current version for " + to().id());
-
-            return result;
+            return to().root();
         }
         else {
             Commit result = commits().get(currentRecord.getMigratedTo());
@@ -645,7 +636,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
             if (result == null)
                 throw new DataMigrationVerificationException("CommitProvider did not provide a current version for " + currentRecord.getMigratedTo());
 
-            return new CurrentCommit(result, true);
+            return result;
         }
     }
 

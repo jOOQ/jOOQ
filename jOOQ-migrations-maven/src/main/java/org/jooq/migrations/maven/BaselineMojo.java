@@ -40,6 +40,8 @@ package org.jooq.migrations.maven;
 import static org.apache.maven.plugins.annotations.LifecyclePhase.GENERATE_SOURCES;
 import static org.apache.maven.plugins.annotations.ResolutionScope.TEST;
 
+import org.jooq.Commit;
+import org.jooq.CommitProvider;
 import org.jooq.Migration;
 
 import org.apache.maven.plugins.annotations.Mojo;
@@ -59,7 +61,7 @@ import org.apache.maven.plugins.annotations.Parameter;
 )
 public class BaselineMojo extends AbstractMigrateMojo {
 
-    static final String P_VERSION   = "jooq.migrate.baseline.version";
+    static final String P_VERSION = "jooq.migrate.baseline.version";
 
     /**
      * The version to set the baseline to, defaulting to <code>root</code>.
@@ -68,10 +70,12 @@ public class BaselineMojo extends AbstractMigrateMojo {
     String version;
 
     @Override
+    final Commit migrateTo(CommitProvider cp) {
+        return version != null ? cp.provide().get(version) : super.migrateTo(cp);
+    }
+
+    @Override
     final void execute1(Migration migration) throws Exception {
-        if (version != null)
-            migration.baseline(migration.configuration().commitProvider().provide().get(version));
-        else
-            migration.baseline();
+        migration.baseline();
     }
 }

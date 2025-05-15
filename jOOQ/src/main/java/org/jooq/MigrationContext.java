@@ -156,4 +156,9 @@ public interface MigrationContext extends Scope {
      */
     @NotNull
     Query query();
+
+    /**
+     * Whether this migration sets a baseline.
+     */
+    boolean baseline();
 }

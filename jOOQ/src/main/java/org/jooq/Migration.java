@@ -132,14 +132,6 @@ public interface Migration extends Scope {
     void baseline() throws DataMigrationVerificationException;
 
     /**
-     * Set the migration baseline to the the argument {@link Commit}.
-     *
-     * @throws DataMigrationVerificationException When something went wrong
-     *             during the creation of the baseline.
-     */
-    void baseline(Commit commit) throws DataMigrationVerificationException;
-
-    /**
      * Apply the migration.
      *
      * @throws DataMigrationException When something went wrong during the

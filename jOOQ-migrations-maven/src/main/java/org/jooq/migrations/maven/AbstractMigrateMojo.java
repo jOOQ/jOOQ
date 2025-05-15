@@ -45,6 +45,7 @@ import org.jooq.Commits;
 import org.jooq.Configuration;
 import org.jooq.Migration;
 import org.jooq.Migrations;
+import org.jooq.exception.DataMigrationVerificationException;
 import org.jooq.impl.DefaultCommitProvider;
 
 import org.apache.maven.plugin.MojoExecutionException;
@@ -77,15 +78,8 @@ public abstract class AbstractMigrateMojo extends AbstractMigrationsMojo {
             .migrations()
             .migrateTo(migrateTo(cp));
 
-        if (getLog().isInfoEnabled()) {
-            Commit snapshot = migration.fromSnapshot();
-
-            getLog().info(
-                  "Migration loaded from version " + migration.from() + " to version " + migration.to()
-                + (snapshot != null ? " from snapshot: " + snapshot.id() : "")
-                + " (number of queries: " + migration.queries().queries().length + ")"
-            );
-        }
+        if (getLog().isInfoEnabled())
+            getLog().info("Migration loaded from version " + migration.from() + " to version " + migration.to());
 
         execute1(migration);
     }

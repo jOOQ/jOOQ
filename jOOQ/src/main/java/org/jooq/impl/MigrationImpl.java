@@ -423,7 +423,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
             if (!FALSE.equals(dsl().settings().isMigrationAutoVerification()))
                 verify0(ctx);
 
-            init();
+            init(baseline);
 
             try {
                 listener.migrationStart(ctx);
@@ -645,10 +645,10 @@ final class MigrationImpl extends AbstractScope implements Migration {
      * Initialise the underlying {@link Configuration} with the jOOQ Migrations
      * History.
      */
-    final void init() {
+    final void init(boolean baseline) {
         history.init();
 
-        MigrationContext ctx = migrationContext(false);
+        MigrationContext ctx = migrationContext(baseline);
         if (TRUE.equals(ctx.settings().isMigrationSchemataCreateSchemaIfNotExists()))
             for (Schema schema : ctx.migratedSchemas())
                 dsl().createSchemaIfNotExists(schema).execute();

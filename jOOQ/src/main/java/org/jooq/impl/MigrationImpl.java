@@ -310,12 +310,17 @@ final class MigrationImpl extends AbstractScope implements Migration {
     }
 
     private final boolean scriptsOnly() {
-        for (Commit commit : commits())
+        boolean result = false;
+
+        for (Commit commit : commits()) {
             for (File file : commit.delta())
                 if (file.type() != SCRIPT)
                     return false;
+                else
+                    result = true;
+        }
 
-        return true;
+        return result;
     }
 
     private final void revertUntracked(DefaultMigrationContext ctx, MigrationListener listener, HistoryRecord currentRecord) {

@@ -332,6 +332,33 @@ final class MigrationImpl extends AbstractScope implements Migration {
                         """.replace("{queries}", "" + ctx.revertUntrackedQueries)
                     );
                 }
+                else if (!ctx.migrationFrom.fromHistory) {
+                    throw new DataMigrationVerificationException(
+                        """
+                        Non-empty difference between actual schema and migration from schema:
+                        {queries}.
+
+                        Setting a baseline can fail for at least 3 reasons:
+                        1) The migration specification of a version that has already been installed has been modified.
+                        2) The baseline version {from} does not correspond to the actual database version.
+                        3) The database schemas contain untracked objects.
+                        4) There's a false positive reported by the database / org.jooq.Meta. Please consider reporting
+                           it here: https://jooq.org/bug
+
+                        Possible remedies if 1):
+                        - Revert changes to the migration specification and move those changes to a new version.
+
+                        Possible remedies if 2):
+                        - Specify the correct baseline version that corresponds to the actual database version.
+
+                        Possible remedies if 3):
+                        - Use Settings.migrationRevertUntracked to automatically drop unknown objects (at your own risk!)
+                        - Manually drop or move unknown objects outside of managed schemas.
+                        - Update migration scripts to track missing objects (including adding them automatically).
+                        """.replace("{queries}", "" + ctx.revertUntrackedQueries)
+                           .replace("{from}", "" + ctx.migrationFrom.commit().id())
+                    );
+                }
                 else {
                     throw new DataMigrationVerificationException(
                         """
@@ -383,6 +410,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
         //       e.g. PostgreSQL supports transactional DDL. Check if we're getting this right.
         run(() -> {
             DefaultMigrationContext ctx = migrationContext(baseline);
+            Commit from0 = ctx.migrationFrom.commit();
             MigrationListener listener = new MigrationListeners(configuration);
 
             if (!FALSE.equals(dsl().settings().isMigrationAutoVerification()))
@@ -395,13 +423,21 @@ final class MigrationImpl extends AbstractScope implements Migration {
 
                 // [#9506] Can't use baseline here, because it can be null when Settings.migrationAutoBaseline is set
                 if (!ctx.migrationFrom.fromHistory) {
-                    if (log.isInfoEnabled())
-                        log.info("Setting baseline to " + ctx.migrationFrom.commit().id());
+                    if (history.available() && history.current().version().id().equals(from0.id())) {
+                        if (log.isInfoEnabled())
+                            log.info("Current version is already set to baseline version: " + from0.id());
 
-                    createRecord(SUCCESS, commits().root(), ctx.migrationFrom.commit(), "New baseline");
+                        return;
+                    }
+
+                    if (log.isInfoEnabled())
+                        log.info("Setting baseline to " + from0.id());
+
+                    createRecord(SUCCESS, commits().root(), from0, "New baseline");
+                    return;
                 }
 
-                if (ctx.migrationFrom.commit().equals(to())) {
+                if (from0.equals(to())) {
                     if (!ctx.migrationFrom.fromHistory && log.isInfoEnabled())
                         log.info("Version " + to().id() + " is already installed as the current version.");
 
@@ -416,7 +452,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
 
                 if (log.isInfoEnabled()) {
                     Commit snapshot = fromSnapshot();
-                    log.info("Version " + from().id() + " is being migrated to " + to().id() + (snapshot != null ? " (from snapshot: " + snapshot.id() + ")" : ""));
+                    log.info("Version " + from0.id() + " is being migrated to " + to().id() + (snapshot != null ? " (from snapshot: " + snapshot.id() + ")" : ""));
                 }
 
                 StopWatch watch = new StopWatch();
@@ -440,7 +476,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
                     e.printStackTrace(new PrintWriter(s));
 
                     if (log.isErrorEnabled()) {
-                        log.error("Version " + from().id() + " migration to " + to().id() + " failed: " + e.getMessage());
+                        log.error("Version " + from0.id() + " migration to " + to().id() + " failed: " + e.getMessage());
 
                         if (!ctx.migrationFrom.fromHistory)
                             log.error("Couldn't migrate from baseline version: " + ctx.migrationFrom.commit().id() + ". Consider specifying an alternative baseline version, instead.");

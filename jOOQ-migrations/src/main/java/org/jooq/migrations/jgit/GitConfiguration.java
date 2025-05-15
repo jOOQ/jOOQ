@@ -42,7 +42,6 @@ import static org.jooq.tools.StringUtils.defaultIfNull;
 import java.io.File;
 
 import org.jooq.Commit;
-import org.jooq.tools.StringUtils;
 
 import org.eclipse.jgit.lib.Repository;
 import org.jetbrains.annotations.NotNull;
@@ -188,6 +187,32 @@ public class GitConfiguration {
     @NotNull
     public final String incrementFilePattern() {
         return incrementFilePattern;
+    }
+
+    /**
+     * The patterns of files in the repository to be searched for script
+     * definition files.
+     */
+    @NotNull
+    public final GitConfiguration scriptFilePattern(String newScriptFilePattern) {
+        return new GitConfiguration(
+            repository,
+            basedir,
+            schemaFilePattern,
+            incrementFilePattern,
+            newScriptFilePattern,
+            snapshotFilePattern,
+            includeUncommitted
+        );
+    }
+
+    /**
+     * The patterns of files in the repository to be searched for script
+     * definition files.
+     */
+    @NotNull
+    public final String scriptFilePattern() {
+        return scriptFilePattern;
     }
 
     /**

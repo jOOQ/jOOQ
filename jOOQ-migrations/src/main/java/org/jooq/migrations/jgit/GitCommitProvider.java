@@ -43,6 +43,7 @@ import static org.eclipse.jgit.diff.DiffEntry.ChangeType.DELETE;
 import static org.eclipse.jgit.diff.DiffEntry.ChangeType.RENAME;
 import static org.jooq.ContentType.INCREMENT;
 import static org.jooq.ContentType.SCHEMA;
+import static org.jooq.ContentType.SCRIPT;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -99,6 +100,7 @@ public final class GitCommitProvider implements CommitProvider {
     private final Migrations        migrations;
     private final GitConfiguration  git;
     private final FilePattern       incrementFilePattern;
+    private final FilePattern       scriptFilePattern;
     private final FilePattern       schemaFilePattern;
 
     public GitCommitProvider(Configuration configuration) {
@@ -110,6 +112,7 @@ public final class GitCommitProvider implements CommitProvider {
         this.migrations = dsl.migrations();
         this.git = git;
         this.incrementFilePattern = new FilePattern().pattern(combine(git.basedir(), git.incrementFilePattern()));
+        this.scriptFilePattern = new FilePattern().pattern(combine(git.basedir(), git.scriptFilePattern()));
         this.schemaFilePattern = new FilePattern().pattern(combine(git.basedir(), git.schemaFilePattern()));
     }
 
@@ -335,6 +338,7 @@ public final class GitCommitProvider implements CommitProvider {
 
     private final ContentType contentType(String path) {
         return incrementFilePattern.matches(path) ? INCREMENT :
+               scriptFilePattern.matches(path) ? SCRIPT :
                schemaFilePattern.matches(path) ? SCHEMA :
                null;
     }

@@ -324,12 +324,12 @@ final class MigrationImpl extends AbstractScope implements Migration {
         MigrationListener listener,
         HistoryRecord currentRecord
     ) {
-        if (ctx.revertUntrackedQueries.queries().length > 0)
+        if (ctx.revertUntrackedQueries.queries().length > 0) {
             if (!TRUE.equals(dsl().settings().isMigrationRevertUntracked())) {
                 if (currentRecord == null) {
                     throw new DataMigrationVerificationException(
                         """
-                        Non-empty difference between actual schema and migration from schema:
+                        Non-empty difference between actual schema and migration root:
                         {queries}
 
                         Possible remedies:
@@ -340,12 +340,12 @@ final class MigrationImpl extends AbstractScope implements Migration {
                 else if (ctx.baseline()) {
                     throw new DataMigrationVerificationException(
                         """
-                        Non-empty difference between actual schema and migration from schema:
+                        Non-empty difference between actual schema and baseline schema version {version}:
                         {queries}.
 
-                        Setting a baseline can fail for at least 3 reasons:
+                        Setting a baseline can fail for at least 4 reasons:
                         1) The migration specification of a version that has already been installed has been modified.
-                        2) The baseline version {from} does not correspond to the actual database version.
+                        2) The baseline version {version} does not correspond to the actual database version.
                         3) The database schemas contain untracked objects.
                         4) There's a false positive reported by the database / org.jooq.Meta. Please consider reporting
                            it here: https://jooq.org/bug
@@ -361,13 +361,13 @@ final class MigrationImpl extends AbstractScope implements Migration {
                         - Manually drop or move unknown objects outside of managed schemas.
                         - Update migration scripts to track missing objects (including adding them automatically).
                         """.replace("{queries}", "" + ctx.untrackedQueries)
-                           .replace("{from}", "" + ctx.migrationFrom.id())
+                           .replace("{version}", "" + ctx.migrationTo.id())
                     );
                 }
                 else {
                     throw new DataMigrationVerificationException(
                         """
-                        Non-empty difference between actual schema and migration from schema:
+                        Non-empty difference between actual schema and migration from version {version}:
                         {queries}.
 
                         This can happen for at least 3 reasons:
@@ -384,11 +384,13 @@ final class MigrationImpl extends AbstractScope implements Migration {
                         - Manually drop or move unknown objects outside of managed schemas.
                         - Update migration scripts to track missing objects (including adding them automatically).
                         """.replace("{queries}", "" + ctx.untrackedQueries)
+                           .replace("{version}", "" + ctx.migrationFrom.id())
                     );
                 }
             }
             else if (listener != null)
                 execute(ctx, listener, ctx.revertUntrackedQueries);
+        }
     }
 
     final DefaultMigrationContext migrationContext(boolean baseline) {
@@ -439,27 +441,36 @@ final class MigrationImpl extends AbstractScope implements Migration {
                     }
 
                     if (log.isInfoEnabled())
-                        log.info("Setting baseline to " + from().id());
+                        log.info("Setting baseline to " + to().id());
 
-                    StopWatch watch = new StopWatch();
-                    HistoryRecord record = createRecord(STARTING, from(), to(), "New baseline");
-
-                    try {
-                        log(watch, record, REVERTING);
-                        revertUntracked(ctx, listener, record);
-                        log(watch, record, SUCCESS);
-                        return;
+                    if (untracked == 0) {
+                        createRecord(ctx, SUCCESS, from(), to(), "New baseline");
                     }
-                    catch (Exception e) {
-                        StringWriter s = new StringWriter();
-                        e.printStackTrace(new PrintWriter(s));
+                    else {
+                        if (log.isInfoEnabled())
+                            log.info("Reverting untracked changes (number of queries: " + untracked + ")");
 
-                        if (log.isErrorEnabled())
-                            log.error("Setting " + to().id() + " as baseline failed: " + e.getMessage());
+                        StopWatch watch = new StopWatch();
+                        HistoryRecord record = createRecord(ctx, STARTING, from(), to(), "New baseline");
 
-                        log(watch, record, FAILURE, OPEN, s.toString());
-                        throw new DataMigrationRedoLogException(record, e);
+                        try {
+                            log(watch, record, REVERTING);
+                            revertUntracked(ctx, listener, record);
+                            log(watch, record, SUCCESS);
+                        }
+                        catch (Exception e) {
+                            StringWriter s = new StringWriter();
+                            e.printStackTrace(new PrintWriter(s));
+
+                            if (log.isErrorEnabled())
+                                log.error("Setting " + to().id() + " as baseline failed: " + e.getMessage());
+
+                            log(watch, record, FAILURE, OPEN, s.toString());
+                            throw new DataMigrationRedoLogException(record, e);
+                        }
                     }
+
+                    return;
                 }
 
                 if (from().equals(to())) {
@@ -490,7 +501,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
                     for (Query query : queries())
                         log.debug(dsl().renderInlined(query));
 
-                HistoryRecord record = createRecord(STARTING);
+                HistoryRecord record = createRecord(ctx, STARTING);
 
                 try {
                     log(watch, record, REVERTING);
@@ -531,15 +542,29 @@ final class MigrationImpl extends AbstractScope implements Migration {
         }
     }
 
-    private final HistoryRecord createRecord(HistoryStatus status) {
-        return createRecord(status, from(), to());
+    private final HistoryRecord createRecord(
+        DefaultMigrationContext ctx,
+        HistoryStatus status
+    ) {
+        return createRecord(ctx, status, from(), to());
     }
 
-    private final HistoryRecord createRecord(HistoryStatus status, Commit from0, Commit to0) {
-        return createRecord(status, from0, to0, null);
+    private final HistoryRecord createRecord(
+        DefaultMigrationContext ctx,
+        HistoryStatus status,
+        Commit from0,
+        Commit to0
+    ) {
+        return createRecord(ctx, status, from0, to0, null);
     }
 
-    private final HistoryRecord createRecord(HistoryStatus status, Commit from0, Commit to0, String message) {
+    private final HistoryRecord createRecord(
+        DefaultMigrationContext ctx,
+        HistoryStatus status,
+        Commit from0,
+        Commit to0,
+        String message
+    ) {
         HistoryRecord record = history.historyCtx.newRecord(HISTORY);
         String hostName;
 
@@ -550,18 +575,18 @@ final class MigrationImpl extends AbstractScope implements Migration {
             hostName = "unknown";
         }
 
-        Queries q = queries();
-        Queries u = revertUntracked();
         String sql;
 
-        if (u.queries().length > 0) {
+        if (ctx.untrackedQueries.queries().length > 0) {
             sql = "-- Reverting untracked objects:\n"
-                + u
-                + "\n-- Migration queries:\n"
-                + q;
+                + ctx.revertUntrackedQueries;
+
+            if (ctx.migrationQueries.queries().length > 0)
+                sql += "\n-- Migration queries:\n"
+                    + ctx.migrationQueries;
         }
         else
-            sql = q.toString();
+            sql = ctx.migrationQueries.toString();
 
         record
             .setJooqVersion(Constants.VERSION)
@@ -574,7 +599,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
             .setClientUserName(System.getProperty("user.name"))
             .setClientHostName(hostName)
             .setSql(sql)
-            .setSqlCount(u.queries().length + q.queries().length)
+            .setSqlCount(ctx.untrackedQueries.queries().length  + ctx.migrationQueries.queries().length)
             .setStatus(status)
             .setStatusMessage(message)
             .insert();
@@ -588,10 +613,15 @@ final class MigrationImpl extends AbstractScope implements Migration {
 
     private final void log(StopWatch watch, HistoryRecord record, HistoryStatus status, HistoryResolution resolution, String message) {
         record.setMigrationTime(watch.split() / 1000000L)
-              .setStatus(status)
-              .setStatusMessage(message)
-              .setResolution(resolution)
-              .update();
+              .setStatus(status);
+
+        if (message != null)
+            record.setStatusMessage(message);
+
+        if (resolution != null)
+            record.setResolution(resolution);
+
+        record.update();
     }
 
     private final void execute(DefaultMigrationContext ctx, MigrationListener listener, Queries q) {

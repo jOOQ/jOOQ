@@ -755,6 +755,11 @@ final class MigrationImpl extends AbstractScope implements Migration {
         Query[] q = untracked().queries();
         log.info("Untracked changes at " + from().id() + ": " + (q.length == 0 ? "none" : ""));
         log(q);
+
+        if (q.length > 0) {
+            log.info("Revert changes with:");
+            log(revertUntracked().queries());
+        }
     }
 
     static final void log(Query[] queries) {

@@ -94,6 +94,12 @@ public interface Migration extends Scope {
     Queries untracked();
 
     /**
+     * The queries that revert the untracked schema objects.
+     */
+    @NotNull
+    Queries revertUntracked();
+
+    /**
      * Log the most recent versions from the migration history to the configured
      * logger.
      */

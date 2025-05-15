@@ -94,6 +94,8 @@ import org.jooq.tools.StopWatch;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.json.JSONArray;
 
+import org.jetbrains.annotations.NotNull;
+
 
 /**
  * @author Lukas Eder
@@ -177,6 +179,11 @@ final class MigrationImpl extends AbstractScope implements Migration {
     @Override
     public final Queries untracked() {
         return untracked(null, history.schemas()).apply();
+    }
+
+    @Override
+    public final Queries revertUntracked() {
+        return untracked(null, history.schemas()).revert();
     }
 
     @Override
@@ -425,10 +432,14 @@ final class MigrationImpl extends AbstractScope implements Migration {
 
             try {
                 listener.migrationStart(ctx);
+                int untracked = ctx.revertUntrackedQueries.queries().length;
 
                 // [#9506] Can't use baseline here, because it can be null when Settings.migrationAutoBaseline is set
                 if (!ctx.migrationFrom.fromHistory) {
-                    if (history.available() && history.current().version().id().equals(from0.id())) {
+                    if (history.available()
+                        && history.current().version().id().equals(from0.id())
+                        && untracked == 0
+                    ) {
                         if (log.isInfoEnabled())
                             log.info("Current version is already set to baseline version: " + from0.id());
 
@@ -438,15 +449,20 @@ final class MigrationImpl extends AbstractScope implements Migration {
                     if (log.isInfoEnabled())
                         log.info("Setting baseline to " + from0.id());
 
-                    createRecord(SUCCESS, commits().root(), from0, "New baseline");
-                    return;
+                    createRecord(SUCCESS, from(), from0, "New baseline");
+
+                    if (untracked == 0)
+                        return;
                 }
 
                 if (from0.equals(to())) {
                     if (!ctx.migrationFrom.fromHistory && log.isInfoEnabled())
                         log.info("Version " + to().id() + " is already installed as the current version.");
 
-                    return;
+                    if (untracked == 0)
+                        return;
+                    else if (log.isInfoEnabled())
+                        log.info("Reverting untracked changes (number of queries: " + untracked + ")");
                 }
 
                 // TODO: Implement preconditions
@@ -455,7 +471,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
                 // TODO: Add some migration settings, e.g. whether HISTORY.SQL should be filled
                 // TODO: Migrate the HISTORY table with the Migration API
 
-                if (log.isInfoEnabled()) {
+                else if (log.isInfoEnabled()) {
                     Commit snapshot = fromSnapshot();
                     log.info("Version " + from0.id() + " is being migrated to " + to().id() + (snapshot != null ? " (from snapshot: " + snapshot.id() + ")" : ""));
                 }
@@ -531,6 +547,19 @@ final class MigrationImpl extends AbstractScope implements Migration {
             hostName = "unknown";
         }
 
+        Queries q = queries();
+        Queries u = revertUntracked();
+        String sql;
+
+        if (u.queries().length > 0) {
+            sql = "-- Reverting untracked objects:\n"
+                + u
+                + "\n-- Migration queries:\n"
+                + q;
+        }
+        else
+            sql = q.toString();
+
         record
             .setJooqVersion(Constants.VERSION)
             .setMigratedAt(new Timestamp(dsl().configuration().clock().instant().toEpochMilli()))
@@ -541,8 +570,8 @@ final class MigrationImpl extends AbstractScope implements Migration {
             .setMigrationTime(0L)
             .setClientUserName(System.getProperty("user.name"))
             .setClientHostName(hostName)
-            .setSql(queries().toString())
-            .setSqlCount(queries().queries().length)
+            .setSql(sql)
+            .setSqlCount(u.queries().length + q.queries().length)
             .setStatus(status)
             .setStatusMessage(message)
             .insert();

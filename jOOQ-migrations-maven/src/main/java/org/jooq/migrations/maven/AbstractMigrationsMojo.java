@@ -52,6 +52,7 @@ import org.jooq.ContentType;
 import org.jooq.SQLDialect;
 import org.jooq.conf.InterpreterSearchSchema;
 import org.jooq.conf.MigrationSchema;
+import org.jooq.conf.Settings;
 import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultCommitProvider;
 import org.jooq.tools.ClassUtils;
@@ -185,6 +186,16 @@ abstract class AbstractMigrationsMojo extends AbstractMojo {
     @Parameter(property = "jooq.migrate.parseDialect")
     SQLDialect            parseDialect;
 
+    /**
+     * Whether to automatically apply the
+     * {@link Settings#isMigrationRevertUntracked()} flag.
+     * <p>
+     * <strong>This is a potentially destructive setting. Use at your own risk,
+     * preferably not in production!</strong>
+     */
+    @Parameter(property = "jooq.migrate.revertUntracked")
+    boolean revertUntracked;
+
     @Override
     public final void execute() throws MojoExecutionException {
         if (skip) {
@@ -220,6 +231,9 @@ abstract class AbstractMigrationsMojo extends AbstractMojo {
 
                 if (parseDialect != null)
                     ctx.settings().setParseDialect(parseDialect);
+
+                if (revertUntracked)
+                    ctx.settings().setMigrationRevertUntracked(revertUntracked);
 
                 // Initialise Settings
                 // ---------------------------------------------------------------------

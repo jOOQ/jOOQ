@@ -46,9 +46,11 @@ import static org.jooq.ContentType.SCHEMA;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -82,6 +84,7 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevTag;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.util.io.DisabledOutputStream;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * A {@link CommitProvider} that produces versions from a git repository.
@@ -131,7 +134,7 @@ public final class GitCommitProvider implements CommitProvider {
             // Prevent a "close() called when useCnt is already zero" warning
             r.incrementOpen();
 
-            List<RevCommit> revCommits = new ArrayList<>();
+            Deque<RevCommit> revCommits = new ArrayDeque<>();
             Map<String, List<RevTag>> tags = new HashMap<>();
             RevCommit last = null;
 
@@ -152,14 +155,14 @@ public final class GitCommitProvider implements CommitProvider {
                 tags.computeIfAbsent(tag.getObject().getName(), id -> new ArrayList<>()).add(tag);
             }
 
-            // The commits seem to come in reverse order from jgit.
-            Collections.reverse(revCommits);
             Commit root = commits.root();
 
             // TODO: This algorithm is quadradic in the worst case. Can we find a better one?
             // TODO: We collect all the commits from git, when we could ignore the empty ones
             while (!revCommits.isEmpty()) {
-                Iterator<RevCommit> it = revCommits.iterator();
+
+                // The commits seem to come in reverse order from jgit.
+                Iterator<RevCommit> it = revCommits.descendingIterator();
 
                 commitLoop:
                 while (it.hasNext()) {
@@ -193,8 +196,14 @@ public final class GitCommitProvider implements CommitProvider {
             }
 
             Status status = g.status().call();
-            if (status.hasUncommittedChanges() || !status.getUntracked().isEmpty())
-                commits.add(commit(last != null ? commits.get(last.getName()) : root, status));
+            if (status.hasUncommittedChanges() || !status.getUntracked().isEmpty()) {
+                Commit c1 = last != null ? commits.get(last.getName()) : root;
+                Commit c2 = commit(c1, status);
+
+                // If we have a diff in git, but the commit is empty.
+                if (c2 != c1)
+                    commits.add(c2);
+            }
         }
         catch (Exception e) {
             throw new GitException("Error while providing git versions", e);

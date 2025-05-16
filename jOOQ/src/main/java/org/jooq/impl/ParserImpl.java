@@ -308,6 +308,7 @@ import static org.jooq.impl.DSL.rangeUnboundedFollowing;
 import static org.jooq.impl.DSL.rangeUnboundedPreceding;
 import static org.jooq.impl.DSL.rank;
 import static org.jooq.impl.DSL.ratioToReport;
+import static org.jooq.impl.DSL.raw;
 import static org.jooq.impl.DSL.regexpReplaceAll;
 import static org.jooq.impl.DSL.regexpReplaceFirst;
 // ...
@@ -777,6 +778,8 @@ import org.jooq.types.DayToSecond;
 import org.jooq.types.Interval;
 import org.jooq.types.YearToMonth;
 import org.jooq.types.YearToSecond;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
@@ -7739,6 +7742,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                 parse(')');
             }
         }
+        else if ((result = parseTemplateIf(DSL::table)) != null) {}
         else {
             result = parseTableName();
 
@@ -8464,6 +8468,11 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
                 loop:
                 while (i < chars.length) {
+                    if (peekTemplateComment(i)) {
+                        position(p);
+                        return null;
+                    }
+
                     switch (chars[i]) {
                         case '*':
                             if (i + 1 < chars.length && chars[i + 1] == '/')
@@ -8505,6 +8514,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
             // [#7266] Support parsing column references as predicates
             else if (dataType.isOther() && (part instanceof TableFieldImpl || part instanceof Val))
                 return condition((Field) part);
+            else if (dataType.isOther() && part instanceof SQLField)
+                return condition(((SQLField) part).delegate);
             else
                 throw expected("Boolean field");
         }
@@ -9057,7 +9068,9 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         for (;;)
             if (parseIf('+'))
                 sign = sign == Sign.NONE ? Sign.PLUS  : sign;
-            else if (parseIf('-'))
+
+            // [#9447] Semantic comments are not stripped out as whitespace, so ignore them here
+            else if (peek('-') && !peek("--") && parseIf('-'))
                 sign = sign == Sign.NONE ? Sign.MINUS : sign.invert();
             else
                 break;
@@ -10272,8 +10285,39 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         else if ((field = parseBooleanValueExpressionIf()) != null)
             return field;
 
+        else if ((field = parseTemplateIf(DSL::field)) != null)
+            return field;
+
         else
             return parseFieldNameOrSequenceExpression();
+    }
+
+    private final <Q extends QueryPart> Q parseTemplateIf(Function<? super SQL, ? extends Q> wrap) {
+        boolean raw = false;
+        afterWhitespace(position, false, true, icTemplate);
+
+        if (markerStart == -1) {
+            raw = true;
+            afterWhitespace(position, false, true, icRaw);
+        }
+
+        if (markerStart > -1) {
+            position(markerStart);
+
+            try {
+                String s = substring(markerStart, markerStop);
+                return wrap.apply(raw ? raw(s) : sql(s));
+            }
+            finally {
+                position(markerStop);
+                parseWhitespaceIf();
+
+                markerStart = -1;
+                markerStop = -1;
+            }
+        }
+        else
+            return null;
     }
 
 
@@ -15248,7 +15292,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         if (chars.length < p + length)
             return false;
 
-        int pos = afterWhitespace(p, false);
+        int pos = afterWhitespace(p);
 
         for (int i = 0; i < length; i++, pos++)
             if (chars[pos] != operator.charAt(i))
@@ -15405,7 +15449,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         if (chars.length < p + length)
             return false;
 
-        int skip = afterWhitespace(p, peekIntoParens) - p;
+        int skip = afterWhitespace(p, peekIntoParens, false, icIgnore) - p;
 
         for (int i = 0; i < length; i++) {
             char c = keyword.charAt(i);
@@ -15450,8 +15494,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
     }
 
     private final boolean peekKeyword(KeywordLookup lookup) {
-        int pos = afterWhitespace(position(), false);
-        int p = lookup.lookup(chars, pos, i -> afterWhitespace(i, false));
+        int pos = afterWhitespace(position(), false, false, icIgnore);
+        int p = lookup.lookup(chars, pos, i -> afterWhitespace(i, false, false, icIgnore));
 
         if (p == pos)
             return false;
@@ -15465,18 +15509,22 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
     @Override
     final int afterWhitespace(int p) {
-        return afterWhitespace(p, false);
+        return afterWhitespace(p, false, false, icIgnore);
     }
 
-    private final int afterWhitespace(int p, boolean peekIntoParens) {
+    private static final record IgnoreComment(
+        boolean check,
+        String start,
+        String stop
+    ) {}
+
+    private final int afterWhitespace(int p, boolean peekIntoParens, boolean toggleMarkers, IgnoreComment ic) {
 
         // [#8074] The SQL standard and some implementations (e.g. PostgreSQL,
         //         SQL Server) support nesting block comments
+        int p0 = p;
         int blockCommentNestLevel = 0;
         boolean ignoreComment = false;
-        final String ignoreCommentStart = settings().getParseIgnoreCommentStart();
-        final String ignoreCommentStop = settings().getParseIgnoreCommentStop();
-        final boolean checkIgnoreComment = !FALSE.equals(settings().isParseIgnoreComments());
 
         loop:
         for (int i = p; i < chars.length; i++) {
@@ -15500,7 +15548,11 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                         blockCommentNestLevel++;
 
                         while (i < chars.length) {
-                            if (!(ignoreComment = peekIgnoreComment(ignoreComment, ignoreCommentStart, ignoreCommentStop, checkIgnoreComment, i))) {
+                            if (!toggleMarkers && peekTemplateComment(i)) {
+                                blockCommentNestLevel = 0;
+                                break loop;
+                            }
+                            else if (!(ignoreComment = peekIgnoreComment(ignoreComment, ic, toggleMarkers, i))) {
                                 switch (chars[i]) {
                                     case '/':
                                         if (i + 1 < chars.length && chars[i + 1] == '*') {
@@ -15522,8 +15574,14 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                                         if (i + 1 < chars.length && chars[i + 1] == '/') {
                                             p = (i = i + 1) + 1;
 
-                                            if (--blockCommentNestLevel == 0)
+                                            if (--blockCommentNestLevel == 0) {
+                                                if (toggleMarkers && markerStart > -1) {
+                                                    markerStart = p0;
+                                                    markerStop = p;
+                                                }
+
                                                 continue loop;
+                                            }
                                         }
 
                                         break;
@@ -15539,12 +15597,22 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                         i = i + 2;
 
                         while (i < chars.length) {
-                            if (!(ignoreComment = peekIgnoreComment(ignoreComment, ignoreCommentStart, ignoreCommentStop, checkIgnoreComment, i))) {
+                            if (!toggleMarkers && peekTemplateComment(i)) {
+                                break loop;
+                            }
+                            else if (!(ignoreComment = peekIgnoreComment(ignoreComment, ic, toggleMarkers, i))) {
                                 switch (chars[i]) {
                                     case '\r':
-                                    case '\n':
+                                    case '\n': {
                                         p = i + 1;
+
+                                        if (toggleMarkers && markerStart > -1) {
+                                            markerStart = p0;
+                                            markerStop = p;
+                                        }
+
                                         continue loop;
+                                    }
                                 }
                             }
 
@@ -15567,12 +15635,22 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                             i++;
 
                         while (i < chars.length) {
-                            if (!(ignoreComment = peekIgnoreComment(ignoreComment, ignoreCommentStart, ignoreCommentStop, checkIgnoreComment, i))) {
+                            if (!toggleMarkers && peekTemplateComment(i)) {
+                                break loop;
+                            }
+                            else if (!(ignoreComment = peekIgnoreComment(ignoreComment, ic, toggleMarkers, i))) {
                                 switch (chars[i]) {
                                     case '\r':
-                                    case '\n':
+                                    case '\n': {
                                         p = i + 1;
+
+                                        if (toggleMarkers && markerStart > -1) {
+                                            markerStart = p0;
+                                            markerStop = p;
+                                        }
+
                                         continue loop;
+                                    }
                                 }
                             }
 
@@ -15599,19 +15677,27 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         return p;
     }
 
+    private boolean peekTemplateComment(int i) {
+        return peekIgnoreComment(false, icTemplate, false, i)
+            || peekIgnoreComment(false, icRaw, false, i);
+    }
+
     private final boolean peekIgnoreComment(
         boolean ignoreComment,
-        String ignoreCommentStart,
-        String ignoreCommentStop,
-        boolean checkIgnoreComment,
+        IgnoreComment check,
+        boolean toggleMarkers,
         int i
     ) {
-
-        if (checkIgnoreComment)
-            if (!ignoreComment)
-                ignoreComment = peek(ignoreCommentStart, i);
-            else
-                ignoreComment = !peek(ignoreCommentStop, i);
+        if (check.check()) {
+            if (!ignoreComment) {
+                if ((ignoreComment = peek(check.start(), i)) && toggleMarkers)
+                    markerStart = i;
+            }
+            else {
+                if (!(ignoreComment = !peek(check.stop(), i)) && toggleMarkers)
+                    markerStop = i;
+            }
+        }
 
         return ignoreComment;
     }
@@ -15861,20 +15947,25 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
     }
 
 
-
     private final Meta                  meta;
     private final ParseWithMetaLookups  metaLookups;
     private boolean                     metaLookupsForceIgnore;
     private final Consumer<Param<?>>    bindParamListener;
-    private boolean                     ignoreHints     = true;
+    private boolean                     ignoreHints       = true;
     private final Object[]              bindings;
-    private int                         bindIndex       = 0;
-    private final Map<String, Param<?>> bindParams      = new LinkedHashMap<>();
-    private String                      delimiter       = ";";
+    private int                         bindIndex         = 0;
+    private final Map<String, Param<?>> bindParams        = new LinkedHashMap<>();
+    private String                      delimiter         = ";";
     private boolean                     delimiterRequired = false;
-    private LanguageContext             languageContext = LanguageContext.QUERY;
-    private EnumSet<FunctionKeyword>    forbidden       = EnumSet.noneOf(FunctionKeyword.class);
-    private ParseScope                  scope           = new ParseScope();
+    private LanguageContext             languageContext   = LanguageContext.QUERY;
+    private EnumSet<FunctionKeyword>    forbidden         = EnumSet.noneOf(FunctionKeyword.class);
+    private ParseScope                  scope             = new ParseScope();
+
+    private final IgnoreComment         icIgnore;
+    private final IgnoreComment         icTemplate;
+    private final IgnoreComment         icRaw;
+    private int                         markerStart       = -1;
+    private int                         markerStop        = -1;
 
 
 
@@ -15909,6 +16000,23 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
 
 
+
+
+        this.icIgnore = new IgnoreComment(
+            TRUE.equals(dsl.settings().isParseIgnoreComments()),
+            dsl.settings().getParseIgnoreCommentStart(),
+            dsl.settings().getParseIgnoreCommentStop()
+        );
+        this.icTemplate = new IgnoreComment(
+            TRUE.equals(dsl.settings().isParsePlainSQLTemplateComments()),
+            dsl.settings().getParsePlainSQLTemplateCommentStart(),
+            dsl.settings().getParsePlainSQLTemplateCommentStop()
+        );
+        this.icRaw = new IgnoreComment(
+            TRUE.equals(dsl.settings().isParseRawSQLComments()),
+            dsl.settings().getParseRawSQLCommentStart(),
+            dsl.settings().getParseRawSQLCommentStop()
+        );
 
         parseWhitespaceIf();
     }

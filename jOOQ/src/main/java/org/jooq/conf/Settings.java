@@ -551,6 +551,18 @@ public class Settings
     @XmlElement(defaultValue = "[jooq ignore stop]")
     protected String parseIgnoreCommentStop = "[jooq ignore stop]";
     @XmlElement(defaultValue = "false")
+    protected Boolean parsePlainSQLTemplateComments = false;
+    @XmlElement(defaultValue = "[jooq template start]")
+    protected String parsePlainSQLTemplateCommentStart = "[jooq template start]";
+    @XmlElement(defaultValue = "[jooq template stop]")
+    protected String parsePlainSQLTemplateCommentStop = "[jooq template stop]";
+    @XmlElement(defaultValue = "false")
+    protected Boolean parseRawSQLComments = false;
+    @XmlElement(defaultValue = "[jooq raw start]")
+    protected String parseRawSQLCommentStart = "[jooq raw start]";
+    @XmlElement(defaultValue = "[jooq raw stop]")
+    protected String parseRawSQLCommentStop = "[jooq raw stop]";
+    @XmlElement(defaultValue = "false")
     protected Boolean parseRetainCommentsBetweenQueries = false;
     @XmlElement(defaultValue = "true")
     protected Boolean parseMetaDefaultExpressions = true;
@@ -6852,6 +6864,118 @@ public class Settings
     }
 
     /**
+     * [#8325] Whether the parser should parse content between plain SQL template comment tokens into a plain SQL template, with {@link org.jooq.impl.DSL#sql(String)} semantics.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isParsePlainSQLTemplateComments() {
+        return parsePlainSQLTemplateComments;
+    }
+
+    /**
+     * [#8325] Whether the parser should parse content between plain SQL template comment tokens into a plain SQL template, with {@link org.jooq.impl.DSL#sql(String)} semantics.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setParsePlainSQLTemplateComments(Boolean value) {
+        this.parsePlainSQLTemplateComments = value;
+    }
+
+    /**
+     * [#8325] The plain SQL template comment start token
+     * 
+     */
+    public String getParsePlainSQLTemplateCommentStart() {
+        return parsePlainSQLTemplateCommentStart;
+    }
+
+    /**
+     * [#8325] The plain SQL template comment start token
+     * 
+     */
+    public void setParsePlainSQLTemplateCommentStart(String value) {
+        this.parsePlainSQLTemplateCommentStart = value;
+    }
+
+    /**
+     * [#8325] The plain SQL template comment stop token
+     * 
+     */
+    public String getParsePlainSQLTemplateCommentStop() {
+        return parsePlainSQLTemplateCommentStop;
+    }
+
+    /**
+     * [#8325] The plain SQL template comment stop token
+     * 
+     */
+    public void setParsePlainSQLTemplateCommentStop(String value) {
+        this.parsePlainSQLTemplateCommentStop = value;
+    }
+
+    /**
+     * [#8325] Whether the parser should parse content between raw comment tokens into a raw template, with {@link org.jooq.impl.DSL#raw(String)} semantics.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isParseRawSQLComments() {
+        return parseRawSQLComments;
+    }
+
+    /**
+     * [#8325] Whether the parser should parse content between raw comment tokens into a raw template, with {@link org.jooq.impl.DSL#raw(String)} semantics.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setParseRawSQLComments(Boolean value) {
+        this.parseRawSQLComments = value;
+    }
+
+    /**
+     * [#8325] The raw comment start token
+     * 
+     */
+    public String getParseRawSQLCommentStart() {
+        return parseRawSQLCommentStart;
+    }
+
+    /**
+     * [#8325] The raw comment start token
+     * 
+     */
+    public void setParseRawSQLCommentStart(String value) {
+        this.parseRawSQLCommentStart = value;
+    }
+
+    /**
+     * [#8325] The raw comment stop token
+     * 
+     */
+    public String getParseRawSQLCommentStop() {
+        return parseRawSQLCommentStop;
+    }
+
+    /**
+     * [#8325] The raw comment stop token
+     * 
+     */
+    public void setParseRawSQLCommentStop(String value) {
+        this.parseRawSQLCommentStop = value;
+    }
+
+    /**
      * [#12538] Whether the parser should retain comments and whitespace between queries when parsing multiple queries through {@link org.jooq.Parser#parse(String)}.
      * <p>
      * jOOQ's query object model doesn't have a way to represent comments
@@ -9847,6 +9971,60 @@ public class Settings
     }
 
     /**
+     * [#8325] Whether the parser should parse content between plain SQL template comment tokens into a plain SQL template, with {@link org.jooq.impl.DSL#sql(String)} semantics.
+     * 
+     */
+    public Settings withParsePlainSQLTemplateComments(Boolean value) {
+        setParsePlainSQLTemplateComments(value);
+        return this;
+    }
+
+    /**
+     * [#8325] The plain SQL template comment start token
+     * 
+     */
+    public Settings withParsePlainSQLTemplateCommentStart(String value) {
+        setParsePlainSQLTemplateCommentStart(value);
+        return this;
+    }
+
+    /**
+     * [#8325] The plain SQL template comment stop token
+     * 
+     */
+    public Settings withParsePlainSQLTemplateCommentStop(String value) {
+        setParsePlainSQLTemplateCommentStop(value);
+        return this;
+    }
+
+    /**
+     * [#8325] Whether the parser should parse content between raw comment tokens into a raw template, with {@link org.jooq.impl.DSL#raw(String)} semantics.
+     * 
+     */
+    public Settings withParseRawSQLComments(Boolean value) {
+        setParseRawSQLComments(value);
+        return this;
+    }
+
+    /**
+     * [#8325] The raw comment start token
+     * 
+     */
+    public Settings withParseRawSQLCommentStart(String value) {
+        setParseRawSQLCommentStart(value);
+        return this;
+    }
+
+    /**
+     * [#8325] The raw comment stop token
+     * 
+     */
+    public Settings withParseRawSQLCommentStop(String value) {
+        setParseRawSQLCommentStop(value);
+        return this;
+    }
+
+    /**
      * [#12538] Whether the parser should retain comments and whitespace between queries when parsing multiple queries through {@link org.jooq.Parser#parse(String)}.
      * <p>
      * jOOQ's query object model doesn't have a way to represent comments
@@ -10227,6 +10405,12 @@ public class Settings
         builder.append("parseIgnoreComments", parseIgnoreComments);
         builder.append("parseIgnoreCommentStart", parseIgnoreCommentStart);
         builder.append("parseIgnoreCommentStop", parseIgnoreCommentStop);
+        builder.append("parsePlainSQLTemplateComments", parsePlainSQLTemplateComments);
+        builder.append("parsePlainSQLTemplateCommentStart", parsePlainSQLTemplateCommentStart);
+        builder.append("parsePlainSQLTemplateCommentStop", parsePlainSQLTemplateCommentStop);
+        builder.append("parseRawSQLComments", parseRawSQLComments);
+        builder.append("parseRawSQLCommentStart", parseRawSQLCommentStart);
+        builder.append("parseRawSQLCommentStop", parseRawSQLCommentStop);
         builder.append("parseRetainCommentsBetweenQueries", parseRetainCommentsBetweenQueries);
         builder.append("parseMetaDefaultExpressions", parseMetaDefaultExpressions);
         builder.append("parseMetaViewSources", parseMetaViewSources);
@@ -12321,6 +12505,60 @@ public class Settings
                 return false;
             }
         }
+        if (parsePlainSQLTemplateComments == null) {
+            if (other.parsePlainSQLTemplateComments!= null) {
+                return false;
+            }
+        } else {
+            if (!parsePlainSQLTemplateComments.equals(other.parsePlainSQLTemplateComments)) {
+                return false;
+            }
+        }
+        if (parsePlainSQLTemplateCommentStart == null) {
+            if (other.parsePlainSQLTemplateCommentStart!= null) {
+                return false;
+            }
+        } else {
+            if (!parsePlainSQLTemplateCommentStart.equals(other.parsePlainSQLTemplateCommentStart)) {
+                return false;
+            }
+        }
+        if (parsePlainSQLTemplateCommentStop == null) {
+            if (other.parsePlainSQLTemplateCommentStop!= null) {
+                return false;
+            }
+        } else {
+            if (!parsePlainSQLTemplateCommentStop.equals(other.parsePlainSQLTemplateCommentStop)) {
+                return false;
+            }
+        }
+        if (parseRawSQLComments == null) {
+            if (other.parseRawSQLComments!= null) {
+                return false;
+            }
+        } else {
+            if (!parseRawSQLComments.equals(other.parseRawSQLComments)) {
+                return false;
+            }
+        }
+        if (parseRawSQLCommentStart == null) {
+            if (other.parseRawSQLCommentStart!= null) {
+                return false;
+            }
+        } else {
+            if (!parseRawSQLCommentStart.equals(other.parseRawSQLCommentStart)) {
+                return false;
+            }
+        }
+        if (parseRawSQLCommentStop == null) {
+            if (other.parseRawSQLCommentStop!= null) {
+                return false;
+            }
+        } else {
+            if (!parseRawSQLCommentStop.equals(other.parseRawSQLCommentStop)) {
+                return false;
+            }
+        }
         if (parseRetainCommentsBetweenQueries == null) {
             if (other.parseRetainCommentsBetweenQueries!= null) {
                 return false;
@@ -12665,6 +12903,12 @@ public class Settings
         result = ((prime*result)+((parseIgnoreComments == null)? 0 :parseIgnoreComments.hashCode()));
         result = ((prime*result)+((parseIgnoreCommentStart == null)? 0 :parseIgnoreCommentStart.hashCode()));
         result = ((prime*result)+((parseIgnoreCommentStop == null)? 0 :parseIgnoreCommentStop.hashCode()));
+        result = ((prime*result)+((parsePlainSQLTemplateComments == null)? 0 :parsePlainSQLTemplateComments.hashCode()));
+        result = ((prime*result)+((parsePlainSQLTemplateCommentStart == null)? 0 :parsePlainSQLTemplateCommentStart.hashCode()));
+        result = ((prime*result)+((parsePlainSQLTemplateCommentStop == null)? 0 :parsePlainSQLTemplateCommentStop.hashCode()));
+        result = ((prime*result)+((parseRawSQLComments == null)? 0 :parseRawSQLComments.hashCode()));
+        result = ((prime*result)+((parseRawSQLCommentStart == null)? 0 :parseRawSQLCommentStart.hashCode()));
+        result = ((prime*result)+((parseRawSQLCommentStop == null)? 0 :parseRawSQLCommentStop.hashCode()));
         result = ((prime*result)+((parseRetainCommentsBetweenQueries == null)? 0 :parseRetainCommentsBetweenQueries.hashCode()));
         result = ((prime*result)+((parseMetaDefaultExpressions == null)? 0 :parseMetaDefaultExpressions.hashCode()));
         result = ((prime*result)+((parseMetaViewSources == null)? 0 :parseMetaViewSources.hashCode()));

@@ -1684,6 +1684,30 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#8325] The ignore comment stop token]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
+      <element name="parsePlainSQLTemplateComments" type="boolean" minOccurs="0" maxOccurs="1" default="false">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#8325] Whether the parser should parse content between plain SQL template comment tokens into a plain SQL template, with {@link org.jooq.impl.DSL#sql(String)} semantics.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="parsePlainSQLTemplateCommentStart" type="string" minOccurs="0" maxOccurs="1" default="[jooq template start]">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#8325] The plain SQL template comment start token]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="parsePlainSQLTemplateCommentStop" type="string" minOccurs="0" maxOccurs="1" default="[jooq template stop]">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#8325] The plain SQL template comment stop token]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="parseRawSQLComments" type="boolean" minOccurs="0" maxOccurs="1" default="false">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#8325] Whether the parser should parse content between raw comment tokens into a raw template, with {@link org.jooq.impl.DSL#raw(String)} semantics.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="parseRawSQLCommentStart" type="string" minOccurs="0" maxOccurs="1" default="[jooq raw start]">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#8325] The raw comment start token]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="parseRawSQLCommentStop" type="string" minOccurs="0" maxOccurs="1" default="[jooq raw stop]">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#8325] The raw comment stop token]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="parseRetainCommentsBetweenQueries" type="boolean" minOccurs="0" maxOccurs="1" default="false">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#12538] Whether the parser should retain comments and whitespace between queries when parsing multiple queries through {@link org.jooq.Parser#parse(String)}.
 <p>

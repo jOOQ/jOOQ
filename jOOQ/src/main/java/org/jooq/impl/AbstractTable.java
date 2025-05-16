@@ -505,15 +505,19 @@ implements
     @Override
     public Identity<R, ?> getIdentity() {
         if (identity == null) {
+            Identity<R, ?> i = null;
+
             for (Field<?> f : fields())
                 if (f instanceof TableField && f.getDataType().identity())
-                    if (identity == null)
-                        identity = new IdentityImpl(this, (TableField) f);
+                    if (i == null)
+                        i = new IdentityImpl(this, (TableField) f);
                     else
                         log.info("Multiple identities", "There are multiple identity fields in table " + this + ", which is not supported by jOOQ");
 
-            if (identity == null)
-                identity = (Identity<R, ?>) IdentityImpl.NULL;
+            if (i == null)
+                i = (Identity<R, ?>) IdentityImpl.NULL;
+
+            identity = i;
         }
 
         return identity == IdentityImpl.NULL ? null : identity;

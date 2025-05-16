@@ -267,7 +267,7 @@ class HistoryImpl extends AbstractScope implements History {
                         CommitProvider didn't provide version for ID: {id}
 
                         This may happen if a successful migration has happened in a database, but the source
-                        for this migration is not available.
+                        for this migration is not available (anymore).
                         """.replace("{id}", r.getMigratedTo())
                     );
             }

@@ -30,7 +30,7 @@
     </licenses>
     
     <properties>
-        <jgit.version>7.1.0.202411261347-r</jgit.version>
+        <jgit.version>7.2.1.202505142326-r</jgit.version>
     </properties>
 
     <build>

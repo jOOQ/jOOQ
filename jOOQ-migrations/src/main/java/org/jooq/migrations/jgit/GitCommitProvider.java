@@ -49,7 +49,6 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Deque;
 import java.util.HashMap;
@@ -82,10 +81,11 @@ import org.eclipse.jgit.lib.ObjectReader;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevObject;
 import org.eclipse.jgit.revwalk.RevTag;
+import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.util.io.DisabledOutputStream;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * A {@link CommitProvider} that produces versions from a git repository.
@@ -132,13 +132,14 @@ public final class GitCommitProvider implements CommitProvider {
         try (
             Git g = Git.open(git.repository());
             Repository r = g.getRepository();
-            ObjectReader reader = r.newObjectReader()
+            ObjectReader reader = r.newObjectReader();
+            RevWalk walk = new RevWalk(reader)
         ) {
             // Prevent a "close() called when useCnt is already zero" warning
             r.incrementOpen();
 
             Deque<RevCommit> revCommits = new ArrayDeque<>();
-            Map<String, List<RevTag>> tags = new HashMap<>();
+            Map<String, List<Tag>> tags = new HashMap<>();
             RevCommit last = null;
 
             try {
@@ -154,8 +155,21 @@ public final class GitCommitProvider implements CommitProvider {
             }
 
             for (Ref ref : g.tagList().call()) {
-                RevTag tag = RevTag.parse(reader.open(ref.getObjectId()).getBytes());
-                tags.computeIfAbsent(tag.getObject().getName(), id -> new ArrayList<>()).add(tag);
+                RevObject any = walk.parseAny(ref.getObjectId());
+
+                // Annotated vs lightweight tags: https://stackoverflow.com/a/29897735/521799
+                if (any instanceof RevTag tag) {
+                    tags.computeIfAbsent(tag.getObject().getName(), id -> new ArrayList<>()).add(new Tag(
+                        tag.getTagName(),
+                        tag.getFullMessage()
+                    ));
+                }
+                else if (any instanceof RevCommit commit) {
+                    tags.computeIfAbsent(commit.getName(), id -> new ArrayList<>()).add(new Tag(
+                        Repository.shortenRefName(r.getRefDatabase().peel(ref).getName()),
+                        null
+                    ));
+                }
             }
 
             Commit root = commits.root();
@@ -215,13 +229,15 @@ public final class GitCommitProvider implements CommitProvider {
         return commits;
     }
 
-    private static final Commit tag(Map<String, List<RevTag>> tags, Commit commit) {
+    private static final record Tag(String name, String message) {}
+
+    private static final Commit tag(Map<String, List<Tag>> tags, Commit commit) {
         Commit result = commit;
-        List<RevTag> list = tags.get(commit.id());
+        List<Tag> list = tags.get(commit.id());
 
         if (list != null)
-            for (RevTag tag : list)
-                result = result.tag(tag.getTagName(), tag.getFullMessage());
+            for (Tag tag : list)
+                result = result.tag(tag.name(), tag.message());
 
         return result;
     }

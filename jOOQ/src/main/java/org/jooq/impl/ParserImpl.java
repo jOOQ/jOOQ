@@ -930,7 +930,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
 
 
-    static final Set<SQLDialect>         SUPPORTS_HASH_COMMENT_SYNTAX  = SQLDialect.supportedBy(MARIADB, MYSQL);
+    static final Set<SQLDialect>         SUPPORTS_HASH_COMMENT_SYNTAX             = SQLDialect.supportedBy(MARIADB, MYSQL);
+    static final Set<SQLDialect>         NO_SUPPORT_QUOTED_BUILT_IN_FUNCION_NAMES = SQLDialect.supportedBy();
 
     final Queries parse() {
         return wrap(() -> {

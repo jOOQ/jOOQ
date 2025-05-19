@@ -7257,7 +7257,7 @@ final class Tools {
      * Get the {@link ParseNameCase}, looking up the default value from the
      * parse dialect.
      */
-    private static final ParseNameCase parseNameCase(Configuration configuration) {
+    static final ParseNameCase parseNameCase(Configuration configuration) {
         ParseNameCase result = defaultIfNull(configuration.settings().getParseNameCase(), ParseNameCase.DEFAULT);
 
         if (result == ParseNameCase.DEFAULT) {

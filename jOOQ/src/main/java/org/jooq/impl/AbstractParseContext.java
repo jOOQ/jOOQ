@@ -227,6 +227,10 @@ abstract class AbstractParseContext extends AbstractScope {
 
     abstract int afterWhitespace(int p);
 
+    final char lower(char c) {
+        return c >= 'A' && c <= 'Z' ? (char) (c + ('a' - 'A')) : c;
+    }
+
     final char upper(char c) {
         return c >= 'a' && c <= 'z' ? (char) (c - ('a' - 'A')) : c;
     }
@@ -338,6 +342,10 @@ abstract class AbstractParseContext extends AbstractScope {
 
     public final boolean peek(char c) {
         return character() == c;
+    }
+
+    final boolean peek(char c, int p) {
+        return character(p) == c;
     }
 
     public final boolean peek(String string) {

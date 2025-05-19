@@ -37,7 +37,6 @@
  */
 package org.jooq.impl;
 
-import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
@@ -55,7 +54,9 @@ import static org.jooq.JoinType.JOIN;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.DERBY;
 // ...
+import static org.jooq.SQLDialect.HSQLDB;
 // ...
 import static org.jooq.SQLDialect.MARIADB;
 // ...
@@ -885,7 +886,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
 
 
-    static final Set<SQLDialect>         SUPPORTS_HASH_COMMENT_SYNTAX  = SQLDialect.supportedBy(MARIADB, MYSQL);
+    static final Set<SQLDialect>         SUPPORTS_HASH_COMMENT_SYNTAX             = SQLDialect.supportedBy(MARIADB, MYSQL);
+    static final Set<SQLDialect>         NO_SUPPORT_QUOTED_BUILT_IN_FUNCION_NAMES = SQLDialect.supportedBy(DERBY, HSQLDB);
 
     final Queries parse() {
         return wrap(() -> {

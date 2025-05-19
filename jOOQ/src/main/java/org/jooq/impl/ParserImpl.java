@@ -37,7 +37,6 @@
  */
 package org.jooq.impl;
 
-import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
@@ -54,7 +53,9 @@ import static org.jooq.JoinType.JOIN;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.DERBY;
 // ...
+import static org.jooq.SQLDialect.HSQLDB;
 // ...
 import static org.jooq.SQLDialect.MARIADB;
 // ...
@@ -779,8 +780,6 @@ import org.jooq.types.Interval;
 import org.jooq.types.YearToMonth;
 import org.jooq.types.YearToSecond;
 
-import org.jetbrains.annotations.NotNull;
-
 /**
  * @author Lukas Eder
  */
@@ -931,7 +930,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
 
     static final Set<SQLDialect>         SUPPORTS_HASH_COMMENT_SYNTAX             = SQLDialect.supportedBy(MARIADB, MYSQL);
-    static final Set<SQLDialect>         NO_SUPPORT_QUOTED_BUILT_IN_FUNCION_NAMES = SQLDialect.supportedBy();
+    static final Set<SQLDialect>         NO_SUPPORT_QUOTED_BUILT_IN_FUNCION_NAMES = SQLDialect.supportedBy(DERBY, HSQLDB);
 
     final Queries parse() {
         return wrap(() -> {

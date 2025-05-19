@@ -935,6 +935,7 @@ final class Diff {
     }
 
     static final int sortIndex(Query q) {
+        final int VIEW = 5;
         final int FKEY = 4;
         final int CONS = 3;
         final int NULL = 2;
@@ -973,6 +974,10 @@ final class Diff {
             return -CONS;
         else if (q instanceof QOM.CreateIndex)
             return CONS;
+        else if (q instanceof QOM.DropView)
+            return -VIEW;
+        else if (q instanceof QOM.CreateView)
+            return VIEW;
         else
             return 0;
     }

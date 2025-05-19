@@ -78,9 +78,11 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.Function;
@@ -97,7 +99,6 @@ import org.jooq.Domain;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Function2;
-import org.jooq.Function3;
 import org.jooq.Index;
 import org.jooq.Key;
 import org.jooq.Meta;
@@ -130,6 +131,7 @@ final class Diff {
     private final Meta                   meta1;
     private final Meta                   meta2;
     private final DDL                    ddl;
+    private final DependencyComparator   comparator;
 
     Diff(Configuration configuration, MigrationConfiguration migrateConf, Meta meta1, Meta meta2) {
         this.migrateConf = migrateConf;
@@ -141,6 +143,7 @@ final class Diff {
         this.meta1 = meta1;
         this.meta2 = meta2;
         this.ddl = new DDL(ctx, exportConf);
+        this.comparator = new DependencyComparator();
     }
 
     final Queries queries() {
@@ -172,7 +175,7 @@ final class Diff {
             }
 
             if (sort)
-                result.queries.sort(Diff::sortOrder);
+                result.queries.sort(comparator);
         }
 
         return result;
@@ -440,7 +443,7 @@ final class Diff {
                 appendChecks(temp, t1, t1.getChecks(), t2.getChecks());
                 appendIndexes(temp, t1, t1.getIndexes(), t2.getIndexes());
 
-                temp.queries.sort(Diff::sortOrder);
+                temp.queries.sort(comparator);
                 r.addAll(temp);
             }
 
@@ -929,7 +932,7 @@ final class Diff {
             result.addAll(created);
         }
 
-        result.queries.sort(Diff::sortOrder);
+        result.queries.sort(comparator);
         return result;
     }
 
@@ -974,11 +977,8 @@ final class Diff {
         }
     }
 
-    static final int sortOrder(Query q1, Query q2) {
-        return sortIndex(q1) - sortIndex(q2);
-    }
-
     static final int sortIndex(Query q) {
+        final int COMM = 6;
         final int VIEW = 5;
         final int FKEY = 4;
         final int CONS = 3;
@@ -1022,7 +1022,32 @@ final class Diff {
             return -VIEW;
         else if (q instanceof QOM.CreateView)
             return VIEW;
+        else if (q instanceof QOM.CommentOn)
+            return COMM;
         else
             return 0;
+    }
+
+    /**
+     * [#15327] A comparator that checks dependencies of objects to ensure
+     * objects are dropped or created in the right order.
+     * <p>
+     * The comparator is stateful, allowing for caching the potentially costly
+     * dependency lookups for the duration of a sort. This means it shouldn't be
+     * re-used between sorts, if the underlying schema may have changed.
+     */
+    static final class DependencyComparator implements Comparator<Query> {
+
+        Map<Table<?>, Set<Table<?>>> dependencies = new HashMap<>();
+
+        @Override
+        public int compare(Query q1, Query q2) {
+            int i = sortIndex(q1) - sortIndex(q2);
+
+            if (i != 0)
+                return i;
+
+            return 0;
+        }
     }
 }

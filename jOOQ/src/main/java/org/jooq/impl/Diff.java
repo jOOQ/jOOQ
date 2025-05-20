@@ -106,6 +106,7 @@ import org.jooq.MigrationConfiguration;
 import org.jooq.Name;
 import org.jooq.Named;
 import org.jooq.Nullability;
+// ...
 import org.jooq.Queries;
 import org.jooq.Query;
 import org.jooq.SQLDialect;

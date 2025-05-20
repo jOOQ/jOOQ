@@ -55,13 +55,13 @@ import java.util.function.Predicate;
 import org.jooq.Catalog;
 import org.jooq.Configuration;
 import org.jooq.DDLExportConfiguration;
+import org.jooq.Dependencies;
 import org.jooq.Domain;
 import org.jooq.ForeignKey;
 import org.jooq.Index;
 import org.jooq.Meta;
 import org.jooq.Name;
 import org.jooq.Named;
-// ...
 import org.jooq.Queries;
 import org.jooq.Query;
 import org.jooq.Record;
@@ -74,8 +74,6 @@ import org.jooq.TableField;
 import org.jooq.UniqueKey;
 import org.jooq.exception.DataAccessException;
 import org.jooq.util.xml.jaxb.InformationSchema;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
@@ -99,6 +97,7 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
 
     final Predicate<? super Catalog>          catalogFilter;
     final Predicate<? super Schema>           schemaFilter;
+    final Dependencies                        dependencies;
 
     AbstractMeta(Configuration configuration) {
         this(configuration, null, null);
@@ -109,6 +108,7 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
 
         this.catalogFilter = catalogFilter;
         this.schemaFilter = schemaFilter;
+        this.dependencies = new DependenciesImpl(this);
     }
 
     abstract AbstractMeta filtered0(Predicate<? super Catalog> catalogFilter, Predicate<? super Schema> schemaFilter);
@@ -780,6 +780,12 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
     @Override
     public final Meta snapshot() {
         return new Snapshot(this);
+    }
+
+    @Override
+    public final Dependencies dependencies() {
+        configuration().requireCommercial(() -> "Object dependencies are a commercial only feature. Please consider upgrading to the jOOQ Professional Edition or jOOQ Enterprise Edition");
+        return dependencies;
     }
 
     @Override

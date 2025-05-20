@@ -556,6 +556,14 @@ public interface Meta extends Scope {
     Meta snapshot() throws DataAccessException;
 
     /**
+     * Collect the object dependencies between the various objects in this {@link Meta}.
+     * <p>
+     * This is a commercial-only feature.
+     */
+    @NotNull
+    Dependencies dependencies() throws DataAccessException;
+
+    /**
      * Generate a creation script for the entire meta data.
      *
      * @throws DataAccessException If something went wrong fetching the meta

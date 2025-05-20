@@ -40,6 +40,7 @@ package org.jooq.impl;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static java.util.Arrays.asList;
+import static java.util.Collections.emptySet;
 // ...
 import static org.jooq.SQLDialect.IGNITE;
 import static org.jooq.SQLDialect.MARIADB;
@@ -77,6 +78,7 @@ import static org.jooq.tools.StringUtils.isEmpty;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -106,13 +108,17 @@ import org.jooq.MigrationConfiguration;
 import org.jooq.Name;
 import org.jooq.Named;
 import org.jooq.Nullability;
+// ...
 import org.jooq.Queries;
 import org.jooq.Query;
+import org.jooq.QueryPart;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Sequence;
 import org.jooq.Table;
 import org.jooq.TableOptions.TableType;
+// ...
+// ...
 import org.jooq.UniqueKey;
 import org.jooq.conf.Settings;
 import org.jooq.tools.StringUtils;
@@ -1061,19 +1067,64 @@ final class Diff {
      * The comparator is stateful, allowing for caching the potentially costly
      * dependency lookups for the duration of a sort. This means it shouldn't be
      * re-used between sorts, if the underlying schema may have changed.
+     * <p>
+     * Note these are commercial only features as they depend on
+     * {@link Traverser} API.
      */
-    static final class DependencyComparator implements Comparator<Query> {
-
-        Map<Table<?>, Set<Table<?>>> dependencies = new HashMap<>();
+    final class DependencyComparator implements Comparator<Query> {
 
         @Override
         public int compare(Query q1, Query q2) {
-            int i = sortIndex(q1) - sortIndex(q2);
+            int i1 = sortIndex(q1);
+            int i2 = sortIndex(q2);
+            int i = i1 - i2;
 
             if (i != 0)
                 return i;
 
+
+
+
+
+
+
+
+
+
+
+
+
             return 0;
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }

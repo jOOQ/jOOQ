@@ -56,6 +56,7 @@ import static org.jooq.JoinType.JOIN;
 // ...
 // ...
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
@@ -486,6 +487,7 @@ import static org.jooq.impl.Tools.asInt;
 import static org.jooq.impl.Tools.deleteQueryImpl;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.normaliseNameCase;
+import static org.jooq.impl.Tools.parseNameCase;
 import static org.jooq.impl.Tools.selectQueryImpl;
 import static org.jooq.impl.Tools.updateQueryImpl;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_PARSE_ON_CONFLICT;
@@ -719,6 +721,7 @@ import org.jooq.XMLAttributes;
 import org.jooq.XMLTableColumnPathStep;
 import org.jooq.XMLTableColumnsStep;
 import org.jooq.XMLTablePassingStep;
+import org.jooq.conf.ParseNameCase;
 import org.jooq.conf.ParseSearchSchema;
 import org.jooq.conf.ParseUnknownFunctions;
 import org.jooq.conf.ParseUnsupportedSyntax;
@@ -892,7 +895,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
 
     static final Set<SQLDialect>         SUPPORTS_HASH_COMMENT_SYNTAX             = SQLDialect.supportedBy(MARIADB, MYSQL);
-    static final Set<SQLDialect>         NO_SUPPORT_QUOTED_BUILT_IN_FUNCION_NAMES = SQLDialect.supportedBy(DERBY, HSQLDB);
+    static final Set<SQLDialect>         NO_SUPPORT_QUOTED_BUILT_IN_FUNCION_NAMES = SQLDialect.supportedBy(DERBY, FIREBIRD, HSQLDB);
 
     final Queries parse() {
         return wrap(() -> {
@@ -8597,7 +8600,22 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
 
 
-        switch (characterUpper()) {
+        char u = characterUpper();
+
+
+
+
+
+        // [#18480] Allow for quoted built-in function identifiers
+        switch (u) {
+            case '`':
+            case '[':
+            case '"':
+                u = characterNextUpper();
+                break;
+        }
+
+        switch (u) {
 
             // [#8821] Known prefixes so far:
             case ':':
@@ -8991,7 +9009,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
             case 'L':
                 if (parseFunctionNameIf("LOWER", "LCASE"))
-                    return lower((Field) parseFieldParenthesised());
+                    return DSL.lower((Field) parseFieldParenthesised());
                 else if (parseFunctionNameIf("LPAD"))
                     return parseFunctionArgs3(DSL::lpad, DSL::lpad);
                 else if (parseFunctionNameIf("LTRIM"))
@@ -12825,6 +12843,14 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
              : 0;
     }
 
+    private final char peekQuote(boolean allowAposQuotes, int p) {
+        return peek('"', p) ? '"'
+             : peek('`', p) ? '`'
+             : peek('[', p) ? ']'
+             : allowAposQuotes && peek('\'', p) ? '\''
+             : 0;
+    }
+
     private final DataType<?> parseCastDataType() {
         char character = characterUpper();
 
@@ -14448,6 +14474,9 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
     }
 
     private final boolean peekKeyword(String keyword, boolean updatePosition, boolean peekIntoParens, boolean requireFunction) {
+        boolean caseSensitive =
+            Character.isLowerCase(keyword.charAt(0))
+         || Character.isLowerCase(keyword.charAt(keyword.length() - 1));
         int length = keyword.length();
         int p = position();
 
@@ -14456,8 +14485,41 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
         int skip = afterWhitespace(p, peekIntoParens) - p;
 
+        // [#18480] Function names are allowed to be quoted
+        char quoteEnd = requireFunction ? peekQuote(false, p + skip) : 0;
+        boolean quoted = quoteEnd != 0;
+        ParseNameCase nameCase = null;
+
+        if (quoted) {
+            if (NO_SUPPORT_QUOTED_BUILT_IN_FUNCION_NAMES.contains(parseDialect()))
+                return false;
+
+            nameCase = parseNameCase(configuration);
+            switch (parseDialect()) {
+
+
+
+
+
+
+                default:
+                    caseSensitive =
+                           nameCase != ParseNameCase.AS_IS
+                        && nameCase != ParseNameCase.LOWER;
+                    break;
+            }
+
+            skip++;
+        }
+
         for (int i = 0; i < length; i++) {
             char c = keyword.charAt(i);
+
+            if (caseSensitive && (
+                nameCase == ParseNameCase.LOWER_IF_UNQUOTED ||
+                nameCase == ParseNameCase.LOWER))
+                c = lower(c);
+
             int pos = p + i + skip;
 
             switch (c) {
@@ -14469,7 +14531,11 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                     break;
 
                 default:
-                    if (upper(character(pos)) != c)
+                    if (caseSensitive) {
+                        if (character(pos) != c)
+                            return false;
+                    }
+                    else if (upper(character(pos)) != c)
                         return false;
 
                     break;
@@ -14477,6 +14543,15 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         }
 
         int pos = p + length + skip;
+
+        if (quoted) {
+            if (character(pos) == quoteEnd) {
+                pos++;
+                skip++;
+            }
+            else
+                return false;
+        }
 
         // [#8806] A keyword that is followed by a period is very likely an identifier
         if (isIdentifierPart(pos) || character(pos) == '.')

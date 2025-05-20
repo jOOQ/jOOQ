@@ -67,7 +67,7 @@ import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Name;
-import org.jooq.Pro;
+// ...
 import org.jooq.Record;
 import org.jooq.TableOptions;
 import org.jooq.XML;

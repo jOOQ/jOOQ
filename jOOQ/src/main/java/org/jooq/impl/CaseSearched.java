@@ -58,7 +58,7 @@ import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Function2;
-import org.jooq.Pro;
+// ...
 import org.jooq.Record1;
 // ...
 import org.jooq.Select;

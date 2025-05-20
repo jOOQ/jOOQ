@@ -117,7 +117,7 @@ import org.jooq.Field;
 import org.jooq.Generator;
 import org.jooq.Name;
 import org.jooq.Nullability;
-import org.jooq.Pro;
+// ...
 import org.jooq.QualifiedRecord;
 import org.jooq.QueryPart;
 import org.jooq.SQLDialect;

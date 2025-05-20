@@ -51,7 +51,7 @@ import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DSLContext;
-import org.jooq.Pro;
+// ...
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.RenderContext;

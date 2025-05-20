@@ -97,7 +97,7 @@ import org.jooq.DDLQuery;
 import org.jooq.Keyword;
 import org.jooq.LanguageContext;
 import org.jooq.Name;
-import org.jooq.Pro;
+// ...
 import org.jooq.Query;
 import org.jooq.QueryPart;
 // ...

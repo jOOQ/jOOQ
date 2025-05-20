@@ -74,7 +74,7 @@ import org.jooq.Field;
 import org.jooq.JSONB;
 import org.jooq.JSONTableColumnPathStep;
 import org.jooq.Name;
-import org.jooq.Pro;
+// ...
 import org.jooq.Record;
 import org.jooq.SQLDialect;
 import org.jooq.TableOptions;

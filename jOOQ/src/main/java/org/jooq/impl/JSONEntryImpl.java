@@ -90,7 +90,7 @@ import org.jooq.JSON;
 import org.jooq.JSONEntry;
 import org.jooq.JSONEntryValueStep;
 import org.jooq.Param;
-import org.jooq.Pro;
+// ...
 import org.jooq.QueryPart;
 import org.jooq.Record1;
 // ...

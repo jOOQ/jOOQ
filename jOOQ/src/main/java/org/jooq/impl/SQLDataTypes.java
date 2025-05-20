@@ -51,7 +51,7 @@ import java.util.UUID;
 import org.jooq.DataType;
 import org.jooq.JSON;
 import org.jooq.JSONB;
-import org.jooq.Pro;
+// ...
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SQLDialect;

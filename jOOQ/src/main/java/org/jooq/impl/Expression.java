@@ -106,7 +106,7 @@ import org.jooq.DatePart;
 import org.jooq.Field;
 import org.jooq.Function2;
 import org.jooq.Param;
-import org.jooq.Pro;
+// ...
 import org.jooq.QueryPart;
 import org.jooq.SQL;
 import org.jooq.SQLDialect;

@@ -93,7 +93,7 @@ import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.GroupField;
 import org.jooq.OrderField;
-import org.jooq.Pro;
+// ...
 import org.jooq.QueryPart;
 // ...
 import org.jooq.SQLDialect;

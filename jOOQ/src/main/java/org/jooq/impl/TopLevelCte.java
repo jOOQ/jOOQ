@@ -44,7 +44,7 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 import org.jooq.Context;
-import org.jooq.Pro;
+// ...
 import org.jooq.QueryPart;
 import org.jooq.impl.ScopeMarker.ScopeContent;
 

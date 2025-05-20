@@ -128,7 +128,7 @@ import org.jooq.Index;
 import org.jooq.InverseForeignKey;
 import org.jooq.Meta;
 import org.jooq.Name;
-import org.jooq.Pro;
+// ...
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SQLDialect;

@@ -88,7 +88,7 @@ import org.jooq.InverseForeignKey;
 import org.jooq.JoinType;
 import org.jooq.LanguageContext;
 // ...
-import org.jooq.Pro;
+// ...
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.RenderContext;

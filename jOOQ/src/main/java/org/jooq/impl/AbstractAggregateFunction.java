@@ -89,7 +89,7 @@ import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.OrderField;
 import org.jooq.OrderedAggregateFunction;
-import org.jooq.Pro;
+// ...
 import org.jooq.QueryPart;
 import org.jooq.SQL;
 import org.jooq.SQLDialect;

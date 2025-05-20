@@ -47,7 +47,7 @@ import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
-import org.jooq.Pro;
+// ...
 import org.jooq.Row1;
 
 /**

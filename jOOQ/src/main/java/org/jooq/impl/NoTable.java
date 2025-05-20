@@ -45,7 +45,7 @@ import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.Name;
 // ...
-import org.jooq.Pro;
+// ...
 import org.jooq.Record;
 import org.jooq.SQL;
 import org.jooq.Table;

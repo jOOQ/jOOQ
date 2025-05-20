@@ -54,7 +54,7 @@ import java.util.Set;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Function1;
-import org.jooq.Pro;
+// ...
 import org.jooq.SQLDialect;
 
 /**

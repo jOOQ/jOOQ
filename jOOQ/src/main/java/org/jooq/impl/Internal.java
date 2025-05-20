@@ -79,7 +79,7 @@ import org.jooq.OrderField;
 import org.jooq.ParamMode;
 import org.jooq.Parameter;
 // ...
-import org.jooq.Pro;
+// ...
 import org.jooq.Queries;
 import org.jooq.Query;
 import org.jooq.QueryPart;

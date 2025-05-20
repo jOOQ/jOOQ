@@ -59,7 +59,7 @@ import java.sql.Struct;
 import java.util.Map;
 import java.util.Properties;
 
-import org.jooq.Pro;
+// ...
 
 /**
  * A mock connection.

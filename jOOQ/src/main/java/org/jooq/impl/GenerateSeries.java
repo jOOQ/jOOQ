@@ -95,7 +95,7 @@ import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Function3;
 import org.jooq.Name;
-import org.jooq.Pro;
+// ...
 import org.jooq.Record1;
 import org.jooq.SQLDialect;
 import org.jooq.Table;

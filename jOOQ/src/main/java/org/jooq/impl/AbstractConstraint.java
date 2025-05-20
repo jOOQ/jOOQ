@@ -58,7 +58,7 @@ import org.jooq.Clause;
 import org.jooq.ConstraintEnforcementStep;
 import org.jooq.Context;
 import org.jooq.Name;
-import org.jooq.Pro;
+// ...
 import org.jooq.SQLDialect;
 import org.jooq.Table;
 

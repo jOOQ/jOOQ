@@ -180,7 +180,7 @@ import org.jooq.Name;
 import org.jooq.Param;
 import org.jooq.Parser;
 import org.jooq.Privilege;
-import org.jooq.Pro;
+// ...
 import org.jooq.Publisher;
 import org.jooq.Queries;
 import org.jooq.Query;

@@ -62,7 +62,7 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Fields;
 import org.jooq.Name;
-import org.jooq.Pro;
+// ...
 import org.jooq.Record;
 import org.jooq.RecordMapper;
 import org.jooq.RecordType;

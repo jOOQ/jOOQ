@@ -79,7 +79,7 @@ import org.jooq.Field;
 import org.jooq.JSONB;
 import org.jooq.Param;
 import org.jooq.Parser;
-import org.jooq.Pro;
+// ...
 import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
 import org.jooq.conf.ParamType;

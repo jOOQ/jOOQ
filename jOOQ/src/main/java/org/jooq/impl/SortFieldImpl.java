@@ -65,7 +65,7 @@ import java.util.Set;
 
 import org.jooq.Context;
 import org.jooq.Field;
-import org.jooq.Pro;
+// ...
 import org.jooq.QueryPart;
 // ...
 import org.jooq.SQLDialect;

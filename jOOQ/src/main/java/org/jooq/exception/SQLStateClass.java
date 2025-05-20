@@ -40,7 +40,7 @@ package org.jooq.exception;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.jooq.Pro;
+// ...
 
 import org.jetbrains.annotations.NotNull;
 

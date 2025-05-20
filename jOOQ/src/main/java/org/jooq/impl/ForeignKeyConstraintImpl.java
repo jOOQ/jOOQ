@@ -109,7 +109,7 @@ import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Keyword;
 import org.jooq.Name;
-import org.jooq.Pro;
+// ...
 import org.jooq.QueryPart;
 // ...
 import org.jooq.SQLDialect;

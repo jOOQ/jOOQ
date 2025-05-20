@@ -96,7 +96,7 @@ import org.jooq.Function3;
 import org.jooq.JSON;
 import org.jooq.JSONB;
 import org.jooq.Param;
-import org.jooq.Pro;
+// ...
 import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.SQLDialect;

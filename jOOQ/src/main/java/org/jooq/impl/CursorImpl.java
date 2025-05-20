@@ -81,7 +81,7 @@ import org.jooq.ContextConverter;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Field;
-import org.jooq.Pro;
+// ...
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.Table;

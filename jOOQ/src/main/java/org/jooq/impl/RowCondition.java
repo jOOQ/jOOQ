@@ -78,7 +78,7 @@ import org.jooq.Comparator;
 import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.Field;
-import org.jooq.Pro;
+// ...
 import org.jooq.Row;
 import org.jooq.SQLDialect;
 import org.jooq.impl.QOM.UNotYetImplemented;

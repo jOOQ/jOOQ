@@ -160,7 +160,7 @@ import org.jooq.Identity;
 import org.jooq.Insert;
 import org.jooq.Name;
 import org.jooq.Param;
-import org.jooq.Pro;
+// ...
 import org.jooq.QualifiedAsterisk;
 import org.jooq.Record;
 import org.jooq.Result;

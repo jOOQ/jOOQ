@@ -64,7 +64,7 @@ import org.jooq.DataType;
 import org.jooq.DerivedColumnList;
 import org.jooq.Field;
 import org.jooq.Name;
-import org.jooq.Pro;
+// ...
 import org.jooq.QueryPart;
 import org.jooq.Record;
 // ...

@@ -297,7 +297,7 @@ import org.jooq.Name.Quoted;
 import org.jooq.Operator;
 import org.jooq.OrderField;
 import org.jooq.Param;
-import org.jooq.Pro;
+// ...
 import org.jooq.QualifiedAsterisk;
 import org.jooq.QueryPart;
 import org.jooq.Record;

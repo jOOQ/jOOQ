@@ -72,7 +72,7 @@ import org.jooq.File;
 import org.jooq.Files;
 import org.jooq.Meta;
 import org.jooq.Node;
-import org.jooq.Pro;
+// ...
 import org.jooq.Source;
 import org.jooq.Tag;
 import org.jooq.Version;

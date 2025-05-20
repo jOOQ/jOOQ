@@ -111,7 +111,7 @@ import org.jooq.MergeValuesStep7;
 import org.jooq.MergeValuesStep8;
 import org.jooq.MergeValuesStep9;
 import org.jooq.MergeValuesStepN;
-import org.jooq.Pro;
+// ...
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Select;

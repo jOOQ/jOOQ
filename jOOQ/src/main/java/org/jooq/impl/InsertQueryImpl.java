@@ -142,7 +142,7 @@ import org.jooq.MergeNotMatchedStep;
 import org.jooq.MergeOnConditionStep;
 import org.jooq.Name;
 import org.jooq.Operator;
-import org.jooq.Pro;
+// ...
 import org.jooq.QueryPart;
 import org.jooq.Record;
 // ...

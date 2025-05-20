@@ -51,7 +51,7 @@ import java.util.function.Predicate;
 
 import org.jooq.Context;
 import org.jooq.Function1;
-import org.jooq.Pro;
+// ...
 import org.jooq.QueryPart;
 // ...
 import org.jooq.SQLDialect;

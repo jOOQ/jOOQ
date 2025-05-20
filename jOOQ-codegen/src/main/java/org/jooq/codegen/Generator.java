@@ -49,7 +49,7 @@ import org.jooq.JSON;
 import org.jooq.JSONB;
 import org.jooq.Name;
 import org.jooq.Path;
-import org.jooq.Pro;
+// ...
 import org.jooq.Spatial;
 import org.jooq.Table;
 import org.jooq.XML;

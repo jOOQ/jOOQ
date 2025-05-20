@@ -47,7 +47,7 @@ import java.util.Collection;
 import org.jooq.Field;
 import org.jooq.JoinType;
 import org.jooq.Name;
-import org.jooq.Pro;
+// ...
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.SQL;

@@ -50,7 +50,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.jooq.DataType;
-// ...
+import org.jooq.Pro;
 import org.jooq.impl.ParserException;
 import org.jooq.impl.SQLDataType;
 import org.jooq.meta.jaxb.SyntheticColumnType;

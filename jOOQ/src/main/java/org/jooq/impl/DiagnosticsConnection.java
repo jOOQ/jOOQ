@@ -67,7 +67,7 @@ import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.Parser;
-// ...
+import org.jooq.Pro;
 import org.jooq.Queries;
 import org.jooq.Query;
 import org.jooq.QueryPart;

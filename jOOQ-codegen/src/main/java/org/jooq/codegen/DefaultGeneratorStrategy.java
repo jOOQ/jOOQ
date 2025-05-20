@@ -57,7 +57,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-// ...
+import org.jooq.Pro;
 import org.jooq.impl.AbstractRoutine;
 import org.jooq.impl.CatalogImpl;
 import org.jooq.impl.DAOImpl;

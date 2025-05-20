@@ -100,7 +100,7 @@ import org.jooq.Index;
 import org.jooq.Key;
 import org.jooq.Meta;
 import org.jooq.Named;
-// ...
+import org.jooq.Pro;
 import org.jooq.Queries;
 import org.jooq.Query;
 import org.jooq.Record;

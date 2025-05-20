@@ -70,7 +70,7 @@ import org.jooq.JSONValueDefaultStep;
 import org.jooq.JSONValueOnStep;
 import org.jooq.Keyword;
 import org.jooq.Param;
-// ...
+import org.jooq.Pro;
 import org.jooq.SQLDialect;
 import org.jooq.TableField;
 import org.jooq.impl.QOM.UNotYetImplemented;

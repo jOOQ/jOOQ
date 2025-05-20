@@ -55,7 +55,7 @@ import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.ParamMode;
 import org.jooq.Parameter;
-// ...
+import org.jooq.Pro;
 import org.jooq.Record1;
 import org.jooq.SQLDialect;
 import org.jooq.Select;

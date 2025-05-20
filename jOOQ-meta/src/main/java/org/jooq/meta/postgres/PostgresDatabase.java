@@ -126,7 +126,7 @@ import org.jooq.Condition;
 import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.Name;
-// ...
+import org.jooq.Pro;
 import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Record12;

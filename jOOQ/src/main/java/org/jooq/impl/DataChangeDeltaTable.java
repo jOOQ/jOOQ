@@ -68,7 +68,7 @@ import org.jooq.DMLQuery;
 import org.jooq.Delete;
 import org.jooq.Insert;
 import org.jooq.Name;
-// ...
+import org.jooq.Pro;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 // ...

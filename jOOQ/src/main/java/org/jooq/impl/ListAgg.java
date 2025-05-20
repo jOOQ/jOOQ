@@ -85,7 +85,7 @@ import java.util.Set;
 
 import org.jooq.Context;
 import org.jooq.Field;
-// ...
+import org.jooq.Pro;
 import org.jooq.SQLDialect;
 import org.jooq.XML;
 import org.jooq.impl.QOM.UNotYetImplemented;

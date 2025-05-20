@@ -75,7 +75,7 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Keyword;
 import org.jooq.LanguageContext;
-// ...
+import org.jooq.Pro;
 import org.jooq.QueryPart;
 import org.jooq.RenderContext.CastMode;
 // ...

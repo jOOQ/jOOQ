@@ -119,7 +119,7 @@ import org.jooq.JSONEntry;
 import org.jooq.JSONObjectNullStep;
 import org.jooq.JSONObjectReturningStep;
 import org.jooq.Name;
-// ...
+import org.jooq.Pro;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Record1;

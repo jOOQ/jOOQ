@@ -84,7 +84,7 @@ import org.jooq.Function1;
 import org.jooq.JSON;
 import org.jooq.JSONEntry;
 import org.jooq.JSONObjectAggNullStep;
-// ...
+import org.jooq.Pro;
 import org.jooq.impl.QOM.JSONOnNull;
 
 

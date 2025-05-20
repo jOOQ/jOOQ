@@ -71,7 +71,7 @@ import java.util.EnumSet;
 import java.util.Set;
 
 import org.jooq.Context;
-// ...
+import org.jooq.Pro;
 import org.jooq.SQLDialect;
 
 /**

@@ -111,7 +111,7 @@ import org.jooq.OrderField;
 import org.jooq.Param;
 import org.jooq.Parameter;
 import org.jooq.Privilege;
-// ...
+import org.jooq.Pro;
 import org.jooq.Query;
 import org.jooq.QueryPart;
 import org.jooq.Record;

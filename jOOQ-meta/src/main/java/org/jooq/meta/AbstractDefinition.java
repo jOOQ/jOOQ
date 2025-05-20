@@ -52,7 +52,7 @@ import java.util.List;
 
 import org.jooq.DSLContext;
 import org.jooq.Name;
-// ...
+import org.jooq.Pro;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultConfiguration;

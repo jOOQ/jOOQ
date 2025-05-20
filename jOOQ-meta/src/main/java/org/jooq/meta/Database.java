@@ -47,7 +47,7 @@ import java.util.Properties;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.Name;
-// ...
+import org.jooq.Pro;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.TableField;

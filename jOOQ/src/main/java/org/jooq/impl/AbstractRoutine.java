@@ -139,7 +139,7 @@ import org.jooq.Name;
 import org.jooq.Package;
 import org.jooq.Param;
 import org.jooq.Parameter;
-// ...
+import org.jooq.Pro;
 import org.jooq.QualifiedRecord;
 import org.jooq.QueryPart;
 import org.jooq.Record;

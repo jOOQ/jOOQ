@@ -65,7 +65,7 @@ import org.jooq.Clause;
 import org.jooq.Comparator;
 import org.jooq.Context;
 import org.jooq.Name;
-// ...
+import org.jooq.Pro;
 import org.jooq.QuantifiedSelect;
 import org.jooq.QueryPartInternal;
 import org.jooq.Record;

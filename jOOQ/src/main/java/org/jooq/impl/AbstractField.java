@@ -70,7 +70,7 @@ import org.jooq.DatePart;
 import org.jooq.Field;
 import org.jooq.LikeEscapeStep;
 import org.jooq.Name;
-// ...
+import org.jooq.Pro;
 import org.jooq.QuantifiedSelect;
 import org.jooq.Record;
 import org.jooq.Record1;

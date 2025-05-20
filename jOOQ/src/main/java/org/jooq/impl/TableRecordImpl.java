@@ -88,7 +88,7 @@ import org.jooq.ForeignKey;
 import org.jooq.Identity;
 import org.jooq.Insert;
 import org.jooq.InsertQuery;
-// ...
+import org.jooq.Pro;
 import org.jooq.Record;
 import org.jooq.Row;
 import org.jooq.SQLDialect;

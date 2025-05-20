@@ -73,7 +73,7 @@ import org.jooq.Name;
 import org.jooq.Operator;
 import org.jooq.OrderField;
 import org.jooq.Path;
-// ...
+import org.jooq.Pro;
 import org.jooq.QuantifiedSelect;
 import org.jooq.QueryPart;
 import org.jooq.Record;

@@ -54,7 +54,7 @@ import static org.jooq.impl.Names.N_DUAL;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Name;
-// ...
+import org.jooq.Pro;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;

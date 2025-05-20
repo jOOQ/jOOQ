@@ -277,7 +277,7 @@ import org.jooq.JSON;
 import org.jooq.JSONB;
 import org.jooq.Package;
 import org.jooq.Param;
-// ...
+import org.jooq.Pro;
 import org.jooq.QualifiedRecord;
 import org.jooq.Record;
 import org.jooq.RecordQualifier;

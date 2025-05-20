@@ -92,7 +92,7 @@ import org.jooq.Field;
 import org.jooq.Function1;
 import org.jooq.JSONArrayAggOrderByStep;
 import org.jooq.OrderField;
-// ...
+import org.jooq.Pro;
 import org.jooq.Record;
 import org.jooq.SQLDialect;
 import org.jooq.Scope;

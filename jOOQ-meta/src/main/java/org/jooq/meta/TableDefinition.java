@@ -40,7 +40,7 @@ package org.jooq.meta;
 
 import java.util.List;
 
-// ...
+import org.jooq.Pro;
 import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableOptions;

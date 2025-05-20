@@ -70,7 +70,7 @@ import org.jooq.Field;
 import org.jooq.InsertSetStep;
 import org.jooq.MergeUsingStep;
 import org.jooq.Name;
-// ...
+import org.jooq.Pro;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Record1;

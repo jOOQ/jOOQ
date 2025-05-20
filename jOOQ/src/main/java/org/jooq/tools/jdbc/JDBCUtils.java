@@ -53,7 +53,7 @@ import java.sql.SQLInput;
 import java.sql.SQLXML;
 import java.sql.Statement;
 
-// ...
+import org.jooq.Pro;
 import org.jooq.SQLDialect;
 import org.jooq.impl.QOM.ForeignKeyRule;
 import org.jooq.tools.JooqLogger;

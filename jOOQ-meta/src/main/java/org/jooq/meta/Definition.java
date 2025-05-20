@@ -41,7 +41,7 @@ package org.jooq.meta;
 import java.util.List;
 
 import org.jooq.Name;
-// ...
+import org.jooq.Pro;
 import org.jooq.meta.jaxb.CommentType;
 import org.jooq.meta.jaxb.ForcedType;
 import org.jooq.meta.jaxb.SyntheticObjectsType;

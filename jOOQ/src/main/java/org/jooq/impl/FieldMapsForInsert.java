@@ -107,7 +107,7 @@ import org.jooq.Field;
 import org.jooq.FieldOrRow;
 import org.jooq.GeneratorStatementType;
 import org.jooq.Param;
-// ...
+import org.jooq.Pro;
 import org.jooq.Record;
 import org.jooq.RenderContext.CastMode;
 import org.jooq.Row;

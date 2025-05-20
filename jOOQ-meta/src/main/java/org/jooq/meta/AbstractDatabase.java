@@ -113,7 +113,7 @@ import org.jooq.MetaProvider;
 import org.jooq.Name;
 import org.jooq.Param;
 import org.jooq.Parser;
-// ...
+import org.jooq.Pro;
 import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.Record14;

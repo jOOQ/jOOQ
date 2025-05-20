@@ -204,7 +204,7 @@ import org.jooq.Index;
 import org.jooq.Keyword;
 import org.jooq.Name;
 import org.jooq.Nullability;
-// ...
+import org.jooq.Pro;
 import org.jooq.Query;
 import org.jooq.Record1;
 import org.jooq.SQLDialect;

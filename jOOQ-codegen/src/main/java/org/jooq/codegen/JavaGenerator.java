@@ -131,7 +131,7 @@ import org.jooq.Parameter;
 import org.jooq.Parser;
 import org.jooq.Path;
 import org.jooq.PlainSQL;
-// ...
+import org.jooq.Pro;
 import org.jooq.Query;
 import org.jooq.QueryPart;
 import org.jooq.Record;

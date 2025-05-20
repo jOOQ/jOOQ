@@ -74,7 +74,7 @@ import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Param;
-// ...
+import org.jooq.Pro;
 import org.jooq.RenderContext.CastMode;
 import org.jooq.conf.ParamType;
 import org.jooq.impl.QOM.UTransient;

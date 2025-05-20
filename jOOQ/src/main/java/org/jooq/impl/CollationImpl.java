@@ -45,7 +45,7 @@ import java.util.Set;
 import org.jooq.Collation;
 import org.jooq.Context;
 import org.jooq.Name;
-// ...
+import org.jooq.Pro;
 import org.jooq.SQLDialect;
 import org.jooq.impl.QOM.UNotYetImplemented;
 

@@ -318,7 +318,7 @@ import org.jooq.Parameter;
 // ...
 import org.jooq.PlainSQL;
 import org.jooq.Privilege;
-// ...
+import org.jooq.Pro;
 import org.jooq.QualifiedRecord;
 import org.jooq.QuantifiedSelect;
 import org.jooq.Queries;

@@ -71,7 +71,7 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.GeneratorStatementType;
 import org.jooq.Name;
-// ...
+import org.jooq.Pro;
 import org.jooq.Record;
 import org.jooq.RowId;
 import org.jooq.SQLDialect;

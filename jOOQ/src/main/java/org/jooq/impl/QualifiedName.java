@@ -45,7 +45,7 @@ import static org.jooq.impl.Tools.stringLiteral;
 
 import org.jooq.Context;
 import org.jooq.Name;
-// ...
+import org.jooq.Pro;
 
 /**
  * The default implementation for a qualified SQL identifier.

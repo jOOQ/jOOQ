@@ -40,7 +40,7 @@ package org.jooq.impl;
 
 import org.jooq.Comparator;
 import org.jooq.Context;
-// ...
+import org.jooq.Pro;
 
 /**
  * @author Lukas Eder

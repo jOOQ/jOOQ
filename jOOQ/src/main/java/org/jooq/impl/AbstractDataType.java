@@ -129,7 +129,7 @@ import org.jooq.JSON;
 import org.jooq.JSONB;
 import org.jooq.Name;
 import org.jooq.Nullability;
-// ...
+import org.jooq.Pro;
 import org.jooq.QualifiedRecord;
 import org.jooq.Record;
 import org.jooq.Result;

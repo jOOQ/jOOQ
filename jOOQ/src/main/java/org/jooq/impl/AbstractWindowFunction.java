@@ -67,7 +67,7 @@ import org.jooq.DataType;
 import org.jooq.GroupField;
 import org.jooq.Name;
 import org.jooq.OrderField;
-// ...
+import org.jooq.Pro;
 import org.jooq.QueryPart;
 import org.jooq.SQLDialect;
 // ...

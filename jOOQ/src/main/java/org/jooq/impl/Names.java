@@ -42,7 +42,7 @@ import static org.jooq.impl.DSL.quotedName;
 import static org.jooq.impl.DSL.systemName;
 
 import org.jooq.Name;
-// ...
+import org.jooq.Pro;
 
 /**
  * An internal {@link Name} cache.

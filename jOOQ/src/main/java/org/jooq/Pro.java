@@ -37,35 +37,32 @@
  */
 package org.jooq;
 
+import static java.lang.annotation.ElementType.CONSTRUCTOR;
+import static java.lang.annotation.ElementType.FIELD;
+import static java.lang.annotation.ElementType.LOCAL_VARIABLE;
+import static java.lang.annotation.ElementType.METHOD;
+import static java.lang.annotation.ElementType.PARAMETER;
+import static java.lang.annotation.ElementType.TYPE;
+import static java.lang.annotation.RetentionPolicy.CLASS;
 
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
 
+/**
+ * An annotation that indicates that any given API is available to the
+ * commercial jOOQ distributions only, including the jOOQ Express Edition, the
+ * jOOQ Professional Edition, and the jOOQ Enterprise Edition.
+ * <p>
+ * Among other things, this is used to remove logic (e.g. classes, methods) and
+ * (static) imports from referencing classes.
+ *
+ * @author Lukas Eder
+ */
+@Documented
+@Retention(CLASS)
+@Target({ TYPE, FIELD, METHOD, PARAMETER, CONSTRUCTOR, LOCAL_VARIABLE })
+public @interface Pro {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}
 

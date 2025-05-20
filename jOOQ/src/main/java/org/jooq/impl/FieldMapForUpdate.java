@@ -112,7 +112,7 @@ import org.jooq.Field;
 import org.jooq.FieldOrRow;
 import org.jooq.FieldOrRowOrSelect;
 import org.jooq.GeneratorStatementType;
-// ...
+import org.jooq.Pro;
 import org.jooq.QueryPart;
 import org.jooq.RenderContext.CastMode;
 import org.jooq.Row;

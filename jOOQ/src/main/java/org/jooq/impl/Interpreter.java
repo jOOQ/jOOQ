@@ -1585,6 +1585,7 @@ final class Interpreter {
 
 
 
+                case DUCKDB:
                 case MARIADB:
                 case MYSQL:
                 case SQLITE:

@@ -108,7 +108,7 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
 
         this.catalogFilter = catalogFilter;
         this.schemaFilter = schemaFilter;
-        this.dependencies = new DependenciesImpl(this);
+        this.dependencies = new DependenciesImpl(configuration.dsl(), this);
     }
 
     abstract AbstractMeta filtered0(Predicate<? super Catalog> catalogFilter, Predicate<? super Schema> schemaFilter);

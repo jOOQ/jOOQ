@@ -47,6 +47,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.jooq.DSLContext;
 import org.jooq.Dependencies;
 import org.jooq.Meta;
 import org.jooq.Queries;
@@ -60,6 +61,8 @@ import org.jooq.tools.JooqLogger;
  * @author Lukas Eder
  */
 final class DependenciesImpl implements Dependencies {
+
+
 
 
 

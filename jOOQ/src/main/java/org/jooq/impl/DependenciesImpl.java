@@ -62,24 +62,22 @@ import org.jooq.tools.JooqLogger;
  */
 final class DependenciesImpl implements Dependencies {
 
+    private static final JooqLogger    log = JooqLogger.getLogger(DependenciesImpl.class);
 
+    final DSLContext                   ctx;
+    final Meta                         meta;
+    final Map<Table<?>, Set<Table<?>>> viewTables;
+    final Map<Table<?>, Set<Table<?>>> viewTablesTransitive;
 
+    DependenciesImpl(DSLContext ctx, Meta meta) {
+        this.ctx = ctx;
+        this.meta = meta;
+        this.viewTables = new HashMap<>();
+        this.viewTablesTransitive = new HashMap<>();
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    @Override
+    public final Set<Table<?>> viewTables(Table<?> view) {
 
 
 

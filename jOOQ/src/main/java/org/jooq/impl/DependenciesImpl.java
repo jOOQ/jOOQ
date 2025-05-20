@@ -39,6 +39,8 @@ package org.jooq.impl;
 
 import static java.util.Collections.emptySet;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -47,10 +49,12 @@ import java.util.Set;
 
 import org.jooq.Dependencies;
 import org.jooq.Meta;
+import org.jooq.Queries;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableOptions;
 // ...
+import org.jooq.tools.JooqLogger;
 
 /**
  * @author Lukas Eder
@@ -93,8 +97,68 @@ final class DependenciesImpl implements Dependencies {
 
 
 
+
+
+
+
+
+
+
         return emptySet();
     }
+
+    @Override
+    public final Set<Table<?>> viewTablesTransitive(Table<?> view) {
+        return viewTablesTransitive.computeIfAbsent(view, v -> {
+            Set<Table<?>> result = new LinkedHashSet<>();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            return result;
+        });
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

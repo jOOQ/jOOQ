@@ -52,8 +52,14 @@ import org.jetbrains.annotations.NotNull;
 public interface Dependencies {
 
     /**
-     * The table dependencies of a view.
+     * The direct table dependencies of a view.
      */
     @NotNull
     Set<Table<?>> viewTables(Table<?> view);
+
+    /**
+     * The and transitive table dependencies of a view.
+     */
+    @NotNull
+    Set<Table<?>> viewTablesTransitive(Table<?> view);
 }

@@ -746,86 +746,16 @@ final class DDL {
 
 
 
+
+
+
+
+
             return result;
         }
 
         return input;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     private ConstraintEnforcementStep rules(
         ConstraintForeignKeyOnStep on,

@@ -378,6 +378,12 @@ final class Interpreter {
             IndexImpl impl = (IndexImpl) index;
             mt.indexes.add(new MutableIndex((UnqualifiedName) impl.getUnqualifiedName(), mt, mt.sortFields(asList(impl.$fields())), impl.$unique(), impl.$where()));
         }
+
+
+
+
+
+
     }
 
     private final void addForeignKey(MutableTable mt, QOM.ForeignKey foreignKey) {
@@ -441,6 +447,13 @@ final class Interpreter {
                 cascade(table.primaryKey, null, check ? RESTRICT : CASCADE);
 
             cascade(table.uniqueKeys, null, check);
+
+
+
+
+
+
+
 
 
 
@@ -872,6 +885,11 @@ final class Interpreter {
         }
 
         if (query.$query() instanceof Select<?> s) {
+
+
+
+
+
             newTable(table, schema, query.$fields(), s, null,
                 query.$materialized() ? TableOptions.materializedView(s) : TableOptions.view(s)
             );
@@ -901,10 +919,17 @@ final class Interpreter {
         else if (existing.options.type() != MATERIALIZED_VIEW && query.$materialized())
             throw objectNotMaterializedView(table);
 
-        if (query.$renameTo() != null && checkNotExists(schema, query.$renameTo()))
+        if (query.$renameTo() != null && checkNotExists(schema, query.$renameTo())) {
             existing.name((UnqualifiedName) query.$renameTo().getUnqualifiedName());
-        else if (query.$as() != null)
+        }
+        else if (query.$as() != null) {
+
+
+
+
+
             initTable(existing, query.$fields(), query.$as(), TableOptions.view(query.$as()));
+        }
         else
             throw unsupportedQuery(query);
     }
@@ -1533,6 +1558,18 @@ final class Interpreter {
             for (Field<?> column : internalFieldsRow0((FieldsTrait) select).fields())
                 addField(t, Integer.MAX_VALUE, (UnqualifiedName) column.getUnqualifiedName(), column.getDataType());
 
+
+
+
+
+
+
+
+
+
+
+
+
         return t;
     }
 
@@ -1939,6 +1976,11 @@ final class Interpreter {
         }
     }
 
+    private static final boolean isView(TableOptions options) {
+        return options.type() == MATERIALIZED_VIEW
+            || options.type() == VIEW;
+    }
+
     private final class MutableTable extends MutableNamed {
         MutableSchema           schema;
         TableOptions            options;
@@ -1948,6 +1990,8 @@ final class Interpreter {
         List<MutableForeignKey> foreignKeys         = new MutableNamedList<>();
         List<MutableCheck>      checks              = new MutableNamedList<>();
         List<MutableIndex>      indexes             = new MutableNamedList<>();
+
+
 
 
 
@@ -1974,7 +2018,19 @@ final class Interpreter {
 
 
 
+
         }
+
+
+
+
+
+
+
+
+
+
+
 
         @Override
         final MutableNamed parent() {

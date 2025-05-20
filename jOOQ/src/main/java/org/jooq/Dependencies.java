@@ -39,11 +39,16 @@ package org.jooq;
 
 import java.util.Set;
 
+import org.jooq.conf.Settings;
+
 import org.jetbrains.annotations.NotNull;
 
 /**
  * A representation of the object dependencies between the various objects in a
  * {@link Meta} object collection.
+ * <p>
+ * Unqualified table references are looked up using
+ * {@link Settings#getInterpreterSearchPath()}.
  * <p>
  * This is a commercial jOOQ edition only feature.
  *

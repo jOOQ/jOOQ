@@ -51,7 +51,6 @@ import static org.jooq.impl.DSL.schema;
 import static org.jooq.impl.FieldsImpl.internalFieldsRow0;
 import static org.jooq.impl.QOM.Cascade.CASCADE;
 import static org.jooq.impl.QOM.Cascade.RESTRICT;
-import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.allMatch;
 import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.map;
@@ -124,7 +123,6 @@ import org.jooq.impl.DefaultParseContext.IgnoreQuery;
 import org.jooq.impl.QOM.Cascade;
 import org.jooq.impl.QOM.CycleOption;
 import org.jooq.impl.QOM.ForeignKeyRule;
-import org.jooq.impl.QOM.PrimaryKey;
 import org.jooq.tools.JooqLogger;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -447,6 +445,9 @@ final class Interpreter {
                 cascade(table.primaryKey, null, check ? RESTRICT : CASCADE);
 
             cascade(table.uniqueKeys, null, check);
+
+
+
 
 
 

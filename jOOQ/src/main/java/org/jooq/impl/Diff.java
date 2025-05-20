@@ -115,6 +115,7 @@ import org.jooq.QueryPart;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Sequence;
+// ...
 import org.jooq.Table;
 import org.jooq.TableOptions.TableType;
 // ...
@@ -250,6 +251,11 @@ final class Diff {
                     for (Sequence<?> seq : s.getSequences())
                         dropSequence().drop(r, seq);
 
+
+
+
+
+
                     if (!StringUtils.isEmpty(s.getName()))
                         r.queries.add(ctx.dropSchema(s));
                 }
@@ -257,10 +263,30 @@ final class Diff {
             (r, s1, s2) -> {
                 appendDomains(r, s1.getDomains(), s2.getDomains());
                 appendTables(r, s1.getTables(), s2.getTables());
+
+
+
                 appendSequences(r, s1.getSequences(), s2.getSequences());
             }
         );
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private final Drop<Sequence<?>> dropSequence() {
         return (r, s) -> r.queries.add(ctx.dropSequence(s));

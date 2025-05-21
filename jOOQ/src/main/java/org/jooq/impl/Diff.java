@@ -1036,6 +1036,9 @@ final class Diff {
     }
 
     static final int sortIndex(Query q) {
+        final int CATALOG = 10;
+        final int SCHEMA = 9;
+        final int SEQ = 8;
         final int SYN = 7;
         final int COMM = 6;
         final int VIEW = 5;
@@ -1073,6 +1076,22 @@ final class Diff {
 
                 : 0;
         }
+
+        // [#18506] Objects that are created first, dropped last
+        else if (q instanceof QOM.DropDatabase)
+            return CATALOG;
+        else if (q instanceof QOM.CreateDatabase)
+            return -CATALOG;
+        else if (q instanceof QOM.DropSchema)
+            return SCHEMA;
+        else if (q instanceof QOM.CreateSchema)
+            return -SCHEMA;
+        else if (q instanceof QOM.DropSequence)
+            return SEQ;
+        else if (q instanceof QOM.CreateSequence)
+            return -SEQ;
+
+        // [#18327] [#18481] [#18503] Objects with dependencies on tables
         else if (q instanceof QOM.DropIndex)
             return -CONS;
         else if (q instanceof QOM.CreateIndex)

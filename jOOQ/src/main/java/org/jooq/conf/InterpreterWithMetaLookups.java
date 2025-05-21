@@ -6,13 +6,12 @@ import jakarta.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for ParseWithMetaLookups.
+ * <p>Java class for InterpreterWithMetaLookups.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * <pre>
- * &lt;simpleType name="ParseWithMetaLookups"&gt;
+ * &lt;simpleType name="InterpreterWithMetaLookups"&gt;
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string"&gt;
- *     &lt;enumeration value="OFF"/&gt;
  *     &lt;enumeration value="IGNORE_ON_FAILURE"/&gt;
  *     &lt;enumeration value="THROW_ON_FAILURE"/&gt;
  *   &lt;/restriction&gt;
@@ -20,25 +19,19 @@ import jakarta.xml.bind.annotation.XmlType;
  * </pre>
  * 
  */
-@XmlType(name = "ParseWithMetaLookups")
+@XmlType(name = "InterpreterWithMetaLookups")
 @XmlEnum
-public enum ParseWithMetaLookups {
+public enum InterpreterWithMetaLookups {
 
 
     /**
-     * Meta lookups are deactivated in the parser
-     * 
-     */
-    OFF,
-
-    /**
-     * Meta lookups are active in the parser, but don't throw exceptions on failure
+     * Meta lookups are active in interpreter, but don't throw exceptions on failure
      * 
      */
     IGNORE_ON_FAILURE,
 
     /**
-     * Meta lookups are active in the parser and throw exceptions on failure
+     * Meta lookups are active in interpreter and throw exceptions on failure
      * 
      */
     THROW_ON_FAILURE;
@@ -47,7 +40,7 @@ public enum ParseWithMetaLookups {
         return name();
     }
 
-    public static ParseWithMetaLookups fromValue(String v) {
+    public static InterpreterWithMetaLookups fromValue(String v) {
         return valueOf(v);
     }
 

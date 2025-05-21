@@ -42,6 +42,7 @@ import static java.util.Arrays.asList;
 import static org.jooq.Name.Quoted.QUOTED;
 import static org.jooq.TableOptions.TableType.MATERIALIZED_VIEW;
 import static org.jooq.TableOptions.TableType.VIEW;
+import static org.jooq.conf.InterpreterWithMetaLookups.THROW_ON_FAILURE;
 import static org.jooq.conf.SettingsTools.interpreterLocale;
 import static org.jooq.impl.AbstractName.NO_NAME;
 import static org.jooq.impl.ConstraintType.FOREIGN_KEY;
@@ -117,6 +118,7 @@ import org.jooq.UniqueKey;
 import org.jooq.Update;
 import org.jooq.conf.InterpreterNameLookupCaseSensitivity;
 import org.jooq.conf.InterpreterSearchSchema;
+import org.jooq.conf.InterpreterWithMetaLookups;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataDefinitionException;
 import org.jooq.impl.DefaultParseContext.IgnoreQuery;
@@ -313,7 +315,7 @@ final class Interpreter {
         Schema schema = query.$schema();
 
         if (getSchema(schema, false, false) != null) {
-            if (!query.$ifNotExists())
+            if (!query.$ifNotExists() && throwIfMetaLookupFails())
                 throw alreadyExists(schema);
 
             return;
@@ -333,7 +335,10 @@ final class Interpreter {
             Schema renameTo = query.$renameTo();
 
             if (getSchema(renameTo, false, false) != null)
-                throw alreadyExists(renameTo);
+                if (throwIfMetaLookupFails())
+                    throw alreadyExists(renameTo);
+                else
+                    return;
 
             oldSchema.name((UnqualifiedName) renameTo.getUnqualifiedName());
             return;
@@ -361,7 +366,7 @@ final class Interpreter {
         // TODO We're doing this all the time. Can this be factored out without adding too much abstraction?
         MutableTable existing = schema.table(table, false);
         if (existing != null) {
-            if (!query.$ifNotExists())
+            if (!query.$ifNotExists() && throwIfMetaLookupFails())
                 throw alreadyExists(table, existing);
 
             return;
@@ -421,7 +426,10 @@ final class Interpreter {
         MutableUniqueKey mu = null;
 
         if (mrf == null)
-            throw notExists(key.$referencesTable());
+            if (throwIfMetaLookupFails())
+                throw notExists(key.$referencesTable());
+            else
+                return;
 
         List<MutableField> mfs = mt.fields(key.$fields(), true);
         List<MutableField> mrfs = mrf.fields(key.$referencesFields(), true);
@@ -432,7 +440,10 @@ final class Interpreter {
             mrfs = (mu = mrf.primaryKey).fields;
 
         if (mu == null)
-            throw primaryKeyNotExists(key.$referencesTable());
+            if (throwIfMetaLookupFails())
+                throw primaryKeyNotExists(key.$referencesTable());
+            else
+                return;
 
         mt.foreignKeys.add(new MutableForeignKey(
             (UnqualifiedName) key.getUnqualifiedName(), mt, mfs, mu, mrfs, key.$deleteRule(), key.$updateRule(), key.$enforced()
@@ -556,7 +567,7 @@ final class Interpreter {
         MutableSchema schema = getSchema(table.getSchema());
         MutableTable existing = schema.table(table, true);
         if (existing == null) {
-            if (!query.$ifExists())
+            if (!query.$ifExists() && throwIfMetaLookupFails())
                 throw notExists(table);
 
             return;
@@ -565,11 +576,20 @@ final class Interpreter {
             throw objectNotTable(table);
 
         if (query.$add() != null) {
-            for (TableElement fc : query.$add())
-                if (fc instanceof Field && find(existing.fields, (Field<?>) fc) != null)
-                    throw alreadyExists(fc);
-                else if (fc instanceof Constraint && !fc.getUnqualifiedName().empty() && existing.constraint((Constraint) fc) != null)
-                    throw alreadyExists(fc);
+            for (TableElement fc : query.$add()) {
+                if (fc instanceof Field && find(existing.fields, (Field<?>) fc) != null) {
+                    if (throwIfMetaLookupFails())
+                        throw alreadyExists(fc);
+                    else
+                        return;
+                }
+                else if (fc instanceof Constraint && !fc.getUnqualifiedName().empty() && existing.constraint((Constraint) fc) != null) {
+                    if (throwIfMetaLookupFails())
+                        throw alreadyExists(fc);
+                    else
+                        return;
+                }
+            }
 
             // TODO: ReverseIterable is not a viable approach if we also allow constraints to be added this way
             if (query.$addFirst()) {
@@ -600,7 +620,7 @@ final class Interpreter {
         }
         else if (query.$addColumn() != null) {
             if (find(existing.fields, query.$addColumn()) != null)
-                if (!query.$ifNotExistsColumn())
+                if (!query.$ifNotExistsColumn() && throwIfMetaLookupFails())
                     throw alreadyExists(query.$addColumn());
                 else
                     return;
@@ -624,7 +644,7 @@ final class Interpreter {
             MutableField existingField = find(existing.fields, query.$alterColumn());
 
             if (existingField == null)
-                if (!query.$ifExistsColumn())
+                if (!query.$ifExistsColumn() && throwIfMetaLookupFails())
                     throw notExists(query.$alterColumn());
                 else
                     return;
@@ -654,18 +674,30 @@ final class Interpreter {
         else if (query.$renameColumn() != null) {
             MutableField mf = find(existing.fields, query.$renameColumn());
 
-            if (mf == null)
-                throw notExists(query.$renameColumn());
-            else if (find(existing.fields, query.$renameColumnTo()) != null)
-                throw alreadyExists(query.$renameColumnTo());
+            if (mf == null) {
+                if (throwIfMetaLookupFails())
+                    throw notExists(query.$renameColumn());
+                else
+                    return;
+            }
+            else if (find(existing.fields, query.$renameColumnTo()) != null) {
+                if (throwIfMetaLookupFails())
+                    throw alreadyExists(query.$renameColumnTo());
+                else
+                    return;
+            }
             else
                 mf.name((UnqualifiedName) query.$renameColumnTo().getUnqualifiedName());
         }
         else if (query.$renameConstraint() != null) {
             MutableConstraint mc = existing.constraint(query.$renameConstraint(), true);
 
-            if (existing.constraint(query.$renameConstraintTo()) != null)
-                throw alreadyExists(query.$renameConstraintTo());
+            if (existing.constraint(query.$renameConstraintTo()) != null) {
+                if (throwIfMetaLookupFails())
+                    throw alreadyExists(query.$renameConstraintTo());
+                else
+                    return;
+            }
             else
                 mc.name((UnqualifiedName) query.$renameConstraintTo().getUnqualifiedName());
         }
@@ -758,7 +790,7 @@ final class Interpreter {
                 }
             }
 
-            if (!query.$ifExistsConstraint())
+            if (!query.$ifExistsConstraint() && throwIfMetaLookupFails())
                 throw notExists(query.$dropConstraint());
         }
         else if (query.$dropConstraintType() == PRIMARY_KEY) {
@@ -766,7 +798,7 @@ final class Interpreter {
                 cascade(existing.primaryKey, null, query.$dropCascade());
                 existing.primaryKey = null;
             }
-            else
+            else if (throwIfMetaLookupFails())
                 throw primaryKeyNotExists(table);
         }
         else
@@ -803,10 +835,18 @@ final class Interpreter {
         MutableField field = new MutableField(name, existing, dataType);
 
         for (MutableField mf : existing.fields)
-            if (mf.nameEquals(field.name()))
-                throw columnAlreadyExists(field.qualifiedName());
-            else if (mf.type.identity() && dataType.identity())
-                throw exception("Table can only have one identity: " + mf.qualifiedName());
+            if (mf.nameEquals(field.name())) {
+                if (throwIfMetaLookupFails())
+                    throw columnAlreadyExists(field.qualifiedName());
+                else
+                    return;
+            }
+            else if (mf.type.identity() && dataType.identity()) {
+                if (throwIfMetaLookupFails())
+                    throw exception("Table can only have one identity: " + mf.qualifiedName());
+                else
+                    return;
+            }
 
         if (index == Integer.MAX_VALUE)
             existing.fields.add(field);
@@ -816,11 +856,18 @@ final class Interpreter {
 
     private final void addConstraint(Query query, Constraint constraint, MutableTable existing) {
         if (!constraint.getUnqualifiedName().empty() && existing.constraint(constraint) != null)
-            throw alreadyExists(constraint);
+            if (throwIfMetaLookupFails())
+                throw alreadyExists(constraint);
+            else
+                return;
 
         if (constraint instanceof QOM.PrimaryKey p) {
-            if (existing.primaryKey != null)
-                throw alreadyExists(constraint);
+            if (existing.primaryKey != null) {
+                if (throwIfMetaLookupFails())
+                    throw alreadyExists(constraint);
+                else
+                    return;
+            }
             else
                 existing.primaryKey = new MutableUniqueKey((UnqualifiedName) constraint.getUnqualifiedName(), existing, existing.fields(p.$fields(), true), p.$enforced());
         }
@@ -840,7 +887,7 @@ final class Interpreter {
         MutableSchema schema = getSchema(table.getSchema());
         MutableTable existing = schema.table(table, true);
         if (existing == null) {
-            if (!query.$ifExists())
+            if (!query.$ifExists() && throwIfMetaLookupFails())
                 throw notExists(table);
 
             return;
@@ -858,8 +905,12 @@ final class Interpreter {
             MutableSchema schema = getSchema(table.getSchema());
             MutableTable existing = schema.table(table, true);
 
-            if (existing == null)
-                throw notExists(table);
+            if (existing == null) {
+                if (throwIfMetaLookupFails())
+                    throw notExists(table);
+                else
+                    return;
+            }
             else if (!existing.options.type().isTable())
                 throw objectNotTable(table);
             else if (query.$cascade() != Cascade.CASCADE && existing.hasReferencingKeys())
@@ -879,7 +930,7 @@ final class Interpreter {
                 throw objectNotMaterializedView(table);
             else if (query.$orReplace())
                 drop(schema.tables, existing, RESTRICT);
-            else if (!query.$ifNotExists())
+            else if (!query.$ifNotExists() && throwIfMetaLookupFails())
                 throw viewAlreadyExists(table);
             else
                 return;
@@ -907,7 +958,7 @@ final class Interpreter {
 
         MutableTable existing = schema.table(table, true);
         if (existing == null) {
-            if (!query.$ifExists())
+            if (!query.$ifExists() && throwIfMetaLookupFails())
                 if (query.$materialized())
                     throw materializedViewNotExists(table);
                 else
@@ -941,7 +992,7 @@ final class Interpreter {
 
         MutableTable existing = schema.table(table, true);
         if (existing == null) {
-            if (!query.$ifExists())
+            if (!query.$ifExists() && throwIfMetaLookupFails())
                 if (query.$materialized())
                     throw materializedViewNotExists(table);
                 else
@@ -963,7 +1014,7 @@ final class Interpreter {
 
         MutableSequence existing = schema.sequence(sequence);
         if (existing != null) {
-            if (!query.$ifNotExists())
+            if (!query.$ifNotExists() && throwIfMetaLookupFails())
                 throw alreadyExists(sequence);
 
             return;
@@ -986,7 +1037,7 @@ final class Interpreter {
 
         MutableSequence existing = schema.sequence(sequence);
         if (existing == null) {
-            if (!query.$ifExists())
+            if (!query.$ifExists() && throwIfMetaLookupFails())
                 throw notExists(sequence);
 
             return;
@@ -996,7 +1047,10 @@ final class Interpreter {
             Sequence<?> renameTo = query.$renameTo();
 
             if (schema.sequence(renameTo) != null)
-                throw alreadyExists(renameTo);
+                if (throwIfMetaLookupFails())
+                    throw alreadyExists(renameTo);
+                else
+                    return;
 
             existing.name((UnqualifiedName) renameTo.getUnqualifiedName());
         }
@@ -1043,7 +1097,7 @@ final class Interpreter {
 
         MutableSequence existing = schema.sequence(sequence);
         if (existing == null) {
-            if (!query.$ifExists())
+            if (!query.$ifExists() && throwIfMetaLookupFails())
                 throw notExists(sequence);
 
             return;
@@ -1167,6 +1221,18 @@ final class Interpreter {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
     private final void accept0(CreateIndexImpl query) {
         Index index = query.$index();
         Table<?> table = query.$table();
@@ -1174,12 +1240,15 @@ final class Interpreter {
         MutableTable mt = schema.table(table, true);
 
         if (mt == null)
-            throw notExists(table);
+            if (throwIfMetaLookupFails())
+                throw notExists(table);
+            else
+                return;
 
         MutableIndex existing = find(mt.indexes, index);
 
         if (existing != null) {
-            if (!query.$ifNotExists())
+            if (!query.$ifNotExists() && throwIfMetaLookupFails())
                 throw alreadyExists(index);
 
             return;
@@ -1195,11 +1264,14 @@ final class Interpreter {
         MutableIndex existing = index(table, index, query.$ifExists(), true);
 
         if (existing != null) {
-            if (query.$renameTo() != null)
+            if (query.$renameTo() != null) {
                 if (index(table, query.$renameTo(), false, false) == null)
                     existing.name((UnqualifiedName) query.$renameTo().getUnqualifiedName());
-                else
+                else if (throwIfMetaLookupFails())
                     throw alreadyExists(query.$renameTo());
+                else
+                    return;
+            }
             else
                 throw unsupportedQuery(query);
         }
@@ -1220,7 +1292,7 @@ final class Interpreter {
 
         MutableDomain existing = schema.domain(domain);
         if (existing != null) {
-            if (!query.$ifNotExists())
+            if (!query.$ifNotExists() && throwIfMetaLookupFails())
                 throw alreadyExists(domain);
 
             return;
@@ -1244,7 +1316,7 @@ final class Interpreter {
 
         MutableDomain existing = schema.domain(domain);
         if (existing == null) {
-            if (!query.$ifExists())
+            if (!query.$ifExists() && throwIfMetaLookupFails())
                 throw notExists(domain);
 
             return;
@@ -1254,7 +1326,10 @@ final class Interpreter {
             Constraint addConstraint = query.$addConstraint();
 
             if (find(existing.checks, addConstraint) != null)
-                throw alreadyExists(addConstraint);
+                if (throwIfMetaLookupFails())
+                    throw alreadyExists(addConstraint);
+                else
+                    return;
 
             existing.checks.add(new MutableCheck((QOM.Check) addConstraint));
         }
@@ -1263,7 +1338,7 @@ final class Interpreter {
             MutableCheck mc = find(existing.checks, dropConstraint);
 
             if (mc == null) {
-                if (!query.$dropConstraintIfExists())
+                if (!query.$dropConstraintIfExists() && throwIfMetaLookupFails())
                     throw notExists(dropConstraint);
 
                 return;
@@ -1275,7 +1350,10 @@ final class Interpreter {
             Domain<?> renameTo = query.$renameTo();
 
             if (schema.domain(renameTo) != null)
-                throw alreadyExists(renameTo);
+                if (throwIfMetaLookupFails())
+                    throw alreadyExists(renameTo);
+                else
+                    return;
 
             existing.name((UnqualifiedName) renameTo.getUnqualifiedName());
         }
@@ -1286,13 +1364,17 @@ final class Interpreter {
             MutableCheck mc = find(existing.checks, renameConstraint);
 
             if (mc == null) {
-                if (!query.$renameConstraintIfExists())
+                if (!query.$renameConstraintIfExists() && throwIfMetaLookupFails())
                     throw notExists(renameConstraint);
 
                 return;
             }
-            else if (find(existing.checks, renameConstraintTo) != null)
-                throw alreadyExists(renameConstraintTo);
+            else if (find(existing.checks, renameConstraintTo) != null) {
+                if (throwIfMetaLookupFails())
+                    throw alreadyExists(renameConstraintTo);
+                else
+                    return;
+            }
 
             mc.name((UnqualifiedName) renameConstraintTo.getUnqualifiedName());
         }
@@ -1316,7 +1398,7 @@ final class Interpreter {
 
         MutableDomain existing = schema.domain(domain);
         if (existing == null) {
-            if (!query.$ifExists())
+            if (!query.$ifExists() && throwIfMetaLookupFails())
                 throw notExists(domain);
 
             return;
@@ -1424,6 +1506,10 @@ final class Interpreter {
         return alreadyExists(typeName(named), named);
     }
 
+    private final boolean throwIfMetaLookupFails() {
+        return configuration.settings().getInterpreterWithMetaLookups() == THROW_ON_FAILURE;
+    }
+
     private static final String typeName(Named named) {
 
         // TODO: Move this to the Named interface
@@ -1502,7 +1588,7 @@ final class Interpreter {
             // TODO createSchemaIfNotExists should probably be configurable
             if (create)
                 schema = new MutableSchema((UnqualifiedName) input.getUnqualifiedName(), catalog, true);
-            else if (throwIfNotExists)
+            else if (throwIfNotExists && throwIfMetaLookupFails())
                 throw notExists(input);
         }
 
@@ -1571,6 +1657,9 @@ final class Interpreter {
 
 
 
+
+
+
         return t;
     }
 
@@ -1581,7 +1670,7 @@ final class Interpreter {
     private final MutableTable table(Table<?> table, boolean throwIfNotExists) {
         MutableTable result = getSchema(table.getSchema(), false, throwIfNotExists).table(table, true);
 
-        if (result == null && throwIfNotExists)
+        if (result == null && throwIfNotExists && throwIfMetaLookupFails())
             throw notExists(table);
 
         return result;
@@ -1618,10 +1707,10 @@ final class Interpreter {
 
         if (mt != null)
             mn = find(mutableElements.apply(mt), element);
-        else if (table != null && throwIfNotExists)
+        else if (table != null && throwIfNotExists && throwIfMetaLookupFails())
             throw notExists(table);
 
-        if (mn == null && !ifExists && throwIfNotExists)
+        if (mn == null && !ifExists && throwIfNotExists && throwIfMetaLookupFails())
             throw notExists(element);
 
         return mn;
@@ -1640,7 +1729,10 @@ final class Interpreter {
         MutableTable mt = schema.table(table, true);
 
         if (mt != null)
-            throw alreadyExists(table, mt);
+            if (throwIfMetaLookupFails())
+                throw alreadyExists(table, mt);
+            else
+                return false;
 
         return true;
     }
@@ -1662,14 +1754,14 @@ final class Interpreter {
         MutableTable table = table(DSL.table(field.getQualifiedName().qualifier()), throwIfNotExists);
 
         if (table == null)
-            if (throwIfNotExists)
+            if (throwIfNotExists && throwIfMetaLookupFails())
                 throw notExists(field);
             else
                 return null;
 
         MutableField result = find(table.fields, field);
 
-        if (result == null && throwIfNotExists)
+        if (result == null && throwIfNotExists && throwIfMetaLookupFails())
             throw notExists(field);
 
         return result;
@@ -2076,7 +2168,7 @@ final class Interpreter {
             if ((result = find(primaryKey, constraint)) != null)
                 return result;
 
-            if (failIfNotFound)
+            if (failIfNotFound && throwIfMetaLookupFails())
                 throw notExists(constraint);
 
             return null;

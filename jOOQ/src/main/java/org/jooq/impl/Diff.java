@@ -1005,6 +1005,7 @@ final class Diff {
     }
 
     static final int sortIndex(Query q) {
+        final int SYN = 7;
         final int COMM = 6;
         final int VIEW = 5;
         final int FKEY = 4;
@@ -1049,6 +1050,12 @@ final class Diff {
             return -VIEW;
         else if (q instanceof QOM.CreateView)
             return VIEW;
+
+
+
+
+
+
         else if (q instanceof QOM.CommentOn)
             return COMM;
         else

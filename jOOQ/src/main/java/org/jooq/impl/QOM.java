@@ -2722,12 +2722,15 @@ public final class QOM {
         @NotNull Table<?> $view();
         boolean $materialized();
         boolean $ifExists();
+        @Nullable Cascade $cascade();
         @CheckReturnValue
         @NotNull DropView $view(Table<?> view);
         @CheckReturnValue
         @NotNull DropView $materialized(boolean materialized);
         @CheckReturnValue
         @NotNull DropView $ifExists(boolean ifExists);
+        @CheckReturnValue
+        @NotNull DropView $cascade(Cascade cascade);
     }
 
     /**

@@ -168,11 +168,11 @@ implements
             ctx.visit(K_IF_EXISTS).sql(' ');
 
         ctx.visit(table);
-        acceptCascade(ctx);
+        acceptCascade0(ctx, cascade);
         ctx.end(Clause.DROP_TABLE_TABLE);
     }
 
-    private final void acceptCascade(Context<?> ctx) {
+    static final void acceptCascade0(Context<?> ctx, Cascade cascade) {
         switch (ctx.family()) {
 
 
@@ -184,7 +184,7 @@ implements
 
 
             default:
-                acceptCascade(ctx, cascade);
+                AbstractDDLQuery.acceptCascade(ctx, cascade);
                 break;
         }
     }

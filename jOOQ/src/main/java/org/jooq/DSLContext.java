@@ -11786,7 +11786,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    DropViewFinalStep dropView(@Stringly.Name String view);
+    DropViewStep dropView(@Stringly.Name String view);
 
     /**
      * The <code>DROP VIEW</code> statement.
@@ -11795,7 +11795,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    DropViewFinalStep dropView(Name view);
+    DropViewStep dropView(Name view);
 
     /**
      * The <code>DROP VIEW</code> statement.
@@ -11804,7 +11804,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    DropViewFinalStep dropView(Table<?> view);
+    DropViewStep dropView(Table<?> view);
 
     /**
      * The <code>DROP VIEW IF EXISTS</code> statement.
@@ -11813,7 +11813,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    DropViewFinalStep dropViewIfExists(@Stringly.Name String view);
+    DropViewStep dropViewIfExists(@Stringly.Name String view);
 
     /**
      * The <code>DROP VIEW IF EXISTS</code> statement.
@@ -11822,7 +11822,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    DropViewFinalStep dropViewIfExists(Name view);
+    DropViewStep dropViewIfExists(Name view);
 
     /**
      * The <code>DROP VIEW IF EXISTS</code> statement.
@@ -11831,7 +11831,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    DropViewFinalStep dropViewIfExists(Table<?> view);
+    DropViewStep dropViewIfExists(Table<?> view);
 
     /**
      * The <code>DROP MATERIALIZED VIEW</code> statement.
@@ -11840,7 +11840,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support({ POSTGRES, YUGABYTEDB })
-    DropViewFinalStep dropMaterializedView(@Stringly.Name String view);
+    DropViewStep dropMaterializedView(@Stringly.Name String view);
 
     /**
      * The <code>DROP MATERIALIZED VIEW</code> statement.
@@ -11849,7 +11849,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support({ POSTGRES, YUGABYTEDB })
-    DropViewFinalStep dropMaterializedView(Name view);
+    DropViewStep dropMaterializedView(Name view);
 
     /**
      * The <code>DROP MATERIALIZED VIEW</code> statement.
@@ -11858,7 +11858,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support({ POSTGRES, YUGABYTEDB })
-    DropViewFinalStep dropMaterializedView(Table<?> view);
+    DropViewStep dropMaterializedView(Table<?> view);
 
     /**
      * The <code>DROP MATERIALIZED VIEW IF EXISTS</code> statement.
@@ -11867,7 +11867,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support({ POSTGRES, YUGABYTEDB })
-    DropViewFinalStep dropMaterializedViewIfExists(@Stringly.Name String view);
+    DropViewStep dropMaterializedViewIfExists(@Stringly.Name String view);
 
     /**
      * The <code>DROP MATERIALIZED VIEW IF EXISTS</code> statement.
@@ -11876,7 +11876,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support({ POSTGRES, YUGABYTEDB })
-    DropViewFinalStep dropMaterializedViewIfExists(Name view);
+    DropViewStep dropMaterializedViewIfExists(Name view);
 
     /**
      * The <code>DROP MATERIALIZED VIEW IF EXISTS</code> statement.
@@ -11885,7 +11885,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support({ POSTGRES, YUGABYTEDB })
-    DropViewFinalStep dropMaterializedViewIfExists(Table<?> view);
+    DropViewStep dropMaterializedViewIfExists(Table<?> view);
 
     /**
      * The <code>GRANT</code> statement.

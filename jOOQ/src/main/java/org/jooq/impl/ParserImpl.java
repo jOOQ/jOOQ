@@ -630,6 +630,7 @@ import org.jooq.DropSchemaStep;
 import org.jooq.DropTableStep;
 // ...
 import org.jooq.DropTypeStep;
+import org.jooq.DropViewStep;
 import org.jooq.Field;
 import org.jooq.FieldOrRow;
 // ...
@@ -4496,9 +4497,14 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
     }
 
     private final DDLQuery parseDropView(boolean materialized) {
-        return materialized
-             ? parseIfExists(this::parseTableName, dsl::dropMaterializedViewIfExists, dsl::dropMaterializedView)
-             : parseIfExists(this::parseTableName, dsl::dropViewIfExists, dsl::dropView);
+        return parseCascadeRestrictIf(
+            materialized
+                 ? parseIfExists(this::parseTableName, dsl::dropMaterializedViewIfExists, dsl::dropMaterializedView)
+                 : parseIfExists(this::parseTableName, dsl::dropViewIfExists, dsl::dropView),
+            DropViewStep::cascade,
+            DropViewStep::restrict,
+            true
+        );
     }
 
     private final DDLQuery parseCreateSequence() {
@@ -5731,7 +5737,16 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         Function<? super S1, ? extends S2> stepCascade,
         Function<? super S1, ? extends S2> stepRestrict
     ) {
-        boolean cascade = parseKeywordIf("CASCADE");
+        return parseCascadeRestrictIf(step, stepCascade, stepRestrict, false);
+    }
+
+    private final <S2 extends QueryPart, S1 extends S2> S2 parseCascadeRestrictIf(
+        S1 step,
+        Function<? super S1, ? extends S2> stepCascade,
+        Function<? super S1, ? extends S2> stepRestrict,
+        boolean cascadeConstraints
+    ) {
+        boolean cascade = parseKeywordIf("CASCADE") && (cascadeConstraints && parseKeywordIf("CONSTRAINTS") || true);
         boolean restrict = !cascade && parseKeywordIf("RESTRICT");
 
         return cascade
@@ -6229,22 +6244,17 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         boolean ifExists = parseKeywordIf("IF EXISTS");
         Table<?> tableName = parseTableName();
         ifExists = ifExists || parseKeywordIf("IF EXISTS");
-        boolean cascade = parseKeywordIf("CASCADE") && (parseKeywordIf("CONSTRAINTS") || true);
-        boolean restrict = !cascade && parseKeywordIf("RESTRICT");
 
-        DropTableStep s1;
-
-        s1 = ifExists
-           ? dsl.dropTableIfExists(tableName)
-           : temporary
-           ? dsl.dropTemporaryTable(tableName)
-           : dsl.dropTable(tableName);
-
-        return cascade
-           ? s1.cascade()
-           : restrict
-           ? s1.restrict()
-           : s1;
+        return parseCascadeRestrictIf(
+            ifExists
+                ? dsl.dropTableIfExists(tableName)
+                : temporary
+                ? dsl.dropTemporaryTable(tableName)
+                : dsl.dropTable(tableName),
+            DropTableStep::cascade,
+            DropTableStep::restrict,
+            true
+        );
     }
 
 

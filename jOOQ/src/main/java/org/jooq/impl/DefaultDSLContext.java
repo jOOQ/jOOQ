@@ -4297,62 +4297,62 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
-    public org.jooq.DropViewFinalStep dropView(@Stringly.Name String view) {
+    public org.jooq.DropViewStep dropView(@Stringly.Name String view) {
         return new DropViewImpl(configuration(), DSL.table(DSL.name(view)), false, false);
     }
 
     @Override
-    public org.jooq.DropViewFinalStep dropView(Name view) {
+    public org.jooq.DropViewStep dropView(Name view) {
         return new DropViewImpl(configuration(), DSL.table(view), false, false);
     }
 
     @Override
-    public org.jooq.DropViewFinalStep dropView(Table<?> view) {
+    public org.jooq.DropViewStep dropView(Table<?> view) {
         return new DropViewImpl(configuration(), view, false, false);
     }
 
     @Override
-    public org.jooq.DropViewFinalStep dropViewIfExists(@Stringly.Name String view) {
+    public org.jooq.DropViewStep dropViewIfExists(@Stringly.Name String view) {
         return new DropViewImpl(configuration(), DSL.table(DSL.name(view)), false, true);
     }
 
     @Override
-    public org.jooq.DropViewFinalStep dropViewIfExists(Name view) {
+    public org.jooq.DropViewStep dropViewIfExists(Name view) {
         return new DropViewImpl(configuration(), DSL.table(view), false, true);
     }
 
     @Override
-    public org.jooq.DropViewFinalStep dropViewIfExists(Table<?> view) {
+    public org.jooq.DropViewStep dropViewIfExists(Table<?> view) {
         return new DropViewImpl(configuration(), view, false, true);
     }
 
     @Override
-    public org.jooq.DropViewFinalStep dropMaterializedView(@Stringly.Name String view) {
+    public org.jooq.DropViewStep dropMaterializedView(@Stringly.Name String view) {
         return new DropViewImpl(configuration(), DSL.table(DSL.name(view)), true, false);
     }
 
     @Override
-    public org.jooq.DropViewFinalStep dropMaterializedView(Name view) {
+    public org.jooq.DropViewStep dropMaterializedView(Name view) {
         return new DropViewImpl(configuration(), DSL.table(view), true, false);
     }
 
     @Override
-    public org.jooq.DropViewFinalStep dropMaterializedView(Table<?> view) {
+    public org.jooq.DropViewStep dropMaterializedView(Table<?> view) {
         return new DropViewImpl(configuration(), view, true, false);
     }
 
     @Override
-    public org.jooq.DropViewFinalStep dropMaterializedViewIfExists(@Stringly.Name String view) {
+    public org.jooq.DropViewStep dropMaterializedViewIfExists(@Stringly.Name String view) {
         return new DropViewImpl(configuration(), DSL.table(DSL.name(view)), true, true);
     }
 
     @Override
-    public org.jooq.DropViewFinalStep dropMaterializedViewIfExists(Name view) {
+    public org.jooq.DropViewStep dropMaterializedViewIfExists(Name view) {
         return new DropViewImpl(configuration(), DSL.table(view), true, true);
     }
 
     @Override
-    public org.jooq.DropViewFinalStep dropMaterializedViewIfExists(Table<?> view) {
+    public org.jooq.DropViewStep dropMaterializedViewIfExists(Table<?> view) {
         return new DropViewImpl(configuration(), view, true, true);
     }
 

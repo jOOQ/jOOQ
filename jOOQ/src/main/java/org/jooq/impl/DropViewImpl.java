@@ -52,6 +52,7 @@ import org.jooq.*;
 import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.ParamType;
+import org.jooq.impl.QOM.Cascade;
 import org.jooq.tools.StringUtils;
 
 import java.util.ArrayList;
@@ -73,12 +74,14 @@ extends
     AbstractDDLQuery
 implements
     QOM.DropView,
+    DropViewStep,
     DropViewFinalStep
 {
 
     final Table<?> view;
     final boolean  materialized;
     final boolean  ifExists;
+          Cascade  cascade;
 
     DropViewImpl(
         Configuration configuration,
@@ -86,11 +89,44 @@ implements
         boolean materialized,
         boolean ifExists
     ) {
+        this(
+            configuration,
+            view,
+            materialized,
+            ifExists,
+            null
+        );
+    }
+
+    DropViewImpl(
+        Configuration configuration,
+        Table<?> view,
+        boolean materialized,
+        boolean ifExists,
+        Cascade cascade
+    ) {
         super(configuration);
 
         this.view = view;
         this.materialized = materialized;
         this.ifExists = ifExists;
+        this.cascade = cascade;
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: DSL API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final DropViewImpl cascade() {
+        this.cascade = Cascade.CASCADE;
+        return this;
+    }
+
+    @Override
+    public final DropViewImpl restrict() {
+        this.cascade = Cascade.RESTRICT;
+        return this;
     }
 
     // -------------------------------------------------------------------------
@@ -147,7 +183,7 @@ implements
 
 
         ctx.visit(view);
-
+        DropTableImpl.acceptCascade0(ctx, cascade);
         ctx.end(Clause.DROP_VIEW_TABLE);
     }
 
@@ -178,23 +214,34 @@ implements
     }
 
     @Override
+    public final Cascade $cascade() {
+        return cascade;
+    }
+
+    @Override
     public final QOM.DropView $view(Table<?> newValue) {
-        return $constructor().apply(newValue, $materialized(), $ifExists());
+        return $constructor().apply(newValue, $materialized(), $ifExists(), $cascade());
     }
 
     @Override
     public final QOM.DropView $materialized(boolean newValue) {
-        return $constructor().apply($view(), newValue, $ifExists());
+        return $constructor().apply($view(), newValue, $ifExists(), $cascade());
     }
 
     @Override
     public final QOM.DropView $ifExists(boolean newValue) {
-        return $constructor().apply($view(), $materialized(), newValue);
+        return $constructor().apply($view(), $materialized(), newValue, $cascade());
     }
 
-    public final Function3<? super Table<?>, ? super Boolean, ? super Boolean, ? extends QOM.DropView> $constructor() {
-        return (a1, a2, a3) -> new DropViewImpl(configuration(), a1, a2, a3);
+    @Override
+    public final QOM.DropView $cascade(Cascade newValue) {
+        return $constructor().apply($view(), $materialized(), $ifExists(), newValue);
     }
+
+    public final Function4<? super Table<?>, ? super Boolean, ? super Boolean, ? super Cascade, ? extends QOM.DropView> $constructor() {
+        return (a1, a2, a3, a4) -> new DropViewImpl(configuration(), a1, a2, a3, a4);
+    }
+
 
 
 

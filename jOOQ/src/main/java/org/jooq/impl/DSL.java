@@ -11282,7 +11282,7 @@ public class DSL {
      */
     @NotNull @CheckReturnValue
     @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    public static org.jooq.DropViewFinalStep dropView(@Stringly.Name String view) {
+    public static org.jooq.DropViewStep dropView(@Stringly.Name String view) {
         return dsl().dropView(view);
     }
 
@@ -11297,7 +11297,7 @@ public class DSL {
      */
     @NotNull @CheckReturnValue
     @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    public static org.jooq.DropViewFinalStep dropView(Name view) {
+    public static org.jooq.DropViewStep dropView(Name view) {
         return dsl().dropView(view);
     }
 
@@ -11312,7 +11312,7 @@ public class DSL {
      */
     @NotNull @CheckReturnValue
     @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    public static org.jooq.DropViewFinalStep dropView(Table<?> view) {
+    public static org.jooq.DropViewStep dropView(Table<?> view) {
         return dsl().dropView(view);
     }
 
@@ -11327,7 +11327,7 @@ public class DSL {
      */
     @NotNull @CheckReturnValue
     @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    public static org.jooq.DropViewFinalStep dropViewIfExists(@Stringly.Name String view) {
+    public static org.jooq.DropViewStep dropViewIfExists(@Stringly.Name String view) {
         return dsl().dropViewIfExists(view);
     }
 
@@ -11342,7 +11342,7 @@ public class DSL {
      */
     @NotNull @CheckReturnValue
     @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    public static org.jooq.DropViewFinalStep dropViewIfExists(Name view) {
+    public static org.jooq.DropViewStep dropViewIfExists(Name view) {
         return dsl().dropViewIfExists(view);
     }
 
@@ -11357,7 +11357,7 @@ public class DSL {
      */
     @NotNull @CheckReturnValue
     @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    public static org.jooq.DropViewFinalStep dropViewIfExists(Table<?> view) {
+    public static org.jooq.DropViewStep dropViewIfExists(Table<?> view) {
         return dsl().dropViewIfExists(view);
     }
 
@@ -11372,7 +11372,7 @@ public class DSL {
      */
     @NotNull @CheckReturnValue
     @Support({ POSTGRES, YUGABYTEDB })
-    public static org.jooq.DropViewFinalStep dropMaterializedView(@Stringly.Name String view) {
+    public static org.jooq.DropViewStep dropMaterializedView(@Stringly.Name String view) {
         return dsl().dropMaterializedView(view);
     }
 
@@ -11387,7 +11387,7 @@ public class DSL {
      */
     @NotNull @CheckReturnValue
     @Support({ POSTGRES, YUGABYTEDB })
-    public static org.jooq.DropViewFinalStep dropMaterializedView(Name view) {
+    public static org.jooq.DropViewStep dropMaterializedView(Name view) {
         return dsl().dropMaterializedView(view);
     }
 
@@ -11402,7 +11402,7 @@ public class DSL {
      */
     @NotNull @CheckReturnValue
     @Support({ POSTGRES, YUGABYTEDB })
-    public static org.jooq.DropViewFinalStep dropMaterializedView(Table<?> view) {
+    public static org.jooq.DropViewStep dropMaterializedView(Table<?> view) {
         return dsl().dropMaterializedView(view);
     }
 
@@ -11417,7 +11417,7 @@ public class DSL {
      */
     @NotNull @CheckReturnValue
     @Support({ POSTGRES, YUGABYTEDB })
-    public static org.jooq.DropViewFinalStep dropMaterializedViewIfExists(@Stringly.Name String view) {
+    public static org.jooq.DropViewStep dropMaterializedViewIfExists(@Stringly.Name String view) {
         return dsl().dropMaterializedViewIfExists(view);
     }
 
@@ -11432,7 +11432,7 @@ public class DSL {
      */
     @NotNull @CheckReturnValue
     @Support({ POSTGRES, YUGABYTEDB })
-    public static org.jooq.DropViewFinalStep dropMaterializedViewIfExists(Name view) {
+    public static org.jooq.DropViewStep dropMaterializedViewIfExists(Name view) {
         return dsl().dropMaterializedViewIfExists(view);
     }
 
@@ -11447,7 +11447,7 @@ public class DSL {
      */
     @NotNull @CheckReturnValue
     @Support({ POSTGRES, YUGABYTEDB })
-    public static org.jooq.DropViewFinalStep dropMaterializedViewIfExists(Table<?> view) {
+    public static org.jooq.DropViewStep dropMaterializedViewIfExists(Table<?> view) {
         return dsl().dropMaterializedViewIfExists(view);
     }
 

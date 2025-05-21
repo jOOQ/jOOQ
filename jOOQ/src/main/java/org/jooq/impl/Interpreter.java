@@ -954,7 +954,7 @@ final class Interpreter {
         else if (existing.options.type() != MATERIALIZED_VIEW && query.$materialized())
             throw objectNotMaterializedView(table);
 
-        drop(schema.tables, existing, RESTRICT);
+        drop(schema.tables, existing, query.$cascade());
     }
 
     private final void accept0(CreateSequenceImpl query) {

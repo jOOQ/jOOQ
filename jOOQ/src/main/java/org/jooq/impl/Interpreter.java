@@ -2186,7 +2186,7 @@ final class Interpreter {
 
                 if (mf != null)
                     result.add(mf);
-                else if (failIfNotFound)
+                else if (failIfNotFound && throwIfMetaLookupFails())
                     throw exception("Field does not exist in table: " + f.getQualifiedName());
             }
 
@@ -2198,7 +2198,7 @@ final class Interpreter {
                 SortField<?> sf = Tools.sortField(of);
                 MutableField mf = find(fields, sf.$field());
 
-                if (mf == null)
+                if (mf == null && throwIfMetaLookupFails())
                     throw exception("Field does not exist in table: " + sf.$field().getQualifiedName());
 
                 return new MutableSortField(mf, sf.$sortOrder());

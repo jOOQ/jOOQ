@@ -48,7 +48,7 @@
         <java.version>21</java.version>
 
         <!-- Scala versions -->
-        <scala.version>2.13.14</scala.version>
+        <scala.version>2.13.16</scala.version>
         <scala3.version>3.5.0</scala3.version>
 
         <!-- Kotlin versions -->

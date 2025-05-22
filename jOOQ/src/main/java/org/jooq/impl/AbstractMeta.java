@@ -37,7 +37,9 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.conf.SettingsTools.interpreterLocale;
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.Interpreter.caseSensitivity;
 import static org.jooq.impl.Tools.flatMap;
 import static org.jooq.impl.Tools.map;
 
@@ -48,6 +50,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -72,6 +75,8 @@ import org.jooq.Table;
 import org.jooq.TableField;
 // ...
 import org.jooq.UniqueKey;
+import org.jooq.conf.InterpreterNameLookupCaseSensitivity;
+import org.jooq.conf.InterpreterSearchSchema;
 import org.jooq.exception.DataAccessException;
 import org.jooq.util.xml.jaxb.InformationSchema;
 
@@ -146,33 +151,111 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
 
     abstract List<Catalog> getCatalogs0();
 
-    private static final record Cached<N extends Named>(Map<Name, N> qualified, Map<Name, List<N>> unqualified) {
-        Cached() {
-            this(new LinkedHashMap<>(), new LinkedHashMap<>());
+    private static final class ResolveName {
+        private final Configuration                        configuration;
+        private final Name                                 name;
+        private final String                               upper;
+        private final InterpreterNameLookupCaseSensitivity caseSensitivity;
+        private final Locale                               locale;
+
+        ResolveName(
+            Name name,
+            Configuration configuration,
+            InterpreterNameLookupCaseSensitivity caseSensitivity,
+            Locale locale
+        ) {
+            this.configuration = configuration;
+            this.caseSensitivity = caseSensitivity;
+            this.locale = locale;
+            this.name = name;
+            this.upper = name.last().toUpperCase(locale);
+        }
+
+        @Override
+        public int hashCode() {
+            return upper.hashCode();
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj)
+                return true;
+            if (obj == null)
+                return false;
+            if (getClass() != obj.getClass())
+                return false;
+            ResolveName other = (ResolveName) obj;
+            return Interpreter.nameEquals0(name, upper, other.name, configuration, caseSensitivity, locale);
+        }
+
+        @Override
+        public String toString() {
+            return name.toString();
+        }
+    }
+
+    private static final class Cached<N extends Named> {
+        final Configuration                        configuration;
+        final InterpreterNameLookupCaseSensitivity caseSensitivity;
+        final Locale                               locale;
+        final Map<Name, N>                         qualified;
+        final Map<ResolveName, N>                   qualifiedForLookup;
+        final Map<Name, List<N>>                   unqualified;
+        final List<Name>                           searchPath;
+
+        Cached(Configuration configuration) {
+            this.configuration = configuration;
+            this.caseSensitivity = caseSensitivity(configuration);
+            this.locale = interpreterLocale(configuration.settings());
+            this.qualified = new LinkedHashMap<>();
+            this.qualifiedForLookup = new LinkedHashMap<>();
+            this.unqualified = new LinkedHashMap<>();
+            this.searchPath = new ArrayList<>();
+
+            for (InterpreterSearchSchema s : configuration.settings().getInterpreterSearchPath())
+                searchPath.add(name(s.getCatalog(), s.getSchema()));
         }
 
         final void init(Iterable<N> i) {
-            if (qualified().isEmpty()) {
+            if (qualified.isEmpty()) {
                 for (N object : i) {
                     Name q = object.getQualifiedName();
                     Name u = object.getUnqualifiedName();
 
-                    qualified().put(q, object);
-                    unqualified().computeIfAbsent(u, n -> new ArrayList<>()).add(object);
+                    qualified.put(q, object);
+                    qualifiedForLookup.put(new ResolveName(q, configuration, caseSensitivity, locale), object);
+                    unqualified.computeIfAbsent(u, n -> new ArrayList<>()).add(object);
                 }
             }
         }
 
         final List<N> get(Name name) {
-            N object = qualified().get(name);
+            N object = qualified.get(name);
             if (object != null)
                 return Collections.singletonList(object);
 
-            List<N> list = unqualified().get(name);
+            List<N> list = unqualified.get(name);
             if (list == null)
                 return Collections.emptyList();
             else
                 return Collections.unmodifiableList(list);
+        }
+
+        final N getForLookup(Name name) {
+            N object = qualifiedForLookup.get(new ResolveName(name, configuration, caseSensitivity, locale));
+            if (object != null)
+                return object;
+
+            if (!name.qualified()) {
+                for (Name s : searchPath) {
+                    object = qualifiedForLookup.get(new ResolveName(s.append(name.unqualifiedName()), configuration, caseSensitivity, locale));
+
+                    if (object != null)
+                        return object;
+                }
+            }
+
+            return null;
         }
     }
 
@@ -188,14 +271,14 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
 
     @Override
     public final List<Schema> getSchemas() {
-        return Collections.unmodifiableList(new ArrayList<>(getCachedSchemas().qualified().values()));
+        return Collections.unmodifiableList(new ArrayList<>(getCachedSchemas().qualified.values()));
     }
 
     private final Cached<Schema> getCachedSchemas() {
         Cached<Schema> s = cachedSchemas;
 
         if (s == null) {
-            s = new Cached<>();
+            s = new Cached<>(configuration());
             s.init(schemaFilter != null
                 ? () -> Tools.filter(getSchemas0().iterator(), schemaFilter)
                 : () -> getSchemas0().iterator()
@@ -223,15 +306,20 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
     }
 
     @Override
+    public final Table<?> resolveTable(Name name) {
+        return getCachedTables().getForLookup(name);
+    }
+
+    @Override
     public final List<Table<?>> getTables() {
-        return Collections.unmodifiableList(new ArrayList<>(getCachedTables().qualified().values()));
+        return Collections.unmodifiableList(new ArrayList<>(getCachedTables().qualified.values()));
     }
 
     private final Cached<Table<?>> getCachedTables() {
         Cached<Table<?>> t = cachedTables;
 
         if (t == null) {
-            t = new Cached<>();
+            t = new Cached<>(configuration());
             t.init(() -> getTables0().iterator());
         }
 
@@ -256,16 +344,21 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
     }
 
     @Override
+    public final Domain<?> resolveDomain(Name name) {
+        return getCachedDomains().getForLookup(name);
+    }
+
+    @Override
     public final List<Domain<?>> getDomains() {
         getCachedDomains();
-        return Collections.unmodifiableList(new ArrayList<>(getCachedDomains().qualified().values()));
+        return Collections.unmodifiableList(new ArrayList<>(getCachedDomains().qualified.values()));
     }
 
     private final Cached<Domain<?>> getCachedDomains() {
         Cached<Domain<?>> d = cachedDomains;
 
         if (d == null) {
-            d = new Cached<>();
+            d = new Cached<>(configuration());
             d.init(() -> getDomains0().iterator());
         }
 
@@ -382,6 +475,16 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
 
 
 
+
+
+
+
+
+
+
+
+
+
     @Override
     public final List<Sequence<?>> getSequences(String name) {
         return getSequences(name(name));
@@ -393,15 +496,20 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
     }
 
     @Override
+    public final Sequence<?> resolveSequence(Name name) {
+        return getCachedSequences().getForLookup(name);
+    }
+
+    @Override
     public final List<Sequence<?>> getSequences() {
-        return Collections.unmodifiableList(new ArrayList<>(getCachedSequences().qualified().values()));
+        return Collections.unmodifiableList(new ArrayList<>(getCachedSequences().qualified.values()));
     }
 
     private final Cached<Sequence<?>> getCachedSequences() {
         Cached<Sequence<?>> s = cachedSequences;
 
         if (s == null) {
-            s = new Cached<>();
+            s = new Cached<>(configuration());
             s.init(() -> getSequences0().iterator());
         }
 
@@ -427,14 +535,14 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
 
     @Override
     public final List<UniqueKey<?>> getPrimaryKeys() {
-        return Collections.unmodifiableList(new ArrayList<>(getCachedPrimaryKeys().qualified().values()));
+        return Collections.unmodifiableList(new ArrayList<>(getCachedPrimaryKeys().qualified.values()));
     }
 
     private final Cached<UniqueKey<?>> getCachedPrimaryKeys() {
         Cached<UniqueKey<?>> k = cachedPrimaryKeys;
 
         if (k == null) {
-            k = new Cached<>();
+            k = new Cached<>(configuration());
             k.init(() -> getPrimaryKeys0().iterator());
         }
 
@@ -466,14 +574,14 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
 
     @Override
     public final List<UniqueKey<?>> getUniqueKeys() {
-        return Collections.unmodifiableList(new ArrayList<>(getCachedUniqueKeys().qualified().values()));
+        return Collections.unmodifiableList(new ArrayList<>(getCachedUniqueKeys().qualified.values()));
     }
 
     private final Cached<UniqueKey<?>> getCachedUniqueKeys() {
         Cached<UniqueKey<?>> k = cachedUniqueKeys;
 
         if (k == null) {
-            k = new Cached<>();
+            k = new Cached<>(configuration());
             k.init(() -> getUniqueKeys0().iterator());
         }
 
@@ -499,14 +607,14 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
 
     @Override
     public final List<ForeignKey<?, ?>> getForeignKeys() {
-        return Collections.unmodifiableList(new ArrayList<>(getCachedForeignKeys().qualified().values()));
+        return Collections.unmodifiableList(new ArrayList<>(getCachedForeignKeys().qualified.values()));
     }
 
     private final Cached<ForeignKey<?, ?>> getCachedForeignKeys() {
         Cached<ForeignKey<?, ?>> k = cachedForeignKeys;
 
         if (k == null) {
-            k = new Cached<>();
+            k = new Cached<>(configuration());
             k.init(() -> getForeignKeys0().iterator());
         }
 
@@ -532,14 +640,14 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
 
     @Override
     public final List<Index> getIndexes() {
-        return Collections.unmodifiableList(new ArrayList<>(getCachedIndexes().qualified().values()));
+        return Collections.unmodifiableList(new ArrayList<>(getCachedIndexes().qualified.values()));
     }
 
     private final Cached<Index> getCachedIndexes() {
         Cached<Index> i = cachedIndexes;
 
         if (i == null) {
-            i = new Cached<>();
+            i = new Cached<>(configuration());
             i.init(() -> getIndexes0().iterator());
         }
 
@@ -553,7 +661,7 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
         return flatMap(getTables(), t -> t.getIndexes());
     }
 
-    private boolean caching() {
+    private final boolean caching() {
         return true;
     }
 

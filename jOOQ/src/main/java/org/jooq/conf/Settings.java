@@ -468,6 +468,9 @@ public class Settings
     @XmlElement(defaultValue = "DEFAULT")
     @XmlSchemaType(name = "string")
     protected InterpreterNameLookupCaseSensitivity interpreterNameLookupCaseSensitivity = InterpreterNameLookupCaseSensitivity.DEFAULT;
+    @XmlElement(defaultValue = "EXPLICIT_DEFAULT_QUOTED")
+    @XmlSchemaType(name = "string")
+    protected InterpreterQuotedNames interpreterQuotedNames = InterpreterQuotedNames.EXPLICIT_DEFAULT_QUOTED;
     @XmlElement(type = String.class)
     @XmlJavaTypeAdapter(LocaleAdapter.class)
     protected Locale interpreterLocale;
@@ -747,8 +750,6 @@ public class Settings
     /**
      * Whether rendered schema, table, column names, etc should be quoted.
      * <p>
-     * This only affects names created through {@link org.jooq.impl.DSL#name(String)} methods (including those that are implicitly created through this method), not {@link org.jooq.impl.DSL#quotedName(String)} or {@link org.jooq.impl.DSL#unquotedName(String)}, whose behaviour cannot be overridden.
-     * <p>
      * This setting does not affect any plain SQL usage.
      * 
      */
@@ -758,8 +759,6 @@ public class Settings
 
     /**
      * Whether rendered schema, table, column names, etc should be quoted.
-     * <p>
-     * This only affects names created through {@link org.jooq.impl.DSL#name(String)} methods (including those that are implicitly created through this method), not {@link org.jooq.impl.DSL#quotedName(String)} or {@link org.jooq.impl.DSL#unquotedName(String)}, whose behaviour cannot be overridden.
      * <p>
      * This setting does not affect any plain SQL usage.
      * 
@@ -6085,6 +6084,26 @@ public class Settings
     }
 
     /**
+     * Whether interpreted schema, table, column names, etc should be quoted.
+     * <p>
+     * This setting does not affect any plain SQL usage.
+     * 
+     */
+    public InterpreterQuotedNames getInterpreterQuotedNames() {
+        return interpreterQuotedNames;
+    }
+
+    /**
+     * Whether interpreted schema, table, column names, etc should be quoted.
+     * <p>
+     * This setting does not affect any plain SQL usage.
+     * 
+     */
+    public void setInterpreterQuotedNames(InterpreterQuotedNames value) {
+        this.interpreterQuotedNames = value;
+    }
+
+    /**
      * The Locale to be used with any interpreter locale dependent logic, defaulting to {@link #getLocale()}.
      * 
      */
@@ -7283,8 +7302,6 @@ public class Settings
 
     /**
      * Whether rendered schema, table, column names, etc should be quoted.
-     * <p>
-     * This only affects names created through {@link org.jooq.impl.DSL#name(String)} methods (including those that are implicitly created through this method), not {@link org.jooq.impl.DSL#quotedName(String)} or {@link org.jooq.impl.DSL#unquotedName(String)}, whose behaviour cannot be overridden.
      * <p>
      * This setting does not affect any plain SQL usage.
      * 
@@ -9642,6 +9659,17 @@ public class Settings
     }
 
     /**
+     * Whether interpreted schema, table, column names, etc should be quoted.
+     * <p>
+     * This setting does not affect any plain SQL usage.
+     * 
+     */
+    public Settings withInterpreterQuotedNames(InterpreterQuotedNames value) {
+        setInterpreterQuotedNames(value);
+        return this;
+    }
+
+    /**
      * The Locale to be used with any interpreter locale dependent logic, defaulting to {@link #getLocale()}.
      * 
      */
@@ -10396,6 +10424,7 @@ public class Settings
         builder.append("executeDeleteWithoutWhere", executeDeleteWithoutWhere);
         builder.append("interpreterDialect", interpreterDialect);
         builder.append("interpreterNameLookupCaseSensitivity", interpreterNameLookupCaseSensitivity);
+        builder.append("interpreterQuotedNames", interpreterQuotedNames);
         builder.append("interpreterLocale", interpreterLocale);
         builder.append("interpreterDelayForeignKeyDeclarations", interpreterDelayForeignKeyDeclarations);
         builder.append("interpreterWithMetaLookups", interpreterWithMetaLookups);
@@ -12201,6 +12230,15 @@ public class Settings
                 return false;
             }
         }
+        if (interpreterQuotedNames == null) {
+            if (other.interpreterQuotedNames!= null) {
+                return false;
+            }
+        } else {
+            if (!interpreterQuotedNames.equals(other.interpreterQuotedNames)) {
+                return false;
+            }
+        }
         if (interpreterLocale == null) {
             if (other.interpreterLocale!= null) {
                 return false;
@@ -12904,6 +12942,7 @@ public class Settings
         result = ((prime*result)+((executeDeleteWithoutWhere == null)? 0 :executeDeleteWithoutWhere.hashCode()));
         result = ((prime*result)+((interpreterDialect == null)? 0 :interpreterDialect.hashCode()));
         result = ((prime*result)+((interpreterNameLookupCaseSensitivity == null)? 0 :interpreterNameLookupCaseSensitivity.hashCode()));
+        result = ((prime*result)+((interpreterQuotedNames == null)? 0 :interpreterQuotedNames.hashCode()));
         result = ((prime*result)+((interpreterLocale == null)? 0 :interpreterLocale.hashCode()));
         result = ((prime*result)+((interpreterDelayForeignKeyDeclarations == null)? 0 :interpreterDelayForeignKeyDeclarations.hashCode()));
         result = ((prime*result)+((interpreterWithMetaLookups == null)? 0 :interpreterWithMetaLookups.hashCode()));

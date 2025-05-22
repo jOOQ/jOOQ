@@ -58,8 +58,6 @@ generated SQL.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       <element name="renderQuotedNames" type="jooq-runtime:RenderQuotedNames" minOccurs="0" maxOccurs="1" default="EXPLICIT_DEFAULT_QUOTED">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether rendered schema, table, column names, etc should be quoted.
 <p>
-This only affects names created through {@link org.jooq.impl.DSL#name(String)} methods (including those that are implicitly created through this method), not {@link org.jooq.impl.DSL#quotedName(String)} or {@link org.jooq.impl.DSL#unquotedName(String)}, whose behaviour cannot be overridden.
-<p>
 This setting does not affect any plain SQL usage.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
@@ -1508,6 +1506,12 @@ deployed on an RDBMS that does not.]]></jxb:javadoc></jxb:property></appinfo></a
       <element name="interpreterNameLookupCaseSensitivity" type="jooq-runtime:InterpreterNameLookupCaseSensitivity" minOccurs="0" maxOccurs="1" default="DEFAULT">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#9633] The case sensitivity of identifiers used when interpreting SQL DDL statements.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+      
+      <element name="interpreterQuotedNames" type="jooq-runtime:InterpreterQuotedNames" minOccurs="0" maxOccurs="1" default="EXPLICIT_DEFAULT_QUOTED">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether interpreted schema, table, column names, etc should be quoted.
+<p>
+This setting does not affect any plain SQL usage.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
             
       <element name="interpreterLocale" type="string" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The Locale to be used with any interpreter locale dependent logic, defaulting to {@link #getLocale()}.]]></jxb:javadoc></jxb:property></appinfo></annotation>
@@ -2435,6 +2439,31 @@ Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided]]></jxb:javad
       
       <enumeration value="NEVER">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Identifiers are never case sensitive]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
+    </restriction>
+  </simpleType>
+
+  <simpleType name="InterpreterQuotedNames">
+    <restriction base="string">
+      <enumeration value="ALWAYS">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Always interpret object names as quoted, as defined in the database.
+           Use this to stay on the safe side with case-sensitivity, special
+           characters, and keywords. For instance:
+           Oracle    : "SYS"."ALL_TAB_COLS"
+           MySQL     : `information_schema`.`TABLES`
+           SQL Server: [INFORMATION_SCHEMA].[TABLES]]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
+      
+      <enumeration value="EXPLICIT_DEFAULT_QUOTED">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Interpret object names as quoted if they are constructed using DSL.quotedName() or DSL.name()]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
+      
+      <enumeration value="EXPLICIT_DEFAULT_UNQUOTED">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Interpret object names as quoted if they are constructed using DSL.quotedName()]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
+
+      <enumeration value="NEVER">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Never interpret object names as quoted.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </enumeration>
     </restriction>
   </simpleType>

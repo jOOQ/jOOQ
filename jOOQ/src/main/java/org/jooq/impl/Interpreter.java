@@ -39,7 +39,6 @@ package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
 import static java.util.Arrays.asList;
-import static org.jooq.Name.Quoted.QUOTED;
 import static org.jooq.TableOptions.TableType.MATERIALIZED_VIEW;
 import static org.jooq.TableOptions.TableType.VIEW;
 import static org.jooq.conf.InterpreterWithMetaLookups.THROW_ON_FAILURE;
@@ -117,8 +116,9 @@ import org.jooq.TableOptions.TableType;
 import org.jooq.UniqueKey;
 import org.jooq.Update;
 import org.jooq.conf.InterpreterNameLookupCaseSensitivity;
+import org.jooq.conf.InterpreterQuotedNames;
 import org.jooq.conf.InterpreterSearchSchema;
-import org.jooq.conf.InterpreterWithMetaLookups;
+import org.jooq.conf.RenderQuotedNames;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataDefinitionException;
 import org.jooq.impl.DefaultParseContext.IgnoreQuery;
@@ -950,6 +950,10 @@ final class Interpreter {
             newTable(table, schema, query.$fields(), null, null,
                 query.$materialized() ? TableOptions.view() : TableOptions.materializedView()
             );
+    }
+
+    private final Function<Table<?>, Table<?>> resolve() {
+        return t -> table(t, true).interpretedTable();
     }
 
     private final void accept0(AlterViewImpl query) {
@@ -1809,7 +1813,7 @@ final class Interpreter {
         return result;
     }
 
-    private static final InterpreterNameLookupCaseSensitivity caseSensitivity(Configuration configuration) {
+    static final InterpreterNameLookupCaseSensitivity caseSensitivity(Configuration configuration) {
         InterpreterNameLookupCaseSensitivity result = defaultIfNull(configuration.settings().getInterpreterNameLookupCaseSensitivity(), InterpreterNameLookupCaseSensitivity.DEFAULT);
 
         if (result == InterpreterNameLookupCaseSensitivity.DEFAULT) {
@@ -1889,21 +1893,7 @@ final class Interpreter {
         }
 
         boolean nameEquals(UnqualifiedName other) {
-            switch (caseSensitivity) {
-                case ALWAYS:
-                    return name.last().equals(other.last());
-
-                case WHEN_QUOTED:
-                    return normaliseNameCase(configuration, name.last(), name.quoted() == QUOTED, locale).equals(
-                           normaliseNameCase(configuration, other.last(), other.quoted() == QUOTED, locale));
-
-                case NEVER:
-                    return upper.equalsIgnoreCase(other.last().toUpperCase(locale));
-
-                case DEFAULT:
-                default:
-                    throw new IllegalStateException();
-            }
+            return nameEquals0(name, upper, other, configuration, caseSensitivity, locale);
         }
 
         abstract MutableNamed parent();
@@ -1912,6 +1902,74 @@ final class Interpreter {
         @Override
         public String toString() {
             return qualifiedName().toString();
+        }
+    }
+    static final boolean nameEquals0(
+        Name n1,
+        String n1Upper,
+        Name n2,
+        Configuration configuration,
+        InterpreterNameLookupCaseSensitivity caseSensitivity,
+        Locale locale
+    ) {
+        if (n1 instanceof UnqualifiedName && n2 instanceof UnqualifiedName) {
+            return nameEquals0(
+                (UnqualifiedName) n1,
+                n1Upper,
+                (UnqualifiedName) n2,
+                configuration,
+                caseSensitivity,
+                locale
+            );
+        }
+        else if (n1.qualified() && n2.qualified()) {
+            Name q1 = n1.qualifier();
+
+            return
+                nameEquals0(
+                    q1,
+                    q1.last().toUpperCase(locale),
+                    n2.qualifier(),
+                    configuration,
+                    caseSensitivity,
+                    locale
+                ) &&
+                nameEquals0(
+                    (UnqualifiedName) n1.unqualifiedName(),
+                    n1.last().toUpperCase(locale),
+                    (UnqualifiedName) n2.unqualifiedName(),
+                    configuration,
+                    caseSensitivity,
+                    locale
+                );
+        }
+        else
+            return false;
+    }
+
+    static final boolean nameEquals0(
+        UnqualifiedName n1,
+        String n1Upper,
+        UnqualifiedName n2,
+        Configuration configuration,
+        InterpreterNameLookupCaseSensitivity caseSensitivity,
+        Locale locale
+    ) {
+        switch (caseSensitivity) {
+            case ALWAYS:
+                return n1.last().equals(n2.last());
+
+            case WHEN_QUOTED:
+                InterpreterQuotedNames q = configuration.settings().getInterpreterQuotedNames();
+                return normaliseNameCase(configuration, n1.last(), UnqualifiedName.quoted(q, n1.quoted()), locale).equals(
+                       normaliseNameCase(configuration, n2.last(), UnqualifiedName.quoted(q, n2.quoted()), locale));
+
+            case NEVER:
+                return n1Upper.equalsIgnoreCase(n2.last().toUpperCase(locale));
+
+            case DEFAULT:
+            default:
+                throw new IllegalStateException();
         }
     }
 

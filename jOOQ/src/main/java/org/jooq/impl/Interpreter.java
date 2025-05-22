@@ -1347,7 +1347,7 @@ final class Interpreter {
 
     private final MutableSchema getSchema(Schema input, boolean create, boolean throwIfNotExists) {
         if (input == null)
-            return currentSchema(create);
+            return currentSchema();
 
         MutableCatalog catalog = defaultCatalog;
         if (input.getCatalog() != null) {
@@ -1372,21 +1372,28 @@ final class Interpreter {
         return schema;
     }
 
-    private final MutableSchema currentSchema(boolean create) {
+    private final MutableSchema currentSchema() {
         if (currentSchema == null)
-            currentSchema = getInterpreterSearchPathSchema(create);
+            currentSchema = getInterpreterSearchPathSchemas().get(0);
 
         return currentSchema;
     }
 
-    private final MutableSchema getInterpreterSearchPathSchema(boolean create) {
+    private final List<MutableSchema> getInterpreterSearchPathSchemas() {
         List<InterpreterSearchSchema> searchPath = configuration.settings().getInterpreterSearchPath();
 
         if (searchPath.isEmpty())
-            return defaultSchema;
+            return asList(defaultSchema);
 
-        InterpreterSearchSchema schema = searchPath.get(0);
-        return getSchema(schema(name(schema.getCatalog(), schema.getSchema())), create, false);
+        List<MutableSchema> result = new ArrayList<>();
+        for (InterpreterSearchSchema schema : searchPath) {
+            MutableSchema s = getSchema(schema(name(schema.getCatalog(), schema.getSchema())), false, false);
+
+            if (s != null)
+                result.add(s);
+        }
+
+        return result;
     }
 
     private final MutableTable newTable(
@@ -1430,7 +1437,19 @@ final class Interpreter {
     }
 
     private final MutableTable table(Table<?> table, boolean throwIfNotExists) {
-        MutableTable result = getSchema(table.getSchema(), false, throwIfNotExists).table(table);
+        MutableTable result = null;
+
+        if (table.getSchema() != null) {
+            result = getSchema(table.getSchema(), false, throwIfNotExists).table(table);
+        }
+        else {
+            for (MutableSchema s : getInterpreterSearchPathSchemas()) {
+                result = s.table(table);
+
+                if (result != null)
+                    break;
+            }
+        }
 
         if (result == null && throwIfNotExists)
             throw notExists(table);

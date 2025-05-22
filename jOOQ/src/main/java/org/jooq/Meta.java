@@ -251,7 +251,7 @@ public interface Meta extends Scope {
      */
     @Nullable
     @Support({ H2, POSTGRES })
-    Domain resolveDomain(Name name) throws DataAccessException;
+    Domain<?> resolveDomain(Name name) throws DataAccessException;
 
 
 

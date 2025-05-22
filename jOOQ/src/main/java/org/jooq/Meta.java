@@ -198,6 +198,21 @@ public interface Meta extends Scope {
      * Resolve a {@link Table} by its name according to interpreter
      * {@link Settings}.
      * <p>
+     * Unlike {@link #getTables(String)}, which may list multiple tables by
+     * their case sensitive name, this method finds the best matching table
+     * according to the argument as well as the underlying
+     * {@link Settings#getInterpreterNameLookupCaseSensitivity()} and
+     * {@link Settings#getInterpreterSearchPath()}, or returns <code>null</code>
+     * if no such table was found.
+     */
+    @Nullable
+    @Support
+    Table<?> resolveTable(String name) throws DataAccessException;
+
+    /**
+     * Resolve a {@link Table} by its name according to interpreter
+     * {@link Settings}.
+     * <p>
      * Unlike {@link #getTables(Name)}, which may list multiple tables by their
      * case sensitive name, this method finds the best matching table according
      * to the argument {@link Name#qualifier()} as well as the underlying
@@ -243,6 +258,21 @@ public interface Meta extends Scope {
      * Resolve a {@link Domain} by its name according to interpreter
      * {@link Settings}.
      * <p>
+     * Unlike {@link #getDomains(String)}, which may list multiple domains by
+     * their case sensitive name, this method finds the best matching domain
+     * according to the argument as well as the underlying
+     * {@link Settings#getInterpreterNameLookupCaseSensitivity()} and
+     * {@link Settings#getInterpreterSearchPath()}, or returns <code>null</code>
+     * if no such domain was found.
+     */
+    @Nullable
+    @Support({ H2, POSTGRES })
+    Domain<?> resolveDomain(String name) throws DataAccessException;
+
+    /**
+     * Resolve a {@link Domain} by its name according to interpreter
+     * {@link Settings}.
+     * <p>
      * Unlike {@link #getDomains(Name)}, which may list multiple domains by
      * their case sensitive name, this method finds the best matching domain
      * according to the argument {@link Name#qualifier()} as well as the
@@ -253,6 +283,38 @@ public interface Meta extends Scope {
     @Nullable
     @Support({ H2, POSTGRES })
     Domain<?> resolveDomain(Name name) throws DataAccessException;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -420,6 +482,21 @@ public interface Meta extends Scope {
     @NotNull
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
     List<Sequence<?>> getSequences(Name name) throws DataAccessException;
+
+    /**
+     * Resolve a {@link Sequence} by its name according to interpreter
+     * {@link Settings}.
+     * <p>
+     * Unlike {@link #getSequences(String)}, which may list multiple sequences
+     * by their case sensitive name, this method finds the best matching
+     * sequence according to the argument as well as the underlying
+     * {@link Settings#getInterpreterNameLookupCaseSensitivity()} and
+     * {@link Settings#getInterpreterSearchPath()}, or returns <code>null</code>
+     * if no such sequence was found.
+     */
+    @Nullable
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    Sequence<?> resolveSequence(String name) throws DataAccessException;
 
     /**
      * Resolve a {@link Sequence} by its name according to interpreter

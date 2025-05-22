@@ -306,6 +306,11 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
     }
 
     @Override
+    public final Table<?> resolveTable(String name) {
+        return resolveTable(name(name));
+    }
+
+    @Override
     public final Table<?> resolveTable(Name name) {
         return getCachedTables().getForLookup(name);
     }
@@ -341,6 +346,11 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
     @Override
     public final List<Domain<?>> getDomains(Name name) {
         return getCachedDomains().get(name);
+    }
+
+    @Override
+    public final Domain<?> resolveDomain(String name) {
+        return resolveDomain(name(name));
     }
 
     @Override
@@ -485,6 +495,16 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
 
 
 
+
+
+
+
+
+
+
+
+
+
     @Override
     public final List<Sequence<?>> getSequences(String name) {
         return getSequences(name(name));
@@ -493,6 +513,11 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
     @Override
     public final List<Sequence<?>> getSequences(Name name) {
         return getCachedSequences().get(name);
+    }
+
+    @Override
+    public final Sequence<?> resolveSequence(String name) {
+        return resolveSequence(name(name));
     }
 
     @Override

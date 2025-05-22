@@ -1393,6 +1393,9 @@ final class Interpreter {
                 result.add(s);
         }
 
+        if (result.isEmpty())
+            return asList(defaultSchema);
+
         return result;
     }
 

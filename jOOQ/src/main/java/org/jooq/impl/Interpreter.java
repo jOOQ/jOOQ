@@ -953,7 +953,10 @@ final class Interpreter {
     }
 
     private final Function<Table<?>, Table<?>> resolve() {
-        return t -> table(t, true).interpretedTable();
+        return t -> {
+            MutableTable result = table(t, true);
+            return result != null ? result.interpretedTable() : t;
+        };
     }
 
     private final void accept0(AlterViewImpl query) {

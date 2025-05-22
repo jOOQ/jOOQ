@@ -52,6 +52,7 @@ import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 import static org.jooq.SQLDialect.SQLITE;
@@ -215,7 +216,7 @@ public interface Meta extends Scope {
      *             objects
      */
     @NotNull
-    @Support({ H2, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTEDB })
     List<Domain<?>> getDomains() throws DataAccessException;
 
     /**
@@ -225,7 +226,7 @@ public interface Meta extends Scope {
      *             objects
      */
     @NotNull
-    @Support({ H2, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTEDB })
     List<Domain<?>> getDomains(String name) throws DataAccessException;
 
     /**
@@ -235,7 +236,7 @@ public interface Meta extends Scope {
      *             objects
      */
     @NotNull
-    @Support({ H2, POSTGRES })
+    @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTEDB })
     List<Domain<?>> getDomains(Name name) throws DataAccessException;
 
     /**

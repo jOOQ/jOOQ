@@ -75,12 +75,15 @@ final class VersionImpl extends AbstractNode<Version> implements Version {
         super(configuration, id, null, null, root);
 
         this.ctx = configuration.dsl();
-        this.meta = meta != null ? meta : init(ctx);
+        this.meta = init(ctx, meta);
         this.parents = parents;
     }
 
-    private static final Meta init(DSLContext ctx) {
-        Meta result = ctx.meta("");
+    private static final Meta init(DSLContext ctx, Meta meta) {
+        Meta result = meta;
+
+        if (result == null)
+            result = ctx.meta("");
 
         MigrationSchema ds = ctx.settings().getMigrationDefaultSchema();
         if (ds != null)

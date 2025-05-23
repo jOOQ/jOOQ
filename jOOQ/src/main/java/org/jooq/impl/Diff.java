@@ -59,6 +59,7 @@ import static org.jooq.impl.ConstraintType.PRIMARY_KEY;
 import static org.jooq.impl.ConstraintType.UNIQUE;
 import static org.jooq.impl.CreateTableImpl.SUPPORT_NULLABLE_PRIMARY_KEY;
 import static org.jooq.impl.DSL.unquotedName;
+import static org.jooq.impl.HistoryImpl.initCtx;
 import static org.jooq.impl.Tools.NO_SUPPORT_TIMESTAMP_PRECISION;
 import static org.jooq.impl.Tools.NO_SUPPORT_TIME_PRECISION;
 import static org.jooq.impl.Tools.allMatch;
@@ -115,6 +116,7 @@ import org.jooq.Sequence;
 // ...
 import org.jooq.Table;
 import org.jooq.TableOptions.TableType;
+// ...
 import org.jooq.UniqueKey;
 import org.jooq.tools.StringUtils;
 
@@ -123,7 +125,7 @@ import org.jooq.tools.StringUtils;
  *
  * @author Lukas Eder
  */
-final class Diff {
+final class Diff extends AbstractScope {
 
     private static final Set<SQLDialect> NO_SUPPORT_PK_NAMES = SQLDialect.supportedBy(IGNITE, MARIADB, MYSQL);
 
@@ -136,12 +138,17 @@ final class Diff {
     private final DependencyComparator   comparator;
 
     Diff(Configuration configuration, MigrationConfiguration migrateConf, Meta meta1, Meta meta2) {
+        super(initCtx(
+            configuration,
+            configuration.settings().getMigrationDefaultSchema()
+        ));
+
         this.migrateConf = migrateConf;
         this.exportConf = new DDLExportConfiguration()
             .createOrReplaceView(migrateConf.createOrReplaceView())
             .createOrReplaceMaterializedView(migrateConf.createOrReplaceMaterializedView());
 
-        this.ctx = configuration.dsl();
+        this.ctx = dsl();
         this.meta1 = meta1;
         this.meta2 = meta2;
         this.ddl = new DDL(ctx, exportConf);
@@ -158,7 +165,7 @@ final class Diff {
         //          when a child table is dropped and its parent PK or UK is dropped as well, we must drop
         //          the child table's FK explicitly in order to ensure that happens first, before the PK or UK is dropped.
         //          A better solution would be to detect an "ideal" drop order among tables, but that would require a more
-        //          sophisticated dependency anylsis, and it would still not always be possible.
+        //          sophisticated dependency analysis, and it would still not always be possible.
         if (anyMatch(result.queries, q -> droppingPKorUK(q)) && anyMatch(result.queries, q -> q instanceof QOM.DropTable)) {
             List<ForeignKey<?, ?>> fks = flatMap(
                 filter(result.queries, q -> q instanceof QOM.DropTable),
@@ -550,7 +557,7 @@ final class Diff {
         final List<Field<?>> add = new ArrayList<>();
         final List<Field<?>> drop = new ArrayList<>();
 
-        result = append(result, l1, l2, null,
+        result = append(result, l1, l2, UNQUALIFIED_COMP,
             (r, f) -> {
 
                 // Ignore synthetic columns

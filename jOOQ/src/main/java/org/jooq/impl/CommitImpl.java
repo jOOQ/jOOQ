@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.TRUE;
 import static org.jooq.ContentType.DECREMENT;
 import static org.jooq.ContentType.INCREMENT;
 import static org.jooq.ContentType.SCHEMA;
@@ -76,6 +77,7 @@ import org.jooq.Node;
 import org.jooq.Source;
 import org.jooq.Tag;
 import org.jooq.Version;
+import org.jooq.exception.DataDefinitionException;
 import org.jooq.exception.DataMigrationVerificationException;
 import org.jooq.impl.DefaultParseContext.IgnoreQuery;
 import org.jooq.tools.StringUtils;
@@ -310,6 +312,9 @@ final class CommitImpl extends AbstractNode<Commit> implements Commit {
         // TODO: The reverse check doesn't take into account branching
         if (ancestor.equals(resultCommit)) {
             configuration().requireCommercial(() -> "Reverse migrations are a commercial only feature. Please upgrade to the jOOQ Professional Edition or jOOQ Enterprise Edition.");
+
+
+
 
 
 

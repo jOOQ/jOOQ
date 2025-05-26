@@ -376,8 +376,14 @@ public final class SettingsTools {
 
         if (result.renderFormatting != null)
             result.renderFormatting = (RenderFormatting) result.renderFormatting.clone();
+        if (result.renderMapping != null)
+            result.renderMapping = (RenderMapping) result.renderMapping.clone();
         if (result.parseSearchPath != null)
             result.parseSearchPath = new ArrayList<>(result.parseSearchPath);
+        if (result.interpreterSearchPath != null)
+            result.interpreterSearchPath = new ArrayList<>(result.interpreterSearchPath);
+        if (result.migrationHistorySchema != null)
+            result.migrationHistorySchema = (MigrationSchema) result.migrationHistorySchema.clone();
         if (result.migrationSchemata != null)
             result.migrationSchemata = new ArrayList<>(result.migrationSchemata);
 

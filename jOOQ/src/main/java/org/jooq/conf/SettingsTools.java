@@ -380,6 +380,8 @@ public final class SettingsTools {
             result.renderMapping = (RenderMapping) result.renderMapping.clone();
         if (result.parseSearchPath != null)
             result.parseSearchPath = new ArrayList<>(result.parseSearchPath);
+        if (result.interpreterSearchPath != null)
+            result.interpreterSearchPath = new ArrayList<>(result.interpreterSearchPath);
         if (result.migrationHistorySchema != null)
             result.migrationHistorySchema = (MigrationSchema) result.migrationHistorySchema.clone();
         if (result.migrationSchemata != null)

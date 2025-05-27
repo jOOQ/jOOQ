@@ -382,8 +382,6 @@ public final class SettingsTools {
             result.parseSearchPath = new ArrayList<>(result.parseSearchPath);
         if (result.interpreterSearchPath != null)
             result.interpreterSearchPath = new ArrayList<>(result.interpreterSearchPath);
-        if (result.migrationHistorySchema != null)
-            result.migrationHistorySchema = (MigrationSchema) result.migrationHistorySchema.clone();
         if (result.migrationSchemata != null)
             result.migrationSchemata = new ArrayList<>(result.migrationSchemata);
 

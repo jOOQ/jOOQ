@@ -4135,24 +4135,24 @@ final class Tools {
 
 
 
+    static final Select<?> extractSelectFromDerivedTable(Table<?> table) {
+        return extractSelectFromDerivedTable(table, false);
+    }
 
+    private static final Select<?> extractSelectFromDerivedTable(Table<?> table, boolean force) {
+        Table<?> aliased;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        if (table instanceof DerivedTable<?> t)
+            return t.query();
+        else if (table instanceof AliasedSelect<?> s)
+            return s.query();
+        else if ((aliased = aliased(table)) != null)
+            return extractSelectFromDerivedTable(aliased, true);
+        else if (force)
+            return select(asterisk()).from(table);
+        else
+            return null;
+    }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     static final <R extends Record> SelectQueryImpl<R> selectQueryImpl(QueryPart part) {

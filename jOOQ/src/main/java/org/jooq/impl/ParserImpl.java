@@ -1414,8 +1414,12 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
     }
 
     private final SelectQueryImpl<Record> parseSelect(Integer degree, WithImpl with) {
+        return parseSelect(degree, with, null);
+    }
+
+    private final SelectQueryImpl<Record> parseSelect(Integer degree, WithImpl with, SelectQueryImpl<Record> prefix) {
         scope.scopeStart();
-        SelectQueryImpl<Record> result = parseQueryExpressionBody(degree, with, null);
+        SelectQueryImpl<Record> result = parseQueryExpressionBody(degree, with, prefix);
         List<SortField<?>> orderBy = null;
 
         for (Field<?> field : result.getSelect())
@@ -7159,6 +7163,18 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
             }
             else {
                 result = parseJoinedTable(forbiddenKeywords);
+
+                // [#18543] We don't really know what the parentheses mean at this point, so
+                //          after the fact, if we happen to have parsed what looks like a
+                //          "derived table, we could still encounter more set operations or
+                //          ORDER BY .. LIMIT clauses
+                if (result instanceof Table<?> t) {
+                    Select<?> s = Tools.extractSelectFromDerivedTable(t);
+
+                    if (s != null)
+                        result = parseSelect(null, null, selectQueryImpl(s));
+                }
+
                 parse(')');
             }
         }

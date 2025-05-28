@@ -158,18 +158,21 @@ final class QueriesImpl extends AbstractAttachableQueryPart implements Queries {
             else if (separatorRequired)
                 ctx.formatSeparator();
 
+            Query q;
             if (i)
                 if (ctx.format())
-                    query = new IgnoreQuery(P_IGNORE_FORMATTED.matcher(((IgnoreQuery) query).sql).replaceFirst("$1"));
+                    q = new IgnoreQuery(P_IGNORE_FORMATTED.matcher(((IgnoreQuery) query).sql).replaceFirst("$1"));
                 else
-                    query = new IgnoreQuery(P_IGNORE_UNFORMATTED.matcher(((IgnoreQuery) query).sql).replaceFirst("$1"));
+                    q = new IgnoreQuery(P_IGNORE_UNFORMATTED.matcher(((IgnoreQuery) query).sql).replaceFirst("$1"));
+            else
+                q = query;
 
-            ctx.visit(query);
+            ctx.languageContext(ctx.languageContext(), query, c -> c.visit(q));
 
             if (!i)
-                ctx.sql(';');
+                BlockImpl.semicolonAfterStatement(ctx, q);
 
-            separatorRequired = !i || !((IgnoreQuery) query).sql.endsWith("\n");
+            separatorRequired = !i || !((IgnoreQuery) q).sql.endsWith("\n");
         }
     }
 

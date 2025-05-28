@@ -159,7 +159,6 @@ extends
     GroupField,
     OrderField<T>,
     FieldOrRow,
-    FieldOrRowOrSelect,
     FieldOrConstraint,
     TableElement
 {

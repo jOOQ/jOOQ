@@ -83,8 +83,7 @@ import org.jetbrains.annotations.ApiStatus.Experimental;
 public interface Row
 extends
     Fields,
-    FieldOrRow,
-    FieldOrRowOrSelect
+    FieldOrRow
 {
 
     /**

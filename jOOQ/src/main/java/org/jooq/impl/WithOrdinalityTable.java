@@ -74,7 +74,7 @@ import static org.jooq.impl.Names.N_OFFSET;
 import static org.jooq.impl.Names.N_ORDINAL;
 import static org.jooq.impl.SQLDataType.BIGINT;
 import static org.jooq.impl.SubqueryCharacteristics.DERIVED_TABLE;
-// ...
+import static org.jooq.impl.Tools.extractSelectFromDerivedTable;
 import static org.jooq.impl.Tools.visitSubquery;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_FORCE_LIMIT_WITH_ORDER_BY;
 

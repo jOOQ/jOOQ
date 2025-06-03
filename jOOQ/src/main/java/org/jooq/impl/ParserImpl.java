@@ -4629,7 +4629,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
             AlterSequenceFlagsStep s1 = s;
             while (true) {
-                Field<Long> field;
+                Field<? extends Number> field;
 
                 if (!startWith && (startWith |= (field = parseSequenceStartWithIf()) != null))
                     s1 = s1.startWith(field);
@@ -4688,7 +4688,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         return parseKeywordIf("NO CACHE", "NOCACHE");
     }
 
-    private final Field<Long> parseSequenceCacheIf() {
+    private final Field<? extends Number> parseSequenceCacheIf() {
         return parseKeywordIf("CACHE") && (parseIf("=") || true) ? parseUnsignedIntegerOrBindVariable() : null;
     }
 
@@ -4700,7 +4700,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         return parseKeywordIf("NO MAXVALUE", "NOMAXVALUE");
     }
 
-    private final Field<Long> parseSequenceMaxvalueIf() {
+    private final Field<? extends Number> parseSequenceMaxvalueIf() {
         return parseKeywordIf("MAXVALUE") && (parseIf("=") || true) ? parseSignedIntegerOrBindVariable() : null;
     }
 
@@ -4708,15 +4708,15 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         return parseKeywordIf("NO MINVALUE", "NOMINVALUE");
     }
 
-    private final Field<Long> parseSequenceMinvalueIf() {
+    private final Field<? extends Number> parseSequenceMinvalueIf() {
         return parseKeywordIf("MINVALUE") && (parseIf("=") || true) ? parseSignedIntegerOrBindVariable() : null;
     }
 
-    private final Field<Long> parseSequenceIncrementByIf() {
+    private final Field<? extends Number> parseSequenceIncrementByIf() {
         return parseKeywordIf("INCREMENT") && (parseKeywordIf("BY") || parseIf("=") || true) ? parseSignedIntegerOrBindVariable() : null;
     }
 
-    private final Field<Long> parseSequenceStartWithIf() {
+    private final Field<? extends Number> parseSequenceStartWithIf() {
         return parseKeywordIf("START") && (parseKeywordIf("WITH") || parseIf("=") || true) ? parseSignedIntegerOrBindVariable() : null;
     }
 
@@ -10735,7 +10735,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
             Field<XML> value = (Field<XML>) parseField();
             parseKeyword("AS");
-            DataType<?> type = parseCastDataType();
+            DataType<?> type = parseCastDataType(false);
             parse(')');
 
             return content ? xmlserializeContent(value, type) : xmlserializeDocument(value, type);
@@ -12714,7 +12714,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
             parse('(');
             Field<?> field = parseField();
             parseKeyword("AS");
-            DataType<?> type = parseCastDataType();
+            DataType<?> type = parseCastDataType(false);
 
             if (!tryCast)
                 tryCast = parseKeywordIf("DEFAULT NULL ON CONVERSION ERROR");
@@ -13875,7 +13875,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
              : 0;
     }
 
-    private final DataType<?> parseCastDataType() {
+    private final DataType<?> parseCastDataType(boolean numericOnly) {
         char character = characterUpper();
 
         switch (character) {
@@ -13892,23 +13892,34 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                 break;
         }
 
-        return parseDataType();
+        return parseDataType(numericOnly);
     }
 
     @Override
     public final DataType<?> parseDataType() {
-        DataType<?> result = parseDataTypeIf(true);
+        return parseDataType(false);
+    }
+
+    private final DataType<?> parseDataType(boolean numericOnly) {
+        DataType<?> result = parseDataTypeIf(true, numericOnly);
 
         if (result == null)
-            throw expected("Data type");
+            if (numericOnly)
+                throw expected("Numeric data type");
+            else
+                throw expected("Data type");
 
         return result;
     }
 
     private final DataType<?> parseDataTypeIf(boolean parseUnknownTypes) {
-        DataType<?> result = parseDataTypePrefixIf(parseUnknownTypes);
+        return parseDataTypeIf(parseUnknownTypes, false);
+    }
 
-        if (result != null) {
+    private final DataType<?> parseDataTypeIf(boolean parseUnknownTypes, boolean numericOnly) {
+        DataType<?> result = parseDataTypePrefixIf(parseUnknownTypes, numericOnly);
+
+        if (result != null && !numericOnly) {
             boolean array;
 
             do {
@@ -13930,7 +13941,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         return result;
     }
 
-    private final DataType<?> parseDataTypePrefixIf(boolean parseUnknownTypes) {
+    private final DataType<?> parseDataTypePrefixIf(boolean parseUnknownTypes, boolean parseNumericOnly) {
+        boolean parseUnknownTypes0 = parseUnknownTypes = parseUnknownTypes && !parseNumericOnly;
         char character = characterUpper();
 
         if (character == '[' || character == '"' || character == '`')
@@ -13938,73 +13950,80 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
         switch (character) {
             case 'A':
-                if (parseKeywordOrIdentifierIf("ARRAY")) {
-                    if (peek('('))
-                        return parseParenthesised(c -> parseDataTypeIf(parseUnknownTypes).array());
-                    else if (peek('<'))
-                        return parseParenthesised('<', c -> parseDataTypeIf(parseUnknownTypes).array(), '>');
-                    else
-                        return OTHER.array();
-                }
-                else if (parseKeywordIf("AUTO_INCREMENT")) {
-                    parseDataTypeIdentityArgsIf();
-                    return INTEGER.identity(true);
+                if (!parseNumericOnly) {
+                    if (parseKeywordOrIdentifierIf("ARRAY")) {
+                        if (peek('('))
+                            return parseParenthesised(c -> parseDataTypeIf(parseUnknownTypes0).array());
+                        else if (peek('<'))
+                            return parseParenthesised('<', c -> parseDataTypeIf(parseUnknownTypes0).array(), '>');
+                        else
+                            return OTHER.array();
+                    }
+                    else if (parseKeywordIf("AUTO_INCREMENT")) {
+                        parseDataTypeIdentityArgsIf();
+                        return INTEGER.identity(true);
+                    }
                 }
 
                 break;
 
             case 'B':
-                if (parseKeywordOrIdentifierIf("BIGINT"))
+                if (parseKeywordOrIdentifierIf("BIGINT")) {
                     return parseUnsigned(parseAndIgnoreDataTypeLength(BIGINT));
-                else if (parseKeywordOrIdentifierIf("BIGSERIAL"))
-                    return BIGINT.identity(true);
-                else if (parseKeywordOrIdentifierIf("BINARY"))
-                    if (parseKeywordIf("VARYING"))
-                        return parseDataTypeLength(VARBINARY);
-                    else
-                        return parseDataTypeLength(BINARY);
-                else if (parseKeywordOrIdentifierIf("BIT"))
-                    return parseDataTypeLength(BIT);
-                else if (parseKeywordOrIdentifierIf("BLOB"))
-                    if (parseKeywordIf("SUB_TYPE"))
-                        if (parseKeywordIf("0", "BINARY"))
-                            return parseDataTypeLength(BLOB);
-                        else if (parseKeywordIf("1", "TEXT"))
-                            return parseDataTypeLength(CLOB);
+                }
+                else if (!parseNumericOnly) {
+                    if (parseKeywordOrIdentifierIf("BIGSERIAL"))
+                        return BIGINT.identity(true);
+                    else if (parseKeywordOrIdentifierIf("BINARY"))
+                        if (parseKeywordIf("VARYING"))
+                            return parseDataTypeLength(VARBINARY);
                         else
-                            throw expected("0", "BINARY", "1", "TEXT");
-                    else
-                        return parseDataTypeLength(BLOB);
-                else if (parseKeywordOrIdentifierIf("BOOLEAN") ||
-                         parseKeywordOrIdentifierIf("BOOL"))
-                    return BOOLEAN;
-                else if (parseKeywordOrIdentifierIf("BYTEA"))
-                    return BLOB;
+                            return parseDataTypeLength(BINARY);
+                    else if (parseKeywordOrIdentifierIf("BIT"))
+                        return parseDataTypeLength(BIT);
+                    else if (parseKeywordOrIdentifierIf("BLOB"))
+                        if (parseKeywordIf("SUB_TYPE"))
+                            if (parseKeywordIf("0", "BINARY"))
+                                return parseDataTypeLength(BLOB);
+                            else if (parseKeywordIf("1", "TEXT"))
+                                return parseDataTypeLength(CLOB);
+                            else
+                                throw expected("0", "BINARY", "1", "TEXT");
+                        else
+                            return parseDataTypeLength(BLOB);
+                    else if (parseKeywordOrIdentifierIf("BOOLEAN") ||
+                             parseKeywordOrIdentifierIf("BOOL"))
+                        return BOOLEAN;
+                    else if (parseKeywordOrIdentifierIf("BYTEA"))
+                        return BLOB;
+                }
 
                 break;
 
             case 'C':
-                if (parseKeywordOrIdentifierIf("CHAR") ||
-                    parseKeywordOrIdentifierIf("CHARACTER"))
-                    if (parseKeywordIf("VARYING"))
-                        return parseDataTypeCollation(parseDataTypeLength(VARCHAR, VARBINARY, () -> parseKeywordIf("FOR BIT DATA")));
-                    else if (parseKeywordIf("LARGE OBJECT"))
-                        return parseDataTypeCollation(parseDataTypeLength(CLOB));
-                    else
-                        return parseDataTypeCollation(parseDataTypeLength(CHAR, BINARY, () -> parseKeywordIf("FOR BIT DATA")));
+                if (!parseNumericOnly) {
+                    if (parseKeywordOrIdentifierIf("CHAR") ||
+                        parseKeywordOrIdentifierIf("CHARACTER"))
+                        if (parseKeywordIf("VARYING"))
+                            return parseDataTypeCollation(parseDataTypeLength(VARCHAR, VARBINARY, () -> parseKeywordIf("FOR BIT DATA")));
+                        else if (parseKeywordIf("LARGE OBJECT"))
+                            return parseDataTypeCollation(parseDataTypeLength(CLOB));
+                        else
+                            return parseDataTypeCollation(parseDataTypeLength(CHAR, BINARY, () -> parseKeywordIf("FOR BIT DATA")));
 
-                // [#5934] [#10291] TODO: support as actual data type as well
-                else if (parseKeywordOrIdentifierIf("CITEXT"))
-                    return parseDataTypeCollation(parseAndIgnoreDataTypeLength(CLOB));
-                else if (parseKeywordOrIdentifierIf("CLOB"))
-                    return parseDataTypeCollation(parseDataTypeLength(CLOB));
+                    // [#5934] [#10291] TODO: support as actual data type as well
+                    else if (parseKeywordOrIdentifierIf("CITEXT"))
+                        return parseDataTypeCollation(parseAndIgnoreDataTypeLength(CLOB));
+                    else if (parseKeywordOrIdentifierIf("CLOB"))
+                        return parseDataTypeCollation(parseDataTypeLength(CLOB));
+                }
 
                 break;
 
             case 'D':
-                if (parseKeywordOrIdentifierIf("DATE"))
+                if (!parseNumericOnly && parseKeywordOrIdentifierIf("DATE"))
                     return DATE;
-                else if (parseKeywordOrIdentifierIf("DATETIME"))
+                else if (!parseNumericOnly && parseKeywordOrIdentifierIf("DATETIME"))
                     return parseDataTypePrecisionIf(TIMESTAMP);
                 else if (parseKeywordOrIdentifierIf("DECIMAL") ||
                          parseKeywordOrIdentifierIf("DEC"))
@@ -14016,7 +14035,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                 break;
 
             case 'E':
-                if (parseKeywordOrIdentifierIf("ENUM"))
+                if (!parseNumericOnly && parseKeywordOrIdentifierIf("ENUM"))
                     return parseDataTypeCollation(parseDataTypeEnum());
 
                 break;
@@ -14028,18 +14047,20 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                 break;
 
             case 'G':
-                if (!ignoreProEdition()
-                    && (parseKeywordOrIdentifierIf("GEOMETRY") || parseKeywordOrIdentifierIf("SDO_GEOMETRY"))
-                    && requireProEdition()
-                ) {
+                if (!parseNumericOnly) {
+                    if (!ignoreProEdition()
+                        && (parseKeywordOrIdentifierIf("GEOMETRY") || parseKeywordOrIdentifierIf("SDO_GEOMETRY"))
+                        && requireProEdition()
+                    ) {
 
 
 
-                }
-                else if (!ignoreProEdition() && parseKeywordOrIdentifierIf("GEOGRAPHY") && requireProEdition()) {
+                    }
+                    else if (!ignoreProEdition() && parseKeywordOrIdentifierIf("GEOGRAPHY") && requireProEdition()) {
 
 
 
+                    }
                 }
 
                 break;
@@ -14053,7 +14074,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                     return SMALLINT;
                 else if (parseKeywordOrIdentifierIf("INT8"))
                     return BIGINT;
-                else if (parseKeywordIf("INTERVAL")) {
+                else if (!parseNumericOnly && parseKeywordIf("INTERVAL")) {
                     if (parseKeywordIf("YEAR")) {
                         parseDataTypePrecisionIf();
                         parseKeyword("TO MONTH");
@@ -14068,7 +14089,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                     else
                         return INTERVAL;
                 }
-                else if (parseKeywordIf("IDENTITY")) {
+                else if (!parseNumericOnly && parseKeywordIf("IDENTITY")) {
                     parseDataTypeIdentityArgsIf();
                     return INTEGER.identity(true);
                 }
@@ -14076,70 +14097,79 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                 break;
 
             case 'J':
-                if (parseKeywordOrIdentifierIf("JSON"))
-                    return JSON;
-                else if (parseKeywordOrIdentifierIf("JSONB"))
-                    return JSONB;
+                if (!parseNumericOnly) {
+                    if (parseKeywordOrIdentifierIf("JSON"))
+                        return JSON;
+                    else if (parseKeywordOrIdentifierIf("JSONB"))
+                        return JSONB;
+                }
 
                 break;
 
             case 'L':
-                if (parseKeywordOrIdentifierIf("LONGBLOB"))
-                    return BLOB;
-                else if (parseKeywordOrIdentifierIf("LONGTEXT"))
-                    return parseDataTypeCollation(CLOB);
-                else if (parseKeywordOrIdentifierIf("LONG NVARCHAR"))
-                    return parseDataTypeCollation(parseDataTypeLength(LONGNVARCHAR));
-                else if (parseKeywordOrIdentifierIf("LONG VARBINARY") ||
-                         parseKeywordOrIdentifierIf("LONGVARBINARY"))
-                    return parseDataTypeCollation(parseDataTypeLength(LONGVARBINARY));
-                else if (parseKeywordOrIdentifierIf("LONG VARCHAR") ||
-                         parseKeywordOrIdentifierIf("LONGVARCHAR"))
-                    return parseDataTypeCollation(parseDataTypeLength(LONGVARCHAR, LONGVARBINARY, () -> parseKeywordIf("FOR BIT DATA")));
+                if (!parseNumericOnly) {
+                    if (parseKeywordOrIdentifierIf("LONGBLOB"))
+                        return BLOB;
+                    else if (parseKeywordOrIdentifierIf("LONGTEXT"))
+                        return parseDataTypeCollation(CLOB);
+                    else if (parseKeywordOrIdentifierIf("LONG NVARCHAR"))
+                        return parseDataTypeCollation(parseDataTypeLength(LONGNVARCHAR));
+                    else if (parseKeywordOrIdentifierIf("LONG VARBINARY") ||
+                             parseKeywordOrIdentifierIf("LONGVARBINARY"))
+                        return parseDataTypeCollation(parseDataTypeLength(LONGVARBINARY));
+                    else if (parseKeywordOrIdentifierIf("LONG VARCHAR") ||
+                             parseKeywordOrIdentifierIf("LONGVARCHAR"))
+                        return parseDataTypeCollation(parseDataTypeLength(LONGVARCHAR, LONGVARBINARY, () -> parseKeywordIf("FOR BIT DATA")));
+                }
 
                 break;
 
             case 'M':
-                if (parseKeywordOrIdentifierIf("MEDIUMBLOB"))
-                    return BLOB;
-                else if (parseKeywordOrIdentifierIf("MEDIUMINT"))
+                if (parseKeywordOrIdentifierIf("MEDIUMINT"))
                     return parseUnsigned(parseAndIgnoreDataTypeLength(INTEGER));
-                else if (parseKeywordOrIdentifierIf("MEDIUMTEXT"))
-                    return parseDataTypeCollation(CLOB);
+                else if (!parseNumericOnly) {
+                    if (parseKeywordOrIdentifierIf("MEDIUMBLOB"))
+                        return BLOB;
+                    else if (parseKeywordOrIdentifierIf("MEDIUMTEXT"))
+                        return parseDataTypeCollation(CLOB);
+                }
 
                 break;
 
             case 'N':
-                if (parseKeywordIf("NATIONAL CHARACTER") ||
-                    parseKeywordIf("NATIONAL CHAR"))
-                    if (parseKeywordIf("VARYING"))
-                        return parseDataTypeCollation(parseDataTypeLength(NVARCHAR));
-                    else if (parseKeywordIf("LARGE OBJECT"))
-                        return parseDataTypeCollation(parseDataTypeLength(NCLOB));
-                    else
-                        return parseDataTypeCollation(parseDataTypeLength(NCHAR));
-                else if (parseKeywordOrIdentifierIf("NCHAR"))
-                    if (parseKeywordIf("VARYING"))
-                        return parseDataTypeCollation(parseDataTypeLength(NVARCHAR));
-                    else if (parseKeywordIf("LARGE OBJECT"))
-                        return parseDataTypeCollation(parseDataTypeLength(NCLOB));
-                    else
-                        return parseDataTypeCollation(parseDataTypeLength(NCHAR));
-                else if (parseKeywordOrIdentifierIf("NCLOB"))
-                    return parseDataTypeCollation(parseDataTypeLength(NCLOB));
-                else if (parseKeywordOrIdentifierIf("NUMBER") ||
-                         parseKeywordOrIdentifierIf("NUMERIC"))
+                if (parseKeywordOrIdentifierIf("NUMBER") ||
+                    parseKeywordOrIdentifierIf("NUMERIC")) {
                     return parseDataTypePrecisionScaleIf(NUMERIC);
-                else if (parseKeywordOrIdentifierIf("NVARCHAR") ||
-                         parseKeywordOrIdentifierIf("NVARCHAR2"))
-                    return parseDataTypeCollation(parseDataTypeLength(NVARCHAR));
-                else if (parseKeywordOrIdentifierIf("NTEXT"))
-                    return parseDataTypeCollation(parseAndIgnoreDataTypeLength(NCLOB));
+                }
+                else if (!parseNumericOnly) {
+                    if (parseKeywordIf("NATIONAL CHARACTER") ||
+                        parseKeywordIf("NATIONAL CHAR"))
+                        if (parseKeywordIf("VARYING"))
+                            return parseDataTypeCollation(parseDataTypeLength(NVARCHAR));
+                        else if (parseKeywordIf("LARGE OBJECT"))
+                            return parseDataTypeCollation(parseDataTypeLength(NCLOB));
+                        else
+                            return parseDataTypeCollation(parseDataTypeLength(NCHAR));
+                    else if (parseKeywordOrIdentifierIf("NCHAR"))
+                        if (parseKeywordIf("VARYING"))
+                            return parseDataTypeCollation(parseDataTypeLength(NVARCHAR));
+                        else if (parseKeywordIf("LARGE OBJECT"))
+                            return parseDataTypeCollation(parseDataTypeLength(NCLOB));
+                        else
+                            return parseDataTypeCollation(parseDataTypeLength(NCHAR));
+                    else if (parseKeywordOrIdentifierIf("NCLOB"))
+                        return parseDataTypeCollation(parseDataTypeLength(NCLOB));
+                    else if (parseKeywordOrIdentifierIf("NVARCHAR") ||
+                             parseKeywordOrIdentifierIf("NVARCHAR2"))
+                        return parseDataTypeCollation(parseDataTypeLength(NVARCHAR));
+                    else if (parseKeywordOrIdentifierIf("NTEXT"))
+                        return parseDataTypeCollation(parseAndIgnoreDataTypeLength(NCLOB));
+                }
 
                 break;
 
             case 'O':
-                if (parseKeywordOrIdentifierIf("OTHER"))
+                if (!parseNumericOnly && parseKeywordOrIdentifierIf("OTHER"))
                     return OTHER;
 
                 break;
@@ -14151,61 +14181,61 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                 break;
 
             case 'S':
-                if (parseKeywordOrIdentifierIf("SERIAL4") ||
-                    parseKeywordOrIdentifierIf("SERIAL"))
-                    return INTEGER.identity(true);
-                else if (parseKeywordOrIdentifierIf("SERIAL8"))
-                    return BIGINT.identity(true);
-                else if (parseKeywordOrIdentifierIf("SET"))
-                    return parseDataTypeCollation(parseDataTypeEnum());
-                else if (parseKeywordOrIdentifierIf("SMALLINT"))
+                if (parseKeywordOrIdentifierIf("SMALLINT"))
                     return parseUnsigned(parseAndIgnoreDataTypeLength(SMALLINT));
-                else if (parseKeywordOrIdentifierIf("SMALLSERIAL") ||
-                         parseKeywordOrIdentifierIf("SERIAL2"))
-                    return SMALLINT.identity(true);
-                else if (parseKeywordOrIdentifierIf("STRING"))
-                    return parseDataTypeCollation(parseDataTypeLength(VARCHAR));
+                else if (!parseNumericOnly) {
+                    if (parseKeywordOrIdentifierIf("SERIAL4") ||
+                        parseKeywordOrIdentifierIf("SERIAL"))
+                        return INTEGER.identity(true);
+                    else if (parseKeywordOrIdentifierIf("SERIAL8"))
+                        return BIGINT.identity(true);
+                    else if (parseKeywordOrIdentifierIf("SET"))
+                        return parseDataTypeCollation(parseDataTypeEnum());
+                    else if (parseKeywordOrIdentifierIf("SMALLSERIAL") ||
+                             parseKeywordOrIdentifierIf("SERIAL2"))
+                        return SMALLINT.identity(true);
+                    else if (parseKeywordOrIdentifierIf("STRING"))
+                        return parseDataTypeCollation(parseDataTypeLength(VARCHAR));
+                }
 
                 break;
 
             case 'T':
-                if (parseKeywordOrIdentifierIf("TEXT"))
-                    return parseDataTypeCollation(parseAndIgnoreDataTypeLength(CLOB));
-                else if (parseKeywordOrIdentifierIf("TIMESTAMPTZ"))
-                    return parseDataTypePrecisionIf(TIMESTAMPWITHTIMEZONE);
-                else if (parseKeywordOrIdentifierIf("TIMESTAMP")) {
-                    Integer precision = parseDataTypePrecisionIf();
-
-                    if (parseKeywordOrIdentifierIf("WITH TIME ZONE"))
-                        return precision == null ? TIMESTAMPWITHTIMEZONE : TIMESTAMPWITHTIMEZONE(precision);
-                    else if (parseKeywordOrIdentifierIf("WITHOUT TIME ZONE") || true)
-                        return precision == null ? TIMESTAMP : TIMESTAMP(precision);
-                }
-                else if (parseKeywordOrIdentifierIf("TIMETZ"))
-                    return parseDataTypePrecisionIf(TIMEWITHTIMEZONE);
-                else if (parseKeywordOrIdentifierIf("TIME")) {
-                    Integer precision = parseDataTypePrecisionIf();
-
-                    if (parseKeywordOrIdentifierIf("WITH TIME ZONE"))
-                        return precision == null ? TIMEWITHTIMEZONE : SQLDataType.TIMEWITHTIMEZONE(precision);
-                    else if (parseKeywordOrIdentifierIf("WITHOUT TIME ZONE") || true)
-                        return precision == null ? TIME : TIME(precision);
-                }
-                else if (parseKeywordOrIdentifierIf("TINYBLOB"))
-                    return BLOB;
-                else if (parseKeywordOrIdentifierIf("TINYINT"))
+                if (parseKeywordOrIdentifierIf("TINYINT"))
                     return parseUnsigned(parseAndIgnoreDataTypeLength(TINYINT));
-                else if (parseKeywordOrIdentifierIf("TINYTEXT"))
-                    return parseDataTypeCollation(CLOB);
+                else if (!parseNumericOnly) {
+                    if (parseKeywordOrIdentifierIf("TEXT"))
+                        return parseDataTypeCollation(parseAndIgnoreDataTypeLength(CLOB));
+                    else if (parseKeywordOrIdentifierIf("TIMESTAMPTZ"))
+                        return parseDataTypePrecisionIf(TIMESTAMPWITHTIMEZONE);
+                    else if (parseKeywordOrIdentifierIf("TIMESTAMP")) {
+                        Integer precision = parseDataTypePrecisionIf();
+
+                        if (parseKeywordOrIdentifierIf("WITH TIME ZONE"))
+                            return precision == null ? TIMESTAMPWITHTIMEZONE : TIMESTAMPWITHTIMEZONE(precision);
+                        else if (parseKeywordOrIdentifierIf("WITHOUT TIME ZONE") || true)
+                            return precision == null ? TIMESTAMP : TIMESTAMP(precision);
+                    }
+                    else if (parseKeywordOrIdentifierIf("TIMETZ"))
+                        return parseDataTypePrecisionIf(TIMEWITHTIMEZONE);
+                    else if (parseKeywordOrIdentifierIf("TIME")) {
+                        Integer precision = parseDataTypePrecisionIf();
+
+                        if (parseKeywordOrIdentifierIf("WITH TIME ZONE"))
+                            return precision == null ? TIMEWITHTIMEZONE : SQLDataType.TIMEWITHTIMEZONE(precision);
+                        else if (parseKeywordOrIdentifierIf("WITHOUT TIME ZONE") || true)
+                            return precision == null ? TIME : TIME(precision);
+                    }
+                    else if (parseKeywordOrIdentifierIf("TINYBLOB"))
+                        return BLOB;
+                    else if (parseKeywordOrIdentifierIf("TINYTEXT"))
+                        return parseDataTypeCollation(CLOB);
+                }
 
                 break;
 
             case 'U':
-                if (parseKeywordOrIdentifierIf("UUID"))
-                    return SQLDataType.UUID;
-                else if (parseKeywordOrIdentifierIf("UNIQUEIDENTIFIER"))
-                    return SQLDataType.UUID;
-                else if (parseKeywordOrIdentifierIf("UTINYINT"))
+                if (parseKeywordOrIdentifierIf("UTINYINT"))
                     return SQLDataType.TINYINTUNSIGNED;
                 else if (parseKeywordOrIdentifierIf("USMALLINT"))
                     return SQLDataType.SMALLINTUNSIGNED;
@@ -14213,28 +14243,36 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                     return SQLDataType.INTEGERUNSIGNED;
                 else if (parseKeywordOrIdentifierIf("UBIGINT"))
                     return SQLDataType.BIGINTUNSIGNED;
+                else if (!parseNumericOnly) {
+                    if (parseKeywordOrIdentifierIf("UUID"))
+                        return SQLDataType.UUID;
+                    else if (parseKeywordOrIdentifierIf("UNIQUEIDENTIFIER"))
+                        return SQLDataType.UUID;
+                }
 
                 break;
 
             case 'V':
-                if (parseKeywordOrIdentifierIf("VARCHAR") ||
-                    parseKeywordOrIdentifierIf("VARCHAR2") ||
-                    // [#5934] [#10291] TODO: support as actual data type as well
-                    parseKeywordOrIdentifierIf("VARCHAR_IGNORECASE"))
-                    return parseDataTypeCollation(parseDataTypeLength(VARCHAR, VARBINARY, () -> parseKeywordIf("FOR BIT DATA")));
-                else if (parseKeywordOrIdentifierIf("VARBINARY"))
-                    return parseDataTypeLength(VARBINARY);
+                if (!parseNumericOnly) {
+                    if (parseKeywordOrIdentifierIf("VARCHAR") ||
+                        parseKeywordOrIdentifierIf("VARCHAR2") ||
+                        // [#5934] [#10291] TODO: support as actual data type as well
+                        parseKeywordOrIdentifierIf("VARCHAR_IGNORECASE"))
+                        return parseDataTypeCollation(parseDataTypeLength(VARCHAR, VARBINARY, () -> parseKeywordIf("FOR BIT DATA")));
+                    else if (parseKeywordOrIdentifierIf("VARBINARY"))
+                        return parseDataTypeLength(VARBINARY);
+                }
 
                 break;
 
             case 'X':
-                if (parseKeywordOrIdentifierIf("XML"))
+                if (!parseNumericOnly && parseKeywordOrIdentifierIf("XML"))
                     return SQLDataType.XML;
 
                 break;
 
             case 'Y':
-                if (parseKeywordOrIdentifierIf("YEAR"))
+                if (!parseNumericOnly && parseKeywordOrIdentifierIf("YEAR"))
                     return parseDataTypeLength(SQLDataType.YEAR);
 
                 break;
@@ -15020,8 +15058,10 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         return result;
     }
 
-    private final Field<Long> parseUnsignedIntegerOrBindVariable() {
-        Long i = parseUnsignedIntegerLiteralIf();
+    private final Field<? extends Number> parseCastIntegerOrBindVariable0(
+        Supplier<Long> l
+    ) {
+        Long i = l.get();
 
         if (i != null)
             return DSL.inline(i);
@@ -15030,20 +15070,31 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         if (f != null)
             return (Field<Long>) f;
 
-        throw expected("Unsigned integer or bind variable");
+        throw expected("Integer or bind variable");
     }
 
-    private final Field<Long> parseSignedIntegerOrBindVariable() {
-        Long i = parseSignedIntegerLiteralIf();
+    private final Field<? extends Number> parseCastIntegerOrBindVariable(
+        Supplier<Long> l
+    ) {
+        if (parseFunctionNameIf("CAST")) {
+            parse('(');
+            Field<?> field = parseCastIntegerOrBindVariable0(l);
+            parseKeyword("AS");
+            parseCastDataType(true);
+            parse(')');
 
-        if (i != null)
-            return DSL.inline(i);
+            return (Field<? extends Number>) field;
+        }
+        else
+            return parseCastIntegerOrBindVariable0(l);
+    }
 
-        Field<?> f = parseBindVariableIf();
-        if (f != null)
-            return (Field<Long>) f;
+    private final Field<? extends Number> parseUnsignedIntegerOrBindVariable() {
+        return parseCastIntegerOrBindVariable(this::parseUnsignedIntegerLiteralIf);
+    }
 
-        throw expected("Signed integer or bind variable");
+    private final Field<? extends Number> parseSignedIntegerOrBindVariable() {
+        return parseCastIntegerOrBindVariable(this::parseSignedIntegerLiteralIf);
     }
 
     @Override

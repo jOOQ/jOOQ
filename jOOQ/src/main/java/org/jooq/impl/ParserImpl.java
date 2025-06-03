@@ -4391,7 +4391,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         boolean cache = false;
 
         for (;;) {
-            Field<Long> field;
+            Field<? extends Number> field;
 
             if (!startWith && (startWith |= (field = parseSequenceStartWithIf()) != null))
                 s = s.startWith(field);

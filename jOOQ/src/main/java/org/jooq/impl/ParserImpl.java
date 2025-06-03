@@ -600,6 +600,7 @@ import org.jooq.DropTableStep;
 import org.jooq.DropTypeStep;
 import org.jooq.Field;
 import org.jooq.FieldOrRow;
+import org.jooq.FieldOrRowOrSelect;
 // ...
 // ...
 import org.jooq.Function1;
@@ -678,6 +679,7 @@ import org.jooq.SQLDialect;
 import org.jooq.SQLDialectCategory;
 import org.jooq.Schema;
 import org.jooq.Select;
+import org.jooq.SelectCorrelatedSubqueryStep;
 import org.jooq.SelectField;
 import org.jooq.SelectFieldOrAsterisk;
 import org.jooq.Sequence;
@@ -1384,6 +1386,19 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
     }
 
     private final Field<?> parseScalarSubqueryIf() {
+        FieldOrRowOrSelect r = parseSubqueryIf();
+
+        if (r instanceof Select<?> s) {
+            if (Tools.degree(s) != 1)
+                throw exception("Select list must contain exactly one column");
+
+            return field((Select) s);
+        }
+
+        return null;
+    }
+
+    private final FieldOrRowOrSelect parseSubqueryIf() {
         int p = position();
 
         try {
@@ -1391,10 +1406,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                 parse('(');
                 SelectQueryImpl<Record> select = parseWithOrSelect();
                 parse(')');
-                if (Tools.degree(select) != 1)
-                    throw exception("Select list must contain exactly one column");
 
-                return field((Select) select);
+                return select;
             }
         }
         catch (ParserException e) {
@@ -1747,7 +1760,11 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         return lhs;
     }
 
-    private final SelectQueryImpl<Record> degreeCheck(int expected, SelectQueryImpl<Record> s) {
+    private final <S extends Select<?>> S degreeCheck(int expected, S s) {
+        return degreeCheck(expected, s, true);
+    }
+
+    private final <S extends Select<?>> S degreeCheck(int expected, S s, boolean throwIfNotMatched) {
         if (expected == 0)
             return s;
 
@@ -1756,7 +1773,10 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
             return s;
 
         if (expected != actual)
-            throw exception("Select list must contain " + expected + " columns. Got: " + actual);
+            if (throwIfNotMatched)
+                throw exception("Select list must contain " + expected + " columns. Got: " + actual);
+            else
+                return null;
 
         return s;
     }
@@ -6753,10 +6773,11 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         }
 
         boolean notOp = false;
-        FieldOrRow left = parseConcat();
+        FieldOrRowOrSelect left = parseConcat();
+        Field leftScalar = toField(left, false);
+        Select leftSelect = left instanceof Select s ? s : null;
         int p2 = position();
         boolean not = parseKeywordIf("NOT");
-        boolean isField = left instanceof Field;
         Comparator comp;
         TSQLOuterJoinComparator outer;
 
@@ -6786,25 +6807,25 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
             // TODO equal degrees
             Condition result =
                   all
-                ? isField
+                ? leftScalar != null
                     ? peekSelectOrWith(true)
-                        ? ((Field) left).compare(comp, DSL.all(parseWithOrSelect(1)))
-                        : ((Field) left).compare(comp, DSL.all(parseList(',', c -> c.parseField()).toArray(EMPTY_FIELD)))
+                        ? leftScalar.compare(comp, DSL.all(parseWithOrSelect(1)))
+                        : leftScalar.compare(comp, DSL.all(parseList(',', c -> c.parseField()).toArray(EMPTY_FIELD)))
 
                     // TODO: Support quantifiers also for rows
                     : new RowSubqueryCondition((Row) left, DSL.all(parseWithOrSelect(((Row) left).size())), comp)
 
                 : any
-                ? isField
+                ? leftScalar != null
                     ? peekSelectOrWith(true)
-                        ? ((Field) left).compare(comp, DSL.any(parseWithOrSelect(1)))
-                        : ((Field) left).compare(comp, DSL.any(parseList(',', c -> c.parseField()).toArray(EMPTY_FIELD)))
+                        ? leftScalar.compare(comp, DSL.any(parseWithOrSelect(1)))
+                        : leftScalar.compare(comp, DSL.any(parseList(',', c -> c.parseField()).toArray(EMPTY_FIELD)))
 
                     // TODO: Support quantifiers also for rows
                     : new RowSubqueryCondition((Row) left, DSL.any(parseWithOrSelect(((Row) left).size())), comp)
 
-                : isField
-                    ? ((Field) left).compare(comp, toField(parseConcat()))
+                : leftScalar != null
+                    ? leftScalar.compare(comp, toField(parseConcat()))
                     : AbstractRow.compare((Row) left, comp, parseRow(((Row) left).size(), true));
 
             if (all || any)
@@ -6817,25 +6838,32 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
             if (parseKeywordIf("NULL"))
                 return not
-                    ? isField
-                        ? ((Field) left).isNotNull()
+                    ? leftScalar != null
+                        ? leftScalar.isNotNull()
+                        : leftSelect != null
+                        ? new SelectIsNotNull(leftSelect)
                         : ((Row) left).isNotNull()
-                    : isField
-                        ? ((Field) left).isNull()
+                    : leftScalar != null
+                        ? leftScalar.isNull()
+                        : leftSelect != null
+                        ? new SelectIsNull(leftSelect)
                         : ((Row) left).isNull();
-            else if (isField && parseKeywordIf("JSON"))
+            else if (leftScalar != null && parseKeywordIf("JSON"))
                 return not
-                    ? ((Field) left).isNotJson()
-                    : ((Field) left).isJson();
-            else if (isField && parseKeywordIf("DOCUMENT"))
+                    ? leftScalar.isNotJson()
+                    : leftScalar.isJson();
+            else if (leftScalar != null && parseKeywordIf("DOCUMENT"))
                 return not
-                    ? ((Field) left).isNotDocument()
-                    : ((Field) left).isDocument();
+                    ? leftScalar.isNotDocument()
+                    : leftScalar.isDocument();
 
             not = parseKeywordIf("DISTINCT FROM") == not;
-            if (left instanceof Field f) {
+            if (leftScalar != null) {
                 Field right = toField(parseConcat());
-                return not ? f.isNotDistinctFrom(right) : f.isDistinctFrom(right);
+                return not ? leftScalar.isNotDistinctFrom(right) : leftScalar.isDistinctFrom(right);
+            }
+            else if (leftSelect != null) {
+                throw notImplementedNonScalarSelectPredicate();
             }
             else {
                 Row right = parseRow(((Row) left).size(), true);
@@ -6849,37 +6877,40 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
             Condition result;
 
             // [#12691] Some dialects support A IN B syntax without parentheses for single element in lists
-            if (isField && !peek('(')) {
+            if (leftScalar != null && !peek('(')) {
                 result = not
-                    ? ((Field) left).notIn(parseConcat())
-                    : ((Field) left).in(parseConcat());
+                    ? leftScalar.notIn(parseConcat())
+                    : leftScalar.in(parseConcat());
             }
             else {
                 parse('(');
 
+                if (leftScalar == null && leftSelect != null)
+                    throw notImplementedNonScalarSelectPredicate();
+
                 if (peek(')'))
                     result = not
-                        ? isField
-                            ? ((Field) left).notIn(EMPTY_FIELD)
+                        ? leftScalar != null
+                            ? leftScalar.notIn(EMPTY_FIELD)
                             : new RowInCondition((Row) left, new QueryPartList<>(), true)
-                        : isField
-                            ? ((Field) left).in(EMPTY_FIELD)
+                        : leftScalar != null
+                            ? leftScalar.in(EMPTY_FIELD)
                             : new RowInCondition((Row) left, new QueryPartList<>(), false);
                 else if (peekSelectOrWith(true))
                     result = not
-                        ? isField
-                            ? ((Field) left).notIn(parseWithOrSelect(1))
+                        ? leftScalar != null
+                            ? leftScalar.notIn(parseWithOrSelect(1))
                             : new RowSubqueryCondition((Row) left, parseWithOrSelect(((Row) left).size()), NOT_IN)
-                        : isField
-                            ? ((Field) left).in(parseWithOrSelect(1))
+                        : leftScalar != null
+                            ? leftScalar.in(parseWithOrSelect(1))
                             : new RowSubqueryCondition((Row) left, parseWithOrSelect(((Row) left).size()), IN);
                 else
                     result = not
-                        ? isField
-                            ? ((Field) left).notIn(parseList(',', c -> c.parseField()))
+                        ? leftScalar != null
+                            ? leftScalar.notIn(parseList(',', c -> c.parseField()))
                             : new RowInCondition((Row) left, new QueryPartList<>(parseList(',', c -> parseRow(((Row) left).size()))), true)
-                        : isField
-                            ? ((Field) left).in(parseList(',', c -> c.parseField()))
+                        : leftScalar != null
+                            ? leftScalar.in(parseList(',', c -> c.parseField()))
                             : new RowInCondition((Row) left, new QueryPartList<>(parseList(',', c -> parseRow(((Row) left).size()))), false);
 
                 parse(')');
@@ -6889,37 +6920,41 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         }
         else if (parseKeywordIf("BETWEEN")) {
             boolean symmetric = !parseKeywordIf("ASYMMETRIC") && parseKeywordIf("SYMMETRIC");
-            FieldOrRow r1 = isField
+
+            if (leftScalar == null && leftSelect != null)
+                throw notImplementedNonScalarSelectPredicate();
+
+            FieldOrRowOrSelect r1 = leftScalar != null
                 ? parseConcat()
                 : parseRow(((Row) left).size());
             parseKeyword("AND");
-            FieldOrRow r2 = isField
+            FieldOrRowOrSelect r2 = leftScalar != null
                 ? parseConcat()
                 : parseRow(((Row) left).size());
 
             return symmetric
                 ? not
-                    ? isField
-                        ? ((Field) left).notBetweenSymmetric((Field) r1, (Field) r2)
+                    ? leftScalar != null
+                        ? leftScalar.notBetweenSymmetric((Field) r1, (Field) r2)
                         : new RowBetweenCondition((Row) left, (Row) r1, not, symmetric, (Row) r2)
-                    : isField
-                        ? ((Field) left).betweenSymmetric((Field) r1, (Field) r2)
+                    : leftScalar != null
+                        ? leftScalar.betweenSymmetric((Field) r1, (Field) r2)
                         : new RowBetweenCondition((Row) left, (Row) r1, not, symmetric, (Row) r2)
                 : not
-                    ? isField
-                        ? ((Field) left).notBetween((Field) r1, (Field) r2)
+                    ? leftScalar != null
+                        ? leftScalar.notBetween((Field) r1, (Field) r2)
                         : new RowBetweenCondition((Row) left, (Row) r1, not, symmetric, (Row) r2)
-                    : isField
-                        ? ((Field) left).between((Field) r1, (Field) r2)
+                    : leftScalar != null
+                        ? leftScalar.between((Field) r1, (Field) r2)
                         : new RowBetweenCondition((Row) left, (Row) r1, not, symmetric, (Row) r2);
         }
-        else if (isField && (parseKeywordIf("LIKE") || parseOperatorIf("~~") || (notOp = parseOperatorIf("!~~")))) {
+        else if (leftScalar != null && (parseKeywordIf("LIKE") || parseOperatorIf("~~") || (notOp = parseOperatorIf("!~~")))) {
             if (parseKeywordIf("ANY")) {
                 parse('(');
                 if (peekSelectOrWith(true)) {
                     Select<?> select = parseWithOrSelect();
                     parse(')');
-                    LikeEscapeStep result = (not ^ notOp) ? ((Field) left).notLike(any(select)) : ((Field) left).like(any(select));
+                    LikeEscapeStep result = (not ^ notOp) ? leftScalar.notLike(any(select)) : leftScalar.like(any(select));
                     return parseEscapeClauseIf(result);
                 }
                 else {
@@ -6932,7 +6967,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                         parse(')');
                     }
                     Field<String>[] fieldArray = fields.toArray(new Field[0]);
-                    LikeEscapeStep result = (not ^ notOp) ? ((Field<String>) left).notLike(any(fieldArray)) : ((Field<String>) left).like(any(fieldArray));
+                    LikeEscapeStep result = (not ^ notOp) ? leftScalar.notLike(any(fieldArray)) : leftScalar.like(any(fieldArray));
                     return parseEscapeClauseIf(result);
                 }
             }
@@ -6941,7 +6976,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                 if (peekSelectOrWith(true)) {
                     Select<?> select = parseWithOrSelect();
                     parse(')');
-                    LikeEscapeStep result = (not ^ notOp) ? ((Field) left).notLike(all(select)) : ((Field) left).like(all(select));
+                    LikeEscapeStep result = (not ^ notOp) ? leftScalar.notLike(all(select)) : leftScalar.like(all(select));
                     return parseEscapeClauseIf(result);
                 }
                 else {
@@ -6954,34 +6989,34 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                         parse(')');
                     }
                     Field<String>[] fieldArray = fields.toArray(new Field[0]);
-                    LikeEscapeStep result = (not ^ notOp) ? ((Field<String>) left).notLike(all(fieldArray)) : ((Field<String>) left).like(all(fieldArray));
+                    LikeEscapeStep result = (not ^ notOp) ? leftScalar.notLike(all(fieldArray)) : leftScalar.like(all(fieldArray));
                     return parseEscapeClauseIf(result);
                 }
             }
             else {
                 Field right = toField(parseConcat());
-                LikeEscapeStep like = (not ^ notOp) ? ((Field) left).notLike(right) : ((Field) left).like(right);
+                LikeEscapeStep like = (not ^ notOp) ? leftScalar.notLike(right) : leftScalar.like(right);
                 return parseEscapeClauseIf(like);
             }
         }
-        else if (isField && (parseKeywordIf("ILIKE") || parseOperatorIf("~~*") || (notOp = parseOperatorIf("!~~*")))) {
+        else if (leftScalar != null && (parseKeywordIf("ILIKE") || parseOperatorIf("~~*") || (notOp = parseOperatorIf("!~~*")))) {
             Field right = toField(parseConcat());
-            LikeEscapeStep like = (not ^ notOp) ? ((Field) left).notLikeIgnoreCase(right) : ((Field) left).likeIgnoreCase(right);
+            LikeEscapeStep like = (not ^ notOp) ? leftScalar.notLikeIgnoreCase(right) : leftScalar.likeIgnoreCase(right);
             return parseEscapeClauseIf(like);
         }
-        else if (isField && (parseKeywordIf("REGEXP")
+        else if (leftScalar != null && (parseKeywordIf("REGEXP")
                                         || parseKeywordIf("RLIKE")
                                         || parseKeywordIf("LIKE_REGEX")
                                         || parseOperatorIf("~")
                                         || (notOp = parseOperatorIf("!~")))) {
             Field right = toField(parseConcat());
             return (not ^ notOp)
-                    ? ((Field) left).notLikeRegex(right)
-                    : ((Field) left).likeRegex(right);
+                    ? leftScalar.notLikeRegex(right)
+                    : leftScalar.likeRegex(right);
         }
-        else if (isField && parseKeywordIf("SIMILAR TO")) {
+        else if (leftScalar != null && parseKeywordIf("SIMILAR TO")) {
             Field right = toField(parseConcat());
-            LikeEscapeStep like = not ? ((Field) left).notSimilarTo(right) : ((Field) left).similarTo(right);
+            LikeEscapeStep like = not ? leftScalar.notSimilarTo(right) : leftScalar.similarTo(right);
             return parseEscapeClauseIf(like);
         }
         else if (left instanceof Row && ((Row) left).size() == 2 && parseKeywordIf("OVERLAPS")) {
@@ -7003,11 +7038,12 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         Condition result;
 
         parse('(');
-        FieldOrRow left = parseConcat();
+        FieldOrRowOrSelect left = parseConcat();
         parse(',');
 
-        if (left instanceof Field f)
-            result = f.isNotDistinctFrom((Field) toField(parseConcat()));
+        Field f = toField(left, false);
+        if (f != null)
+            result = f.isNotDistinctFrom(toField(parseConcat()));
         else
             result = new RowIsDistinctFrom((Row) left, parseRow(((Row) left).size(), true), true);
 
@@ -8052,6 +8088,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
             return null;
         else if (part instanceof Field<?> f)
             return f;
+        else if (part instanceof Select<?> s)
+            return DSL.field((Select) degreeCheck(1, s));
         else if (part instanceof Row r)
             return r;
         else
@@ -8059,20 +8097,32 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
     }
 
     private final Field<?> toField(QueryPart part) {
+        return toField(part, true);
+    }
+
+    private final Field<?> toField(QueryPart part, boolean throwIfNonScalar) {
         if (part == null)
             return null;
         else if (part instanceof Field<?> f)
             return f;
-        else
+        else if (part instanceof Select s)
+            if (degreeCheck(1, s, throwIfNonScalar) != null)
+                return DSL.field(s);
+            else
+                return null;
+        else if (throwIfNonScalar)
             throw expected("Field");
+        else
+            return null;
     }
 
-    private final FieldOrRow parseConcat() {
-        FieldOrRow r = parseCollated();
+    private final FieldOrRowOrSelect parseConcat() {
+        FieldOrRowOrSelect r = parseCollated();
 
-        if (r instanceof Field)
+        Field f = toField(r, false);
+        if (f != null)
             while (parseIf("||"))
-                r = concatOperator((Field) r, toField(parseCollated()));
+                r = f = concatOperator(f, toField(parseCollated()));
 
         return r;
     }
@@ -8084,12 +8134,13 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
             return DSL.concat(a1, a2);
     }
 
-    private final FieldOrRow parseCollated() {
-        FieldOrRow r = parseNumericOp();
+    private final FieldOrRowOrSelect parseCollated() {
+        FieldOrRowOrSelect r = parseNumericOp();
 
-        if (r instanceof Field) {
+        Field f = toField(r, false);
+        if (f != null) {
             if (parseKeywordIf("COLLATE"))
-                r = ((Field) r).collate(parseCollation());
+                r = f = f.collate(parseCollation());
 
 
 
@@ -8235,50 +8286,51 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
     // Any numeric operator of low precedence
     // See https://www.postgresql.org/docs/current/sql-syntax-lexical.html#SQL-PRECEDENCE
-    private final FieldOrRow parseNumericOp() {
-        FieldOrRow l = parseSum();
+    private final FieldOrRowOrSelect parseNumericOp() {
+        FieldOrRowOrSelect l = parseSum();
 
-        if (l instanceof Field)
+        Field f = toField(l, false);
+        if (f != null)
             for (;;)
                 if (parseIf("<<"))
-                    l = ((Field) l).shl((Field) parseSum());
+                    l = f = f.shl(toField(parseSum()));
                 else if (parseIf(">>"))
-                    l = ((Field) l).shr((Field) parseSum());
+                    l = f = f.shr(toField(parseSum()));
                 else if (parseIf("->>")) {
-                    Field r = (Field) parseSum();
+                    Field r = toField(parseSum());
 
                     // [#10018] We cannot really know reliably whether this is a
                     //          index or attribute access. Let's default to the
                     //          more popular attribute access for now. Also,
                     //          JSONB is likely more popular than JSON.
                     if (r.getDataType().isNumeric())
-                        if (((Field) l).getDataType().getFromType() == JSON.class)
-                            l = jsonGetElementAsText((Field) l, r);
+                        if (f.getDataType().getFromType() == JSON.class)
+                            l = f = jsonGetElementAsText(f, r);
                         else
-                            l = jsonbGetElementAsText((Field) l, r);
+                            l = f = jsonbGetElementAsText(f, r);
                     else
-                        if (((Field) l).getDataType().getFromType() == JSON.class)
-                            l = jsonGetAttributeAsText((Field) l, r);
+                        if (f.getDataType().getFromType() == JSON.class)
+                            l = f = jsonGetAttributeAsText(f, r);
                         else
-                            l = jsonbGetAttributeAsText((Field) l, r);
+                            l = f = jsonbGetAttributeAsText(f, r);
                 }
                 else if (parseIf("->")) {
-                    Field r = (Field) parseSum();
+                    Field r = toField(parseSum());
 
                     // [#10018] We cannot really know reliably whether this is a
                     //          index or attribute access. Let's default to the
                     //          more popular attribute access for now. Also,
                     //          JSONB is likely more popular than JSON.
                     if (r.getDataType().isNumeric())
-                        if (((Field) l).getDataType().getFromType() == JSON.class)
-                            l = jsonGetElement((Field) l, r);
+                        if (f.getDataType().getFromType() == JSON.class)
+                            l = f = jsonGetElement(f, r);
                         else
-                            l = jsonbGetElement((Field) l, r);
+                            l = f = jsonbGetElement(f, r);
                     else
-                        if (((Field) l).getDataType().getFromType() == JSON.class)
-                            l = jsonGetAttribute((Field) l, r);
+                        if (f.getDataType().getFromType() == JSON.class)
+                            l = f = jsonGetAttribute(f, r);
                         else
-                            l = jsonbGetAttribute((Field) l, r);
+                            l = f = jsonbGetAttribute(f, r);
                 }
                 else
                     break;
@@ -8286,23 +8338,24 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         return l;
     }
 
-    private final FieldOrRow parseSum() {
-        FieldOrRow r = parseFactor();
+    private final FieldOrRowOrSelect parseSum() {
+        FieldOrRowOrSelect r = parseFactor();
 
-        if (r instanceof Field)
+        Field f = toField(r, false);
+        if (f != null)
             for (;;)
                 if (parseIf('+'))
-                    r = parseSumRightOperand(r, true);
+                    r = f = parseSumRightOperand(f, true);
                 else if (!peek("->") && parseIf('-'))
-                    r = parseSumRightOperand(r, false);
+                    r = f = parseSumRightOperand(f, false);
                 else
                     break;
 
         return r;
     }
 
-    private final Field parseSumRightOperand(FieldOrRow r, boolean add) {
-        Field rhs = (Field) parseFactor();
+    private final Field parseSumRightOperand(FieldOrRowOrSelect r, boolean add) {
+        Field rhs = toField(parseFactor());
         DatePart part;
 
         if (!ignoreProEdition() && parseKeywordIf("YEAR", "YEARS") && requireProEdition())
@@ -8320,7 +8373,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         else
             part = null;
 
-        Field lhs = (Field) r;
+        Field lhs = toField(r);
 
 
 
@@ -8345,17 +8398,18 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                 return lhs.sub(rhs);
     }
 
-    private final FieldOrRow parseFactor() {
-        FieldOrRow r = parseExp();
+    private final FieldOrRowOrSelect parseFactor() {
+        FieldOrRowOrSelect r = parseExp();
 
-        if (r instanceof Field)
+        Field f = toField(r, false);
+        if (f != null)
             for (;;)
                 if (!peek("*=") && parseIf('*'))
-                    r = ((Field) r).mul((Field) parseExp());
+                    r = f = f.mul(toField(parseExp()));
                 else if (parseIf('/'))
-                    r = ((Field) r).div((Field) parseExp());
+                    r = f = f.div(toField(parseExp()));
                 else if (parseIf('%'))
-                    r = ((Field) r).mod((Field) parseExp());
+                    r = f = f.mod(toField(parseExp()));
 
 
 
@@ -8368,20 +8422,21 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         return r;
     }
 
-    private final FieldOrRow parseExp() {
-        FieldOrRow r = parseUnaryOps();
+    private final FieldOrRowOrSelect parseExp() {
+        FieldOrRowOrSelect r = parseUnaryOps();
 
-        if (r instanceof Field)
+        Field f = toField(r, false);
+        if (f != null)
             for (;;)
                 if (!peek("^=") && parseIf('^') || parseIf("**"))
-                    r = ((Field) r).pow(toField(parseUnaryOps()));
+                    r = f = f.pow(toField(parseUnaryOps()));
                 else
                     break;
 
         return r;
     }
 
-    private final FieldOrRow parseUnaryOps() {
+    private final FieldOrRowOrSelect parseUnaryOps() {
         if (!ignoreProEdition() && parseKeywordIf("CONNECT_BY_ROOT") && requireProEdition()) {
 
 
@@ -8391,7 +8446,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         if (parseIf('~'))
             return toField(parseUnaryOps()).bitNot();
 
-        FieldOrRow r;
+        FieldOrRowOrSelect r;
         Sign sign = parseSign();
 
         if (sign == Sign.NONE)
@@ -8434,7 +8489,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         return r;
     }
 
-    private final FieldOrRow parseMethodCallIf(FieldOrRow r) {
+    private final FieldOrRowOrSelect parseMethodCallIf(FieldOrRowOrSelect r) {
 
 
 
@@ -8446,7 +8501,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         return r;
     }
 
-    private final FieldOrRow parseMethodCallIf0(FieldOrRow r) {
+    private final FieldOrRowOrSelect parseMethodCallIf0(FieldOrRowOrSelect r) {
+
 
 
 
@@ -8594,8 +8650,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         }
     }
 
-    private final FieldOrRow parseTerm() {
-        FieldOrRow field;
+    private final FieldOrRowOrSelect parseTerm() {
+        FieldOrRowOrSelect field;
         Object value;
 
 
@@ -9606,12 +9662,15 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                     if (!forbidden.isEmpty())
                         forbidden = EnumSet.noneOf(FunctionKeyword.class);
 
-                    FieldOrRow r = parseScalarSubqueryIf();
+                    FieldOrRowOrSelect r = parseSubqueryIf();
                     if (r != null)
                         return r;
 
                     parse('(');
-                    r = parseFieldOrRow();
+
+                    // [#18548] This cast is safe in 3.20. In 3.21, it is unnecessary because
+                    //          FieldOrRow <: FieldOrRowOrSelect
+                    r = (FieldOrRowOrSelect) parseFieldOrRow();
                     List<Field<?>> list = null;
 
                     if (r instanceof Field<?> f) {
@@ -15088,6 +15147,10 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
     private final ParserException notImplemented(String feature) {
         return notImplemented(feature, "https://github.com/jOOQ/jOOQ/issues/10171");
+    }
+
+    private final ParserException notImplementedNonScalarSelectPredicate() {
+        return notImplemented("Non-scalar SELECT predicate", "https://github.com/jOOQ/jOOQ/issues/10176");
     }
 
     private final ParserException notImplemented(String feature, String link) {

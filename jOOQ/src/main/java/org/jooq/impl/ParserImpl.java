@@ -7415,9 +7415,9 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                         parse(')');
                     }
                     if (binary(leftScalar))
-                        return (not ^ notOp) ? ((Field<String>) left).notBinaryLike(any((Field<byte[]>[]) fields.toArray(EMPTY_FIELD))) : ((Field<String>) left).binaryLike(any((Field<byte[]>[]) fields.toArray(EMPTY_FIELD)));
+                        return (not ^ notOp) ? leftScalar.notBinaryLike(any((Field<byte[]>[]) fields.toArray(EMPTY_FIELD))) : leftScalar.binaryLike(any((Field<byte[]>[]) fields.toArray(EMPTY_FIELD)));
                     else
-                        return parseEscapeClauseIf((not ^ notOp) ? ((Field<String>) left).notLike(any((Field<String>[]) fields.toArray(EMPTY_FIELD))) : ((Field<String>) left).like(any((Field<String>[]) fields.toArray(EMPTY_FIELD))));
+                        return parseEscapeClauseIf((not ^ notOp) ? leftScalar.notLike(any((Field<String>[]) fields.toArray(EMPTY_FIELD))) : leftScalar.like(any((Field<String>[]) fields.toArray(EMPTY_FIELD))));
                 }
             }
             else if (parseKeywordIf("ALL")) {

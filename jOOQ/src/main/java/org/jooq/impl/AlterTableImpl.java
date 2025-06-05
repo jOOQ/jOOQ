@@ -323,6 +323,9 @@ implements
     final boolean                  $alterColumnDropIdentity() { return alterColumnDropIdentity; }
     final Constraint               $alterConstraint()         { return alterConstraint; }
     final boolean                  $alterConstraintEnforced() { return alterConstraintEnforced; }
+    final Field<?>                 $changeColumnFrom()        { return changeColumnFrom; }
+    final Field<?>                 $changeColumnTo()          { return changeColumnTo; }
+    final DataType<?>              $changeColumnType()        { return changeColumnType; }
     final Table<?>                 $renameTo()                { return renameTo; }
     final Field<?>                 $renameColumn()            { return renameColumn; }
     final Field<?>                 $renameColumnTo()          { return renameColumnTo; }

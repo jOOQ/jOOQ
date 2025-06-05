@@ -668,6 +668,31 @@ final class Interpreter {
             else
                 throw unsupportedQuery(query);
         }
+        else if (query.$changeColumnFrom() != null) {
+            MutableField existingField = find(existing.fields, query.$changeColumnFrom());
+
+            if (existingField == null)
+                if (!query.$ifExistsColumn() && throwIfMetaLookupFails())
+                    throw notExists(query.$changeColumnFrom());
+                else
+                    return;
+
+            if (!query.$changeColumnFrom().getUnqualifiedName().equals(query.$changeColumnTo().getUnqualifiedName())) {
+                if (find(existing.fields, query.$changeColumnTo()) != null)
+                    if (throwIfMetaLookupFails())
+                        throw alreadyExists(query.$changeColumnTo());
+                    else
+                        return;
+
+                existingField.name((UnqualifiedName) query.$changeColumnTo().getUnqualifiedName());
+            }
+
+            existingField.type = query.$changeColumnType().nullability(
+                  query.$changeColumnType().nullability() == Nullability.DEFAULT
+                ? existingField.type.nullability()
+                : query.$changeColumnType().nullability()
+            );
+        }
         else if (query.$renameTo() != null && checkNotExists(schema, query.$renameTo())) {
             existing.name((UnqualifiedName) query.$renameTo().getUnqualifiedName());
         }

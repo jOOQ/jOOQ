@@ -426,6 +426,15 @@ implements
         else {
             switch (family) {
 
+
+
+
+
+
+
+
+
+
                 // [#852] Some RDBMS don't allow for using JDBC procedure escape
                 // syntax for functions. Select functions from DUAL instead
                 case HSQLDB:
@@ -456,7 +465,6 @@ implements
 
 
 
-
                     return executeSelect();
 
                 // [#773] If JDBC escape syntax is available for functions, use
@@ -467,6 +475,13 @@ implements
             }
         }
     }
+
+
+
+
+
+
+
 
 
 

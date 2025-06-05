@@ -402,6 +402,176 @@ public interface AlterTableStep {
     AlterTableAlterStep<Object> alterColumnIfExists(String field);
 
     /**
+     * Add a MySQL style <code>CHANGE COLUMN</code> clause to the
+     * <code>ALTER TABLE</code> statement.
+     * <p>
+     * Unless this statement style is strictly required, it is always
+     * recommended to use the more explicit {@link #alterColumn(Field)} command
+     * instead. This clause is supported by jOOQ mainly for interoperability
+     * purposes, e.g. when using the parser on legacy MySQL DDL scripts.
+     * <p>
+     * This is an alias for {@link #changeColumn(Field, Field)}.
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    <T> AlterTableChangeStep<T> change(Field<?> oldName, Field<T> newName);
+
+    /**
+     * Add a MySQL style <code>CHANGE COLUMN</code> clause to the
+     * <code>ALTER TABLE</code> statement.
+     * <p>
+     * Unless this statement style is strictly required, it is always
+     * recommended to use the more explicit {@link #alterColumn(Field)} command
+     * instead. This clause is supported by jOOQ mainly for interoperability
+     * purposes, e.g. when using the parser on legacy MySQL DDL scripts.
+     * <p>
+     * This is an alias for {@link #changeColumn(Name, Name)}
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    AlterTableChangeStep<Object> change(Name oldName, Name newName);
+
+    /**
+     * Add a MySQL style <code>CHANGE COLUMN</code> clause to the
+     * <code>ALTER TABLE</code> statement.
+     * <p>
+     * Unless this statement style is strictly required, it is always
+     * recommended to use the more explicit {@link #alterColumn(Field)} command
+     * instead. This clause is supported by jOOQ mainly for interoperability
+     * purposes, e.g. when using the parser on legacy MySQL DDL scripts.
+     * <p>
+     * This is an alias for {@link #changeColumn(String, String)}
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    AlterTableChangeStep<Object> change(String oldName, String newName);
+
+    /**
+     * Add a MySQL style <code>CHANGE COLUMN IF EXISTS</code> clause to the
+     * <code>ALTER TABLE</code> statement.
+     * <p>
+     * Unless this statement style is strictly required, it is always
+     * recommended to use the more explicit {@link #alterColumn(Field)} command
+     * instead. This clause is supported by jOOQ mainly for interoperability
+     * purposes, e.g. when using the parser on legacy MySQL DDL scripts.
+     * <p>
+     * This is an alias for {@link #changeColumn(Field, Field)}.
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CLICKHOUSE, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    <T> AlterTableChangeStep<T> changeIfExists(Field<?> oldName, Field<T> newName);
+
+    /**
+     * Add a MySQL style <code>CHANGE COLUMN IF EXISTS</code> clause to the
+     * <code>ALTER TABLE</code> statement.
+     * <p>
+     * Unless this statement style is strictly required, it is always
+     * recommended to use the more explicit {@link #alterColumn(Field)} command
+     * instead. This clause is supported by jOOQ mainly for interoperability
+     * purposes, e.g. when using the parser on legacy MySQL DDL scripts.
+     * <p>
+     * This is an alias for {@link #changeColumn(Field, Field)}.
+     */
+
+    @NotNull @CheckReturnValue
+    @Support({ CLICKHOUSE, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    AlterTableChangeStep<Object> changeIfExists(Name oldName, Name newName);
+
+    /**
+     * Add a MySQL style <code>CHANGE COLUMN IF EXISTS</code> clause to the
+     * <code>ALTER TABLE</code> statement.
+     * <p>
+     * Unless this statement style is strictly required, it is always
+     * recommended to use the more explicit {@link #alterColumn(Field)} command
+     * instead. This clause is supported by jOOQ mainly for interoperability
+     * purposes, e.g. when using the parser on legacy MySQL DDL scripts.
+     * <p>
+     * This is an alias for {@link #changeColumn(Field, Field)}.
+     */
+
+    @NotNull @CheckReturnValue
+    @Support({ CLICKHOUSE, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    AlterTableChangeStep<Object> changeIfExists(String oldName, String newName);
+
+    /**
+     * Add a MySQL style <code>CHANGE COLUMN</code> clause to the
+     * <code>ALTER TABLE</code> statement.
+     * <p>
+     * Unless this statement style is strictly required, it is always
+     * recommended to use the more explicit {@link #alterColumn(Field)} command
+     * instead. This clause is supported by jOOQ mainly for interoperability
+     * purposes, e.g. when using the parser on legacy MySQL DDL scripts.
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    <T> AlterTableChangeStep<T> changeColumn(Field<?> oldName, Field<T> newName);
+
+    /**
+     * Add a MySQL style <code>CHANGE COLUMN</code> clause to the
+     * <code>ALTER TABLE</code> statement.
+     * <p>
+     * Unless this statement style is strictly required, it is always
+     * recommended to use the more explicit {@link #alterColumn(Field)} command
+     * instead. This clause is supported by jOOQ mainly for interoperability
+     * purposes, e.g. when using the parser on legacy MySQL DDL scripts.
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    AlterTableChangeStep<Object> changeColumn(Name oldName, Name newName);
+
+    /**
+     * Add a MySQL style <code>CHANGE COLUMN</code> clause to the
+     * <code>ALTER TABLE</code> statement.
+     * <p>
+     * Unless this statement style is strictly required, it is always
+     * recommended to use the more explicit {@link #alterColumn(Field)} command
+     * instead. This clause is supported by jOOQ mainly for interoperability
+     * purposes, e.g. when using the parser on legacy MySQL DDL scripts.
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    AlterTableChangeStep<Object> changeColumn(String oldName, String newName);
+
+    /**
+     * Add a MySQL style <code>CHANGE COLUMN IF EXISTS</code> clause to the
+     * <code>ALTER TABLE</code> statement.
+     * <p>
+     * Unless this statement style is strictly required, it is always
+     * recommended to use the more explicit {@link #alterColumn(Field)} command
+     * instead. This clause is supported by jOOQ mainly for interoperability
+     * purposes, e.g. when using the parser on legacy MySQL DDL scripts.
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CLICKHOUSE, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    <T> AlterTableChangeStep<T> changeColumnIfExists(Field<?> oldName, Field<T> newName);
+
+    /**
+     * Add a MySQL style <code>CHANGE COLUMN IF EXISTS</code> clause to the
+     * <code>ALTER TABLE</code> statement.
+     * <p>
+     * Unless this statement style is strictly required, it is always
+     * recommended to use the more explicit {@link #alterColumn(Field)} command
+     * instead. This clause is supported by jOOQ mainly for interoperability
+     * purposes, e.g. when using the parser on legacy MySQL DDL scripts.
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CLICKHOUSE, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    AlterTableChangeStep<Object> changeColumnIfExists(Name oldName, Name newName);
+
+    /**
+     * Add a MySQL style <code>CHANGE COLUMN IF EXISTS</code> clause to the
+     * <code>ALTER TABLE</code> statement.
+     * <p>
+     * Unless this statement style is strictly required, it is always
+     * recommended to use the more explicit {@link #alterColumn(Field)} command
+     * instead. This clause is supported by jOOQ mainly for interoperability
+     * purposes, e.g. when using the parser on legacy MySQL DDL scripts.
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CLICKHOUSE, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    AlterTableChangeStep<Object> changeColumnIfExists(String oldName, String newName);
+
+    /**
      * Add an <code>ALTER CONSTRAINT</code> clause to the <code>ALTER TABLE</code>
      * statement.
      */

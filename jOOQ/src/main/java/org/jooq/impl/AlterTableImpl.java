@@ -54,34 +54,11 @@ import static org.jooq.Clause.ALTER_TABLE_RENAME_INDEX;
 import static org.jooq.Clause.ALTER_TABLE_TABLE;
 import static org.jooq.Nullability.NOT_NULL;
 import static org.jooq.Nullability.NULL;
-// ...
-// ...
 import static org.jooq.SQLDialect.*;
-// ...
-// ...
-// ...
-import static org.jooq.SQLDialect.CUBRID;
-// ...
-import static org.jooq.SQLDialect.DERBY;
-// ...
-import static org.jooq.SQLDialect.FIREBIRD;
-import static org.jooq.SQLDialect.H2;
-// ...
-import static org.jooq.SQLDialect.HSQLDB;
-// ...
-import static org.jooq.SQLDialect.MARIADB;
-// ...
-import static org.jooq.SQLDialect.MYSQL;
-// ...
-import static org.jooq.SQLDialect.POSTGRES;
-// ...
-// ...
-// ...
-// ...
-import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.impl.ConstraintType.FOREIGN_KEY;
 import static org.jooq.impl.ConstraintType.PRIMARY_KEY;
 import static org.jooq.impl.ConstraintType.UNIQUE;
+import static org.jooq.impl.DSL.alterTable;
 import static org.jooq.impl.DSL.begin;
 import static org.jooq.impl.DSL.commentOnColumn;
 import static org.jooq.impl.DSL.commentOnTable;
@@ -163,7 +140,6 @@ import static org.jooq.impl.Tools.NO_SUPPORT_DEFAULT_DATETIME_LITERAL_PREFIX;
 import static org.jooq.impl.Tools.begin;
 import static org.jooq.impl.Tools.beginExecuteImmediate;
 import static org.jooq.impl.Tools.endExecuteImmediate;
-import static org.jooq.impl.Tools.executeImmediate;
 import static org.jooq.impl.Tools.executeImmediateIf;
 import static org.jooq.impl.Tools.fieldsByName;
 import static org.jooq.impl.Tools.filter;
@@ -185,6 +161,7 @@ import java.util.Set;
 import org.jooq.AlterTableAddStep;
 import org.jooq.AlterTableAlterConstraintStep;
 import org.jooq.AlterTableAlterStep;
+import org.jooq.AlterTableChangeStep;
 import org.jooq.AlterTableDropStep;
 import org.jooq.AlterTableFinalStep;
 import org.jooq.AlterTableRenameColumnToStep;
@@ -231,6 +208,7 @@ implements
     AlterTableDropStep,
     AlterTableAlterStep,
     AlterTableAlterConstraintStep,
+    AlterTableChangeStep<Object>,
     AlterTableUsingIndexStep,
     AlterTableRenameColumnToStep,
     AlterTableRenameIndexToStep,
@@ -250,6 +228,7 @@ implements
     private static final Set<SQLDialect> NO_SUPPORT_RENAME_QUALIFIED_TABLE     = SQLDialect.supportedBy(DERBY, DUCKDB, POSTGRES, YUGABYTEDB);
     private static final Set<SQLDialect> NO_SUPPORT_ALTER_TYPE_AND_NULL        = SQLDialect.supportedBy(CLICKHOUSE, POSTGRES, YUGABYTEDB);
     private static final Set<SQLDialect> NO_SUPPORT_DROP_CONSTRAINT            = SQLDialect.supportedBy(MARIADB, MYSQL);
+    private static final Set<SQLDialect> NO_SUPPORT_CHANGE_COLUMN              = SQLDialect.supportedBy(CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, POSTGRES, SQLITE, TRINO, YUGABYTEDB);
     private static final Set<SQLDialect> REQUIRE_REPEAT_ADD_ON_MULTI_ALTER     = SQLDialect.supportedBy(CLICKHOUSE, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB);
     private static final Set<SQLDialect> REQUIRE_REPEAT_DROP_ON_MULTI_ALTER    = SQLDialect.supportedBy(CLICKHOUSE, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB);
 
@@ -304,6 +283,9 @@ implements
     private boolean                      alterColumnDropDefault;
     private GenerationMode               alterColumnSetIdentity;
     private boolean                      alterColumnDropIdentity;
+    private Field<?>                     changeColumnFrom;
+    private Field<?>                     changeColumnTo;
+    private DataType<?>                  changeColumnType;
     private QueryPartList<Field<?>>      dropColumns;
     private Constraint                   dropConstraint;
     private ConstraintType               dropConstraintType;
@@ -734,6 +716,69 @@ implements
     }
 
     @Override
+    public final <T> AlterTableChangeStep<T> change(Field<?> oldName, Field<T> newName) {
+        return changeColumn(oldName, newName);
+    }
+
+    @Override
+    public final AlterTableChangeStep<Object> change(Name oldName, Name newName) {
+        return changeColumn(oldName, newName);
+    }
+
+    @Override
+    public final AlterTableChangeStep<Object> change(String oldName, String newName) {
+        return changeColumn(oldName, newName);
+    }
+
+    @Override
+    public final <T> AlterTableChangeStep<T> changeIfExists(Field<?> oldName, Field<T> newName) {
+        return changeColumnIfExists(oldName, newName);
+    }
+
+    @Override
+    public final AlterTableChangeStep<Object> changeIfExists(Name oldName, Name newName) {
+        return changeColumnIfExists(oldName, newName);
+    }
+
+    @Override
+    public final AlterTableChangeStep<Object> changeIfExists(String oldName, String newName) {
+        return changeColumnIfExists(oldName, newName);
+    }
+
+    @Override
+    public final AlterTableChangeStep<Object> changeColumn(Name oldName, Name newName) {
+        return changeColumn(field(oldName), field(newName));
+    }
+
+    @Override
+    public final AlterTableChangeStep<Object> changeColumn(String oldName, String newName) {
+        return changeColumn(name(oldName), name(newName));
+    }
+
+    @Override
+    public final <T> AlterTableChangeStep<T> changeColumn(Field<?> oldName, Field<T> newName) {
+        changeColumnFrom = oldName;
+        changeColumnTo = newName;
+        return (AlterTableChangeStep<T>) this;
+    }
+
+    @Override
+    public final AlterTableChangeStep<Object> changeColumnIfExists(Name oldName, Name newName) {
+        return changeColumnIfExists(field(oldName), field(newName));
+    }
+
+    @Override
+    public final AlterTableChangeStep<Object> changeColumnIfExists(String oldName, String newName) {
+        return changeColumnIfExists(name(oldName), name(newName));
+    }
+
+    @Override
+    public final <T> AlterTableChangeStep<T> changeColumnIfExists(Field<?> oldName, Field<T> newName) {
+        ifExistsColumn = true;
+        return changeColumn(oldName, newName);
+    }
+
+    @Override
     public final AlterTableImpl alter(Constraint constraint) {
         return alterConstraint(constraint);
     }
@@ -768,7 +813,11 @@ implements
 
     @Override
     public final AlterTableImpl set(DataType type) {
-        alterColumnType = type;
+        if (changeColumnFrom != null)
+            changeColumnType = type;
+        else
+            alterColumnType = type;
+
         return this;
     }
 
@@ -1084,6 +1133,7 @@ implements
         if ((ifExists && !supportsIfExists(ctx))
             || (ifExistsColumn && dropColumns  != null && !supportsIfExistsColumn(ctx))
             || (ifExistsColumn && alterColumn  != null && !supportsIfExistsColumnAlter(ctx))
+            || (ifExistsColumn && changeColumnFrom != null && !supportsIfExistsColumnAlter(ctx))
             || (ifExistsColumn && renameColumn != null && !supportsIfExistsColumnRename(ctx))
             || (ifExistsConstraint && !supportsIfExistsConstraint(ctx))
             || (ifNotExistsColumn && !supportsIfNotExistsColumn(ctx))
@@ -1102,6 +1152,18 @@ implements
 
     private final void accept0(Context<?> ctx) {
         SQLDialect family = ctx.family();
+
+        if (changeColumnFrom != null && NO_SUPPORT_CHANGE_COLUMN.contains(ctx.dialect())) {
+            if (changeColumnFrom.getUnqualifiedName().equals(changeColumnTo.getUnqualifiedName()))
+                ctx.visit(alterTable(table).alter(changeColumnFrom).set(changeColumnType));
+            else
+                ctx.visit(begin(
+                    alterTable(table).renameColumn(changeColumnFrom).to(changeColumnTo),
+                    alterTable(table).alter(changeColumnTo).set(changeColumnType)
+                ));
+
+            return;
+        }
 
         if (comment != null) {
             switch (family) {
@@ -1534,6 +1596,28 @@ implements
             ctx.end(ALTER_TABLE_ALTER);
         }
 
+        else if (changeColumnFrom != null) {
+            ctx.start(ALTER_TABLE_ALTER);
+
+            switch (family) {
+
+                case MARIADB:
+                case MYSQL:
+                default:
+                    ctx.visit(K_CHANGE_COLUMN);
+
+                    if (ifExistsColumn && supportsIfExistsColumnAlter(ctx))
+                        ctx.sql(' ').visit(K_IF_EXISTS);
+
+                    ctx.sql(' ').qualify(false, c -> c.visit(changeColumnFrom));
+                    ctx.sql(' ').qualify(false, c -> c.visit(changeColumnTo));
+                    ctx.sql(' ');
+                    acceptColumnType(ctx, table, changeColumnType);
+                    break;
+            }
+
+            ctx.end(ALTER_TABLE_ALTER);
+        }
         else if (alterColumn != null) {
             ctx.start(ALTER_TABLE_ALTER);
 
@@ -1644,24 +1728,7 @@ implements
                 }
 
                 ctx.sql(' ');
-                toSQLDDLTypeDeclaration(ctx, alterColumnType);
-                toSQLDDLTypeDeclarationIdentityBeforeNull(ctx, table, alterColumnType);
-
-                // [#3805] Some databases cannot change the type and the NOT NULL constraint in a single statement
-                if (!NO_SUPPORT_ALTER_TYPE_AND_NULL.contains(ctx.dialect())) {
-                    switch (alterColumnType.nullability()) {
-                        case NULL:
-                            ctx.sql(' ').visit(K_NULL);
-                            break;
-                        case NOT_NULL:
-                            ctx.sql(' ').visit(K_NOT_NULL);
-                            break;
-                        case DEFAULT:
-                            break;
-                    }
-                }
-
-                toSQLDDLTypeDeclarationIdentityAfterNull(ctx, table, alterColumnType);
+                acceptColumnType(ctx, table, alterColumnType);
             }
             else if (alterColumnDefault != null) {
                 ctx.start(ALTER_TABLE_ALTER_DEFAULT);
@@ -1883,6 +1950,27 @@ implements
             ctx.visit(K_DROP).sql(' ').visit(K_PRIMARY_KEY);
             ctx.end(ALTER_TABLE_DROP);
         }
+    }
+
+    private static final void acceptColumnType(Context<?> ctx, Table<?> table, DataType<?> type) {
+        toSQLDDLTypeDeclaration(ctx, type);
+        toSQLDDLTypeDeclarationIdentityBeforeNull(ctx, table, type);
+
+        // [#3805] Some databases cannot change the type and the NOT NULL constraint in a single statement
+        if (!NO_SUPPORT_ALTER_TYPE_AND_NULL.contains(ctx.dialect())) {
+            switch (type.nullability()) {
+                case NULL:
+                    ctx.sql(' ').visit(K_NULL);
+                    break;
+                case NOT_NULL:
+                    ctx.sql(' ').visit(K_NOT_NULL);
+                    break;
+                case DEFAULT:
+                    break;
+            }
+        }
+
+        toSQLDDLTypeDeclarationIdentityAfterNull(ctx, table, type);
     }
 
     private final boolean unqualifyRenameTo(Context<?> ctx) {

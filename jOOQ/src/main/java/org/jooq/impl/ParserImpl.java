@@ -5824,7 +5824,11 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
             case 'C':
 
                 // TODO: support all of the storageLoop from the CREATE TABLE statement
-                if (parseKeywordIf("COMMENT")) {
+                if (parseKeywordIf("CHANGE")) {
+                    parseKeywordIf("COLUMN");
+                    return parseAlterTableChangeColumn(s1);
+                }
+                else if (parseKeywordIf("COMMENT")) {
                     if (parseKeywordIf("COLUMN")) {
                         return dsl.commentOnColumn(tableName.getQualifiedName().append(parseIdentifier()))
                                   .is(parseStringLiteral());
@@ -5975,7 +5979,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                 break;
         }
 
-        throw expected("ADD", "ALTER", "COMMENT", "DROP", "MODIFY", "OWNER TO", "RENAME", "SET", "WITH");
+        throw expected("ADD", "ALTER", "CHANGE", "COMMENT", "DROP", "MODIFY", "OWNER TO", "RENAME", "SET", "WITH");
     }
 
     private final DDLQuery parseAlterTableAdd(AlterTableStep s1, Table<?> tableName, boolean constraintOnly) {
@@ -6140,6 +6144,20 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
             parse(')');
 
         return (ifExists ? s1.alterIfExists(field) : s1.alter(field)).set(type);
+    }
+
+    private final DDLQuery parseAlterTableChangeColumn(AlterTableStep s1) {
+        boolean ifExists = parseKeywordIf("IF EXISTS");
+        TableField<?, ?> oldName = parseFieldName();
+        TableField<?, ?> newName = parseFieldName();
+        DataType<?> type = parseDataType();
+
+        if (parseKeywordIf("NULL"))
+            type = type.nullable(true);
+        else if (parseNotNullOptionalEnable())
+            type = type.nullable(false);
+
+        return (ifExists ? s1.changeIfExists(oldName, newName) : s1.change(oldName, newName)).set(type);
     }
 
     private final boolean parseNotNullOptionalEnable() {

@@ -100,6 +100,7 @@ import static org.jooq.conf.ThrowExceptions.THROW_FIRST;
 import static org.jooq.conf.ThrowExceptions.THROW_NONE;
 import static org.jooq.exception.DataAccessException.sqlStateClass;
 import static org.jooq.impl.AbstractDataType.convert0;
+import static org.jooq.impl.BlockImpl.semicolonAfterStatement;
 import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_ANNOTATED_GETTER;
 import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_ANNOTATED_MEMBERS;
 import static org.jooq.impl.CacheType.REFLECTION_CACHE_GET_ANNOTATED_SETTERS;
@@ -5605,7 +5606,8 @@ final class Tools {
 
                     runnable.accept(c);
 
-                    c.sql(';').formatIndentEnd().formatSeparator()
+                    semicolonAfterStatement(c, null);
+                    c.formatIndentEnd().formatSeparator()
                      .visit(K_EXCEPTION).formatIndentStart().formatSeparator();
 
                     for (String sqlstate : sqlstates)
@@ -5673,7 +5675,7 @@ final class Tools {
                 c.visit(keyword("declare continue handler for sqlstate")).sql(' ').visit(DSL.inline(sqlstate)).sql(' ').visit(K_BEGIN).sql(' ').visit(K_END).sql(';').formatSeparator();
 
             runnable.accept(c);
-            c.sql(';');
+            semicolonAfterStatement(c, null);
         });
     }
 

@@ -3709,12 +3709,12 @@ implements
 
     @Override
     public final Condition isNull() {
-        return new SelectIsNull(this);
+        return getDelegate().isNull();
     }
 
     @Override
     public final Condition isNotNull() {
-        return new SelectIsNotNull(this);
+        return getDelegate().isNotNull();
     }
 
     /**

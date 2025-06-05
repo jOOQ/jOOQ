@@ -112,6 +112,20 @@ extends
 {
 
     /**
+     * Check if the result of this subquery <code>IS NULL</code>
+     */
+    @NotNull @CheckReturnValue
+    @Support
+    Condition isNull();
+
+    /**
+     * Check if the result of this subquery <code>IS NOT NULL</code>
+     */
+    @NotNull @CheckReturnValue
+    @Support
+    Condition isNotNull();
+
+    /**
      * Apply the <code>UNION</code> set operation.
      * <p>
      * In SQL, a <code>UNION</code> is <code>DISTINCT</code> by default,

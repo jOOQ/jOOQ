@@ -101,7 +101,9 @@ import org.jooq.conf.Settings;
  * </ul>
  *
  * @author Lukas Eder
+ * @deprecated - 3.21.0 - [#18566] - Do not reference this type directly.
  */
+@Deprecated
 public interface SelectCorrelatedSubqueryStep<R extends Record> extends SelectFinalStep<R> {
 
     /**
@@ -635,18 +637,4 @@ public interface SelectCorrelatedSubqueryStep<R extends Record> extends SelectFi
     @NotNull @CheckReturnValue
     @Support
     Condition notBetweenSymmetric(Select<? extends R> minValue, Select<? extends R> maxValue);
-
-    /**
-     * Check if the result of this subquery <code>IS NULL</code>
-     */
-    @NotNull @CheckReturnValue
-    @Support
-    Condition isNull();
-
-    /**
-     * Check if the result of this subquery <code>IS NOT NULL</code>
-     */
-    @NotNull @CheckReturnValue
-    @Support
-    Condition isNotNull();
 }

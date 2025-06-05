@@ -7305,12 +7305,12 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                     ? leftScalar != null
                         ? leftScalar.isNotNull()
                         : leftSelect != null
-                        ? new SelectIsNotNull(leftSelect)
+                        ? leftSelect.isNotNull()
                         : ((Row) left).isNotNull()
                     : leftScalar != null
                         ? leftScalar.isNull()
                         : leftSelect != null
-                        ? new SelectIsNull(leftSelect)
+                        ? leftSelect.isNull()
                         : ((Row) left).isNull();
             else if (leftScalar != null && parseKeywordIf("JSON"))
                 return not

@@ -348,7 +348,12 @@ import org.jooq.tools.StringUtils;
  *
  * @author Lukas Eder
  */
-final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> implements SelectQuery<R> {
+final class SelectQueryImpl<R extends Record>
+extends
+    AbstractResultQuery<R>
+implements
+    SelectQuery<R>
+{
     private static final JooqLogger      log                                     = JooqLogger.getLogger(SelectQueryImpl.class);
     private static final Clause[]        CLAUSES                                 = { SELECT };
     static final Set<SQLDialect>         EMULATE_SELECT_INTO_AS_CTAS             = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB);
@@ -5175,6 +5180,16 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     @Override
     public final SelectQueryImpl<R> intersectAll(Select<? extends R> other) {
         return combine(INTERSECT_ALL, other);
+    }
+
+    @Override
+    public final Condition isNull() {
+        return new SelectIsNull(this);
+    }
+
+    @Override
+    public final Condition isNotNull() {
+        return new SelectIsNotNull(this);
     }
 
     @Override

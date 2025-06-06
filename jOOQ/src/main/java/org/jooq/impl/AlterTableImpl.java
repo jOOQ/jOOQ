@@ -1157,13 +1157,24 @@ implements
         SQLDialect family = ctx.family();
 
         if (changeColumnFrom != null && NO_SUPPORT_CHANGE_COLUMN.contains(ctx.dialect())) {
-            if (changeColumnFrom.getUnqualifiedName().equals(changeColumnTo.getUnqualifiedName()))
-                ctx.visit(alterTable(table).alter(changeColumnFrom).set(changeColumnType));
-            else
+            if (changeColumnFrom.getUnqualifiedName().equals(changeColumnTo.getUnqualifiedName())) {
+                if (ifExistsColumn)
+                    ctx.visit(alterTable(table).alterIfExists(changeColumnFrom).set(changeColumnType));
+                else
+                    ctx.visit(alterTable(table).alter(changeColumnFrom).set(changeColumnType));
+            }
+            else if (ifExistsColumn) {
+                ctx.visit(begin(
+                    alterTable(table).renameColumnIfExists(changeColumnFrom).to(changeColumnTo),
+                    alterTable(table).alterIfExists(changeColumnTo).set(changeColumnType)
+                ));
+            }
+            else {
                 ctx.visit(begin(
                     alterTable(table).renameColumn(changeColumnFrom).to(changeColumnTo),
                     alterTable(table).alter(changeColumnTo).set(changeColumnType)
                 ));
+            }
 
             return;
         }

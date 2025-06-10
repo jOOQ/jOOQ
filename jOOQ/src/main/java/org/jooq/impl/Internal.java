@@ -59,6 +59,7 @@ import org.jooq.DDLExportConfiguration;
 import org.jooq.DataType;
 import org.jooq.Domain;
 import org.jooq.EmbeddableRecord;
+import org.jooq.EnumType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Identity;
@@ -88,6 +89,7 @@ import org.jooq.UDTRecord;
 import org.jooq.UniqueKey;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataTypeException;
+import org.jooq.exception.MappingException;
 import org.jooq.impl.QOM.CreateTable;
 import org.jooq.tools.reflect.Reflect;
 import org.jooq.tools.reflect.ReflectException;
@@ -790,5 +792,40 @@ public final class Internal {
     @Deprecated(forRemoval = true)
     public static final <U> List<U> convert(Collection<?> collection, Converter<?, ? extends U> converter) throws DataTypeException {
         return Convert.convert(collection, converter);
+    }
+
+    /**
+     * A utility to list enum literals from a {@link Class}, independently of
+     * language implementation.
+     */
+    @SuppressWarnings("unchecked")
+    public static final <E> E[] enums(Class<? extends E> type) {
+
+        // Java implementation
+        if (Enum.class.isAssignableFrom(type)) {
+            E[] result = type.getEnumConstants();
+
+            // [#18568] Enums may be subclasses of the declaring enum type, e.g. enum E { a {} } or Scala 3 enums.
+            if (result == null && type.getSuperclass() != Enum.class)
+                result = (E[]) type.getSuperclass().getEnumConstants();
+
+            return result;
+        }
+
+        // [#4427] Scala implementation
+        else {
+            try {
+
+                // There's probably a better way to do this:
+                // http://stackoverflow.com/q/36068089/521799
+                Class<?> companionClass = Thread.currentThread().getContextClassLoader().loadClass(type.getName() + "$");
+                java.lang.reflect.Field module = companionClass.getField("MODULE$");
+                Object companion = module.get(companionClass);
+                return (E[]) companionClass.getMethod("values").invoke(companion);
+            }
+            catch (Exception e) {
+                throw new MappingException("Error while looking up Scala enum", e);
+            }
+        }
     }
 }

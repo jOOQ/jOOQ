@@ -1240,16 +1240,10 @@ final class Convert {
                         if (fromString == null)
                             return null;
 
-                        if (EnumType.class.isAssignableFrom(toClass)) {
-                            for (Object value : toClass.getEnumConstants())
-                                if (fromString.equals(((EnumType) value).getLiteral()))
-                                    return (U) value;
-
-                            return null;
-                        }
-                        else {
+                        if (EnumType.class.isAssignableFrom(toClass))
+                            return (U) EnumType.lookupLiteral((Class) toClass, fromString);
+                        else
                             return (U) java.lang.Enum.valueOf((Class) toClass, fromString);
-                        }
 
                     }
                     catch (IllegalArgumentException e) {

@@ -40,6 +40,7 @@ package org.jooq;
 import static java.util.Arrays.stream;
 import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toMap;
+import static org.jooq.impl.Internal.enums;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -55,7 +56,7 @@ final class EnumTypes {
     // Avoid intersection type because of Eclipse compiler bug:
     // https://bugs.eclipse.org/bugs/show_bug.cgi?id=577466
     static <E extends /* Enum<E> & */ EnumType> E lookupLiteral(Class<E> enumType, String literal) {
-        return (E) LOOKUP.computeIfAbsent(enumType, t -> stream(enumType.getEnumConstants()).collect(toMap(E::getLiteral, identity()))).get(literal);
+        return (E) LOOKUP.computeIfAbsent(enumType, t -> stream(enums(enumType)).collect(toMap(E::getLiteral, identity()))).get(literal);
     }
 
     private EnumTypes() {}

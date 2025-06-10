@@ -6106,7 +6106,7 @@ final class Tools {
                     ctx.visit(K_ENUM).sql('(');
 
                     String separator = "";
-                    for (EnumType e : enumConstants(enumType)) {
+                    for (EnumType e : enums(enumType)) {
                         ctx.sql(separator).visit(DSL.inline(e.getLiteral()));
                         separator = ", ";
                     }
@@ -6244,20 +6244,15 @@ final class Tools {
     }
 
     static final boolean storedEnumType(DataType<EnumType> enumType) {
-        return enumConstants(enumType)[0].getName() != null;
+        return enums(enumType)[0].getName() != null;
     }
 
-    private static final EnumType[] enumConstants(DataType<? extends EnumType> type) {
-        EnumType[] enums = type.getType().getEnumConstants();
-
-        if (enums == null)
-            throw new DataTypeException("EnumType must be a Java enum");
-
-        return enums;
+    static final EnumType[] enums(DataType<? extends EnumType> type) {
+        return enums(type.getType());
     }
 
     static final DataType<String> emulateEnumType(DataType<? extends EnumType> type) {
-        return emulateEnumType(type, enumConstants(type));
+        return emulateEnumType(type, enums(type));
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -6339,29 +6334,8 @@ final class Tools {
         };
     }
 
-    @SuppressWarnings("unchecked")
     static final <E extends EnumType> E[] enums(Class<? extends E> type) {
-
-        // Java implementation
-        if (Enum.class.isAssignableFrom(type)) {
-            return type.getEnumConstants();
-        }
-
-        // [#4427] Scala implementation
-        else {
-            try {
-
-                // There's probably a better way to do this:
-                // http://stackoverflow.com/q/36068089/521799
-                Class<?> companionClass = Thread.currentThread().getContextClassLoader().loadClass(type.getName() + "$");
-                java.lang.reflect.Field module = companionClass.getField("MODULE$");
-                Object companion = module.get(companionClass);
-                return (E[]) companionClass.getMethod("values").invoke(companion);
-            }
-            catch (Exception e) {
-                throw new MappingException("Error while looking up Scala enum", e);
-            }
-        }
+        return Internal.enums(type);
     }
 
     /**

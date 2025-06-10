@@ -76,7 +76,7 @@ public /* non-final */ class EnumConverter<T, U extends Enum<U>> extends Abstrac
         this.to = to;
         this.lookup = new LinkedHashMap<>();
 
-        for (U u : toType.getEnumConstants()) {
+        for (U u : Internal.enums(toType)) {
             T key = to(u);
 
             if (key != null)

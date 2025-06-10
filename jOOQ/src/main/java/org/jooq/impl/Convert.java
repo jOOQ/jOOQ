@@ -45,6 +45,7 @@ import static org.jooq.impl.Internal.arrayType;
 import static org.jooq.impl.Internal.converterContext;
 import static org.jooq.impl.Tools.configuration;
 import static org.jooq.impl.Tools.emulateMultiset;
+import static org.jooq.impl.Tools.enums;
 import static org.jooq.tools.StringUtils.leftPad;
 import static org.jooq.tools.reflect.Reflect.accessible;
 import static org.jooq.tools.reflect.Reflect.wrapper;
@@ -1241,16 +1242,10 @@ final class Convert {
                         if (fromString == null)
                             return null;
 
-                        if (EnumType.class.isAssignableFrom(toClass)) {
-                            for (Object value : toClass.getEnumConstants())
-                                if (fromString.equals(((EnumType) value).getLiteral()))
-                                    return (U) value;
-
-                            return null;
-                        }
-                        else {
+                        if (EnumType.class.isAssignableFrom(toClass))
+                            return (U) EnumType.lookupLiteral((Class) toClass, fromString);
+                        else
                             return (U) java.lang.Enum.valueOf((Class) toClass, fromString);
-                        }
 
                     }
                     catch (IllegalArgumentException e) {

@@ -10277,7 +10277,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createGlobalTemporaryTable(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, POSTGRES })
     CreateTableElementListStep createGlobalTemporaryTable(@Stringly.Name String table);
 
     /**
@@ -10286,7 +10286,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createGlobalTemporaryTable(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, POSTGRES })
     CreateTableElementListStep createGlobalTemporaryTable(Name table);
 
     /**
@@ -10295,7 +10295,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createGlobalTemporaryTable(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, POSTGRES })
     CreateTableElementListStep createGlobalTemporaryTable(Table<?> table);
 
     /**
@@ -10304,7 +10304,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createGlobalTemporaryTableIfNotExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ FIREBIRD, POSTGRES })
     CreateTableElementListStep createGlobalTemporaryTableIfNotExists(@Stringly.Name String table);
 
     /**
@@ -10313,7 +10313,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createGlobalTemporaryTableIfNotExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ FIREBIRD, POSTGRES })
     CreateTableElementListStep createGlobalTemporaryTableIfNotExists(Name table);
 
     /**
@@ -10322,7 +10322,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createGlobalTemporaryTableIfNotExists(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ FIREBIRD, POSTGRES })
     CreateTableElementListStep createGlobalTemporaryTableIfNotExists(Table<?> table);
 
     /**

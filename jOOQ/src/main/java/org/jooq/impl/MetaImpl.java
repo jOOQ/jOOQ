@@ -398,8 +398,8 @@ final class MetaImpl extends AbstractMeta {
 
 
             if (!inverseSchemaCatalog) {
-                Schemas schemas = meta(() -> "Error while fetching schemas for catalog: " + this,
-                    meta -> {
+                Schemas schemas = meta(() -> "Error while fetching schemas for catalog: " + this, meta -> {
+                    switch (family()) {
 
 
 
@@ -422,11 +422,16 @@ final class MetaImpl extends AbstractMeta {
 
 
 
+                        case DUCKDB:
 
+                            // [#9791] Include catalog in DuckDB searches
+                            return new Schemas(dsl().fetch(meta.getSchemas(getName(), "%"), VARCHAR), false);
 
+                        default:
 
-                    // [#2681] Work around a flaw in the MySQL JDBC driver
-                    return new Schemas(dsl().fetch(meta.getSchemas(), VARCHAR), false); // TABLE_SCHEM
+                            // [#2681] Work around a flaw in the MySQL JDBC driver
+                            return new Schemas(dsl().fetch(meta.getSchemas(), VARCHAR), false); // TABLE_SCHEM
+                    }
                 });
 
                 for (String name : schemas.schemas().getValues(0, String.class))

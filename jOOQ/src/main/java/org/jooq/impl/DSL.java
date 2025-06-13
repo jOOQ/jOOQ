@@ -8858,7 +8858,7 @@ public class DSL {
      * @see DSLContext#createGlobalTemporaryTableIfNotExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     public static org.jooq.CreateTableElementListStep createGlobalTemporaryTableIfNotExists(@Stringly.Name String table) {
         return dsl().createGlobalTemporaryTableIfNotExists(table);
     }
@@ -8873,7 +8873,7 @@ public class DSL {
      * @see DSLContext#createGlobalTemporaryTableIfNotExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     public static org.jooq.CreateTableElementListStep createGlobalTemporaryTableIfNotExists(Name table) {
         return dsl().createGlobalTemporaryTableIfNotExists(table);
     }
@@ -8888,7 +8888,7 @@ public class DSL {
      * @see DSLContext#createGlobalTemporaryTableIfNotExists(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     public static org.jooq.CreateTableElementListStep createGlobalTemporaryTableIfNotExists(Table<?> table) {
         return dsl().createGlobalTemporaryTableIfNotExists(table);
     }

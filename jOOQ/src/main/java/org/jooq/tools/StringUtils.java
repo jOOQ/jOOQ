@@ -1358,6 +1358,9 @@ public final class StringUtils {
     /**
      * Convert a string from <code>snake_case</code> to <code>PascalCase</code>.
      * <p>
+     * [#18576] In SQL, identifiers may also contain whitespace, which is
+     * treated the same way as underscores.
+     * <p>
      * [#18412] For historic reasons, the method claims the result is in
      * <code>camelCase</code> because it is often used with a prefix making the
      * result camel case, e.g. "set" + "PascalCase" => "setPascalCase".
@@ -1366,7 +1369,7 @@ public final class StringUtils {
         StringBuilder result = new StringBuilder();
 
         // [#2515] - Keep trailing underscores
-        for (String word : string.split("_", -1)) {
+        for (String word : string.split("[_ ]", -1)) {
 
             // Uppercase first letter of a word
             if (word.length() > 0) {

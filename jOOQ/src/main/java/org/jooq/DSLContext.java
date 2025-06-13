@@ -10304,7 +10304,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createGlobalTemporaryTableIfNotExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     CreateTableElementListStep createGlobalTemporaryTableIfNotExists(@Stringly.Name String table);
 
     /**
@@ -10313,7 +10313,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createGlobalTemporaryTableIfNotExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     CreateTableElementListStep createGlobalTemporaryTableIfNotExists(Name table);
 
     /**
@@ -10322,7 +10322,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createGlobalTemporaryTableIfNotExists(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     CreateTableElementListStep createGlobalTemporaryTableIfNotExists(Table<?> table);
 
     /**

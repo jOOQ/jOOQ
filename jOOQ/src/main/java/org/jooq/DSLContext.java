@@ -10202,7 +10202,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createGlobalTemporaryTableIfNotExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     CreateTableElementListStep createGlobalTemporaryTableIfNotExists(@Stringly.Name String table);
 
     /**
@@ -10211,7 +10211,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createGlobalTemporaryTableIfNotExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     CreateTableElementListStep createGlobalTemporaryTableIfNotExists(Name table);
 
     /**
@@ -10220,7 +10220,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createGlobalTemporaryTableIfNotExists(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     CreateTableElementListStep createGlobalTemporaryTableIfNotExists(Table<?> table);
 
 
@@ -10840,6 +10840,28 @@ public interface DSLContext extends Scope {
     @NotNull @CheckReturnValue
     @Support({ FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     DropTableStep dropTemporaryTableIfExists(Table<?> table);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

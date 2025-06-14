@@ -10885,28 +10885,6 @@ public interface DSLContext extends Scope {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     /**
      * The <code>DROP VIEW</code> statement.
      *

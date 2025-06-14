@@ -9775,34 +9775,6 @@ public class DSL {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     /**
      * The <code>DROP VIEW</code> statement.
      * <p>

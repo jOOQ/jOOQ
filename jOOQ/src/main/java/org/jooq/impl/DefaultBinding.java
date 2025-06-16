@@ -1276,6 +1276,33 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                         .sql('\'');
         }
 
+        static final <U> void sqlInlineWorkaround6516(
+            BindingSQLContext<U> ctx,
+            String value,
+            int limit,
+            String prefix,
+            ThrowingBiConsumer<? super BindingSQLContext<U>, ? super String, SQLException> sqlInline0
+        ) throws SQLException {
+            int l = value.length();
+
+            if (l > limit) {
+                ctx.render().sql('(');
+
+                for (int i = 0; i < l; i += limit) {
+                    if (i > 0)
+                        ctx.render().sql(" || ");
+
+                    ctx.render().sql(prefix).sql("(");
+                    sqlInline0.accept(ctx, value.substring(i, Math.min(l, i + limit)));
+                    ctx.render().sql(')');
+                }
+
+                ctx.render().sql(')');
+            }
+            else
+                sqlInline0.accept(ctx, value);
+        }
+
         @SuppressWarnings("unused")
         /* non-final */ void sqlBind0(BindingSQLContext<U> ctx, T value) throws SQLException {
             ctx.render().sql(ctx.variable());
@@ -4692,7 +4719,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             //         future UTF encodings which may use more bytes per
             //         character are not handled here, yet.
             if (ctx.family() == DERBY)
-                sqlInlineWorkaround6516(ctx, value, 8192, "");
+                sqlInlineWorkaround6516(ctx, value, 8192, "", super::sqlInline0);
 
 
 
@@ -4707,28 +4734,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             else
                 super.sqlInline0(ctx, value);
         }
-
-        private final void sqlInlineWorkaround6516(BindingSQLContext<U> ctx, String value, int limit, String prefix) throws SQLException {
-            int l = value.length();
-
-            if (l > limit) {
-                ctx.render().sql('(');
-
-                for (int i = 0; i < l; i += limit) {
-                    if (i > 0)
-                        ctx.render().sql(" || ");
-
-                    ctx.render().sql(prefix).sql("(");
-                    super.sqlInline0(ctx, value.substring(i, Math.min(l, i + limit)));
-                    ctx.render().sql(')');
-                }
-
-                ctx.render().sql(')');
-            }
-            else
-                super.sqlInline0(ctx, value);
-        }
-
 
         @Override
         final void set0(BindingSetStatementContext<U> ctx, String value) throws SQLException {
@@ -4834,6 +4839,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             if (NO_SUPPORT_NVARCHAR.contains(ctx.dialect())) {
                 fallback.sqlInline0(ctx, value);
             }
+
+
+
+
+
             else {
                 ctx.render().sql('N');
                 super.sqlInline0(ctx, value);

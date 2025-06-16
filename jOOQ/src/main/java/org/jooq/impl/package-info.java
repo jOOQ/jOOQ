@@ -41,6 +41,14 @@ interface ThrowingConsumer<T, E extends Throwable> {
 }
 
 /**
+ * A checked exception throwing {@link BiConsumer}.
+ */
+@FunctionalInterface
+interface ThrowingBiConsumer<T1, T2, E extends Throwable> {
+    void accept(T1 t1, T2 t2) throws E;
+}
+
+/**
  * A checked exception throwing {@link Supplier}.
  */
 @FunctionalInterface

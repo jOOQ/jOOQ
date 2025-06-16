@@ -8804,6 +8804,96 @@ public class DSL {
     }
 
     /**
+     * The <code>CREATE LOCAL TEMPORARY TABLE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createLocalTemporaryTable(String)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, YUGABYTEDB })
+    public static org.jooq.CreateTableElementListStep createLocalTemporaryTable(@Stringly.Name String table) {
+        return dsl().createLocalTemporaryTable(table);
+    }
+
+    /**
+     * The <code>CREATE LOCAL TEMPORARY TABLE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createLocalTemporaryTable(Name)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, YUGABYTEDB })
+    public static org.jooq.CreateTableElementListStep createLocalTemporaryTable(Name table) {
+        return dsl().createLocalTemporaryTable(table);
+    }
+
+    /**
+     * The <code>CREATE LOCAL TEMPORARY TABLE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createLocalTemporaryTable(Table)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, YUGABYTEDB })
+    public static org.jooq.CreateTableElementListStep createLocalTemporaryTable(Table<?> table) {
+        return dsl().createLocalTemporaryTable(table);
+    }
+
+    /**
+     * The <code>CREATE LOCAL TEMPORARY TABLE IF NOT EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createLocalTemporaryTableIfNotExists(String)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, YUGABYTEDB })
+    public static org.jooq.CreateTableElementListStep createLocalTemporaryTableIfNotExists(@Stringly.Name String table) {
+        return dsl().createLocalTemporaryTableIfNotExists(table);
+    }
+
+    /**
+     * The <code>CREATE LOCAL TEMPORARY TABLE IF NOT EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createLocalTemporaryTableIfNotExists(Name)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, YUGABYTEDB })
+    public static org.jooq.CreateTableElementListStep createLocalTemporaryTableIfNotExists(Name table) {
+        return dsl().createLocalTemporaryTableIfNotExists(table);
+    }
+
+    /**
+     * The <code>CREATE LOCAL TEMPORARY TABLE IF NOT EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#createLocalTemporaryTableIfNotExists(Table)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, YUGABYTEDB })
+    public static org.jooq.CreateTableElementListStep createLocalTemporaryTableIfNotExists(Table<?> table) {
+        return dsl().createLocalTemporaryTableIfNotExists(table);
+    }
+
+    /**
      * The <code>CREATE GLOBAL TEMPORARY TABLE</code> statement.
      * <p>
      * Unlike statement construction methods in the {@link DSLContext} API, this

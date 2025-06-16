@@ -2247,6 +2247,7 @@ public final class QOM {
     {
         @NotNull Table<?> $table();
         boolean $temporary();
+        @Nullable TableScope $tableScope();
         boolean $ifNotExists();
         @NotNull UnmodifiableList<? extends TableElement> $tableElements();
         @Nullable Select<?> $select();
@@ -2258,6 +2259,8 @@ public final class QOM {
         @NotNull CreateTable $table(Table<?> table);
         @CheckReturnValue
         @NotNull CreateTable $temporary(boolean temporary);
+        @CheckReturnValue
+        @NotNull CreateTable $tableScope(TableScope tableScope);
         @CheckReturnValue
         @NotNull CreateTable $ifNotExists(boolean ifNotExists);
         @CheckReturnValue
@@ -10229,6 +10232,24 @@ public final class QOM {
         final Keyword keyword;
 
         private ForeignKeyRule(Keyword keyword) {
+            this.keyword = keyword;
+        }
+    }
+
+    /**
+     * The <code>TableScope</code> type.
+     * <p>
+     * Specify the table scope of a temporary table.
+     */
+    public enum TableScope {
+        LOCAL_TEMPORARY(keyword("local temporary")),
+        GLOBAL_TEMPORARY(keyword("global temporary")),
+        TEMPORARY(keyword("temporary")),
+        ;
+
+        final Keyword keyword;
+
+        private TableScope(Keyword keyword) {
             this.keyword = keyword;
         }
     }

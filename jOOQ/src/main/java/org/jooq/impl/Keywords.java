@@ -201,7 +201,7 @@ final class Keywords {
     static final Keyword K_GENERATED                = keyword("generated");
     static final Keyword K_GEOGRAPHY                = keyword("geography");
     static final Keyword K_GEOMETRY                 = keyword("geometry");
-    static final Keyword K_GLOBAL_TEMPORARY         = keyword("global temporary");
+    static final Keyword K_GLOBAL                   = keyword("global");
     static final Keyword K_GOTO                     = keyword("goto");
     static final Keyword K_GRANT                    = keyword("grant");
     static final Keyword K_GRANT_OPTION_FOR         = keyword("grant option for");
@@ -335,6 +335,7 @@ final class Keywords {
     static final Keyword K_PREVIOUS_VALUE_FOR       = keyword("previous value for");
     static final Keyword K_PRIMARY_KEY              = keyword("primary key");
     static final Keyword K_PRIOR                    = keyword("prior");
+    static final Keyword K_PRIVATE                  = keyword("private");
     static final Keyword K_PROCEDURE                = keyword("procedure");
     static final Keyword K_PUBLIC                   = keyword("public");
     static final Keyword K_QUALIFY                  = keyword("qualify");
@@ -387,6 +388,7 @@ final class Keywords {
     static final Keyword K_ROWS_FROM                = keyword("rows from");
     static final Keyword K_ROWS_ONLY                = keyword("rows only");
     static final Keyword K_ROWS_WITH_TIES           = keyword("rows with ties");
+    static final Keyword K_ROWSTORE                 = keyword("rowstore");
     static final Keyword K_SAMPLE                   = keyword("sample");
     static final Keyword K_SAVE                     = keyword("save");
     static final Keyword K_SAVEPOINT                = keyword("savepoint");

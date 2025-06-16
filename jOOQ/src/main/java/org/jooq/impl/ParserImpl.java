@@ -776,6 +776,7 @@ import org.jooq.impl.QOM.JSONOnNull;
 import org.jooq.impl.QOM.JoinHint;
 import org.jooq.impl.QOM.PrimaryKey;
 // ...
+import org.jooq.impl.QOM.TableScope;
 import org.jooq.impl.QOM.UEmpty;
 import org.jooq.impl.QOM.XMLPassingMechanism;
 import org.jooq.impl.ScopeStack.Value;
@@ -1187,7 +1188,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                     else if (!parseResultQuery && peekKeyword("COMMENT ON"))
                         return result = metaLookupsForceIgnore(true).parseCommentOn();
                     else if (!parseResultQuery && parseKeywordIf("CT"))
-                        return result = metaLookupsForceIgnore(true).parseCreateTable(false);
+                        return result = metaLookupsForceIgnore(true).parseCreateTable(null);
                     else if (!parseResultQuery && parseKeywordIf("CV"))
                         return result = metaLookupsForceIgnore(true).parseCreateView(false, false);
                     else if (!ignoreProEdition() && peekKeyword("CALL") && requireProEdition())
@@ -2976,7 +2977,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
             case 'C':
                 if (parseKeywordIf("CACHED TABLE"))
-                    return parseCreateTable(false);
+                    return parseCreateTable(null);
 
                 break;
 
@@ -3013,7 +3014,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                 if (parseKeywordIf("GENERATOR"))
                     return parseCreateSequence();
                 else if (parseKeywordIf("GLOBAL TEMP TABLE", "GLOBAL TEMPORARY TABLE"))
-                    return parseCreateTable(true);
+                    return parseCreateTable(TableScope.GLOBAL_TEMPORARY);
 
                 break;
 
@@ -3023,9 +3024,15 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
                 break;
 
+            case 'L':
+                if (parseKeywordIf("LOCAL TEMP TABLE", "LOCAL TEMPORARY TABLE"))
+                    return parseCreateTable(TableScope.LOCAL_TEMPORARY);
+
+                break;
+
             case 'M':
                 if (parseKeywordIf("MEMORY TABLE"))
-                    return parseCreateTable(false);
+                    return parseCreateTable(null);
                 else if (parseKeywordIf("MATERIALIZED VIEW"))
                     return parseCreateView(false, true);
 
@@ -3073,7 +3080,9 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                 break;
 
             case 'P':
-                if (parseKeywordIf("PACKAGE"))
+                if (parseKeywordIf("PRIVATE TEMP TABLE", "PRIVATE TEMPORARY TABLE"))
+                    return parseCreateTable(TableScope.LOCAL_TEMPORARY);
+                else if (parseKeywordIf("PACKAGE"))
                     throw notImplemented("CREATE PACKAGE", "https://github.com/jOOQ/jOOQ/issues/9190");
                 else if (parseProKeywordIf("PROC", "PROCEDURE"))
 
@@ -3116,9 +3125,9 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
             case 'T':
                 if (parseKeywordIf("TABLE"))
-                    return parseCreateTable(false);
+                    return parseCreateTable(null);
                 else if (parseKeywordIf("TEMP TABLE", "TEMPORARY TABLE"))
-                    return parseCreateTable(true);
+                    return parseCreateTable(TableScope.TEMPORARY);
                 else if (parseProKeywordIf("TRIGGER"))
 
 
@@ -3143,7 +3152,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                 if (parseKeywordIf("VIEW"))
                     return parseCreateView(false, false);
                 else if (parseKeywordIf("VIRTUAL") && parseKeyword("TABLE"))
-                    return parseCreateTable(false);
+                    return parseCreateTable(null);
 
                 break;
         }
@@ -3151,12 +3160,14 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         throw expected(
             "ALIAS",
             "FUNCTION",
+            "LOCAL TEMPORARY TABLE",
             "GENERATOR",
             "GLOBAL TEMPORARY TABLE",
             "INDEX",
             "OR ALTER",
             "OR REPLACE",
             "PRIVATE SYNONYM",
+            "PRIVATE TEMPORARY TABLE",
             "PROCEDURE",
             "PUBLIC ALIAS",
             "PUBLIC SYNONYM",
@@ -3164,6 +3175,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
             "SEQUENCE",
             "SYNONYM",
             "TABLE",
+            "TEMP TABLE",
             "TEMPORARY TABLE",
             "TRIGGER",
             "TYPE",
@@ -4762,7 +4774,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
 
 
-    private final DDLQuery parseCreateTable(boolean temporary) {
+    private final DDLQuery parseCreateTable(TableScope tableScope) {
         boolean ifNotExists = parseKeywordIf("IF NOT EXISTS");
         Table<?> tableName = DSL.table(parseTableName().getQualifiedName());
 
@@ -4898,10 +4910,18 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
             ctas = true;
 
         CreateTableElementListStep elementListStep = ifNotExists
-            ? temporary
+            ? tableScope == TableScope.GLOBAL_TEMPORARY
+                ? dsl.createGlobalTemporaryTableIfNotExists(tableName)
+                : tableScope == TableScope.LOCAL_TEMPORARY
+                ? dsl.createLocalTemporaryTableIfNotExists(tableName)
+                : tableScope == TableScope.TEMPORARY
                 ? dsl.createTemporaryTableIfNotExists(tableName)
                 : dsl.createTableIfNotExists(tableName)
-            : temporary
+            : tableScope == TableScope.GLOBAL_TEMPORARY
+                ? dsl.createGlobalTemporaryTable(tableName)
+                : tableScope == TableScope.LOCAL_TEMPORARY
+                ? dsl.createLocalTemporaryTable(tableName)
+                : tableScope == TableScope.TEMPORARY
                 ? dsl.createTemporaryTable(tableName)
                 : dsl.createTable(tableName);
 
@@ -4918,7 +4938,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         // [#6133] Historically, the jOOQ API places the ON COMMIT clause after
         // the AS clause, which doesn't correspond to dialect implementations
         Function<CreateTableOnCommitStep, CreateTableCommentStep> onCommit;
-        if (temporary && parseKeywordIf("ON COMMIT")) {
+        if (tableScope != null && parseKeywordIf("ON COMMIT")) {
             if (parseKeywordIf("DELETE ROWS"))
                 onCommit = CreateTableOnCommitStep::onCommitDeleteRows;
             else if (parseKeywordIf("DROP"))

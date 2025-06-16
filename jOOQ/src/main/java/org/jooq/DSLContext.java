@@ -10272,6 +10272,60 @@ public interface DSLContext extends Scope {
     CreateTableElementListStep createTemporaryTableIfNotExists(Table<?> table);
 
     /**
+     * The <code>CREATE LOCAL TEMPORARY TABLE</code> statement.
+     *
+     * @see DSL#createLocalTemporaryTable(String)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, YUGABYTEDB })
+    CreateTableElementListStep createLocalTemporaryTable(@Stringly.Name String table);
+
+    /**
+     * The <code>CREATE LOCAL TEMPORARY TABLE</code> statement.
+     *
+     * @see DSL#createLocalTemporaryTable(Name)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, YUGABYTEDB })
+    CreateTableElementListStep createLocalTemporaryTable(Name table);
+
+    /**
+     * The <code>CREATE LOCAL TEMPORARY TABLE</code> statement.
+     *
+     * @see DSL#createLocalTemporaryTable(Table)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, YUGABYTEDB })
+    CreateTableElementListStep createLocalTemporaryTable(Table<?> table);
+
+    /**
+     * The <code>CREATE LOCAL TEMPORARY TABLE IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createLocalTemporaryTableIfNotExists(String)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, YUGABYTEDB })
+    CreateTableElementListStep createLocalTemporaryTableIfNotExists(@Stringly.Name String table);
+
+    /**
+     * The <code>CREATE LOCAL TEMPORARY TABLE IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createLocalTemporaryTableIfNotExists(Name)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, YUGABYTEDB })
+    CreateTableElementListStep createLocalTemporaryTableIfNotExists(Name table);
+
+    /**
+     * The <code>CREATE LOCAL TEMPORARY TABLE IF NOT EXISTS</code> statement.
+     *
+     * @see DSL#createLocalTemporaryTableIfNotExists(Table)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, YUGABYTEDB })
+    CreateTableElementListStep createLocalTemporaryTableIfNotExists(Table<?> table);
+
+    /**
      * The <code>CREATE GLOBAL TEMPORARY TABLE</code> statement.
      *
      * @see DSL#createGlobalTemporaryTable(String)

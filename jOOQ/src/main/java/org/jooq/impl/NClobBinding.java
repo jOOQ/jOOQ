@@ -56,6 +56,7 @@ import org.jooq.BindingSetStatementContext;
 import org.jooq.Converter;
 import org.jooq.Converters;
 import org.jooq.ResourceManagingScope;
+import org.jooq.conf.ParamType;
 import org.jooq.tools.jdbc.JDBCUtils;
 
 // ...
@@ -78,7 +79,10 @@ public class NClobBinding implements Binding<String, String> {
 
     @Override
     public final void sql(BindingSQLContext<String> ctx) throws SQLException {
-        ctx.render().visit(DSL.val(ctx.value(), SQLDataType.NCLOB));
+        if (ctx.render().paramType() == ParamType.INLINED)
+            ctx.render().visit(DSL.inline(ctx.convert(converter()).value(), SQLDataType.NCLOB));
+        else
+            ctx.render().sql(ctx.variable());
     }
 
     @Override
@@ -133,6 +137,9 @@ public class NClobBinding implements Binding<String, String> {
     }
 
     static final NClob newNClob(ResourceManagingScope scope, String string) throws SQLException {
+        if (string == null)
+            return null;
+
         NClob clob;
 
         switch (scope.dialect()) {

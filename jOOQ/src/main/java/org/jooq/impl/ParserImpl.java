@@ -4778,6 +4778,19 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         boolean ifNotExists = parseKeywordIf("IF NOT EXISTS");
         Table<?> tableName = DSL.table(parseTableName().getQualifiedName());
 
+
+
+
+
+
+
+
+
+
+
+
+
+
         if (parseKeywordIf("USING"))
             parseIdentifier();
 

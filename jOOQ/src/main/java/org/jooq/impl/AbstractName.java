@@ -66,6 +66,19 @@ implements
 
     static final UnqualifiedName NO_NAME          = new UnqualifiedName("");
 
+    static final Name name(Quoted quoted, String name) {
+        switch (quoted) {
+            case QUOTED:
+                return DSL.quotedName(name);
+            case UNQUOTED:
+                return DSL.unquotedName(name);
+            case SYSTEM:
+                return DSL.systemName(name);
+            default:
+                return DSL.name(name);
+        }
+    }
+
     @Override
     public final Name append(String name) {
         return append(new UnqualifiedName(name));

@@ -783,15 +783,8 @@ implements
            .visit(K_CREATE)
            .sql(' ');
 
-        toSQLTableScope(ctx, tableScope != null
-            ? tableScope
-            : temporary
-            ? NO_SUPPORT_GLOBAL_TEMPORARY.contains(ctx.dialect())
-                ? TableScope.TEMPORARY
-                : TableScope.GLOBAL_TEMPORARY
-            : null
-        );
-
+        TableScope s = tableScope(ctx, tableScope, temporary);
+        toSQLTableScope(ctx, s);
         ctx.visit(K_TABLE)
            .sql(' ');
 
@@ -799,8 +792,37 @@ implements
             ctx.visit(K_IF_NOT_EXISTS)
                .sql(' ');
 
-        ctx.visit(table)
+        ctx.visit(tableName(ctx, s, table))
            .end(Clause.CREATE_TABLE_NAME);
+    }
+
+    static final Table<?> tableName(Context<?> ctx, TableScope tableScope, Table<?> table) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        return table;
+    }
+
+    static final TableScope tableScope(Context<?> ctx, TableScope tableScope, boolean temporary) {
+        return tableScope != null
+            ? tableScope
+            : temporary
+            ? NO_SUPPORT_GLOBAL_TEMPORARY.contains(ctx.dialect())
+                ? TableScope.TEMPORARY
+                : TableScope.GLOBAL_TEMPORARY
+            : null;
     }
 
     private static final void toSQLTableScope(Context<?> ctx, TableScope tableScope) {
@@ -808,6 +830,9 @@ implements
             return;
 
         switch (ctx.family()) {
+
+
+
 
 
 

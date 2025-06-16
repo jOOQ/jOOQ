@@ -52,6 +52,7 @@ import org.jooq.*;
 import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.ParamType;
+import org.jooq.impl.QOM.TableScope;
 import org.jooq.impl.QOM.Cascade;
 import org.jooq.tools.StringUtils;
 
@@ -78,20 +79,23 @@ implements
     DropTableFinalStep
 {
 
-    final boolean  temporary;
-    final Table<?> table;
-    final boolean  ifExists;
-          Cascade  cascade;
+    final boolean    temporary;
+    final TableScope tableScope;
+    final Table<?>   table;
+    final boolean    ifExists;
+          Cascade    cascade;
 
     DropTableImpl(
         Configuration configuration,
         boolean temporary,
+        TableScope tableScope,
         Table<?> table,
         boolean ifExists
     ) {
         this(
             configuration,
             temporary,
+            tableScope,
             table,
             ifExists,
             null
@@ -102,12 +106,29 @@ implements
         Configuration configuration,
         boolean temporary,
         Table<?> table,
+        boolean ifExists
+    ) {
+        this(
+            configuration,
+            temporary,
+            null,
+            table,
+            ifExists
+        );
+    }
+
+    DropTableImpl(
+        Configuration configuration,
+        boolean temporary,
+        TableScope tableScope,
+        Table<?> table,
         boolean ifExists,
         Cascade cascade
     ) {
         super(configuration);
 
         this.temporary = temporary;
+        this.tableScope = tableScope;
         this.table = table;
         this.ifExists = ifExists;
         this.cascade = cascade;
@@ -159,7 +180,8 @@ implements
         // [#6371] [#9019] While many dialects do not require this keyword, in
         //                 some dialects (e.g. MySQL), there is a semantic
         //                 difference, e.g. with respect to transactions.
-        if (temporary && TEMPORARY_SEMANTIC.contains(ctx.dialect()))
+        TableScope s = CreateTableImpl.tableScope(ctx, tableScope, temporary);
+        if (s != null && TEMPORARY_SEMANTIC.contains(ctx.dialect()))
             ctx.visit(K_TEMPORARY).sql(' ');
 
         ctx.visit(K_TABLE).sql(' ');
@@ -167,7 +189,7 @@ implements
         if (ifExists && supportsIfExists(ctx))
             ctx.visit(K_IF_EXISTS).sql(' ');
 
-        ctx.visit(table);
+        ctx.visit(CreateTableImpl.tableName(ctx, s, table));
         acceptCascade0(ctx, cascade);
         ctx.end(Clause.DROP_TABLE_TABLE);
     }
@@ -206,6 +228,11 @@ implements
     }
 
     @Override
+    public final TableScope $tableScope() {
+        return tableScope;
+    }
+
+    @Override
     public final Table<?> $table() {
         return table;
     }
@@ -222,27 +249,33 @@ implements
 
     @Override
     public final QOM.DropTable $temporary(boolean newValue) {
-        return $constructor().apply(newValue, $table(), $ifExists(), $cascade());
+        return $constructor().apply(newValue, $tableScope(), $table(), $ifExists(), $cascade());
+    }
+
+    @Override
+    public final QOM.DropTable $tableScope(TableScope newValue) {
+        return $constructor().apply($temporary(), newValue, $table(), $ifExists(), $cascade());
     }
 
     @Override
     public final QOM.DropTable $table(Table<?> newValue) {
-        return $constructor().apply($temporary(), newValue, $ifExists(), $cascade());
+        return $constructor().apply($temporary(), $tableScope(), newValue, $ifExists(), $cascade());
     }
 
     @Override
     public final QOM.DropTable $ifExists(boolean newValue) {
-        return $constructor().apply($temporary(), $table(), newValue, $cascade());
+        return $constructor().apply($temporary(), $tableScope(), $table(), newValue, $cascade());
     }
 
     @Override
     public final QOM.DropTable $cascade(Cascade newValue) {
-        return $constructor().apply($temporary(), $table(), $ifExists(), newValue);
+        return $constructor().apply($temporary(), $tableScope(), $table(), $ifExists(), newValue);
     }
 
-    public final Function4<? super Boolean, ? super Table<?>, ? super Boolean, ? super Cascade, ? extends QOM.DropTable> $constructor() {
-        return (a1, a2, a3, a4) -> new DropTableImpl(configuration(), a1, a2, a3, a4);
+    public final Function5<? super Boolean, ? super TableScope, ? super Table<?>, ? super Boolean, ? super Cascade, ? extends QOM.DropTable> $constructor() {
+        return (a1, a2, a3, a4, a5) -> new DropTableImpl(configuration(), a1, a2, a3, a4, a5);
     }
+
 
 
 

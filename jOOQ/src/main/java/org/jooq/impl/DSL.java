@@ -11051,6 +11051,186 @@ public class DSL {
         return dsl().dropTemporaryTableIfExists(table);
     }
 
+    /**
+     * The <code>DROP LOCAL TEMPORARY TABLE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#dropLocalTemporaryTable(String)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, YUGABYTEDB })
+    public static org.jooq.DropTableStep dropLocalTemporaryTable(@Stringly.Name String table) {
+        return dsl().dropLocalTemporaryTable(table);
+    }
+
+    /**
+     * The <code>DROP LOCAL TEMPORARY TABLE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#dropLocalTemporaryTable(Name)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, YUGABYTEDB })
+    public static org.jooq.DropTableStep dropLocalTemporaryTable(Name table) {
+        return dsl().dropLocalTemporaryTable(table);
+    }
+
+    /**
+     * The <code>DROP LOCAL TEMPORARY TABLE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#dropLocalTemporaryTable(Table)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, YUGABYTEDB })
+    public static org.jooq.DropTableStep dropLocalTemporaryTable(Table<?> table) {
+        return dsl().dropLocalTemporaryTable(table);
+    }
+
+    /**
+     * The <code>DROP LOCAL TEMPORARY TABLE IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#dropLocalTemporaryTableIfExists(String)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, YUGABYTEDB })
+    public static org.jooq.DropTableStep dropLocalTemporaryTableIfExists(@Stringly.Name String table) {
+        return dsl().dropLocalTemporaryTableIfExists(table);
+    }
+
+    /**
+     * The <code>DROP LOCAL TEMPORARY TABLE IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#dropLocalTemporaryTableIfExists(Name)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, YUGABYTEDB })
+    public static org.jooq.DropTableStep dropLocalTemporaryTableIfExists(Name table) {
+        return dsl().dropLocalTemporaryTableIfExists(table);
+    }
+
+    /**
+     * The <code>DROP LOCAL TEMPORARY TABLE IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#dropLocalTemporaryTableIfExists(Table)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, YUGABYTEDB })
+    public static org.jooq.DropTableStep dropLocalTemporaryTableIfExists(Table<?> table) {
+        return dsl().dropLocalTemporaryTableIfExists(table);
+    }
+
+    /**
+     * The <code>DROP GLOBAL TEMPORARY TABLE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#dropGlobalTemporaryTable(String)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, POSTGRES })
+    public static org.jooq.DropTableStep dropGlobalTemporaryTable(@Stringly.Name String table) {
+        return dsl().dropGlobalTemporaryTable(table);
+    }
+
+    /**
+     * The <code>DROP GLOBAL TEMPORARY TABLE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#dropGlobalTemporaryTable(Name)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, POSTGRES })
+    public static org.jooq.DropTableStep dropGlobalTemporaryTable(Name table) {
+        return dsl().dropGlobalTemporaryTable(table);
+    }
+
+    /**
+     * The <code>DROP GLOBAL TEMPORARY TABLE</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#dropGlobalTemporaryTable(Table)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, POSTGRES })
+    public static org.jooq.DropTableStep dropGlobalTemporaryTable(Table<?> table) {
+        return dsl().dropGlobalTemporaryTable(table);
+    }
+
+    /**
+     * The <code>DROP GLOBAL TEMPORARY TABLE IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#dropGlobalTemporaryTableIfExists(String)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, POSTGRES })
+    public static org.jooq.DropTableStep dropGlobalTemporaryTableIfExists(@Stringly.Name String table) {
+        return dsl().dropGlobalTemporaryTableIfExists(table);
+    }
+
+    /**
+     * The <code>DROP GLOBAL TEMPORARY TABLE IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#dropGlobalTemporaryTableIfExists(Name)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, POSTGRES })
+    public static org.jooq.DropTableStep dropGlobalTemporaryTableIfExists(Name table) {
+        return dsl().dropGlobalTemporaryTableIfExists(table);
+    }
+
+    /**
+     * The <code>DROP GLOBAL TEMPORARY TABLE IF EXISTS</code> statement.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#dropGlobalTemporaryTableIfExists(Table)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, POSTGRES })
+    public static org.jooq.DropTableStep dropGlobalTemporaryTableIfExists(Table<?> table) {
+        return dsl().dropGlobalTemporaryTableIfExists(table);
+    }
+
 
 
 

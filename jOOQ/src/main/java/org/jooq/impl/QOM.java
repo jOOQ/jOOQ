@@ -2657,11 +2657,14 @@ public final class QOM {
         //    DropTableImpl
     {
         boolean $temporary();
+        @Nullable TableScope $tableScope();
         @NotNull Table<?> $table();
         boolean $ifExists();
         @Nullable Cascade $cascade();
         @CheckReturnValue
         @NotNull DropTable $temporary(boolean temporary);
+        @CheckReturnValue
+        @NotNull DropTable $tableScope(TableScope tableScope);
         @CheckReturnValue
         @NotNull DropTable $table(Table<?> table);
         @CheckReturnValue

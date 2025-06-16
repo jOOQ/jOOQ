@@ -11643,6 +11643,114 @@ public interface DSLContext extends Scope {
     @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     DropTableStep dropTemporaryTableIfExists(Table<?> table);
 
+    /**
+     * The <code>DROP LOCAL TEMPORARY TABLE</code> statement.
+     *
+     * @see DSL#dropLocalTemporaryTable(String)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, YUGABYTEDB })
+    DropTableStep dropLocalTemporaryTable(@Stringly.Name String table);
+
+    /**
+     * The <code>DROP LOCAL TEMPORARY TABLE</code> statement.
+     *
+     * @see DSL#dropLocalTemporaryTable(Name)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, YUGABYTEDB })
+    DropTableStep dropLocalTemporaryTable(Name table);
+
+    /**
+     * The <code>DROP LOCAL TEMPORARY TABLE</code> statement.
+     *
+     * @see DSL#dropLocalTemporaryTable(Table)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, YUGABYTEDB })
+    DropTableStep dropLocalTemporaryTable(Table<?> table);
+
+    /**
+     * The <code>DROP LOCAL TEMPORARY TABLE IF EXISTS</code> statement.
+     *
+     * @see DSL#dropLocalTemporaryTableIfExists(String)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, YUGABYTEDB })
+    DropTableStep dropLocalTemporaryTableIfExists(@Stringly.Name String table);
+
+    /**
+     * The <code>DROP LOCAL TEMPORARY TABLE IF EXISTS</code> statement.
+     *
+     * @see DSL#dropLocalTemporaryTableIfExists(Name)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, YUGABYTEDB })
+    DropTableStep dropLocalTemporaryTableIfExists(Name table);
+
+    /**
+     * The <code>DROP LOCAL TEMPORARY TABLE IF EXISTS</code> statement.
+     *
+     * @see DSL#dropLocalTemporaryTableIfExists(Table)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, YUGABYTEDB })
+    DropTableStep dropLocalTemporaryTableIfExists(Table<?> table);
+
+    /**
+     * The <code>DROP GLOBAL TEMPORARY TABLE</code> statement.
+     *
+     * @see DSL#dropGlobalTemporaryTable(String)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, POSTGRES })
+    DropTableStep dropGlobalTemporaryTable(@Stringly.Name String table);
+
+    /**
+     * The <code>DROP GLOBAL TEMPORARY TABLE</code> statement.
+     *
+     * @see DSL#dropGlobalTemporaryTable(Name)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, POSTGRES })
+    DropTableStep dropGlobalTemporaryTable(Name table);
+
+    /**
+     * The <code>DROP GLOBAL TEMPORARY TABLE</code> statement.
+     *
+     * @see DSL#dropGlobalTemporaryTable(Table)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, POSTGRES })
+    DropTableStep dropGlobalTemporaryTable(Table<?> table);
+
+    /**
+     * The <code>DROP GLOBAL TEMPORARY TABLE IF EXISTS</code> statement.
+     *
+     * @see DSL#dropGlobalTemporaryTableIfExists(String)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, POSTGRES })
+    DropTableStep dropGlobalTemporaryTableIfExists(@Stringly.Name String table);
+
+    /**
+     * The <code>DROP GLOBAL TEMPORARY TABLE IF EXISTS</code> statement.
+     *
+     * @see DSL#dropGlobalTemporaryTableIfExists(Name)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, POSTGRES })
+    DropTableStep dropGlobalTemporaryTableIfExists(Name table);
+
+    /**
+     * The <code>DROP GLOBAL TEMPORARY TABLE IF EXISTS</code> statement.
+     *
+     * @see DSL#dropGlobalTemporaryTableIfExists(Table)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ FIREBIRD, POSTGRES })
+    DropTableStep dropGlobalTemporaryTableIfExists(Table<?> table);
+
 
 
 

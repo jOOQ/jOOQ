@@ -145,7 +145,10 @@ final class DDL {
     }
 
     private final List<Query> createTableOrViewWithInlineConstraints(Table<?> table, Collection<? extends Constraint> constraints) {
-        boolean temporary = table.getTableType() == TableType.TEMPORARY;
+        boolean globalTemporary =
+               table.getTableType() == TableType.GLOBAL_TEMPORARY
+            || table.getTableType() == TableType.TEMPORARY;
+        boolean localTemporary = table.getTableType() == TableType.LOCAL_TEMPORARY;
         boolean materialized = table.getTableType() == MATERIALIZED_VIEW;
         boolean view = table.getTableType().isView();
         OnCommit onCommit = table.getOptions().onCommit();
@@ -178,11 +181,15 @@ final class DDL {
 
         CreateTableOnCommitStep s0 =
             (configuration.createTableIfNotExists()
-                        ? temporary
-                            ? ctx.createTemporaryTableIfNotExists(table)
+                        ? globalTemporary
+                            ? ctx.createGlobalTemporaryTableIfNotExists(table)
+                            : localTemporary
+                            ? ctx.createLocalTemporaryTableIfNotExists(table)
                             : ctx.createTableIfNotExists(table)
-                        : temporary
-                            ? ctx.createTemporaryTable(table)
+                        : globalTemporary
+                            ? ctx.createGlobalTemporaryTable(table)
+                            : localTemporary
+                            ? ctx.createLocalTemporaryTable(table)
                             : ctx.createTable(table))
 
                 // [#14512] We're exporting COMMENT ON COLUMN statements, so
@@ -190,7 +197,7 @@ final class DDL {
                 .columns(sortIf(map(table.fieldsIncludingHidden().fields(), f -> !isEmpty(f.getComment()) ? f.comment("") : f), !configuration.respectColumnOrder()))
                 .constraints(constraints);
 
-        if (temporary && onCommit != null) {
+        if (globalTemporary && onCommit != null) {
             switch (onCommit) {
                 case DELETE_ROWS:
                     return asList(s0.onCommitDeleteRows());

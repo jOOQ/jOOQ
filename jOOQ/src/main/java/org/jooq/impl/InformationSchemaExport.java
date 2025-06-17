@@ -361,7 +361,9 @@ final class InformationSchemaExport {
         switch (t.getOptions().type()) {
             case MATERIALIZED_VIEW: it.setTableType(TableType.MATERIALIZED_VIEW); break;
             case VIEW:              it.setTableType(TableType.VIEW); break;
-            case TEMPORARY:         it.setTableType(TableType.GLOBAL_TEMPORARY); break;
+            case TEMPORARY:
+            case GLOBAL_TEMPORARY:  it.setTableType(TableType.GLOBAL_TEMPORARY); break;
+            case LOCAL_TEMPORARY:   it.setTableType(TableType.LOCAL_TEMPORARY); break;
             case FUNCTION:
             case TABLE:
             case EXPRESSION:

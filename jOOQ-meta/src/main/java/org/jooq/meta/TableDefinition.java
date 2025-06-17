@@ -204,8 +204,22 @@ public interface TableDefinition extends Definition {
 
     /**
      * Whether this table is a temporary table.
+     *
+     * @deprecated - 3.21.0 - [#18626] - Use {@link #isGlobalTemporary()} or
+     *             {@link #isLocalTemporary()} instead.
      */
+    @Deprecated(forRemoval = true)
     boolean isTemporary();
+
+    /**
+     * Whether this table is a global temporary table.
+     */
+    boolean isGlobalTemporary();
+
+    /**
+     * Whether this table is a local temporary table.
+     */
+    boolean isLocalTemporary();
 
     /**
      * Whether this table is a view.

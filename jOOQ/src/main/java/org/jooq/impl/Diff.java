@@ -436,8 +436,11 @@ final class Diff extends AbstractScope {
                 r.queries.add(ctx.dropView(t));
             else if (t.getTableType() == MATERIALIZED_VIEW)
                 r.queries.add(ctx.dropMaterializedView(t));
-            else if (t.getTableType() == TableType.TEMPORARY)
-                r.queries.add(ctx.dropTemporaryTable(t));
+            else if (t.getTableType() == TableType.GLOBAL_TEMPORARY
+                  || t.getTableType() == TableType.TEMPORARY)
+                r.queries.add(ctx.dropGlobalTemporaryTable(t));
+            else if (t.getTableType() == TableType.LOCAL_TEMPORARY)
+                r.queries.add(ctx.dropLocalTemporaryTable(t));
             else
                 r.queries.add(migrateConf.dropTableCascade()
                     ? ctx.dropTable(t).cascade()

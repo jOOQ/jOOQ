@@ -125,6 +125,7 @@ import org.jooq.impl.DefaultParseContext.IgnoreQuery;
 import org.jooq.impl.QOM.Cascade;
 import org.jooq.impl.QOM.CycleOption;
 import org.jooq.impl.QOM.ForeignKeyRule;
+import org.jooq.impl.QOM.TableScope;
 import org.jooq.tools.JooqLogger;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -372,7 +373,20 @@ final class Interpreter {
             return;
         }
 
-        MutableTable mt = newTable(table, schema, query.$columns(), query.$select(), query.$comment(), query.$temporary() ? TableOptions.temporaryTable(query.$onCommit()) : TableOptions.table());
+        MutableTable mt = newTable(
+            table,
+            schema,
+            query.$columns(),
+            query.$select(),
+            query.$comment(),
+            query.$tableScope() == TableScope.GLOBAL_TEMPORARY
+                ? TableOptions.globalTemporaryTable(query.$onCommit())
+                : query.$tableScope() == TableScope.LOCAL_TEMPORARY
+                ? TableOptions.localTemporaryTable()
+                : query.$tableScope() == TableScope.TEMPORARY
+                ? TableOptions.temporaryTable(query.$onCommit())
+                : TableOptions.table()
+        );
 
         for (Constraint constraint : query.$constraints())
             addConstraint(query, constraint, mt);
@@ -919,7 +933,10 @@ final class Interpreter {
         }
         else if (!existing.options.type().isTable())
             throw objectNotTable(table);
-        else if (query.$temporary() && existing.options.type() != TableType.TEMPORARY)
+        else if (query.$temporary()
+                && existing.options.type() != TableType.TEMPORARY
+                && existing.options.type() != TableType.GLOBAL_TEMPORARY
+                && existing.options.type() != TableType.LOCAL_TEMPORARY)
             throw objectNotTemporaryTable(table);
 
         drop(schema.tables, existing, query.$cascade());

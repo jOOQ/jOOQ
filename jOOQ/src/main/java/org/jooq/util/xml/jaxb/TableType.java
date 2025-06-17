@@ -17,6 +17,7 @@ import jakarta.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="VIEW"/&gt;
  *     &lt;enumeration value="MATERIALIZED VIEW"/&gt;
  *     &lt;enumeration value="GLOBAL TEMPORARY"/&gt;
+ *     &lt;enumeration value="LOCAL TEMPORARY"/&gt;
  *   &lt;/restriction&gt;
  * &lt;/simpleType&gt;
  * </pre>
@@ -48,11 +49,18 @@ public enum TableType {
     MATERIALIZED_VIEW("MATERIALIZED VIEW"),
 
     /**
-     * The table is a TEMPORARY table.
+     * The table is a GLOBAL TEMPORARY table.
      * 
      */
     @XmlEnumValue("GLOBAL TEMPORARY")
-    GLOBAL_TEMPORARY("GLOBAL TEMPORARY");
+    GLOBAL_TEMPORARY("GLOBAL TEMPORARY"),
+
+    /**
+     * The table is a LOCAL TEMPORARY table.
+     * 
+     */
+    @XmlEnumValue("LOCAL TEMPORARY")
+    LOCAL_TEMPORARY("LOCAL TEMPORARY");
     private final String value;
 
     TableType(String v) {
@@ -81,6 +89,8 @@ public enum TableType {
                 return "MATERIALIZED VIEW";
             case GLOBAL_TEMPORARY:
                 return "GLOBAL TEMPORARY";
+            case LOCAL_TEMPORARY:
+                return "LOCAL TEMPORARY";
             default:
                 return this.name();
         }

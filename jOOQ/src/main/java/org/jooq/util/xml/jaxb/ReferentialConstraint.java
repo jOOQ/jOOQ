@@ -29,8 +29,8 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *         &lt;element name="unique_constraint_catalog" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="unique_constraint_schema" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="unique_constraint_name" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *         &lt;element name="delete_rule" type="{http://www.jooq.org/xsd/jooq-meta-3.20.0.xsd}ForeignKeyRule" minOccurs="0"/&gt;
- *         &lt;element name="update_rule" type="{http://www.jooq.org/xsd/jooq-meta-3.20.0.xsd}ForeignKeyRule" minOccurs="0"/&gt;
+ *         &lt;element name="delete_rule" type="{http://www.jooq.org/xsd/jooq-meta-3.21.0.xsd}ForeignKeyRule" minOccurs="0"/&gt;
+ *         &lt;element name="update_rule" type="{http://www.jooq.org/xsd/jooq-meta-3.21.0.xsd}ForeignKeyRule" minOccurs="0"/&gt;
  *       &lt;/all&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -49,7 +49,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class ReferentialConstraint implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 32000L;
+    private final static long serialVersionUID = 32100L;
     @XmlElement(name = "constraint_catalog")
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String constraintCatalog;

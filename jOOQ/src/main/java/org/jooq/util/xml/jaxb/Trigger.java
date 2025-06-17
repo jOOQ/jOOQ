@@ -26,15 +26,15 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *         &lt;element name="trigger_catalog" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="trigger_schema" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="trigger_name" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *         &lt;element name="event_manipulation" type="{http://www.jooq.org/xsd/jooq-meta-3.20.0.xsd}TriggerEventManipulation"/&gt;
+ *         &lt;element name="event_manipulation" type="{http://www.jooq.org/xsd/jooq-meta-3.21.0.xsd}TriggerEventManipulation"/&gt;
  *         &lt;element name="event_object_catalog" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="event_object_schema" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="event_object_table" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *         &lt;element name="action_order" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/&gt;
  *         &lt;element name="action_condition" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="action_statement" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *         &lt;element name="action_orientation" type="{http://www.jooq.org/xsd/jooq-meta-3.20.0.xsd}TriggerActionOrientation"/&gt;
- *         &lt;element name="action_timing" type="{http://www.jooq.org/xsd/jooq-meta-3.20.0.xsd}TriggerActionTiming"/&gt;
+ *         &lt;element name="action_orientation" type="{http://www.jooq.org/xsd/jooq-meta-3.21.0.xsd}TriggerActionOrientation"/&gt;
+ *         &lt;element name="action_timing" type="{http://www.jooq.org/xsd/jooq-meta-3.21.0.xsd}TriggerActionTiming"/&gt;
  *         &lt;element name="action_reference_old_table" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="action_reference_new_table" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="action_reference_old_row" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
@@ -58,7 +58,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class Trigger implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 32000L;
+    private final static long serialVersionUID = 32100L;
     @XmlElement(name = "trigger_catalog")
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String triggerCatalog;

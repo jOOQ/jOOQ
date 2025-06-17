@@ -830,7 +830,7 @@ implements
         return table;
     }
 
-    static final TableScope tableScope(Context<?> ctx, TableScope tableScope, boolean temporary) {
+    static final TableScope tableScope(Scope ctx, TableScope tableScope, boolean temporary) {
         return tableScope != null
             ? tableScope
             : temporary

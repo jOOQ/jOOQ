@@ -73,6 +73,7 @@ import static org.jooq.TableOptions.TableType.MATERIALIZED_VIEW;
 import static org.jooq.TableOptions.TableType.TABLE;
 import static org.jooq.TableOptions.TableType.VIEW;
 import static org.jooq.impl.AbstractNamed.findIgnoreCase;
+import static org.jooq.impl.CreateTableImpl.NO_SUPPORT_GLOBAL_TEMPORARY;
 import static org.jooq.impl.DSL.comment;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.field;
@@ -577,11 +578,13 @@ final class MetaImpl extends AbstractMeta {
                         : "SYSTEM_VIEW".equals(type) || "SYSTEM VIEW".equals(type)
                         ? TableType.VIEW
                         : "GLOBAL TEMPORARY".equals(type)
-                        ? TableType.TEMPORARY
+                        ? TableType.GLOBAL_TEMPORARY
                         : "LOCAL TEMPORARY".equals(type)
-                        ? TableType.TEMPORARY
+                        ? TableType.LOCAL_TEMPORARY
                         : "TEMPORARY".equals(type)
-                        ? TableType.TEMPORARY
+                        ? NO_SUPPORT_GLOBAL_TEMPORARY.contains(dialect())
+                            ? TableType.LOCAL_TEMPORARY
+                            : TableType.GLOBAL_TEMPORARY
                         : "MATERIALIZED VIEW".equals(type)
                         ? TableType.MATERIALIZED_VIEW
                         : TableType.TABLE;

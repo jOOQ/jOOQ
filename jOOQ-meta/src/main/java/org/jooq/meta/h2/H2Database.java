@@ -823,7 +823,7 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
                     TABLES.TABLE_SCHEMA,
                     TABLES.TABLE_NAME,
                     when(TABLES.TABLE_TYPE.eq(inline("VIEW")), inline(TableType.VIEW.name()))
-                       .when(TABLES.STORAGE_TYPE.like(inline("%TEMPORARY%")), inline(TableType.TEMPORARY.name()))
+                       .when(TABLES.STORAGE_TYPE.like(inline("%TEMPORARY%")), inline(TableType.GLOBAL_TEMPORARY.name()))
                        .else_(inline(TableType.TABLE.name())).convertFrom(TableType::valueOf).as("table_type"),
                     TABLES.REMARKS)
                 .from(TABLES)

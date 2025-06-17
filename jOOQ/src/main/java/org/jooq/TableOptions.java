@@ -63,7 +63,8 @@ public final class TableOptions implements Serializable {
     private static final TableOptions C_FUNCTION          = new TableOptions(TableType.FUNCTION);
     private static final TableOptions C_MATERIALIZED_VIEW = materializedView((String) null);
     private static final TableOptions C_TABLE             = new TableOptions(TableType.TABLE);
-    private static final TableOptions C_TEMPORARY         = new TableOptions(TableType.TEMPORARY);
+    private static final TableOptions C_GLOBAL_TEMPORARY  = new TableOptions(TableType.GLOBAL_TEMPORARY);
+    private static final TableOptions C_LOCAL_TEMPORARY   = new TableOptions(TableType.LOCAL_TEMPORARY);
     private static final TableOptions C_VIEW              = view((String) null);
 
     private final TableType           type;
@@ -79,7 +80,7 @@ public final class TableOptions implements Serializable {
     }
 
     private TableOptions(OnCommit onCommit) {
-        this.type = TableType.TEMPORARY;
+        this.type = TableType.GLOBAL_TEMPORARY;
         this.onCommit = onCommit;
         this.select = null;
         this.source = null;
@@ -111,6 +112,10 @@ public final class TableOptions implements Serializable {
                 return function();
             case MATERIALIZED_VIEW:
                 return materializedView();
+            case GLOBAL_TEMPORARY:
+                return globalTemporaryTable();
+            case LOCAL_TEMPORARY:
+                return localTemporaryTable();
             case TEMPORARY:
                 return temporaryTable();
             case VIEW:
@@ -131,35 +136,86 @@ public final class TableOptions implements Serializable {
     }
 
     /**
-     * Create a new {@link TableOptions} object for a {@link TableType#TEMPORARY}.
+     * Create a new {@link TableOptions} object for a
+     * {@link TableType#GLOBAL_TEMPORARY} table.
+     *
+     * @deprecated - 3.21.0 - [#18626] - Use {@link #globalTemporaryTable()} or
+     *             {@link #localTemporaryTable()} instead.
      */
+    @Deprecated(forRemoval = true)
     @NotNull
     public static final TableOptions temporaryTable() {
-        return C_TEMPORARY;
+        return globalTemporaryTable();
     }
 
     /**
-     * Create a new {@link TableOptions} object for a {@link TableType#TEMPORARY}.
+     * Create a new {@link TableOptions} object for a
+     * {@link TableType#GLOBAL_TEMPORARY} table.
+     *
+     * @deprecated - 3.21.0 - [#18626] - Use
+     *             {@link #globalTemporaryTable(OnCommit)}.
      */
+    @Deprecated(forRemoval = true)
     @NotNull
     public static final TableOptions temporaryTable(OnCommit onCommit) {
+        return globalTemporaryTable(onCommit);
+    }
+
+    /**
+     * Create a new {@link TableOptions} object for a
+     * {@link TableType#GLOBAL_TEMPORARY} table.
+     *
+     * @deprecated - 3.21.0 - [#18626] - Use
+     *             {@link #globalTemporaryTable(TableCommitAction)}.
+     */
+    @Deprecated(forRemoval = true)
+    @NotNull
+    public static final TableOptions temporaryTable(TableCommitAction onCommit) {
+        return globalTemporaryTable(onCommit);
+    }
+
+    /**
+     * Create a new {@link TableOptions} object for a
+     * {@link TableType#GLOBAL_TEMPORARY} table.
+     */
+    @NotNull
+    public static final TableOptions globalTemporaryTable() {
+        return C_GLOBAL_TEMPORARY;
+    }
+
+    /**
+     * Create a new {@link TableOptions} object for a
+     * {@link TableType#GLOBAL_TEMPORARY} table.
+     */
+    @NotNull
+    public static final TableOptions globalTemporaryTable(OnCommit onCommit) {
         return new TableOptions(onCommit);
     }
 
     /**
-     * Create a new {@link TableOptions} object for a {@link TableType#TEMPORARY}.
+     * Create a new {@link TableOptions} object for a
+     * {@link TableType#GLOBAL_TEMPORARY} table.
      */
     @NotNull
-    public static final TableOptions temporaryTable(TableCommitAction onCommit) {
+    public static final TableOptions globalTemporaryTable(TableCommitAction onCommit) {
         if (onCommit == null)
             return new TableOptions((OnCommit) null);
 
         switch (onCommit) {
-            case DELETE_ROWS: return temporaryTable(DELETE_ROWS);
-            case PRESERVE_ROWS: return temporaryTable(PRESERVE_ROWS);
-            case DROP: return temporaryTable(DROP);
+            case DELETE_ROWS: return globalTemporaryTable(DELETE_ROWS);
+            case PRESERVE_ROWS: return globalTemporaryTable(PRESERVE_ROWS);
+            case DROP: return globalTemporaryTable(DROP);
             default: throw new IllegalArgumentException("TableCommitAction not supported: " + onCommit);
         }
+    }
+
+    /**
+     * Create a new {@link TableOptions} object for a
+     * {@link TableType#LOCAL_TEMPORARY} table.
+     */
+    @NotNull
+    public static final TableOptions localTemporaryTable() {
+        return C_LOCAL_TEMPORARY;
     }
 
     /**
@@ -249,10 +305,11 @@ public final class TableOptions implements Serializable {
     }
 
     /**
-     * The <code>ON COMMIT</code> flag for {@link TableType#TEMPORARY} tables.
+     * The <code>ON COMMIT</code> flag for {@link TableType#GLOBAL_TEMPORARY}
+     * tables.
      * <p>
      * This may be <code>null</code>, if it is undefined, or unknown, or if the
-     * table is not a {@link TableType#TEMPORARY} table.
+     * table is not a {@link TableType#GLOBAL_TEMPORARY} table.
      */
     @Nullable
     public final OnCommit onCommit() {
@@ -296,8 +353,24 @@ public final class TableOptions implements Serializable {
         /**
          * A global temporary table that is stored in the schema and visible to
          * everyone.
+         *
+         * @deprecated - 3.21.0 - [#18626] - Use {@link #GLOBAL_TEMPORARY} or
+         *             {@link #LOCAL_TEMPORARY} instead.
          */
+        @Deprecated(forRemoval = true)
         TEMPORARY,
+
+        /**
+         * A global temporary table that is stored in the schema and visible to
+         * everyone.
+         */
+        GLOBAL_TEMPORARY,
+
+        /**
+         * A local temporary table that is stored in the schema and visible to
+         * everyone.
+         */
+        LOCAL_TEMPORARY,
 
         /**
          * A view that is defined by a {@link Select} statement.
@@ -344,12 +417,15 @@ public final class TableOptions implements Serializable {
          * Whether the type is a table or a temporary table.
          */
         public final boolean isTable() {
-            return this == TABLE || this == TEMPORARY;
+            return this == TABLE
+                || this == TEMPORARY
+                || this == GLOBAL_TEMPORARY
+                || this == LOCAL_TEMPORARY;
         }
     }
 
     /**
-     * The <code>ON COMMIT</code> flag for {@link TableType#TEMPORARY} tables.
+     * The <code>ON COMMIT</code> flag for {@link TableType#GLOBAL_TEMPORARY} tables.
      */
     public enum OnCommit {
 

@@ -560,7 +560,8 @@ public class XMLDatabase extends AbstractDatabase {
                 TableType tableType;
 
                 switch (table.getTableType()) {
-                    case GLOBAL_TEMPORARY: tableType = TableType.TEMPORARY; break;
+                    case GLOBAL_TEMPORARY: tableType = TableType.GLOBAL_TEMPORARY; break;
+                    case LOCAL_TEMPORARY:  tableType = TableType.LOCAL_TEMPORARY; break;
                     case VIEW:             tableType = TableType.VIEW; break;
                     case MATERIALIZED_VIEW:tableType = TableType.MATERIALIZED_VIEW; break;
                     case BASE_TABLE:

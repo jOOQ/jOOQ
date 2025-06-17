@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema xmlns="http://www.w3.org/2001/XMLSchema"
-    xmlns:tns="http://www.jooq.org/xsd/jooq-meta-3.20.0.xsd"
+    xmlns:tns="http://www.jooq.org/xsd/jooq-meta-3.21.0.xsd"
     xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
     xmlns:annox="http://annox.dev.java.net"
-    targetNamespace="http://www.jooq.org/xsd/jooq-meta-3.20.0.xsd"
+    targetNamespace="http://www.jooq.org/xsd/jooq-meta-3.21.0.xsd"
     elementFormDefault="qualified"
     jxb:extensionBindingPrefixes="annox"
     jxb:version="2.1">
@@ -528,7 +528,10 @@
                 <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The table is a MATERIALIZED VIEW.]]></jxb:javadoc></jxb:property></appinfo></annotation>
             </enumeration>
             <enumeration value="GLOBAL TEMPORARY">
-                <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The table is a TEMPORARY table.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+                <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The table is a GLOBAL TEMPORARY table.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+            </enumeration>
+            <enumeration value="LOCAL TEMPORARY">
+                <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The table is a LOCAL TEMPORARY table.]]></jxb:javadoc></jxb:property></appinfo></annotation>
             </enumeration>
         </restriction>
     </simpleType>

@@ -165,8 +165,10 @@ public class XMLGenerator extends AbstractGenerator {
                       ? TableType.VIEW
                       : t.isMaterializedView()
                       ? TableType.MATERIALIZED_VIEW
-                      : t.isTemporary()
+                      : t.isGlobalTemporary()
                       ? TableType.GLOBAL_TEMPORARY
+                      : t.isLocalTemporary()
+                      ? TableType.LOCAL_TEMPORARY
                       : TableType.BASE_TABLE
                     );
 

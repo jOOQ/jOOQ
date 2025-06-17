@@ -276,7 +276,8 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
             TableType tableType;
 
             switch (xt.getTableType()) {
-                case GLOBAL_TEMPORARY: tableType = TableType.TEMPORARY; break;
+                case GLOBAL_TEMPORARY: tableType = TableType.GLOBAL_TEMPORARY; break;
+                case LOCAL_TEMPORARY:  tableType = TableType.LOCAL_TEMPORARY; break;
                 case VIEW:             tableType = TableType.VIEW; break;
                 case BASE_TABLE:
                 default:               tableType = TableType.TABLE; break;

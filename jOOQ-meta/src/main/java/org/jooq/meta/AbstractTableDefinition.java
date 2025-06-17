@@ -282,6 +282,10 @@ implements
             return TableOptions.materializedView(getSource());
         else if (isView())
             return TableOptions.view(getSource());
+        else if (isGlobalTemporary())
+            return TableOptions.globalTemporaryTable();
+        else if (isLocalTemporary())
+            return TableOptions.localTemporaryTable();
         else if (isTemporary())
             return TableOptions.temporaryTable();
         else
@@ -323,7 +327,18 @@ implements
 
     @Override
     public final boolean isTemporary() {
-        return tableType == TableType.TEMPORARY;
+        return tableType == TableType.TEMPORARY
+            || isGlobalTemporary();
+    }
+
+    @Override
+    public final boolean isGlobalTemporary() {
+        return tableType == TableType.GLOBAL_TEMPORARY;
+    }
+
+    @Override
+    public final boolean isLocalTemporary() {
+        return tableType == TableType.LOCAL_TEMPORARY;
     }
 
     @Override

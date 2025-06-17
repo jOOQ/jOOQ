@@ -7267,7 +7267,12 @@ public class JavaGenerator extends AbstractGenerator {
         final String schemaId = generateDefaultSchema(schema)
             ? out.ref(getStrategy().getFullJavaIdentifier(schema), 2)
             : null;
-        final String tableType = table.isTemporary()
+        final String tableType =
+              table.isGlobalTemporary()
+            ? "globalTemporaryTable"
+            : table.isLocalTemporary()
+            ? "localTemporaryTable"
+            : table.isTemporary()
             ? "temporaryTable"
             : table.isView()
             ? "view"

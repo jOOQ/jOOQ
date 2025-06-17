@@ -527,6 +527,7 @@ public class FirebirdDatabase extends AbstractDatabase implements ResultQueryDat
                     trim(RDB$RELATIONS.RDB$RELATION_NAME),
                     trim(RDB$RELATIONS.RDB$DESCRIPTION),
                     trim(when(RDB$RELATIONS.RDB$RELATION_TYPE.eq(inline((short) 1)), inline(TableType.VIEW.name()))
+                        .when(RDB$RELATIONS.RDB$RELATION_TYPE.in(inline((short) 4), inline((short) 5)), inline(TableType.GLOBAL_TEMPORARY.name()))
                         .else_(inline(TableType.TABLE.name()))).as("table_type"),
                     when(lower(RDB$RELATIONS.RDB$VIEW_SOURCE).like(inline("create%")), trim(RDB$RELATIONS.RDB$VIEW_SOURCE))
                         .else_(prependCreateView(trim(RDB$RELATIONS.RDB$RELATION_NAME), RDB$RELATIONS.RDB$VIEW_SOURCE, '"')).as("view_source"))

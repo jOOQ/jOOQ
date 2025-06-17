@@ -3317,12 +3317,20 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
             case 'G':
                 if (parseKeywordIf("GENERATOR"))
                     return parseDropSequence();
+                else if (parseKeywordIf("GLOBAL TEMPORARY TABLE"))
+                    return parseDropTable(TableScope.GLOBAL_TEMPORARY);
 
                 break;
 
             case 'I':
                 if (parseKeywordIf("INDEX"))
                     return parseDropIndex();
+
+                break;
+
+            case 'L':
+                if (parseKeywordIf("LOCAL TEMPORARY TABLE"))
+                    return parseDropTable(TableScope.LOCAL_TEMPORARY);
 
                 break;
 
@@ -3373,9 +3381,9 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
             case 'T':
                 if (parseKeywordIf("TABLE"))
-                    return parseDropTable(false);
+                    return parseDropTable(null);
                 else if (parseKeywordIf("TEMPORARY TABLE"))
-                    return parseDropTable(true);
+                    return parseDropTable(TableScope.TEMPORARY);
                 else if (parseProKeywordIf("TRIGGER"))
 
 
@@ -6317,17 +6325,27 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
             : dsl.alterTable(oldName).renameTo(parseTableName());
     }
 
-    private final DDLQuery parseDropTable(boolean temporary) {
+    private final DDLQuery parseDropTable(TableScope tableScope) {
         boolean ifExists = parseKeywordIf("IF EXISTS");
         Table<?> tableName = parseTableName();
         ifExists = ifExists || parseKeywordIf("IF EXISTS");
 
         return parseCascadeRestrictIf(
             ifExists
-                ? dsl.dropTableIfExists(tableName)
-                : temporary
-                ? dsl.dropTemporaryTable(tableName)
-                : dsl.dropTable(tableName),
+                ? tableScope == TableScope.GLOBAL_TEMPORARY
+                    ? dsl.dropGlobalTemporaryTableIfExists(tableName)
+                    : tableScope == TableScope.LOCAL_TEMPORARY
+                    ? dsl.dropLocalTemporaryTableIfExists(tableName)
+                    : tableScope == TableScope.TEMPORARY
+                    ? dsl.dropTemporaryTableIfExists(tableName)
+                    : dsl.dropTableIfExists(tableName)
+                : tableScope == TableScope.GLOBAL_TEMPORARY
+                    ? dsl.dropGlobalTemporaryTable(tableName)
+                    : tableScope == TableScope.LOCAL_TEMPORARY
+                    ? dsl.dropLocalTemporaryTable(tableName)
+                    : tableScope == TableScope.TEMPORARY
+                    ? dsl.dropTemporaryTable(tableName)
+                    : dsl.dropTable(tableName),
             DropTableStep::cascade,
             DropTableStep::restrict,
             true

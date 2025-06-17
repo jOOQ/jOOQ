@@ -779,11 +779,26 @@ implements
 
 
     private final void toSQLCreateTableName(Context<?> ctx) {
-        ctx.start(Clause.CREATE_TABLE_NAME)
-           .visit(K_CREATE)
-           .sql(' ');
-
         TableScope s = tableScope(ctx, tableScope, temporary);
+
+        ctx.start(Clause.CREATE_TABLE_NAME);
+
+        switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+
+            default:
+                ctx.visit(K_CREATE).sql(' ');
+                break;
+        }
+
         toSQLTableScope(ctx, s);
         ctx.visit(K_TABLE)
            .sql(' ');

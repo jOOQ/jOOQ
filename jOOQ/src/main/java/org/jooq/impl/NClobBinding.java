@@ -37,6 +37,9 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.ClobBinding.NO_SUPPORT_LOBS;
+import static org.jooq.impl.ClobBinding.NO_SUPPORT_NULL_LOBS;
+import static org.jooq.impl.DefaultBinding.InternalBinding.NO_SUPPORT_NVARCHAR;
 import static org.jooq.impl.DefaultExecuteContext.localConnection;
 import static org.jooq.impl.DefaultExecuteContext.localTargetConnection;
 import static org.jooq.impl.Tools.asInt;
@@ -72,6 +75,8 @@ import org.jooq.tools.jdbc.JDBCUtils;
  */
 public class NClobBinding implements Binding<String, String> {
 
+    final ClobBinding clobBinding = new ClobBinding();
+
     @Override
     public final Converter<String, String> converter() {
         return Converters.identity(String.class);
@@ -87,53 +92,97 @@ public class NClobBinding implements Binding<String, String> {
 
     @Override
     public final void register(BindingRegisterContext<String> ctx) throws SQLException {
-        ctx.statement().registerOutParameter(ctx.index(), Types.NCLOB);
+        if (NO_SUPPORT_NVARCHAR.contains(ctx.dialect()))
+            clobBinding.register(ctx);
+        else if (!NO_SUPPORT_LOBS.contains(ctx.dialect()))
+            ctx.statement().registerOutParameter(ctx.index(), Types.NCLOB);
+        else
+            ctx.statement().registerOutParameter(ctx.index(), Types.NVARCHAR);
     }
 
     @Override
     public final void set(BindingSetStatementContext<String> ctx) throws SQLException {
-        ctx.statement().setClob(ctx.index(), newNClob(ctx, ctx.value()));
+        if (NO_SUPPORT_NVARCHAR.contains(ctx.dialect())) {
+            clobBinding.set(ctx);
+        }
+        else if (!NO_SUPPORT_LOBS.contains(ctx.dialect())) {
+            NClob clob = newNClob(ctx, ctx.value());
+
+            // [#14067] Workaround for Firebird bug https://github.com/FirebirdSQL/jaybird/issues/712
+            if (clob == null && NO_SUPPORT_NULL_LOBS.contains(ctx.dialect()))
+                ctx.statement().setNull(ctx.index(), Types.NCLOB);
+            else
+                ctx.statement().setNClob(ctx.index(), clob);
+        }
+        else
+            ctx.statement().setNString(ctx.index(), ctx.value());
     }
 
     @Override
     public final void set(BindingSetSQLOutputContext<String> ctx) throws SQLException {
-        ctx.output().writeClob(newNClob(ctx, ctx.value()));
+        if (NO_SUPPORT_NVARCHAR.contains(ctx.dialect()))
+            clobBinding.set(ctx);
+        else if (!NO_SUPPORT_LOBS.contains(ctx.dialect()))
+            ctx.output().writeNClob(newNClob(ctx, ctx.value()));
+        else
+            ctx.output().writeNString(ctx.value());
     }
 
     @Override
     public final void get(BindingGetResultSetContext<String> ctx) throws SQLException {
-        NClob clob = ctx.resultSet().getNClob(ctx.index());
+        if (NO_SUPPORT_NVARCHAR.contains(ctx.dialect())) {
+            clobBinding.get(ctx);
+        }
+        else if (!NO_SUPPORT_LOBS.contains(ctx.dialect())) {
+            NClob clob = ctx.resultSet().getNClob(ctx.index());
 
-        try {
-            ctx.value(clob == null ? null : clob.getSubString(1, asInt(clob.length())));
+            try {
+                ctx.value(clob == null ? null : clob.getSubString(1, asInt(clob.length())));
+            }
+            finally {
+                JDBCUtils.safeFree(clob);
+            }
         }
-        finally {
-            JDBCUtils.safeFree(clob);
-        }
+        else
+            ctx.value(ctx.resultSet().getNString(ctx.index()));
     }
 
     @Override
     public final void get(BindingGetStatementContext<String> ctx) throws SQLException {
-        NClob clob = ctx.statement().getNClob(ctx.index());
+        if (NO_SUPPORT_NVARCHAR.contains(ctx.dialect())) {
+            clobBinding.get(ctx);
+        }
+        else if (!NO_SUPPORT_LOBS.contains(ctx.dialect())) {
+            NClob clob = ctx.statement().getNClob(ctx.index());
 
-        try {
-            ctx.value(clob == null ? null : clob.getSubString(1, asInt(clob.length())));
+            try {
+                ctx.value(clob == null ? null : clob.getSubString(1, asInt(clob.length())));
+            }
+            finally {
+                JDBCUtils.safeFree(clob);
+            }
         }
-        finally {
-            JDBCUtils.safeFree(clob);
-        }
+        else
+            ctx.value(ctx.statement().getNString(ctx.index()));
     }
 
     @Override
     public final void get(BindingGetSQLInputContext<String> ctx) throws SQLException {
-        NClob clob = ctx.input().readNClob();
+        if (NO_SUPPORT_NVARCHAR.contains(ctx.dialect())) {
+            clobBinding.get(ctx);
+        }
+        else if (!NO_SUPPORT_LOBS.contains(ctx.dialect())) {
+            NClob clob = ctx.input().readNClob();
 
-        try {
-            ctx.value(clob == null ? null : clob.getSubString(1, asInt(clob.length())));
+            try {
+                ctx.value(clob == null ? null : clob.getSubString(1, asInt(clob.length())));
+            }
+            finally {
+                JDBCUtils.safeFree(clob);
+            }
         }
-        finally {
-            JDBCUtils.safeFree(clob);
-        }
+        else
+            ctx.value(ctx.input().readNString());
     }
 
     static final NClob newNClob(ResourceManagingScope scope, String string) throws SQLException {

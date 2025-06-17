@@ -80,6 +80,7 @@ import static org.jooq.impl.SQLDataType.SMALLINT;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.EMPTY_OBJECT;
 import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
+import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.flatMap;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.tools.StringUtils.defaultIfEmpty;
@@ -98,6 +99,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -136,6 +138,8 @@ import org.jooq.exception.DataTypeException;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
+
+import org.jetbrains.annotations.Nullable;
 
 /**
  * An implementation of the public {@link Meta} type.
@@ -520,6 +524,8 @@ final class MetaImpl extends AbstractMeta {
                 }
             });
 
+            addTables(tables);
+
             return Tools.map(
 
                 // [#15325] Generic exclusion of SYNONYM types
@@ -554,7 +560,7 @@ final class MetaImpl extends AbstractMeta {
                         : TableType.TABLE;
 
 
-                    switch (dsl().family()) {
+                    switch (family()) {
 
 
                         case MYSQL:
@@ -578,6 +584,44 @@ final class MetaImpl extends AbstractMeta {
                     );
                 }
             );
+        }
+
+        private final void addTables(Result<Record> tables) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         }
 
         private final Result<Record> getUks(String catalog, String schema, String table) {

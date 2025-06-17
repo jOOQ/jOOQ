@@ -10219,6 +10219,9 @@ public interface DSLContext extends Scope {
 
     /**
      * The <code>CREATE TEMPORARY TABLE</code> statement.
+     * <p>
+     * Create a <code>GLOBAL TEMPORARY</code>, or if that's not supported in your dialect,
+     * a <code>LOCAL TEMPORARY</code> table.
      *
      * @see DSL#createTemporaryTable(String)
      */
@@ -10228,6 +10231,9 @@ public interface DSLContext extends Scope {
 
     /**
      * The <code>CREATE TEMPORARY TABLE</code> statement.
+     * <p>
+     * Create a <code>GLOBAL TEMPORARY</code>, or if that's not supported in your dialect,
+     * a <code>LOCAL TEMPORARY</code> table.
      *
      * @see DSL#createTemporaryTable(Name)
      */
@@ -10237,6 +10243,9 @@ public interface DSLContext extends Scope {
 
     /**
      * The <code>CREATE TEMPORARY TABLE</code> statement.
+     * <p>
+     * Create a <code>GLOBAL TEMPORARY</code>, or if that's not supported in your dialect,
+     * a <code>LOCAL TEMPORARY</code> table.
      *
      * @see DSL#createTemporaryTable(Table)
      */
@@ -10246,6 +10255,9 @@ public interface DSLContext extends Scope {
 
     /**
      * The <code>CREATE TEMPORARY TABLE IF NOT EXISTS</code> statement.
+     * <p>
+     * Create a <code>GLOBAL TEMPORARY</code>, or if that's not supported in your dialect,
+     * a <code>LOCAL TEMPORARY</code> table.
      *
      * @see DSL#createTemporaryTableIfNotExists(String)
      */
@@ -10255,6 +10267,9 @@ public interface DSLContext extends Scope {
 
     /**
      * The <code>CREATE TEMPORARY TABLE IF NOT EXISTS</code> statement.
+     * <p>
+     * Create a <code>GLOBAL TEMPORARY</code>, or if that's not supported in your dialect,
+     * a <code>LOCAL TEMPORARY</code> table.
      *
      * @see DSL#createTemporaryTableIfNotExists(Name)
      */
@@ -10264,6 +10279,9 @@ public interface DSLContext extends Scope {
 
     /**
      * The <code>CREATE TEMPORARY TABLE IF NOT EXISTS</code> statement.
+     * <p>
+     * Create a <code>GLOBAL TEMPORARY</code>, or if that's not supported in your dialect,
+     * a <code>LOCAL TEMPORARY</code> table.
      *
      * @see DSL#createTemporaryTableIfNotExists(Table)
      */
@@ -10273,6 +10291,9 @@ public interface DSLContext extends Scope {
 
     /**
      * The <code>CREATE LOCAL TEMPORARY TABLE</code> statement.
+     * <p>
+     * Create a <code>LOCAL TEMPORARY</code> table, i.e. a table whose meta data
+     * and data are both local to a session or transaction.
      *
      * @see DSL#createLocalTemporaryTable(String)
      */
@@ -10282,6 +10303,9 @@ public interface DSLContext extends Scope {
 
     /**
      * The <code>CREATE LOCAL TEMPORARY TABLE</code> statement.
+     * <p>
+     * Create a <code>LOCAL TEMPORARY</code> table, i.e. a table whose meta data
+     * and data are both local to a session or transaction.
      *
      * @see DSL#createLocalTemporaryTable(Name)
      */
@@ -10291,6 +10315,9 @@ public interface DSLContext extends Scope {
 
     /**
      * The <code>CREATE LOCAL TEMPORARY TABLE</code> statement.
+     * <p>
+     * Create a <code>LOCAL TEMPORARY</code> table, i.e. a table whose meta data
+     * and data are both local to a session or transaction.
      *
      * @see DSL#createLocalTemporaryTable(Table)
      */
@@ -10300,6 +10327,9 @@ public interface DSLContext extends Scope {
 
     /**
      * The <code>CREATE LOCAL TEMPORARY TABLE IF NOT EXISTS</code> statement.
+     * <p>
+     * Create a <code>LOCAL TEMPORARY</code> table, i.e. a table whose meta data
+     * and data are both local to a session or transaction.
      *
      * @see DSL#createLocalTemporaryTableIfNotExists(String)
      */
@@ -10309,6 +10339,9 @@ public interface DSLContext extends Scope {
 
     /**
      * The <code>CREATE LOCAL TEMPORARY TABLE IF NOT EXISTS</code> statement.
+     * <p>
+     * Create a <code>LOCAL TEMPORARY</code> table, i.e. a table whose meta data
+     * and data are both local to a session or transaction.
      *
      * @see DSL#createLocalTemporaryTableIfNotExists(Name)
      */
@@ -10318,6 +10351,9 @@ public interface DSLContext extends Scope {
 
     /**
      * The <code>CREATE LOCAL TEMPORARY TABLE IF NOT EXISTS</code> statement.
+     * <p>
+     * Create a <code>LOCAL TEMPORARY</code> table, i.e. a table whose meta data
+     * and data are both local to a session or transaction.
      *
      * @see DSL#createLocalTemporaryTableIfNotExists(Table)
      */
@@ -10327,6 +10363,9 @@ public interface DSLContext extends Scope {
 
     /**
      * The <code>CREATE GLOBAL TEMPORARY TABLE</code> statement.
+     * <p>
+     * Create a <code>GLOBAL TEMPORARY</code> table, i.e. a table whose meta data
+     * but not data is shared among sessions and transactions.
      *
      * @see DSL#createGlobalTemporaryTable(String)
      */
@@ -10336,6 +10375,9 @@ public interface DSLContext extends Scope {
 
     /**
      * The <code>CREATE GLOBAL TEMPORARY TABLE</code> statement.
+     * <p>
+     * Create a <code>GLOBAL TEMPORARY</code> table, i.e. a table whose meta data
+     * but not data is shared among sessions and transactions.
      *
      * @see DSL#createGlobalTemporaryTable(Name)
      */
@@ -10345,6 +10387,9 @@ public interface DSLContext extends Scope {
 
     /**
      * The <code>CREATE GLOBAL TEMPORARY TABLE</code> statement.
+     * <p>
+     * Create a <code>GLOBAL TEMPORARY</code> table, i.e. a table whose meta data
+     * but not data is shared among sessions and transactions.
      *
      * @see DSL#createGlobalTemporaryTable(Table)
      */
@@ -10354,6 +10399,9 @@ public interface DSLContext extends Scope {
 
     /**
      * The <code>CREATE GLOBAL TEMPORARY TABLE IF NOT EXISTS</code> statement.
+     * <p>
+     * Create a <code>GLOBAL TEMPORARY</code> table, i.e. a table whose meta data
+     * but not data is shared among sessions and transactions.
      *
      * @see DSL#createGlobalTemporaryTableIfNotExists(String)
      */
@@ -10363,6 +10411,9 @@ public interface DSLContext extends Scope {
 
     /**
      * The <code>CREATE GLOBAL TEMPORARY TABLE IF NOT EXISTS</code> statement.
+     * <p>
+     * Create a <code>GLOBAL TEMPORARY</code> table, i.e. a table whose meta data
+     * but not data is shared among sessions and transactions.
      *
      * @see DSL#createGlobalTemporaryTableIfNotExists(Name)
      */
@@ -10372,6 +10423,9 @@ public interface DSLContext extends Scope {
 
     /**
      * The <code>CREATE GLOBAL TEMPORARY TABLE IF NOT EXISTS</code> statement.
+     * <p>
+     * Create a <code>GLOBAL TEMPORARY</code> table, i.e. a table whose meta data
+     * but not data is shared among sessions and transactions.
      *
      * @see DSL#createGlobalTemporaryTableIfNotExists(Table)
      */
@@ -11591,6 +11645,9 @@ public interface DSLContext extends Scope {
 
     /**
      * The <code>DROP TEMPORARY TABLE</code> statement.
+     * <p>
+     * Drop a <code>GLOBAL TEMPORARY</code>, or if that's not supported in your dialect,
+     * a <code>LOCAL TEMPORARY</code> table.
      *
      * @see DSL#dropTemporaryTable(String)
      */
@@ -11600,6 +11657,9 @@ public interface DSLContext extends Scope {
 
     /**
      * The <code>DROP TEMPORARY TABLE</code> statement.
+     * <p>
+     * Drop a <code>GLOBAL TEMPORARY</code>, or if that's not supported in your dialect,
+     * a <code>LOCAL TEMPORARY</code> table.
      *
      * @see DSL#dropTemporaryTable(Name)
      */
@@ -11609,6 +11669,9 @@ public interface DSLContext extends Scope {
 
     /**
      * The <code>DROP TEMPORARY TABLE</code> statement.
+     * <p>
+     * Drop a <code>GLOBAL TEMPORARY</code>, or if that's not supported in your dialect,
+     * a <code>LOCAL TEMPORARY</code> table.
      *
      * @see DSL#dropTemporaryTable(Table)
      */
@@ -11618,6 +11681,9 @@ public interface DSLContext extends Scope {
 
     /**
      * The <code>DROP TEMPORARY TABLE IF EXISTS</code> statement.
+     * <p>
+     * Drop a <code>GLOBAL TEMPORARY</code>, or if that's not supported in your dialect,
+     * a <code>LOCAL TEMPORARY</code> table.
      *
      * @see DSL#dropTemporaryTableIfExists(String)
      */
@@ -11627,6 +11693,9 @@ public interface DSLContext extends Scope {
 
     /**
      * The <code>DROP TEMPORARY TABLE IF EXISTS</code> statement.
+     * <p>
+     * Drop a <code>GLOBAL TEMPORARY</code>, or if that's not supported in your dialect,
+     * a <code>LOCAL TEMPORARY</code> table.
      *
      * @see DSL#dropTemporaryTableIfExists(Name)
      */
@@ -11636,6 +11705,9 @@ public interface DSLContext extends Scope {
 
     /**
      * The <code>DROP TEMPORARY TABLE IF EXISTS</code> statement.
+     * <p>
+     * Drop a <code>GLOBAL TEMPORARY</code>, or if that's not supported in your dialect,
+     * a <code>LOCAL TEMPORARY</code> table.
      *
      * @see DSL#dropTemporaryTableIfExists(Table)
      */
@@ -11645,6 +11717,8 @@ public interface DSLContext extends Scope {
 
     /**
      * The <code>DROP LOCAL TEMPORARY TABLE</code> statement.
+     * <p>
+     * Drop a <code>LOCAL TEMPORARY</code> table.
      *
      * @see DSL#dropLocalTemporaryTable(String)
      */
@@ -11654,6 +11728,8 @@ public interface DSLContext extends Scope {
 
     /**
      * The <code>DROP LOCAL TEMPORARY TABLE</code> statement.
+     * <p>
+     * Drop a <code>LOCAL TEMPORARY</code> table.
      *
      * @see DSL#dropLocalTemporaryTable(Name)
      */
@@ -11663,6 +11739,8 @@ public interface DSLContext extends Scope {
 
     /**
      * The <code>DROP LOCAL TEMPORARY TABLE</code> statement.
+     * <p>
+     * Drop a <code>LOCAL TEMPORARY</code> table.
      *
      * @see DSL#dropLocalTemporaryTable(Table)
      */
@@ -11672,6 +11750,8 @@ public interface DSLContext extends Scope {
 
     /**
      * The <code>DROP LOCAL TEMPORARY TABLE IF EXISTS</code> statement.
+     * <p>
+     * Drop a <code>LOCAL TEMPORARY</code> table.
      *
      * @see DSL#dropLocalTemporaryTableIfExists(String)
      */
@@ -11681,6 +11761,8 @@ public interface DSLContext extends Scope {
 
     /**
      * The <code>DROP LOCAL TEMPORARY TABLE IF EXISTS</code> statement.
+     * <p>
+     * Drop a <code>LOCAL TEMPORARY</code> table.
      *
      * @see DSL#dropLocalTemporaryTableIfExists(Name)
      */
@@ -11690,6 +11772,8 @@ public interface DSLContext extends Scope {
 
     /**
      * The <code>DROP LOCAL TEMPORARY TABLE IF EXISTS</code> statement.
+     * <p>
+     * Drop a <code>LOCAL TEMPORARY</code> table.
      *
      * @see DSL#dropLocalTemporaryTableIfExists(Table)
      */
@@ -11699,6 +11783,8 @@ public interface DSLContext extends Scope {
 
     /**
      * The <code>DROP GLOBAL TEMPORARY TABLE</code> statement.
+     * <p>
+     * Drop a <code>GLOBAL TEMPORARY</code> table.
      *
      * @see DSL#dropGlobalTemporaryTable(String)
      */
@@ -11708,6 +11794,8 @@ public interface DSLContext extends Scope {
 
     /**
      * The <code>DROP GLOBAL TEMPORARY TABLE</code> statement.
+     * <p>
+     * Drop a <code>GLOBAL TEMPORARY</code> table.
      *
      * @see DSL#dropGlobalTemporaryTable(Name)
      */
@@ -11717,6 +11805,8 @@ public interface DSLContext extends Scope {
 
     /**
      * The <code>DROP GLOBAL TEMPORARY TABLE</code> statement.
+     * <p>
+     * Drop a <code>GLOBAL TEMPORARY</code> table.
      *
      * @see DSL#dropGlobalTemporaryTable(Table)
      */
@@ -11726,6 +11816,8 @@ public interface DSLContext extends Scope {
 
     /**
      * The <code>DROP GLOBAL TEMPORARY TABLE IF EXISTS</code> statement.
+     * <p>
+     * Drop a <code>GLOBAL TEMPORARY</code> table.
      *
      * @see DSL#dropGlobalTemporaryTableIfExists(String)
      */
@@ -11735,6 +11827,8 @@ public interface DSLContext extends Scope {
 
     /**
      * The <code>DROP GLOBAL TEMPORARY TABLE IF EXISTS</code> statement.
+     * <p>
+     * Drop a <code>GLOBAL TEMPORARY</code> table.
      *
      * @see DSL#dropGlobalTemporaryTableIfExists(Name)
      */
@@ -11744,6 +11838,8 @@ public interface DSLContext extends Scope {
 
     /**
      * The <code>DROP GLOBAL TEMPORARY TABLE IF EXISTS</code> statement.
+     * <p>
+     * Drop a <code>GLOBAL TEMPORARY</code> table.
      *
      * @see DSL#dropGlobalTemporaryTableIfExists(Table)
      */

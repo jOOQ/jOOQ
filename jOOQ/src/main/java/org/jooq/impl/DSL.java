@@ -8716,6 +8716,9 @@ public class DSL {
     /**
      * The <code>CREATE TEMPORARY TABLE</code> statement.
      * <p>
+     * Create a <code>GLOBAL TEMPORARY</code>, or if that's not supported in your dialect,
+     * a <code>LOCAL TEMPORARY</code> table.
+     * <p>
      * Unlike statement construction methods in the {@link DSLContext} API, this
      * creates an unattached, and thus not directly renderable or executable
      * statement. It can be used as a subquery or nested in procedural logic.
@@ -8730,6 +8733,9 @@ public class DSL {
 
     /**
      * The <code>CREATE TEMPORARY TABLE</code> statement.
+     * <p>
+     * Create a <code>GLOBAL TEMPORARY</code>, or if that's not supported in your dialect,
+     * a <code>LOCAL TEMPORARY</code> table.
      * <p>
      * Unlike statement construction methods in the {@link DSLContext} API, this
      * creates an unattached, and thus not directly renderable or executable
@@ -8746,6 +8752,9 @@ public class DSL {
     /**
      * The <code>CREATE TEMPORARY TABLE</code> statement.
      * <p>
+     * Create a <code>GLOBAL TEMPORARY</code>, or if that's not supported in your dialect,
+     * a <code>LOCAL TEMPORARY</code> table.
+     * <p>
      * Unlike statement construction methods in the {@link DSLContext} API, this
      * creates an unattached, and thus not directly renderable or executable
      * statement. It can be used as a subquery or nested in procedural logic.
@@ -8760,6 +8769,9 @@ public class DSL {
 
     /**
      * The <code>CREATE TEMPORARY TABLE IF NOT EXISTS</code> statement.
+     * <p>
+     * Create a <code>GLOBAL TEMPORARY</code>, or if that's not supported in your dialect,
+     * a <code>LOCAL TEMPORARY</code> table.
      * <p>
      * Unlike statement construction methods in the {@link DSLContext} API, this
      * creates an unattached, and thus not directly renderable or executable
@@ -8776,6 +8788,9 @@ public class DSL {
     /**
      * The <code>CREATE TEMPORARY TABLE IF NOT EXISTS</code> statement.
      * <p>
+     * Create a <code>GLOBAL TEMPORARY</code>, or if that's not supported in your dialect,
+     * a <code>LOCAL TEMPORARY</code> table.
+     * <p>
      * Unlike statement construction methods in the {@link DSLContext} API, this
      * creates an unattached, and thus not directly renderable or executable
      * statement. It can be used as a subquery or nested in procedural logic.
@@ -8790,6 +8805,9 @@ public class DSL {
 
     /**
      * The <code>CREATE TEMPORARY TABLE IF NOT EXISTS</code> statement.
+     * <p>
+     * Create a <code>GLOBAL TEMPORARY</code>, or if that's not supported in your dialect,
+     * a <code>LOCAL TEMPORARY</code> table.
      * <p>
      * Unlike statement construction methods in the {@link DSLContext} API, this
      * creates an unattached, and thus not directly renderable or executable
@@ -8806,6 +8824,9 @@ public class DSL {
     /**
      * The <code>CREATE LOCAL TEMPORARY TABLE</code> statement.
      * <p>
+     * Create a <code>LOCAL TEMPORARY</code> table, i.e. a table whose meta data
+     * and data are both local to a session or transaction.
+     * <p>
      * Unlike statement construction methods in the {@link DSLContext} API, this
      * creates an unattached, and thus not directly renderable or executable
      * statement. It can be used as a subquery or nested in procedural logic.
@@ -8820,6 +8841,9 @@ public class DSL {
 
     /**
      * The <code>CREATE LOCAL TEMPORARY TABLE</code> statement.
+     * <p>
+     * Create a <code>LOCAL TEMPORARY</code> table, i.e. a table whose meta data
+     * and data are both local to a session or transaction.
      * <p>
      * Unlike statement construction methods in the {@link DSLContext} API, this
      * creates an unattached, and thus not directly renderable or executable
@@ -8836,6 +8860,9 @@ public class DSL {
     /**
      * The <code>CREATE LOCAL TEMPORARY TABLE</code> statement.
      * <p>
+     * Create a <code>LOCAL TEMPORARY</code> table, i.e. a table whose meta data
+     * and data are both local to a session or transaction.
+     * <p>
      * Unlike statement construction methods in the {@link DSLContext} API, this
      * creates an unattached, and thus not directly renderable or executable
      * statement. It can be used as a subquery or nested in procedural logic.
@@ -8850,6 +8877,9 @@ public class DSL {
 
     /**
      * The <code>CREATE LOCAL TEMPORARY TABLE IF NOT EXISTS</code> statement.
+     * <p>
+     * Create a <code>LOCAL TEMPORARY</code> table, i.e. a table whose meta data
+     * and data are both local to a session or transaction.
      * <p>
      * Unlike statement construction methods in the {@link DSLContext} API, this
      * creates an unattached, and thus not directly renderable or executable
@@ -8866,6 +8896,9 @@ public class DSL {
     /**
      * The <code>CREATE LOCAL TEMPORARY TABLE IF NOT EXISTS</code> statement.
      * <p>
+     * Create a <code>LOCAL TEMPORARY</code> table, i.e. a table whose meta data
+     * and data are both local to a session or transaction.
+     * <p>
      * Unlike statement construction methods in the {@link DSLContext} API, this
      * creates an unattached, and thus not directly renderable or executable
      * statement. It can be used as a subquery or nested in procedural logic.
@@ -8880,6 +8913,9 @@ public class DSL {
 
     /**
      * The <code>CREATE LOCAL TEMPORARY TABLE IF NOT EXISTS</code> statement.
+     * <p>
+     * Create a <code>LOCAL TEMPORARY</code> table, i.e. a table whose meta data
+     * and data are both local to a session or transaction.
      * <p>
      * Unlike statement construction methods in the {@link DSLContext} API, this
      * creates an unattached, and thus not directly renderable or executable
@@ -8896,6 +8932,9 @@ public class DSL {
     /**
      * The <code>CREATE GLOBAL TEMPORARY TABLE</code> statement.
      * <p>
+     * Create a <code>GLOBAL TEMPORARY</code> table, i.e. a table whose meta data
+     * but not data is shared among sessions and transactions.
+     * <p>
      * Unlike statement construction methods in the {@link DSLContext} API, this
      * creates an unattached, and thus not directly renderable or executable
      * statement. It can be used as a subquery or nested in procedural logic.
@@ -8910,6 +8949,9 @@ public class DSL {
 
     /**
      * The <code>CREATE GLOBAL TEMPORARY TABLE</code> statement.
+     * <p>
+     * Create a <code>GLOBAL TEMPORARY</code> table, i.e. a table whose meta data
+     * but not data is shared among sessions and transactions.
      * <p>
      * Unlike statement construction methods in the {@link DSLContext} API, this
      * creates an unattached, and thus not directly renderable or executable
@@ -8926,6 +8968,9 @@ public class DSL {
     /**
      * The <code>CREATE GLOBAL TEMPORARY TABLE</code> statement.
      * <p>
+     * Create a <code>GLOBAL TEMPORARY</code> table, i.e. a table whose meta data
+     * but not data is shared among sessions and transactions.
+     * <p>
      * Unlike statement construction methods in the {@link DSLContext} API, this
      * creates an unattached, and thus not directly renderable or executable
      * statement. It can be used as a subquery or nested in procedural logic.
@@ -8940,6 +8985,9 @@ public class DSL {
 
     /**
      * The <code>CREATE GLOBAL TEMPORARY TABLE IF NOT EXISTS</code> statement.
+     * <p>
+     * Create a <code>GLOBAL TEMPORARY</code> table, i.e. a table whose meta data
+     * but not data is shared among sessions and transactions.
      * <p>
      * Unlike statement construction methods in the {@link DSLContext} API, this
      * creates an unattached, and thus not directly renderable or executable
@@ -8956,6 +9004,9 @@ public class DSL {
     /**
      * The <code>CREATE GLOBAL TEMPORARY TABLE IF NOT EXISTS</code> statement.
      * <p>
+     * Create a <code>GLOBAL TEMPORARY</code> table, i.e. a table whose meta data
+     * but not data is shared among sessions and transactions.
+     * <p>
      * Unlike statement construction methods in the {@link DSLContext} API, this
      * creates an unattached, and thus not directly renderable or executable
      * statement. It can be used as a subquery or nested in procedural logic.
@@ -8970,6 +9021,9 @@ public class DSL {
 
     /**
      * The <code>CREATE GLOBAL TEMPORARY TABLE IF NOT EXISTS</code> statement.
+     * <p>
+     * Create a <code>GLOBAL TEMPORARY</code> table, i.e. a table whose meta data
+     * but not data is shared among sessions and transactions.
      * <p>
      * Unlike statement construction methods in the {@link DSLContext} API, this
      * creates an unattached, and thus not directly renderable or executable
@@ -10964,6 +11018,9 @@ public class DSL {
     /**
      * The <code>DROP TEMPORARY TABLE</code> statement.
      * <p>
+     * Drop a <code>GLOBAL TEMPORARY</code>, or if that's not supported in your dialect,
+     * a <code>LOCAL TEMPORARY</code> table.
+     * <p>
      * Unlike statement construction methods in the {@link DSLContext} API, this
      * creates an unattached, and thus not directly renderable or executable
      * statement. It can be used as a subquery or nested in procedural logic.
@@ -10978,6 +11035,9 @@ public class DSL {
 
     /**
      * The <code>DROP TEMPORARY TABLE</code> statement.
+     * <p>
+     * Drop a <code>GLOBAL TEMPORARY</code>, or if that's not supported in your dialect,
+     * a <code>LOCAL TEMPORARY</code> table.
      * <p>
      * Unlike statement construction methods in the {@link DSLContext} API, this
      * creates an unattached, and thus not directly renderable or executable
@@ -10994,6 +11054,9 @@ public class DSL {
     /**
      * The <code>DROP TEMPORARY TABLE</code> statement.
      * <p>
+     * Drop a <code>GLOBAL TEMPORARY</code>, or if that's not supported in your dialect,
+     * a <code>LOCAL TEMPORARY</code> table.
+     * <p>
      * Unlike statement construction methods in the {@link DSLContext} API, this
      * creates an unattached, and thus not directly renderable or executable
      * statement. It can be used as a subquery or nested in procedural logic.
@@ -11008,6 +11071,9 @@ public class DSL {
 
     /**
      * The <code>DROP TEMPORARY TABLE IF EXISTS</code> statement.
+     * <p>
+     * Drop a <code>GLOBAL TEMPORARY</code>, or if that's not supported in your dialect,
+     * a <code>LOCAL TEMPORARY</code> table.
      * <p>
      * Unlike statement construction methods in the {@link DSLContext} API, this
      * creates an unattached, and thus not directly renderable or executable
@@ -11024,6 +11090,9 @@ public class DSL {
     /**
      * The <code>DROP TEMPORARY TABLE IF EXISTS</code> statement.
      * <p>
+     * Drop a <code>GLOBAL TEMPORARY</code>, or if that's not supported in your dialect,
+     * a <code>LOCAL TEMPORARY</code> table.
+     * <p>
      * Unlike statement construction methods in the {@link DSLContext} API, this
      * creates an unattached, and thus not directly renderable or executable
      * statement. It can be used as a subquery or nested in procedural logic.
@@ -11038,6 +11107,9 @@ public class DSL {
 
     /**
      * The <code>DROP TEMPORARY TABLE IF EXISTS</code> statement.
+     * <p>
+     * Drop a <code>GLOBAL TEMPORARY</code>, or if that's not supported in your dialect,
+     * a <code>LOCAL TEMPORARY</code> table.
      * <p>
      * Unlike statement construction methods in the {@link DSLContext} API, this
      * creates an unattached, and thus not directly renderable or executable
@@ -11054,6 +11126,8 @@ public class DSL {
     /**
      * The <code>DROP LOCAL TEMPORARY TABLE</code> statement.
      * <p>
+     * Drop a <code>LOCAL TEMPORARY</code> table.
+     * <p>
      * Unlike statement construction methods in the {@link DSLContext} API, this
      * creates an unattached, and thus not directly renderable or executable
      * statement. It can be used as a subquery or nested in procedural logic.
@@ -11068,6 +11142,8 @@ public class DSL {
 
     /**
      * The <code>DROP LOCAL TEMPORARY TABLE</code> statement.
+     * <p>
+     * Drop a <code>LOCAL TEMPORARY</code> table.
      * <p>
      * Unlike statement construction methods in the {@link DSLContext} API, this
      * creates an unattached, and thus not directly renderable or executable
@@ -11084,6 +11160,8 @@ public class DSL {
     /**
      * The <code>DROP LOCAL TEMPORARY TABLE</code> statement.
      * <p>
+     * Drop a <code>LOCAL TEMPORARY</code> table.
+     * <p>
      * Unlike statement construction methods in the {@link DSLContext} API, this
      * creates an unattached, and thus not directly renderable or executable
      * statement. It can be used as a subquery or nested in procedural logic.
@@ -11098,6 +11176,8 @@ public class DSL {
 
     /**
      * The <code>DROP LOCAL TEMPORARY TABLE IF EXISTS</code> statement.
+     * <p>
+     * Drop a <code>LOCAL TEMPORARY</code> table.
      * <p>
      * Unlike statement construction methods in the {@link DSLContext} API, this
      * creates an unattached, and thus not directly renderable or executable
@@ -11114,6 +11194,8 @@ public class DSL {
     /**
      * The <code>DROP LOCAL TEMPORARY TABLE IF EXISTS</code> statement.
      * <p>
+     * Drop a <code>LOCAL TEMPORARY</code> table.
+     * <p>
      * Unlike statement construction methods in the {@link DSLContext} API, this
      * creates an unattached, and thus not directly renderable or executable
      * statement. It can be used as a subquery or nested in procedural logic.
@@ -11128,6 +11210,8 @@ public class DSL {
 
     /**
      * The <code>DROP LOCAL TEMPORARY TABLE IF EXISTS</code> statement.
+     * <p>
+     * Drop a <code>LOCAL TEMPORARY</code> table.
      * <p>
      * Unlike statement construction methods in the {@link DSLContext} API, this
      * creates an unattached, and thus not directly renderable or executable
@@ -11144,6 +11228,8 @@ public class DSL {
     /**
      * The <code>DROP GLOBAL TEMPORARY TABLE</code> statement.
      * <p>
+     * Drop a <code>GLOBAL TEMPORARY</code> table.
+     * <p>
      * Unlike statement construction methods in the {@link DSLContext} API, this
      * creates an unattached, and thus not directly renderable or executable
      * statement. It can be used as a subquery or nested in procedural logic.
@@ -11158,6 +11244,8 @@ public class DSL {
 
     /**
      * The <code>DROP GLOBAL TEMPORARY TABLE</code> statement.
+     * <p>
+     * Drop a <code>GLOBAL TEMPORARY</code> table.
      * <p>
      * Unlike statement construction methods in the {@link DSLContext} API, this
      * creates an unattached, and thus not directly renderable or executable
@@ -11174,6 +11262,8 @@ public class DSL {
     /**
      * The <code>DROP GLOBAL TEMPORARY TABLE</code> statement.
      * <p>
+     * Drop a <code>GLOBAL TEMPORARY</code> table.
+     * <p>
      * Unlike statement construction methods in the {@link DSLContext} API, this
      * creates an unattached, and thus not directly renderable or executable
      * statement. It can be used as a subquery or nested in procedural logic.
@@ -11188,6 +11278,8 @@ public class DSL {
 
     /**
      * The <code>DROP GLOBAL TEMPORARY TABLE IF EXISTS</code> statement.
+     * <p>
+     * Drop a <code>GLOBAL TEMPORARY</code> table.
      * <p>
      * Unlike statement construction methods in the {@link DSLContext} API, this
      * creates an unattached, and thus not directly renderable or executable
@@ -11204,6 +11296,8 @@ public class DSL {
     /**
      * The <code>DROP GLOBAL TEMPORARY TABLE IF EXISTS</code> statement.
      * <p>
+     * Drop a <code>GLOBAL TEMPORARY</code> table.
+     * <p>
      * Unlike statement construction methods in the {@link DSLContext} API, this
      * creates an unattached, and thus not directly renderable or executable
      * statement. It can be used as a subquery or nested in procedural logic.
@@ -11218,6 +11312,8 @@ public class DSL {
 
     /**
      * The <code>DROP GLOBAL TEMPORARY TABLE IF EXISTS</code> statement.
+     * <p>
+     * Drop a <code>GLOBAL TEMPORARY</code> table.
      * <p>
      * Unlike statement construction methods in the {@link DSLContext} API, this
      * creates an unattached, and thus not directly renderable or executable

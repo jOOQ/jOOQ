@@ -1204,7 +1204,9 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                     break;
 
                 case 'D':
-                    if (!parseResultQuery && !ignoreProEdition() && peekKeyword("DECLARE") && requireProEdition())
+                    if (!parseResultQuery && parseKeywordIf("DECLARE GLOBAL TEMPORARY TABLE"))
+                        return result = parseCreateTable(TableScope.LOCAL_TEMPORARY);
+                    else if (!parseResultQuery && !ignoreProEdition() && peekKeyword("DECLARE") && requireProEdition())
                         return result = parseBlock(true);
                     else if (!parseSelect && (peekKeyword("DELETE", "DEL")))
                         return result = parseDelete(null, parseResultQuery);

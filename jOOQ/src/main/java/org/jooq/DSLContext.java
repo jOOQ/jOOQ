@@ -10226,7 +10226,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createTemporaryTable(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     CreateTableElementListStep createTemporaryTable(@Stringly.Name String table);
 
     /**
@@ -10238,7 +10238,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createTemporaryTable(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     CreateTableElementListStep createTemporaryTable(Name table);
 
     /**
@@ -10250,7 +10250,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createTemporaryTable(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     CreateTableElementListStep createTemporaryTable(Table<?> table);
 
     /**
@@ -10262,7 +10262,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createTemporaryTableIfNotExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     CreateTableElementListStep createTemporaryTableIfNotExists(@Stringly.Name String table);
 
     /**
@@ -10274,7 +10274,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createTemporaryTableIfNotExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     CreateTableElementListStep createTemporaryTableIfNotExists(Name table);
 
     /**
@@ -10286,7 +10286,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createTemporaryTableIfNotExists(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     CreateTableElementListStep createTemporaryTableIfNotExists(Table<?> table);
 
     /**
@@ -10298,7 +10298,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createLocalTemporaryTable(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, YUGABYTEDB })
     CreateTableElementListStep createLocalTemporaryTable(@Stringly.Name String table);
 
     /**
@@ -10310,7 +10310,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createLocalTemporaryTable(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, YUGABYTEDB })
     CreateTableElementListStep createLocalTemporaryTable(Name table);
 
     /**
@@ -10322,7 +10322,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createLocalTemporaryTable(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, YUGABYTEDB })
     CreateTableElementListStep createLocalTemporaryTable(Table<?> table);
 
     /**
@@ -10334,7 +10334,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createLocalTemporaryTableIfNotExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, YUGABYTEDB })
     CreateTableElementListStep createLocalTemporaryTableIfNotExists(@Stringly.Name String table);
 
     /**
@@ -10346,7 +10346,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createLocalTemporaryTableIfNotExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, YUGABYTEDB })
     CreateTableElementListStep createLocalTemporaryTableIfNotExists(Name table);
 
     /**
@@ -10358,7 +10358,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createLocalTemporaryTableIfNotExists(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, YUGABYTEDB })
     CreateTableElementListStep createLocalTemporaryTableIfNotExists(Table<?> table);
 
     /**
@@ -10370,7 +10370,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createGlobalTemporaryTable(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, H2, POSTGRES })
     CreateTableElementListStep createGlobalTemporaryTable(@Stringly.Name String table);
 
     /**
@@ -10382,7 +10382,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createGlobalTemporaryTable(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, H2, POSTGRES })
     CreateTableElementListStep createGlobalTemporaryTable(Name table);
 
     /**
@@ -10394,7 +10394,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createGlobalTemporaryTable(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, H2, POSTGRES })
     CreateTableElementListStep createGlobalTemporaryTable(Table<?> table);
 
     /**
@@ -10406,7 +10406,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createGlobalTemporaryTableIfNotExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, H2, POSTGRES })
     CreateTableElementListStep createGlobalTemporaryTableIfNotExists(@Stringly.Name String table);
 
     /**
@@ -10418,7 +10418,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createGlobalTemporaryTableIfNotExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, H2, POSTGRES })
     CreateTableElementListStep createGlobalTemporaryTableIfNotExists(Name table);
 
     /**
@@ -10430,7 +10430,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createGlobalTemporaryTableIfNotExists(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, H2, POSTGRES })
     CreateTableElementListStep createGlobalTemporaryTableIfNotExists(Table<?> table);
 
     /**
@@ -11652,7 +11652,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropTemporaryTable(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     DropTableStep dropTemporaryTable(@Stringly.Name String table);
 
     /**
@@ -11664,7 +11664,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropTemporaryTable(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     DropTableStep dropTemporaryTable(Name table);
 
     /**
@@ -11676,7 +11676,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropTemporaryTable(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     DropTableStep dropTemporaryTable(Table<?> table);
 
     /**
@@ -11688,7 +11688,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropTemporaryTableIfExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     DropTableStep dropTemporaryTableIfExists(@Stringly.Name String table);
 
     /**
@@ -11700,7 +11700,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropTemporaryTableIfExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     DropTableStep dropTemporaryTableIfExists(Name table);
 
     /**
@@ -11712,7 +11712,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropTemporaryTableIfExists(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     DropTableStep dropTemporaryTableIfExists(Table<?> table);
 
     /**
@@ -11723,7 +11723,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropLocalTemporaryTable(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, YUGABYTEDB })
     DropTableStep dropLocalTemporaryTable(@Stringly.Name String table);
 
     /**
@@ -11734,7 +11734,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropLocalTemporaryTable(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, YUGABYTEDB })
     DropTableStep dropLocalTemporaryTable(Name table);
 
     /**
@@ -11745,7 +11745,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropLocalTemporaryTable(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, YUGABYTEDB })
     DropTableStep dropLocalTemporaryTable(Table<?> table);
 
     /**
@@ -11756,7 +11756,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropLocalTemporaryTableIfExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, YUGABYTEDB })
     DropTableStep dropLocalTemporaryTableIfExists(@Stringly.Name String table);
 
     /**
@@ -11767,7 +11767,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropLocalTemporaryTableIfExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, YUGABYTEDB })
     DropTableStep dropLocalTemporaryTableIfExists(Name table);
 
     /**
@@ -11778,7 +11778,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropLocalTemporaryTableIfExists(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, YUGABYTEDB })
     DropTableStep dropLocalTemporaryTableIfExists(Table<?> table);
 
     /**
@@ -11789,7 +11789,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropGlobalTemporaryTable(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, H2, POSTGRES })
     DropTableStep dropGlobalTemporaryTable(@Stringly.Name String table);
 
     /**
@@ -11800,7 +11800,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropGlobalTemporaryTable(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, H2, POSTGRES })
     DropTableStep dropGlobalTemporaryTable(Name table);
 
     /**
@@ -11811,7 +11811,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropGlobalTemporaryTable(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, H2, POSTGRES })
     DropTableStep dropGlobalTemporaryTable(Table<?> table);
 
     /**
@@ -11822,7 +11822,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropGlobalTemporaryTableIfExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, H2, POSTGRES })
     DropTableStep dropGlobalTemporaryTableIfExists(@Stringly.Name String table);
 
     /**
@@ -11833,7 +11833,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropGlobalTemporaryTableIfExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, H2, POSTGRES })
     DropTableStep dropGlobalTemporaryTableIfExists(Name table);
 
     /**
@@ -11844,7 +11844,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropGlobalTemporaryTableIfExists(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, H2, POSTGRES })
     DropTableStep dropGlobalTemporaryTableIfExists(Table<?> table);
 
 

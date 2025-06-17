@@ -8726,7 +8726,7 @@ public class DSL {
      * @see DSLContext#createTemporaryTable(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     public static org.jooq.CreateTableElementListStep createTemporaryTable(@Stringly.Name String table) {
         return dsl().createTemporaryTable(table);
     }
@@ -8744,7 +8744,7 @@ public class DSL {
      * @see DSLContext#createTemporaryTable(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     public static org.jooq.CreateTableElementListStep createTemporaryTable(Name table) {
         return dsl().createTemporaryTable(table);
     }
@@ -8762,7 +8762,7 @@ public class DSL {
      * @see DSLContext#createTemporaryTable(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     public static org.jooq.CreateTableElementListStep createTemporaryTable(Table<?> table) {
         return dsl().createTemporaryTable(table);
     }
@@ -8780,7 +8780,7 @@ public class DSL {
      * @see DSLContext#createTemporaryTableIfNotExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     public static org.jooq.CreateTableElementListStep createTemporaryTableIfNotExists(@Stringly.Name String table) {
         return dsl().createTemporaryTableIfNotExists(table);
     }
@@ -8798,7 +8798,7 @@ public class DSL {
      * @see DSLContext#createTemporaryTableIfNotExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     public static org.jooq.CreateTableElementListStep createTemporaryTableIfNotExists(Name table) {
         return dsl().createTemporaryTableIfNotExists(table);
     }
@@ -8816,7 +8816,7 @@ public class DSL {
      * @see DSLContext#createTemporaryTableIfNotExists(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     public static org.jooq.CreateTableElementListStep createTemporaryTableIfNotExists(Table<?> table) {
         return dsl().createTemporaryTableIfNotExists(table);
     }
@@ -8834,7 +8834,7 @@ public class DSL {
      * @see DSLContext#createLocalTemporaryTable(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, YUGABYTEDB })
     public static org.jooq.CreateTableElementListStep createLocalTemporaryTable(@Stringly.Name String table) {
         return dsl().createLocalTemporaryTable(table);
     }
@@ -8852,7 +8852,7 @@ public class DSL {
      * @see DSLContext#createLocalTemporaryTable(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, YUGABYTEDB })
     public static org.jooq.CreateTableElementListStep createLocalTemporaryTable(Name table) {
         return dsl().createLocalTemporaryTable(table);
     }
@@ -8870,7 +8870,7 @@ public class DSL {
      * @see DSLContext#createLocalTemporaryTable(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, YUGABYTEDB })
     public static org.jooq.CreateTableElementListStep createLocalTemporaryTable(Table<?> table) {
         return dsl().createLocalTemporaryTable(table);
     }
@@ -8888,7 +8888,7 @@ public class DSL {
      * @see DSLContext#createLocalTemporaryTableIfNotExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, YUGABYTEDB })
     public static org.jooq.CreateTableElementListStep createLocalTemporaryTableIfNotExists(@Stringly.Name String table) {
         return dsl().createLocalTemporaryTableIfNotExists(table);
     }
@@ -8906,7 +8906,7 @@ public class DSL {
      * @see DSLContext#createLocalTemporaryTableIfNotExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, YUGABYTEDB })
     public static org.jooq.CreateTableElementListStep createLocalTemporaryTableIfNotExists(Name table) {
         return dsl().createLocalTemporaryTableIfNotExists(table);
     }
@@ -8924,7 +8924,7 @@ public class DSL {
      * @see DSLContext#createLocalTemporaryTableIfNotExists(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, YUGABYTEDB })
     public static org.jooq.CreateTableElementListStep createLocalTemporaryTableIfNotExists(Table<?> table) {
         return dsl().createLocalTemporaryTableIfNotExists(table);
     }
@@ -8942,7 +8942,7 @@ public class DSL {
      * @see DSLContext#createGlobalTemporaryTable(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, H2, POSTGRES })
     public static org.jooq.CreateTableElementListStep createGlobalTemporaryTable(@Stringly.Name String table) {
         return dsl().createGlobalTemporaryTable(table);
     }
@@ -8960,7 +8960,7 @@ public class DSL {
      * @see DSLContext#createGlobalTemporaryTable(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, H2, POSTGRES })
     public static org.jooq.CreateTableElementListStep createGlobalTemporaryTable(Name table) {
         return dsl().createGlobalTemporaryTable(table);
     }
@@ -8978,7 +8978,7 @@ public class DSL {
      * @see DSLContext#createGlobalTemporaryTable(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, H2, POSTGRES })
     public static org.jooq.CreateTableElementListStep createGlobalTemporaryTable(Table<?> table) {
         return dsl().createGlobalTemporaryTable(table);
     }
@@ -8996,7 +8996,7 @@ public class DSL {
      * @see DSLContext#createGlobalTemporaryTableIfNotExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, H2, POSTGRES })
     public static org.jooq.CreateTableElementListStep createGlobalTemporaryTableIfNotExists(@Stringly.Name String table) {
         return dsl().createGlobalTemporaryTableIfNotExists(table);
     }
@@ -9014,7 +9014,7 @@ public class DSL {
      * @see DSLContext#createGlobalTemporaryTableIfNotExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, H2, POSTGRES })
     public static org.jooq.CreateTableElementListStep createGlobalTemporaryTableIfNotExists(Name table) {
         return dsl().createGlobalTemporaryTableIfNotExists(table);
     }
@@ -9032,7 +9032,7 @@ public class DSL {
      * @see DSLContext#createGlobalTemporaryTableIfNotExists(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, H2, POSTGRES })
     public static org.jooq.CreateTableElementListStep createGlobalTemporaryTableIfNotExists(Table<?> table) {
         return dsl().createGlobalTemporaryTableIfNotExists(table);
     }
@@ -11028,7 +11028,7 @@ public class DSL {
      * @see DSLContext#dropTemporaryTable(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     public static org.jooq.DropTableStep dropTemporaryTable(@Stringly.Name String table) {
         return dsl().dropTemporaryTable(table);
     }
@@ -11046,7 +11046,7 @@ public class DSL {
      * @see DSLContext#dropTemporaryTable(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     public static org.jooq.DropTableStep dropTemporaryTable(Name table) {
         return dsl().dropTemporaryTable(table);
     }
@@ -11064,7 +11064,7 @@ public class DSL {
      * @see DSLContext#dropTemporaryTable(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     public static org.jooq.DropTableStep dropTemporaryTable(Table<?> table) {
         return dsl().dropTemporaryTable(table);
     }
@@ -11082,7 +11082,7 @@ public class DSL {
      * @see DSLContext#dropTemporaryTableIfExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     public static org.jooq.DropTableStep dropTemporaryTableIfExists(@Stringly.Name String table) {
         return dsl().dropTemporaryTableIfExists(table);
     }
@@ -11100,7 +11100,7 @@ public class DSL {
      * @see DSLContext#dropTemporaryTableIfExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     public static org.jooq.DropTableStep dropTemporaryTableIfExists(Name table) {
         return dsl().dropTemporaryTableIfExists(table);
     }
@@ -11118,7 +11118,7 @@ public class DSL {
      * @see DSLContext#dropTemporaryTableIfExists(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     public static org.jooq.DropTableStep dropTemporaryTableIfExists(Table<?> table) {
         return dsl().dropTemporaryTableIfExists(table);
     }
@@ -11135,7 +11135,7 @@ public class DSL {
      * @see DSLContext#dropLocalTemporaryTable(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, YUGABYTEDB })
     public static org.jooq.DropTableStep dropLocalTemporaryTable(@Stringly.Name String table) {
         return dsl().dropLocalTemporaryTable(table);
     }
@@ -11152,7 +11152,7 @@ public class DSL {
      * @see DSLContext#dropLocalTemporaryTable(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, YUGABYTEDB })
     public static org.jooq.DropTableStep dropLocalTemporaryTable(Name table) {
         return dsl().dropLocalTemporaryTable(table);
     }
@@ -11169,7 +11169,7 @@ public class DSL {
      * @see DSLContext#dropLocalTemporaryTable(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, YUGABYTEDB })
     public static org.jooq.DropTableStep dropLocalTemporaryTable(Table<?> table) {
         return dsl().dropLocalTemporaryTable(table);
     }
@@ -11186,7 +11186,7 @@ public class DSL {
      * @see DSLContext#dropLocalTemporaryTableIfExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, YUGABYTEDB })
     public static org.jooq.DropTableStep dropLocalTemporaryTableIfExists(@Stringly.Name String table) {
         return dsl().dropLocalTemporaryTableIfExists(table);
     }
@@ -11203,7 +11203,7 @@ public class DSL {
      * @see DSLContext#dropLocalTemporaryTableIfExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, YUGABYTEDB })
     public static org.jooq.DropTableStep dropLocalTemporaryTableIfExists(Name table) {
         return dsl().dropLocalTemporaryTableIfExists(table);
     }
@@ -11220,7 +11220,7 @@ public class DSL {
      * @see DSLContext#dropLocalTemporaryTableIfExists(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, YUGABYTEDB })
     public static org.jooq.DropTableStep dropLocalTemporaryTableIfExists(Table<?> table) {
         return dsl().dropLocalTemporaryTableIfExists(table);
     }
@@ -11237,7 +11237,7 @@ public class DSL {
      * @see DSLContext#dropGlobalTemporaryTable(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, H2, POSTGRES })
     public static org.jooq.DropTableStep dropGlobalTemporaryTable(@Stringly.Name String table) {
         return dsl().dropGlobalTemporaryTable(table);
     }
@@ -11254,7 +11254,7 @@ public class DSL {
      * @see DSLContext#dropGlobalTemporaryTable(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, H2, POSTGRES })
     public static org.jooq.DropTableStep dropGlobalTemporaryTable(Name table) {
         return dsl().dropGlobalTemporaryTable(table);
     }
@@ -11271,7 +11271,7 @@ public class DSL {
      * @see DSLContext#dropGlobalTemporaryTable(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, H2, POSTGRES })
     public static org.jooq.DropTableStep dropGlobalTemporaryTable(Table<?> table) {
         return dsl().dropGlobalTemporaryTable(table);
     }
@@ -11288,7 +11288,7 @@ public class DSL {
      * @see DSLContext#dropGlobalTemporaryTableIfExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, H2, POSTGRES })
     public static org.jooq.DropTableStep dropGlobalTemporaryTableIfExists(@Stringly.Name String table) {
         return dsl().dropGlobalTemporaryTableIfExists(table);
     }
@@ -11305,7 +11305,7 @@ public class DSL {
      * @see DSLContext#dropGlobalTemporaryTableIfExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, H2, POSTGRES })
     public static org.jooq.DropTableStep dropGlobalTemporaryTableIfExists(Name table) {
         return dsl().dropGlobalTemporaryTableIfExists(table);
     }
@@ -11322,7 +11322,7 @@ public class DSL {
      * @see DSLContext#dropGlobalTemporaryTableIfExists(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, POSTGRES })
+    @Support({ FIREBIRD, H2, POSTGRES })
     public static org.jooq.DropTableStep dropGlobalTemporaryTableIfExists(Table<?> table) {
         return dsl().dropGlobalTemporaryTableIfExists(table);
     }

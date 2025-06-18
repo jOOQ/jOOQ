@@ -10370,7 +10370,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createGlobalTemporaryTable(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, POSTGRES })
+    @Support({ FIREBIRD, H2 })
     CreateTableElementListStep createGlobalTemporaryTable(@Stringly.Name String table);
 
     /**
@@ -10382,7 +10382,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createGlobalTemporaryTable(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, POSTGRES })
+    @Support({ FIREBIRD, H2 })
     CreateTableElementListStep createGlobalTemporaryTable(Name table);
 
     /**
@@ -10394,7 +10394,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createGlobalTemporaryTable(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, POSTGRES })
+    @Support({ FIREBIRD, H2 })
     CreateTableElementListStep createGlobalTemporaryTable(Table<?> table);
 
     /**
@@ -10406,7 +10406,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createGlobalTemporaryTableIfNotExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, POSTGRES })
+    @Support({ FIREBIRD, H2 })
     CreateTableElementListStep createGlobalTemporaryTableIfNotExists(@Stringly.Name String table);
 
     /**
@@ -10418,7 +10418,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createGlobalTemporaryTableIfNotExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, POSTGRES })
+    @Support({ FIREBIRD, H2 })
     CreateTableElementListStep createGlobalTemporaryTableIfNotExists(Name table);
 
     /**
@@ -10430,7 +10430,7 @@ public interface DSLContext extends Scope {
      * @see DSL#createGlobalTemporaryTableIfNotExists(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, POSTGRES })
+    @Support({ FIREBIRD, H2 })
     CreateTableElementListStep createGlobalTemporaryTableIfNotExists(Table<?> table);
 
     /**
@@ -11789,7 +11789,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropGlobalTemporaryTable(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, POSTGRES })
+    @Support({ FIREBIRD, H2 })
     DropTableStep dropGlobalTemporaryTable(@Stringly.Name String table);
 
     /**
@@ -11800,7 +11800,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropGlobalTemporaryTable(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, POSTGRES })
+    @Support({ FIREBIRD, H2 })
     DropTableStep dropGlobalTemporaryTable(Name table);
 
     /**
@@ -11811,7 +11811,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropGlobalTemporaryTable(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, POSTGRES })
+    @Support({ FIREBIRD, H2 })
     DropTableStep dropGlobalTemporaryTable(Table<?> table);
 
     /**
@@ -11822,7 +11822,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropGlobalTemporaryTableIfExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, POSTGRES })
+    @Support({ FIREBIRD, H2 })
     DropTableStep dropGlobalTemporaryTableIfExists(@Stringly.Name String table);
 
     /**
@@ -11833,7 +11833,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropGlobalTemporaryTableIfExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, POSTGRES })
+    @Support({ FIREBIRD, H2 })
     DropTableStep dropGlobalTemporaryTableIfExists(Name table);
 
     /**
@@ -11844,7 +11844,7 @@ public interface DSLContext extends Scope {
      * @see DSL#dropGlobalTemporaryTableIfExists(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, POSTGRES })
+    @Support({ FIREBIRD, H2 })
     DropTableStep dropGlobalTemporaryTableIfExists(Table<?> table);
 
 

@@ -8942,7 +8942,7 @@ public class DSL {
      * @see DSLContext#createGlobalTemporaryTable(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, POSTGRES })
+    @Support({ FIREBIRD, H2 })
     public static org.jooq.CreateTableElementListStep createGlobalTemporaryTable(@Stringly.Name String table) {
         return dsl().createGlobalTemporaryTable(table);
     }
@@ -8960,7 +8960,7 @@ public class DSL {
      * @see DSLContext#createGlobalTemporaryTable(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, POSTGRES })
+    @Support({ FIREBIRD, H2 })
     public static org.jooq.CreateTableElementListStep createGlobalTemporaryTable(Name table) {
         return dsl().createGlobalTemporaryTable(table);
     }
@@ -8978,7 +8978,7 @@ public class DSL {
      * @see DSLContext#createGlobalTemporaryTable(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, POSTGRES })
+    @Support({ FIREBIRD, H2 })
     public static org.jooq.CreateTableElementListStep createGlobalTemporaryTable(Table<?> table) {
         return dsl().createGlobalTemporaryTable(table);
     }
@@ -8996,7 +8996,7 @@ public class DSL {
      * @see DSLContext#createGlobalTemporaryTableIfNotExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, POSTGRES })
+    @Support({ FIREBIRD, H2 })
     public static org.jooq.CreateTableElementListStep createGlobalTemporaryTableIfNotExists(@Stringly.Name String table) {
         return dsl().createGlobalTemporaryTableIfNotExists(table);
     }
@@ -9014,7 +9014,7 @@ public class DSL {
      * @see DSLContext#createGlobalTemporaryTableIfNotExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, POSTGRES })
+    @Support({ FIREBIRD, H2 })
     public static org.jooq.CreateTableElementListStep createGlobalTemporaryTableIfNotExists(Name table) {
         return dsl().createGlobalTemporaryTableIfNotExists(table);
     }
@@ -9032,7 +9032,7 @@ public class DSL {
      * @see DSLContext#createGlobalTemporaryTableIfNotExists(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, POSTGRES })
+    @Support({ FIREBIRD, H2 })
     public static org.jooq.CreateTableElementListStep createGlobalTemporaryTableIfNotExists(Table<?> table) {
         return dsl().createGlobalTemporaryTableIfNotExists(table);
     }
@@ -11237,7 +11237,7 @@ public class DSL {
      * @see DSLContext#dropGlobalTemporaryTable(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, POSTGRES })
+    @Support({ FIREBIRD, H2 })
     public static org.jooq.DropTableStep dropGlobalTemporaryTable(@Stringly.Name String table) {
         return dsl().dropGlobalTemporaryTable(table);
     }
@@ -11254,7 +11254,7 @@ public class DSL {
      * @see DSLContext#dropGlobalTemporaryTable(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, POSTGRES })
+    @Support({ FIREBIRD, H2 })
     public static org.jooq.DropTableStep dropGlobalTemporaryTable(Name table) {
         return dsl().dropGlobalTemporaryTable(table);
     }
@@ -11271,7 +11271,7 @@ public class DSL {
      * @see DSLContext#dropGlobalTemporaryTable(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, POSTGRES })
+    @Support({ FIREBIRD, H2 })
     public static org.jooq.DropTableStep dropGlobalTemporaryTable(Table<?> table) {
         return dsl().dropGlobalTemporaryTable(table);
     }
@@ -11288,7 +11288,7 @@ public class DSL {
      * @see DSLContext#dropGlobalTemporaryTableIfExists(String)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, POSTGRES })
+    @Support({ FIREBIRD, H2 })
     public static org.jooq.DropTableStep dropGlobalTemporaryTableIfExists(@Stringly.Name String table) {
         return dsl().dropGlobalTemporaryTableIfExists(table);
     }
@@ -11305,7 +11305,7 @@ public class DSL {
      * @see DSLContext#dropGlobalTemporaryTableIfExists(Name)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, POSTGRES })
+    @Support({ FIREBIRD, H2 })
     public static org.jooq.DropTableStep dropGlobalTemporaryTableIfExists(Name table) {
         return dsl().dropGlobalTemporaryTableIfExists(table);
     }
@@ -11322,7 +11322,7 @@ public class DSL {
      * @see DSLContext#dropGlobalTemporaryTableIfExists(Table)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, POSTGRES })
+    @Support({ FIREBIRD, H2 })
     public static org.jooq.DropTableStep dropGlobalTemporaryTableIfExists(Table<?> table) {
         return dsl().dropGlobalTemporaryTableIfExists(table);
     }

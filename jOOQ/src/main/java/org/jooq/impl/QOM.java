@@ -2246,6 +2246,11 @@ public final class QOM {
         //    CreateTableImpl
     {
         @NotNull Table<?> $table();
+
+        /**
+         * @deprecated - 3.21.0 - [#18603] - Use {@link #$tableScope()} instead.
+         */
+        @Deprecated(forRemoval = true, since = "3.21")
         boolean $temporary();
         @Nullable TableScope $tableScope();
         boolean $ifNotExists();
@@ -2257,6 +2262,11 @@ public final class QOM {
         @Nullable SQL $storage();
         @CheckReturnValue
         @NotNull CreateTable $table(Table<?> table);
+
+        /**
+         * @deprecated - 3.21.0 - [#18603] - Use {@link #$tableScope()} instead.
+         */
+        @Deprecated(forRemoval = true, since = "3.21")
         @CheckReturnValue
         @NotNull CreateTable $temporary(boolean temporary);
         @CheckReturnValue
@@ -2656,11 +2666,21 @@ public final class QOM {
         //permits
         //    DropTableImpl
     {
+
+        /**
+         * @deprecated - 3.21.0 - [#18603] - Use {@link #$tableScope()} instead.
+         */
+        @Deprecated(forRemoval = true, since = "3.21")
         boolean $temporary();
         @Nullable TableScope $tableScope();
         @NotNull Table<?> $table();
         boolean $ifExists();
         @Nullable Cascade $cascade();
+
+        /**
+         * @deprecated - 3.21.0 - [#18603] - Use {@link #$tableScope()} instead.
+         */
+        @Deprecated(forRemoval = true, since = "3.21")
         @CheckReturnValue
         @NotNull DropTable $temporary(boolean temporary);
         @CheckReturnValue

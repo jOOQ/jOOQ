@@ -395,7 +395,13 @@ class GenerationUtil {
             // case '}':
             case '<':
             case '>':
+
+            // [#18641] OS forbidden characters: https://stackoverflow.com/q/1976007/521799
+            case '*':
+            case '?':
+            case '|':
                 return false;
+
             default:
                 return true;
         }
@@ -475,17 +481,24 @@ class GenerationUtil {
             else if (language == KOTLIN && !isKotlinIdentifierPart(c))
                 sb.append(escape(c));
 
-            // TODO: Should we do this for Scala as well?
-            else if (language == KOTLIN && !Character.isJavaIdentifierPart(c))
-                return "`" + literal + "`";
-            else if (language == KOTLIN && i == 0 && !Character.isJavaIdentifierStart(c))
-                return "`" + literal + "`";
-
-            // [#10867] The $ character is not allowed in Kotlin unquoted identifiers
-            else if (language == KOTLIN && c == '$')
-                return "`" + literal + "`";
             else
                 sb.append(c);
+        }
+
+        // TODO: Should we do this for Scala as well?
+        if (language == KOTLIN) {
+            for (int i = 0; i < sb.length(); i++) {
+                char c = sb.charAt(i);
+
+                if (!Character.isJavaIdentifierPart(c))
+                    return "`" + sb + "`";
+                else if (i == 0 && !Character.isJavaIdentifierStart(c))
+                    return "`" + sb + "`";
+
+                // [#10867] The $ character is not allowed in Kotlin unquoted identifiers
+                else if (c == '$')
+                    return "`" + sb + "`";
+            }
         }
 
         return sb.toString();
@@ -499,7 +512,7 @@ class GenerationUtil {
         return convertToIdentifier(literal, Language.JAVA);
     }
 
-    private static String escape(char c) {
+    static String escape(char c) {
         if (c == ' ' || c == '-' || c == '.')
             return "_";
         else

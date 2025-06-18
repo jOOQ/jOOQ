@@ -99,6 +99,10 @@ public class MetaExtensions {
             this.objects = objects;
         }
 
+        public Boolean getAutoCommit() {
+            return isAutoCommit();
+        }
+
         public void properties(Action<PropertyListExtension> action) {
             PropertyListExtension l = objects.newInstance(PropertyListExtension.class, objects);
             action.execute(l);
@@ -671,10 +675,178 @@ public class MetaExtensions {
             this.objects = objects;
         }
 
+        public Boolean getRegexMatchesPartialQualification() {
+            return isRegexMatchesPartialQualification();
+        }
+
+        public Boolean getSqlMatchesPartialQualification() {
+            return isSqlMatchesPartialQualification();
+        }
+
+        public Boolean getIncludeExcludeColumns() {
+            return isIncludeExcludeColumns();
+        }
+
+        public Boolean getIncludeExcludePackageRoutines() {
+            return isIncludeExcludePackageRoutines();
+        }
+
+        public Boolean getIncludeTables() {
+            return isIncludeTables();
+        }
+
+        public Boolean getIncludeEmbeddables() {
+            return isIncludeEmbeddables();
+        }
+
+        public Boolean getIncludeRoutines() {
+            return isIncludeRoutines();
+        }
+
+        public Boolean getIncludeTriggerRoutines() {
+            return isIncludeTriggerRoutines();
+        }
+
+        public Boolean getIncludePackages() {
+            return isIncludePackages();
+        }
+
+        public Boolean getIncludePackageRoutines() {
+            return isIncludePackageRoutines();
+        }
+
+        public Boolean getIncludePackageUDTs() {
+            return isIncludePackageUDTs();
+        }
+
+        public Boolean getIncludePackageConstants() {
+            return isIncludePackageConstants();
+        }
+
+        public Boolean getIncludeXMLSchemaCollections() {
+            return isIncludeXMLSchemaCollections();
+        }
+
+        public Boolean getIncludeUDTs() {
+            return isIncludeUDTs();
+        }
+
+        public Boolean getIncludeDomains() {
+            return isIncludeDomains();
+        }
+
+        public Boolean getIncludeTriggers() {
+            return isIncludeTriggers();
+        }
+
+        public Boolean getIncludeSequences() {
+            return isIncludeSequences();
+        }
+
+        public Boolean getIncludeIndexes() {
+            return isIncludeIndexes();
+        }
+
+        public Boolean getIncludePrimaryKeys() {
+            return isIncludePrimaryKeys();
+        }
+
+        public Boolean getIncludeUniqueKeys() {
+            return isIncludeUniqueKeys();
+        }
+
+        public Boolean getIncludeForeignKeys() {
+            return isIncludeForeignKeys();
+        }
+
+        public Boolean getIncludeCheckConstraints() {
+            return isIncludeCheckConstraints();
+        }
+
+        public Boolean getIncludeSystemTables() {
+            return isIncludeSystemTables();
+        }
+
+        public Boolean getIncludeSystemIndexes() {
+            return isIncludeSystemIndexes();
+        }
+
+        public Boolean getIncludeSystemCheckConstraints() {
+            return isIncludeSystemCheckConstraints();
+        }
+
+        public Boolean getIncludeSystemSequences() {
+            return isIncludeSystemSequences();
+        }
+
+        public Boolean getIncludeSystemUDTs() {
+            return isIncludeSystemUDTs();
+        }
+
+        public Boolean getIncludeInvisibleColumns() {
+            return isIncludeInvisibleColumns();
+        }
+
         public void syntheticObjects(Action<SyntheticObjectsTypeExtension> action) {
             SyntheticObjectsTypeExtension o = objects.newInstance(SyntheticObjectsTypeExtension.class, objects);
             action.execute(o);
             setSyntheticObjects(o);
+        }
+
+        public Boolean getDateAsTimestamp() {
+            return isDateAsTimestamp();
+        }
+
+        public Boolean getIgnoreProcedureReturnValues() {
+            return isIgnoreProcedureReturnValues();
+        }
+
+        public Boolean getUnsignedTypes() {
+            return isUnsignedTypes();
+        }
+
+        public Boolean getIntegerDisplayWidths() {
+            return isIntegerDisplayWidths();
+        }
+
+        public Boolean getOutputCatalogToDefault() {
+            return isOutputCatalogToDefault();
+        }
+
+        public Boolean getOutputSchemaToDefault() {
+            return isOutputSchemaToDefault();
+        }
+
+        public Boolean getReadonlyIdentities() {
+            return isReadonlyIdentities();
+        }
+
+        public Boolean getReadonlyComputedColumns() {
+            return isReadonlyComputedColumns();
+        }
+
+        public Boolean getReadonlyNonUpdatableColumns() {
+            return isReadonlyNonUpdatableColumns();
+        }
+
+        public Boolean getForcedTypesForBuiltinDataTypeExtensions() {
+            return isForcedTypesForBuiltinDataTypeExtensions();
+        }
+
+        public Boolean getForcedTypesForXMLSchemaCollections() {
+            return isForcedTypesForXMLSchemaCollections();
+        }
+
+        public Boolean getForceIntegerTypesOnZeroScaleDecimals() {
+            return isForceIntegerTypesOnZeroScaleDecimals();
+        }
+
+        public Boolean getTableValuedFunctions() {
+            return isTableValuedFunctions();
+        }
+
+        public Boolean getOracleUseDBAViews() {
+            return isOracleUseDBAViews();
         }
 
         public void properties(Action<PropertyListExtension> action) {
@@ -844,6 +1016,14 @@ public class MetaExtensions {
         public SyntheticEnumTypeExtension(ObjectFactory objects) {
             this.objects = objects;
         }
+
+        public Boolean getLiteralsFromColumnContent() {
+            return isLiteralsFromColumnContent();
+        }
+
+        public Boolean getLiteralsFromCheckConstraints() {
+            return isLiteralsFromCheckConstraints();
+        }
     }
 
     public static class SyntheticPrimaryKeyTypeExtension extends SyntheticPrimaryKeyType {
@@ -920,6 +1100,14 @@ public class MetaExtensions {
         public CommentTypeExtension(ObjectFactory objects) {
             this.objects = objects;
         }
+
+        public Boolean getDeprecated() {
+            return isDeprecated();
+        }
+
+        public Boolean getIncludeSchemaComment() {
+            return isIncludeSchemaComment();
+        }
     }
 
     public static class CatalogMappingTypeExtension extends CatalogMappingType {
@@ -929,6 +1117,10 @@ public class MetaExtensions {
         @Inject
         public CatalogMappingTypeExtension(ObjectFactory objects) {
             this.objects = objects;
+        }
+
+        public Boolean getOutputCatalogToDefault() {
+            return isOutputCatalogToDefault();
         }
 
         public void schemata(Action<SchemaMappingTypeListExtension> action) {
@@ -946,6 +1138,10 @@ public class MetaExtensions {
         public SchemaMappingTypeExtension(ObjectFactory objects) {
             this.objects = objects;
         }
+
+        public Boolean getOutputSchemaToDefault() {
+            return isOutputSchemaToDefault();
+        }
     }
 
     public static class EmbeddableDefinitionTypeExtension extends EmbeddableDefinitionType {
@@ -955,6 +1151,10 @@ public class MetaExtensions {
         @Inject
         public EmbeddableDefinitionTypeExtension(ObjectFactory objects) {
             this.objects = objects;
+        }
+
+        public Boolean getReplacesFields() {
+            return isReplacesFields();
         }
 
         public void fields(Action<EmbeddableFieldListExtension> action) {
@@ -983,10 +1183,50 @@ public class MetaExtensions {
             this.objects = objects;
         }
 
+        public Boolean getAuditInsertTimestamp() {
+            return isAuditInsertTimestamp();
+        }
+
+        public Boolean getAuditInsertUser() {
+            return isAuditInsertUser();
+        }
+
+        public Boolean getAuditUpdateTimestamp() {
+            return isAuditUpdateTimestamp();
+        }
+
+        public Boolean getAuditUpdateUser() {
+            return isAuditUpdateUser();
+        }
+
+        public Boolean getGenericConverter() {
+            return isGenericConverter();
+        }
+
+        public Boolean getAutoConverter() {
+            return isAutoConverter();
+        }
+
+        public Boolean getEnumConverter() {
+            return isEnumConverter();
+        }
+
+        public Boolean getXmlConverter() {
+            return isXmlConverter();
+        }
+
+        public Boolean getJsonConverter() {
+            return isJsonConverter();
+        }
+
         public void lambdaConverter(Action<LambdaConverterExtension> action) {
             LambdaConverterExtension o = objects.newInstance(LambdaConverterExtension.class, objects);
             action.execute(o);
             setLambdaConverter(o);
+        }
+
+        public Boolean getGenericBinding() {
+            return isGenericBinding();
         }
     }
 
@@ -997,6 +1237,10 @@ public class MetaExtensions {
         @Inject
         public LambdaConverterExtension(ObjectFactory objects) {
             this.objects = objects;
+        }
+
+        public Boolean getNullable() {
+            return isNullable();
         }
     }
 
@@ -1019,10 +1263,50 @@ public class MetaExtensions {
             this.objects = objects;
         }
 
+        public Boolean getAuditInsertTimestamp() {
+            return isAuditInsertTimestamp();
+        }
+
+        public Boolean getAuditInsertUser() {
+            return isAuditInsertUser();
+        }
+
+        public Boolean getAuditUpdateTimestamp() {
+            return isAuditUpdateTimestamp();
+        }
+
+        public Boolean getAuditUpdateUser() {
+            return isAuditUpdateUser();
+        }
+
+        public Boolean getGenericConverter() {
+            return isGenericConverter();
+        }
+
+        public Boolean getAutoConverter() {
+            return isAutoConverter();
+        }
+
+        public Boolean getEnumConverter() {
+            return isEnumConverter();
+        }
+
+        public Boolean getXmlConverter() {
+            return isXmlConverter();
+        }
+
+        public Boolean getJsonConverter() {
+            return isJsonConverter();
+        }
+
         public void lambdaConverter(Action<LambdaConverterExtension> action) {
             LambdaConverterExtension o = objects.newInstance(LambdaConverterExtension.class, objects);
             action.execute(o);
             setLambdaConverter(o);
+        }
+
+        public Boolean getGenericBinding() {
+            return isGenericBinding();
         }
     }
 
@@ -1034,6 +1318,418 @@ public class MetaExtensions {
         public GenerateExtension(ObjectFactory objects) {
             this.objects = objects;
         }
+
+        public Boolean getIndexes() {
+            return isIndexes();
+        }
+
+        public Boolean getRelations() {
+            return isRelations();
+        }
+
+        public Boolean getSequenceFlags() {
+            return isSequenceFlags();
+        }
+
+        public Boolean getUdtPaths() {
+            return isUdtPaths();
+        }
+
+        public Boolean getImplicitJoinPathsToOne() {
+            return isImplicitJoinPathsToOne();
+        }
+
+        public Boolean getImplicitJoinPathsToMany() {
+            return isImplicitJoinPathsToMany();
+        }
+
+        public Boolean getImplicitJoinPathTableSubtypes() {
+            return isImplicitJoinPathTableSubtypes();
+        }
+
+        public Boolean getImplicitJoinPathUnusedConstructors() {
+            return isImplicitJoinPathUnusedConstructors();
+        }
+
+        public Boolean getImplicitJoinPathsUseTableNameForUnambiguousFKs() {
+            return isImplicitJoinPathsUseTableNameForUnambiguousFKs();
+        }
+
+        public Boolean getImplicitJoinPathsAsKotlinProperties() {
+            return isImplicitJoinPathsAsKotlinProperties();
+        }
+
+        public Boolean getDeprecated() {
+            return isDeprecated();
+        }
+
+        public Boolean getDeprecationOnUnknownTypes() {
+            return isDeprecationOnUnknownTypes();
+        }
+
+        public Boolean getInstanceFields() {
+            return isInstanceFields();
+        }
+
+        public Boolean getGeneratedAnnotation() {
+            return isGeneratedAnnotation();
+        }
+
+        public Boolean getGeneratedAnnotationDate() {
+            return isGeneratedAnnotationDate();
+        }
+
+        public Boolean getGeneratedAnnotationJooqVersion() {
+            return isGeneratedAnnotationJooqVersion();
+        }
+
+        public Boolean getNonnullAnnotation() {
+            return isNonnullAnnotation();
+        }
+
+        public Boolean getNullableAnnotation() {
+            return isNullableAnnotation();
+        }
+
+        public Boolean getConstructorPropertiesAnnotation() {
+            return isConstructorPropertiesAnnotation();
+        }
+
+        public Boolean getConstructorPropertiesAnnotationOnPojos() {
+            return isConstructorPropertiesAnnotationOnPojos();
+        }
+
+        public Boolean getConstructorPropertiesAnnotationOnRecords() {
+            return isConstructorPropertiesAnnotationOnRecords();
+        }
+
+        public Boolean getRoutines() {
+            return isRoutines();
+        }
+
+        public Boolean getSequences() {
+            return isSequences();
+        }
+
+        public Boolean getTriggers() {
+            return isTriggers();
+        }
+
+        public Boolean getUdts() {
+            return isUdts();
+        }
+
+        public Boolean getQueues() {
+            return isQueues();
+        }
+
+        public Boolean getLinks() {
+            return isLinks();
+        }
+
+        public Boolean getKeys() {
+            return isKeys();
+        }
+
+        public Boolean getTables() {
+            return isTables();
+        }
+
+        public Boolean getEmbeddables() {
+            return isEmbeddables();
+        }
+
+        public Boolean getRecords() {
+            return isRecords();
+        }
+
+        public Boolean getRecordsImplementingRecordN() {
+            return isRecordsImplementingRecordN();
+        }
+
+        public Boolean getEnumsAsScalaSealedTraits() {
+            return isEnumsAsScalaSealedTraits();
+        }
+
+        public Boolean getPojos() {
+            return isPojos();
+        }
+
+        public Boolean getPojosEqualsAndHashCode() {
+            return isPojosEqualsAndHashCode();
+        }
+
+        public Boolean getPojosToString() {
+            return isPojosToString();
+        }
+
+        public Boolean getPojosAsJavaRecordClasses() {
+            return isPojosAsJavaRecordClasses();
+        }
+
+        public Boolean getPojosAsScalaCaseClasses() {
+            return isPojosAsScalaCaseClasses();
+        }
+
+        public Boolean getPojosAsKotlinDataClasses() {
+            return isPojosAsKotlinDataClasses();
+        }
+
+        public Boolean getImmutablePojos() {
+            return isImmutablePojos();
+        }
+
+        public Boolean getSerializablePojos() {
+            return isSerializablePojos();
+        }
+
+        public Boolean getInterfaces() {
+            return isInterfaces();
+        }
+
+        public Boolean getImmutableInterfaces() {
+            return isImmutableInterfaces();
+        }
+
+        public Boolean getSerializableInterfaces() {
+            return isSerializableInterfaces();
+        }
+
+        public Boolean getDaos() {
+            return isDaos();
+        }
+
+        public Boolean getJooqVersionReference() {
+            return isJooqVersionReference();
+        }
+
+        public Boolean getJpaAnnotations() {
+            return isJpaAnnotations();
+        }
+
+        public Boolean getValidationAnnotations() {
+            return isValidationAnnotations();
+        }
+
+        public Boolean getSpringAnnotations() {
+            return isSpringAnnotations();
+        }
+
+        public Boolean getSpringDao() {
+            return isSpringDao();
+        }
+
+        public Boolean getKotlinSetterJvmNameAnnotationsOnIsPrefix() {
+            return isKotlinSetterJvmNameAnnotationsOnIsPrefix();
+        }
+
+        public Boolean getKotlinNotNullPojoAttributes() {
+            return isKotlinNotNullPojoAttributes();
+        }
+
+        public Boolean getKotlinNotNullRecordAttributes() {
+            return isKotlinNotNullRecordAttributes();
+        }
+
+        public Boolean getKotlinNotNullInterfaceAttributes() {
+            return isKotlinNotNullInterfaceAttributes();
+        }
+
+        public Boolean getKotlinDefaultedNullablePojoAttributes() {
+            return isKotlinDefaultedNullablePojoAttributes();
+        }
+
+        public Boolean getKotlinDefaultedNullableRecordAttributes() {
+            return isKotlinDefaultedNullableRecordAttributes();
+        }
+
+        public Boolean getGlobalObjectNames() {
+            return isGlobalObjectNames();
+        }
+
+        public Boolean getGlobalObjectReferences() {
+            return isGlobalObjectReferences();
+        }
+
+        public Boolean getGlobalCatalogReferences() {
+            return isGlobalCatalogReferences();
+        }
+
+        public Boolean getGlobalSchemaReferences() {
+            return isGlobalSchemaReferences();
+        }
+
+        public Boolean getGlobalDomainReferences() {
+            return isGlobalDomainReferences();
+        }
+
+        public Boolean getGlobalTriggerReferences() {
+            return isGlobalTriggerReferences();
+        }
+
+        public Boolean getGlobalTableReferences() {
+            return isGlobalTableReferences();
+        }
+
+        public Boolean getGlobalSequenceReferences() {
+            return isGlobalSequenceReferences();
+        }
+
+        public Boolean getGlobalUDTReferences() {
+            return isGlobalUDTReferences();
+        }
+
+        public Boolean getGlobalRoutineReferences() {
+            return isGlobalRoutineReferences();
+        }
+
+        public Boolean getGlobalQueueReferences() {
+            return isGlobalQueueReferences();
+        }
+
+        public Boolean getGlobalLinkReferences() {
+            return isGlobalLinkReferences();
+        }
+
+        public Boolean getGlobalKeyReferences() {
+            return isGlobalKeyReferences();
+        }
+
+        public Boolean getGlobalIndexReferences() {
+            return isGlobalIndexReferences();
+        }
+
+        public Boolean getDefaultCatalog() {
+            return isDefaultCatalog();
+        }
+
+        public Boolean getDefaultSchema() {
+            return isDefaultSchema();
+        }
+
+        public Boolean getJavadoc() {
+            return isJavadoc();
+        }
+
+        public Boolean getComments() {
+            return isComments();
+        }
+
+        public Boolean getCommentsOnCatalogs() {
+            return isCommentsOnCatalogs();
+        }
+
+        public Boolean getCommentsOnSchemas() {
+            return isCommentsOnSchemas();
+        }
+
+        public Boolean getCommentsOnTables() {
+            return isCommentsOnTables();
+        }
+
+        public Boolean getCommentsOnColumns() {
+            return isCommentsOnColumns();
+        }
+
+        public Boolean getCommentsOnEmbeddables() {
+            return isCommentsOnEmbeddables();
+        }
+
+        public Boolean getCommentsOnUDTs() {
+            return isCommentsOnUDTs();
+        }
+
+        public Boolean getCommentsOnAttributes() {
+            return isCommentsOnAttributes();
+        }
+
+        public Boolean getCommentsOnPackages() {
+            return isCommentsOnPackages();
+        }
+
+        public Boolean getCommentsOnRoutines() {
+            return isCommentsOnRoutines();
+        }
+
+        public Boolean getCommentsOnParameters() {
+            return isCommentsOnParameters();
+        }
+
+        public Boolean getCommentsOnSequences() {
+            return isCommentsOnSequences();
+        }
+
+        public Boolean getCommentsOnLinks() {
+            return isCommentsOnLinks();
+        }
+
+        public Boolean getCommentsOnQueues() {
+            return isCommentsOnQueues();
+        }
+
+        public Boolean getCommentsOnKeys() {
+            return isCommentsOnKeys();
+        }
+
+        public Boolean getSources() {
+            return isSources();
+        }
+
+        public Boolean getSourcesOnViews() {
+            return isSourcesOnViews();
+        }
+
+        public Boolean getFluentSetters() {
+            return isFluentSetters();
+        }
+
+        public Boolean getJavaBeansGettersAndSetters() {
+            return isJavaBeansGettersAndSetters();
+        }
+
+        public Boolean getVarargSetters() {
+            return isVarargSetters();
+        }
+
+        public Boolean getEmptyCatalogs() {
+            return isEmptyCatalogs();
+        }
+
+        public Boolean getEmptySchemas() {
+            return isEmptySchemas();
+        }
+
+        public Boolean getJavaTimeTypes() {
+            return isJavaTimeTypes();
+        }
+
+        public Boolean getSpatialTypes() {
+            return isSpatialTypes();
+        }
+
+        public Boolean getXmlTypes() {
+            return isXmlTypes();
+        }
+
+        public Boolean getJsonTypes() {
+            return isJsonTypes();
+        }
+
+        public Boolean getIntervalTypes() {
+            return isIntervalTypes();
+        }
+
+        public Boolean getWhereMethodOverrides() {
+            return isWhereMethodOverrides();
+        }
+
+        public Boolean getRenameMethodOverrides() {
+            return isRenameMethodOverrides();
+        }
+
+        public Boolean getAsMethodOverrides() {
+            return isAsMethodOverrides();
+        }
     }
 
     public static class TargetExtension extends Target {
@@ -1043,6 +1739,10 @@ public class MetaExtensions {
         @Inject
         public TargetExtension(ObjectFactory objects) {
             this.objects = objects;
+        }
+
+        public Boolean getClean() {
+            return isClean();
         }
     }
 

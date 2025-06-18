@@ -51,6 +51,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
 
 import org.jooq.Record;
 import org.jooq.impl.AbstractRoutine;
@@ -118,18 +119,18 @@ class GeneratorStrategyWrapper extends AbstractDelegatingGeneratorStrategy {
             TypedElementDefinition<?> e = (TypedElementDefinition<?>) definition;
 
             if (identifier.equals(getJavaIdentifier(e.getContainer())))
-                return identifier + "_";
+                return append(identifier, "_");
 
             // [#2781] Disambiguate collisions with the leading package name
             if (identifier.equals(getJavaPackageName(e.getContainer()).replaceAll("\\..*", "")))
-                return identifier + "_";
+                return append(identifier, "_");
         }
 
         else if (definition instanceof TableDefinition) {
             SchemaDefinition schema = definition.getSchema();
 
             if (identifier.equals(getJavaIdentifier(schema)))
-                return identifier + "_";
+                return append(identifier, "_");
         }
 
         // [#5557] Once more, this causes issues...
@@ -137,11 +138,25 @@ class GeneratorStrategyWrapper extends AbstractDelegatingGeneratorStrategy {
             CatalogDefinition catalog = definition.getCatalog();
 
             if (identifier.equals(getJavaIdentifier(catalog)))
-                return identifier + "_";
+                return append(identifier, "_");
         }
 
         identifier = overload(definition, Mode.DEFAULT, identifier);
         return identifier;
+    }
+
+    static final String append(String identifier, String suffix) {
+        if (identifier.startsWith("`") && identifier.endsWith("`"))
+            return identifier.replaceFirst("^`(.*)`$", "`$1" + Matcher.quoteReplacement(suffix) + "`");
+        else
+            return identifier + suffix;
+    }
+
+    static final String prepend(String prefix, String identifier) {
+        if (identifier.startsWith("`") && identifier.endsWith("`"))
+            return identifier.replaceFirst("^`(.*)`$", "`" + Matcher.quoteReplacement(prefix) + "$1`");
+        else
+            return prefix + identifier;
     }
 
     @Override
@@ -171,7 +186,7 @@ class GeneratorStrategyWrapper extends AbstractDelegatingGeneratorStrategy {
      */
     private String overload(Definition definition, Mode mode, String identifier) {
         if (!StringUtils.isBlank(definition.getOverload()))
-            identifier += getOverloadSuffix(definition, mode, definition.getOverload());
+            identifier = append(identifier, getOverloadSuffix(definition, mode, definition.getOverload()));
 
         return identifier;
     }

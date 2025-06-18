@@ -6756,11 +6756,8 @@ public class JavaGenerator extends AbstractGenerator {
                             final String referencedTableClassName = out.ref(getStrategy().getFullJavaClassName(foreignKey.getReferencedTable()));
                             final String keyMethodName = out.ref(getStrategy().getJavaMethodName(foreignKey));
 
-                            // [#13008] Prevent conflicts with the below leading underscore
-                            final String unquotedKeyMethodName = keyMethodName.replace("`", "");
-
                             if (kotlin)
-                                out.println("private lateinit var _%s: %s", unquotedKeyMethodName, referencedTableClassName);
+                                out.println("private lateinit var %s: %s", GeneratorStrategyWrapper.prepend("_", keyMethodName), referencedTableClassName);
                             else
                                 out.println("private transient %s _%s;", referencedTableClassName, keyMethodName);
                         }
@@ -6786,10 +6783,10 @@ public class JavaGenerator extends AbstractGenerator {
                         }
                         else if (kotlin) {
                             out.println("%sfun %s(): %s {", visibility(), keyMethodName, referencedTableClassName);
-                            out.println("if (!this::_%s.isInitialized)", unquotedKeyMethodName);
+                            out.println("if (!this::%s.isInitialized)", GeneratorStrategyWrapper.prepend("_", keyMethodName));
                             out.println("_%s = %s(this, %s)", unquotedKeyMethodName, referencedTableClassName, keyFullId);
                             out.println();
-                            out.println("return _%s;", unquotedKeyMethodName);
+                            out.println("return %s;", GeneratorStrategyWrapper.prepend("_", keyMethodName));
                             out.println("}");
 
                             if (generateImplicitJoinPathsAsKotlinProperties()) {

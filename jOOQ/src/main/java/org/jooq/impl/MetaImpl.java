@@ -551,7 +551,7 @@ final class MetaImpl extends AbstractMeta {
                 }
             });
 
-            addTables(tables);
+            patchTables(tables);
 
             return Tools.map(
 
@@ -627,7 +627,26 @@ final class MetaImpl extends AbstractMeta {
             );
         }
 
-        private final void addTables(Result<Record> tables) {
+        @SuppressWarnings("unchecked")
+        private final void patchTables(Result<Record> tables) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

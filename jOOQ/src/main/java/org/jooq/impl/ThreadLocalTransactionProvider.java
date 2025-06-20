@@ -43,13 +43,13 @@ import java.sql.Connection;
 import java.sql.Savepoint;
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.Set;
 
 import org.jooq.Configuration;
 import org.jooq.ConnectionProvider;
 import org.jooq.TransactionContext;
+import org.jooq.TransactionProperty;
 import org.jooq.TransactionProvider;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * A {@link TransactionProvider} that implements thread-bound transaction
@@ -82,23 +82,42 @@ public class ThreadLocalTransactionProvider implements TransactionProvider {
      *            supported.
      */
     public ThreadLocalTransactionProvider(ConnectionProvider connectionProvider, boolean nested) {
+        this(connectionProvider, nested, new TransactionProperty[0]);
+    }
+
+    /**
+     * @param nested Whether nested transactions via {@link Savepoint}s are
+     *            supported.
+     * @param properties The default transaction properties that are used to
+     *            create transactions from this provider.
+     */
+    public ThreadLocalTransactionProvider(
+        ConnectionProvider connectionProvider,
+        boolean nested,
+        TransactionProperty... properties
+    ) {
         this.localConnectionProvider = new ThreadLocalConnectionProvider(connectionProvider);
-        this.delegateTransactionProvider = new DefaultTransactionProvider(localConnectionProvider, nested);
+        this.delegateTransactionProvider = new DefaultTransactionProvider(localConnectionProvider, nested, properties);
         this.localConfigurations = new ThreadLocal<>();
         this.localTxConnection = new ThreadLocal<>();
+    }
+
+    @Override
+    public final Set<TransactionProperty> properties() {
+        return delegateTransactionProvider.properties();
     }
 
     @Override
     public void begin(TransactionContext ctx) {
         delegateTransactionProvider.begin(ctx);
         configurations().push(ctx.configuration());
-        if (delegateTransactionProvider.nestingLevel(ctx.configuration()) == 1)
+        if (delegateTransactionProvider.nestingLevel(ctx) == 1)
             localTxConnection.set(((DefaultConnectionProvider) ctx.configuration().data(DATA_DEFAULT_TRANSACTION_PROVIDER_CONNECTION)).connection);
     }
 
     @Override
     public void commit(TransactionContext ctx) {
-        if (delegateTransactionProvider.nestingLevel(ctx.configuration()) == 1)
+        if (delegateTransactionProvider.nestingLevel(ctx) == 1)
             localTxConnection.remove();
 
         // [#17517] In case of failure during commit(), avoid calling pop() here
@@ -109,7 +128,7 @@ public class ThreadLocalTransactionProvider implements TransactionProvider {
 
     @Override
     public void rollback(TransactionContext ctx) {
-        if (delegateTransactionProvider.nestingLevel(ctx.configuration()) == 1)
+        if (delegateTransactionProvider.nestingLevel(ctx) == 1)
             localTxConnection.remove();
 
         delegateTransactionProvider.rollback(ctx);

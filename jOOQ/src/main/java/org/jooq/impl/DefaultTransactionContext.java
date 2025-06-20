@@ -37,23 +37,65 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.Readonly.READONLY;
+
+import java.util.Collections;
+import java.util.LinkedHashSet;
+import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import org.jooq.Configuration;
 import org.jooq.Transaction;
 import org.jooq.TransactionContext;
+import org.jooq.TransactionProperty;
 
 /**
  * @author Lukas Eder
  */
 class DefaultTransactionContext extends AbstractScope implements TransactionContext {
 
-    static final String DATA_KEY = "org.jooq.transaction-context";
+    static final String            DATA_KEY = "org.jooq.transaction-context";
 
-    Transaction         transaction;
-    Throwable           cause;
-    Object              result;
+    final Set<TransactionProperty> properties;
+    Transaction                    transaction;
+    Throwable                      cause;
+    Object                         result;
 
-    DefaultTransactionContext(Configuration configuration) {
+    DefaultTransactionContext(Configuration configuration, Set<TransactionProperty> properties) {
         super(configuration);
+
+        this.properties = init(configuration, properties);
+    }
+
+    static final Set<TransactionProperty> init(
+        Configuration configuration,
+        Set<TransactionProperty> properties
+    ) {
+        Set<TransactionProperty> result = new LinkedHashSet<TransactionProperty>();
+        AtomicBoolean isolationSet = new AtomicBoolean();
+
+        init0(properties, result, isolationSet);
+        init0(configuration.transactionProvider().properties(), result, isolationSet);
+
+        return result;
+    }
+
+    static final void init0(
+        Set<TransactionProperty> properties,
+        Set<TransactionProperty> result,
+        AtomicBoolean isolationSet
+    ) {
+        for (TransactionProperty property : properties) {
+            if (property == READONLY)
+                result.add(READONLY);
+            else if (!isolationSet.getAndSet(true))
+                result.add(property);
+        }
+    }
+
+    @Override
+    public final Set<TransactionProperty> properties() {
+        return Collections.unmodifiableSet(properties);
     }
 
     @Override

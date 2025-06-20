@@ -37,6 +37,8 @@
  */
 package org.jooq;
 
+import java.util.Set;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -50,6 +52,11 @@ import org.jetbrains.annotations.Nullable;
  * @author Lukas Eder
  */
 public interface TransactionContext extends Scope {
+
+    /**
+     * The transaction properties that the transaction was created with.
+     */
+    Set<TransactionProperty> properties();
 
     /**
      * A user-defined transaction object, possibly obtained from

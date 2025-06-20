@@ -351,6 +351,7 @@ import org.jooq.Table;
 import org.jooq.TableElement;
 import org.jooq.TableField;
 import org.jooq.TableRecord;
+import org.jooq.TransactionProperty;
 import org.jooq.UDT;
 import org.jooq.UDTRecord;
 import org.jooq.UpdatableRecord;
@@ -437,6 +438,7 @@ final class Tools {
     static final TableField<?, ?>[]         EMPTY_TABLE_FIELD             = {};
     static final TableRecord<?>[]           EMPTY_TABLE_RECORD            = {};
     static final UpdatableRecord<?>[]       EMPTY_UPDATABLE_RECORD        = {};
+    static final TransactionProperty[]      EMPTY_TRANSACTION_PROPERTY    = {};
 
     // ------------------------------------------------------------------------
     // Some constants for use with Context.data()
@@ -563,6 +565,12 @@ final class Tools {
          * a new transaction.
          */
         DATA_DEFAULT_TRANSACTION_PROVIDER_AUTOCOMMIT,
+
+        /**
+         * [#4836] The {@link Connection#isReadOnly()} flag value before starting
+         * a new transaction.
+         */
+        DATA_DEFAULT_TRANSACTION_PROVIDER_READONLY,
 
         /**
          * [#2080] When emulating OFFSET pagination in certain databases, synthetic
@@ -768,6 +776,12 @@ final class Tools {
          * the transaction.
          */
         DATA_DEFAULT_TRANSACTION_PROVIDER_CONNECTION,
+
+        /**
+         * [#4836] The {@link Connection#getTransactionIsolation()} flag value
+         * before starting a new transaction.
+         */
+        DATA_DEFAULT_TRANSACTION_PROVIDER_ISOLATION,
 
         /**
          * [#2080] When emulating OFFSET pagination in certain databases, synthetic

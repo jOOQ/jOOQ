@@ -477,6 +477,33 @@ public interface DSLContext extends Scope {
     <T> T transactionResult(TransactionalCallable<T> transactional);
 
     /**
+     * Run a {@link TransactionalCallable} in the context of this
+     * <code>DSLContext</code>'s underlying {@link #configuration()}'s
+     * {@link Configuration#transactionProvider()}, and return the
+     * <code>transactional</code>'s outcome.
+     * <p>
+     * The argument transactional code should not capture any scope but derive
+     * its {@link Configuration} from the
+     * {@link TransactionalCallable#run(Configuration)} argument in order to
+     * create new statements.
+     *
+     * @param transactional The transactional code
+     * @param properties The transaction properties (e.g.
+     *            {@link Readonly#READONLY} or {@link Isolation#SERIALIZABLE}).
+     * @return The transactional outcome
+     * @throws RuntimeException any runtime exception thrown by the
+     *             <code>transactional</code> logic, indicating that a rollback
+     *             has occurred.
+     * @throws DataAccessException any database problem that may have arised
+     *             when executing the <code>transactional</code> logic, or a
+     *             wrapper for any checked exception thrown by the
+     *             <code>transactional</code> logic, indicating that a rollback
+     *             has occurred.
+     */
+    @Blocking
+    <T> T transactionResult(TransactionalCallable<T> transactional, TransactionProperty... properties);
+
+    /**
      * Run a {@link ContextTransactionalRunnable} in the context of this
      * <code>DSLContext</code>'s underlying {@link #configuration()}'s
      * {@link Configuration#transactionProvider()}, and return the
@@ -506,6 +533,35 @@ public interface DSLContext extends Scope {
     <T> T transactionResult(ContextTransactionalCallable<T> transactional) throws ConfigurationException;
 
     /**
+     * Run a {@link ContextTransactionalRunnable} in the context of this
+     * <code>DSLContext</code>'s underlying {@link #configuration()}'s
+     * {@link Configuration#transactionProvider()}, and return the
+     * <code>transactional</code>'s outcome.
+     * <p>
+     * The argument transactional code may capture scope to derive its
+     * {@link Configuration} from the "context" in order to create new
+     * statements. This context can be provided, for instance, by
+     * {@link ThreadLocalTransactionProvider} automatically.
+     *
+     * @param transactional The transactional code
+     * @return The transactional outcome
+     * @throws ConfigurationException if the underlying
+     *             {@link Configuration#transactionProvider()} is not able to
+     *             provide context (i.e. currently, it is not a
+     *             {@link ThreadLocalTransactionProvider}).
+     * @throws RuntimeException any runtime exception thrown by the
+     *             <code>transactional</code> logic, indicating that a rollback
+     *             has occurred.
+     * @throws DataAccessException any database problem that may have arised
+     *             when executing the <code>transactional</code> logic, or a
+     *             wrapper for any checked exception thrown by the
+     *             <code>transactional</code> logic, indicating that a rollback
+     *             has occurred.
+     */
+    @Blocking
+    <T> T transactionResult(ContextTransactionalCallable<T> transactional, TransactionProperty... properties) throws ConfigurationException;
+
+    /**
      * Run a {@link TransactionalRunnable} in the context of this
      * <code>DSLContext</code>'s underlying {@link #configuration()}'s
      * {@link Configuration#transactionProvider()}.
@@ -527,6 +583,29 @@ public interface DSLContext extends Scope {
      */
     @Blocking
     void transaction(TransactionalRunnable transactional);
+
+    /**
+     * Run a {@link TransactionalRunnable} in the context of this
+     * <code>DSLContext</code>'s underlying {@link #configuration()}'s
+     * {@link Configuration#transactionProvider()}.
+     * <p>
+     * The argument transactional code should not capture any scope but derive
+     * its {@link Configuration} from the
+     * {@link TransactionalCallable#run(Configuration)} argument in order to
+     * create new statements.
+     *
+     * @param transactional The transactional code
+     * @throws RuntimeException any runtime exception thrown by the
+     *             <code>transactional</code> logic, indicating that a rollback
+     *             has occurred.
+     * @throws DataAccessException any database problem that may have arised
+     *             when executing the <code>transactional</code> logic, or a
+     *             wrapper for any checked exception thrown by the
+     *             <code>transactional</code> logic, indicating that a rollback
+     *             has occurred.
+     */
+    @Blocking
+    void transaction(TransactionalRunnable transactional, TransactionProperty... properties);
 
     /**
      * Run a {@link ContextTransactionalRunnable} in the context of this
@@ -556,6 +635,33 @@ public interface DSLContext extends Scope {
     void transaction(ContextTransactionalRunnable transactional) throws ConfigurationException;
 
     /**
+     * Run a {@link ContextTransactionalRunnable} in the context of this
+     * <code>DSLContext</code>'s underlying {@link #configuration()}'s
+     * {@link Configuration#transactionProvider()}.
+     * <p>
+     * The argument transactional code may capture scope to derive its
+     * {@link Configuration} from the "context" in order to create new
+     * statements. This context can be provided, for instance, by
+     * {@link ThreadLocalTransactionProvider} automatically.
+     *
+     * @param transactional The transactional code
+     * @throws ConfigurationException if the underlying
+     *             {@link Configuration#transactionProvider()} is not able to
+     *             provide context (i.e. currently, it is not a
+     *             {@link ThreadLocalTransactionProvider}).
+     * @throws RuntimeException any runtime exception thrown by the
+     *             <code>transactional</code> logic, indicating that a rollback
+     *             has occurred.
+     * @throws DataAccessException any database problem that may have arised
+     *             when executing the <code>transactional</code> logic, or a
+     *             wrapper for any checked exception thrown by the
+     *             <code>transactional</code> logic, indicating that a rollback
+     *             has occurred.
+     */
+    @Blocking
+    void transaction(ContextTransactionalRunnable transactional, TransactionProperty... properties) throws ConfigurationException;
+
+    /**
      * Run a {@link TransactionalCallable} asynchronously.
      * <p>
      * The <code>TransactionCallable</code> is run in the context of this
@@ -573,6 +679,25 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     <T> CompletionStage<T> transactionResultAsync(TransactionalCallable<T> transactional) throws ConfigurationException;
+
+    /**
+     * Run a {@link TransactionalCallable} asynchronously.
+     * <p>
+     * The <code>TransactionCallable</code> is run in the context of this
+     * <code>DSLContext</code>'s underlying {@link #configuration()}'s
+     * {@link Configuration#transactionProvider()}, and returns the
+     * <code>transactional</code>'s outcome in a new {@link CompletionStage}
+     * that is asynchronously completed by a task run by an {@link Executor}
+     * provided by the underlying {@link #configuration()}'s
+     * {@link Configuration#executorProvider()}.
+     *
+     * @param transactional The transactional code
+     * @return The transactional outcome
+     * @throws ConfigurationException If this is run with a
+     *             {@link ThreadLocalTransactionProvider}.
+     */
+    @NotNull
+    <T> CompletionStage<T> transactionResultAsync(TransactionalCallable<T> transactional, TransactionProperty... properties) throws ConfigurationException;
 
     /**
      * Run a {@link TransactionalRunnable} asynchronously.
@@ -593,6 +718,24 @@ public interface DSLContext extends Scope {
     CompletionStage<Void> transactionAsync(TransactionalRunnable transactional) throws ConfigurationException;
 
     /**
+     * Run a {@link TransactionalRunnable} asynchronously.
+     * <p>
+     * The <code>TransactionRunnable</code> is run in the context of this
+     * <code>DSLContext</code>'s underlying {@link #configuration()}'s
+     * {@link Configuration#transactionProvider()}, and returns the
+     * <code>transactional</code>'s outcome in a new {@link CompletionStage}
+     * that is asynchronously completed by a task run by an {@link Executor}
+     * provided by the underlying {@link #configuration()}'s
+     * {@link Configuration#executorProvider()}.
+     *
+     * @param transactional The transactional code
+     * @throws ConfigurationException If this is run with a
+     *             {@link ThreadLocalTransactionProvider}.
+     */
+    @NotNull
+    CompletionStage<Void> transactionAsync(TransactionalRunnable transactional, TransactionProperty... properties) throws ConfigurationException;
+
+    /**
      * Run a {@link TransactionalCallable} asynchronously.
      * <p>
      * The <code>TransactionCallable</code> is run in the context of this
@@ -609,6 +752,24 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     <T> CompletionStage<T> transactionResultAsync(Executor executor, TransactionalCallable<T> transactional) throws ConfigurationException;
+
+    /**
+     * Run a {@link TransactionalCallable} asynchronously.
+     * <p>
+     * The <code>TransactionCallable</code> is run in the context of this
+     * <code>DSLContext</code>'s underlying {@link #configuration()}'s
+     * {@link Configuration#transactionProvider()}, and returns the
+     * <code>transactional</code>'s outcome in a new {@link CompletionStage}
+     * that is asynchronously completed by a task run by a given
+     * {@link Executor}.
+     *
+     * @param transactional The transactional code
+     * @return The transactional outcome
+     * @throws ConfigurationException If this is run with a
+     *             {@link ThreadLocalTransactionProvider}.
+     */
+    @NotNull
+    <T> CompletionStage<T> transactionResultAsync(Executor executor, TransactionalCallable<T> transactional, TransactionProperty... properties) throws ConfigurationException;
 
     /**
      * Run a {@link TransactionalRunnable} asynchronously.
@@ -628,6 +789,23 @@ public interface DSLContext extends Scope {
     CompletionStage<Void> transactionAsync(Executor executor, TransactionalRunnable transactional) throws ConfigurationException;
 
     /**
+     * Run a {@link TransactionalRunnable} asynchronously.
+     * <p>
+     * The <code>TransactionRunnable</code> is run in the context of this
+     * <code>DSLContext</code>'s underlying {@link #configuration()}'s
+     * {@link Configuration#transactionProvider()}, and returns the
+     * <code>transactional</code>'s outcome in a new {@link CompletionStage}
+     * that is asynchronously completed by a task run by a given
+     * {@link Executor}.
+     *
+     * @param transactional The transactional code
+     * @throws ConfigurationException If this is run with a
+     *             {@link ThreadLocalTransactionProvider}.
+     */
+    @NotNull
+    CompletionStage<Void> transactionAsync(Executor executor, TransactionalRunnable transactional, TransactionProperty... properties) throws ConfigurationException;
+
+    /**
      * Run a {@link TransactionalPublishable} reactively.
      *
      * @param transactional The transactional code
@@ -637,6 +815,17 @@ public interface DSLContext extends Scope {
      */
     @NotNull
     <T> Publisher<T> transactionPublisher(TransactionalPublishable<T> transactional);
+
+    /**
+     * Run a {@link TransactionalPublishable} reactively.
+     *
+     * @param transactional The transactional code
+     * @return The transactional outcome
+     * @throws ConfigurationException If this is run with a
+     *             {@link ThreadLocalTransactionProvider}.
+     */
+    @NotNull
+    <T> Publisher<T> transactionPublisher(TransactionalPublishable<T> transactional, TransactionProperty... properties);
 
     /**
      * Run a {@link ConnectionCallable} in the context of this

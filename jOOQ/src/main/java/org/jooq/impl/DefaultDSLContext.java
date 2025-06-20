@@ -66,6 +66,7 @@ import static org.jooq.impl.Tools.EMPTY_QUERY;
 import static org.jooq.impl.Tools.EMPTY_STRING;
 import static org.jooq.impl.Tools.EMPTY_TABLE;
 import static org.jooq.impl.Tools.EMPTY_TABLE_RECORD;
+import static org.jooq.impl.Tools.EMPTY_TRANSACTION_PROPERTY;
 import static org.jooq.impl.Tools.EMPTY_UPDATABLE_RECORD;
 import static org.jooq.impl.Tools.blocking;
 import static org.jooq.impl.Tools.getMappedSchema;
@@ -84,6 +85,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -234,6 +236,7 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableLike;
 import org.jooq.TableRecord;
+import org.jooq.TransactionProperty;
 import org.jooq.TransactionProvider;
 import org.jooq.TransactionalCallable;
 import org.jooq.TransactionalPublishable;
@@ -493,20 +496,40 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <T> T transactionResult(ContextTransactionalCallable<T> transactional) {
+        return transactionResult(transactional, EMPTY_TRANSACTION_PROPERTY);
+    }
+
+    @Override
+    public <T> T transactionResult(ContextTransactionalCallable<T> transactional, TransactionProperty... properties) {
         TransactionProvider tp = configuration().transactionProvider();
 
         if (!(tp instanceof ThreadLocalTransactionProvider))
             throw new ConfigurationException("Cannot use ContextTransactionalCallable with TransactionProvider of type " + tp.getClass());
 
-        return transactionResult0(c -> transactional.run(), ((ThreadLocalTransactionProvider) tp).configuration(configuration()), true);
+        return transactionResult0(
+            c -> transactional.run(),
+            ((ThreadLocalTransactionProvider) tp).configuration(configuration()),
+            true,
+            properties
+        );
     }
 
     @Override
     public <T> T transactionResult(TransactionalCallable<T> transactional) {
-        return transactionResult0(transactional, configuration(), false);
+        return transactionResult0(transactional, configuration(), false, EMPTY_TRANSACTION_PROPERTY);
     }
 
-    private static <T> T transactionResult0(TransactionalCallable<T> transactional, Configuration configuration, boolean threadLocal) {
+    @Override
+    public <T> T transactionResult(TransactionalCallable<T> transactional, TransactionProperty... properties) {
+        return transactionResult0(transactional, configuration(), false, properties);
+    }
+
+    private static <T> T transactionResult0(
+        TransactionalCallable<T> transactional,
+        Configuration configuration,
+        boolean threadLocal,
+        TransactionProperty... properties
+    ) {
 
         // If used in a Java 8 Stream, a transaction should always be executed
         // in a ManagedBlocker context, just in case Stream.parallel() is called
@@ -517,7 +540,11 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return blocking(() -> {
             T result;
 
-            DefaultTransactionContext ctx = new DefaultTransactionContext(configuration.derive());
+            DefaultTransactionContext ctx = new DefaultTransactionContext(
+                configuration.derive(),
+                new LinkedHashSet<>(asList(properties))
+            );
+
             ctx.configuration().data(DefaultTransactionContext.DATA_KEY, ctx);
             TransactionProvider provider = ctx.configuration().transactionProvider();
             TransactionListeners listeners = new TransactionListeners(ctx.configuration());
@@ -585,61 +612,96 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public void transaction(ContextTransactionalRunnable transactional) {
+        transaction(transactional, EMPTY_TRANSACTION_PROPERTY);
+    }
+
+    @Override
+    public void transaction(ContextTransactionalRunnable transactional, TransactionProperty... properties) {
         transactionResult((ContextTransactionalCallable<Void>) () -> {
             transactional.run();
             return null;
-        });
+        }, properties);
     }
 
     @Override
     public void transaction(TransactionalRunnable transactional) {
+        transaction(transactional, EMPTY_TRANSACTION_PROPERTY);
+    }
+
+    @Override
+    public void transaction(TransactionalRunnable transactional, TransactionProperty... properties) {
         transactionResult((TransactionalCallable<Void>) c -> {
             transactional.run(c);
             return null;
-        });
+        }, properties);
     }
 
     @Override
     public CompletionStage<Void> transactionAsync(TransactionalRunnable transactional) {
-        return transactionAsync(Tools.configuration(configuration()).executorProvider().provide(), transactional);
+        return transactionAsync(transactional, EMPTY_TRANSACTION_PROPERTY);
+    }
+
+    @Override
+    public CompletionStage<Void> transactionAsync(TransactionalRunnable transactional, TransactionProperty... properties) {
+        return transactionAsync(Tools.configuration(configuration()).executorProvider().provide(), transactional, properties);
     }
 
     @Override
     public CompletionStage<Void> transactionAsync(Executor executor, TransactionalRunnable transactional) {
+        return transactionAsync(executor, transactional, EMPTY_TRANSACTION_PROPERTY);
+    }
+
+    @Override
+    public CompletionStage<Void> transactionAsync(Executor executor, TransactionalRunnable transactional, TransactionProperty... properties) {
         if (configuration().transactionProvider() instanceof ThreadLocalTransactionProvider)
             throw new ConfigurationException("Cannot use TransactionalRunnable with ThreadLocalTransactionProvider");
 
         return ExecutorProviderCompletionStage.of(CompletableFuture.supplyAsync(
-            () -> { transaction(transactional); return null; }, executor),
+            () -> { transaction(transactional, properties); return null; }, executor),
             () -> executor
         );
     }
 
     @Override
     public <T> CompletionStage<T> transactionResultAsync(TransactionalCallable<T> transactional) {
-        return transactionResultAsync(Tools.configuration(configuration()).executorProvider().provide(), transactional);
+        return transactionResultAsync(transactional, EMPTY_TRANSACTION_PROPERTY);
+    }
+
+    @Override
+    public <T> CompletionStage<T> transactionResultAsync(TransactionalCallable<T> transactional, TransactionProperty... properties) {
+        return transactionResultAsync(Tools.configuration(configuration()).executorProvider().provide(), transactional, properties);
     }
 
     @Override
     public <T> CompletionStage<T> transactionResultAsync(Executor executor, TransactionalCallable<T> transactional) {
+        return transactionResultAsync(executor, transactional, EMPTY_TRANSACTION_PROPERTY);
+    }
+
+    @Override
+    public <T> CompletionStage<T> transactionResultAsync(Executor executor, TransactionalCallable<T> transactional, TransactionProperty... properties) {
         if (configuration().transactionProvider() instanceof ThreadLocalTransactionProvider)
             throw new ConfigurationException("Cannot use TransactionalCallable with ThreadLocalTransactionProvider");
 
         return ExecutorProviderCompletionStage.of(CompletableFuture.supplyAsync(
-            () -> transactionResult(transactional), executor),
+            () -> transactionResult(transactional, properties), executor),
             () -> executor
         );
     }
 
     @Override
     public <T> Publisher<T> transactionPublisher(TransactionalPublishable<T> transactional) {
+        return transactionPublisher(transactional, EMPTY_TRANSACTION_PROPERTY);
+    }
+
+    @Override
+    public <T> Publisher<T> transactionPublisher(TransactionalPublishable<T> transactional, TransactionProperty... properties) {
         return subscriber -> {
             ConnectionFactory cf = configuration().connectionFactory();
 
             if (!(cf instanceof NoConnectionFactory))
-                subscriber.onSubscribe(new TransactionSubscription<>(this, subscriber, transactional));
+                subscriber.onSubscribe(new TransactionSubscription<>(this, subscriber, transactional, properties));
             else
-                subscriber.onSubscribe(new BlockingTransactionSubscription<>(this, subscriber, transactional));
+                subscriber.onSubscribe(new BlockingTransactionSubscription<>(this, subscriber, transactional, properties));
         };
     }
 

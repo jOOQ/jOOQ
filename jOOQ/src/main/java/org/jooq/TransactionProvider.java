@@ -37,7 +37,10 @@
  */
 package org.jooq;
 
+import static java.util.Collections.emptySet;
+
 import java.sql.Savepoint;
+import java.util.Set;
 
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DefaultTransactionProvider;
@@ -63,6 +66,13 @@ import org.jooq.impl.DefaultTransactionProvider;
  * @author Lukas Eder
  */
 public interface TransactionProvider {
+
+    /**
+     * Specify the transaction properties for transactions created by this provider.
+     */
+    default Set<TransactionProperty> properties() {
+        return emptySet();
+    }
 
     /**
      * Begin a new transaction.

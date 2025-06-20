@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
+import static java.util.Arrays.asList;
 import static org.jooq.ContextConverter.scoped;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
@@ -71,6 +72,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Year;
+import java.util.LinkedHashSet;
 import java.util.Properties;
 import java.util.Set;
 import java.util.UUID;
@@ -93,15 +95,18 @@ import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Function3;
+import org.jooq.Isolation;
 import org.jooq.JSON;
 import org.jooq.JSONB;
 import org.jooq.Param;
 // ...
 import org.jooq.Query;
+import org.jooq.Readonly;
 import org.jooq.Record;
 import org.jooq.SQLDialect;
 import org.jooq.Scope;
 import org.jooq.SubscriberProvider;
+import org.jooq.TransactionProperty;
 import org.jooq.TransactionalPublishable;
 import org.jooq.XML;
 import org.jooq.conf.Settings;
@@ -127,12 +132,14 @@ import io.r2dbc.spi.Connection;
 import io.r2dbc.spi.ConnectionFactories;
 import io.r2dbc.spi.ConnectionFactoryOptions;
 import io.r2dbc.spi.ConnectionFactoryOptions.Builder;
+import io.r2dbc.spi.IsolationLevel;
 import io.r2dbc.spi.Option;
 import io.r2dbc.spi.R2dbcException;
 import io.r2dbc.spi.Result;
 import io.r2dbc.spi.Row;
 import io.r2dbc.spi.RowMetadata;
 import io.r2dbc.spi.Statement;
+import io.r2dbc.spi.TransactionDefinition;
 
 /**
  * A single namespace for all reactive {@link Subscription} and other
@@ -858,19 +865,25 @@ final class R2DBC {
     static final class TransactionSubscription<T> extends AbstractNonBlockingSubscription<T> {
         final TransactionalPublishable<T> transactional;
         final ConnectionSubscriber<T>     delegate;
+        final Set<TransactionProperty>    properties;
 
         TransactionSubscription(
             DSLContext ctx,
             Subscriber<? super T> subscriber,
-            TransactionalPublishable<T> transactional
+            TransactionalPublishable<T> transactional,
+            TransactionProperty... properties
         ) {
             super(ctx.configuration(), subscriber);
 
             this.transactional = transactional;
+            this.properties = new LinkedHashSet<>();
+
+            DefaultTransactionContext.init0(new LinkedHashSet<>(asList(properties)), this.properties, new AtomicBoolean());
+
             this.delegate = new ConnectionSubscriber<T>(this) {
                 @Override
                 void onNext0(Connection c) {
-                    c.beginTransaction().subscribe(subscriber(
+                    c.beginTransaction(transactionDefinition()).subscribe(subscriber(
                         s -> s.request(1),
                         v -> {},
                         subscriber::onError,
@@ -906,6 +919,33 @@ final class R2DBC {
                         configuration.subscriberProvider(),
                         subscriber
                     ));
+                }
+
+                private final TransactionDefinition transactionDefinition() {
+                    return new TransactionDefinition() {
+
+                        @SuppressWarnings("unchecked")
+                        @Override
+                        public <T> T getAttribute(Option<T> option) {
+                            Set<TransactionProperty> p = TransactionSubscription.this.properties;
+
+                            if (TransactionDefinition.READ_ONLY.equals(option)) {
+                                return (T) (Boolean) p.contains(Readonly.READONLY);
+                            }
+                            else if (TransactionDefinition.ISOLATION_LEVEL.equals(option)) {
+                                if (p.contains(Isolation.READ_COMMITTED))
+                                    return (T) IsolationLevel.READ_COMMITTED;
+                                else if (p.contains(Isolation.READ_UNCOMMITTED))
+                                    return (T) IsolationLevel.READ_UNCOMMITTED;
+                                else if (p.contains(Isolation.REPEATABLE_READ))
+                                    return (T) IsolationLevel.REPEATABLE_READ;
+                                else if (p.contains(Isolation.SERIALIZABLE))
+                                    return (T) IsolationLevel.SERIALIZABLE;
+                            }
+
+                            return null;
+                        }
+                    };
                 }
 
                 private final void rollback(Subscriber<? super T> s, Connection c, Throwable e) {
@@ -1783,22 +1823,29 @@ final class R2DBC {
     static final class BlockingTransactionSubscription<T> extends AbstractSubscription<T> {
         final DSLContext                  ctx;
         final TransactionalPublishable<T> transactional;
+        final TransactionProperty[]       properties;
 
         BlockingTransactionSubscription(
             DSLContext ctx,
             Subscriber<? super T> subscriber,
-            TransactionalPublishable<T> transactional
+            TransactionalPublishable<T> transactional,
+            TransactionProperty... properties
         ) {
             super(ctx.configuration(), subscriber);
 
             this.ctx = ctx;
             this.transactional = transactional;
+            this.properties = properties;
         }
 
         @Override
         final void request0() {
             try {
-                subscriber.onNext(ctx.transactionResult(c -> block(transactional.run(c), configuration, subscriber)));
+                subscriber.onNext(ctx.transactionResult(
+                    c -> block(transactional.run(c), configuration, subscriber),
+                    properties
+                ));
+
                 subscriber.onComplete();
             }
             catch (Throwable t) {

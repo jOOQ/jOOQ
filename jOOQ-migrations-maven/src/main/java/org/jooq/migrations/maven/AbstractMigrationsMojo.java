@@ -43,6 +43,7 @@ import static org.jooq.tools.StringUtils.isBlank;
 import java.io.File;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.CloseableDSLContext;
@@ -60,6 +61,7 @@ import org.jooq.tools.jdbc.JDBCUtils;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.descriptor.PluginDescriptor;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 
@@ -333,12 +335,19 @@ abstract class AbstractMigrationsMojo extends AbstractMojo {
     private URLClassLoader getClassLoader() throws MojoExecutionException {
         try {
             List<String> classpathElements = project.getRuntimeClasspathElements();
-            URL urls[] = new URL[classpathElements.size()];
+            List<URL> urls = new ArrayList<>();
 
-            for (int i = 0; i < urls.length; i++)
-                urls[i] = new File(classpathElements.get(i)).toURI().toURL();
+            // [#18586] Re-add also plugin dependencies to the plugin class path, explicitly.
+            //          E.g. when passing the URL list to the in-memory compilation utility.
+            PluginDescriptor d = (PluginDescriptor) getPluginContext().get("pluginDescriptor");
+            if (d != null)
+                for (URL u : d.getClassRealm().getURLs())
+                    urls.add(u);
 
-            return new URLClassLoader(urls, getClass().getClassLoader());
+            for (String e : classpathElements)
+                urls.add(new File(e).toURI().toURL());
+
+            return new URLClassLoader(urls.toArray(new URL[0]), getClass().getClassLoader());
         }
         catch (Exception e) {
             throw new MojoExecutionException("Couldn't create a classloader.", e);

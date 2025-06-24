@@ -257,7 +257,8 @@ implements
 
                         // [#7373] [#10944] Refer to <customType/> only if someone is still using the feature
                         else if (!TRUE.equals(forcedType.isIgnoreUnused()))
-                            log.warn("Bad configuration for <forcedType/> " + forcedType.getName() + ". No matching <customType/> found, and no matching SQLDataType found: " + forcedType);
+                            Logging.log(db.onMetadataProblem(),
+                                () -> "Bad configuration for <forcedType/> " + forcedType.getName() + ". No matching <customType/> found, and no matching SQLDataType found: " + forcedType);
                     }
                 }
             }

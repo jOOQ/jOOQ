@@ -65,7 +65,6 @@ import org.jooq.tools.JooqLogger;
  */
 class GenerationUtil {
 
-    private static final JooqLogger  log                        = JooqLogger.getLogger(GenerationUtil.class);
     static final Pattern             TYPE_REFERENCE_PATTERN     = Pattern.compile("^((?:[\\p{L}_$][\\p{L}\\p{N}_$]*\\.)*[\\p{L}_$][\\p{L}\\p{N}_$]*)((?:<.*>|\\[.*])*)$");
     static final Pattern             PLAIN_GENERIC_TYPE_PATTERN = Pattern.compile("[<\\[]((?:[\\p{L}_$][\\p{L}\\p{N}_$]*\\.)*[\\p{L}_$][\\p{L}\\p{N}_$]*)[>\\]]");
     static final Pattern             UNDERSCORE_PATTERN         = Pattern.compile("_+");
@@ -660,39 +659,5 @@ class GenerationUtil {
     enum ExpressionType {
         CONSTRUCTOR_REFERENCE,
         EXPRESSION
-    }
-
-    @FunctionalInterface
-    interface ThrowingRunnable {
-        void run() throws Exception;
-    }
-
-    static final void run(OnError onError, ThrowingRunnable runnable) {
-        run(onError, runnable, () -> "Error in code generator");
-    }
-
-    static final void run(OnError onError, ThrowingRunnable runnable, Supplier<String> message) {
-        try {
-            runnable.run();
-        }
-        catch (Exception e) {
-            if (onError == null)
-                onError = OnError.FAIL;
-
-            switch (onError) {
-                case SILENT:
-                    break;
-
-                case LOG:
-                    log.warn(message.get(), e);
-                    break;
-
-                case FAIL:
-                    if (e instanceof RuntimeException r)
-                        throw r;
-                    else
-                        throw new GeneratorException(message.get(), e);
-            }
-        }
     }
 }

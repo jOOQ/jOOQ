@@ -44,6 +44,7 @@ import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toList;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.impl.DSL.selectOne;
+import static org.jooq.meta.Logging.log;
 import static org.jooq.tools.StringUtils.defaultIfBlank;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 import static org.jooq.tools.StringUtils.defaultString;
@@ -244,7 +245,7 @@ public class GenerationTool {
     }
 
     public void run(Configuration configuration) throws Exception {
-        GenerationUtil.run(configuration.getOnError(), () -> run0(configuration));
+        org.jooq.meta.Logging.run(configuration.getOnError(), () -> run0(configuration));
     }
 
     @SuppressWarnings({ "unchecked", "unused" })
@@ -401,8 +402,8 @@ public class GenerationTool {
                     // [#7416] Depending on who is unmarshalling the Configuration (Maven / JAXB),
                     //         the XSD's default value might apply, which we can safely ignore.
                     if (!DefaultGeneratorStrategy.class.getName().equals(g.getStrategy().getName()))
-                        log.warn("WARNING: Matchers take precedence over custom strategy. Strategy ignored: " +
-                            g.getStrategy().getName());
+                        log(configuration.getOnMisconfiguration(),
+                            () -> "Matchers take precedence over custom strategy. Strategy ignored: " + g.getStrategy().getName());
 
                     g.getStrategy().setName(null);
                 }
@@ -441,6 +442,11 @@ public class GenerationTool {
             database.setBasedir(configuration.getBasedir());
             database.setProperties(properties(d.getProperties()));
             database.setOnError(configuration.getOnError());
+            database.setOnDeprecated(configuration.getOnDeprecated());
+            database.setOnExperimental(configuration.getOnExperimental());
+            database.setOnMisconfiguration(configuration.getOnMisconfiguration());
+            database.setOnMetadataProblem(configuration.getOnMetadataProblem());
+            database.setOnPerformanceProblem(configuration.getOnPerformanceProblem());
 
             List<CatalogMappingType> catalogs = d.getCatalogs();
             List<SchemaMappingType> schemata = d.getSchemata();
@@ -451,7 +457,8 @@ public class GenerationTool {
             // For convenience, the catalog configuration can be set also directly in the <database/> element
             if (catalogsEmpty) {
                 if (isBlank(d.getInputCatalog()) && !isBlank(d.getOutputCatalog()))
-                    log.warn("WARNING: /configuration/generator/database/outputCatalog must be paired with /configuration/generator/database/inputCatalog");
+                    log(configuration.getOnMisconfiguration(),
+                        () -> "/configuration/generator/database/outputCatalog must be paired with /configuration/generator/database/inputCatalog");
 
                 CatalogMappingType catalog = new CatalogMappingType();
                 catalog.setInputCatalog(trim(d.getInputCatalog()));
@@ -466,7 +473,8 @@ public class GenerationTool {
                 // in the <database/> element
                 if (schemataEmpty) {
                     if (isBlank(d.getInputSchema()) && !isBlank(d.getOutputSchema()))
-                        log.warn("WARNING: /configuration/generator/database/outputSchema must be paired with /configuration/generator/database/inputSchema");
+                        log(configuration.getOnMisconfiguration(),
+                            () -> "/configuration/generator/database/outputSchema must be paired with /configuration/generator/database/inputSchema");
 
                     SchemaMappingType schema = new SchemaMappingType();
                     schema.setInputSchema(trim(d.getInputSchema()));
@@ -481,27 +489,40 @@ public class GenerationTool {
                     catalog.getSchemata().addAll(schemata);
 
                     if (!isBlank(d.getInputSchema()))
-                        log.warn("WARNING: Cannot combine configuration properties /configuration/generator/database/inputSchema and /configuration/generator/database/schemata");
+                        log(configuration.getOnMisconfiguration(),
+                            () -> "Cannot combine configuration properties /configuration/generator/database/inputSchema and /configuration/generator/database/schemata");
+
                     if (!isBlank(d.getOutputSchema()))
-                        log.warn("WARNING: Cannot combine configuration properties /configuration/generator/database/outputSchema and /configuration/generator/database/schemata");
+                        log(configuration.getOnMisconfiguration(),
+                            () -> "Cannot combine configuration properties /configuration/generator/database/outputSchema and /configuration/generator/database/schemata");
                 }
             }
             else {
                 if (!isBlank(d.getInputCatalog()))
-                    log.warn("WARNING: Cannot combine configuration properties /configuration/generator/database/inputCatalog and /configuration/generator/database/catalogs");
+                    log(configuration.getOnMisconfiguration(),
+                        () -> "Cannot combine configuration properties /configuration/generator/database/inputCatalog and /configuration/generator/database/catalogs");
+
                 if (!isBlank(d.getOutputCatalog()))
-                    log.warn("WARNING: Cannot combine configuration properties /configuration/generator/database/outputCatalog and /configuration/generator/database/catalogs");
+                    log(configuration.getOnMisconfiguration(),
+                        () -> "Cannot combine configuration properties /configuration/generator/database/outputCatalog and /configuration/generator/database/catalogs");
+
                 if (!isBlank(d.getInputSchema()))
-                    log.warn("WARNING: Cannot combine configuration properties /configuration/generator/database/inputSchema and /configuration/generator/database/catalogs");
+                    log(configuration.getOnMisconfiguration(),
+                        () -> "Cannot combine configuration properties /configuration/generator/database/inputSchema and /configuration/generator/database/catalogs");
+
                 if (!isBlank(d.getOutputSchema()))
-                    log.warn("WARNING: Cannot combine configuration properties /configuration/generator/database/outputSchema and /configuration/generator/database/catalogs");
+                    log(configuration.getOnMisconfiguration(),
+                        () -> "Cannot combine configuration properties /configuration/generator/database/outputSchema and /configuration/generator/database/catalogs");
+
                 if (!schemataEmpty)
-                    log.warn("WARNING: Cannot combine configuration properties /configuration/generator/database/catalogs and /configuration/generator/database/schemata");
+                    log(configuration.getOnMisconfiguration(),
+                        () -> "Cannot combine configuration properties /configuration/generator/database/catalogs and /configuration/generator/database/schemata");
             }
 
             for (CatalogMappingType catalog : catalogs) {
                 if ("".equals(catalog.getOutputCatalog()))
-                    log.warn("WARNING: Empty <outputCatalog/> should not be used to model default outputCatalogs. Use <outputCatalogToDefault>true</outputCatalogToDefault>, instead. See also: https://github.com/jOOQ/jOOQ/issues/3018");
+                    log(configuration.getOnMisconfiguration(),
+                        () -> "Empty <outputCatalog/> should not be used to model default outputCatalogs. Use <outputCatalogToDefault>true</outputCatalogToDefault>, instead. See also: https://github.com/jOOQ/jOOQ/issues/3018");
 
                 // [#3018] If users want the output catalog to be "" then, ignore the actual <outputCatalog/> configuration
                 if (TRUE.equals(catalog.isOutputCatalogToDefault()))
@@ -517,7 +538,8 @@ public class GenerationTool {
                 for (SchemaMappingType schema : catalog.getSchemata()) {
                     if (catalogsEmpty && schemataEmpty && isBlank(schema.getInputSchema())) {
                         if (!isBlank(j.getSchema()))
-                            log.warn("WARNING: The configuration property jdbc.Schema is deprecated and will be removed in the future. Use /configuration/generator/database/inputSchema instead");
+                            log(configuration.getOnDeprecated(),
+                                () -> "The configuration property jdbc.Schema is deprecated and will be removed in the future. Use /configuration/generator/database/inputSchema instead");
 
                         schema.setInputSchema(trim(j.getSchema()));
                     }
@@ -526,7 +548,8 @@ public class GenerationTool {
                     // the outputSchema should be the default schema. This is a bit too clever, and doesn't
                     // work when Maven parses the XML configurations.
                     if ("".equals(schema.getOutputSchema()))
-                        log.warn("WARNING: Empty <outputSchema/> should not be used to model default outputSchemas. Use <outputSchemaToDefault>true</outputSchemaToDefault>, instead. See also: https://github.com/jOOQ/jOOQ/issues/3018");
+                        log(configuration.getOnMisconfiguration(),
+                            () -> "Empty <outputSchema/> should not be used to model default outputSchemas. Use <outputSchemaToDefault>true</outputSchemaToDefault>, instead. See also: https://github.com/jOOQ/jOOQ/issues/3018");
 
                     // [#3018] If users want the output schema to be "" then, ignore the actual <outputSchema/> configuration
                     if (TRUE.equals(schema.isOutputSchemaToDefault()))
@@ -689,15 +712,19 @@ public class GenerationTool {
                 if (Comparator.class.isAssignableFrom(orderProvider))
                     database.setOrderProvider((Comparator<Definition>) orderProvider.newInstance());
                 else
-                    log.warn("Order provider must be of type java.util.Comparator: " + orderProvider);
+                    log(configuration.getOnMisconfiguration(),
+                        () -> "Order provider must be of type java.util.Comparator: " + orderProvider);
             }
 
             if (d.getEnumTypes().size() > 0)
-                log.warn("DEPRECATED", "The configuration property /configuration/generator/database/enumTypes is experimental and deprecated and will be removed in the future.");
+                log(configuration.getOnDeprecated(),
+                    () -> "The configuration property /configuration/generator/database/enumTypes is experimental and deprecated and will be removed in the future.");
             if (Boolean.TRUE.equals(d.isDateAsTimestamp()))
-                log.warn("DEPRECATED", "The configuration property /configuration/generator/database/dateAsTimestamp is deprecated as it is superseded by custom bindings and converters. It will thus be removed in the future. More information here: https://www.jooq.org/doc/latest/manual/reference/reference-data-types/data-types-oracle-date/");
+                log(configuration.getOnDeprecated(),
+                    () -> "The configuration property /configuration/generator/database/dateAsTimestamp is deprecated as it is superseded by custom bindings and converters. It will thus be removed in the future. More information here: https://www.jooq.org/doc/latest/manual/reference/reference-data-types/data-types-oracle-date/");
             if (Boolean.TRUE.equals(d.isIgnoreProcedureReturnValues()))
-                log.warn("DEPRECATED", "The <ignoreProcedureReturnValues/> flag is deprecated and used for backwards-compatibility only. It will be removed in the future.");
+                log(configuration.getOnDeprecated(),
+                    () -> "The <ignoreProcedureReturnValues/> flag is deprecated and used for backwards-compatibility only. It will be removed in the future.");
 
             if (isBlank(g.getTarget().getPackageName()))
                 g.getTarget().setPackageName(DEFAULT_TARGET_PACKAGENAME);
@@ -799,8 +826,13 @@ public class GenerationTool {
                 generator.setGenerateRecordsExcludes(g.getGenerate().getRecordsExcludes());
             if (g.getGenerate().isRecordsImplementingRecordN() != null)
                 generator.setGenerateRecordsImplementingRecordN(g.getGenerate().isRecordsImplementingRecordN());
-            if (g.getGenerate().isEnumsAsScalaSealedTraits() != null)
+            if (g.getGenerate().isEnumsAsScalaSealedTraits() != null) {
                 generator.setGenerateEnumsAsScalaSealedTraits(g.getGenerate().isEnumsAsScalaSealedTraits());
+
+                log(configuration.getOnDeprecated(),
+                    () -> "The <generateEnumsAsScalaSealedTraits/> flag is deprecated and will be removed in the future."
+                );
+            }
             if (g.getGenerate().isEnumsAsScalaEnums() != null)
                 generator.setGenerateEnumsAsScalaEnums(g.getGenerate().isEnumsAsScalaEnums());
             if (g.getGenerate().isPojos() != null)
@@ -1000,7 +1032,8 @@ public class GenerationTool {
             if (d.isTableValuedFunctionsAsRoutines() != null)
                 generator.setGenerateTableValuedFunctionsAsRoutines(d.isTableValuedFunctionsAsRoutines());
             if (d.isTableValuedFunctions() != null) {
-                log.warn("DEPRECATED", "The configuration property /configuration/generator/database/tableValuedFunctions is deprecated and will be removed in the future. Use tableValuedFunctionsAsRoutines and/or tableValuedFunctionsAsTables, instead");
+                log(configuration.getOnDeprecated(),
+                    () -> "The configuration property /configuration/generator/database/tableValuedFunctions is deprecated and will be removed in the future. Use tableValuedFunctionsAsRoutines and/or tableValuedFunctionsAsTables, instead");
 
                 generator.setGenerateTableValuedFunctionsAsTables(d.isTableValuedFunctions());
                 generator.setGenerateTableValuedFunctionsAsRoutines(!d.isTableValuedFunctions());
@@ -1011,7 +1044,7 @@ public class GenerationTool {
             strategy.setJavaBeansGettersAndSetters(generator.generateJavaBeansGettersAndSetters());
             strategy.setUseTableNameForUnambiguousFKs(generator.generateUseTableNameForUnambiguousFKs());
 
-            verifyVersions();
+            verifyVersions(configuration);
             generator.generate(database);
 
             if (configuration.getOnUnused() != OnError.SILENT) {
@@ -1124,7 +1157,7 @@ public class GenerationTool {
             set.accept(configurationObject, convert.apply(p));
     }
 
-    private void verifyVersions() {
+    private void verifyVersions(Configuration configuration) {
 
         // [#12488] Check if all of jOOQ, jOOQ-meta, jOOQ-codegen are using the same versions and editions
         try {
@@ -1137,27 +1170,36 @@ public class GenerationTool {
             Arrays.sort(f3, comparing(Field::getName));
 
             if (f1.length != f2.length)
-                log.warn("Version check", "org.jooq.Constants and org.jooq.meta.Constants contents mismatch. Check if you're using the same versions for org.jooq and org.jooq.meta");
+                log(configuration.getOnMisconfiguration(),
+                    () -> "org.jooq.Constants and org.jooq.meta.Constants contents mismatch. Check if you're using the same versions for org.jooq and org.jooq.meta");
             if (f1.length != f3.length)
-                log.warn("Version check", "org.jooq.Constants and org.jooq.codegen.Constants contents mismatch. Check if you're using the same versions for org.jooq and org.jooq.meta");
+                log(configuration.getOnMisconfiguration(),
+                    () -> "org.jooq.Constants and org.jooq.codegen.Constants contents mismatch. Check if you're using the same versions for org.jooq and org.jooq.meta");
 
             String v1 = org.jooq.Constants.FULL_VERSION;
             String v2 = org.jooq.meta.Constants.FULL_VERSION;
             String v3 = org.jooq.codegen.Constants.FULL_VERSION;
 
             for (int i = 0; i < f1.length && i < f2.length && i < f3.length; i++) {
+                int i0 = i;
+
                 Object c1 = f1[i].get(org.jooq.Constants.class);
                 Object c2 = f2[i].get(org.jooq.meta.Constants.class);
                 Object c3 = f3[i].get(org.jooq.codegen.Constants.class);
 
                 if (!Objects.equals(c1, c2))
-                    log.warn("Version check", "org.jooq.Constants." + f1[i].getName() + " contents mismatch: " + c1 + " vs " + c2 + ". Check if you're using the same versions for org.jooq (" + v1 + ") and org.jooq.meta (" + v2 + ")");
+                    log(configuration.getOnMisconfiguration(),
+                        () -> "org.jooq.Constants." + f1[i0].getName() + " contents mismatch: " + c1 + " vs " + c2 + ". Check if you're using the same versions for org.jooq (" + v1 + ") and org.jooq.meta (" + v2 + ")");
                 if (!Objects.equals(c1, c3))
-                    log.warn("Version check", "org.jooq.Constants." + f1[i].getName() + " contents mismatch: " + c1 + " vs " + c3 + ". Check if you're using the same versions for org.jooq (" + v1 + ") and org.jooq.codegen (" + v3 + ")");
+                    log(configuration.getOnMisconfiguration(),
+                        () -> "org.jooq.Constants." + f1[i0].getName() + " contents mismatch: " + c1 + " vs " + c3 + ". Check if you're using the same versions for org.jooq (" + v1 + ") and org.jooq.codegen (" + v3 + ")");
             }
         }
         catch (Throwable e) {
-            log.warn("Version check", "Something went wrong when comparing versions of org.jooq, org.jooq.meta, and org.jooq.codegen", e);
+            log(configuration.getOnMisconfiguration(),
+                () -> "Something went wrong when comparing versions of org.jooq, org.jooq.meta, and org.jooq.codegen",
+                e
+            );
         }
     }
 

@@ -106,6 +106,7 @@ import org.jooq.meta.DomainDefinition;
 import org.jooq.meta.EnumDefinition;
 import org.jooq.meta.IndexColumnDefinition;
 import org.jooq.meta.IndexDefinition;
+import org.jooq.meta.Logging;
 import org.jooq.meta.PackageDefinition;
 import org.jooq.meta.RoutineDefinition;
 import org.jooq.meta.SchemaDefinition;
@@ -194,10 +195,18 @@ public class XMLDatabase extends AbstractDatabase {
                                             content = new String(content.getBytes("UTF-8"), encoding);
                                     }
                                     catch (XMLStreamException e1) {
-                                        log.warn("Could not open XML Stream: " + e1.getMessage());
+                                        Logging.log(
+                                            onMetadataProblem(),
+                                            () -> "Could not open XML Stream: " + e1.getMessage(),
+                                            e1
+                                        );
                                     }
                                     catch (UnsupportedEncodingException e2) {
-                                        log.warn("Unsupported encoding: " + e2.getMessage());
+                                        Logging.log(
+                                            onMetadataProblem(),
+                                            () -> "Unsupported encoding: " + e2.getMessage(),
+                                            e2
+                                        );
                                     }
                                 }
                                 else {

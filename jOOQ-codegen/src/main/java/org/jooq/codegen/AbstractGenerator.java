@@ -52,6 +52,7 @@ import java.util.stream.Stream;
 import org.jooq.meta.CatalogDefinition;
 import org.jooq.meta.Database;
 import org.jooq.meta.Definition;
+import org.jooq.meta.Logging;
 import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.jaxb.GeneratedAnnotationType;
 import org.jooq.meta.jaxb.GeneratedSerialVersionUID;
@@ -452,7 +453,9 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGenerateVisibilityModifier(VisibilityModifier generateVisibilityModifier) {
         if (generateVisibilityModifier == VisibilityModifier.PRIVATE)
-            log.warn("Visibility", "The private visibility modifier cannot be used globally, to be applied to classes. It can only be used on <forcedType/> configurations.");
+            Logging.log(database.onMisconfiguration(),
+                () -> "The private visibility modifier cannot be used globally, to be applied to classes. It can only be used on <forcedType/> configurations."
+            );
         else
             this.generateVisibilityModifier = generateVisibilityModifier;
     }
@@ -757,9 +760,6 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGenerateEnumsAsScalaSealedTraits(boolean generateEnumsAsScalaSealedTraits) {
         this.generateEnumsAsScalaSealedTraits = generateEnumsAsScalaSealedTraits;
-
-        if (generateEnumsAsScalaSealedTraits)
-            log.warn("Deprecation", "The <generateEnumsAsScalaSealedTraits/> flag is deprecated and will be removed in the future.");
     }
 
     @Override
@@ -1825,7 +1825,10 @@ abstract class AbstractGenerator implements Generator {
 
             // Just a Murphy's Law safeguard in case a user misconfigures their config...
             if (file.getParentFile() == null) {
-                log.warn("WARNING: Root directory configured for code generation. Not deleting anything from previous generations!");
+                Logging.log(
+                    database.onMisconfiguration(),
+                    () -> "Root directory configured for code generation. Not deleting anything from previous generations!"
+                );
                 return;
             }
 

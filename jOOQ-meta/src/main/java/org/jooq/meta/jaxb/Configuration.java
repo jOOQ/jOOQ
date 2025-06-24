@@ -27,6 +27,11 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *         &lt;element name="logging" type="{http://www.jooq.org/xsd/jooq-codegen-3.21.0.xsd}Logging" minOccurs="0"/&gt;
  *         &lt;element name="onError" type="{http://www.jooq.org/xsd/jooq-codegen-3.21.0.xsd}OnError" minOccurs="0"/&gt;
  *         &lt;element name="onUnused" type="{http://www.jooq.org/xsd/jooq-codegen-3.21.0.xsd}OnError" minOccurs="0"/&gt;
+ *         &lt;element name="onDeprecated" type="{http://www.jooq.org/xsd/jooq-codegen-3.21.0.xsd}OnError" minOccurs="0"/&gt;
+ *         &lt;element name="onExperimental" type="{http://www.jooq.org/xsd/jooq-codegen-3.21.0.xsd}OnError" minOccurs="0"/&gt;
+ *         &lt;element name="onMisconfiguration" type="{http://www.jooq.org/xsd/jooq-codegen-3.21.0.xsd}OnError" minOccurs="0"/&gt;
+ *         &lt;element name="onMetadataProblem" type="{http://www.jooq.org/xsd/jooq-codegen-3.21.0.xsd}OnError" minOccurs="0"/&gt;
+ *         &lt;element name="onPerformanceProblem" type="{http://www.jooq.org/xsd/jooq-codegen-3.21.0.xsd}OnError" minOccurs="0"/&gt;
  *         &lt;element name="jdbc" type="{http://www.jooq.org/xsd/jooq-codegen-3.21.0.xsd}Jdbc" minOccurs="0"/&gt;
  *         &lt;element name="generator" type="{http://www.jooq.org/xsd/jooq-codegen-3.21.0.xsd}Generator"/&gt;
  *         &lt;element name="basedir" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
@@ -58,6 +63,21 @@ public class Configuration implements Serializable, XMLAppendable
     @XmlElement(defaultValue = "LOG")
     @XmlSchemaType(name = "string")
     protected OnError onUnused = OnError.LOG;
+    @XmlElement(defaultValue = "LOG")
+    @XmlSchemaType(name = "string")
+    protected OnError onDeprecated = OnError.LOG;
+    @XmlElement(defaultValue = "FAIL")
+    @XmlSchemaType(name = "string")
+    protected OnError onExperimental = OnError.FAIL;
+    @XmlElement(defaultValue = "FAIL")
+    @XmlSchemaType(name = "string")
+    protected OnError onMisconfiguration = OnError.FAIL;
+    @XmlElement(defaultValue = "LOG")
+    @XmlSchemaType(name = "string")
+    protected OnError onMetadataProblem = OnError.LOG;
+    @XmlElement(defaultValue = "LOG")
+    @XmlSchemaType(name = "string")
+    protected OnError onPerformanceProblem = OnError.LOG;
     protected Jdbc jdbc;
     @XmlElement(required = true)
     protected Generator generator;
@@ -81,7 +101,12 @@ public class Configuration implements Serializable, XMLAppendable
     }
 
     /**
-     * The action to be taken by the generator as the consequence of an encountered exception. Defaults to FAIL.
+     * 
+     * The action to be taken by the generator as the consequence of an encountered exception 
+     * outside of jOOQ's control, such as a {@link java.sql.SQLException} or a 
+     * {@link java.io.IOException}. 
+     * 
+     * Defaults to FAIL.
      * 
      */
     public OnError getOnError() {
@@ -89,7 +114,12 @@ public class Configuration implements Serializable, XMLAppendable
     }
 
     /**
-     * The action to be taken by the generator as the consequence of an encountered exception. Defaults to FAIL.
+     * 
+     * The action to be taken by the generator as the consequence of an encountered exception 
+     * outside of jOOQ's control, such as a {@link java.sql.SQLException} or a 
+     * {@link java.io.IOException}. 
+     * 
+     * Defaults to FAIL.
      * 
      */
     public void setOnError(OnError value) {
@@ -97,7 +127,10 @@ public class Configuration implements Serializable, XMLAppendable
     }
 
     /**
-     * The action to be taken by the generator as the consequence of unused objects being encountered. Defaults to LOG.
+     * 
+     * The action to be taken by the generator as the consequence of unused objects being encountered.
+     * 
+     * Defaults to LOG.
      * 
      */
     public OnError getOnUnused() {
@@ -105,11 +138,130 @@ public class Configuration implements Serializable, XMLAppendable
     }
 
     /**
-     * The action to be taken by the generator as the consequence of unused objects being encountered. Defaults to LOG.
+     * 
+     * The action to be taken by the generator as the consequence of unused objects being encountered.
+     * 
+     * Defaults to LOG.
      * 
      */
     public void setOnUnused(OnError value) {
         this.onUnused = value;
+    }
+
+    /**
+     * 
+     * The action to be taken by the generator as the consequence of deprecated configuration being used.
+     * 
+     * Defaults to LOG.
+     * 
+     */
+    public OnError getOnDeprecated() {
+        return onDeprecated;
+    }
+
+    /**
+     * 
+     * The action to be taken by the generator as the consequence of deprecated configuration being used.
+     * 
+     * Defaults to LOG.
+     * 
+     */
+    public void setOnDeprecated(OnError value) {
+        this.onDeprecated = value;
+    }
+
+    /**
+     * 
+     * The action to be taken by the generator as the consequence of experimental configuration being used.
+     * 
+     * Defaults to FAIL.
+     * 
+     */
+    public OnError getOnExperimental() {
+        return onExperimental;
+    }
+
+    /**
+     * 
+     * The action to be taken by the generator as the consequence of experimental configuration being used.
+     * 
+     * Defaults to FAIL.
+     * 
+     */
+    public void setOnExperimental(OnError value) {
+        this.onExperimental = value;
+    }
+
+    /**
+     * 
+     * The action to be taken by the generator as the consequence of inconsistent or 
+     * illegal configuration being used.
+     * 
+     * Defaults to FAIL.
+     * 
+     */
+    public OnError getOnMisconfiguration() {
+        return onMisconfiguration;
+    }
+
+    /**
+     * 
+     * The action to be taken by the generator as the consequence of inconsistent or 
+     * illegal configuration being used.
+     * 
+     * Defaults to FAIL.
+     * 
+     */
+    public void setOnMisconfiguration(OnError value) {
+        this.onMisconfiguration = value;
+    }
+
+    /**
+     * 
+     * The action to be taken by the generator as the consequence of database meta data causing
+     * code generation problems, such as ambiguities in generated file names or object names.
+     * 
+     * Defaults to LOG.
+     * 
+     */
+    public OnError getOnMetadataProblem() {
+        return onMetadataProblem;
+    }
+
+    /**
+     * 
+     * The action to be taken by the generator as the consequence of database meta data causing
+     * code generation problems, such as ambiguities in generated file names or object names.
+     * 
+     * Defaults to LOG.
+     * 
+     */
+    public void setOnMetadataProblem(OnError value) {
+        this.onMetadataProblem = value;
+    }
+
+    /**
+     * 
+     * The action to be taken by the generator as the consequence of database meta data querying 
+     * being slow.
+     * 
+     * Defaults to LOG.
+     * 
+     */
+    public OnError getOnPerformanceProblem() {
+        return onPerformanceProblem;
+    }
+
+    /**
+     * 
+     * The action to be taken by the generator as the consequence of database meta data querying 
+     * being slow.
+     * 
+     * Defaults to LOG.
+     * 
+     */
+    public void setOnPerformanceProblem(OnError value) {
+        this.onPerformanceProblem = value;
     }
 
     /**
@@ -170,7 +322,12 @@ public class Configuration implements Serializable, XMLAppendable
     }
 
     /**
-     * The action to be taken by the generator as the consequence of an encountered exception. Defaults to FAIL.
+     * 
+     * The action to be taken by the generator as the consequence of an encountered exception 
+     * outside of jOOQ's control, such as a {@link java.sql.SQLException} or a 
+     * {@link java.io.IOException}. 
+     * 
+     * Defaults to FAIL.
      * 
      */
     public Configuration withOnError(OnError value) {
@@ -179,11 +336,77 @@ public class Configuration implements Serializable, XMLAppendable
     }
 
     /**
-     * The action to be taken by the generator as the consequence of unused objects being encountered. Defaults to LOG.
+     * 
+     * The action to be taken by the generator as the consequence of unused objects being encountered.
+     * 
+     * Defaults to LOG.
      * 
      */
     public Configuration withOnUnused(OnError value) {
         setOnUnused(value);
+        return this;
+    }
+
+    /**
+     * 
+     * The action to be taken by the generator as the consequence of deprecated configuration being used.
+     * 
+     * Defaults to LOG.
+     * 
+     */
+    public Configuration withOnDeprecated(OnError value) {
+        setOnDeprecated(value);
+        return this;
+    }
+
+    /**
+     * 
+     * The action to be taken by the generator as the consequence of experimental configuration being used.
+     * 
+     * Defaults to FAIL.
+     * 
+     */
+    public Configuration withOnExperimental(OnError value) {
+        setOnExperimental(value);
+        return this;
+    }
+
+    /**
+     * 
+     * The action to be taken by the generator as the consequence of inconsistent or 
+     * illegal configuration being used.
+     * 
+     * Defaults to FAIL.
+     * 
+     */
+    public Configuration withOnMisconfiguration(OnError value) {
+        setOnMisconfiguration(value);
+        return this;
+    }
+
+    /**
+     * 
+     * The action to be taken by the generator as the consequence of database meta data causing
+     * code generation problems, such as ambiguities in generated file names or object names.
+     * 
+     * Defaults to LOG.
+     * 
+     */
+    public Configuration withOnMetadataProblem(OnError value) {
+        setOnMetadataProblem(value);
+        return this;
+    }
+
+    /**
+     * 
+     * The action to be taken by the generator as the consequence of database meta data querying 
+     * being slow.
+     * 
+     * Defaults to LOG.
+     * 
+     */
+    public Configuration withOnPerformanceProblem(OnError value) {
+        setOnPerformanceProblem(value);
         return this;
     }
 
@@ -219,6 +442,11 @@ public class Configuration implements Serializable, XMLAppendable
         builder.append("logging", logging);
         builder.append("onError", onError);
         builder.append("onUnused", onUnused);
+        builder.append("onDeprecated", onDeprecated);
+        builder.append("onExperimental", onExperimental);
+        builder.append("onMisconfiguration", onMisconfiguration);
+        builder.append("onMetadataProblem", onMetadataProblem);
+        builder.append("onPerformanceProblem", onPerformanceProblem);
         builder.append("jdbc", jdbc);
         builder.append("generator", generator);
         builder.append("basedir", basedir);
@@ -270,6 +498,51 @@ public class Configuration implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (onDeprecated == null) {
+            if (other.onDeprecated!= null) {
+                return false;
+            }
+        } else {
+            if (!onDeprecated.equals(other.onDeprecated)) {
+                return false;
+            }
+        }
+        if (onExperimental == null) {
+            if (other.onExperimental!= null) {
+                return false;
+            }
+        } else {
+            if (!onExperimental.equals(other.onExperimental)) {
+                return false;
+            }
+        }
+        if (onMisconfiguration == null) {
+            if (other.onMisconfiguration!= null) {
+                return false;
+            }
+        } else {
+            if (!onMisconfiguration.equals(other.onMisconfiguration)) {
+                return false;
+            }
+        }
+        if (onMetadataProblem == null) {
+            if (other.onMetadataProblem!= null) {
+                return false;
+            }
+        } else {
+            if (!onMetadataProblem.equals(other.onMetadataProblem)) {
+                return false;
+            }
+        }
+        if (onPerformanceProblem == null) {
+            if (other.onPerformanceProblem!= null) {
+                return false;
+            }
+        } else {
+            if (!onPerformanceProblem.equals(other.onPerformanceProblem)) {
+                return false;
+            }
+        }
         if (jdbc == null) {
             if (other.jdbc!= null) {
                 return false;
@@ -307,6 +580,11 @@ public class Configuration implements Serializable, XMLAppendable
         result = ((prime*result)+((logging == null)? 0 :logging.hashCode()));
         result = ((prime*result)+((onError == null)? 0 :onError.hashCode()));
         result = ((prime*result)+((onUnused == null)? 0 :onUnused.hashCode()));
+        result = ((prime*result)+((onDeprecated == null)? 0 :onDeprecated.hashCode()));
+        result = ((prime*result)+((onExperimental == null)? 0 :onExperimental.hashCode()));
+        result = ((prime*result)+((onMisconfiguration == null)? 0 :onMisconfiguration.hashCode()));
+        result = ((prime*result)+((onMetadataProblem == null)? 0 :onMetadataProblem.hashCode()));
+        result = ((prime*result)+((onPerformanceProblem == null)? 0 :onPerformanceProblem.hashCode()));
         result = ((prime*result)+((jdbc == null)? 0 :jdbc.hashCode()));
         result = ((prime*result)+((generator == null)? 0 :generator.hashCode()));
         result = ((prime*result)+((basedir == null)? 0 :basedir.hashCode()));

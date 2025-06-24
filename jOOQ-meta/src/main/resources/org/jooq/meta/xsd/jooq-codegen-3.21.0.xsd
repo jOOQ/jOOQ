@@ -16,11 +16,57 @@
         </element>
 
         <element name="onError" type="tns:OnError" minOccurs="0" maxOccurs="1" default="FAIL">
-          <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The action to be taken by the generator as the consequence of an encountered exception. Defaults to FAIL.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+          <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[
+The action to be taken by the generator as the consequence of an encountered exception 
+outside of jOOQ's control, such as a {@link java.sql.SQLException} or a 
+{@link java.io.IOException}. 
+
+Defaults to FAIL.]]></jxb:javadoc></jxb:property></appinfo></annotation>
         </element>
 
         <element name="onUnused" type="tns:OnError" minOccurs="0" maxOccurs="1" default="LOG">
-          <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The action to be taken by the generator as the consequence of unused objects being encountered. Defaults to LOG.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+          <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[
+The action to be taken by the generator as the consequence of unused objects being encountered.
+
+Defaults to LOG.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        </element>
+
+        <element name="onDeprecated" type="tns:OnError" minOccurs="0" maxOccurs="1" default="LOG">
+          <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[
+The action to be taken by the generator as the consequence of deprecated configuration being used.
+
+Defaults to LOG.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        </element>
+
+        <element name="onExperimental" type="tns:OnError" minOccurs="0" maxOccurs="1" default="FAIL">
+          <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[
+The action to be taken by the generator as the consequence of experimental configuration being used.
+
+Defaults to FAIL.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        </element>
+
+        <element name="onMisconfiguration" type="tns:OnError" minOccurs="0" maxOccurs="1" default="FAIL">
+          <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[
+The action to be taken by the generator as the consequence of inconsistent or 
+illegal configuration being used.
+
+Defaults to FAIL.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        </element>
+
+        <element name="onMetadataProblem" type="tns:OnError" minOccurs="0" maxOccurs="1" default="LOG">
+          <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[
+The action to be taken by the generator as the consequence of database meta data causing
+code generation problems, such as ambiguities in generated file names or object names.
+
+Defaults to LOG.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        </element>
+
+        <element name="onPerformanceProblem" type="tns:OnError" minOccurs="0" maxOccurs="1" default="LOG">
+          <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[
+The action to be taken by the generator as the consequence of database meta data querying 
+being slow.
+
+Defaults to LOG.]]></jxb:javadoc></jxb:property></appinfo></annotation>
         </element>
 
         <element name="jdbc" type="tns:Jdbc" minOccurs="0"  maxOccurs="1">

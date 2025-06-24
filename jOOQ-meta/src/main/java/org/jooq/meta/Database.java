@@ -38,7 +38,9 @@
 
 package org.jooq.meta;
 
+import java.io.IOException;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -944,14 +946,80 @@ public interface Database extends AutoCloseable {
     boolean getForceIntegerTypesOnZeroScaleDecimals();
 
     /**
-     * The behaviour when errors are encountered.
+     * The action to be taken by the generator as the consequence of an
+     * encountered exception outside of jOOQ's control, such as a
+     * {@link SQLException} or a {@link IOException}.
      */
     void setOnError(OnError onError);
 
     /**
-     * The behaviour when errors are encountered.
+     * The action to be taken by the generator as the consequence of an
+     * encountered exception outside of jOOQ's control, such as a
+     * {@link SQLException} or a {@link IOException}.
      */
     OnError onError();
+
+    /**
+     * The action to be taken by the generator as the consequence of deprecated
+     * configuration being used.
+     */
+    void setOnDeprecated(OnError onError);
+
+    /**
+     * The action to be taken by the generator as the consequence of deprecated
+     * configuration being used.
+     */
+    OnError onDeprecated();
+
+    /**
+     * The action to be taken by the generator as the consequence of
+     * experimental configuration being used.
+     */
+    void setOnExperimental(OnError onError);
+
+    /**
+     * The action to be taken by the generator as the consequence of
+     * experimental configuration being used.
+     */
+    OnError onExperimental();
+
+    /**
+     * The action to be taken by the generator as the consequence of
+     * inconsistent or illegal configuration being used.
+     */
+    void setOnMisconfiguration(OnError onError);
+
+    /**
+     * The action to be taken by the generator as the consequence of
+     * inconsistent or illegal configuration being used.
+     */
+    OnError onMisconfiguration();
+
+    /**
+     * The action to be taken by the generator as the consequence of database
+     * meta data causing code generation problems, such as ambiguities in
+     * generated file names or object names.
+     */
+    void setOnMetadataProblem(OnError onError);
+
+    /**
+     * The action to be taken by the generator as the consequence of database
+     * meta data causing code generation problems, such as ambiguities in
+     * generated file names or object names.
+     */
+    OnError onMetadataProblem();
+
+    /**
+     * The action to be taken by the generator as the consequence of database meta data querying
+     * being slow.
+     */
+    void setOnPerformanceProblem(OnError onError);
+
+    /**
+     * The action to be taken by the generator as the consequence of database meta data querying
+     * being slow.
+     */
+    OnError onPerformanceProblem();
 
     /**
      * [#3488] Add an additional filter to the database that is applied in

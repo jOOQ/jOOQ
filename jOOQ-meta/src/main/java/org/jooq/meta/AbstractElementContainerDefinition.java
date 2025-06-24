@@ -101,7 +101,8 @@ extends AbstractDefinition {
                 // [#5335] Warn if a table definition contains several identity columns
                 if (this instanceof TableDefinition t) {
                     if (e.stream().map(c -> (ColumnDefinition) c).filter(ColumnDefinition::isIdentity).count() > 1)
-                        log.warn("Multiple identities", "Table " + getOutputName() + " has multiple identity columns. Only the first one is considered.");
+                        Logging.log(getDatabase().onMetadataProblem(),
+                            () -> "Table " + getOutputName() + " has multiple identity columns. Only the first one is considered.");
 
 
 

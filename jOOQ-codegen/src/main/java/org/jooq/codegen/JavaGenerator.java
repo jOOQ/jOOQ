@@ -206,6 +206,7 @@ import org.jooq.meta.IndexColumnDefinition;
 import org.jooq.meta.IndexDefinition;
 import org.jooq.meta.InverseForeignKeyDefinition;
 import org.jooq.meta.JavaTypeResolver;
+import org.jooq.meta.Logging;
 import org.jooq.meta.ManyToManyKeyDefinition;
 import org.jooq.meta.PackageDefinition;
 import org.jooq.meta.ParameterDefinition;
@@ -464,6 +465,12 @@ public class JavaGenerator extends AbstractGenerator {
         this.catalogVersions = new LinkedHashMap<>();
         this.database.addFilter(new AvoidAmbiguousClassesFilter());
 
+        if (!generateInstanceFields()) {
+            Logging.log(db.onDeprecated(),
+                () -> "<generateInstanceFields/> = false is deprecated! This feature is no longer maintained and will be removed in jOOQ 4.0. Please adapt your configuration."
+            );
+        }
+
         logDatabaseParameters(db);
         log.info("");
         log.info("JavaGenerator parameters");
@@ -546,13 +553,6 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("  deprecated code", generateDeprecated());
         log.info("----------------------------------------------------------");
 
-        if (!generateInstanceFields()) {
-            log.warn("");
-            log.warn("Deprecation warnings");
-            log.warn("----------------------------------------------------------");
-            log.warn("  <generateInstanceFields/> = false is deprecated! This feature is no longer maintained and will be removed in jOOQ 4.0. Please adapt your configuration.");
-        }
-
         log.info("");
         logGenerationRemarks(db);
 
@@ -566,7 +566,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         StopWatch w = new StopWatch();
         for (CatalogDefinition catalog : database.getCatalogs()) {
-            GenerationUtil.run(
+            Logging.run(
                 database.onError(),
                 () -> {
                     if (generateCatalogIfEmpty(catalog))
@@ -663,7 +663,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         log.info("Generating schemata", "Total: " + catalog.getSchemata().size());
         for (SchemaDefinition schema : catalog.getSchemata()) {
-            GenerationUtil.run(
+            Logging.run(
                 database.onError(),
                 () -> {
                     if (generateSchemaIfEmpty(schema))
@@ -908,13 +908,21 @@ public class JavaGenerator extends AbstractGenerator {
             if (existing == null)
                 return false;
 
-            log.warn("Ambiguous type name",
-                "The database object " + definition.getQualifiedOutputName()
-              + " generates a class " + name + " (" + definition.getClass() + ")"
-              + " which conflicts with the previously generated class " + existing.name() + " (" + existing.definition().getClass() + ")."
-              + " Use a custom generator strategy to disambiguate the types. More information here:\n"
-              + " - https://www.jooq.org/doc/latest/manual/code-generation/codegen-generatorstrategy/\n"
-              + " - https://www.jooq.org/doc/latest/manual/code-generation/codegen-matcherstrategy/"
+            Logging.log(
+                database.onMetadataProblem(), () ->
+                """
+                Ambiguous type name
+
+                The database object {outputName} generates a class {class} ({definitionClass})
+                which conflicts with the previously generated class {existingName} ({existingDefinitionClass}).
+                Use a custom generator strategy to disambiguate the types. More information here:
+                - https://www.jooq.org/doc/latest/manual/code-generation/codegen-generatorstrategy
+                - https://www.jooq.org/doc/latest/manual/code-generation/codegen-matcherstrategy
+                """.replace("{outputName}", definition.getQualifiedOutputName())
+                   .replace("{class}", name)
+                   .replace("{definitionClass}", definition.getClass().getName())
+                   .replace("{existingName}", existing.name())
+                   .replace("{existingDefinitionClass}", existing.definition().getClass().getName())
             );
 
             return true;
@@ -1083,7 +1091,7 @@ public class JavaGenerator extends AbstractGenerator {
         List<ForeignKeyDefinition> allForeignKeys = new ArrayList<>();
 
         // Unique keys
-        GenerationUtil.run(
+        Logging.run(
             database.onError(),
             () -> {
                 for (UniqueKeyDefinition uniqueKey : database.getKeys(schema)) {
@@ -1117,7 +1125,7 @@ public class JavaGenerator extends AbstractGenerator {
 
 
         // Foreign keys
-        GenerationUtil.run(
+        Logging.run(
             database.onError(),
             () -> {
                 for (ForeignKeyDefinition foreignKey : database.getForeignKeys(schema)) {
@@ -1235,7 +1243,7 @@ public class JavaGenerator extends AbstractGenerator {
         out.println();
 
         for (IndexDefinition index : database.getIndexes(schema)) {
-            GenerationUtil.run(
+            Logging.run(
                 database.onError(),
                 () -> {
                     final String keyId = getStrategy().getJavaIdentifier(index);
@@ -1450,6 +1458,12 @@ public class JavaGenerator extends AbstractGenerator {
 
 
 
+
+
+
+
+
+
     private void printCreateUniqueKey(JavaWriter out, UniqueKeyDefinition uniqueKey) {
 
 
@@ -1588,6 +1602,9 @@ public class JavaGenerator extends AbstractGenerator {
 
 
 
+
+
+
         printCreateNonEmbeddableForeignKey(out, foreignKey);
 
         out.println("%s", semicolon);
@@ -1676,7 +1693,7 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("Generating table records");
 
         for (TableDefinition table : database.getTables(schema)) {
-            GenerationUtil.run(
+            Logging.run(
                 database.onError(),
                 () -> {
                     if (generateRecordsIncluded(table)) {
@@ -1895,7 +1912,7 @@ public class JavaGenerator extends AbstractGenerator {
                 boolean instance = routine.getInParameters().size() > 0
                                 && routine.getInParameters().get(0).getInputName().toUpperCase(getStrategy().getTargetLocale()).equals("SELF");
 
-                GenerationUtil.run(
+                Logging.run(
                     database.onError(),
                     () -> {
                         if (!routine.isSQLUsable()) {
@@ -3359,7 +3376,7 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("Generating table interfaces");
 
         for (TableDefinition table : database.getTables(schema)) {
-            GenerationUtil.run(
+            Logging.run(
                 database.onError(),
                 () -> {
                     generateInterface(table);
@@ -3637,7 +3654,7 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("Generating UDTs");
 
         for (UDTDefinition udt : database.getUDTs(schema)) {
-            GenerationUtil.run(
+            Logging.run(
                 database.onError(),
                 () -> {
                     if (generateUDTs()) {
@@ -3759,7 +3776,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         // [#799] Oracle UDT's can have member procedures
         for (RoutineDefinition routine : udt.getRoutines()) {
-            GenerationUtil.run(
+            Logging.run(
                 database.onError(),
                 () -> {
                     if (!routine.isSQLUsable()) {
@@ -4002,7 +4019,7 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("Generating UDT POJOs");
 
         for (UDTDefinition udt : database.getUDTs(schema)) {
-            GenerationUtil.run(
+            Logging.run(
                 database.onError(),
                 () -> {
                     generateUDTPojo(udt);
@@ -4034,7 +4051,7 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("Generating UDT interfaces");
 
         for (UDTDefinition udt : database.getUDTs(schema)) {
-            GenerationUtil.run(
+            Logging.run(
                 database.onError(),
                 () -> {
                     generateUDTInterface(udt);
@@ -4069,7 +4086,7 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("Generating UDT records");
 
         for (UDTDefinition udt : database.getUDTs(schema)) {
-            GenerationUtil.run(
+            Logging.run(
                 database.onError(),
                 () -> {
                     generateUDTRecord(udt);
@@ -4104,7 +4121,7 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("Generating UDT record types");
 
         for (UDTDefinition udt : database.getUDTs(schema)) {
-            GenerationUtil.run(
+            Logging.run(
                 database.onError(),
                 () -> {
                     if (udt.isInTypeHierarchy())
@@ -4139,7 +4156,7 @@ public class JavaGenerator extends AbstractGenerator {
                 log.info("Generating member routines");
 
                 for (RoutineDefinition routine : udt.getRoutines()) {
-                    GenerationUtil.run(
+                    Logging.run(
                         database.onError(),
                         () -> {
                             generateRoutine(schema, routine);
@@ -4348,7 +4365,7 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("Generating ARRAYs");
 
         for (ArrayDefinition array : database.getArrays(schema)) {
-            GenerationUtil.run(
+            Logging.run(
                 database.onError(),
                 () -> {
                     generateArray(schema, array);
@@ -4503,7 +4520,7 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("Generating ENUMs");
 
         for (EnumDefinition e : database.getEnums(schema)) {
-            GenerationUtil.run(
+            Logging.run(
                 database.onError(),
                 () -> {
                     generateEnum(e);
@@ -4774,7 +4791,7 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("Generating routines and table-valued functions");
 
         for (RoutineDefinition routine : database.getRoutines(schema)) {
-            GenerationUtil.run(
+            Logging.run(
                 database.onError(),
                 () -> {
                     if (generateRoutines())
@@ -5067,11 +5084,13 @@ public class JavaGenerator extends AbstractGenerator {
 
     protected void generateSyntheticDaos(SchemaDefinition schema) {
         log.info("Generating synthetic DAOs");
-        log.warn("Experimental", "Synthetic daos are experimental functionality and subject to change.");
+        Logging.log(database.onExperimental(),
+            () -> "Synthetic daos are experimental functionality and subject to change."
+        );
 
         for (SyntheticDaoType dao : database.getConfiguredSyntheticDaos()) {
             if (schema.getQualifiedInputNamePart().equals(name(dao.getCatalog(), dao.getSchema()))) {
-                GenerationUtil.run(
+                Logging.run(
                     database.onError(),
                     () -> {
                         generateSyntheticDao(new DefaultSyntheticDaoDefinition(database, schema, dao));
@@ -5256,7 +5275,7 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("Generating DAOs");
 
         for (TableDefinition table : database.getTables(schema)) {
-            GenerationUtil.run(
+            Logging.run(
                 database.onError(),
                 () -> {
                     if (generateDaosIncluded(table))
@@ -5897,7 +5916,7 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("Generating table POJOs");
 
         for (TableDefinition table : database.getTables(schema)) {
-            GenerationUtil.run(
+            Logging.run(
                 database.onError(),
                 () -> {
                     if (generatePojosIncluded(table))
@@ -6054,8 +6073,9 @@ public class JavaGenerator extends AbstractGenerator {
 
                 out.println(")[[before= implements ][%s]] {", interfaces);
 
-                if (replacingEmbeddablesAndUnreplacedColumns.size() >= 255)
-                    log.warn(
+                if (replacingEmbeddablesAndUnreplacedColumns.size() >= 255) {
+                    Logging.log(
+                        database.onMetadataProblem(), () ->
                         """
                         {object} has more than 254 {elements}. There's no workaround that the code generator could implement out of the box.
 
@@ -6064,16 +6084,17 @@ public class JavaGenerator extends AbstractGenerator {
                         - Switching to a different POJO style that doesn't require mandatory canonical constructors
                         - Use replacing embeddables to reduce the column number: https://www.jooq.org/doc/latest/manual/code-generation/codegen-embeddable-types/codegen-embeddable-types-replacing-fields/
                         """.replace("{object}",
-                              tableUdtOrEmbeddable instanceof EmbeddableDefinition
-                            ? "Embeddable " + tableUdtOrEmbeddable
-                            : tableUdtOrEmbeddable instanceof UDTDefinition
-                            ? "UDT " + tableUdtOrEmbeddable
-                            : "Table " + tableUdtOrEmbeddable
-                        ).replace("{elements}",
-                               tableUdtOrEmbeddable instanceof UDTDefinition
-                            ? "attributes"
-                            : "columns"
-                    ));
+                                  tableUdtOrEmbeddable instanceof EmbeddableDefinition
+                                ? "Embeddable " + tableUdtOrEmbeddable
+                                : tableUdtOrEmbeddable instanceof UDTDefinition
+                                ? "UDT " + tableUdtOrEmbeddable
+                                : "Table " + tableUdtOrEmbeddable)
+                           .replace("{elements}",
+                                   tableUdtOrEmbeddable instanceof UDTDefinition
+                                ? "attributes"
+                                : "columns")
+                    );
+                }
 
             }
             else {
@@ -7213,7 +7234,7 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("Generating tables");
 
         for (TableDefinition table : database.getTables(schema)) {
-            GenerationUtil.run(
+            Logging.run(
                 database.onError(),
                 () -> {
                     if (generateTables())
@@ -8069,15 +8090,25 @@ public class JavaGenerator extends AbstractGenerator {
                         final Definition previousKey;
 
                         if ((previousKey = keyMethodNames.putIfAbsent(keyMethodName, foreignKey)) != null) {
-                            log.warn("Ambiguous key name",
-                                "The one-to-many key " + foreignKey
-                              + " generates an inbound key method name " + keyMethodName + " on table " + table
-                              + " which conflicts with the previously generated key method name for key " + previousKey + "."
-                              + " Use a custom generator strategy to disambiguate the method names for ForeignKeyDefinition, InverseForeignKeyDefinition, and/or ManyToManyKeyDefinition, or simply turn off the feature. More information here:\n"
-                              + " - https://www.jooq.org/doc/latest/manual/code-generation/codegen-generatorstrategy/\n"
-                              + " - https://www.jooq.org/doc/latest/manual/code-generation/codegen-matcherstrategy/\n"
-                              + " - https://www.jooq.org/doc/latest/manual/code-generation/codegen-advanced/codegen-config-generate/codegen-implicit-join-paths/"
+                            Logging.log(
+                                database.onMetadataProblem(), () ->
+                                """
+                                Ambiguous key name
+
+                                The one-to-many key {foreignKey} generates an inbound key method name {keyMethodName}
+                                on table {table} which conflicts with the previously generated key method name for key
+                                {previousKey}. Use a custom generator strategy to disambiguate the method names for ForeignKeyDefinition,
+                                InverseForeignKeyDefinition, and/or ManyToManyKeyDefinition, or simply turn off the feature.
+                                More information here:
+                                - https://www.jooq.org/doc/latest/manual/code-generation/codegen-generatorstrategy
+                                - https://www.jooq.org/doc/latest/manual/code-generation/codegen-matcherstrategy
+                                - https://www.jooq.org/doc/latest/manual/code-generation/codegen-advanced/codegen-config-generate/codegen-implicit-join-paths
+                                """.replace("{foreignKey}", foreignKey.toString())
+                                   .replace("{keyMethodName}", keyMethodName)
+                                   .replace("{table}", table.toString())
+                                   .replace("{previousKey}", previousKey.toString())
                             );
+
                             continue inboundFKLoop;
                         }
 
@@ -8143,15 +8174,25 @@ public class JavaGenerator extends AbstractGenerator {
                             final Definition previousKey;
 
                             if ((previousKey = keyMethodNames.putIfAbsent(keyMethodName, manyToManyKey)) != null) {
-                                log.warn("Ambiguous key name",
-                                    "The many-to-many key " + manyToManyKey
-                                  + " generates an inbound key method name " + keyMethodName + " on table " + table
-                                  + " which conflicts with the previously generated key method name for key " + previousKey + "."
-                                  + " Use a custom generator strategy to disambiguate the method names for ForeignKeyDefinition, InverseForeignKeyDefinition, and/or ManyToManyKeyDefinition, or simply turn off the feature. More information here:\n"
-                                  + " - https://www.jooq.org/doc/latest/manual/code-generation/codegen-generatorstrategy/\n"
-                                  + " - https://www.jooq.org/doc/latest/manual/code-generation/codegen-matcherstrategy/\n"
-                                  + " - https://www.jooq.org/doc/latest/manual/code-generation/codegen-advanced/codegen-config-generate/codegen-implicit-join-paths/"
+                                Logging.log(
+                                    database.onMetadataProblem(), () ->
+                                    """
+                                    Ambiguous key name
+
+                                    The many-to-many key {manyToManyKey} generates an inbound key method name {keyMethodName}
+                                    on table {table} which conflicts with the previously generated key method name for key
+                                    {previousKey}. Use a custom generator strategy to disambiguate the method names for ForeignKeyDefinition,
+                                    InverseForeignKeyDefinition, and/or ManyToManyKeyDefinition, or simply turn off the feature.
+                                    More information here:
+                                    - https://www.jooq.org/doc/latest/manual/code-generation/codegen-generatorstrategy
+                                    - https://www.jooq.org/doc/latest/manual/code-generation/codegen-matcherstrategy
+                                    - https://www.jooq.org/doc/latest/manual/code-generation/codegen-advanced/codegen-config-generate/codegen-implicit-join-paths
+                                    """.replace("{manyToManyKey}", manyToManyKey.toString())
+                                       .replace("{keyMethodName}", keyMethodName)
+                                       .replace("{table}", table.toString())
+                                       .replace("{previousKey}", previousKey.toString())
                                 );
+
                                 continue manyToManyKeyLoop;
                             }
 
@@ -8819,7 +8860,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         Set<File> duplicates = new HashSet<>();
         for (EmbeddableDefinition embeddable : embeddables(schema)) {
-            GenerationUtil.run(
+            Logging.run(
                 database.onError(),
                 () -> {
 
@@ -8848,7 +8889,7 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("Generating embeddable POJOs");
 
         for (EmbeddableDefinition embeddable : embeddables(schema)) {
-            GenerationUtil.run(
+            Logging.run(
                 database.onError(),
                 () -> {
                     generateEmbeddablePojo(embeddable);
@@ -8880,7 +8921,7 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("Generating embeddable interfaces");
 
         for (EmbeddableDefinition embeddable : embeddables(schema)) {
-            GenerationUtil.run(
+            Logging.run(
                 database.onError(),
                 () -> {
                     generateEmbeddableInterface(embeddable);

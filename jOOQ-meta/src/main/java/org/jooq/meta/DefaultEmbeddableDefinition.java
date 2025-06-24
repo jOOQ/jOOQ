@@ -184,9 +184,11 @@ public class DefaultEmbeddableDefinition
         int size = embeddableColumns.size();
 
         if (size != other.getColumns().size()) {
-            log.warn("Embeddable " + getName() + " has two references with non-matching column sets: "
-                + getReferencingName() + " (" + this + ") and "
-                + other.getReferencingName() + " (" + other + ")");
+            Logging.log(getDatabase().onMetadataProblem(),
+                () -> "Embeddable " + getName() + " has two references with non-matching column sets: "
+                    + getReferencingName() + " (" + this + ") and "
+                    + other.getReferencingName() + " (" + other + ")");
+
             return;
         }
 

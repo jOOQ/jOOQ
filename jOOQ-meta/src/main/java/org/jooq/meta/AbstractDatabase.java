@@ -191,6 +191,11 @@ public abstract class AbstractDatabase implements Database {
     private boolean                                                              regexMatchesPartialQualification;
     private boolean                                                              sqlMatchesPartialQualification;
     private OnError                                                              onError                                 = OnError.FAIL;
+    private OnError                                                              onDeprecated                            = OnError.LOG;
+    private OnError                                                              onExperimental                          = OnError.FAIL;
+    private OnError                                                              onMisconfiguration                      = OnError.FAIL;
+    private OnError                                                              onMetadataProblem                       = OnError.LOG;
+    private OnError                                                              onPerformanceProblem                    = OnError.LOG;
     private List<Filter>                                                         filters;
     private String[]                                                             excludes;
     private String[]                                                             excludesResult;
@@ -518,20 +523,25 @@ public abstract class AbstractDatabase implements Database {
                     if (watch.split() > TimeUnit.SECONDS.toNanos(s)) {
                         watch.splitWarn("Slow SQL");
 
-                        log.warn(
-                            "Slow SQL",
-                            "jOOQ Meta executed a slow query (slower than " + s + " seconds, configured by configuration/generator/database/logSlowQueriesAfterSeconds)"
-                          + "\n\n"
-                          + "In some RDBMS, this can be caused by outdated statistics on the information schema / dictionary / meta data views.\n"
+                        Logging.log(
+                            onPerformanceProblem(), () ->
+                            """
+                            Slow SQL
 
+                            jOOQ Meta executed a slow query (slower than {s} seconds, configured by configuration/generator/database/logSlowQueriesAfterSeconds).
+                            In some RDBMS, this can be caused by outdated statistics on the information schema / dictionary / meta data views.
+                            {oracleComment}
 
+                            If you think this is a bug in jOOQ, please report it here: https://jooq.org/bug
 
-                          + "\n"
-                          + "If you think this is a bug in jOOQ, please report it here: https://jooq.org/bug"
-                          + "\n\n```sql\n"
-                          + formatted(ctx.query())
-                          + "```\n",
-                            new SQLPerformanceWarning());
+                            ```sql
+                            {query}
+                            ```
+                            """.replace("{s}", "" + s)
+                               .replace("{query}", formatted(ctx.query()))
+                               .replace("{oracleComment}", "" ),
+                            new SQLPerformanceWarning()
+                        );
                     }
                 }
 
@@ -551,15 +561,22 @@ public abstract class AbstractDatabase implements Database {
                     if (watch.split() > TimeUnit.SECONDS.toNanos(s)) {
                         watch.splitWarn("Slow Result Fetching");
 
-                        log.warn(
-                            "Slow Result Fetching",
-                            "jOOQ Meta fetched a slow result (slower than " + s + " seconds, configured by configuration/generator/database/logSlowResultsAfterSeconds)"
-                          + "\n\n"
-                          + "If you think this is a bug in jOOQ, please report it here: https://jooq.org/bug"
-                          + "\n\n```sql\n"
-                          + formatted(ctx.query())
-                          + "```\n",
-                            new SQLPerformanceWarning());
+                        Logging.log(
+                            onPerformanceProblem(), () ->
+                            """
+                            Slow Result Fetching
+
+                            jOOQ Meta fetched a slow result (slower than {s} seconds, configured by configuration/generator/database/logSlowResultsAfterSeconds).
+
+                            If you think this is a bug in jOOQ, please report it here: https://jooq.org/bug
+
+                            ```sql
+                            {query}
+                            ```
+                            """.replace("{s}", "" + s)
+                               .replace("{query}", formatted(ctx.query())),
+                            new SQLPerformanceWarning()
+                        );
                     }
                 }
 
@@ -815,13 +832,11 @@ public abstract class AbstractDatabase implements Database {
 
             if (catalogs.isEmpty())
                 if (onlyDefaultCatalog)
-                    log.warn(
-                        "No catalogs were loaded",
-                        "Your database reported only a default catalog, which was filtered out by your <inputCatalog/> configurations. jOOQ does not support catalogs for all databases, in case of which <inputCatalog/> configurations will not work. E.g. a catalog works on SQL Server to qualify tables as [catalog].[schema].[table]. Perhaps you meant to configure an <inputSchema/> instead?");
+                    Logging.log(onMetadataProblem(),
+                        () -> "No catalogs were loaded: Your database reported only a default catalog, which was filtered out by your <inputCatalog/> configurations. jOOQ does not support catalogs for all databases, in case of which <inputCatalog/> configurations will not work. E.g. a catalog works on SQL Server to qualify tables as [catalog].[schema].[table]. Perhaps you meant to configure an <inputSchema/> instead?");
                 else
-                    log.warn(
-                        "No catalogs were loaded",
-                        "Please check your connection settings, and whether your database (and your database version!) is really supported by jOOQ. Also, check the case-sensitivity in your configured <inputCatalog/> elements.");
+                    Logging.log(onMetadataProblem(),
+                        () -> "No catalogs were loaded: Please check your connection settings, and whether your database (and your database version!) is really supported by jOOQ. Also, check the case-sensitivity in your configured <inputCatalog/> elements.");
         }
 
         return catalogs;
@@ -847,12 +862,12 @@ public abstract class AbstractDatabase implements Database {
             schemata.removeIf(schema -> !getInputSchemata().contains(schema.getName()));
 
             if (schemata.isEmpty()) {
-                log.warn(
-                    "No schemata were loaded",
-                    "Please check your connection settings, and whether your database (and your database version!) is really supported by jOOQ. Also, check the case-sensitivity in your configured <inputSchema/> elements : " + inputSchemataPerCatalog);
+                Logging.log(onMetadataProblem(),
+                    () -> "No schemata were loaded: Please check your connection settings, and whether your database (and your database version!) is really supported by jOOQ. Also, check the case-sensitivity in your configured <inputSchema/> elements : " + inputSchemataPerCatalog);
 
                 if (NO_SUPPORT_SCHEMATA.contains(getDialect().family()))
-                    log.warn("No schemata were loaded", "The database you're using (" + getClass().getName() + ") does not support schemata. Consider removing all <inputSchema/> and related configuration : " + inputSchemataPerCatalog);
+                    Logging.log(onMetadataProblem(),
+                        () -> "No schemata were loaded: The database you're using (" + getClass().getName() + ") does not support schemata. Consider removing all <inputSchema/> and related configuration : " + inputSchemataPerCatalog);
             }
         }
 
@@ -1112,6 +1127,56 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final OnError onError() {
         return onError == null ? OnError.FAIL : onError;
+    }
+
+    @Override
+    public final void setOnDeprecated(OnError onError) {
+        this.onDeprecated = onError;
+    }
+
+    @Override
+    public final OnError onDeprecated() {
+        return onDeprecated == null ? OnError.LOG : onDeprecated;
+    }
+
+    @Override
+    public final void setOnExperimental(OnError onError) {
+        this.onExperimental = onError;
+    }
+
+    @Override
+    public final OnError onExperimental() {
+        return onExperimental == null ? OnError.FAIL : onExperimental;
+    }
+
+    @Override
+    public final void setOnMisconfiguration(OnError onError) {
+        this.onMisconfiguration = onError;
+    }
+
+    @Override
+    public final OnError onMisconfiguration() {
+        return onMisconfiguration == null ? OnError.FAIL : onMisconfiguration;
+    }
+
+    @Override
+    public final void setOnMetadataProblem(OnError onError) {
+        this.onMetadataProblem = onError;
+    }
+
+    @Override
+    public final OnError onMetadataProblem() {
+        return onMetadataProblem == null ? OnError.LOG : onMetadataProblem;
+    }
+
+    @Override
+    public final void setOnPerformanceProblem(OnError onError) {
+        this.onPerformanceProblem = onError;
+    }
+
+    @Override
+    public final OnError onPerformanceProblem() {
+        return onPerformanceProblem == null ? OnError.LOG : onPerformanceProblem;
     }
 
     @Override
@@ -1538,7 +1603,9 @@ public abstract class AbstractDatabase implements Database {
         if (syntheticPrimaryKeys != null) {
             for (String syntheticPrimaryKey : syntheticPrimaryKeys) {
                 if (!StringUtils.isBlank(syntheticPrimaryKey)) {
-                    log.warn("DEPRECATION", "The <syntheticPrimaryKeys/> configuration element has been deprecated in jOOQ 3.14. Use <syntheticObjects/> only, instead.");
+                    Logging.log(onDeprecated(),
+                        () -> "The <syntheticPrimaryKeys/> configuration element has been deprecated in jOOQ 3.14. Use <syntheticObjects/> only, instead.");
+
                     getConfiguredSyntheticPrimaryKeys().add(new SyntheticPrimaryKeyType().withFields(syntheticPrimaryKey));
                 }
             }
@@ -1548,7 +1615,9 @@ public abstract class AbstractDatabase implements Database {
     @Override
     @Deprecated
     public String[] getSyntheticPrimaryKeys() {
-        log.warn("DEPRECATION", "The <syntheticPrimaryKeys/> configuration element has been deprecated in jOOQ 3.14. Use <syntheticObjects/> only, instead.");
+        Logging.log(onDeprecated(),
+            () -> "The <syntheticPrimaryKeys/> configuration element has been deprecated in jOOQ 3.14. Use <syntheticObjects/> only, instead.");
+
         return new String[0];
     }
 
@@ -1558,7 +1627,9 @@ public abstract class AbstractDatabase implements Database {
         if (overridePrimaryKeys != null) {
             for (String overridePrimaryKey : overridePrimaryKeys) {
                 if (!StringUtils.isBlank(overridePrimaryKey)) {
-                    log.warn("DEPRECATION", "The <overridePrimaryKeys/> configuration element has been deprecated in jOOQ 3.14. Use <syntheticObjects/> only, instead.");
+                    Logging.log(onDeprecated(),
+                        () -> "The <overridePrimaryKeys/> configuration element has been deprecated in jOOQ 3.14. Use <syntheticObjects/> only, instead.");
+
                     getConfiguredSyntheticPrimaryKeys().add(new SyntheticPrimaryKeyType().withKey(overridePrimaryKey));
                 }
             }
@@ -1568,7 +1639,9 @@ public abstract class AbstractDatabase implements Database {
     @Override
     @Deprecated
     public String[] getOverridePrimaryKeys() {
-        log.warn("DEPRECATION", "The <overridePrimaryKeys/> configuration element has been deprecated in jOOQ 3.14. Use <syntheticObjects/> only, instead.");
+        Logging.log(onDeprecated(),
+            () -> "The <overridePrimaryKeys/> configuration element has been deprecated in jOOQ 3.14. Use <syntheticObjects/> only, instead.");
+
         return new String[0];
     }
 
@@ -1578,7 +1651,9 @@ public abstract class AbstractDatabase implements Database {
         if (syntheticIdentities != null) {
             for (String syntheticIdentity : syntheticIdentities) {
                 if (!StringUtils.isBlank(syntheticIdentity)) {
-                    log.warn("DEPRECATION", "The <syntheticIdentities/> configuration element has been deprecated in jOOQ 3.14. Use <syntheticObjects/> only, instead.");
+                    Logging.log(onDeprecated(),
+                        () -> "The <syntheticIdentities/> configuration element has been deprecated in jOOQ 3.14. Use <syntheticObjects/> only, instead.");
+
                     getConfiguredSyntheticIdentities().add(new SyntheticIdentityType().withFields(syntheticIdentity));
                 }
             }
@@ -1588,7 +1663,9 @@ public abstract class AbstractDatabase implements Database {
     @Override
     @Deprecated
     public final String[] getSyntheticIdentities() {
-        log.warn("DEPRECATION", "The <syntheticIdentities/> configuration element has been deprecated in jOOQ 3.14. Use <syntheticObjects/> only, instead.");
+        Logging.log(onDeprecated(),
+            () -> "The <syntheticIdentities/> configuration element has been deprecated in jOOQ 3.14. Use <syntheticObjects/> only, instead.");
+
         return new String[0];
     }
 
@@ -1609,7 +1686,8 @@ public abstract class AbstractDatabase implements Database {
     @Deprecated
     public final void setConfiguredCustomTypes(List<CustomType> configuredCustomTypes) {
         if (!configuredCustomTypes.isEmpty())
-            log.warn("DEPRECATION", "The <customTypes/> configuration element has been deprecated in jOOQ 3.10. Use <forcedTypes/> only, instead.");
+            Logging.log(onDeprecated(),
+                () -> "The <customTypes/> configuration element has been deprecated in jOOQ 3.10. Use <forcedTypes/> only, instead.");
 
         this.configuredCustomTypes = configuredCustomTypes;
     }
@@ -1637,7 +1715,9 @@ public abstract class AbstractDatabase implements Database {
             CustomType type = it1.next();
 
             if (type == null || (type.getName() == null && type.getType() == null)) {
-                log.warn("Invalid custom type encountered: " + type);
+                Logging.log(onMisconfiguration(),
+                    () -> "Invalid custom type encountered (either <name/> or <type/> must be specified): " + type);
+
                 it1.remove();
                 continue;
             }
@@ -1688,19 +1768,25 @@ public abstract class AbstractDatabase implements Database {
             if (type.getExpressions() != null) {
                 type.setIncludeExpression(type.getExpressions());
                 type.setExpressions(null);
-                log.warn("DEPRECATED", "The <expressions/> element in <forcedType/> is deprecated. Use <includeExpression/> instead: " + type);
+
+                Logging.log(onDeprecated(),
+                    () -> "The <expressions/> element in <forcedType/> is deprecated. Use <includeExpression/> instead: " + type);
             }
 
             if (type.getExpression() != null) {
                 type.setIncludeExpression(type.getExpression());
                 type.setExpression(null);
-                log.warn("DEPRECATED", "The <expression/> element in <forcedType/> is deprecated. Use <includeExpression/> instead: " + type);
+
+                Logging.log(onDeprecated(),
+                    () -> "The <expression/> element in <forcedType/> is deprecated. Use <includeExpression/> instead: " + type);
             }
 
             if (type.getTypes() != null) {
                 type.setIncludeTypes(type.getTypes());
                 type.setTypes(null);
-                log.warn("DEPRECATED", "The <types/> element in <forcedType/> is deprecated. Use <includeTypes/> instead: " + type);
+
+                Logging.log(onDeprecated(),
+                    () -> "The <types/> element in <forcedType/> is deprecated. Use <includeTypes/> instead: " + type);
             }
 
 
@@ -1716,13 +1802,15 @@ public abstract class AbstractDatabase implements Database {
             if (StringUtils.isBlank(type.getUserType())
                     && StringUtils.isBlank(type.getName())
                     && !commercialFlags) {
-                log.warn("Bad configuration for <forcedType/>. Any of <name/>, <userType/>, <generator/>, <auditInsertTimestamp/>, <auditInsertUser/>, <auditUpdateTimestamp/>, <auditUpdateUser/>, or <visibilityModifier/> is required: " + type);
+                Logging.log(onMisconfiguration(),
+                    () -> "Bad configuration for <forcedType/>. Any of <name/>, <userType/>, <generator/>, <auditInsertTimestamp/>, <auditInsertUser/>, <auditUpdateTimestamp/>, <auditUpdateUser/>, or <visibilityModifier/> is required: " + type);
 
                 it.remove();
                 continue;
             }
             else if (commercialFlags && !commercial()) {
-                log.warn("<generator/>, <hidden/>, <auditInsertTimestamp/>, <auditInsertUser/>, <auditUpdateTimestamp/>, <auditUpdateUser/>, and <visibilityModifier/> are commercial only features. Please upgrade to the jOOQ Professional Edition or jOOQ Enterprise Edition: " + type);
+                Logging.log(onMisconfiguration(),
+                    () -> "<generator/>, <hidden/>, <auditInsertTimestamp/>, <auditInsertUser/>, <auditUpdateTimestamp/>, <auditUpdateUser/>, and <visibilityModifier/> are commercial only features. Please upgrade to the jOOQ Professional Edition or jOOQ Enterprise Edition: " + type);
 
                 it.remove();
                 continue;
@@ -2301,6 +2389,13 @@ public abstract class AbstractDatabase implements Database {
 
 
 
+
+
+
+
+
+
+
     private final List<EnumDefinition> getConfiguredEnums() {
         List<EnumDefinition> result = new ArrayList<>(getConfiguredEnumTypes().size());
 
@@ -2759,7 +2854,9 @@ public abstract class AbstractDatabase implements Database {
                     continue embeddableLoop;
 
                 if (embeddable.getFields().isEmpty()) {
-                    log.warn("Illegal embeddable", "An embeddable definition must have at least one field declaration");
+                    Logging.log(onMisconfiguration(),
+                        () -> "Illegal embeddable: An embeddable definition must have at least one field declaration");
+
                     continue embeddableLoop;
                 }
 
@@ -2772,7 +2869,8 @@ public abstract class AbstractDatabase implements Database {
                     for (ColumnDefinition column : table.getColumns())
                         if (matches(patterns.pattern(embeddableField.getExpression()), column))
                             if (matched)
-                                log.warn("EmbeddableField configuration matched several columns in table " + table + ": " + embeddableField);
+                                Logging.log(onMetadataProblem(),
+                                    () -> "EmbeddableField configuration matched several columns in table " + table + ": " + embeddableField);
                             else
                                 matched = columns.add(column) && names.add(defaultIfEmpty(embeddableField.getName(), column.getName()));
                 }
@@ -2793,7 +2891,8 @@ public abstract class AbstractDatabase implements Database {
                     Name key = table.getQualifiedNamePart().append(referencingName);
                     if (result.containsKey(key)) {
                         if (!TRUE.equals(embeddable.isIgnoreUnused()))
-                            log.warn("Embeddable configuration", "Table " + table + " already has embeddable by the same referencingName " + embeddable);
+                            Logging.log(onMetadataProblem(),
+                                () -> "Table " + table + " already has embeddable by the same referencingName " + embeddable);
                     }
                     else {
                         result.put(
@@ -3011,6 +3110,7 @@ public abstract class AbstractDatabase implements Database {
     public final DomainDefinition getDomain(SchemaDefinition schema, Name name, boolean ignoreCase) {
         return getDefinition(getDomains(schema), name, ignoreCase);
     }
+
 
 
 
@@ -4033,6 +4133,12 @@ public abstract class AbstractDatabase implements Database {
             }
         }
     }
+
+
+
+
+
+
 
 
 

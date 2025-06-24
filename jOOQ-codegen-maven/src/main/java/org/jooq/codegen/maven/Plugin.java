@@ -124,7 +124,7 @@ public class Plugin extends AbstractMojo {
     private boolean                      skip;
 
     /**
-     * The logging threshold.
+     * The logging threshold, see {@link Configuration#getLogging()}.
      */
     @Parameter(
         property = "jooq.codegen.logging"
@@ -132,7 +132,7 @@ public class Plugin extends AbstractMojo {
     private org.jooq.meta.jaxb.Logging   logging;
 
     /**
-     * The on-error behavior.
+     * The on-error behavior, see {@link Configuration#getOnDeprecated()}.
      */
     @Parameter(
         property = "jooq.codegen.onError"
@@ -140,12 +140,56 @@ public class Plugin extends AbstractMojo {
     private org.jooq.meta.jaxb.OnError   onError;
 
     /**
-     * The on-unused behavior.
+     * The on-unused behavior, see {@link Configuration#getOnUnused()}.
      */
     @Parameter(
         property = "jooq.codegen.onUnused"
     )
     private org.jooq.meta.jaxb.OnError   onUnused;
+
+    /**
+     * The on-deprecated behavior, see {@link Configuration#getOnDeprecated()}.
+     */
+    @Parameter(
+        property = "jooq.codegen.onDeprecated"
+    )
+    private org.jooq.meta.jaxb.OnError   onDeprecated;
+
+    /**
+     * The on-experimental behavior, see
+     * {@link Configuration#getOnExperimental()}.
+     */
+    @Parameter(
+        property = "jooq.codegen.onExperimental"
+    )
+    private org.jooq.meta.jaxb.OnError   onExperimental;
+
+    /**
+     * The on-misconfiguration behavior, see
+     * {@link Configuration#getOnMisconfiguration()}.
+     */
+    @Parameter(
+        property = "jooq.codegen.onMisconfiguration"
+    )
+    private org.jooq.meta.jaxb.OnError   onMisconfiguration;
+
+    /**
+     * The on-metadata-problem behavior, see
+     * {@link Configuration#getOnMetadataProblem()}.
+     */
+    @Parameter(
+        property = "jooq.codegen.onMetadataProblem"
+    )
+    private org.jooq.meta.jaxb.OnError   onMetadataProblem;
+
+    /**
+     * The on-performance-problem behavior, see
+     * {@link Configuration#getOnPerformanceProblem()}.
+     */
+    @Parameter(
+        property = "jooq.codegen.onPerformanceProblem"
+    )
+    private org.jooq.meta.jaxb.OnError   onPerformanceProblem;
 
     /**
      * The jdbc settings.
@@ -230,9 +274,24 @@ public class Plugin extends AbstractMojo {
                 generator.getTarget().setDirectory(DEFAULT_TARGET_DIRECTORY);
 
             Configuration configuration = new Configuration();
-            configuration.setLogging(logging);
-            configuration.setOnError(onError);
-            configuration.setOnUnused(onUnused);
+
+            if (logging != null)
+                configuration.setLogging(logging);
+            if (onError != null)
+                configuration.setOnError(onError);
+            if (onUnused != null)
+                configuration.setOnUnused(onUnused);
+            if (onDeprecated != null)
+                configuration.setOnDeprecated(onDeprecated);
+            if (onExperimental != null)
+                configuration.setOnExperimental(onExperimental);
+            if (onMisconfiguration != null)
+                configuration.setOnMisconfiguration(onMisconfiguration);
+            if (onMetadataProblem != null)
+                configuration.setOnMetadataProblem(onMetadataProblem);
+            if (onMetadataProblem != null)
+                configuration.setOnPerformanceProblem(onPerformanceProblem);
+
             configuration.setJdbc(jdbc);
             configuration.setGenerator(generator);
             configuration.setBasedir(actualBasedir);

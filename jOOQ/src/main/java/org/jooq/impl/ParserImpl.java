@@ -6259,6 +6259,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
 
 
+
+
     private final DDLQuery parseCreateDomain() {
         boolean ifNotExists = parseKeywordIf("IF NOT EXISTS");
         Domain<?> domainName = parseDomainName();

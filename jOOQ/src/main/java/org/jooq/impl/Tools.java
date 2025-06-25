@@ -4901,14 +4901,38 @@ final class Tools {
             listener.warning(ctx);
     }
 
+    static final SQLException consumeExceptions(ExecuteContext ctx, ThrowingRunnable<SQLException> runnable) throws SQLException {
+        try {
+            runnable.run();
+            return null;
+        }
+
+        // [#3011] [#3054] [#6390] [#6413] Consume additional exceptions if there are any
+        catch (SQLException e) {
+            if (ctx.settings().getThrowExceptions() != THROW_NONE) {
+                consumeExceptions(ctx.configuration(), ctx.statement(), e);
+                throw e;
+            }
+            else {
+                return e;
+            }
+        }
+    }
+
+    static final SQLException executeUpdateAndConsumeExceptions(ExecuteContext ctx) throws SQLException {
+        return consumeExceptions(ctx, () -> {
+            ctx.resultSet(null);
+            ctx.rows(ctx.statement().executeUpdate());
+        });
+    }
+
     /**
      * [#5666] Handle the complexity of each dialect's understanding of
      * correctly calling {@link PreparedStatement#execute()}}.
      */
     static final SQLException executeStatementAndGetFirstResultSet(ExecuteContext ctx, int skipUpdateCounts) throws SQLException {
-        PreparedStatement stmt = ctx.statement();
-
-        try {
+        return consumeExceptions(ctx, () -> {
+            PreparedStatement stmt = ctx.statement();
 
 
 
@@ -4960,6 +4984,7 @@ final class Tools {
             // first ResultSet. Unexpected result sets could be produced as
             // well, but it's much harder to skip them.
             if (skipUpdateCounts > 0) {
+                int skipUpdateCounts0 = skipUpdateCounts;
 
                 fetchLoop:
                 for (int i = 0; i < maxConsumedResults; i++) {
@@ -4983,7 +5008,7 @@ final class Tools {
                             ctx.rows(updateCount);
                         }
 
-                        if (updateCount == -1 || skipUpdateCounts-- == 0)
+                        if (updateCount == -1 || skipUpdateCounts0-- == 0)
                             break fetchLoop;
                     }
                 }
@@ -4999,20 +5024,7 @@ final class Tools {
                 ctx.resultSet(null);
                 ctx.rows(stmt.getUpdateCount());
             }
-
-            return null;
-        }
-
-        // [#3011] [#3054] [#6390] [#6413] Consume additional exceptions if there are any
-        catch (SQLException e) {
-            if (ctx.settings().getThrowExceptions() != THROW_NONE) {
-                consumeExceptions(ctx.configuration(), ctx.statement(), e);
-                throw e;
-            }
-            else {
-                return e;
-            }
-        }
+        });
     }
 
 

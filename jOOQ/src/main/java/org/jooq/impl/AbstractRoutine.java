@@ -47,6 +47,7 @@ import static org.jooq.Clause.FIELD_FUNCTION;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
 // ...
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
@@ -101,6 +102,7 @@ import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_NAME;
 import static org.jooq.impl.Tools.configurationOrThrow;
 // ...
+import static org.jooq.impl.Tools.executeUpdateAndConsumeExceptions;
 import static org.jooq.impl.Tools.executeStatementAndGetFirstResultSet;
 import static org.jooq.impl.Tools.getRecordQualifier;
 import static org.jooq.impl.Tools.settings;
@@ -607,9 +609,10 @@ implements
 
 
 
-            // [#2925] Jaybird currently doesn't like fetching OUT parameters and consuming ResultSets
-            //         http://tracker.firebirdsql.org/browse/JDBC-350
-            if (ctx.family() != FIREBIRD)
+
+            // [#2925]  Jaybird currently doesn't like fetching OUT parameters and consuming ResultSets
+            //          http://tracker.firebirdsql.org/browse/JDBC-350
+            if (!asList(FIREBIRD).contains(ctx.family()))
                 Tools.consumeResultSets(ctx, listener, results, null, e);
 
             listener.outStart(ctx);
@@ -640,7 +643,15 @@ implements
 
     private final SQLException execute0(ExecuteContext ctx, ExecuteListener listener) throws SQLException {
         listener.executeStart(ctx);
-        SQLException e = executeStatementAndGetFirstResultSet(ctx, 0);
+        SQLException e;
+
+
+
+
+
+
+        e = executeStatementAndGetFirstResultSet(ctx, 0);
+
         listener.executeEnd(ctx);
 
         if (e != null)

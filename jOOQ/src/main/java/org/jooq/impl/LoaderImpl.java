@@ -100,6 +100,7 @@ import org.jooq.tools.csv.CSVParser;
 import org.jooq.tools.csv.CSVReader;
 import org.jooq.tools.jdbc.DefaultPreparedStatement;
 
+import org.jetbrains.annotations.NotNull;
 import org.xml.sax.InputSource;
 
 /**
@@ -1025,6 +1026,11 @@ final class LoaderImpl<R extends Record> implements
 
     private class DefaultLoaderContext implements LoaderContext {
         Object[] row;
+
+        @Override
+        public Field<?> @NotNull [] fields() {
+            return fields;
+        }
 
         @Override
         public final LoaderContext row(Object[] r) {

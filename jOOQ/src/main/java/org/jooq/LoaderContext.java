@@ -51,6 +51,11 @@ import org.jetbrains.annotations.Nullable;
 public interface LoaderContext {
 
     /**
+     * The loader's {@link Field} list.
+     */
+    Field<?> @NotNull [] fields();
+
+    /**
      * Override the row that will be processed. Changing it has now effect on
      * the {@link LoaderListenerStep#onRowEnd(LoaderRowListener)} event.
      */

@@ -209,6 +209,10 @@ implements
             case MYSQL: {
                 if (table != null)
                     acceptMySQL(ctx);
+
+
+
+
                 else
                     acceptDefault(ctx);
 
@@ -308,7 +312,14 @@ implements
 
 
     private final void acceptMySQL(Context<?> ctx) {
-        ctx.visit(K_ALTER_TABLE).sql(' ').visit(table).sql(' ').visit(K_COMMENT).sql(" = ").visit(comment);
+        if (table != null)
+            ctx.visit(K_ALTER_TABLE).sql(' ').visit(table).sql(' ').visit(K_COMMENT).sql(" = ").visit(comment);
+
+
+
+
+
+
     }
 
     private final void acceptDefault(Context<?> ctx) {

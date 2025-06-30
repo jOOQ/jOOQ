@@ -73,14 +73,14 @@ public interface CommentOnRoutineParametersStep extends CommentOnIsStep {
     /**
      * Add the <code>PARAMETERS</code> clause to the <code>COMMENT ON TABLE</code> statement.
      */
-    @Support({ POSTGRES, YUGABYTEDB })
+    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     @NotNull @CheckReturnValue
     CommentOnIsStep parameters(Parameter<?>... parameters);
 
     /**
      * Add the <code>PARAMETERS</code> clause to the <code>COMMENT ON TABLE</code> statement.
      */
-    @Support({ POSTGRES, YUGABYTEDB })
+    @Support({ MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     @NotNull @CheckReturnValue
     CommentOnIsStep parameters(Collection<? extends Parameter<?>> parameters);
 }

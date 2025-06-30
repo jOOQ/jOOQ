@@ -576,6 +576,7 @@ import org.jooq.CharacterSet;
 import org.jooq.Collation;
 import org.jooq.Comment;
 import org.jooq.CommentOnIsStep;
+import org.jooq.CommentOnRoutineParametersStep;
 import org.jooq.CommonTableExpression;
 import org.jooq.Comparator;
 import org.jooq.Condition;
@@ -2856,7 +2857,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
     private final DDLQuery parseCommentOn() {
         parseKeyword("COMMENT ON");
 
-        CommentOnIsStep s1;
+        CommentOnIsStep s1 = null;
 
         if (parseKeywordIf("COLUMN")) {
             s1 = dsl.commentOnColumn(parseFieldName());
@@ -2879,6 +2880,20 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         }
         else if (parseKeywordIf("MATERIALIZED VIEW")) {
             s1 = dsl.commentOnMaterializedView(parseTableName());
+        }
+        else if (parseProKeywordIf("FUNCTION")) {
+
+
+
+
+
+        }
+        else if (parseProKeywordIf("PROCEDURE")) {
+
+
+
+
+
         }
 
         // Ignored no-arg object comments
@@ -3205,8 +3220,11 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                 break;
 
             case 'F':
-                if (parseKeywordIf("FUNCTION"))
-                    throw notImplemented("ALTER FUNCTION", "https://github.com/jOOQ/jOOQ/issues/9190");
+                if (parseProKeywordIf("FUNCTION"))
+
+
+
+                    ;
 
                 break;
 
@@ -3224,8 +3242,11 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
             case 'P':
                 if (parseKeywordIf("PACKAGE"))
                     throw notImplemented("ALTER PACKAGE", "https://github.com/jOOQ/jOOQ/issues/9190");
-                else if (parseKeywordIf("PROCEDURE"))
-                    throw notImplemented("ALTER PROCEDURE", "https://github.com/jOOQ/jOOQ/issues/9190");
+                else if (parseProKeywordIf("PROCEDURE"))
+
+
+
+                    ;
 
                 break;
 
@@ -6871,6 +6892,26 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         else
             throw expected("ADD", "DROP", "RENAME", "SET", "OWNER TO");
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private final DDLQuery parseCreateDatabase() {
         boolean ifNotExists = parseKeywordIf("IF NOT EXISTS");

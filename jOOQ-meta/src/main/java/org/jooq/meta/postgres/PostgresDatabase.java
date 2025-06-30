@@ -1147,13 +1147,18 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
             ? PG_PROC.PROKIND.eq(inline("a"))
             : field("{0}.proisagg", SQLDataType.BOOLEAN, PG_PROC)
         ).as("is_agg");
+        Field<String> routineType = r1.ROUTINE_TYPE;
+
+
+
+
 
         return
         create().select(
                 r1.ROUTINE_SCHEMA,
                 r1.ROUTINE_NAME,
                 r1.SPECIFIC_NAME,
-                r1.ROUTINE_TYPE,
+                routineType.as(r1.ROUTINE_TYPE),
 
                 when(r1.DATA_TYPE.eq(inline("USER-DEFINED")).and(r1.TYPE_UDT_NAME.eq(inline("geometry"))), inline("geometry"))
 
@@ -1301,6 +1306,12 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
     protected boolean exists0(Table<?> table) {
         return exists1(table, TABLES, TABLES.TABLE_SCHEMA, TABLES.TABLE_NAME);
     }
+
+
+
+
+
+
 
 
 

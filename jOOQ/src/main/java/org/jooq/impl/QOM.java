@@ -2074,6 +2074,8 @@ public final class QOM {
         @NotNull CommentObjectType $objectType();
         @Nullable Table<?> $table();
         @Nullable Field<?> $field();
+        @Nullable Name $function();
+        @Nullable Name $procedure();
 
         /**
          * @deprecated - 3.21.0 - [#18684] - Use {@link #$objectType()} instead.
@@ -2086,6 +2088,7 @@ public final class QOM {
          */
         @Deprecated(forRemoval = true, since = "3.21")
         boolean $isMaterializedView();
+        @NotNull UnmodifiableList<? extends Parameter<?>> $parameters();
         @NotNull Comment $comment();
         @CheckReturnValue
         @NotNull CommentOn $objectType(CommentObjectType objectType);
@@ -2093,6 +2096,10 @@ public final class QOM {
         @NotNull CommentOn $table(Table<?> table);
         @CheckReturnValue
         @NotNull CommentOn $field(Field<?> field);
+        @CheckReturnValue
+        @NotNull CommentOn $function(Name function);
+        @CheckReturnValue
+        @NotNull CommentOn $procedure(Name procedure);
 
         /**
          * @deprecated - 3.21.0 - [#18684] - Use {@link #$objectType()} instead.
@@ -2107,6 +2114,8 @@ public final class QOM {
         @Deprecated(forRemoval = true, since = "3.21")
         @CheckReturnValue
         @NotNull CommentOn $isMaterializedView(boolean isMaterializedView);
+        @CheckReturnValue
+        @NotNull CommentOn $parameters(Collection<? extends Parameter<?>> parameters);
         @CheckReturnValue
         @NotNull CommentOn $comment(Comment comment);
     }
@@ -10307,7 +10316,9 @@ public final class QOM {
      */
     public enum CommentObjectType {
         COLUMN(keyword("column")),
+        FUNCTION(keyword("function")),
         MATERIALIZED_VIEW(keyword("materialized view")),
+        PROCEDURE(keyword("procedure")),
         TABLE(keyword("table")),
         VIEW(keyword("view")),
         ;

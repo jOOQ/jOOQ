@@ -3178,63 +3178,91 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public org.jooq.CommentOnIsStep commentOnTable(@Stringly.Name String table) {
-        return new CommentOnImpl(configuration(), CommentObjectType.TABLE, DSL.table(DSL.name(table)), null);
+        return new CommentOnImpl(configuration(), CommentObjectType.TABLE, DSL.table(DSL.name(table)), null, null, null);
     }
 
     @Override
     public org.jooq.CommentOnIsStep commentOnTable(Name table) {
-        return new CommentOnImpl(configuration(), CommentObjectType.TABLE, DSL.table(table), null);
+        return new CommentOnImpl(configuration(), CommentObjectType.TABLE, DSL.table(table), null, null, null);
     }
 
     @Override
     public org.jooq.CommentOnIsStep commentOnTable(Table<?> table) {
-        return new CommentOnImpl(configuration(), CommentObjectType.TABLE, table, null);
+        return new CommentOnImpl(configuration(), CommentObjectType.TABLE, table, null, null, null);
     }
 
     @Override
     public org.jooq.CommentOnIsStep commentOnView(@Stringly.Name String view) {
-        return new CommentOnImpl(configuration(), CommentObjectType.VIEW, DSL.table(DSL.name(view)), null);
+        return new CommentOnImpl(configuration(), CommentObjectType.VIEW, DSL.table(DSL.name(view)), null, null, null);
     }
 
     @Override
     public org.jooq.CommentOnIsStep commentOnView(Name view) {
-        return new CommentOnImpl(configuration(), CommentObjectType.VIEW, DSL.table(view), null);
+        return new CommentOnImpl(configuration(), CommentObjectType.VIEW, DSL.table(view), null, null, null);
     }
 
     @Override
     public org.jooq.CommentOnIsStep commentOnView(Table<?> view) {
-        return new CommentOnImpl(configuration(), CommentObjectType.VIEW, view, null);
+        return new CommentOnImpl(configuration(), CommentObjectType.VIEW, view, null, null, null);
     }
 
     @Override
     public org.jooq.CommentOnIsStep commentOnMaterializedView(@Stringly.Name String view) {
-        return new CommentOnImpl(configuration(), CommentObjectType.MATERIALIZED_VIEW, DSL.table(DSL.name(view)), null);
+        return new CommentOnImpl(configuration(), CommentObjectType.MATERIALIZED_VIEW, DSL.table(DSL.name(view)), null, null, null);
     }
 
     @Override
     public org.jooq.CommentOnIsStep commentOnMaterializedView(Name view) {
-        return new CommentOnImpl(configuration(), CommentObjectType.MATERIALIZED_VIEW, DSL.table(view), null);
+        return new CommentOnImpl(configuration(), CommentObjectType.MATERIALIZED_VIEW, DSL.table(view), null, null, null);
     }
 
     @Override
     public org.jooq.CommentOnIsStep commentOnMaterializedView(Table<?> view) {
-        return new CommentOnImpl(configuration(), CommentObjectType.MATERIALIZED_VIEW, view, null);
+        return new CommentOnImpl(configuration(), CommentObjectType.MATERIALIZED_VIEW, view, null, null, null);
     }
 
     @Override
     public org.jooq.CommentOnIsStep commentOnColumn(@Stringly.Name String field) {
-        return new CommentOnImpl(configuration(), CommentObjectType.COLUMN, null, DSL.field(DSL.name(field)));
+        return new CommentOnImpl(configuration(), CommentObjectType.COLUMN, null, DSL.field(DSL.name(field)), null, null);
     }
 
     @Override
     public org.jooq.CommentOnIsStep commentOnColumn(Name field) {
-        return new CommentOnImpl(configuration(), CommentObjectType.COLUMN, null, DSL.field(field));
+        return new CommentOnImpl(configuration(), CommentObjectType.COLUMN, null, DSL.field(field), null, null);
     }
 
     @Override
     public org.jooq.CommentOnIsStep commentOnColumn(Field<?> field) {
-        return new CommentOnImpl(configuration(), CommentObjectType.COLUMN, null, field);
+        return new CommentOnImpl(configuration(), CommentObjectType.COLUMN, null, field, null, null);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @Override
     public org.jooq.CreateDatabaseFinalStep createDatabase(@Stringly.Name String database) {

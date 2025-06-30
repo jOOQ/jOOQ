@@ -74,26 +74,35 @@ extends
     AbstractDDLQuery
 implements
     QOM.CommentOn,
+    CommentOnRoutineParametersStep,
     CommentOnIsStep,
     CommentOnFinalStep
 {
 
-    final CommentObjectType objectType;
-    final Table<?>          table;
-    final Field<?>          field;
-          Comment           comment;
+    final CommentObjectType                         objectType;
+    final Table<?>                                  table;
+    final Field<?>                                  field;
+    final Name                                      function;
+    final Name                                      procedure;
+          QueryPartListView<? extends Parameter<?>> parameters;
+          Comment                                   comment;
 
     CommentOnImpl(
         Configuration configuration,
         CommentObjectType objectType,
         Table<?> table,
-        Field<?> field
+        Field<?> field,
+        Name function,
+        Name procedure
     ) {
         this(
             configuration,
             objectType,
             table,
             field,
+            function,
+            procedure,
+            null,
             null
         );
     }
@@ -107,6 +116,8 @@ implements
             configuration,
             objectType,
             table,
+            null,
+            null,
             null
         );
     }
@@ -116,6 +127,9 @@ implements
         CommentObjectType objectType,
         Table<?> table,
         Field<?> field,
+        Name function,
+        Name procedure,
+        Collection<? extends Parameter<?>> parameters,
         Comment comment
     ) {
         super(configuration);
@@ -123,12 +137,26 @@ implements
         this.objectType = objectType;
         this.table = table;
         this.field = field;
+        this.function = function;
+        this.procedure = procedure;
+        this.parameters = new QueryPartList<>(parameters);
         this.comment = comment;
     }
 
     // -------------------------------------------------------------------------
     // XXX: DSL API
     // -------------------------------------------------------------------------
+
+    @Override
+    public final CommentOnImpl parameters(Parameter<?>... parameters) {
+        return parameters(Arrays.asList(parameters));
+    }
+
+    @Override
+    public final CommentOnImpl parameters(Collection<? extends Parameter<?>> parameters) {
+        this.parameters = new QueryPartList<>(parameters);
+        return this;
+    }
 
     @Override
     public final CommentOnImpl is(String comment) {
@@ -302,6 +330,14 @@ implements
         }
         else if (field != null)
             ctx.visit(K_COLUMN).sql(' ').visit(field);
+
+
+
+
+
+
+
+
         else
             throw new IllegalStateException();
 
@@ -330,6 +366,16 @@ implements
     }
 
     @Override
+    public final Name $function() {
+        return function;
+    }
+
+    @Override
+    public final Name $procedure() {
+        return procedure;
+    }
+
+    @Override
     public final boolean $isView() {
         return $objectType() == CommentObjectType.VIEW;
     }
@@ -340,28 +386,48 @@ implements
     }
 
     @Override
+    public final QOM.UnmodifiableList<? extends Parameter<?>> $parameters() {
+        return QOM.unmodifiable(parameters);
+    }
+
+    @Override
     public final Comment $comment() {
         return comment;
     }
 
     @Override
     public final QOM.CommentOn $objectType(CommentObjectType newValue) {
-        return $constructor().apply(newValue, $table(), $field(), $comment());
+        return $constructor().apply(newValue, $table(), $field(), $function(), $procedure(), $parameters(), $comment());
     }
 
     @Override
     public final QOM.CommentOn $table(Table<?> newValue) {
-        return $constructor().apply($objectType(), newValue, $field(), $comment());
+        return $constructor().apply($objectType(), newValue, $field(), $function(), $procedure(), $parameters(), $comment());
     }
 
     @Override
     public final QOM.CommentOn $field(Field<?> newValue) {
-        return $constructor().apply($objectType(), $table(), newValue, $comment());
+        return $constructor().apply($objectType(), $table(), newValue, $function(), $procedure(), $parameters(), $comment());
+    }
+
+    @Override
+    public final QOM.CommentOn $function(Name newValue) {
+        return $constructor().apply($objectType(), $table(), $field(), newValue, $procedure(), $parameters(), $comment());
+    }
+
+    @Override
+    public final QOM.CommentOn $procedure(Name newValue) {
+        return $constructor().apply($objectType(), $table(), $field(), $function(), newValue, $parameters(), $comment());
+    }
+
+    @Override
+    public final QOM.CommentOn $parameters(Collection<? extends Parameter<?>> newValue) {
+        return $constructor().apply($objectType(), $table(), $field(), $function(), $procedure(), newValue, $comment());
     }
 
     @Override
     public final QOM.CommentOn $comment(Comment newValue) {
-        return $constructor().apply($objectType(), $table(), $field(), newValue);
+        return $constructor().apply($objectType(), $table(), $field(), $function(), $procedure(), $parameters(), newValue);
     }
 
     @Override
@@ -374,9 +440,15 @@ implements
         return $objectType(newValue ? CommentObjectType.MATERIALIZED_VIEW : CommentObjectType.TABLE);
     }
 
-    public final Function4<? super CommentObjectType, ? super Table<?>, ? super Field<?>, ? super Comment, ? extends QOM.CommentOn> $constructor() {
-        return (a1, a2, a3, a4) -> new CommentOnImpl(configuration(), a1, a2, a3, a4);
+    public final Function7<? super CommentObjectType, ? super Table<?>, ? super Field<?>, ? super Name, ? super Name, ? super Collection<? extends Parameter<?>>, ? super Comment, ? extends QOM.CommentOn> $constructor() {
+        return (a1, a2, a3, a4, a5, a6, a7) -> new CommentOnImpl(configuration(), a1, a2, a3, a4, a5, (Collection<? extends Parameter<?>>) a6, a7);
     }
+
+
+
+
+
+
 
 
 

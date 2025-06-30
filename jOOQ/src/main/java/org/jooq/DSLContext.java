@@ -10012,6 +10012,50 @@ public interface DSLContext extends Scope {
     @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     CommentOnIsStep commentOnColumn(Field<?> field);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * The <code>CREATE DATABASE</code> statement.
      *

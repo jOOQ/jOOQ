@@ -5042,8 +5042,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
             // [#10164] In a statement batch, this could already be the next statement
             else if (!peekKeyword("COMMENT ON") && parseKeywordIf("COMMENT")) {
-                if (!parseIf('='))
-                    parseKeywordIf("IS");
+                parseEqualOrIsIf();
                 comment = parseComment();
             }
             else if (peekKeyword("OPTIONS")) {
@@ -5143,6 +5142,13 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
             return storageStep.storage(new SQLConcatenationImpl(storage.toArray(EMPTY_QUERYPART)));
         else
             return storageStep;
+    }
+
+    private final boolean parseEqualOrIsIf() {
+        if (!parseIf('='))
+            parseKeywordIf("IS");
+
+        return true;
     }
 
     private static final record ParseInlineConstraints(DataType<?> type, Comment fieldComment, boolean primary, boolean identity, boolean hidden, boolean readonly) {}
@@ -5358,8 +5364,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
                 // [#10164] In a statement batch, this could already be the next statement
                 if (!peekKeyword("COMMENT ON") && parseKeywordIf("COMMENT")) {
-                    if (!parseIf('='))
-                        parseKeywordIf("IS");
+                    parseEqualOrIsIf();
                     fieldComment = parseComment();
                     comment = true;
                     continue;
@@ -5877,9 +5882,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                                   .is(parseStringLiteral());
                     }
                     else {
-                        if (!parseIf('='))
-                            parseKeywordIf("IS");
-
+                        parseEqualOrIsIf();
                         return dsl.commentOnTable(tableName).is(parseStringLiteral());
                     }
                 }
@@ -6351,6 +6354,23 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
             true
         );
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

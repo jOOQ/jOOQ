@@ -57,13 +57,6 @@ import static org.jooq.impl.DSL.sequence;
 import static org.jooq.impl.DSL.sql;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.zero;
-import static org.jooq.impl.QOM.CommentObjectType.COLUMN;
-import static org.jooq.impl.QOM.CommentObjectType.MATERIALIZED_VIEW;
-import static org.jooq.impl.QOM.CommentObjectType.TABLE;
-import static org.jooq.impl.QOM.CommentObjectType.VIEW;
-import static org.jooq.impl.QOM.TableScope.GLOBAL_TEMPORARY;
-import static org.jooq.impl.QOM.TableScope.LOCAL_TEMPORARY;
-import static org.jooq.impl.QOM.TableScope.TEMPORARY;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_NAME;
 import static org.jooq.impl.Tools.EMPTY_QUERY;
@@ -285,6 +278,7 @@ import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.BatchCRUD.Action;
 import org.jooq.impl.QOM.CommentObjectType;
+import org.jooq.impl.QOM.TableScope;
 import org.jooq.impl.R2DBC.BlockingTransactionSubscription;
 import org.jooq.impl.R2DBC.TransactionSubscription;
 import org.jooq.tools.csv.CSVReader;
@@ -3440,122 +3434,122 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public org.jooq.CreateTableElementListStep createTable(@Stringly.Name String table) {
-        return new CreateTableImpl(configuration(), DSL.table(DSL.name(table)), false, null, false);
+        return new CreateTableImpl(configuration(), DSL.table(DSL.name(table)), null, false);
     }
 
     @Override
     public org.jooq.CreateTableElementListStep createTable(Name table) {
-        return new CreateTableImpl(configuration(), DSL.table(table), false, null, false);
+        return new CreateTableImpl(configuration(), DSL.table(table), null, false);
     }
 
     @Override
     public org.jooq.CreateTableElementListStep createTable(Table<?> table) {
-        return new CreateTableImpl(configuration(), table, false, null, false);
+        return new CreateTableImpl(configuration(), table, null, false);
     }
 
     @Override
     public org.jooq.CreateTableElementListStep createTableIfNotExists(@Stringly.Name String table) {
-        return new CreateTableImpl(configuration(), DSL.table(DSL.name(table)), false, null, true);
+        return new CreateTableImpl(configuration(), DSL.table(DSL.name(table)), null, true);
     }
 
     @Override
     public org.jooq.CreateTableElementListStep createTableIfNotExists(Name table) {
-        return new CreateTableImpl(configuration(), DSL.table(table), false, null, true);
+        return new CreateTableImpl(configuration(), DSL.table(table), null, true);
     }
 
     @Override
     public org.jooq.CreateTableElementListStep createTableIfNotExists(Table<?> table) {
-        return new CreateTableImpl(configuration(), table, false, null, true);
+        return new CreateTableImpl(configuration(), table, null, true);
     }
 
     @Override
     public org.jooq.CreateTableElementListStep createTemporaryTable(@Stringly.Name String table) {
-        return new CreateTableImpl(configuration(), DSL.table(DSL.name(table)), true, TEMPORARY, false);
+        return new CreateTableImpl(configuration(), DSL.table(DSL.name(table)), TableScope.TEMPORARY, false);
     }
 
     @Override
     public org.jooq.CreateTableElementListStep createTemporaryTable(Name table) {
-        return new CreateTableImpl(configuration(), DSL.table(table), true, TEMPORARY, false);
+        return new CreateTableImpl(configuration(), DSL.table(table), TableScope.TEMPORARY, false);
     }
 
     @Override
     public org.jooq.CreateTableElementListStep createTemporaryTable(Table<?> table) {
-        return new CreateTableImpl(configuration(), table, true, TEMPORARY, false);
+        return new CreateTableImpl(configuration(), table, TableScope.TEMPORARY, false);
     }
 
     @Override
     public org.jooq.CreateTableElementListStep createTemporaryTableIfNotExists(@Stringly.Name String table) {
-        return new CreateTableImpl(configuration(), DSL.table(DSL.name(table)), true, TEMPORARY, true);
+        return new CreateTableImpl(configuration(), DSL.table(DSL.name(table)), TableScope.TEMPORARY, true);
     }
 
     @Override
     public org.jooq.CreateTableElementListStep createTemporaryTableIfNotExists(Name table) {
-        return new CreateTableImpl(configuration(), DSL.table(table), true, TEMPORARY, true);
+        return new CreateTableImpl(configuration(), DSL.table(table), TableScope.TEMPORARY, true);
     }
 
     @Override
     public org.jooq.CreateTableElementListStep createTemporaryTableIfNotExists(Table<?> table) {
-        return new CreateTableImpl(configuration(), table, true, TEMPORARY, true);
+        return new CreateTableImpl(configuration(), table, TableScope.TEMPORARY, true);
     }
 
     @Override
     public org.jooq.CreateTableElementListStep createLocalTemporaryTable(@Stringly.Name String table) {
-        return new CreateTableImpl(configuration(), DSL.table(DSL.name(table)), true, LOCAL_TEMPORARY, false);
+        return new CreateTableImpl(configuration(), DSL.table(DSL.name(table)), TableScope.LOCAL_TEMPORARY, false);
     }
 
     @Override
     public org.jooq.CreateTableElementListStep createLocalTemporaryTable(Name table) {
-        return new CreateTableImpl(configuration(), DSL.table(table), true, LOCAL_TEMPORARY, false);
+        return new CreateTableImpl(configuration(), DSL.table(table), TableScope.LOCAL_TEMPORARY, false);
     }
 
     @Override
     public org.jooq.CreateTableElementListStep createLocalTemporaryTable(Table<?> table) {
-        return new CreateTableImpl(configuration(), table, true, LOCAL_TEMPORARY, false);
+        return new CreateTableImpl(configuration(), table, TableScope.LOCAL_TEMPORARY, false);
     }
 
     @Override
     public org.jooq.CreateTableElementListStep createLocalTemporaryTableIfNotExists(@Stringly.Name String table) {
-        return new CreateTableImpl(configuration(), DSL.table(DSL.name(table)), true, LOCAL_TEMPORARY, true);
+        return new CreateTableImpl(configuration(), DSL.table(DSL.name(table)), TableScope.LOCAL_TEMPORARY, true);
     }
 
     @Override
     public org.jooq.CreateTableElementListStep createLocalTemporaryTableIfNotExists(Name table) {
-        return new CreateTableImpl(configuration(), DSL.table(table), true, LOCAL_TEMPORARY, true);
+        return new CreateTableImpl(configuration(), DSL.table(table), TableScope.LOCAL_TEMPORARY, true);
     }
 
     @Override
     public org.jooq.CreateTableElementListStep createLocalTemporaryTableIfNotExists(Table<?> table) {
-        return new CreateTableImpl(configuration(), table, true, LOCAL_TEMPORARY, true);
+        return new CreateTableImpl(configuration(), table, TableScope.LOCAL_TEMPORARY, true);
     }
 
     @Override
     public org.jooq.CreateTableElementListStep createGlobalTemporaryTable(@Stringly.Name String table) {
-        return new CreateTableImpl(configuration(), DSL.table(DSL.name(table)), true, GLOBAL_TEMPORARY, false);
+        return new CreateTableImpl(configuration(), DSL.table(DSL.name(table)), TableScope.GLOBAL_TEMPORARY, false);
     }
 
     @Override
     public org.jooq.CreateTableElementListStep createGlobalTemporaryTable(Name table) {
-        return new CreateTableImpl(configuration(), DSL.table(table), true, GLOBAL_TEMPORARY, false);
+        return new CreateTableImpl(configuration(), DSL.table(table), TableScope.GLOBAL_TEMPORARY, false);
     }
 
     @Override
     public org.jooq.CreateTableElementListStep createGlobalTemporaryTable(Table<?> table) {
-        return new CreateTableImpl(configuration(), table, true, GLOBAL_TEMPORARY, false);
+        return new CreateTableImpl(configuration(), table, TableScope.GLOBAL_TEMPORARY, false);
     }
 
     @Override
     public org.jooq.CreateTableElementListStep createGlobalTemporaryTableIfNotExists(@Stringly.Name String table) {
-        return new CreateTableImpl(configuration(), DSL.table(DSL.name(table)), true, GLOBAL_TEMPORARY, true);
+        return new CreateTableImpl(configuration(), DSL.table(DSL.name(table)), TableScope.GLOBAL_TEMPORARY, true);
     }
 
     @Override
     public org.jooq.CreateTableElementListStep createGlobalTemporaryTableIfNotExists(Name table) {
-        return new CreateTableImpl(configuration(), DSL.table(table), true, GLOBAL_TEMPORARY, true);
+        return new CreateTableImpl(configuration(), DSL.table(table), TableScope.GLOBAL_TEMPORARY, true);
     }
 
     @Override
     public org.jooq.CreateTableElementListStep createGlobalTemporaryTableIfNotExists(Table<?> table) {
-        return new CreateTableImpl(configuration(), table, true, GLOBAL_TEMPORARY, true);
+        return new CreateTableImpl(configuration(), table, TableScope.GLOBAL_TEMPORARY, true);
     }
 
     @Override
@@ -4228,122 +4222,122 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public org.jooq.DropTableStep dropTable(@Stringly.Name String table) {
-        return new DropTableImpl(configuration(), false, null, DSL.table(DSL.name(table)), false);
+        return new DropTableImpl(configuration(), null, DSL.table(DSL.name(table)), false);
     }
 
     @Override
     public org.jooq.DropTableStep dropTable(Name table) {
-        return new DropTableImpl(configuration(), false, null, DSL.table(table), false);
+        return new DropTableImpl(configuration(), null, DSL.table(table), false);
     }
 
     @Override
     public org.jooq.DropTableStep dropTable(Table<?> table) {
-        return new DropTableImpl(configuration(), false, null, table, false);
+        return new DropTableImpl(configuration(), null, table, false);
     }
 
     @Override
     public org.jooq.DropTableStep dropTableIfExists(@Stringly.Name String table) {
-        return new DropTableImpl(configuration(), false, null, DSL.table(DSL.name(table)), true);
+        return new DropTableImpl(configuration(), null, DSL.table(DSL.name(table)), true);
     }
 
     @Override
     public org.jooq.DropTableStep dropTableIfExists(Name table) {
-        return new DropTableImpl(configuration(), false, null, DSL.table(table), true);
+        return new DropTableImpl(configuration(), null, DSL.table(table), true);
     }
 
     @Override
     public org.jooq.DropTableStep dropTableIfExists(Table<?> table) {
-        return new DropTableImpl(configuration(), false, null, table, true);
+        return new DropTableImpl(configuration(), null, table, true);
     }
 
     @Override
     public org.jooq.DropTableStep dropTemporaryTable(@Stringly.Name String table) {
-        return new DropTableImpl(configuration(), true, TEMPORARY, DSL.table(DSL.name(table)), false);
+        return new DropTableImpl(configuration(), TableScope.TEMPORARY, DSL.table(DSL.name(table)), false);
     }
 
     @Override
     public org.jooq.DropTableStep dropTemporaryTable(Name table) {
-        return new DropTableImpl(configuration(), true, TEMPORARY, DSL.table(table), false);
+        return new DropTableImpl(configuration(), TableScope.TEMPORARY, DSL.table(table), false);
     }
 
     @Override
     public org.jooq.DropTableStep dropTemporaryTable(Table<?> table) {
-        return new DropTableImpl(configuration(), true, TEMPORARY, table, false);
+        return new DropTableImpl(configuration(), TableScope.TEMPORARY, table, false);
     }
 
     @Override
     public org.jooq.DropTableStep dropTemporaryTableIfExists(@Stringly.Name String table) {
-        return new DropTableImpl(configuration(), true, TEMPORARY, DSL.table(DSL.name(table)), true);
+        return new DropTableImpl(configuration(), TableScope.TEMPORARY, DSL.table(DSL.name(table)), true);
     }
 
     @Override
     public org.jooq.DropTableStep dropTemporaryTableIfExists(Name table) {
-        return new DropTableImpl(configuration(), true, TEMPORARY, DSL.table(table), true);
+        return new DropTableImpl(configuration(), TableScope.TEMPORARY, DSL.table(table), true);
     }
 
     @Override
     public org.jooq.DropTableStep dropTemporaryTableIfExists(Table<?> table) {
-        return new DropTableImpl(configuration(), true, TEMPORARY, table, true);
+        return new DropTableImpl(configuration(), TableScope.TEMPORARY, table, true);
     }
 
     @Override
     public org.jooq.DropTableStep dropLocalTemporaryTable(@Stringly.Name String table) {
-        return new DropTableImpl(configuration(), true, LOCAL_TEMPORARY, DSL.table(DSL.name(table)), false);
+        return new DropTableImpl(configuration(), TableScope.LOCAL_TEMPORARY, DSL.table(DSL.name(table)), false);
     }
 
     @Override
     public org.jooq.DropTableStep dropLocalTemporaryTable(Name table) {
-        return new DropTableImpl(configuration(), true, LOCAL_TEMPORARY, DSL.table(table), false);
+        return new DropTableImpl(configuration(), TableScope.LOCAL_TEMPORARY, DSL.table(table), false);
     }
 
     @Override
     public org.jooq.DropTableStep dropLocalTemporaryTable(Table<?> table) {
-        return new DropTableImpl(configuration(), true, LOCAL_TEMPORARY, table, false);
+        return new DropTableImpl(configuration(), TableScope.LOCAL_TEMPORARY, table, false);
     }
 
     @Override
     public org.jooq.DropTableStep dropLocalTemporaryTableIfExists(@Stringly.Name String table) {
-        return new DropTableImpl(configuration(), true, LOCAL_TEMPORARY, DSL.table(DSL.name(table)), true);
+        return new DropTableImpl(configuration(), TableScope.LOCAL_TEMPORARY, DSL.table(DSL.name(table)), true);
     }
 
     @Override
     public org.jooq.DropTableStep dropLocalTemporaryTableIfExists(Name table) {
-        return new DropTableImpl(configuration(), true, LOCAL_TEMPORARY, DSL.table(table), true);
+        return new DropTableImpl(configuration(), TableScope.LOCAL_TEMPORARY, DSL.table(table), true);
     }
 
     @Override
     public org.jooq.DropTableStep dropLocalTemporaryTableIfExists(Table<?> table) {
-        return new DropTableImpl(configuration(), true, LOCAL_TEMPORARY, table, true);
+        return new DropTableImpl(configuration(), TableScope.LOCAL_TEMPORARY, table, true);
     }
 
     @Override
     public org.jooq.DropTableStep dropGlobalTemporaryTable(@Stringly.Name String table) {
-        return new DropTableImpl(configuration(), true, GLOBAL_TEMPORARY, DSL.table(DSL.name(table)), false);
+        return new DropTableImpl(configuration(), TableScope.GLOBAL_TEMPORARY, DSL.table(DSL.name(table)), false);
     }
 
     @Override
     public org.jooq.DropTableStep dropGlobalTemporaryTable(Name table) {
-        return new DropTableImpl(configuration(), true, GLOBAL_TEMPORARY, DSL.table(table), false);
+        return new DropTableImpl(configuration(), TableScope.GLOBAL_TEMPORARY, DSL.table(table), false);
     }
 
     @Override
     public org.jooq.DropTableStep dropGlobalTemporaryTable(Table<?> table) {
-        return new DropTableImpl(configuration(), true, GLOBAL_TEMPORARY, table, false);
+        return new DropTableImpl(configuration(), TableScope.GLOBAL_TEMPORARY, table, false);
     }
 
     @Override
     public org.jooq.DropTableStep dropGlobalTemporaryTableIfExists(@Stringly.Name String table) {
-        return new DropTableImpl(configuration(), true, GLOBAL_TEMPORARY, DSL.table(DSL.name(table)), true);
+        return new DropTableImpl(configuration(), TableScope.GLOBAL_TEMPORARY, DSL.table(DSL.name(table)), true);
     }
 
     @Override
     public org.jooq.DropTableStep dropGlobalTemporaryTableIfExists(Name table) {
-        return new DropTableImpl(configuration(), true, GLOBAL_TEMPORARY, DSL.table(table), true);
+        return new DropTableImpl(configuration(), TableScope.GLOBAL_TEMPORARY, DSL.table(table), true);
     }
 
     @Override
     public org.jooq.DropTableStep dropGlobalTemporaryTableIfExists(Table<?> table) {
-        return new DropTableImpl(configuration(), true, GLOBAL_TEMPORARY, table, true);
+        return new DropTableImpl(configuration(), TableScope.GLOBAL_TEMPORARY, table, true);
     }
 
 

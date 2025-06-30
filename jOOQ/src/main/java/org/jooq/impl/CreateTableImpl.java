@@ -86,7 +86,6 @@ implements
 {
 
     final Table<?>                                  table;
-    final boolean                                   temporary;
     final TableScope                                tableScope;
     final boolean                                   ifNotExists;
           QueryPartListView<? extends TableElement> tableElements;
@@ -99,14 +98,12 @@ implements
     CreateTableImpl(
         Configuration configuration,
         Table<?> table,
-        boolean temporary,
         TableScope tableScope,
         boolean ifNotExists
     ) {
         this(
             configuration,
             table,
-            temporary,
             tableScope,
             ifNotExists,
             null,
@@ -121,13 +118,11 @@ implements
     CreateTableImpl(
         Configuration configuration,
         Table<?> table,
-        boolean temporary,
         boolean ifNotExists
     ) {
         this(
             configuration,
             table,
-            temporary,
             null,
             ifNotExists
         );
@@ -136,7 +131,6 @@ implements
     CreateTableImpl(
         Configuration configuration,
         Table<?> table,
-        boolean temporary,
         TableScope tableScope,
         boolean ifNotExists,
         Collection<? extends TableElement> tableElements,
@@ -149,7 +143,6 @@ implements
         super(configuration);
 
         this.table = table;
-        this.temporary = temporary;
         this.tableScope = tableScope;
         this.ifNotExists = ifNotExists;
         this.tableElements = new QueryPartList<>(tableElements);
@@ -779,8 +772,6 @@ implements
 
 
     private final void toSQLCreateTableName(Context<?> ctx) {
-        TableScope s = tableScope(ctx, tableScope, temporary);
-
         ctx.start(Clause.CREATE_TABLE_NAME);
 
         switch (ctx.family()) {
@@ -799,7 +790,7 @@ implements
                 break;
         }
 
-        toSQLTableScope(ctx, s);
+        toSQLTableScope(ctx, tableScope);
         ctx.visit(K_TABLE)
            .sql(' ');
 
@@ -807,7 +798,7 @@ implements
             ctx.visit(K_IF_NOT_EXISTS)
                .sql(' ');
 
-        ctx.visit(tableName(ctx, s, table))
+        ctx.visit(tableName(ctx, tableScope, table))
            .end(Clause.CREATE_TABLE_NAME);
     }
 
@@ -828,16 +819,6 @@ implements
 
 
         return table;
-    }
-
-    static final TableScope tableScope(Scope ctx, TableScope tableScope, boolean temporary) {
-        return tableScope != null
-            ? tableScope
-            : temporary
-            ? NO_SUPPORT_GLOBAL_TEMPORARY.contains(ctx.dialect())
-                ? TableScope.TEMPORARY
-                : TableScope.GLOBAL_TEMPORARY
-            : null;
     }
 
     private static final void toSQLTableScope(Context<?> ctx, TableScope tableScope) {
@@ -915,7 +896,7 @@ implements
     }
 
     private final void toSQLOnCommit(Context<?> ctx) {
-        if (temporary && onCommit != null) {
+        if (tableScope != null && onCommit != null) {
             switch (onCommit) {
                 case DELETE_ROWS:   ctx.formatSeparator().visit(K_ON_COMMIT_DELETE_ROWS);   break;
                 case PRESERVE_ROWS: ctx.formatSeparator().visit(K_ON_COMMIT_PRESERVE_ROWS); break;
@@ -956,11 +937,6 @@ implements
     }
 
     @Override
-    public final boolean $temporary() {
-        return temporary;
-    }
-
-    @Override
     public final TableScope $tableScope() {
         return tableScope;
     }
@@ -968,6 +944,11 @@ implements
     @Override
     public final boolean $ifNotExists() {
         return ifNotExists;
+    }
+
+    @Override
+    public final boolean $temporary() {
+        return $tableScope() != null;
     }
 
     @Override
@@ -1002,58 +983,57 @@ implements
 
     @Override
     public final QOM.CreateTable $table(Table<?> newValue) {
-        return $constructor().apply(newValue, $temporary(), $tableScope(), $ifNotExists(), $tableElements(), $select(), $withData(), $onCommit(), $comment(), $storage());
-    }
-
-    @Override
-    public final QOM.CreateTable $temporary(boolean newValue) {
-        return $constructor().apply($table(), newValue, $tableScope(), $ifNotExists(), $tableElements(), $select(), $withData(), $onCommit(), $comment(), $storage());
+        return $constructor().apply(newValue, $tableScope(), $ifNotExists(), $tableElements(), $select(), $withData(), $onCommit(), $comment(), $storage());
     }
 
     @Override
     public final QOM.CreateTable $tableScope(TableScope newValue) {
-        return $constructor().apply($table(), $temporary(), newValue, $ifNotExists(), $tableElements(), $select(), $withData(), $onCommit(), $comment(), $storage());
+        return $constructor().apply($table(), newValue, $ifNotExists(), $tableElements(), $select(), $withData(), $onCommit(), $comment(), $storage());
     }
 
     @Override
     public final QOM.CreateTable $ifNotExists(boolean newValue) {
-        return $constructor().apply($table(), $temporary(), $tableScope(), newValue, $tableElements(), $select(), $withData(), $onCommit(), $comment(), $storage());
+        return $constructor().apply($table(), $tableScope(), newValue, $tableElements(), $select(), $withData(), $onCommit(), $comment(), $storage());
     }
 
     @Override
     public final QOM.CreateTable $tableElements(Collection<? extends TableElement> newValue) {
-        return $constructor().apply($table(), $temporary(), $tableScope(), $ifNotExists(), newValue, $select(), $withData(), $onCommit(), $comment(), $storage());
+        return $constructor().apply($table(), $tableScope(), $ifNotExists(), newValue, $select(), $withData(), $onCommit(), $comment(), $storage());
     }
 
     @Override
     public final QOM.CreateTable $select(Select<?> newValue) {
-        return $constructor().apply($table(), $temporary(), $tableScope(), $ifNotExists(), $tableElements(), newValue, $withData(), $onCommit(), $comment(), $storage());
+        return $constructor().apply($table(), $tableScope(), $ifNotExists(), $tableElements(), newValue, $withData(), $onCommit(), $comment(), $storage());
     }
 
     @Override
     public final QOM.CreateTable $withData(WithOrWithoutData newValue) {
-        return $constructor().apply($table(), $temporary(), $tableScope(), $ifNotExists(), $tableElements(), $select(), newValue, $onCommit(), $comment(), $storage());
+        return $constructor().apply($table(), $tableScope(), $ifNotExists(), $tableElements(), $select(), newValue, $onCommit(), $comment(), $storage());
     }
 
     @Override
     public final QOM.CreateTable $onCommit(TableCommitAction newValue) {
-        return $constructor().apply($table(), $temporary(), $tableScope(), $ifNotExists(), $tableElements(), $select(), $withData(), newValue, $comment(), $storage());
+        return $constructor().apply($table(), $tableScope(), $ifNotExists(), $tableElements(), $select(), $withData(), newValue, $comment(), $storage());
     }
 
     @Override
     public final QOM.CreateTable $comment(Comment newValue) {
-        return $constructor().apply($table(), $temporary(), $tableScope(), $ifNotExists(), $tableElements(), $select(), $withData(), $onCommit(), newValue, $storage());
+        return $constructor().apply($table(), $tableScope(), $ifNotExists(), $tableElements(), $select(), $withData(), $onCommit(), newValue, $storage());
     }
 
     @Override
     public final QOM.CreateTable $storage(SQL newValue) {
-        return $constructor().apply($table(), $temporary(), $tableScope(), $ifNotExists(), $tableElements(), $select(), $withData(), $onCommit(), $comment(), newValue);
+        return $constructor().apply($table(), $tableScope(), $ifNotExists(), $tableElements(), $select(), $withData(), $onCommit(), $comment(), newValue);
     }
 
-    public final Function10<? super Table<?>, ? super Boolean, ? super TableScope, ? super Boolean, ? super Collection<? extends TableElement>, ? super Select<?>, ? super WithOrWithoutData, ? super TableCommitAction, ? super Comment, ? super SQL, ? extends QOM.CreateTable> $constructor() {
-        return (a1, a2, a3, a4, a5, a6, a7, a8, a9, a10) -> new CreateTableImpl(configuration(), a1, a2, a3, a4, (Collection<? extends TableElement>) a5, a6, a7, a8, a9, a10);
+    @Override
+    public final QOM.CreateTable $temporary(boolean newValue) {
+        return $tableScope(newValue ? TableScope.TEMPORARY : null);
     }
 
+    public final Function9<? super Table<?>, ? super TableScope, ? super Boolean, ? super Collection<? extends TableElement>, ? super Select<?>, ? super WithOrWithoutData, ? super TableCommitAction, ? super Comment, ? super SQL, ? extends QOM.CreateTable> $constructor() {
+        return (a1, a2, a3, a4, a5, a6, a7, a8, a9) -> new CreateTableImpl(configuration(), a1, a2, a3, (Collection<? extends TableElement>) a4, a5, a6, a7, a8, a9);
+    }
 
 
 

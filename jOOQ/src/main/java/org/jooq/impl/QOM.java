@@ -2269,14 +2269,14 @@ public final class QOM {
         //    CreateTableImpl
     {
         @NotNull Table<?> $table();
+        @Nullable TableScope $tableScope();
+        boolean $ifNotExists();
 
         /**
          * @deprecated - 3.21.0 - [#18603] - Use {@link #$tableScope()} instead.
          */
         @Deprecated(forRemoval = true, since = "3.21")
         boolean $temporary();
-        @Nullable TableScope $tableScope();
-        boolean $ifNotExists();
         @NotNull UnmodifiableList<? extends TableElement> $tableElements();
         @Nullable Select<?> $select();
         @Nullable WithOrWithoutData $withData();
@@ -2285,6 +2285,10 @@ public final class QOM {
         @Nullable SQL $storage();
         @CheckReturnValue
         @NotNull CreateTable $table(Table<?> table);
+        @CheckReturnValue
+        @NotNull CreateTable $tableScope(TableScope tableScope);
+        @CheckReturnValue
+        @NotNull CreateTable $ifNotExists(boolean ifNotExists);
 
         /**
          * @deprecated - 3.21.0 - [#18603] - Use {@link #$tableScope()} instead.
@@ -2292,10 +2296,6 @@ public final class QOM {
         @Deprecated(forRemoval = true, since = "3.21")
         @CheckReturnValue
         @NotNull CreateTable $temporary(boolean temporary);
-        @CheckReturnValue
-        @NotNull CreateTable $tableScope(TableScope tableScope);
-        @CheckReturnValue
-        @NotNull CreateTable $ifNotExists(boolean ifNotExists);
         @CheckReturnValue
         @NotNull CreateTable $tableElements(Collection<? extends TableElement> tableElements);
         @CheckReturnValue
@@ -2689,16 +2689,22 @@ public final class QOM {
         //permits
         //    DropTableImpl
     {
+        @Nullable TableScope $tableScope();
+        @NotNull Table<?> $table();
+        boolean $ifExists();
 
         /**
          * @deprecated - 3.21.0 - [#18603] - Use {@link #$tableScope()} instead.
          */
         @Deprecated(forRemoval = true, since = "3.21")
         boolean $temporary();
-        @Nullable TableScope $tableScope();
-        @NotNull Table<?> $table();
-        boolean $ifExists();
         @Nullable Cascade $cascade();
+        @CheckReturnValue
+        @NotNull DropTable $tableScope(TableScope tableScope);
+        @CheckReturnValue
+        @NotNull DropTable $table(Table<?> table);
+        @CheckReturnValue
+        @NotNull DropTable $ifExists(boolean ifExists);
 
         /**
          * @deprecated - 3.21.0 - [#18603] - Use {@link #$tableScope()} instead.
@@ -2706,12 +2712,6 @@ public final class QOM {
         @Deprecated(forRemoval = true, since = "3.21")
         @CheckReturnValue
         @NotNull DropTable $temporary(boolean temporary);
-        @CheckReturnValue
-        @NotNull DropTable $tableScope(TableScope tableScope);
-        @CheckReturnValue
-        @NotNull DropTable $table(Table<?> table);
-        @CheckReturnValue
-        @NotNull DropTable $ifExists(boolean ifExists);
         @CheckReturnValue
         @NotNull DropTable $cascade(Cascade cascade);
     }

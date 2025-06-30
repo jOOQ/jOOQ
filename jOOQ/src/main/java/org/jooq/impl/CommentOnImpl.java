@@ -360,6 +360,11 @@ implements
     }
 
     @Override
+    public final QOM.CommentOn $comment(Comment newValue) {
+        return $constructor().apply($objectType(), $table(), $field(), newValue);
+    }
+
+    @Override
     public final QOM.CommentOn $isView(boolean newValue) {
         return $objectType(newValue ? CommentObjectType.VIEW : null);
     }
@@ -367,11 +372,6 @@ implements
     @Override
     public final QOM.CommentOn $isMaterializedView(boolean newValue) {
         return $objectType(newValue ? CommentObjectType.MATERIALIZED_VIEW : CommentObjectType.TABLE);
-    }
-
-    @Override
-    public final QOM.CommentOn $comment(Comment newValue) {
-        return $constructor().apply($objectType(), $table(), $field(), $comment());
     }
 
     public final Function4<? super CommentObjectType, ? super Table<?>, ? super Field<?>, ? super Comment, ? extends QOM.CommentOn> $constructor() {

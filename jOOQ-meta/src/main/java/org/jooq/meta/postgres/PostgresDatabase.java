@@ -180,6 +180,7 @@ import org.jooq.meta.XMLSchemaCollectionDefinition;
 import org.jooq.meta.hsqldb.HSQLDBDatabase;
 import org.jooq.meta.postgres.information_schema.tables.CheckConstraints;
 import org.jooq.meta.postgres.information_schema.tables.KeyColumnUsage;
+import org.jooq.meta.postgres.information_schema.tables.Parameters;
 import org.jooq.meta.postgres.information_schema.tables.Routines;
 import org.jooq.meta.postgres.information_schema.tables.Triggers;
 import org.jooq.meta.postgres.pg_catalog.tables.PgClass;
@@ -1300,6 +1301,11 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
     protected boolean exists0(Table<?> table) {
         return exists1(table, TABLES, TABLES.TABLE_SCHEMA, TABLES.TABLE_NAME);
     }
+
+
+
+
+
 
 
 

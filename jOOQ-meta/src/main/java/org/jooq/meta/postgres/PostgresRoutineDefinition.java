@@ -143,7 +143,7 @@ public class PostgresRoutineDefinition extends AbstractRoutineDefinition {
                 when(p.DATA_TYPE.eq(inline("ARRAY")), substring(p.UDT_NAME, inline(2)))
                     .else_(p.UDT_NAME).as(p.UDT_NAME),
                 p.ORDINAL_POSITION,
-                p.PARAMETER_MODE,
+                ((PostgresDatabase) getDatabase()).parameterMode(p).as(p.PARAMETER_MODE),
                 ((PostgresDatabase) getDatabase()).is94()
                     ? p.PARAMETER_DEFAULT
                     : inline((String) null).as(p.PARAMETER_DEFAULT),

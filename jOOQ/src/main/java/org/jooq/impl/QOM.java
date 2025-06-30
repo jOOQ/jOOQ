@@ -2071,19 +2071,42 @@ public final class QOM {
         //permits
         //    CommentOnImpl
     {
+        @NotNull CommentObjectType $objectType();
         @Nullable Table<?> $table();
-        boolean $isView();
-        boolean $isMaterializedView();
         @Nullable Field<?> $field();
+
+        /**
+         * @deprecated - 3.21.0 - [#18684] - Use {@link #$objectType()} instead.
+         */
+        @Deprecated(forRemoval = true, since = "3.21")
+        boolean $isView();
+
+        /**
+         * @deprecated - 3.21.0 - [#18684] - Use {@link #$objectType()} instead.
+         */
+        @Deprecated(forRemoval = true, since = "3.21")
+        boolean $isMaterializedView();
         @NotNull Comment $comment();
+        @CheckReturnValue
+        @NotNull CommentOn $objectType(CommentObjectType objectType);
         @CheckReturnValue
         @NotNull CommentOn $table(Table<?> table);
         @CheckReturnValue
+        @NotNull CommentOn $field(Field<?> field);
+
+        /**
+         * @deprecated - 3.21.0 - [#18684] - Use {@link #$objectType()} instead.
+         */
+        @Deprecated(forRemoval = true, since = "3.21")
+        @CheckReturnValue
         @NotNull CommentOn $isView(boolean isView);
+
+        /**
+         * @deprecated - 3.21.0 - [#18684] - Use {@link #$objectType()} instead.
+         */
+        @Deprecated(forRemoval = true, since = "3.21")
         @CheckReturnValue
         @NotNull CommentOn $isMaterializedView(boolean isMaterializedView);
-        @CheckReturnValue
-        @NotNull CommentOn $field(Field<?> field);
         @CheckReturnValue
         @NotNull CommentOn $comment(Comment comment);
     }
@@ -10273,6 +10296,25 @@ public final class QOM {
         final Keyword keyword;
 
         private TableScope(Keyword keyword) {
+            this.keyword = keyword;
+        }
+    }
+
+    /**
+     * The <code>CommentObjectType</code> type.
+     * <p>
+     * Specify the object type receiving a COMMENT.
+     */
+    public enum CommentObjectType {
+        COLUMN(keyword("column")),
+        MATERIALIZED_VIEW(keyword("materialized view")),
+        TABLE(keyword("table")),
+        VIEW(keyword("view")),
+        ;
+
+        final Keyword keyword;
+
+        private CommentObjectType(Keyword keyword) {
             this.keyword = keyword;
         }
     }

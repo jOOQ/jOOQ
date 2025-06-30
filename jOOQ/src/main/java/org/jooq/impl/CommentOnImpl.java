@@ -52,6 +52,7 @@ import org.jooq.*;
 import org.jooq.Function1;
 import org.jooq.Record;
 import org.jooq.conf.ParamType;
+import org.jooq.impl.QOM.CommentObjectType;
 import org.jooq.tools.StringUtils;
 
 import java.util.ArrayList;
@@ -77,24 +78,21 @@ implements
     CommentOnFinalStep
 {
 
-    final Table<?> table;
-    final boolean  isView;
-    final boolean  isMaterializedView;
-    final Field<?> field;
-          Comment  comment;
+    final CommentObjectType objectType;
+    final Table<?>          table;
+    final Field<?>          field;
+          Comment           comment;
 
     CommentOnImpl(
         Configuration configuration,
+        CommentObjectType objectType,
         Table<?> table,
-        boolean isView,
-        boolean isMaterializedView,
         Field<?> field
     ) {
         this(
             configuration,
+            objectType,
             table,
-            isView,
-            isMaterializedView,
             field,
             null
         );
@@ -102,32 +100,28 @@ implements
 
     CommentOnImpl(
         Configuration configuration,
-        Table<?> table,
-        boolean isView,
-        boolean isMaterializedView
+        CommentObjectType objectType,
+        Table<?> table
     ) {
         this(
             configuration,
+            objectType,
             table,
-            isView,
-            isMaterializedView,
             null
         );
     }
 
     CommentOnImpl(
         Configuration configuration,
+        CommentObjectType objectType,
         Table<?> table,
-        boolean isView,
-        boolean isMaterializedView,
         Field<?> field,
         Comment comment
     ) {
         super(configuration);
 
+        this.objectType = objectType;
         this.table = table;
-        this.isView = isView;
-        this.isMaterializedView = isMaterializedView;
         this.field = field;
         this.comment = comment;
     }
@@ -293,9 +287,9 @@ implements
         ctx.visit(K_COMMENT).sql(' ').visit(K_ON).sql(' ');
 
         if (table != null) {
-            if (isView && !NO_SUPPORT_COMMENT_ON_VIEW.contains(ctx.dialect()))
+            if (objectType == CommentObjectType.VIEW && !NO_SUPPORT_COMMENT_ON_VIEW.contains(ctx.dialect()))
                 ctx.visit(K_VIEW).sql(' ');
-            else if (isMaterializedView && !NO_SUPPORT_COMMENT_ON_MATERIALIZED_VIEW.contains(ctx.dialect()))
+            else if (objectType == CommentObjectType.MATERIALIZED_VIEW && !NO_SUPPORT_COMMENT_ON_MATERIALIZED_VIEW.contains(ctx.dialect()))
                 ctx.visit(K_MATERIALIZED).sql(' ').visit(K_VIEW).sql(' ');
 
 
@@ -321,18 +315,13 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
+    public final CommentObjectType $objectType() {
+        return objectType;
+    }
+
+    @Override
     public final Table<?> $table() {
         return table;
-    }
-
-    @Override
-    public final boolean $isView() {
-        return isView;
-    }
-
-    @Override
-    public final boolean $isMaterializedView() {
-        return isMaterializedView;
     }
 
     @Override
@@ -341,39 +330,53 @@ implements
     }
 
     @Override
+    public final boolean $isView() {
+        return $objectType() == CommentObjectType.VIEW;
+    }
+
+    @Override
+    public final boolean $isMaterializedView() {
+        return $objectType() == CommentObjectType.MATERIALIZED_VIEW;
+    }
+
+    @Override
     public final Comment $comment() {
         return comment;
     }
 
     @Override
+    public final QOM.CommentOn $objectType(CommentObjectType newValue) {
+        return $constructor().apply(newValue, $table(), $field(), $comment());
+    }
+
+    @Override
     public final QOM.CommentOn $table(Table<?> newValue) {
-        return $constructor().apply(newValue, $isView(), $isMaterializedView(), $field(), $comment());
-    }
-
-    @Override
-    public final QOM.CommentOn $isView(boolean newValue) {
-        return $constructor().apply($table(), newValue, $isMaterializedView(), $field(), $comment());
-    }
-
-    @Override
-    public final QOM.CommentOn $isMaterializedView(boolean newValue) {
-        return $constructor().apply($table(), $isView(), newValue, $field(), $comment());
+        return $constructor().apply($objectType(), newValue, $field(), $comment());
     }
 
     @Override
     public final QOM.CommentOn $field(Field<?> newValue) {
-        return $constructor().apply($table(), $isView(), $isMaterializedView(), newValue, $comment());
+        return $constructor().apply($objectType(), $table(), newValue, $comment());
+    }
+
+    @Override
+    public final QOM.CommentOn $isView(boolean newValue) {
+        return $objectType(newValue ? CommentObjectType.VIEW : null);
+    }
+
+    @Override
+    public final QOM.CommentOn $isMaterializedView(boolean newValue) {
+        return $objectType(newValue ? CommentObjectType.MATERIALIZED_VIEW : CommentObjectType.TABLE);
     }
 
     @Override
     public final QOM.CommentOn $comment(Comment newValue) {
-        return $constructor().apply($table(), $isView(), $isMaterializedView(), $field(), newValue);
+        return $constructor().apply($objectType(), $table(), $field(), $comment());
     }
 
-    public final Function5<? super Table<?>, ? super Boolean, ? super Boolean, ? super Field<?>, ? super Comment, ? extends QOM.CommentOn> $constructor() {
-        return (a1, a2, a3, a4, a5) -> new CommentOnImpl(configuration(), a1, a2, a3, a4, a5);
+    public final Function4<? super CommentObjectType, ? super Table<?>, ? super Field<?>, ? super Comment, ? extends QOM.CommentOn> $constructor() {
+        return (a1, a2, a3, a4) -> new CommentOnImpl(configuration(), a1, a2, a3, a4);
     }
-
 
 
 

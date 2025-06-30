@@ -151,6 +151,7 @@ import org.jooq.Result;
 import org.jooq.Results;
 import org.jooq.Routine;
 import org.jooq.SQLDialect;
+import org.jooq.SQLDialectCategory;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.UDT;
@@ -959,7 +960,7 @@ implements
             if (indent && i++ > 0)
                 context.formatNewLine();
 
-            if (defaulted && context.family() == POSTGRES)
+            if (defaulted && context.family().category() == SQLDialectCategory.POSTGRES)
                 context.visit(parameter.getUnqualifiedName()).sql(" := ");
 
             // OUT and IN OUT parameters are always written as a '?' bind variable
@@ -981,7 +982,7 @@ implements
     }
 
     private final void toSQLEnd(RenderContext context) {
-        if (!isSQLUsable() && context.family() == POSTGRES) {}
+        if (!isSQLUsable() && context.family().category() == SQLDialectCategory.POSTGRES) {}
 
 
 
@@ -1207,7 +1208,7 @@ implements
 
 
     private final void toSQLBegin(RenderContext context) {
-        if (!isSQLUsable() && context.family() == POSTGRES) {}
+        if (!isSQLUsable() && context.family().category() == SQLDialectCategory.POSTGRES) {}
 
 
 

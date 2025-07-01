@@ -56,7 +56,6 @@ import static org.jooq.impl.DSL.coalesce;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.currentCatalog;
-import static org.jooq.impl.DSL.decode;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.greatest;
@@ -163,7 +162,6 @@ import org.jooq.meta.DefaultEnumDefinition;
 import org.jooq.meta.DefaultIndexColumnDefinition;
 import org.jooq.meta.DefaultRelations;
 import org.jooq.meta.DefaultSequenceDefinition;
-import org.jooq.meta.Definition;
 import org.jooq.meta.DomainDefinition;
 import org.jooq.meta.EnumDefinition;
 import org.jooq.meta.IndexColumnDefinition;
@@ -188,9 +186,6 @@ import org.jooq.meta.postgres.pg_catalog.tables.PgIndex;
 import org.jooq.meta.postgres.pg_catalog.tables.PgInherits;
 import org.jooq.meta.postgres.pg_catalog.tables.PgType;
 import org.jooq.tools.JooqLogger;
-import org.jooq.tools.jdbc.JDBCUtils;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * Postgres uses the ANSI default INFORMATION_SCHEMA, but unfortunately ships
@@ -585,13 +580,17 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                             ROUTINES.ROUTINE_SCHEMA,
                             ROUTINES.ROUTINE_NAME,
                             ROUTINES.SPECIFIC_NAME,
-                            inline(""),
+                            PG_DESCRIPTION.DESCRIPTION,
                             inline(TableType.FUNCTION.name()).as("table_type"),
                             ROUTINES.TYPE_UDT_SCHEMA,
                             ROUTINES.TYPE_UDT_NAME)
                         .from(ROUTINES)
                         .join(PG_PROC).on(PG_PROC.pgNamespace().NSPNAME.eq(ROUTINES.SPECIFIC_SCHEMA))
                                       .and(PG_PROC.PRONAME.concat("_").concat(PG_PROC.OID).eq(ROUTINES.SPECIFIC_NAME))
+                        .leftOuterJoin(PG_DESCRIPTION)
+                            .on(PG_DESCRIPTION.OBJOID.eq(PG_PROC.OID))
+                            .and(PG_DESCRIPTION.CLASSOID.eq(field("'pg_proc'::regclass", BIGINT)))
+                            .and(PG_DESCRIPTION.OBJSUBID.eq(inline(0)))
                         .where(ROUTINES.ROUTINE_SCHEMA.in(getInputSchemata()))
                         .and(PG_PROC.PRORETSET)
 
@@ -715,8 +714,8 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
             .orderBy(1, 2, 3);
     }
 
-    private static final Field<String> objDescription(Field<Long> oid) {
-        return DSL.function(unquotedName("obj_description"), VARCHAR, oid);
+    private static final Field<String> objDescription(Field<Long> oid, String className) {
+        return DSL.function(unquotedName("obj_description"), VARCHAR, oid, inline(className));
     }
 
     @Override
@@ -726,33 +725,33 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                 PG_CLASS.pgNamespace().NSPNAME.as("schema_name"),
                 PG_CLASS.RELNAME.as("table_name"),
                 inline(null, VARCHAR).as("column_name"),
-                objDescription(PG_CLASS.OID).as("remarks"))
+                objDescription(PG_CLASS.OID, "pg_class").as("remarks"))
             .from(PG_CLASS)
-            .where(objDescription(PG_CLASS.OID).isNotNull())
+            .where(objDescription(PG_CLASS.OID, "pg_class").isNotNull())
             .unionAll(
                 select(
                     PG_NAMESPACE.NSPNAME,
                     inline(null, VARCHAR),
                     inline(null, VARCHAR),
-                    objDescription(PG_NAMESPACE.OID).as("remarks"))
+                    objDescription(PG_NAMESPACE.OID, "pg_namespace").as("remarks"))
                 .from(PG_NAMESPACE)
-                .where(objDescription(PG_NAMESPACE.OID).isNotNull()))
+                .where(objDescription(PG_NAMESPACE.OID, "pg_namespace").isNotNull()))
             .unionAll(
                 select(
                     PG_PROC.pgNamespace().NSPNAME,
                     PG_PROC.PRONAME,
                     inline(null, VARCHAR),
-                    objDescription(PG_PROC.OID).as("remarks"))
+                    objDescription(PG_PROC.OID, "pg_proc").as("remarks"))
                 .from(PG_PROC)
-                .where(objDescription(PG_PROC.OID).isNotNull()))
+                .where(objDescription(PG_PROC.OID, "pg_proc").isNotNull()))
             .unionAll(
                 select(
                     PG_TYPE.pgNamespace().NSPNAME,
                     PG_TYPE.TYPNAME,
                     inline(null, VARCHAR),
-                    objDescription(PG_TYPE.OID).as("remarks"))
+                    objDescription(PG_TYPE.OID, "pg_type").as("remarks"))
                 .from(PG_TYPE)
-                .where(objDescription(PG_TYPE.OID).isNotNull()))
+                .where(objDescription(PG_TYPE.OID, "pg_type").isNotNull()))
             .asTable("c");
 
         return create()

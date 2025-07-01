@@ -53,9 +53,11 @@ import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DefaultDataType.getDataType;
 import static org.jooq.impl.SQLDataType.VARCHAR;
+import static org.jooq.impl.Tools.allMatch;
 import static org.jooq.impl.Tools.convertHexToBytes;
 import static org.jooq.impl.Tools.converterContext;
 import static org.jooq.impl.Tools.fields;
+import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.newRecord;
 import static org.jooq.tools.StringUtils.defaultIfBlank;
 
@@ -74,6 +76,7 @@ import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Fields;
+import org.jooq.QualifiedRecord;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
@@ -306,10 +309,19 @@ final class JSONReader<R extends Record> {
 
                 List<Object> l;
 
-                if (value instanceof List)
+                if (value instanceof List) {
                     l = patchRecord(ctx, multiset, actualRow, (List<Object>) value);
-                else if (value instanceof Map)
-                    l = patchRecord(ctx, multiset, actualRow, new ArrayList<>(((Map<?, ?>) value).values()));
+                }
+
+                // [#18681] The Map encoding of nested ROW values can happen for 2 reasons:
+                //          - We create it ourselves with "v1", "v2", ... keys because json objects work better than arrays in some RDBMS
+                //          - It's a UDT or similar, serialised into a JSON object, where keys are attribute names, not in order!
+                else if (value instanceof Map<?, ?> map) {
+                    if (QualifiedRecord.class.isAssignableFrom(recordType) && allMatch(actualRow.fields.fields, f -> map.containsKey(f.getName())))
+                        l = patchRecord(ctx, multiset, actualRow, map(actualRow.fields.fields, f -> map.get(f.getName())));
+                    else
+                        l = patchRecord(ctx, multiset, actualRow, new ArrayList<>(map.values()));
+                }
                 else
                     throw new IllegalStateException();
 

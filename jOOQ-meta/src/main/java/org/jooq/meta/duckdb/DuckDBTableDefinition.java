@@ -38,6 +38,7 @@
 
 package org.jooq.meta.duckdb;
 
+import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.when;
@@ -51,6 +52,8 @@ import java.util.List;
 
 import org.jooq.Record;
 import org.jooq.TableOptions.TableType;
+import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.meta.AbstractTableDefinition;
 import org.jooq.meta.ColumnDefinition;
 import org.jooq.meta.DataTypeDefinition;
@@ -84,7 +87,10 @@ public class DuckDBTableDefinition extends AbstractTableDefinition {
                 DUCKDB_COLUMNS.NUMERIC_PRECISION,
                 DUCKDB_COLUMNS.NUMERIC_SCALE,
                 DUCKDB_COLUMNS.IS_NULLABLE,
-                DUCKDB_COLUMNS.COLUMN_DEFAULT,
+
+                // See https://github.com/duckdb/duckdb/discussions/18118
+                when(field("d.default").isNotNull(), DUCKDB_COLUMNS.COLUMN_DEFAULT).as(DUCKDB_COLUMNS.COLUMN_DEFAULT),
+                when(field("d.default").isNull(), DUCKDB_COLUMNS.COLUMN_DEFAULT).as("generator"),
                 DUCKDB_COLUMNS.COLUMN_DEFAULT.like(inline("nextval('%')")).as("is_identity"),
                 when(
                     DUCKDB_TYPES.LOGICAL_TYPE.eq(inline("STRUCT")),
@@ -99,6 +105,8 @@ public class DuckDBTableDefinition extends AbstractTableDefinition {
             .from("{0}()", DUCKDB_COLUMNS)
                 .leftJoin(DUCKDB_TYPES)
                 .on(DUCKDB_COLUMNS.DATA_TYPE_ID.eq(DUCKDB_TYPES.TYPE_OID))
+                .join("(describe {0}) as d", getQualifiedInputNamePart())
+                .on(DUCKDB_COLUMNS.COLUMN_NAME.eq(field("d.column_name", VARCHAR)))
             .where(DUCKDB_COLUMNS.DATABASE_NAME.eq(getCatalog().getInputName()))
             .and(DUCKDB_COLUMNS.SCHEMA_NAME.eq(getSchema().getInputName()))
             .and(DUCKDB_COLUMNS.TABLE_NAME.eq(getInputName()))
@@ -117,7 +125,7 @@ public class DuckDBTableDefinition extends AbstractTableDefinition {
                     record.get(DUCKDB_TYPES.SCHEMA_NAME),
                     record.get(DUCKDB_TYPES.TYPE_NAME)
                 )
-            );
+            ).generatedAlwaysAs(record.get("generator", String.class));
 
             result.add(new DefaultColumnDefinition(
                 this,

@@ -198,6 +198,11 @@ public class TrinoDatabase extends AbstractDatabase implements ResultQueryDataba
 
 
 
+
+
+
+
+
     @Override
     protected List<CatalogDefinition> getCatalogs0() throws SQLException {
         List<CatalogDefinition> result = new ArrayList<>();

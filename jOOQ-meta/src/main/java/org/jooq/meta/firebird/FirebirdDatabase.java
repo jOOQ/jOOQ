@@ -66,6 +66,9 @@ import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.NUMERIC;
 import static org.jooq.impl.SQLDataType.SMALLINT;
 import static org.jooq.impl.SQLDataType.VARCHAR;
+import static org.jooq.meta.firebird.FirebirdDatabase.CHARACTER_LENGTH;
+import static org.jooq.meta.firebird.FirebirdDatabase.FIELD_SCALE;
+import static org.jooq.meta.firebird.FirebirdDatabase.FIELD_TYPE;
 import static org.jooq.meta.firebird.rdb.Tables.RDB$CHECK_CONSTRAINTS;
 import static org.jooq.meta.firebird.rdb.Tables.RDB$FIELDS;
 import static org.jooq.meta.firebird.rdb.Tables.RDB$FUNCTIONS;
@@ -109,6 +112,7 @@ import org.jooq.TableOptions.TableType;
 import org.jooq.conf.Settings;
 import org.jooq.impl.DSL;
 import org.jooq.impl.QOM.ForeignKeyRule;
+import org.jooq.impl.QOM.GenerationOption;
 import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.AbstractIndexDefinition;
 import org.jooq.meta.ArrayDefinition;
@@ -141,6 +145,7 @@ import org.jooq.meta.firebird.rdb.tables.Rdb$indices;
 import org.jooq.meta.firebird.rdb.tables.Rdb$procedures;
 import org.jooq.meta.firebird.rdb.tables.Rdb$refConstraints;
 import org.jooq.meta.firebird.rdb.tables.Rdb$relationConstraints;
+import org.jooq.meta.firebird.rdb.tables.Rdb$relationFields;
 import org.jooq.meta.firebird.rdb.tables.Rdb$triggers;
 import org.jooq.meta.jaxb.SchemaMappingType;
 import org.jooq.tools.StringUtils;
@@ -668,6 +673,26 @@ public class FirebirdDatabase extends AbstractDatabase implements ResultQueryDat
 
         return result;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -366,6 +366,11 @@ public class ClickHouseDatabase extends AbstractDatabase implements ResultQueryD
 
 
 
+
+
+
+
+
     @Override
     protected List<XMLSchemaCollectionDefinition> getXMLSchemaCollections0() throws SQLException {
         List<XMLSchemaCollectionDefinition> result = new ArrayList<>();

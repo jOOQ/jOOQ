@@ -154,6 +154,7 @@ import org.jooq.exception.DataDefinitionException;
 import org.jooq.exception.DataTypeException;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.QOM.ForeignKeyRule;
+import org.jooq.impl.QOM.GenerationOption;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.jdbc.JDBCUtils;
@@ -174,6 +175,7 @@ final class MetaImpl extends AbstractMeta {
     private static final Set<SQLDialect> INVERSE_SCHEMA_CATALOG           = SQLDialect.supportedBy(CLICKHOUSE, MARIADB, MYSQL);
     private static final Set<SQLDialect> CURRENT_TIMESTAMP_COLUMN_DEFAULT = SQLDialect.supportedBy(MARIADB, MYSQL);
     private static final Set<SQLDialect> EXPRESSION_COLUMN_DEFAULT        = SQLDialect.supportedBy(CLICKHOUSE, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, POSTGRES, SQLITE, YUGABYTEDB);
+    private static final Set<SQLDialect> EXPRESSION_COLUMN_GENERATOR      = SQLDialect.supportedBy(MYSQL);
     private static final Set<SQLDialect> NO_SUPPORT_SCHEMAS               = SQLDialect.supportedBy(FIREBIRD, SQLITE);
     private static final Set<SQLDialect> NO_SUPPORT_INDEXES               = SQLDialect.supportedBy(TRINO);
     private static final Set<SQLDialect> SUPPORTS_CATALOGS                = SQLDialect.supportedBy(DUCKDB);
@@ -471,6 +473,7 @@ final class MetaImpl extends AbstractMeta {
         private transient volatile Map<Name, Result<Record>> sequenceCache;
         private transient volatile Map<Name, String>         sourceCache;
         private transient volatile Map<Name, String>         commentCache;
+
 
 
 
@@ -1001,6 +1004,42 @@ final class MetaImpl extends AbstractMeta {
             else
                 return null;
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         final String comment(String tableName) {
             return comment(tableName, null);
@@ -1628,6 +1667,7 @@ final class MetaImpl extends AbstractMeta {
                     ? column.get(22, boolean.class)                      // IS_AUTOINCREMENT
                     : false;
 
+                GenerationOption o = null;
                 boolean isGenerated = column.size() >= 24                // IS_GENERATEDCOLUMN
                     ? column.get(23, boolean.class)
                     : false;
@@ -1705,6 +1745,16 @@ final class MetaImpl extends AbstractMeta {
 
 
 
+
+
+
+
+
+
+
+
+
+
                 // [#10207] Ignore secondary identity columns, as allowed e.g. in PostgreSQL
                 if (isAutoIncrement)
                     if (!hasAutoIncrement)
@@ -1722,7 +1772,10 @@ final class MetaImpl extends AbstractMeta {
                     try {
 
                         // [#7194] [#8469] Some databases report all default values as expressions, not as values
-                        if (EXPRESSION_COLUMN_DEFAULT.contains(dialect())) {
+                        // [#18701]        Or they report generator expressions as expression, but not defaults (!)
+                        if (EXPRESSION_COLUMN_DEFAULT.contains(dialect())
+                         || EXPRESSION_COLUMN_GENERATOR.contains(dialect()) && o != null
+                        ) {
                             if (FALSE.equals(settings().isParseMetaDefaultExpressions())) {
                                 d = DSL.field(defaultValue, type);
                             }
@@ -1765,7 +1818,7 @@ final class MetaImpl extends AbstractMeta {
 
                     if (d != null)
                         if (isGenerated)
-                            type = type.generatedAlwaysAs(d);
+                            type = type.generatedAlwaysAs(d).generationOption(o);
                         else
                             type = type.default_(d);
                 }

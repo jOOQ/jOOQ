@@ -76,12 +76,10 @@ import static org.jooq.meta.hsqldb.information_schema.Tables.SYSTEM_TABLES;
 import static org.jooq.meta.hsqldb.information_schema.Tables.TABLE_CONSTRAINTS;
 import static org.jooq.meta.hsqldb.information_schema.Tables.TRIGGERS;
 import static org.jooq.meta.hsqldb.information_schema.Tables.VIEWS;
-import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.EnumSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -103,10 +101,9 @@ import org.jooq.SortOrder;
 import org.jooq.Table;
 import org.jooq.TableOptions.TableType;
 // ...
-// ...
-// ...
 import org.jooq.impl.DSL;
 import org.jooq.impl.QOM.ForeignKeyRule;
+import org.jooq.impl.QOM.GenerationOption;
 import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.AbstractIndexDefinition;
 import org.jooq.meta.ArrayDefinition;
@@ -118,7 +115,6 @@ import org.jooq.meta.DefaultDomainDefinition;
 import org.jooq.meta.DefaultIndexColumnDefinition;
 import org.jooq.meta.DefaultRelations;
 import org.jooq.meta.DefaultSequenceDefinition;
-// ...
 import org.jooq.meta.DomainDefinition;
 import org.jooq.meta.EnumDefinition;
 import org.jooq.meta.IndexColumnDefinition;
@@ -129,10 +125,8 @@ import org.jooq.meta.RoutineDefinition;
 import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.SequenceDefinition;
 import org.jooq.meta.TableDefinition;
-// ...
 import org.jooq.meta.UDTDefinition;
 import org.jooq.meta.XMLSchemaCollectionDefinition;
-import org.jooq.meta.hsqldb.information_schema.Tables;
 import org.jooq.meta.hsqldb.information_schema.tables.CheckConstraints;
 import org.jooq.meta.hsqldb.information_schema.tables.Columns;
 import org.jooq.meta.hsqldb.information_schema.tables.DomainConstraints;
@@ -142,8 +136,6 @@ import org.jooq.meta.hsqldb.information_schema.tables.SystemSynonyms;
 import org.jooq.meta.hsqldb.information_schema.tables.Triggers;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
-
-import org.jetbrains.annotations.Nullable;
 
 /**
  * The HSQLDB database
@@ -652,6 +644,22 @@ public class HSQLDBDatabase extends AbstractDatabase implements ResultQueryDatab
 
         return new ArrayList<>(result.values());
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

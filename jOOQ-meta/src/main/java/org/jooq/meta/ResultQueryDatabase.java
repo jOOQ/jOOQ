@@ -40,6 +40,7 @@ package org.jooq.meta;
 import java.math.BigDecimal;
 import java.util.List;
 
+import org.jooq.DataType;
 import org.jooq.Meta;
 import org.jooq.Record12;
 import org.jooq.Record14;
@@ -181,6 +182,27 @@ public interface ResultQueryDatabase extends Database {
     @Internal
     @Nullable
     ResultQuery<Record5<String, String, String, String, String>> comments(List<String> schemas);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

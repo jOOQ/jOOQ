@@ -106,8 +106,6 @@ import org.jooq.meta.XMLSchemaCollectionDefinition;
 import org.jooq.meta.duckdb.system.information_schema.tables.KeyColumnUsage;
 import org.jooq.meta.duckdb.system.main.tables.DuckdbConstraints;
 
-import org.jetbrains.annotations.NotNull;
-
 /**
  * The DuckDB database
  *
@@ -401,6 +399,11 @@ public class DuckDBDatabase extends AbstractDatabase implements ResultQueryDatab
             .from(t)
             .where(t.field(DUCKDB_TABLES.SCHEMA_NAME).in(schemas));
     }
+
+
+
+
+
 
 
 

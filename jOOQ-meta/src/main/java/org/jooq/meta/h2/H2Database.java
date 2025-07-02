@@ -117,6 +117,7 @@ import org.jooq.TableField;
 import org.jooq.TableOptions.TableType;
 import org.jooq.impl.DSL;
 import org.jooq.impl.QOM.ForeignKeyRule;
+import org.jooq.impl.QOM.GenerationOption;
 import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.AbstractIndexDefinition;
 import org.jooq.meta.ArrayDefinition;
@@ -748,6 +749,22 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
                 SEQUENCES.SEQUENCE_SCHEMA,
                 SEQUENCES.SEQUENCE_NAME);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

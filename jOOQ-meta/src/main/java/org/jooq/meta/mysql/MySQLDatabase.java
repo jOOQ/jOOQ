@@ -48,6 +48,7 @@ import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.impl.DSL.case_;
 import static org.jooq.impl.DSL.cast;
+import static org.jooq.impl.DSL.coalesce;
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.field;
@@ -115,6 +116,7 @@ import org.jooq.TableOptions.TableType;
 // ...
 import org.jooq.impl.DSL;
 import org.jooq.impl.QOM.ForeignKeyRule;
+import org.jooq.impl.QOM.GenerationOption;
 import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.AbstractIndexDefinition;
 import org.jooq.meta.ArrayDefinition;
@@ -681,6 +683,24 @@ public class MySQLDatabase extends AbstractDatabase implements ResultQueryDataba
         List<DomainDefinition> result = new ArrayList<>();
         return result;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -1088,7 +1088,8 @@ final class MetaImpl extends AbstractMeta {
 
         String.class,  // SCOPE_TABLE
         String.class,  // SOURCE_DATA_TYPE
-        String.class   // IS_AUTOINCREMENT
+        String.class,  // IS_AUTOINCREMENT
+        String.class   // IS_GENERATEDCOLUMN
     };
 
     private static final TableOptions tableOption(DSLContext ctx, MetaSchema schema, String tableName, TableType tableType) {
@@ -1624,6 +1625,10 @@ final class MetaImpl extends AbstractMeta {
                     ? column.get(22, boolean.class)                      // IS_AUTOINCREMENT
                     : false;
 
+                boolean isGenerated = column.size() >= 24                // IS_GENERATEDCOLUMN
+                    ? column.get(23, boolean.class)
+                    : false;
+
                 switch (family()) {
 
 
@@ -1654,8 +1659,10 @@ final class MetaImpl extends AbstractMeta {
 
                     // [#17284] Computed columns are reported as defaults
                     case DERBY:
-                        if (defaultValue != null && defaultValue.toUpperCase().startsWith("GENERATED ALWAYS AS"))
-                            defaultValue = null;
+                        if (defaultValue != null && defaultValue.toUpperCase().startsWith("GENERATED ALWAYS AS")) {
+                            isGenerated = true;
+                            defaultValue = defaultValue.replaceFirst("^(?i:\\s*GENERATED ALWAYS AS\\s*\\((.*)\\))$", "$1");
+                        }
 
                         break;
 
@@ -1707,12 +1714,14 @@ final class MetaImpl extends AbstractMeta {
 
                 // [#6883] Default values may be present
                 if (!isAutoIncrement && !StringUtils.isEmpty(defaultValue)) {
+                    Field<?> d = null;
+
                     try {
 
                         // [#7194] [#8469] Some databases report all default values as expressions, not as values
                         if (EXPRESSION_COLUMN_DEFAULT.contains(dialect())) {
                             if (FALSE.equals(settings().isParseMetaDefaultExpressions())) {
-                                type = type.defaultValue(DSL.field(defaultValue, type));
+                                d = DSL.field(defaultValue, type);
                             }
                             else {
                                 try {
@@ -1729,20 +1738,20 @@ final class MetaImpl extends AbstractMeta {
 
 
 
-                                    type = type.defaultValue(ctx.parser().parseField(defaultValue));
+                                    d = ctx.parser().parseField(defaultValue);
                                 }
                                 catch (ParserException e) {
                                     log.info("Cannot parse default expression (to skip parsing, use Settings.parseMetaViewDefaultExpressions): " + defaultValue + " of column " + columnName + " in table " + this, e);
-                                    type = type.defaultValue(DSL.field(defaultValue, type));
+                                    d = DSL.field(defaultValue, type);
                                 }
                             }
                         }
 
                         // [#5574] MySQL mixes constant value expressions with other column expressions here
                         else if (CURRENT_TIMESTAMP_COLUMN_DEFAULT.contains(dialect()) && "CURRENT_TIMESTAMP".equalsIgnoreCase(defaultValue))
-                            type = type.defaultValue(DSL.field(defaultValue, type));
+                            d = DSL.field(defaultValue, type);
                         else
-                            type = type.defaultValue(DSL.inline(defaultValue, type));
+                            d = DSL.inline(defaultValue, type);
                     }
 
                     // [#8469] Rather than catching exceptions after conversions, we should use the
@@ -1750,6 +1759,12 @@ final class MetaImpl extends AbstractMeta {
                     catch (DataTypeException e) {
                         log.warn("Default value", "Could not load default value: " + defaultValue + " for type: " + type + " of column " + columnName + " in table " + this, e);
                     }
+
+                    if (d != null)
+                        if (isGenerated)
+                            type = type.generatedAlwaysAs(d);
+                        else
+                            type = type.default_(d);
                 }
 
                 createField(name(columnName), type, this, remarks != null ? remarks : schema.comment(getName(), columnName));

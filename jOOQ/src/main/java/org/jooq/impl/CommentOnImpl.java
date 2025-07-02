@@ -339,8 +339,13 @@ implements
 
             ctx.visit(table);
         }
-        else if (field != null)
+        else if (field != null) {
             ctx.visit(K_COLUMN).sql(' ').visit(field);
+        }
+
+
+
+
 
 
 

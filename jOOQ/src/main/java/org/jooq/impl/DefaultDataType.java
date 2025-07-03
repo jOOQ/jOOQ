@@ -369,11 +369,11 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
         this.castTypePrefix = split.length > 0 ? split[0] : "";
         this.castTypeSuffix = split.length > 1 ? split[1] : "";
 
-        this.nullability = nullability == null ? Nullability.DEFAULT : nullability;
+        this.nullability = nullabilityDefault(nullability);
         this.readonly = readonly;
         this.generatedAlwaysAs = generatedAlwaysAs;
-        this.generationOption = generationOption == null ? GenerationOption.DEFAULT : generationOption;
-        this.generationLocation = generationLocation == null ? GenerationLocation.SERVER : generationLocation;
+        this.generationOption = generationOptionDefault(generationOption);
+        this.generationLocation = generationLocationDefault(generationLocation);
         this.collation = collation;
         this.characterSet = characterSet;
         this.identity = identity;
@@ -406,6 +406,18 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
         // [#13107] Eagerly register array types of built-in types in type registry
         if (this instanceof BuiltInDataType && !tType.isArray())
             getArrayDataType();
+    }
+
+    static final Nullability nullabilityDefault(Nullability nullability) {
+        return nullability == null ? Nullability.DEFAULT : nullability;
+    }
+
+    static final GenerationLocation generationLocationDefault(GenerationLocation generationLocation) {
+        return generationLocation == null ? GenerationLocation.SERVER : generationLocation;
+    }
+
+    static final GenerationOption generationOptionDefault(GenerationOption generationOption) {
+        return generationOption == null ? GenerationOption.DEFAULT : generationOption;
     }
 
     /**
@@ -472,11 +484,11 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
         this.castTypePrefix = t.castTypePrefix0();
         this.castTypeSuffix = t.castTypeSuffix0();
 
-        this.nullability = nullability;
+        this.nullability = nullabilityDefault(nullability);
         this.readonly = readonly;
         this.generatedAlwaysAs = generatedAlwaysAs;
-        this.generationOption = generationOption;
-        this.generationLocation = generationLocation;
+        this.generationOption = generationOptionDefault(generationOption);
+        this.generationLocation = generationLocationDefault(generationLocation);
         this.collation = collation;
         this.characterSet = characterSet;
         this.identity = identity;

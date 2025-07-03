@@ -100,7 +100,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
                 generationLocation(),
                 collation(),
                 characterSet(),
-                !n.nullable() && identity(),
+                n != null && !n.nullable() && identity(),
                 defaultValue()
             );
     }

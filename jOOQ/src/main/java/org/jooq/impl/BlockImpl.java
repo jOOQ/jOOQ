@@ -521,42 +521,37 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
 
 
 
+        DefaultRenderContext r = ctx instanceof DefaultRenderContext d
+            ? d
+            : null;
 
+        // Statement s may have been generating a BlockImpl e.g. to emulate an
+        // indexed for loop as a sequence of statements. In that case, there might
+        // already be a semi colon as the last generated token
+        boolean fb = ctx.family() == FIREBIRD;
+        boolean h2 = ctx.family() == H2;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        if (r == null
+                || r.sql.length() == 0
+                // [#11361] "BEGIN" is also a possible last token in case a declaration was moved to the top level
+                || (fb && r.sql.length() >= 3 && lastTokenIsNot(r.sql, ";") && lastTokenIsNot(r.sql, "end") && lastTokenIsNot(r.sql, "begin") && lastTokenIsNot(r.sql, "atomic"))
+                || (h2 && lastTokenIsNot(r.sql, ";") && lastTokenIsNot(r.sql, "}"))
+                || (!fb && !h2 && lastTokenIsNot(r.sql, ";")))
             ctx.sql(';');
     }
 
+    private static final boolean lastTokenIsNot(StringBuilder sql, String token) {
+        int whitespace = 0;
+        int length = sql.length();
 
+        for (int i; (i = length - whitespace - 1) >= 0 && Character.isWhitespace(sql.charAt(i)); whitespace++)
+            ;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        if (length < whitespace + token.length())
+            return true;
+        else
+            return !sql.subSequence(length - whitespace - token.length(), length - whitespace).toString().equalsIgnoreCase(token);
+    }
 
     private static final void begin(Context<?> ctx, boolean topLevel) {
         if (ctx.family() == H2)

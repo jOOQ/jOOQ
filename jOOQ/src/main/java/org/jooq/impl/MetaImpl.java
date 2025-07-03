@@ -1041,6 +1041,10 @@ final class MetaImpl extends AbstractMeta {
 
 
 
+
+
+
+
         final String comment(String tableName) {
             return comment(tableName, null);
         }

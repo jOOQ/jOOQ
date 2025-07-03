@@ -1710,11 +1710,12 @@ final class MetaImpl extends AbstractMeta {
                         log.warn("Default value", "Could not load default value: " + defaultValue + " for type: " + type + " of column " + columnName + " in table " + this, e);
                     }
 
-                    if (d != null)
+                    if (d != null) {
                         if (isGenerated)
                             type = type.generatedAlwaysAs(d);
                         else
                             type = type.default_(d);
+                    }
                 }
 
                 createField(name(columnName), type, this, remarks != null ? remarks : schema.comment(getName(), columnName));

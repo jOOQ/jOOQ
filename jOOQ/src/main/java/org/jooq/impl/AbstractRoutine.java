@@ -543,6 +543,7 @@ implements
 
 
 
+
                     return executeSelect();
 
                 // [#773] If JDBC escape syntax is available for functions, use

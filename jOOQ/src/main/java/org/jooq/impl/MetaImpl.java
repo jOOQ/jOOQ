@@ -466,6 +466,13 @@ final class MetaImpl extends AbstractMeta {
         }
     }
 
+
+
+
+
+
+
+
     private final class MetaSchema extends SchemaImpl {
         private final boolean                                empty;
         private transient volatile Map<Name, Result<Record>> columnCache;
@@ -1004,9 +1011,6 @@ final class MetaImpl extends AbstractMeta {
             else
                 return null;
         }
-
-
-
 
 
 

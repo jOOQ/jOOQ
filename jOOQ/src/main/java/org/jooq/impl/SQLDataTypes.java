@@ -192,6 +192,12 @@ final class SQLDataTypes {
         static final DataType<ULong>       UINT64                   = new BuiltInDataType<>(FAMILY, SQLDataType.BIGINTUNSIGNED, "UInt64");
 
         // -------------------------------------------------------------------------
+        // Dialect-specific data types and synonyms thereof
+        // -------------------------------------------------------------------------
+
+        static final DataType<Object>      NOTHING                  = new BuiltInDataType<>(FAMILY, SQLDataType.OTHER, "Nothing");
+
+        // -------------------------------------------------------------------------
         // Compatibility types for supported SQLDialect.CLICKHOUSE, SQLDataTypes
         // -------------------------------------------------------------------------
 

@@ -166,6 +166,11 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
     private static final Pattern                                P_NORMALISE                            = Pattern.compile("\"|\\.|\\s|\\(\\w+(\\s*,\\s*\\w+)*\\)|(NOT\\s*NULL)?");
 
     /**
+     * A pattern for data type name normalisation.
+     */
+    private static final Pattern                                P_NULLABLE                             = Pattern.compile("^Nullable\\((.*)\\)$");
+
+    /**
      * A pattern to be used to replace all precision, scale, and length
      * information.
      */
@@ -412,7 +417,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
 
         // [#3225] Avoid normalisation if not necessary
         if (!TYPES_BY_NAME[ordinal].containsKey(typeName.toUpperCase()))
-            TYPES_BY_NAME[ordinal].putIfAbsent(DefaultDataType.normalise(typeName), this);
+            TYPES_BY_NAME[ordinal].putIfAbsent(DefaultDataType.normalise(dialect, typeName), this);
 
         TYPES_BY_TYPE[ordinal].putIfAbsent(type, this);
         if (sqlDataType != null)
@@ -708,7 +713,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
 
         // [#3225] Normalise only if necessary
         if (result == null) {
-            result = TYPES_BY_NAME[ordinal].get(normalised = DefaultDataType.normalise(typeName));
+            result = TYPES_BY_NAME[ordinal].get(normalised = DefaultDataType.normalise(dialect, typeName));
 
             // UDT data types and built-in array data types are registered using DEFAULT
             if (result == null) {
@@ -1050,6 +1055,16 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
      */
     public static final String normalise(String typeName) {
         return P_NORMALISE.matcher(typeName.toUpperCase()).replaceAll("");
+    }
+
+    /**
+     * @return The type name without all special characters and white spaces
+     */
+    static final String normalise(SQLDialect dialect, String typeName) {
+        if (dialect != null && dialect.family() == CLICKHOUSE && typeName.startsWith("Nullable("))
+            typeName = P_NULLABLE.matcher(typeName).replaceFirst(r -> r.group(1));
+
+        return normalise(typeName);
     }
 
     /**

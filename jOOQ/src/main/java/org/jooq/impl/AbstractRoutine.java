@@ -45,6 +45,7 @@ import static org.jooq.Clause.FIELD;
 import static org.jooq.Clause.FIELD_FUNCTION;
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 // ...
@@ -59,6 +60,7 @@ import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.param;
+import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.sql;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.val;
@@ -89,6 +91,7 @@ import static org.jooq.impl.Keywords.K_PASSING;
 import static org.jooq.impl.Keywords.K_RECORD;
 import static org.jooq.impl.Keywords.K_RETURN;
 import static org.jooq.impl.Keywords.K_SELECT;
+import static org.jooq.impl.Keywords.K_SET;
 import static org.jooq.impl.Keywords.K_THEN;
 import static org.jooq.impl.Keywords.K_TRUE;
 import static org.jooq.impl.Keywords.K_TYPE;
@@ -104,6 +107,7 @@ import static org.jooq.impl.Tools.configurationOrThrow;
 import static org.jooq.impl.Tools.executeUpdateAndConsumeExceptions;
 import static org.jooq.impl.Tools.executeStatementAndGetFirstResultSet;
 import static org.jooq.impl.Tools.getRecordQualifier;
+import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.toSQLDDLTypeDeclaration;
 
 import java.sql.CallableStatement;
@@ -132,6 +136,7 @@ import org.jooq.Comment;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Converter;
+import org.jooq.Cursor;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.ExecuteContext;
@@ -694,14 +699,20 @@ implements
 
 
 
-            // [#2925]  Jaybird currently doesn't like fetching OUT parameters and consuming ResultSets
-            //          http://tracker.firebirdsql.org/browse/JDBC-350
-            if (!asList(FIREBIRD).contains(ctx.family()))
-                Tools.consumeResultSets(ctx, listener, results, e);
 
-            listener.outStart(ctx);
-            fetchOutParameters(ctx);
-            listener.outEnd(ctx);
+
+
+
+            {
+                // [#2925]  Jaybird currently doesn't like fetching OUT parameters and consuming ResultSets
+                //          http://tracker.firebirdsql.org/browse/JDBC-350
+                if (!asList(FIREBIRD).contains(ctx.family()))
+                    Tools.consumeResultSets(ctx, listener, results, e);
+
+                listener.outStart(ctx);
+                fetchOutParameters(ctx);
+                listener.outEnd(ctx);
+            }
 
             return 0;
         }
@@ -724,6 +735,23 @@ implements
             Tools.safeClose(listener, ctx);
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private final SQLException execute0(ExecuteContext ctx, ExecuteListener listener) throws SQLException {
         listener.executeStart(ctx);
@@ -1026,11 +1054,26 @@ implements
 
 
 
+
+
+
+
+
         else
             context.sql(" }");
     }
 
     private final void toSQLDeclare(RenderContext context) {
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1210,6 +1253,7 @@ implements
 
     private final void toSQLBegin(RenderContext context) {
         if (!isSQLUsable() && context.family().category() == SQLDialectCategory.POSTGRES) {}
+
 
 
 
@@ -1687,6 +1731,7 @@ implements
 
 
 
+
         {
             context.sql("? = ");
         }
@@ -1727,10 +1772,16 @@ implements
 
 
 
+
+
+
         ctx.sql('?');
     }
 
     private final void toSQLInParam(RenderContext ctx, Parameter<?> parameter, int index, Field<?> value) {
+
+
+
 
 
 
@@ -1824,6 +1875,11 @@ implements
     }
 
     private final void registerOutParameters(ExecuteContext ctx) throws SQLException {
+
+
+
+
+
         Configuration c = ctx.configuration();
         CallableStatement statement = (CallableStatement) ctx.statement();
 

@@ -96,6 +96,7 @@ import static org.jooq.meta.postgres.information_schema.Tables.SEQUENCES;
 import static org.jooq.meta.postgres.information_schema.Tables.TABLES;
 import static org.jooq.meta.postgres.information_schema.Tables.TRIGGERS;
 import static org.jooq.meta.postgres.information_schema.Tables.VIEWS;
+import static org.jooq.meta.postgres.pg_catalog.Tables.PG_ATTRIBUTE;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_CLASS;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_CONSTRAINT;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_DEPEND;
@@ -148,6 +149,7 @@ import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
 import org.jooq.impl.ParserException;
 import org.jooq.impl.QOM.ForeignKeyRule;
+import org.jooq.impl.QOM.GenerationOption;
 import org.jooq.impl.SQLDataType;
 import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.AbstractIndexDefinition;
@@ -1037,6 +1039,28 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
 
         return new ArrayList<>(result.values());
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

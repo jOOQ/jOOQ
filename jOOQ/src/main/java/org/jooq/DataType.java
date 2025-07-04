@@ -549,7 +549,7 @@ public interface DataType<T> extends Named {
      * <p>
      * This feature is implemented in commercial distributions only.
      *
-     * @param readonly The new hidden attribute value.
+     * @param hidden The new hidden attribute value.
      * @return The new data type
      */
     @NotNull

@@ -52,6 +52,9 @@ public final class TXTFormat {
 
     public static final TXTFormat DEFAULT = new TXTFormat();
 
+
+
+
     final int                     maxRows;
     final int                     minColWidth;
     final int                     maxColWidth;
@@ -64,6 +67,9 @@ public final class TXTFormat {
 
     public TXTFormat() {
         this(
+
+
+
             Integer.MAX_VALUE,
             4,
             Integer.MAX_VALUE,
@@ -77,6 +83,9 @@ public final class TXTFormat {
     }
 
     private TXTFormat(
+
+
+
         int maxRows,
         int minColWidth,
         int maxColWidth,
@@ -87,6 +96,9 @@ public final class TXTFormat {
         boolean verticalCellBorder,
         boolean intersectLines
     ) {
+
+
+
         this.maxRows = maxRows;
         this.minColWidth = minColWidth;
         this.maxColWidth = maxColWidth;
@@ -98,12 +110,47 @@ public final class TXTFormat {
         this.intersectLines = intersectLines;
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * The maximum number of rows to be included in the format, defaulting to all rows.
      */
     @NotNull
     public TXTFormat maxRows(int newMaxRows) {
         return new TXTFormat(
+
+
+
             newMaxRows,
             minColWidth,
             maxColWidth,
@@ -129,6 +176,9 @@ public final class TXTFormat {
     @NotNull
     public TXTFormat minColWidth(int newMinColWidth) {
         return new TXTFormat(
+
+
+
             maxRows,
             newMinColWidth,
             maxColWidth,
@@ -154,6 +204,9 @@ public final class TXTFormat {
     @NotNull
     public TXTFormat maxColWidth(int newMaxColWidth) {
         return new TXTFormat(
+
+
+
             maxRows,
             minColWidth,
             newMaxColWidth,
@@ -180,6 +233,9 @@ public final class TXTFormat {
     @NotNull
     public TXTFormat horizontalTableBorder(boolean newHorizontalTableBorder) {
         return new TXTFormat(
+
+
+
             maxRows,
             minColWidth,
             maxColWidth,
@@ -207,6 +263,9 @@ public final class TXTFormat {
     @NotNull
     public TXTFormat horizontalHeaderBorder(boolean newHorizontalHeaderBorder) {
         return new TXTFormat(
+
+
+
             maxRows,
             minColWidth,
             maxColWidth,
@@ -234,6 +293,9 @@ public final class TXTFormat {
     @NotNull
     public TXTFormat horizontalCellBorder(boolean newHorizontalCellBorder) {
         return new TXTFormat(
+
+
+
             maxRows,
             minColWidth,
             maxColWidth,
@@ -261,6 +323,9 @@ public final class TXTFormat {
     @NotNull
     public TXTFormat verticalTableBorder(boolean newVerticalTableBorder) {
         return new TXTFormat(
+
+
+
             maxRows,
             minColWidth,
             maxColWidth,
@@ -288,6 +353,9 @@ public final class TXTFormat {
     @NotNull
     public TXTFormat verticalCellBorder(boolean newVerticalCellBorder) {
         return new TXTFormat(
+
+
+
             maxRows,
             minColWidth,
             maxColWidth,
@@ -315,6 +383,9 @@ public final class TXTFormat {
     @NotNull
     public TXTFormat intersectLines(boolean newIntersectLines) {
         return new TXTFormat(
+
+
+
             maxRows,
             minColWidth,
             maxColWidth,

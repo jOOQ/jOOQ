@@ -1648,7 +1648,7 @@ final class Tools {
      * if <code>null</code>.
      */
     static final Configuration configuration(Attachable attachable) {
-        return configuration(attachable.configuration());
+        return configuration(attachable != null ? attachable.configuration() : null);
     }
 
     /**

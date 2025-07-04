@@ -1734,6 +1734,12 @@ inside of queries (including procedural statements) are still not supported.]]><
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#8469] Whether to parse view sources retrieved from {@link java.sql.DatabaseMetaData}.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
+      <element name="redact" type="jooq-runtime:Redact" minOccurs="0" maxOccurs="1" default="TEXT_ONLY">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#18679] The behaviour when formatting values with {@link org.jooq.DataType#redacted()}.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="readonlyTableRecordInsert" type="jooq-runtime:WriteIfReadonly" minOccurs="0" maxOccurs="1" default="IGNORE">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#9864] The behaviour when trying to insert into readonly columns using {@link org.jooq.TableRecord#insert()}.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
@@ -2669,6 +2675,22 @@ Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided]]></jxb:javad
     
       <enumeration value="JSONB">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Emulate LIST, SET, MULTISET syntax using JSONB]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
+    </restriction>
+  </simpleType>
+  
+  <simpleType name="Redact">
+    <restriction base="string">
+      <enumeration value="ALL_FORMATS">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Redact formatted content for all output formats, including CSV, JSON, XML, and all text formats.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
+
+      <enumeration value="TEXT_ONLY">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Redact formatted content for text formats, including text, HTML, chart formats.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
+
+      <enumeration value="NONE">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Redact no content, turning the feature off.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </enumeration>
     </restriction>
   </simpleType>

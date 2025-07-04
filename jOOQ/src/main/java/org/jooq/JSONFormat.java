@@ -74,6 +74,9 @@ public final class JSONFormat {
     public final static JSONFormat DEFAULT_FOR_RECORDS = new JSONFormat().header(false);
 
     final boolean                  mutable;
+
+
+
     boolean                        format;
     String                         newline;
     int                            globalIndent;
@@ -89,6 +92,9 @@ public final class JSONFormat {
     public JSONFormat() {
         this(
             false,
+
+
+
             false,
             "\n",
             0,
@@ -105,6 +111,9 @@ public final class JSONFormat {
 
     private JSONFormat(
         boolean mutable,
+
+
+
         boolean format,
         String newline,
         int globalIndent,
@@ -118,6 +127,9 @@ public final class JSONFormat {
         boolean quoteNested
     ) {
         this.mutable = mutable;
+
+
+
         this.format = format;
         this.newline = newline;
         this.globalIndent = globalIndent;
@@ -151,6 +163,9 @@ public final class JSONFormat {
         if (mutable ^ newMutable)
             return new JSONFormat(
                 newMutable,
+
+
+
                 format,
                 newline,
                 globalIndent,
@@ -167,6 +182,46 @@ public final class JSONFormat {
             return this;
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * The new value for the formatting flag, defaulting to <code>false</code>.
      */
@@ -179,6 +234,9 @@ public final class JSONFormat {
         else
             return new JSONFormat(
                 mutable,
+
+
+
                 newFormat,
                 newline,
                 globalIndent,
@@ -212,6 +270,9 @@ public final class JSONFormat {
         else
             return new JSONFormat(
                 mutable,
+
+
+
                 format,
                 newNewline,
                 globalIndent,
@@ -246,6 +307,9 @@ public final class JSONFormat {
         else
             return new JSONFormat(
                 mutable,
+
+
+
                 format,
                 newline,
                 newGlobalIndent,
@@ -279,6 +343,9 @@ public final class JSONFormat {
         else
             return new JSONFormat(
                 mutable,
+
+
+
                 format,
                 newline,
                 globalIndent,
@@ -328,6 +395,9 @@ public final class JSONFormat {
         else
             return new JSONFormat(
                 mutable,
+
+
+
                 format,
                 newline,
                 globalIndent,
@@ -363,6 +433,9 @@ public final class JSONFormat {
         else
             return new JSONFormat(
                 mutable,
+
+
+
                 format,
                 newline,
                 globalIndent,
@@ -399,6 +472,9 @@ public final class JSONFormat {
         else
             return new JSONFormat(
                 mutable,
+
+
+
                 format,
                 newline,
                 globalIndent,
@@ -435,6 +511,9 @@ public final class JSONFormat {
         else
             return new JSONFormat(
                 mutable,
+
+
+
                 format,
                 newline,
                 globalIndent,
@@ -470,6 +549,9 @@ public final class JSONFormat {
         else
             return new JSONFormat(
                 mutable,
+
+
+
                 format,
                 newline,
                 globalIndent,
@@ -504,6 +586,9 @@ public final class JSONFormat {
         else
             return new JSONFormat(
                 mutable,
+
+
+
                 format,
                 newline,
                 globalIndent,

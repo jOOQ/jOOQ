@@ -55,6 +55,9 @@ public final class XMLFormat {
     public final static XMLFormat DEFAULT_FOR_RECORDS = new XMLFormat().header(false).xmlns(false);
 
     final boolean                 mutable;
+
+
+
     boolean                       xmlns;
     boolean                       format;
     String                        newline;
@@ -68,6 +71,9 @@ public final class XMLFormat {
     public XMLFormat() {
         this(
             false,
+
+
+
             true,
             false,
             "\n",
@@ -82,6 +88,9 @@ public final class XMLFormat {
 
     private XMLFormat(
         boolean mutable,
+
+
+
         boolean xmlns,
         boolean format,
         String newline,
@@ -93,6 +102,9 @@ public final class XMLFormat {
         boolean quoteNested
     ) {
         this.mutable = mutable;
+
+
+
         this.xmlns = xmlns;
         this.format = format;
         this.newline = newline;
@@ -124,6 +136,9 @@ public final class XMLFormat {
         if (mutable ^ newMutable)
             return new XMLFormat(
                 newMutable,
+
+
+
                 xmlns,
                 format,
                 newline,
@@ -138,6 +153,44 @@ public final class XMLFormat {
             return this;
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * The new value for the xmlns flag, defaulting to <code>true</code>.
      */
@@ -150,6 +203,9 @@ public final class XMLFormat {
         else
             return new XMLFormat(
                 mutable,
+
+
+
                 newXmlns,
                 format,
                 newline,
@@ -181,6 +237,9 @@ public final class XMLFormat {
         else
             return new XMLFormat(
                 mutable,
+
+
+
                 xmlns,
                 newFormat,
                 newline,
@@ -212,6 +271,9 @@ public final class XMLFormat {
         else
             return new XMLFormat(
                 mutable,
+
+
+
                 xmlns,
                 format,
                 newNewline,
@@ -244,6 +306,9 @@ public final class XMLFormat {
         else
             return new XMLFormat(
                 mutable,
+
+
+
                 xmlns,
                 format,
                 newline,
@@ -275,6 +340,9 @@ public final class XMLFormat {
         else
             return new XMLFormat(
                 mutable,
+
+
+
                 xmlns,
                 format,
                 newline,
@@ -327,6 +395,9 @@ public final class XMLFormat {
         else
             return new XMLFormat(
                 mutable,
+
+
+
                 xmlns,
                 format,
                 newline,
@@ -359,6 +430,9 @@ public final class XMLFormat {
         else
             return new XMLFormat(
                 mutable,
+
+
+
                 xmlns,
                 format,
                 newline,
@@ -393,6 +467,9 @@ public final class XMLFormat {
         else
             return new XMLFormat(
                 mutable,
+
+
+
                 xmlns,
                 format,
                 newline,

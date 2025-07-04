@@ -41,6 +41,8 @@ import java.io.OutputStream;
 import java.io.Writer;
 import java.sql.ResultSet;
 
+import org.jooq.conf.Redact;
+import org.jooq.conf.Settings;
 import org.jooq.exception.IOException;
 
 import org.jetbrains.annotations.NotNull;
@@ -68,6 +70,16 @@ import org.xml.sax.SAXException;
  * resource is closed. Calling these methods on a {@link Cursor} is not
  * repeatable as the {@link Cursor} (and the underlying JDBC {@link ResultSet})
  * is consumed entirely, and closed eagerly after consumption.
+ * <p>
+ * Formatting is subject to {@link Settings#getRedact()} if a formatted
+ * {@link DataType#redacted()} flag is set. It affects these formats:
+ * <ul>
+ * <li>HTML with {@link Redact#TEXT_ONLY} or {@link Redact#ALL_FORMATS}</li>
+ * <li>Text with {@link Redact#TEXT_ONLY} or {@link Redact#ALL_FORMATS}</li>
+ * <li>CSV with {@link Redact#ALL_FORMATS}</li>
+ * <li>JSON with {@link Redact#ALL_FORMATS}</li>
+ * <li>XML with {@link Redact#ALL_FORMATS}</li>
+ * </ul>
  *
  * @author Lukas Eder
  */

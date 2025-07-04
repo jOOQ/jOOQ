@@ -574,6 +574,9 @@ public class Settings
     protected Boolean parseMetaDefaultExpressions = true;
     @XmlElement(defaultValue = "true")
     protected Boolean parseMetaViewSources = true;
+    @XmlElement(defaultValue = "TEXT_ONLY")
+    @XmlSchemaType(name = "string")
+    protected Redact redact = Redact.TEXT_ONLY;
     @XmlElement(defaultValue = "IGNORE")
     @XmlSchemaType(name = "string")
     protected WriteIfReadonly readonlyTableRecordInsert = WriteIfReadonly.IGNORE;
@@ -7098,6 +7101,26 @@ public class Settings
     }
 
     /**
+     * [#18679] The behaviour when formatting values with {@link org.jooq.DataType#redacted()}.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
+    public Redact getRedact() {
+        return redact;
+    }
+
+    /**
+     * [#18679] The behaviour when formatting values with {@link org.jooq.DataType#redacted()}.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
+    public void setRedact(Redact value) {
+        this.redact = value;
+    }
+
+    /**
      * [#9864] The behaviour when trying to insert into readonly columns using {@link org.jooq.TableRecord#insert()}.
      * 
      */
@@ -10114,6 +10137,17 @@ public class Settings
     }
 
     /**
+     * [#18679] The behaviour when formatting values with {@link org.jooq.DataType#redacted()}.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
+    public Settings withRedact(Redact value) {
+        setRedact(value);
+        return this;
+    }
+
+    /**
      * [#9864] The behaviour when trying to insert into readonly columns using {@link org.jooq.TableRecord#insert()}.
      * 
      */
@@ -10472,6 +10506,7 @@ public class Settings
         builder.append("parseRetainCommentsBetweenQueries", parseRetainCommentsBetweenQueries);
         builder.append("parseMetaDefaultExpressions", parseMetaDefaultExpressions);
         builder.append("parseMetaViewSources", parseMetaViewSources);
+        builder.append("redact", redact);
         builder.append("readonlyTableRecordInsert", readonlyTableRecordInsert);
         builder.append("readonlyUpdatableRecordUpdate", readonlyUpdatableRecordUpdate);
         builder.append("readonlyInsert", readonlyInsert);
@@ -12662,6 +12697,15 @@ public class Settings
                 return false;
             }
         }
+        if (redact == null) {
+            if (other.redact!= null) {
+                return false;
+            }
+        } else {
+            if (!redact.equals(other.redact)) {
+                return false;
+            }
+        }
         if (readonlyTableRecordInsert == null) {
             if (other.readonlyTableRecordInsert!= null) {
                 return false;
@@ -12990,6 +13034,7 @@ public class Settings
         result = ((prime*result)+((parseRetainCommentsBetweenQueries == null)? 0 :parseRetainCommentsBetweenQueries.hashCode()));
         result = ((prime*result)+((parseMetaDefaultExpressions == null)? 0 :parseMetaDefaultExpressions.hashCode()));
         result = ((prime*result)+((parseMetaViewSources == null)? 0 :parseMetaViewSources.hashCode()));
+        result = ((prime*result)+((redact == null)? 0 :redact.hashCode()));
         result = ((prime*result)+((readonlyTableRecordInsert == null)? 0 :readonlyTableRecordInsert.hashCode()));
         result = ((prime*result)+((readonlyUpdatableRecordUpdate == null)? 0 :readonlyUpdatableRecordUpdate.hashCode()));
         result = ((prime*result)+((readonlyInsert == null)? 0 :readonlyInsert.hashCode()));

@@ -4619,7 +4619,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             else if (dataType instanceof TableDataType<?> t) {
                 ctx.visit(defaultIfNull(getMappedTable(ctx, t.table), t.table));
             }
-            else if (dataType.isUDT()) {
+            else if (dataType.isQualifiedRecord()) {
                 RecordQualifier<?> q = getRecordQualifier(dataType);
                 ctx.visit(defaultIfNull(Tools.getMappedQualifier(ctx, q), q));
             }

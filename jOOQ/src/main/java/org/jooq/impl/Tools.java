@@ -5638,8 +5638,6 @@ final class Tools {
 
                     for (String sqlstate : sqlstates)
                         c.visit(K_WHEN).sql(' ').visit(K_SQLSTATE).sql(' ').visit(DSL.inline(sqlstate)).sql(' ').visit(K_THEN).sql(' ').visit(K_NULL).sql(';').formatSeparator();
-
-                    c.formatIndentEnd();
                 });
                 break;
             }

@@ -128,6 +128,9 @@ public class PostgresMaterializedViewDefinition extends AbstractTableDefinition 
                    .otherwise(
                         when(c0array, substring(udtName, inline(2)).concat(inline(" ARRAY")))
                        .when(nt.NSPNAME.eq(inline("pg_catalog")), field("format_type({0}, NULL::integer)", String.class, a.ATTTYPID))
+
+                       // [#18738] Just like in PostgresTableDefinition
+                       .when(udtName.eq(inline("geometry")), inline("geometry"))
                        .otherwise(inline("USER-DEFINED")))).as(col.DATA_TYPE),
                 field("(information_schema._pg_char_max_length(information_schema._pg_truetypid(a.*, t.*), information_schema._pg_truetypmod(a.*, t.*)))::integer", col.CHARACTER_MAXIMUM_LENGTH.getDataType()).as(col.CHARACTER_MAXIMUM_LENGTH),
                 field("(information_schema._pg_numeric_precision(information_schema._pg_truetypid(a.*, t.*), information_schema._pg_truetypmod(a.*, t.*)))::integer", col.NUMERIC_PRECISION.getDataType()).as(col.NUMERIC_PRECISION),

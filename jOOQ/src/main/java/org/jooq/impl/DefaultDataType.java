@@ -1074,7 +1074,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
      */
     static final String normalise(SQLDialect dialect, String typeName) {
         if (dialect != null && dialect.family() == CLICKHOUSE && typeName.startsWith("Nullable("))
-            typeName = P_NULLABLE.matcher(typeName).replaceFirst(r -> r.group(1));
+            typeName = P_NULLABLE.matcher(typeName).replaceFirst("$1");
 
         return normalise(typeName);
     }

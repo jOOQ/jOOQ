@@ -55,7 +55,6 @@ import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.jsonArray;
 import static org.jooq.impl.DSL.jsonEntry;
 import static org.jooq.impl.DSL.jsonbArray;
-import static org.jooq.impl.DSL.noField;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectFrom;
@@ -79,7 +78,6 @@ import static org.jooq.impl.Names.N_RESULT;
 import static org.jooq.impl.Names.N_T;
 import static org.jooq.impl.SQLDataType.BLOB;
 import static org.jooq.impl.SQLDataType.CLOB;
-import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.JSON;
 import static org.jooq.impl.SQLDataType.JSONB;
 import static org.jooq.impl.SQLDataType.VARCHAR;
@@ -123,6 +121,7 @@ import org.jooq.Name;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Record1;
+import org.jooq.RecordQualifier;
 // ...
 import org.jooq.Result;
 import org.jooq.SQLDialect;
@@ -132,8 +131,12 @@ import org.jooq.SelectOrderByStep;
 import org.jooq.SortField;
 import org.jooq.Spatial;
 import org.jooq.Table;
+import org.jooq.TableField;
 import org.jooq.TableLike;
 // ...
+import org.jooq.UDT;
+import org.jooq.UDTField;
+import org.jooq.UDTPathField;
 import org.jooq.XML;
 import org.jooq.XMLAggOrderByStep;
 
@@ -495,8 +498,10 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
 
 
 
+
+            // [#18728] Always quote this name because of the : character
             default:
-                return DSL.name("xsi:nil");
+                return DSL.quotedName("xsi:nil");
         }
     }
 
@@ -630,6 +635,10 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
 
     @SuppressWarnings("unchecked")
     static final Field<?> castForXML(Context<?> ctx, Field<?> field) {
+        if (field.getDataType() instanceof UDTDataType) {
+            return toXMLElements(ctx, field);
+        }
+
 
 
 
@@ -647,11 +656,40 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
         return field;
     }
 
+    private static final Field<?> toXMLElements(Context<?> ctx, Field<?> field) {
+        if (field.getDataType() instanceof UDTDataType<?> ut) {
+            UDTPathField<?, ?, ?> up;
+
+            if (field instanceof UDTPathField<?, ?, ?> u)
+                up = u;
+            else if (field instanceof TableField<?, ?> tf)
+                up = new UDTPathFieldImpl<>(field.getUnqualifiedName(), field.getDataType(), tf.getTable(), ut.udt, null);
+            else
+                up = null;
+
+            if (up != null) {
+                return when(field.isNotNull(), xmlelement(N_RECORD,
+                    map(field.getDataType().getRow().fields(),
+                        (f, i) -> wrapXmlelement(
+                            ctx,
+                            toXMLElements(ctx, new UDTPathFieldImpl<>(
+                                f.getUnqualifiedName(), f.getDataType(), up.asQualifier(), ut.udt, null
+                            )),
+                            fieldNameString(i)
+                        )
+                    )
+                ));
+            }
+        }
+
+        return field;
+    }
+
     static final XMLAggOrderByStep<XML> xmlaggEmulation(Context<?> ctx, Fields fields, boolean agg) {
         return xmlagg(
             xmlelement(N_RECORD,
                 map(fields.fields(), (f, i) -> {
-                    Field<?> v = castForXML(ctx, agg ? f : DSL.field(fieldName(i), f.getDataType()));
+                    Field<?> v = castForXML(ctx, agg ? f : DSL.field(N_T.append(fieldName(i)), f.getDataType()));
                     String n = fieldNameString(i);
                     return wrapXmlelement(ctx, v, n);
                 })

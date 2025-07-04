@@ -69,6 +69,7 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Result;
+import org.jooq.UDTRecord;
 import org.jooq.exception.DataAccessException;
 import org.jooq.tools.JooqLogger;
 
@@ -116,7 +117,13 @@ final class XMLHandler<R extends Record> extends DefaultHandler {
 
             // [#12134] Patch base64 encoded binary values
             for (int i = 0; i < fields.size(); i++) {
-                Object v = values.get(i);
+                Object v;
+                try {
+                    v = values.get(i);
+                }
+                catch (Exception e) {
+                    throw e;
+                }
                 DataType<?> t = fields.get(i).getDataType();
 
                 if (v instanceof String s) {
@@ -272,7 +279,9 @@ final class XMLHandler<R extends Record> extends DefaultHandler {
                 s.values.add("");
             else if (t.isArray() && !isNil(attributes))
                 s.elements = new ArrayList<>();
-            else if (!t.isMultiset() && !t.isRecord())
+
+            // [#18726] UDTs can be NULL, unlike nested records, which currently cannot be NULL yet.
+            else if (!t.isMultiset() && !t.isRecord() || t instanceof UDTDataType)
                 s.values.add(null);
         }
     }
@@ -323,7 +332,14 @@ final class XMLHandler<R extends Record> extends DefaultHandler {
                 Field<?> f = peek.row.field(peek.column);
 
                 if ("record".equalsIgnoreCase(qName) && f.getDataType().isRecord()) {
-                    peek.values.add(newRecord(true, ctx.configuration(), s.recordType, s.row).operate(s::into));
+                    R r = newRecord(true, ctx.configuration(), s.recordType, s.row).operate(s::into);
+
+                    // [#18726] UDTs can be NULL, unlike nested records, which currently cannot be NULL yet.
+                    if (f.getDataType() instanceof UDTDataType)
+                        peek.values.set(peek.values.size() - 1, r);
+                    else
+                        peek.values.add(r);
+
                     s = states.pop();
                     s.inRecord--;
                     break x;

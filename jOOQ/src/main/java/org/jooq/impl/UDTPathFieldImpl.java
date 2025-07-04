@@ -86,13 +86,15 @@ implements
     private final RecordQualifier<R> qualifier;
     private final UDT<U>             udt;
 
+    UDTPathFieldImpl(Name name, DataType<T> type, RecordQualifier<R> qualifier, UDT<U> udt, Comment comment) {
+        this(name, type, qualifier, udt, comment, type.getBinding());
+    }
+
     UDTPathFieldImpl(Name name, DataType<T> type, RecordQualifier<R> qualifier, UDT<U> udt, Comment comment, Binding<?, T> binding) {
         super(qualify(qualifier, name), type, comment, binding);
 
         this.qualifier = qualifier;
         this.udt = udt;
-
-        qualifier.$name();
     }
 
     @Override

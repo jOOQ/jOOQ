@@ -281,7 +281,7 @@ final class XMLHandler<R extends Record> extends DefaultHandler {
                 s.elements = new ArrayList<>();
 
             // [#18726] UDTs can be NULL, unlike nested records, which currently cannot be NULL yet.
-            else if (!t.isMultiset() && !t.isRecord() || t instanceof UDTDataType)
+            else if (!t.isMultiset() && !t.isRecord() || t.isUDTRecord())
                 s.values.add(null);
         }
     }
@@ -335,7 +335,7 @@ final class XMLHandler<R extends Record> extends DefaultHandler {
                     R r = newRecord(true, ctx.configuration(), s.recordType, s.row).operate(s::into);
 
                     // [#18726] UDTs can be NULL, unlike nested records, which currently cannot be NULL yet.
-                    if (f.getDataType() instanceof UDTDataType)
+                    if (f.getDataType().isUDTRecord())
                         peek.values.set(peek.values.size() - 1, r);
                     else
                         peek.values.add(r);

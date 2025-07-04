@@ -635,7 +635,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
 
     @SuppressWarnings("unchecked")
     static final Field<?> castForXML(Context<?> ctx, Field<?> field) {
-        if (field.getDataType() instanceof UDTDataType) {
+        if (field.getDataType().isUDTRecord()) {
             return toXMLElements(ctx, field);
         }
 

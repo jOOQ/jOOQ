@@ -81,6 +81,11 @@ public interface ColumnDefinition extends TypedElementDefinition<TableDefinition
     boolean isHidden();
 
     /**
+     * Whether this column is redacted.
+     */
+    boolean isRedacted();
+
+    /**
      * Whether this column is readonly.
      */
     boolean isReadonly();

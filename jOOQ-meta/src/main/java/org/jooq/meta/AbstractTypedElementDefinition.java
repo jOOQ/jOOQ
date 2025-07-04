@@ -209,20 +209,22 @@ implements
 
 
 
-            boolean n = result.isNullable();
-            String d = result.getDefaultValue();
-            boolean i = result.isIdentity();
-            boolean h = result.isHidden();
-            boolean r = result.isReadonly();
-            String g = result.getGeneratedAlwaysAs();
+            boolean nullable = result.isNullable();
+            String defaultValue = result.getDefaultValue();
+            boolean identity = result.isIdentity();
+            boolean hidden = result.isHidden();
+            boolean redacted = result.isRedacted();
+            boolean readonly = result.isReadonly();
+            String generatedAlwaysAs = result.getGeneratedAlwaysAs();
 
 
 
 
 
-            int l = 0;
-            int p = 0;
-            int s = 0;
+
+            int length = 0;
+            int precision = 0;
+            int scale = 0;
 
             CustomType customType = customType(db, forcedType);
 
@@ -233,20 +235,39 @@ implements
                 Matcher matcher = LENGTH_PRECISION_SCALE_PATTERN.matcher(name);
                 if (matcher.find()) {
                     if (!isEmpty(matcher.group(1))) {
-                        l = p = convert(matcher.group(1), int.class);
+                        length = precision = convert(matcher.group(1), int.class);
                     }
                     else {
-                        p = convert(matcher.group(2), int.class);
-                        s = convert(matcher.group(3), int.class);
+                        precision = convert(matcher.group(2), int.class);
+                        scale = convert(matcher.group(3), int.class);
                     }
                 }
 
                 try {
-                    forcedDataType = getDataType(db, name, p, s);
+                    forcedDataType = getDataType(db, name, precision, scale);
 
                     // [#677] SQLDataType matches are actual type-rewrites
                     if (forcedDataType != null)
-                        result = new DefaultDataTypeDefinition(db, child.getSchema(), name, l, p, s, n, h, r, g, d, i, (Name) null, generator, converter, binding, null);
+                        result = new DefaultDataTypeDefinition(
+                            db,
+                            child.getSchema(),
+                            name,
+                            length,
+                            precision,
+                            scale,
+                            nullable,
+                            hidden,
+                            redacted,
+                            readonly,
+                            generatedAlwaysAs,
+                            defaultValue,
+                            identity,
+                            (Name) null,
+                            generator,
+                            converter,
+                            binding,
+                            null
+                        );
 
                 }
                 catch (SQLDialectNotSupportedException e) {
@@ -274,6 +295,7 @@ implements
 
                 if (generator == null)
                     generator = customType.getGenerator();
+
 
 
 
@@ -357,12 +379,12 @@ implements
                 db.doOnce(new SimpleImmutableEntry<>(child, forcedType), () -> log.info("Forcing type", child + " to " + forcedType));
 
                 if (customType != null) {
-                    l = result.getLength();
-                    p = result.getPrecision();
-                    s = result.getScale();
+                    length = result.getLength();
+                    precision = result.getPrecision();
+                    scale = result.getScale();
                     String t = result.getType();
                     Name u = result.getQualifiedUserType();
-                    result = new DefaultDataTypeDefinition(db, definedType.getSchema(), t, l, p, s, n, h, r, g, d, i, u, generator, converter, binding, uType);
+                    result = new DefaultDataTypeDefinition(db, definedType.getSchema(), t, length, precision, scale, nullable, hidden, readonly, generatedAlwaysAs, defaultValue, identity, u, generator, converter, binding, uType);
                 }
             }
 
@@ -377,6 +399,11 @@ implements
 
 
             }
+
+
+
+
+
 
 
 
@@ -430,6 +457,7 @@ implements
                 .withLambdaConverter(forcedType.getLambdaConverter())
                 .withVisibilityModifier(forcedType.getVisibilityModifier())
                 .withHidden(forcedType.isHidden())
+                .withRedacted(forcedType.isRedacted())
                 .withGenerator(forcedType.getGenerator())
                 .withAuditInsertTimestamp(forcedType.isAuditInsertTimestamp())
                 .withAuditInsertUser(forcedType.isAuditInsertUser())

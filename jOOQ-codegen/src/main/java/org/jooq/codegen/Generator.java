@@ -694,6 +694,24 @@ public interface Generator {
      */
     void setGenerateSerializablePojos(boolean generateSerializablePojos);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * Whether interfaces should be generated to be implemented by records and
      * POJO's

@@ -40,6 +40,8 @@ public class ForcedType implements Serializable, XMLAppendable
     protected VisibilityModifier visibilityModifier;
     @XmlElement(defaultValue = "false")
     protected Boolean hidden = false;
+    @XmlElement(defaultValue = "false")
+    protected Boolean redacted = false;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String generator;
     protected Boolean auditInsertTimestamp;
@@ -190,6 +192,38 @@ public class ForcedType implements Serializable, XMLAppendable
      */
     public void setHidden(Boolean value) {
         this.hidden = value;
+    }
+
+    /**
+     * The redacted flag allows for redacting columns when formatting result set output, e.g. in debug logs.
+     * <p>
+     * This has no effect on matched objects that are not columns.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isRedacted() {
+        return redacted;
+    }
+
+    /**
+     * The redacted flag allows for redacting columns when formatting result set output, e.g. in debug logs.
+     * <p>
+     * This has no effect on matched objects that are not columns.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setRedacted(Boolean value) {
+        this.redacted = value;
     }
 
     /**
@@ -791,6 +825,19 @@ public class ForcedType implements Serializable, XMLAppendable
     }
 
     /**
+     * The redacted flag allows for redacting columns when formatting result set output, e.g. in debug logs.
+     * <p>
+     * This has no effect on matched objects that are not columns.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
+    public ForcedType withRedacted(Boolean value) {
+        setRedacted(value);
+        return this;
+    }
+
+    /**
      * A {@link org.jooq.Generator} implementation used for client-side computed columns.
      * <p>
      * This has no effect on matched objects that are not columns.
@@ -1049,6 +1096,7 @@ public class ForcedType implements Serializable, XMLAppendable
         builder.append("userType", userType);
         builder.append("visibilityModifier", visibilityModifier);
         builder.append("hidden", hidden);
+        builder.append("redacted", redacted);
         builder.append("generator", generator);
         builder.append("auditInsertTimestamp", auditInsertTimestamp);
         builder.append("auditInsertUser", auditInsertUser);
@@ -1137,6 +1185,15 @@ public class ForcedType implements Serializable, XMLAppendable
             }
         } else {
             if (!hidden.equals(other.hidden)) {
+                return false;
+            }
+        }
+        if (redacted == null) {
+            if (other.redacted!= null) {
+                return false;
+            }
+        } else {
+            if (!redacted.equals(other.redacted)) {
                 return false;
             }
         }
@@ -1377,6 +1434,7 @@ public class ForcedType implements Serializable, XMLAppendable
         result = ((prime*result)+((userType == null)? 0 :userType.hashCode()));
         result = ((prime*result)+((visibilityModifier == null)? 0 :visibilityModifier.hashCode()));
         result = ((prime*result)+((hidden == null)? 0 :hidden.hashCode()));
+        result = ((prime*result)+((redacted == null)? 0 :redacted.hashCode()));
         result = ((prime*result)+((generator == null)? 0 :generator.hashCode()));
         result = ((prime*result)+((auditInsertTimestamp == null)? 0 :auditInsertTimestamp.hashCode()));
         result = ((prime*result)+((auditInsertUser == null)? 0 :auditInsertUser.hashCode()));

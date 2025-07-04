@@ -49,6 +49,7 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.stream.Stream;
 
+// ...
 import org.jooq.meta.CatalogDefinition;
 import org.jooq.meta.Database;
 import org.jooq.meta.Definition;
@@ -126,6 +127,9 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generatePojosToString                                 = true;
     boolean                            generateImmutablePojos                                = false;
     boolean                            generateSerializablePojos                             = true;
+
+
+
     boolean                            generateInterfaces                                    = false;
     boolean                            generateImmutableInterfaces                           = false;
     boolean                            generateSerializableInterfaces                        = true;
@@ -865,6 +869,20 @@ abstract class AbstractGenerator implements Generator {
     public void setGenerateSerializablePojos(boolean generateSerializablePojos) {
         this.generateSerializablePojos = generateSerializablePojos;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @Override
     public boolean generateInterfaces() {

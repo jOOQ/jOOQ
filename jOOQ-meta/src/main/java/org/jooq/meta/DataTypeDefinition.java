@@ -41,6 +41,7 @@ import java.util.List;
 
 // ...
 import org.jooq.Name;
+// ...
 import org.jooq.impl.QOM.GenerationLocation;
 import org.jooq.impl.QOM.GenerationOption;
 import org.jooq.meta.jaxb.ForcedType;
@@ -127,6 +128,11 @@ public interface DataTypeDefinition {
      * Whether this data type is hidden.
      */
     boolean isHidden();
+
+    /**
+     * Whether this data type is redacted.
+     */
+    boolean isRedacted();
 
     /**
      * Whether this data type is readonly.

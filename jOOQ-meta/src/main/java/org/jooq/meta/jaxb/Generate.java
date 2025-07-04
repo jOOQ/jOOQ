@@ -306,6 +306,8 @@ public class Generate implements Serializable, XMLAppendable
     protected Boolean hiddenColumnsInPojos = false;
     @XmlElement(defaultValue = "false")
     protected Boolean hiddenColumnsInInterfaces = false;
+    @XmlElement(defaultValue = "true")
+    protected Boolean redactedColumnsInPojos = true;
 
     /**
      * Generate index information.
@@ -3566,6 +3568,34 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
+     * Whether redacted columns should be redacted in POJOs.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isRedactedColumnsInPojos() {
+        return redactedColumnsInPojos;
+    }
+
+    /**
+     * Whether redacted columns should be redacted in POJOs.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setRedactedColumnsInPojos(Boolean value) {
+        this.redactedColumnsInPojos = value;
+    }
+
+    /**
      * Generate index information.
      * 
      */
@@ -4870,6 +4900,17 @@ public class Generate implements Serializable, XMLAppendable
         return this;
     }
 
+    /**
+     * Whether redacted columns should be redacted in POJOs.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
+    public Generate withRedactedColumnsInPojos(Boolean value) {
+        setRedactedColumnsInPojos(value);
+        return this;
+    }
+
     @Override
     public final void appendTo(XMLBuilder builder) {
         builder.append("indexes", indexes);
@@ -5006,6 +5047,7 @@ public class Generate implements Serializable, XMLAppendable
         builder.append("hiddenColumnsInRecords", hiddenColumnsInRecords);
         builder.append("hiddenColumnsInPojos", hiddenColumnsInPojos);
         builder.append("hiddenColumnsInInterfaces", hiddenColumnsInInterfaces);
+        builder.append("redactedColumnsInPojos", redactedColumnsInPojos);
     }
 
     @Override
@@ -6233,6 +6275,15 @@ public class Generate implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (redactedColumnsInPojos == null) {
+            if (other.redactedColumnsInPojos!= null) {
+                return false;
+            }
+        } else {
+            if (!redactedColumnsInPojos.equals(other.redactedColumnsInPojos)) {
+                return false;
+            }
+        }
         return true;
     }
 
@@ -6374,6 +6425,7 @@ public class Generate implements Serializable, XMLAppendable
         result = ((prime*result)+((hiddenColumnsInRecords == null)? 0 :hiddenColumnsInRecords.hashCode()));
         result = ((prime*result)+((hiddenColumnsInPojos == null)? 0 :hiddenColumnsInPojos.hashCode()));
         result = ((prime*result)+((hiddenColumnsInInterfaces == null)? 0 :hiddenColumnsInInterfaces.hashCode()));
+        result = ((prime*result)+((redactedColumnsInPojos == null)? 0 :redactedColumnsInPojos.hashCode()));
         return result;
     }
 

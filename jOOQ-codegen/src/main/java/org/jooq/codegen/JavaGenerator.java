@@ -6184,6 +6184,21 @@ public class JavaGenerator extends AbstractGenerator {
         if (generatePojosToString())
             generatePojoToString(tableUdtOrEmbeddable, out);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         if (generateInterfaces() && !generateImmutablePojos())
             printFromAndInto(out, tableUdtOrEmbeddable, Mode.POJO);
 
@@ -7130,6 +7145,11 @@ public class JavaGenerator extends AbstractGenerator {
                 final String columnType = getJavaType(column, out);
                 final boolean array = isArrayType(columnType);
 
+
+
+
+
+
                 if (columnType.equals("scala.Array[scala.Byte]"))
                     out.println("sb%s.append(\"[binary...]\")", separator);
                 else if (array)
@@ -7157,6 +7177,11 @@ public class JavaGenerator extends AbstractGenerator {
                 final String columnType = getJavaType(column, out);
                 final boolean array = isArrayType(columnType);
 
+
+
+
+
+
                 if (array && columnType.equals("kotlin.ByteArray"))
                     out.println("sb%s.append(\"[binary...]\")", separator);
                 else if (array)
@@ -7183,6 +7208,11 @@ public class JavaGenerator extends AbstractGenerator {
                 final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
                 final String columnType = getJavaType(column, out);
                 final boolean array = isArrayType(columnType);
+
+
+
+
+
 
                 if (array && columnType.equals("byte[]"))
                     out.println("sb%s.append(\"[binary...]\");", separator);
@@ -11552,6 +11582,7 @@ public class JavaGenerator extends AbstractGenerator {
             type.isNullable(),
             type.isIdentity(),
             type.isHidden(),
+            type.isRedacted(),
             type.isReadonly(),
             type.getGeneratedAlwaysAs(),
             type.getGenerationOption(),
@@ -11950,7 +11981,26 @@ public class JavaGenerator extends AbstractGenerator {
         Name u
     ) {
         return getTypeReference0(
-            db, schema, out, t, p, s, l, n, i, h, r, g, go, ge, d, u, x -> {}
+            db,
+            schema,
+            out,
+            t,
+            p,
+            s,
+            l,
+            n,
+            i,
+            h,
+
+
+
+            r,
+            g,
+            go,
+            ge,
+            d,
+            u,
+            x -> {}
         );
     }
 
@@ -11958,18 +12008,19 @@ public class JavaGenerator extends AbstractGenerator {
         Database db,
         SchemaDefinition schema,
         JavaWriter out,
-        String t,
-        int p,
-        int s,
-        int l,
-        boolean n,
-        boolean i,
-        boolean h,
-        boolean r,
-        String g,
-        GenerationOption go,
+        String type,
+        int precision,
+        int scale,
+        int length,
+        boolean nullable,
+        boolean identity,
+        boolean hidden,
+        boolean redacted,
+        boolean readonly,
+        String generator,
+        GenerationOption generationOption,
         String ge,
-        String d,
+        String defaultValue,
         Name u,
         Consumer<? super StringBuilder> arrayAppender
     ) {
@@ -11988,8 +12039,8 @@ public class JavaGenerator extends AbstractGenerator {
             sb.append(sqlDataTypeRef);
 
             arrayAppender.accept(sb);
-            appendTypeReferenceNullability(db, out, sb, n);
-            appendTypeReferenceDefault(db, out, sb, d, sqlDataTypeRef, arrayAppender);
+            appendTypeReferenceNullability(db, out, sb, nullable);
+            appendTypeReferenceDefault(db, out, sb, defaultValue, sqlDataTypeRef, arrayAppender);
         }
         else if (db.getUDT(schema, u) != null) {
             sb.append(out.ref(getStrategy().getFullJavaIdentifier(db.getUDT(schema, u)), 2));
@@ -12010,7 +12061,7 @@ public class JavaGenerator extends AbstractGenerator {
                 db,
                 schema,
                 DefaultDataType.getDataType(db.getDialect(), String.class).getTypeName(),
-                l, p, s, n, h, r, g, d, i, (Name) null, ge, null, null, null
+                length, precision, scale, nullable, hidden, redacted, readonly, generator, defaultValue, identity, (Name) null, ge, null, null, null
             ), out));
             sb.append(".asEnumDataType(");
             sb.append(classOf(out.ref(getStrategy().getFullJavaClassName(db.getEnum(schema, u), Mode.ENUM))));
@@ -12023,22 +12074,22 @@ public class JavaGenerator extends AbstractGenerator {
             String sqlDataTypeRef;
 
             try {
-                dataType = mapTypes(getDataType(db, t, p, s));
+                dataType = mapTypes(getDataType(db, type, precision, scale));
             }
 
             // Mostly because of unsupported data types.
             catch (SQLDialectNotSupportedException ignore) {
-                dataType = SQLDataType.OTHER.nullable(n).identity(i);
+                dataType = SQLDataType.OTHER.nullable(nullable).identity(identity);
 
                 sb = new StringBuilder();
 
                 sb.append(out.ref(DefaultDataType.class));
                 sb.append(".getDefaultDataType(\"");
-                sb.append(escapeString(u != null && !u.empty() ? u.toString() : t));
+                sb.append(escapeString(u != null && !u.empty() ? u.toString() : type));
                 sb.append("\")");
             }
 
-            dataType = dataType.nullable(n).identity(i);
+            dataType = dataType.nullable(nullable).identity(identity);
 
 
 
@@ -12047,8 +12098,9 @@ public class JavaGenerator extends AbstractGenerator {
 
 
 
-            if (d != null)
-                dataType = dataType.defaultValue((Field) DSL.field(d, dataType));
+
+            if (defaultValue != null)
+                dataType = dataType.defaultValue((Field) DSL.field(defaultValue, dataType));
 
             // If there is a standard SQLDataType available for the dialect-
             // specific DataType t, then reference that one.
@@ -12062,27 +12114,27 @@ public class JavaGenerator extends AbstractGenerator {
 
                 sb.append(sqlDataTypeRef);
 
-                if (dataType.hasPrecision() && (dataType.isTimestamp() || p > 0)) {
+                if (dataType.hasPrecision() && (dataType.isTimestamp() || precision > 0)) {
 
                     // [#6411] Call static method if available, rather than instance method
                     if (SQLDATATYPE_WITH_PRECISION.contains(literal))
-                        sb.append('(').append(p);
+                        sb.append('(').append(precision);
                     else
-                        sb.append(".precision(").append(p);
+                        sb.append(".precision(").append(precision);
 
-                    if (dataType.hasScale() && s > 0)
-                        sb.append(", ").append(s);
+                    if (dataType.hasScale() && scale > 0)
+                        sb.append(", ").append(scale);
 
                     sb.append(')');
                 }
 
-                if (dataType.hasLength() && l > 0)
+                if (dataType.hasLength() && length > 0)
 
                     // [#6411] Call static method if available, rather than instance method
                     if (SQLDATATYPE_WITH_LENGTH.contains(literal))
-                        sb.append("(").append(l).append(")");
+                        sb.append("(").append(length).append(")");
                     else
-                        sb.append(".length(").append(l).append(")");
+                        sb.append(".length(").append(length).append(")");
             }
             else {
                 sqlDataTypeRef = SQLDataType.class.getCanonicalName() + ".OTHER";
@@ -12092,7 +12144,7 @@ public class JavaGenerator extends AbstractGenerator {
             }
 
             arrayAppender.accept(sb);
-            appendTypeReferenceNullability(db, out, sb, n);
+            appendTypeReferenceNullability(db, out, sb, nullable);
 
             if (dataType.identity())
                 sb.append(".identity(true)");
@@ -12122,10 +12174,13 @@ public class JavaGenerator extends AbstractGenerator {
 
 
 
+
+
+
             // [#5291] Some dialects report valid SQL expresions (e.g. PostgreSQL), others
             //         report actual values (e.g. MySQL).
             if (dataType.defaulted())
-                appendTypeReferenceDefault(db, out, sb, d, sqlDataTypeRef, arrayAppender);
+                appendTypeReferenceDefault(db, out, sb, defaultValue, sqlDataTypeRef, arrayAppender);
         }
 
         return sb.toString();

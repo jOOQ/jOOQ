@@ -567,6 +567,7 @@ class GenerationUtil {
             type.getScale(),
             type.isNullable(),
             type.isHidden(),
+            type.isRedacted(),
             type.isReadonly(),
             type.getGeneratedAlwaysAs(),
             type.getDefaultValue(),

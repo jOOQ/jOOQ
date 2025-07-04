@@ -2181,6 +2181,18 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
         </annotation>
       </element>
       
+      <element name="redacted" type="boolean" minOccurs="0" maxOccurs="1" default="false">
+        <annotation>
+          <appinfo>
+            <jxb:property>
+              <jxb:javadoc><![CDATA[@deprecated Use ForcedType only]]></jxb:javadoc>
+            </jxb:property>
+            <annox:annotate target="getter">@java.lang.Deprecated</annox:annotate>
+            <annox:annotate target="setter">@java.lang.Deprecated</annox:annotate>
+          </appinfo>
+        </annotation>
+      </element>
+      
       <element name="generator" type="string" minOccurs="0" maxOccurs="1">
         <annotation>
           <appinfo>
@@ -2450,6 +2462,14 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
       
       <element name="hidden" type="boolean" minOccurs="0" maxOccurs="1" default="false">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The hidden flag allows for hiding columns from usage in queries by default, unless explicitly projected..
+<p>
+This has no effect on matched objects that are not columns.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="redacted" type="boolean" minOccurs="0" maxOccurs="1" default="false">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The redacted flag allows for redacting columns when formatting result set output, e.g. in debug logs.
 <p>
 This has no effect on matched objects that are not columns.
 <p>
@@ -3296,6 +3316,12 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
       
       <element name="hiddenColumnsInInterfaces" type="boolean" minOccurs="0" maxOccurs="1" default="false">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether hidden columns should be generated in interfaces.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
+      <element name="redactedColumnsInPojos" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether redacted columns should be redacted in POJOs.
 <p>
 This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>

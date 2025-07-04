@@ -40,6 +40,8 @@ public class CustomType implements Serializable, XMLAppendable
     protected VisibilityModifier visibilityModifier;
     @XmlElement(defaultValue = "false")
     protected Boolean hidden = false;
+    @XmlElement(defaultValue = "false")
+    protected Boolean redacted = false;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String generator;
     protected Boolean auditInsertTimestamp;
@@ -136,6 +138,32 @@ public class CustomType implements Serializable, XMLAppendable
     @Deprecated
     public void setHidden(Boolean value) {
         this.hidden = value;
+    }
+
+    /**
+     * @deprecated Use ForcedType only
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    @Deprecated
+    public Boolean isRedacted() {
+        return redacted;
+    }
+
+    /**
+     * @deprecated Use ForcedType only
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    @Deprecated
+    public void setRedacted(Boolean value) {
+        this.redacted = value;
     }
 
     /**
@@ -513,6 +541,15 @@ public class CustomType implements Serializable, XMLAppendable
      * @deprecated Use ForcedType only
      * 
      */
+    public CustomType withRedacted(Boolean value) {
+        setRedacted(value);
+        return this;
+    }
+
+    /**
+     * @deprecated Use ForcedType only
+     * 
+     */
     @Deprecated
     public CustomType withGenerator(String value) {
         setGenerator(value);
@@ -645,6 +682,7 @@ public class CustomType implements Serializable, XMLAppendable
         builder.append("type", type);
         builder.append("visibilityModifier", visibilityModifier);
         builder.append("hidden", hidden);
+        builder.append("redacted", redacted);
         builder.append("generator", generator);
         builder.append("auditInsertTimestamp", auditInsertTimestamp);
         builder.append("auditInsertUser", auditInsertUser);
@@ -713,6 +751,15 @@ public class CustomType implements Serializable, XMLAppendable
             }
         } else {
             if (!hidden.equals(other.hidden)) {
+                return false;
+            }
+        }
+        if (redacted == null) {
+            if (other.redacted!= null) {
+                return false;
+            }
+        } else {
+            if (!redacted.equals(other.redacted)) {
                 return false;
             }
         }
@@ -853,6 +900,7 @@ public class CustomType implements Serializable, XMLAppendable
         result = ((prime*result)+((type == null)? 0 :type.hashCode()));
         result = ((prime*result)+((visibilityModifier == null)? 0 :visibilityModifier.hashCode()));
         result = ((prime*result)+((hidden == null)? 0 :hidden.hashCode()));
+        result = ((prime*result)+((redacted == null)? 0 :redacted.hashCode()));
         result = ((prime*result)+((generator == null)? 0 :generator.hashCode()));
         result = ((prime*result)+((auditInsertTimestamp == null)? 0 :auditInsertTimestamp.hashCode()));
         result = ((prime*result)+((auditInsertUser == null)? 0 :auditInsertUser.hashCode()));

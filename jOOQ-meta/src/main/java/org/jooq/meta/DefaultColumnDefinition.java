@@ -63,6 +63,7 @@ public class DefaultColumnDefinition
     private final boolean                        identity;
     private final String                         defaultValue;
     private final boolean                        hidden;
+    private final boolean                        redacted;
     private final boolean                        readonly;
     private transient List<EmbeddableDefinition> replacedByEmbeddables;
     private boolean                              synthetic;
@@ -100,18 +101,34 @@ public class DefaultColumnDefinition
         boolean readonly,
         String comment
     ) {
+        this(table, name, position, type, identity, hidden, type.isRedacted(), readonly, comment);
+    }
+
+    public DefaultColumnDefinition(
+        TableDefinition table,
+        String name,
+        int position,
+        DataTypeDefinition type,
+        boolean identity,
+        boolean hidden,
+        boolean redacted,
+        boolean readonly,
+        String comment
+    ) {
         super(table, name, position, type, comment);
 
         this.position = position;
         this.identity = identity || isSyntheticIdentity(this);
         this.defaultValue = getSyntheticDefault(this);
         this.hidden = hidden;
+        this.redacted = redacted;
         this.readonly = readonly || isSyntheticReadonlyColumn(this, this.identity);
 
         // [#6222] Copy the column's identity flag to the data type definition
         if (type instanceof DefaultDataTypeDefinition dd) {
             dd.identity(this.identity);
             dd.hidden(this.hidden);
+            dd.redacted(this.redacted);
             dd.readonly(this.readonly);
             dd.defaultValue(this.defaultValue);
 
@@ -223,6 +240,11 @@ public class DefaultColumnDefinition
     @Override
     public final boolean isHidden() {
         return hidden;
+    }
+
+    @Override
+    public final boolean isRedacted() {
+        return redacted;
     }
 
     @Override

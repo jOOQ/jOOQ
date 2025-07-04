@@ -1794,6 +1794,7 @@ public abstract class AbstractDatabase implements Database {
                    type.getVisibilityModifier() != null
                 || !StringUtils.isBlank(type.getGenerator())
                 || TRUE.equals(type.isHidden())
+                || TRUE.equals(type.isRedacted())
                 || TRUE.equals(type.isAuditInsertTimestamp())
                 || TRUE.equals(type.isAuditInsertUser())
                 || TRUE.equals(type.isAuditUpdateTimestamp())
@@ -1810,7 +1811,7 @@ public abstract class AbstractDatabase implements Database {
             }
             else if (commercialFlags && !commercial()) {
                 Logging.log(onMisconfiguration(),
-                    () -> "<generator/>, <hidden/>, <auditInsertTimestamp/>, <auditInsertUser/>, <auditUpdateTimestamp/>, <auditUpdateUser/>, and <visibilityModifier/> are commercial only features. Please upgrade to the jOOQ Professional Edition or jOOQ Enterprise Edition: " + type);
+                    () -> "<generator/>, <hidden/>, <redacted/>, <auditInsertTimestamp/>, <auditInsertUser/>, <auditUpdateTimestamp/>, <auditUpdateUser/>, and <visibilityModifier/> are commercial only features. Please upgrade to the jOOQ Professional Edition or jOOQ Enterprise Edition: " + type);
 
                 it.remove();
                 continue;

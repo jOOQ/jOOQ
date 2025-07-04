@@ -1590,7 +1590,11 @@ public interface DataType<T> extends Named {
      * It is recommended to use {@link #isQualifiedRecord()} instead, which
      * returns the same thing as {@link #isUDT()}, or {@link #isUDTRecord()} if
      * only actual {@link UDT} types are requested.
+     *
+     * @deprecated - 3.21.0 - [#18732] - Use {@link #isQualifiedRecord()}
+     *             instead, or {@link #isUDTRecord()} if that's more precise.
      */
+    @Deprecated(forRemoval = true)
     boolean isUDT();
 
     /**

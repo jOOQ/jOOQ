@@ -64,6 +64,7 @@ import static org.jooq.impl.Names.N_JSON_ARRAY;
 import static org.jooq.impl.Names.N_JSON_EXTRACT;
 import static org.jooq.impl.Names.N_JSON_MERGE;
 import static org.jooq.impl.Names.N_JSON_MERGE_PRESERVE;
+import static org.jooq.impl.Names.N_JSON_OBJECT;
 import static org.jooq.impl.Names.N_JSON_QUERY;
 import static org.jooq.impl.Names.N_PARSE_JSON;
 import static org.jooq.impl.Names.N_RAWTOHEX;
@@ -248,6 +249,11 @@ final class JSONEntryImpl<T> extends AbstractQueryPart implements JSONEntry<T>, 
                     return function(N_JSON, SQLDataType.JSON, field);
 
                 break;
+
+
+
+
+
 
 
 

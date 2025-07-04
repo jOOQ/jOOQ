@@ -573,6 +573,25 @@ public interface DataType<T> extends Named {
     boolean hidden();
 
     /**
+     * Return a new data type like this, with a new redacted attribute.
+     * <p>
+     * This feature is implemented in commercial distributions only.
+     *
+     * @param redacted The new redacted attribute value.
+     * @return The new data type
+     */
+    @NotNull
+    @Support
+    DataType<T> redacted(boolean redacted);
+
+    /**
+     * Get the redacted attribute of this data type.
+     * <p>
+     * This feature is implemented in commercial distributions only.
+     */
+    boolean redacted();
+
+    /**
      * Return a new data type like this, with a new readonly attribute.
      * <p>
      * This feature is implemented in commercial distributions only.

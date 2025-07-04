@@ -73,6 +73,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
         Integer newLength,
         Nullability newNullability,
         boolean newHidden,
+        boolean newRedacted,
         boolean newReadonly,
         Generator<?, ?, T> newGeneratedAlwaysAs,
         GenerationOption newGenerationOption,
@@ -94,6 +95,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
                 length0(),
                 n,
                 hidden(),
+                redacted(),
                 readonly(),
                 generatedAlwaysAsGenerator(),
                 generationOption(),
@@ -108,7 +110,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
     @Override
     public final DataType<T> hidden(boolean h) {
         if (h && !CONFIG.get().commercial())
-            logGeneratedAlwaysAs.info("Hidden columns", "Hidden columns are a commercial only jOOQ feature. If you wish to profit from this feature, please upgrade to the jOOQ Professional Edition");
+            logCommercialOnly.info("Hidden columns", "Hidden columns are a commercial only jOOQ feature. If you wish to profit from this feature, please upgrade to the jOOQ Professional Edition");
 
         return construct(
             precision0(),
@@ -116,6 +118,30 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             length0(),
             nullability(),
             h,
+            redacted(),
+            readonly(),
+            generatedAlwaysAsGenerator(),
+            generationOption(),
+            generationLocation(),
+            collation(),
+            characterSet(),
+            identity(),
+            defaultValue()
+        );
+    }
+
+    @Override
+    public final DataType<T> redacted(boolean r) {
+        if (r && !CONFIG.get().commercial())
+            logCommercialOnly.info("Redacted columns", "Redacted columns are a commercial only jOOQ feature. If you wish to profit from this feature, please upgrade to the jOOQ Professional Edition");
+
+        return construct(
+            precision0(),
+            scale0(),
+            length0(),
+            nullability(),
+            hidden(),
+            r,
             readonly(),
             generatedAlwaysAsGenerator(),
             generationOption(),
@@ -130,7 +156,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
     @Override
     public final DataType<T> readonly(boolean r) {
         if (r && !CONFIG.get().commercial())
-            logGeneratedAlwaysAs.info("Readonly columns", "Readonly columns are a commercial only jOOQ feature. If you wish to profit from this feature, please upgrade to the jOOQ Professional Edition");
+            logCommercialOnly.info("Readonly columns", "Readonly columns are a commercial only jOOQ feature. If you wish to profit from this feature, please upgrade to the jOOQ Professional Edition");
 
         return construct(
             precision0(),
@@ -138,6 +164,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             length0(),
             nullability(),
             hidden(),
+            redacted(),
             r,
             generatedAlwaysAsGenerator(),
             generationOption(),
@@ -149,12 +176,12 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
         );
     }
 
-    private static final JooqLogger logGeneratedAlwaysAs = JooqLogger.getLogger(AbstractDataTypeX.class, "generateAlwaysAs", 1);
+    private static final JooqLogger logCommercialOnly = JooqLogger.getLogger(AbstractDataTypeX.class, "logCommercialOnly", 1);
 
     @Override
     public final DataType<T> generatedAlwaysAs(Generator<?, ?, T> g) {
         if (g != null && !CONFIG.get().commercial())
-            logGeneratedAlwaysAs.info("Computed columns", "Computed columns are a commercial only jOOQ feature. If you wish to profit from this feature, please upgrade to the jOOQ Professional Edition");
+            logCommercialOnly.info("Computed columns", "Computed columns are a commercial only jOOQ feature. If you wish to profit from this feature, please upgrade to the jOOQ Professional Edition");
 
         return construct(
             precision0(),
@@ -162,6 +189,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             length0(),
             nullability(),
             hidden(),
+            redacted(),
             g != null ? true : readonly(),
             g,
             generationOption(),
@@ -176,7 +204,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
     @Override
     public final DataType<T> generationOption(GenerationOption g) {
         if (g != null && !CONFIG.get().commercial())
-            logGeneratedAlwaysAs.info("Computed columns", "Computed columns are a commercial only jOOQ feature. If you wish to profit from this feature, please upgrade to the jOOQ Professional Edition");
+            logCommercialOnly.info("Computed columns", "Computed columns are a commercial only jOOQ feature. If you wish to profit from this feature, please upgrade to the jOOQ Professional Edition");
 
         return construct(
             precision0(),
@@ -184,6 +212,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             length0(),
             nullability(),
             hidden(),
+            redacted(),
             readonly(),
             generatedAlwaysAsGenerator(),
             g,
@@ -198,7 +227,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
     @Override
     public final DataType<T> generationLocation(GenerationLocation g) {
         if (g != null && !CONFIG.get().commercial())
-            logGeneratedAlwaysAs.info("Computed columns", "Computed columns are a commercial only jOOQ feature. If you wish to profit from this feature, please upgrade to the jOOQ Professional Edition");
+            logCommercialOnly.info("Computed columns", "Computed columns are a commercial only jOOQ feature. If you wish to profit from this feature, please upgrade to the jOOQ Professional Edition");
 
         return construct(
             precision0(),
@@ -206,6 +235,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             length0(),
             nullability(),
             hidden(),
+            redacted(),
             readonly(),
             generatedAlwaysAsGenerator(),
             generationOption(),
@@ -225,6 +255,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             length0(),
             nullability(),
             hidden(),
+            redacted(),
             readonly(),
             generatedAlwaysAsGenerator(),
             generationOption(),
@@ -244,6 +275,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             length0(),
             nullability(),
             hidden(),
+            redacted(),
             readonly(),
             generatedAlwaysAsGenerator(),
             generationOption(),
@@ -263,6 +295,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             length0(),
             i ? NOT_NULL : nullability(),
             hidden(),
+            redacted(),
             readonly(),
             generatedAlwaysAsGenerator(),
             generationOption(),
@@ -282,6 +315,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             length0(),
             nullability(),
             hidden(),
+            redacted(),
             readonly(),
             d != null ? null : generatedAlwaysAsGenerator(),
             generationOption(),
@@ -301,6 +335,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             length0(),
             nullability(),
             hidden(),
+            redacted(),
             readonly(),
             generatedAlwaysAsGenerator(),
             generationOption(),
@@ -320,6 +355,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             length0(),
             nullability(),
             hidden(),
+            redacted(),
             readonly(),
             generatedAlwaysAsGenerator(),
             generationOption(),
@@ -339,6 +375,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             l,
             nullability(),
             hidden(),
+            redacted(),
             readonly(),
             generatedAlwaysAsGenerator(),
             generationOption(),

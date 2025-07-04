@@ -203,6 +203,12 @@ implements
     public abstract DataType<T> hidden(boolean h);
 
     @Override
+    public abstract boolean redacted();
+
+    @Override
+    public abstract DataType<T> redacted(boolean r);
+
+    @Override
     public abstract boolean readonly();
 
     @Override
@@ -813,6 +819,7 @@ implements
             length0(),
             nullability(),
             hidden(),
+            redacted(),
             readonly(),
             (Generator<?, ?, E>) generatedAlwaysAsGenerator(),
             generationOption(),

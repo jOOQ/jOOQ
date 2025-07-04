@@ -78,6 +78,7 @@ final class ArrayDataType<T> extends DefaultDataType<T[]> {
         Integer length,
         Nullability nullability,
         boolean hidden,
+        boolean redacted,
         boolean readonly,
         Generator<?, ?, T[]> generatedAlwaysAs,
         GenerationOption generationOption,
@@ -87,7 +88,7 @@ final class ArrayDataType<T> extends DefaultDataType<T[]> {
         boolean identity,
         Field<T[]> defaultValue
     ) {
-        super(t, precision, scale, length, nullability, hidden, readonly, generatedAlwaysAs, generationOption, generationLocation, collation, characterSet, identity, defaultValue);
+        super(t, precision, scale, length, nullability, hidden, redacted, readonly, generatedAlwaysAs, generationOption, generationLocation, collation, characterSet, identity, defaultValue);
 
         this.elementType = elementType;
     }
@@ -100,6 +101,7 @@ final class ArrayDataType<T> extends DefaultDataType<T[]> {
         Integer newLength,
         Nullability newNullability,
         boolean newHidden,
+        boolean newRedacted,
         boolean newReadonly,
         Generator<?, ?, T[]> newGeneratedAlwaysAs,
         GenerationOption newGenerationOption,
@@ -117,6 +119,7 @@ final class ArrayDataType<T> extends DefaultDataType<T[]> {
             newLength,
             newNullability,
             newHidden,
+            newRedacted,
             newReadonly,
             newGeneratedAlwaysAs,
             newGenerationOption,

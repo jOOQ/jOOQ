@@ -39,7 +39,6 @@ package org.jooq.impl;
 
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.toList;
-import static org.jooq.impl.Tools.CONFIG;
 import static org.jooq.impl.Tools.newRecord;
 import static org.jooq.impl.Tools.recordType;
 
@@ -97,6 +96,7 @@ final class RecordDataType<R extends Record> extends DefaultDataType<R> {
         Integer length,
         Nullability nullability,
         boolean hidden,
+        boolean redacted,
         boolean readonly,
         Generator<?, ?, R> generatedAlwaysAs,
         GenerationOption generationOption,
@@ -106,7 +106,7 @@ final class RecordDataType<R extends Record> extends DefaultDataType<R> {
         boolean identity,
         Field<R> defaultValue
     ) {
-        super(t, precision, scale, length, nullability, hidden, readonly, generatedAlwaysAs, generationOption, generationLocation, collation, characterSet, identity, defaultValue);
+        super(t, precision, scale, length, nullability, hidden, redacted, readonly, generatedAlwaysAs, generationOption, generationLocation, collation, characterSet, identity, defaultValue);
 
         this.row = row;
     }
@@ -119,6 +119,7 @@ final class RecordDataType<R extends Record> extends DefaultDataType<R> {
         Integer newLength,
         Nullability newNullability,
         boolean newHidden,
+        boolean newRedacted,
         boolean newReadonly,
         Generator<?, ?, R> newGeneratedAlwaysAs,
         GenerationOption newGenerationOption,
@@ -136,6 +137,7 @@ final class RecordDataType<R extends Record> extends DefaultDataType<R> {
             newLength,
             newNullability,
             newHidden,
+            newRedacted,
             newReadonly,
             newGeneratedAlwaysAs,
             newGenerationOption,

@@ -495,8 +495,10 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
 
 
 
+
+            // [#18728] Always quote this name because of the : character
             default:
-                return DSL.name("xsi:nil");
+                return DSL.quotedName("xsi:nil");
         }
     }
 

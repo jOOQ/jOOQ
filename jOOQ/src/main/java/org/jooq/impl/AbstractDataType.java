@@ -138,6 +138,7 @@ import org.jooq.RowId;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Table;
+import org.jooq.UDTRecord;
 import org.jooq.XML;
 import org.jooq.impl.QOM.GenerationLocation;
 import org.jooq.impl.QOM.GenerationOption;
@@ -1039,7 +1040,17 @@ implements
     }
 
     @Override
+    public final boolean isUDTRecord() {
+        return UDTRecord.class.isAssignableFrom(tType0());
+    }
+
+    @Override
     public final boolean isUDT() {
+        return isQualifiedRecord();
+    }
+
+    @Override
+    public final boolean isQualifiedRecord() {
         return QualifiedRecord.class.isAssignableFrom(tType0());
     }
 

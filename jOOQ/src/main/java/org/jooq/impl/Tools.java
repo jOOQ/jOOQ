@@ -5748,7 +5748,7 @@ final class Tools {
 
                     c.sql(';').formatIndentEnd().formatSeparator()
                      .visit(K_EXCEPTION).formatIndentStart().formatSeparator()
-                     .visit(K_WHEN).sql(' ').visit(K_SQLSTATE).sql(' ').visit(DSL.inline(sqlstate)).sql(' ').visit(K_THEN).sql(' ').visit(K_NULL).sql(';').formatIndentEnd();
+                     .visit(K_WHEN).sql(' ').visit(K_SQLSTATE).sql(' ').visit(DSL.inline(sqlstate)).sql(' ').visit(K_THEN).sql(' ').visit(K_NULL).sql(';');
                 });
                 break;
             }

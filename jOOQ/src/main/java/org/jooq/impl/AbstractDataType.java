@@ -112,6 +112,7 @@ import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.ContextConverter;
 import org.jooq.Table;
+import org.jooq.UDTRecord;
 import org.jooq.XML;
 import org.jooq.exception.DataTypeException;
 import org.jooq.impl.QOM.GenerationLocation;
@@ -965,7 +966,17 @@ implements
     }
 
     @Override
+    public final boolean isUDTRecord() {
+        return UDTRecord.class.isAssignableFrom(tType0());
+    }
+
+    @Override
     public final boolean isUDT() {
+        return isQualifiedRecord();
+    }
+
+    @Override
+    public final boolean isQualifiedRecord() {
         return QualifiedRecord.class.isAssignableFrom(tType0());
     }
 

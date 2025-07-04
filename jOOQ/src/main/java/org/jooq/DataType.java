@@ -1577,8 +1577,25 @@ public interface DataType<T> extends Named {
 
     /**
      * Whether this data type is a UDT type.
+     * <p>
+     * It is recommended to use {@link #isQualifiedRecord()} instead, which
+     * returns the same thing as {@link #isUDT()}, or {@link #isUDTRecord()} if
+     * only actual {@link UDT} types are requested.
      */
     boolean isUDT();
+
+    /**
+     * Whether this data type is a {@link UDTRecord} type.
+     */
+    boolean isUDTRecord();
+
+    /**
+     * Whether this data type is a {@link QualifiedRecord} type.
+     * <p>
+     * This includes {@link UDT#getDataType()} as well as
+     * {@link Table#getDataType()}.
+     */
+    boolean isQualifiedRecord();
 
     /**
      * Whether this data type is a nested record type.

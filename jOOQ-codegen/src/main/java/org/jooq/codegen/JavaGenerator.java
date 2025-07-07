@@ -3719,6 +3719,51 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("val %s = %s.%s", attrId, udtId, attrId);
             }
 
+            if (generateUDTConstructors()) {
+                out.javadoc("Create a constructor expression for <code>%s</code>", udt.getQualifiedOutputName());
+                out.println("def %s(", identifier);
+
+                forEach(udt.getAttributes(), (attribute, separator) -> {
+                    final String attrType = out.ref(getJavaType(attribute.getType(resolver(out)), out));
+                    final String attrName = strategy.getJavaMemberName(attribute);
+
+                    out.println("%s: %s%s", attrName, attrType, separator);
+                });
+
+                out.println("): %s[%s] = %s.construct(", Field.class, recordType, identifier);
+
+                forEach(udt.getAttributes(), (attribute, separator) -> {
+                    final String attrName = strategy.getJavaMemberName(attribute);
+
+                    out.println("%s.value(%s)%s", DSL.class, attrName, separator);
+                });
+
+                out.println(")");
+
+
+                if (!udt.getAttributes().isEmpty()) {
+                    out.javadoc("Create a constructor expression for <code>%s</code>", udt.getQualifiedOutputName());
+                    out.println("def %s(", identifier);
+
+                    forEach(udt.getAttributes(), (attribute, separator) -> {
+                        final String attrType = out.ref(getJavaType(attribute.getType(resolver(out)), out));
+                        final String attrName = strategy.getJavaMemberName(attribute);
+
+                        out.println("%s: %s[%s]%s", attrName, Field.class, attrType, separator);
+                    });
+
+                    out.println("): %s[%s] = %s.construct(", Field.class, recordType, identifier);
+
+                    forEach(udt.getAttributes(), (attribute, separator) -> {
+                        final String attrName = strategy.getJavaMemberName(attribute);
+
+                        out.println("%s%s", attrName, separator);
+                    });
+
+                    out.println(")");
+                }
+            }
+
             out.println("}");
             out.println();
         }
@@ -3742,6 +3787,53 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("%scompanion object {", visibility());
             out.javadoc("The reference instance of <code>%s</code>", udt.getQualifiedOutputName());
             out.println("%sval %s: %s = %s()", visibility(), getStrategy().getJavaIdentifier(udt), className, className);
+
+
+            if (generateUDTConstructors()) {
+                out.javadoc("Create a constructor expression for <code>%s</code>", udt.getQualifiedOutputName());
+                out.println("fun %s(", identifier);
+
+                forEach(udt.getAttributes(), (attribute, separator) -> {
+                    final String attrType = out.ref(getJavaType(attribute.getType(resolver(out)), out));
+                    final String attrName = strategy.getJavaMemberName(attribute);
+
+                    out.println("%s: %s%s", attrName, attrType, separator);
+                });
+
+                out.println("): %s<%s> = %s.construct(", Field.class, recordType, identifier);
+
+                forEach(udt.getAttributes(), (attribute, separator) -> {
+                    final String attrName = strategy.getJavaMemberName(attribute);
+
+                    out.println("%s.value(%s)%s", DSL.class, attrName, separator);
+                });
+
+                out.println(")");
+
+
+                if (!udt.getAttributes().isEmpty()) {
+                    out.javadoc("Create a constructor expression for <code>%s</code>", udt.getQualifiedOutputName());
+                    out.println("fun %s(", identifier);
+
+                    forEach(udt.getAttributes(), (attribute, separator) -> {
+                        final String attrType = out.ref(getJavaType(attribute.getType(resolver(out)), out));
+                        final String attrName = strategy.getJavaMemberName(attribute);
+
+                        out.println("%s: %s<%s>%s", attrName, Field.class, attrType, separator);
+                    });
+
+                    out.println("): %s<%s> = %s.construct(", Field.class, recordType, identifier);
+
+                    forEach(udt.getAttributes(), (attribute, separator) -> {
+                        final String attrName = strategy.getJavaMemberName(attribute);
+
+                        out.println("%s%s", attrName, separator);
+                    });
+
+                    out.println(")");
+                }
+            }
+
             out.println("}");
         }
         else {
@@ -3751,8 +3843,6 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         if (generateUDTConstructors()) {
-
-            // [#18744] TODO:
             if (scala || kotlin) {}
             else {
                 out.javadoc("Create a constructor expression for <code>%s</code>", udt.getQualifiedOutputName());

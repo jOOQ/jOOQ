@@ -73,10 +73,14 @@ public class YugabyteDBDatabase extends PostgresDatabase {
         return ctx;
     }
 
-    @Override
-    protected Field<String> attgenerated(Field<String> attgenerated) {
 
-        // [#18701] YugabyteDB doesn't support the ATTGENERATED property
-        return DSL.inline("s");
-    }
+
+
+
+
+
+
+
+
+
 }

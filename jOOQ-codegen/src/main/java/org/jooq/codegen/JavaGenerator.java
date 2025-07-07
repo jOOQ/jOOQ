@@ -3695,6 +3695,7 @@ public class JavaGenerator extends AbstractGenerator {
         final PackageDefinition pkg = udt.getPackage();
         final boolean synthetic = udt.isSynthetic();
         final String className = getStrategy().getJavaClassName(udt);
+        final String identifier = getStrategy().getJavaIdentifier(udt);
         final String recordType = out.ref(getStrategy().getFullJavaClassName(udt, Mode.RECORD));
         final String classExtends = out.ref(getStrategy().getJavaClassExtends(udt, Mode.DEFAULT));
         final List<String> interfaces = out.ref(getStrategy().getJavaClassImplements(udt, Mode.DEFAULT));
@@ -3747,6 +3748,58 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("%sclass %s extends %s<%s>[[before= implements ][%s]] {", visibility(), className, classExtends, recordType, interfaces);
             out.printSerial();
             printSingletonInstance(out, udt);
+        }
+
+        if (generateUDTConstructors()) {
+
+            // [#18744] TODO:
+            if (scala || kotlin) {}
+            else {
+                out.javadoc("Create a constructor expression for <code>%s</code>", udt.getQualifiedOutputName());
+                out.println("%sstatic %s<%s> %s(", visibility(), Field.class, recordType, identifier);
+
+                forEach(udt.getAttributes(), (attribute, separator) -> {
+                    final String attrType = out.ref(getJavaType(attribute.getType(resolver(out)), out));
+                    final String attrName = strategy.getJavaMemberName(attribute);
+
+                    out.println("%s %s%s", attrType, attrName, separator);
+                });
+
+                out.println(") {");
+                out.println("return %s.construct(", identifier);
+
+                forEach(udt.getAttributes(), (attribute, separator) -> {
+                    final String attrName = strategy.getJavaMemberName(attribute);
+
+                    out.println("%s.val(%s)%s", DSL.class, attrName, separator);
+                });
+
+                out.println(");");
+                out.println("}");
+
+
+                out.javadoc("Create a constructor expression for <code>%s</code>", udt.getQualifiedOutputName());
+                out.println("%sstatic %s<%s> %s(", visibility(), Field.class, recordType, identifier);
+
+                forEach(udt.getAttributes(), (attribute, separator) -> {
+                    final String attrType = out.ref(getJavaType(attribute.getType(resolver(out)), out));
+                    final String attrName = strategy.getJavaMemberName(attribute);
+
+                    out.println("%s<%s> %s%s", Field.class, attrType, attrName, separator);
+                });
+
+                out.println(") {");
+                out.println("return %s.construct(", identifier);
+
+                forEach(udt.getAttributes(), (attribute, separator) -> {
+                    final String attrName = strategy.getJavaMemberName(attribute);
+
+                    out.println("%s%s", attrName, separator);
+                });
+
+                out.println(");");
+                out.println("}");
+            }
         }
 
         printRecordTypeMethod(out, udt);
@@ -11991,9 +12044,7 @@ public class JavaGenerator extends AbstractGenerator {
             n,
             i,
             h,
-
-
-
+            false,
             r,
             g,
             go,

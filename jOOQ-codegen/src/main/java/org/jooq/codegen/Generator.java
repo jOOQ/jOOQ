@@ -137,6 +137,16 @@ public interface Generator {
     void setGenerateUDTPaths(boolean generateUDTPaths);
 
     /**
+     * Whether to generate UDT path expressions on tables and UDTs.
+     */
+    boolean generateUDTConstructors();
+
+    /**
+     * Whether to generate UDT constructor expressions on tables and UDTs.
+     */
+    void setGenerateUDTConstructors(boolean generateUDTConstructors);
+
+    /**
      * Whether implicit join path constructors on generated tables for outgoing
      * foreign key relationships (to-one relationships) should be generated.
      */

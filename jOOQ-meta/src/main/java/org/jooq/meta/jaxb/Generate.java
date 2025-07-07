@@ -39,6 +39,8 @@ public class Generate implements Serializable, XMLAppendable
     @XmlElement(defaultValue = "true")
     protected Boolean udtPaths = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean udtConstructors = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean implicitJoinPathsToOne = true;
     @XmlElement(defaultValue = "true")
     protected Boolean implicitJoinPathsToMany = true;
@@ -405,6 +407,30 @@ public class Generate implements Serializable, XMLAppendable
      */
     public void setUdtPaths(Boolean value) {
         this.udtPaths = value;
+    }
+
+    /**
+     * Generate UDT constructor expressions on UDTs.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isUdtConstructors() {
+        return udtConstructors;
+    }
+
+    /**
+     * Generate UDT constructor expressions on UDTs.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setUdtConstructors(Boolean value) {
+        this.udtConstructors = value;
     }
 
     /**
@@ -3633,6 +3659,15 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
+     * Generate UDT constructor expressions on UDTs.
+     * 
+     */
+    public Generate withUdtConstructors(Boolean value) {
+        setUdtConstructors(value);
+        return this;
+    }
+
+    /**
      * Generate implicit join path constructors on generated tables for outgoing foreign key relationships (to-one relationships)
      * 
      */
@@ -4917,6 +4952,7 @@ public class Generate implements Serializable, XMLAppendable
         builder.append("relations", relations);
         builder.append("sequenceFlags", sequenceFlags);
         builder.append("udtPaths", udtPaths);
+        builder.append("udtConstructors", udtConstructors);
         builder.append("implicitJoinPathsToOne", implicitJoinPathsToOne);
         builder.append("implicitJoinPathsToMany", implicitJoinPathsToMany);
         builder.append("implicitJoinPathsManyToMany", implicitJoinPathsManyToMany);
@@ -5102,6 +5138,15 @@ public class Generate implements Serializable, XMLAppendable
             }
         } else {
             if (!udtPaths.equals(other.udtPaths)) {
+                return false;
+            }
+        }
+        if (udtConstructors == null) {
+            if (other.udtConstructors!= null) {
+                return false;
+            }
+        } else {
+            if (!udtConstructors.equals(other.udtConstructors)) {
                 return false;
             }
         }
@@ -6295,6 +6340,7 @@ public class Generate implements Serializable, XMLAppendable
         result = ((prime*result)+((relations == null)? 0 :relations.hashCode()));
         result = ((prime*result)+((sequenceFlags == null)? 0 :sequenceFlags.hashCode()));
         result = ((prime*result)+((udtPaths == null)? 0 :udtPaths.hashCode()));
+        result = ((prime*result)+((udtConstructors == null)? 0 :udtConstructors.hashCode()));
         result = ((prime*result)+((implicitJoinPathsToOne == null)? 0 :implicitJoinPathsToOne.hashCode()));
         result = ((prime*result)+((implicitJoinPathsToMany == null)? 0 :implicitJoinPathsToMany.hashCode()));
         result = ((prime*result)+((implicitJoinPathsManyToMany == null)? 0 :implicitJoinPathsManyToMany.hashCode()));

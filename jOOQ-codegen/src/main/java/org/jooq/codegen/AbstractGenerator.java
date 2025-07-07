@@ -49,7 +49,6 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.stream.Stream;
 
-// ...
 import org.jooq.meta.CatalogDefinition;
 import org.jooq.meta.Database;
 import org.jooq.meta.Definition;
@@ -76,6 +75,7 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateIndexes                                       = true;
     boolean                            generateRelations                                     = true;
     boolean                            generateUDTPaths                                      = true;
+    boolean                            generateUDTConstructors                               = true;
     boolean                            generateImplicitJoinPathsToOne                        = true;
     boolean                            generateImplicitJoinPathsToMany                       = true;
     boolean                            generateImplicitJoinPathsManyToMany                   = true;
@@ -345,6 +345,16 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGenerateUDTPaths(boolean generateUDTPaths) {
         this.generateUDTPaths = generateUDTPaths;
+    }
+
+    @Override
+    public boolean generateUDTConstructors() {
+        return generateUDTConstructors;
+    }
+
+    @Override
+    public void setGenerateUDTConstructors(boolean generateUDTConstructors) {
+        this.generateUDTConstructors = generateUDTConstructors;
     }
 
     @Override

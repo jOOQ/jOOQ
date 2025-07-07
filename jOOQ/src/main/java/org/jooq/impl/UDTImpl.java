@@ -47,6 +47,7 @@ import org.jooq.Comment;
 import org.jooq.Context;
 import org.jooq.Converter;
 import org.jooq.DataType;
+import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Named;
 import org.jooq.Package;
@@ -57,6 +58,8 @@ import org.jooq.UDT;
 import org.jooq.UDTField;
 import org.jooq.UDTRecord;
 import org.jooq.impl.QOM.UNotYetImplemented;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A common base type for UDT's
@@ -205,6 +208,11 @@ implements
             type = new UDTDataType<>(this);
 
         return type;
+    }
+
+    @Override
+    public final Field<R> construct(Field<?>... args) {
+        return new UDTConstructor<>(this, args);
     }
 
     @Override

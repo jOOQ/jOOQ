@@ -37,6 +37,14 @@
  */
 package org.jooq;
 
+// ...
+// ...
+import static org.jooq.SQLDialect.DUCKDB;
+// ...
+// ...
+import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.YUGABYTEDB;
+
 import java.util.List;
 
 import org.jetbrains.annotations.NotNull;
@@ -87,4 +95,11 @@ public interface UDT<R extends UDTRecord<R>> extends RecordQualifier<R> {
      * Check if this type is a supertype or the same type as another {@link UDT} type.
      */
     boolean isAssignableFrom(UDT<?> other);
+
+    /**
+     * Create a constructor call for UDTs.
+     */
+    @Support({ DUCKDB, POSTGRES, YUGABYTEDB })
+    @NotNull
+    Field<R> construct(Field<?>... args);
 }

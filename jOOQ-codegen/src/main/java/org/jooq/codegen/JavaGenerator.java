@@ -3778,27 +3778,29 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("}");
 
 
-                out.javadoc("Create a constructor expression for <code>%s</code>", udt.getQualifiedOutputName());
-                out.println("%sstatic %s<%s> %s(", visibility(), Field.class, recordType, identifier);
+                if (!udt.getAttributes().isEmpty()) {
+                    out.javadoc("Create a constructor expression for <code>%s</code>", udt.getQualifiedOutputName());
+                    out.println("%sstatic %s<%s> %s(", visibility(), Field.class, recordType, identifier);
 
-                forEach(udt.getAttributes(), (attribute, separator) -> {
-                    final String attrType = out.ref(getJavaType(attribute.getType(resolver(out)), out));
-                    final String attrName = strategy.getJavaMemberName(attribute);
+                    forEach(udt.getAttributes(), (attribute, separator) -> {
+                        final String attrType = out.ref(getJavaType(attribute.getType(resolver(out)), out));
+                        final String attrName = strategy.getJavaMemberName(attribute);
 
-                    out.println("%s<%s> %s%s", Field.class, attrType, attrName, separator);
-                });
+                        out.println("%s<%s> %s%s", Field.class, attrType, attrName, separator);
+                    });
 
-                out.println(") {");
-                out.println("return %s.construct(", identifier);
+                    out.println(") {");
+                    out.println("return %s.construct(", identifier);
 
-                forEach(udt.getAttributes(), (attribute, separator) -> {
-                    final String attrName = strategy.getJavaMemberName(attribute);
+                    forEach(udt.getAttributes(), (attribute, separator) -> {
+                        final String attrName = strategy.getJavaMemberName(attribute);
 
-                    out.println("%s%s", attrName, separator);
-                });
+                        out.println("%s%s", attrName, separator);
+                    });
 
-                out.println(");");
-                out.println("}");
+                    out.println(");");
+                    out.println("}");
+                }
             }
         }
 

@@ -139,6 +139,8 @@ import org.jooq.TableLike;
 // ...
 // ...
 import org.jooq.Type;
+import org.jooq.UDT;
+import org.jooq.UDTRecord;
 // ...
 import org.jooq.WindowDefinition;
 import org.jooq.WindowSpecification;
@@ -928,6 +930,21 @@ public final class QOM {
         @NotNull default Field<T> $from() { return $arg1(); }
         @NotNull default Field<T> $to() { return $arg2(); }
         @Nullable default Field<T> $step() { return $arg3(); }
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: UDT expressions
+    // -------------------------------------------------------------------------
+
+    /**
+     * A constructor call for {@link UDT} types.
+     */
+    public interface UDTConstructor<R extends UDTRecord<R>>
+        extends
+            Field<R>
+    {
+        @NotNull UDT<R> $udt();
+        @NotNull UnmodifiableList<Field<?>> $args();
     }
 
     // -------------------------------------------------------------------------

@@ -39,22 +39,33 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Keywords.K_ROW;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.QueryPart;
+// ...
+// ...
 import org.jooq.UDT;
 import org.jooq.UDTRecord;
+import org.jooq.impl.QOM.UnmodifiableList;
 
 final class UDTConstructor<R extends UDTRecord<R>>
 extends
     AbstractField<R>
 implements
-    QOM.UNotYetImplemented
+    QOM.UDTConstructor<R>
 {
 
     final UDT<R>                  udt;
     final QueryPartList<Field<?>> args;
 
     UDTConstructor(UDT<R> udt, Field<?>[] args) {
+        this(udt, Arrays.asList(args));
+    }
+
+    private UDTConstructor(UDT<R> udt, Collection<? extends Field<?>> args) {
         super(udt.getQualifiedName(), udt.getDataType());
 
         this.udt = udt;
@@ -70,6 +81,8 @@ implements
         switch (ctx.family()) {
 
 
+
+            case DUCKDB:
             case POSTGRES:
             case YUGABYTEDB:
                 Cast.renderCast(ctx,
@@ -87,5 +100,28 @@ implements
     // -------------------------------------------------------------------------
     // XXX: Query Object Model
     // -------------------------------------------------------------------------
+
+    @Override
+    public final UDT<R> $udt() {
+        return udt;
+    }
+
+    @Override
+    public final UnmodifiableList<Field<?>> $args() {
+        return QOM.unmodifiable(args);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

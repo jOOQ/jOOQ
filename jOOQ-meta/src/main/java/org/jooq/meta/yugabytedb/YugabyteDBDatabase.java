@@ -41,7 +41,12 @@ package org.jooq.meta.yugabytedb;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.unquotedName;
 
+import java.util.List;
+
 import org.jooq.DSLContext;
+import org.jooq.Field;
+import org.jooq.Record6;
+import org.jooq.ResultQuery;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 import org.jooq.meta.postgres.PostgresDatabase;
@@ -66,5 +71,12 @@ public class YugabyteDBDatabase extends PostgresDatabase {
         }
 
         return ctx;
+    }
+
+    @Override
+    protected Field<String> attgenerated(Field<String> attgenerated) {
+
+        // [#18701] YugabyteDB doesn't support the ATTGENERATED property
+        return DSL.inline("s");
     }
 }

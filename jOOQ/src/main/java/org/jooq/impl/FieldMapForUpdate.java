@@ -181,9 +181,14 @@ extends
                     UDTPathField<?, ?, ?> u = (UDTPathField<?, ?, ?>) key;
                     UDTPathTableField<?, ?, ?> f = u.getTableField();
 
-                    // [#18744] TODO: Support nested UDTs
                     BiFunction<UDT<?>, Field<?>, Field<?>> init = (u0, f0) -> {
-                        return new UDTPathFieldImpl<>(f0.getUnqualifiedName(), f0.getDataType(), f.asQualifier(), u0, null);
+                        return new UDTPathFieldImpl<>(
+                            f0.getUnqualifiedName(),
+                            f0.getDataType(),
+                            UDTPathFieldImpl.getPathFieldFor(u0, u).getQualifier(),
+                            u0,
+                            null
+                        );
                     };
 
                     result.compute(f, (k, v) -> {

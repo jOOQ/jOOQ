@@ -110,7 +110,6 @@ implements
             return tf;
         else
             throw new IllegalStateException();
-
     }
 
     static final <R extends UDTRecord<R>> Field<R> construct(

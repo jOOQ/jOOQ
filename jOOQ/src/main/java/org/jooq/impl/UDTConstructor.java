@@ -69,7 +69,7 @@ implements
         super(udt.getQualifiedName(), udt.getDataType());
 
         this.udt = udt;
-        this.args = new QueryPartList<>(args);
+        this.args = new QueryPartList<>(Tools.map(args, (f, i) -> f != null ? f : DSL.val(null, udt.field(i).getDataType())));
     }
 
     // -------------------------------------------------------------------------

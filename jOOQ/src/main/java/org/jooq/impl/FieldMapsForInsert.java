@@ -47,18 +47,12 @@ import static org.jooq.Clause.INSERT_VALUES;
 // ...
 // ...
 // ...
-import static org.jooq.SQLDialect.CLICKHOUSE;
-// ...
+import static org.jooq.SQLDialect.DUCKDB;
 // ...
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
-// ...
-import static org.jooq.SQLDialect.SQLITE;
-// ...
-// ...
 import static org.jooq.SQLDialect.TRINO;
-// ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.conf.WriteIfReadonly.IGNORE;
 import static org.jooq.conf.WriteIfReadonly.THROW;
@@ -79,11 +73,10 @@ import static org.jooq.impl.Tools.flatten;
 import static org.jooq.impl.Tools.flattenCollection;
 import static org.jooq.impl.Tools.flattenFieldOrRows;
 import static org.jooq.impl.Tools.lazy;
-import static org.jooq.impl.Tools.map;
-import static org.jooq.impl.Tools.orElse;
 import static org.jooq.impl.Tools.row0;
 import static org.jooq.impl.Tools.selectQueryImpl;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_STORE_ASSIGNMENT;
+import static org.jooq.impl.UDTPathFieldImpl.patchUDTConstructor;
 
 import java.util.AbstractList;
 import java.util.AbstractMap;
@@ -115,6 +108,8 @@ import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.UDTPathField;
+import org.jooq.UDTPathTableField;
 import org.jooq.conf.WriteIfReadonly;
 import org.jooq.exception.DataTypeException;
 import org.jooq.impl.AbstractStoreQuery.UnknownField;
@@ -124,8 +119,6 @@ import org.jooq.impl.Tools.BooleanDataKey;
 import org.jooq.impl.Tools.ExtendedDataKey;
 import org.jooq.tools.StringUtils;
 
-import org.jetbrains.annotations.NotNull;
-
 
 /**
  * @author Lukas Eder
@@ -133,6 +126,7 @@ import org.jetbrains.annotations.NotNull;
 final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImplemented {
     static final Set<SQLDialect>        CASTS_NEEDED           = SQLDialect.supportedBy(POSTGRES, TRINO, YUGABYTEDB);
     static final Set<SQLDialect>        CASTS_NEEDED_FOR_MERGE = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
+    static final Set<SQLDialect>        EMULATE_UDT_PATHS      = SQLDialect.supportedBy(DUCKDB);
 
     final Table<?>                      table;
     final Map<Field<?>, Field<?>>       empty;
@@ -261,6 +255,46 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
                 }
             }
         }
+    }
+
+    final FieldMapsForInsert emulateUDTPaths(Context<?> ctx) {
+        if (EMULATE_UDT_PATHS.contains(ctx.dialect()) && anyMatch(values.keySet(), f -> f instanceof UDTPathField && table.indexOf(f) == -1)) {
+            FieldMapsForInsert result = new FieldMapsForInsert(table);
+            result.nextRow = nextRow;
+            result.rows = rows;
+
+            for (Entry<Field<?>, List<Field<?>>> e : values.entrySet()) {
+                Field<?> key = e.getKey();
+                List<Field<?>> value = e.getValue();
+
+                if (key instanceof UDTPathField && table.indexOf(key) == -1) {
+                    UDTPathField<?, ?, ?> u = (UDTPathField<?, ?, ?>) key;
+                    UDTPathTableField<?, ?, ?> f = u.getTableField();
+
+                    result.values.compute(f, (k, v) -> {
+                        List<Field<?>> v0 = v;
+
+                        if (v0 == null) {
+                            v0 = new ArrayList<>();
+
+                            for (int i = 0; i < value.size(); i++)
+                                v0.add(f.getUDT().construct());
+                        }
+
+                        for (int i = 0; i < value.size(); i++)
+                            patchUDTConstructor(u, (UDTConstructor<?>) v0.get(i), value.get(i));
+
+                        return v0;
+                    });
+                }
+                else
+                    result.values.put(key, value);
+            }
+
+            return result;
+        }
+
+        return null;
     }
 
     private final void toSQLValues(Context<?> ctx) {

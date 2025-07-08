@@ -97,6 +97,14 @@ public interface UDT<R extends UDTRecord<R>> extends RecordQualifier<R> {
     boolean isAssignableFrom(UDT<?> other);
 
     /**
+     * Create a constructor call for UDTs, with all UDT fields set to their
+     * default (<code>NULL</code>).
+     */
+    @Support({ DUCKDB, POSTGRES, YUGABYTEDB })
+    @NotNull
+    Field<R> construct();
+
+    /**
      * Create a constructor call for UDTs.
      */
     @Support({ DUCKDB, POSTGRES, YUGABYTEDB })

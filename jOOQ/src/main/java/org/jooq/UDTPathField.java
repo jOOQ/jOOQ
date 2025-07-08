@@ -39,6 +39,7 @@
 package org.jooq;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * A field dereferenced from a UDT path.
@@ -51,6 +52,17 @@ import org.jetbrains.annotations.NotNull;
  * @author Lukas Eder
  */
 public interface UDTPathField<R extends Record, U extends UDTRecord<U>, T> extends UDTField<U, T> {
+
+    /**
+     * Get the {@link TableField} reference on this UDT path.
+     * <p>
+     * While this currently returns non-<code>null</code> values only, as
+     * there's always a {@link UDTPathTableField} on the path, there might not
+     * be in the future, e.g. when a UDT path is based on a UDT constructor or
+     * UDT returning function, which jOOQ currently does not yet support.
+     */
+    @Nullable
+    UDTPathTableField<?, ?, ?> getTableField();
 
     /**
      * @return The UDT path this field is contained in.

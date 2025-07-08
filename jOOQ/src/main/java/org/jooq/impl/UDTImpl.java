@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static java.util.Collections.emptyList;
+import static org.jooq.impl.Tools.map;
 
 import java.util.List;
 
@@ -56,6 +57,7 @@ import org.jooq.Row;
 import org.jooq.Schema;
 import org.jooq.UDT;
 import org.jooq.UDTField;
+import org.jooq.UDTPathField;
 import org.jooq.UDTRecord;
 import org.jooq.impl.QOM.UNotYetImplemented;
 
@@ -208,6 +210,16 @@ implements
             type = new UDTDataType<>(this);
 
         return type;
+    }
+
+    @Override
+    public final Field<R> construct() {
+
+        // [#15506] We do not recurse into nested UDTs here, because u1(null, null) is not the same thing as u1(u2(null, null), null)
+        return new UDTConstructor<>(this, map(
+            fields(),
+            f -> DSL.inline(null, f.getDataType())
+        ));
     }
 
     @Override

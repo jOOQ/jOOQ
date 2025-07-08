@@ -65,7 +65,7 @@ implements
         this(udt, Arrays.asList(args));
     }
 
-    private UDTConstructor(UDT<R> udt, Collection<? extends Field<?>> args) {
+    UDTConstructor(UDT<R> udt, Collection<? extends Field<?>> args) {
         super(udt.getQualifiedName(), udt.getDataType());
 
         this.udt = udt;

@@ -39,6 +39,7 @@
 package org.jooq;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * A field dereferenced from a UDT path.

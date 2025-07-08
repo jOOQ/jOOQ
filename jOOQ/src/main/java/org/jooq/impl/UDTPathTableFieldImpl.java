@@ -45,10 +45,13 @@ import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.RecordQualifier;
 import org.jooq.Table;
+import org.jooq.TableField;
 import org.jooq.UDT;
 import org.jooq.UDTPathField;
 import org.jooq.UDTPathTableField;
 import org.jooq.UDTRecord;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A common base type for table fields that are also {@link UDTPathField}.

@@ -381,6 +381,14 @@ implements
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     public final void accept(Context<?> ctx) {
+
+        // [#15506] Transform the statement if UDT paths have to be emulated
+        FieldMapsForInsert e = insertMaps.emulateUDTPaths(ctx);
+        if (e != null) {
+            ctx.visit($columns(e.$columns()).$values(e.$values()));
+            return;
+        }
+
         ctx.scopeStart(this);
 
         // [#2682] [#15632] Apply inline derived tables to the target table

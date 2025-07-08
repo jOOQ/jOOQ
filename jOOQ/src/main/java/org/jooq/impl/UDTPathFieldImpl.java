@@ -50,6 +50,7 @@ import org.jooq.Clause;
 import org.jooq.Comment;
 import org.jooq.Context;
 import org.jooq.DataType;
+import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Package;
 import org.jooq.Record;
@@ -60,6 +61,7 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UDT;
 import org.jooq.UDTPathField;
+import org.jooq.UDTPathTableField;
 import org.jooq.UDTRecord;
 import org.jooq.impl.QOM.UEmpty;
 import org.jooq.impl.QOM.UNotYetImplemented;
@@ -98,6 +100,48 @@ implements
     }
 
     @Override
+    public final UDTPathTableField<?, ?, ?> getTableField() {
+        if (getQualifier() instanceof UDTPathTableFieldImpl<?, ?, ?>.UDTPathFieldImplAsQualifier u)
+            return u.getTableField();
+        else if (this instanceof UDTPathTableField<?, ?, ?> tf)
+            return tf;
+        else
+            throw new IllegalStateException();
+
+    }
+
+    static final void patchUDTConstructor(
+        UDTPathField<?, ?, ?> u,
+        UDTConstructor<?> udtConstructor,
+        Field<?> value
+    ) {
+        while (!u.getUDT().equals(udtConstructor.udt)) {
+            UDTPathField<?, ?, ?> p = getPathFieldFor(udtConstructor.udt, u);
+
+            int i = udtConstructor.udt.indexOf(p);
+            Field<?> e = udtConstructor.args.get(i);
+
+            if (!(e instanceof UDTConstructor))
+                udtConstructor.args.set(i, e = p.getUDT().construct());
+
+            udtConstructor = (UDTConstructor<?>) e;
+        }
+
+        udtConstructor.args.set(udtConstructor.udt.indexOf(u), value);
+    }
+
+    static final UDTPathField<?, ?, ?> getPathFieldFor(UDT<?> udt, UDTPathField<?, ?, ?> f) {
+        while (udt.field(f) == null) {
+            if (f.getQualifier() instanceof UDTPathTableFieldImpl<?, ?, ?>.UDTPathFieldImplAsQualifier u)
+                f = u.getPathField();
+            else
+                throw new IllegalStateException();
+        }
+
+        return f;
+    }
+
+    @Override
     public final RecordQualifier<R> getQualifier() {
         return qualifier;
     }
@@ -108,7 +152,7 @@ implements
     }
 
     // [#228] TODO Refactor this logic into UDTImpl
-    private class UDTPathFieldImplAsQualifier
+    final class UDTPathFieldImplAsQualifier
     extends AbstractNamed
     implements
         RecordQualifier<U>,
@@ -117,6 +161,14 @@ implements
     {
         UDTPathFieldImplAsQualifier() {
             super(UDTPathFieldImpl.this.getQualifiedName(), UDTPathFieldImpl.this.getCommentPart());
+        }
+
+        UDTPathField<?, ?, ?> getPathField() {
+            return UDTPathFieldImpl.this;
+        }
+
+        UDTPathTableField<?, ?, ?> getTableField() {
+            return UDTPathFieldImpl.this.getTableField();
         }
 
         RecordQualifier<R> getQualifier() {

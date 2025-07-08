@@ -79,6 +79,7 @@ import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.Default.patchDefaultForUpdate;
+import static org.jooq.impl.FieldMapsForInsert.EMULATE_UDT_PATHS;
 import static org.jooq.impl.Keywords.K_ROW;
 import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.apply;
@@ -94,6 +95,8 @@ import static org.jooq.impl.Tools.unqualified;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_FORCE_LIMIT_WITH_ORDER_BY;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_STORE_ASSIGNMENT;
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_ON_DUPLICATE_KEY_WHERE;
+import static org.jooq.impl.UDTPathFieldImpl.construct;
+import static org.jooq.impl.UDTPathFieldImpl.patchUDTConstructor;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -102,6 +105,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -119,6 +123,9 @@ import org.jooq.Row;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.Table;
+import org.jooq.UDT;
+import org.jooq.UDTPathField;
+import org.jooq.UDTPathTableField;
 import org.jooq.exception.DataTypeException;
 
 /**
@@ -158,6 +165,45 @@ extends
         this.table = table;
         this.setClause = setClause;
         this.assignmentClause = assignmentClause;
+    }
+
+
+
+    final FieldMapForUpdate emulateUDTPaths(Context<?> ctx) {
+        if (EMULATE_UDT_PATHS.contains(ctx.dialect()) && anyMatch(keySet(), f -> f instanceof UDTPathField && table.indexOf((Field<?>) f) == -1)) {
+            FieldMapForUpdate result = new FieldMapForUpdate(table, setClause, assignmentClause);
+
+            for (Entry<FieldOrRow, FieldOrRowOrSelect> e : entrySet()) {
+                FieldOrRow key = e.getKey();
+                FieldOrRowOrSelect value = e.getValue();
+
+                if (key instanceof UDTPathField && value instanceof Field && table.indexOf((Field<?>) key) == -1) {
+                    UDTPathField<?, ?, ?> u = (UDTPathField<?, ?, ?>) key;
+                    UDTPathTableField<?, ?, ?> f = u.getTableField();
+
+                    // [#18744] TODO: Support nested UDTs
+                    BiFunction<UDT<?>, Field<?>, Field<?>> init = (u0, f0) -> {
+                        return new UDTPathFieldImpl<>(f0.getUnqualifiedName(), f0.getDataType(), f.asQualifier(), u0, null);
+                    };
+
+                    result.compute(f, (k, v) -> {
+                        FieldOrRowOrSelect v0 = v;
+
+                        if (v0 == null)
+                            v0 = construct(f.getUDT(), init);
+
+                        patchUDTConstructor(u, (UDTConstructor<?>) v0, (Field<?>) value, init);
+                        return v0;
+                    });
+                }
+                else
+                    result.put(key, value);
+            }
+
+            return result;
+        }
+
+        return null;
     }
 
     @Override

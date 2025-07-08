@@ -76,6 +76,7 @@ import static org.jooq.impl.Tools.lazy;
 import static org.jooq.impl.Tools.row0;
 import static org.jooq.impl.Tools.selectQueryImpl;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_STORE_ASSIGNMENT;
+import static org.jooq.impl.UDTPathFieldImpl.construct;
 import static org.jooq.impl.UDTPathFieldImpl.patchUDTConstructor;
 
 import java.util.AbstractList;
@@ -91,6 +92,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import org.jooq.Configuration;
@@ -108,6 +110,7 @@ import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.UDT;
 import org.jooq.UDTPathField;
 import org.jooq.UDTPathTableField;
 import org.jooq.conf.WriteIfReadonly;
@@ -262,6 +265,7 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
             FieldMapsForInsert result = new FieldMapsForInsert(table);
             result.nextRow = nextRow;
             result.rows = rows;
+            BiFunction<UDT<?>, Field<?>, Field<?>> init = (u, f) -> DSL.inline(null, f.getDataType());
 
             for (Entry<Field<?>, List<Field<?>>> e : values.entrySet()) {
                 Field<?> key = e.getKey();
@@ -278,11 +282,11 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
                             v0 = new ArrayList<>();
 
                             for (int i = 0; i < value.size(); i++)
-                                v0.add(f.getUDT().construct());
+                                v0.add(construct(f.getUDT(), init));
                         }
 
                         for (int i = 0; i < value.size(); i++)
-                            patchUDTConstructor(u, (UDTConstructor<?>) v0.get(i), value.get(i));
+                            patchUDTConstructor(u, (UDTConstructor<?>) v0.get(i), value.get(i), init);
 
                         return v0;
                     });

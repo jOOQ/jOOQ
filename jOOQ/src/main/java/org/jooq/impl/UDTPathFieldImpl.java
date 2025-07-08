@@ -41,8 +41,11 @@ package org.jooq.impl;
 import static java.lang.Boolean.TRUE;
 import static org.jooq.impl.QualifiedName.hashCode0;
 import static org.jooq.impl.SchemaImpl.DEFAULT_SCHEMA;
+import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_STORE_ASSIGNMENT;
 import static org.jooq.tools.StringUtils.defaultIfNull;
+
+import java.util.function.BiFunction;
 
 import org.jooq.Binding;
 import org.jooq.Catalog;
@@ -110,10 +113,23 @@ implements
 
     }
 
+    static final <R extends UDTRecord<R>> Field<R> construct(
+        UDT<R> udt,
+        BiFunction<? super UDT<R>, ? super Field<?>, ? extends Field<?>> init
+    ) {
+
+        // [#15506] We do not recurse into nested UDTs here, because u1(null, null) is not the same thing as u1(u2(null, null), null)
+        return new UDTConstructor<>(udt, map(
+            udt.fields(),
+            f -> init.apply(udt, f)
+        ));
+    }
+
     static final void patchUDTConstructor(
         UDTPathField<?, ?, ?> u,
         UDTConstructor<?> udtConstructor,
-        Field<?> value
+        Field<?> value,
+        BiFunction<? super UDT<?>, ? super Field<?>, ? extends Field<?>> init
     ) {
         while (!u.getUDT().equals(udtConstructor.udt)) {
             UDTPathField<?, ?, ?> p = getPathFieldFor(udtConstructor.udt, u);
@@ -122,7 +138,7 @@ implements
             Field<?> e = udtConstructor.args.get(i);
 
             if (!(e instanceof UDTConstructor))
-                udtConstructor.args.set(i, e = p.getUDT().construct());
+                udtConstructor.args.set(i, e = construct(p.getUDT(), init));
 
             udtConstructor = (UDTConstructor<?>) e;
         }

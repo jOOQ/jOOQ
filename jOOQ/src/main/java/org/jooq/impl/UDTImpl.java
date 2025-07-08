@@ -213,16 +213,6 @@ implements
     }
 
     @Override
-    public final Field<R> construct() {
-
-        // [#15506] We do not recurse into nested UDTs here, because u1(null, null) is not the same thing as u1(u2(null, null), null)
-        return new UDTConstructor<>(this, map(
-            fields(),
-            f -> DSL.inline(null, f.getDataType())
-        ));
-    }
-
-    @Override
     public final Field<R> construct(Field<?>... args) {
         return new UDTConstructor<>(this, args);
     }

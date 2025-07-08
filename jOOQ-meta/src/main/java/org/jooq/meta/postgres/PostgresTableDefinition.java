@@ -146,9 +146,8 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
 
         Field<String> serialColumnDefault = inline("nextval('%_seq'::regclass)");
         Field<String> generationExpression = COLUMNS.GENERATION_EXPRESSION;
-        Field<String> attgenerated = PG_ATTRIBUTE.ATTGENERATED;
+        Field<String> attgenerated = database.attgenerated(PG_ATTRIBUTE.ATTGENERATED);
         Condition columnHidden = falseCondition();
-
 
 
 

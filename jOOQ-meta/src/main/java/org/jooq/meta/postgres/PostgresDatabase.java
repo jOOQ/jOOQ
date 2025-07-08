@@ -1398,11 +1398,11 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
 
 
 
+    protected Field<String> attgenerated(Field<String> attgenerated) {
 
-
-
-
-
+        // [#6492] CockroachDB doesn't implement the standard exactly
+        return is12() ? attgenerated : inline("s");
+    }
 
     boolean canCombineArrays() {
         if (canCombineArrays == null) {

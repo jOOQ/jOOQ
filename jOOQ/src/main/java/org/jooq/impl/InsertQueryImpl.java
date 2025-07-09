@@ -1407,7 +1407,10 @@ implements
         if ($updateSet() == newUpdateSet)
             return this;
         else
-            return copy(i -> i.addValuesForUpdate(newUpdateSet));
+            return copy(i -> {
+                i.updateMap.clear();
+                i.updateMap.putAll(newUpdateSet);
+            });
     }
 
     @Override

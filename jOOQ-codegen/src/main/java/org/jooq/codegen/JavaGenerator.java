@@ -3303,7 +3303,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
         else if (kotlin) {
             out.println();
-            out.println("%s override fun getSchema(): %s = %s", visibilityPublic(), Schema.class, schemaId);
+            out.println("%soverride fun getSchema(): %s = %s", visibilityPublic(), Schema.class, schemaId);
         }
         else {
             out.overrideInherit();

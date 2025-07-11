@@ -1850,25 +1850,32 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         boolean withTies = false;
 
         // T-SQL style TOP .. START AT
-        if (parseKeywordIf("TOP")) {
-            limit = (Field) parseField();
-            percent = parseProKeywordIf("PERCENT");
+        try {
+            supportArraySubscripts = false;
 
-            if (parseKeywordIf("START AT"))
-                offset = (Field) parseField();
-            else if (parseKeywordIf("WITH TIES"))
-                withTies = true;
-        }
-
-        // Informix style SKIP .. FIRST
-        else if (parseKeywordIf("SKIP")) {
-            offset = (Field) parseField();
-
-            if (parseKeywordIf("FIRST"))
+            if (parseKeywordIf("TOP")) {
                 limit = (Field) parseField();
+                percent = parseProKeywordIf("PERCENT");
+
+                if (parseKeywordIf("START AT"))
+                    offset = (Field) parseField();
+                else if (parseKeywordIf("WITH TIES"))
+                    withTies = true;
+            }
+
+            // Informix style SKIP .. FIRST
+            else if (parseKeywordIf("SKIP")) {
+                offset = (Field) parseField();
+
+                if (parseKeywordIf("FIRST"))
+                    limit = (Field) parseField();
+            }
+            else if (parseKeywordIf("FIRST")) {
+                limit = (Field) parseField();
+            }
         }
-        else if (parseKeywordIf("FIRST")) {
-            limit = (Field) parseField();
+        finally {
+            supportArraySubscripts = true;
         }
 
         List<SelectFieldOrAsterisk> select = parseSelectList();
@@ -8864,13 +8871,32 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
 
 
-        if (parseIf('[')) {
+        if (peek('[') && possiblyArrayTyped(r) && parseIf('[')) {
             r = arrayGet((Field) toField(r), (Field) parseField());
             parse(']');
         }
 
         r = parseMethodCallIf(r);
         return r;
+    }
+
+    private final boolean possiblyArrayTyped(FieldOrRowOrSelect r) {
+        if (!supportArraySubscripts)
+            return false;
+        else if (r instanceof Row)
+            return false;
+        else if (r instanceof Field<?> f)
+            return f.getDataType().isArray() || f.getDataType().isOther();
+        else if (r instanceof Select<?> s) {
+            List<Field<?>> l = s.getSelect();
+
+            if (l.size() != 1)
+                return false;
+            else if (!l.get(0).getDataType().isArray() && !l.get(0).getDataType().isOther())
+                return false;
+        }
+
+        return true;
     }
 
     private final FieldOrRowOrSelect parseMethodCallIf(FieldOrRowOrSelect r) {
@@ -15949,15 +15975,17 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
     private final ParseWithMetaLookups  metaLookups;
     private boolean                     metaLookupsForceIgnore;
     private final Consumer<Param<?>>    bindParamListener;
-    private boolean                     ignoreHints     = true;
+    private boolean                     ignoreHints            = true;
     private final Object[]              bindings;
-    private int                         bindIndex       = 0;
-    private final Map<String, Param<?>> bindParams      = new LinkedHashMap<>();
-    private String                      delimiter       = ";";
-    private boolean                     delimiterRequired = false;
-    private LanguageContext             languageContext = LanguageContext.QUERY;
-    private EnumSet<FunctionKeyword>    forbidden       = EnumSet.noneOf(FunctionKeyword.class);
-    private ParseScope                  scope           = new ParseScope();
+    private int                         bindIndex              = 0;
+    private final Map<String, Param<?>> bindParams             = new LinkedHashMap<>();
+    private String                      delimiter              = ";";
+    private boolean                     delimiterRequired      = false;
+    private LanguageContext             languageContext        = LanguageContext.QUERY;
+    private EnumSet<FunctionKeyword>    forbidden              = EnumSet.noneOf(FunctionKeyword.class);
+    private boolean                     supportArraySubscripts = true;
+    private ParseScope                  scope                  = new ParseScope();
+
 
 
 

@@ -38,7 +38,7 @@
 
 package org.jooq;
 
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * A field contained in a UDT.
@@ -55,6 +55,6 @@ public interface UDTField<R extends UDTRecord<R>, T> extends Field<T> {
     /**
      * @return The UDT this field is contained in
      */
-    @NotNull
+    @Nullable
     UDT<R> getUDT();
 }

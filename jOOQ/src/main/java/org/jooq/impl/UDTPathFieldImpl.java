@@ -39,6 +39,7 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
+// ...
 import static org.jooq.impl.QualifiedName.hashCode0;
 import static org.jooq.impl.SchemaImpl.DEFAULT_SCHEMA;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_STORE_ASSIGNMENT;
@@ -50,11 +51,14 @@ import org.jooq.Clause;
 import org.jooq.Comment;
 import org.jooq.Context;
 import org.jooq.DataType;
+import org.jooq.Field;
+import org.jooq.LanguageContext;
 import org.jooq.Name;
 import org.jooq.Package;
 import org.jooq.Record;
 import org.jooq.RecordQualifier;
 import org.jooq.Row;
+import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -196,8 +200,14 @@ implements
 
         // [#228] The disambiguating wrapping in parentheses is only required in references to
         //        a UDT path identifier expression, not in assignments (where it is disallowed)
-        if (!TRUE.equals(ctx.data(DATA_STORE_ASSIGNMENT)) && q instanceof UDTPathFieldImpl.UDTPathFieldImplAsQualifier && ((UDTPathFieldImpl<?, ?, ?>.UDTPathFieldImplAsQualifier) q).getQualifier() instanceof Table)
+        if (!TRUE.equals(ctx.data(DATA_STORE_ASSIGNMENT)) && q instanceof UDTPathFieldImpl.UDTPathFieldImplAsQualifier && ((UDTPathFieldImpl<?, ?, ?>.UDTPathFieldImplAsQualifier) q).getQualifier() instanceof Table) {
+
+
+
+
+
             ctx.sql('(').visit(q).sql(").").visit(getUnqualifiedName());
+        }
         else if (q instanceof Table<?> t)
             TableFieldImpl.accept2(ctx, t, getUnqualifiedName(), getDataType());
         else

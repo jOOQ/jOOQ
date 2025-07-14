@@ -67,7 +67,7 @@ public interface UDTPathField<R extends Record, U extends UDTRecord<U>, T> exten
     /**
      * @return The UDT path this field is contained in.
      */
-    @NotNull
+    @Nullable
     RecordQualifier<R> getQualifier();
 
     /**

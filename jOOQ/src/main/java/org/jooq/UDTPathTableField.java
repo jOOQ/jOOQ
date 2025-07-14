@@ -38,7 +38,6 @@
 
 package org.jooq;
 
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -57,6 +56,6 @@ public interface UDTPathTableField<R extends Record, U extends UDTRecord<U>, T> 
      * @return The UDT path this field is contained in.
      */
     @Override
-    @NotNull
+    @Nullable
     RecordQualifier<R> getQualifier();
 }

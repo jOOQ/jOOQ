@@ -738,6 +738,7 @@ import org.jooq.TableSampleRowsStep;
 import org.jooq.Truncate;
 import org.jooq.TruncateCascadeStep;
 import org.jooq.TruncateIdentityStep;
+import org.jooq.UDTPathField;
 import org.jooq.Update;
 import org.jooq.UpdateFromStep;
 import org.jooq.UpdateLimitStep;
@@ -10540,7 +10541,19 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                     }
 
                     parse(')');
-                    return list != null ? row(list) : r;
+
+                    if (list != null)
+                        return row(list);
+                    else if (peek('.') && r instanceof TableField)
+                        return parseUDTPath((TableField<?, ?>) r);
+
+
+
+
+                    else if (peek('.') && r instanceof UDTPathField)
+                        return parseUDTPath((UDTPathField<?, ?, ?>) r);
+                    else
+                        return r;
                 }
                 finally {
                     forbidden = fk;
@@ -10558,6 +10571,36 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
         else
             return parseFieldNameOrSequenceExpression();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private final Field<?> parseUDTPath(TableField<?, ?> tf) {
+        return parseUDTPath((UDTPathField<?, ?, ?>) new UDTPathTableFieldImpl<>(
+            tf.getUnqualifiedName(),
+            tf.getDataType(),
+            tf.getTable(),
+            null, null, null
+        ));
+    }
+
+    private final Field<?> parseUDTPath(UDTPathField<?, ?, ?> r) {
+        while (parseIf('.'))
+            r = new UDTPathFieldImpl<>(parseIdentifier(), OTHER, r.asQualifier(), null, null);
+
+        return r;
     }
 
     private final <Q extends QueryPart> Q parseTemplateIf(Function<? super SQL, ? extends Q> wrap) {

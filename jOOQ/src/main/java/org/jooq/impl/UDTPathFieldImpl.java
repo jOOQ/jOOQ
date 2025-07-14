@@ -192,17 +192,17 @@ implements
 
         @Override
         public final Catalog getCatalog() {
-            return null;
+            return getQualifier() == null ? null : getQualifier().getCatalog();
         }
 
         @Override
         public final Schema getSchema() {
-            return null;
+            return getQualifier() == null ? null : getQualifier().getSchema();
         }
 
         @Override
         public final Schema $schema() {
-            return null;
+            return getSchema();
         }
 
         @Override
@@ -266,12 +266,22 @@ implements
 
         // [#228] The disambiguating wrapping in parentheses is only required in references to
         //        a UDT path identifier expression, not in assignments (where it is disallowed)
-        if (!TRUE.equals(ctx.data(DATA_STORE_ASSIGNMENT)) && q instanceof UDTPathFieldImpl.UDTPathFieldImplAsQualifier && ((UDTPathFieldImpl<?, ?, ?>.UDTPathFieldImplAsQualifier) q).getQualifier() instanceof Table)
+        if (!TRUE.equals(ctx.data(DATA_STORE_ASSIGNMENT)) && isTableFieldOrUnqualified(q))
             ctx.sql('(').visit(q).sql(").").visit(getUnqualifiedName());
         else if (q instanceof Table<?> t)
             TableFieldImpl.accept2(ctx, t, getUnqualifiedName(), getDataType());
-        else
+        else if (q != null)
             ctx.visit(q).sql('.').visit(getUnqualifiedName());
+        else
+            ctx.visit(getUnqualifiedName());
+    }
+
+    private final boolean isTableFieldOrUnqualified(RecordQualifier<R> q) {
+        if (q instanceof UDTPathFieldImpl<?, ?, ?>.UDTPathFieldImplAsQualifier u) {
+            return u.getQualifier() instanceof Table || u.getQualifier() == null;
+        }
+        else
+            return false;
     }
 
     // -------------------------------------------------------------------------
@@ -290,11 +300,15 @@ implements
                 getQualifier().getUnqualifiedName(),
                 getUnqualifiedName()
             );
-        else
+        else if (getQualifier() != null && getUDT() != null)
             return hashCode0(
                 defaultIfNull(getQualifier().getSchema(), DEFAULT_SCHEMA.get()).getQualifiedName(),
                 getQualifier().getUnqualifiedName(),
                 getUDT().getUnqualifiedName(),
+                getUnqualifiedName()
+            );
+        else
+            return hashCode0(
                 getUnqualifiedName()
             );
     }

@@ -383,13 +383,17 @@ implements
     public final void accept(Context<?> ctx) {
 
         // [#15506] Transform the statement if UDT paths have to be emulated
-        FieldMapsForInsert ei = insertMaps.emulateUDTPaths(ctx);
+        FieldMapsForInsert.OrSelect ei = insertMaps.emulateUDTPaths(ctx, select);
         FieldMapForUpdate eu = updateMap.emulateUDTPaths(ctx);
         if (ei != null || eu != null) {
             Insert<?> i = this;
 
-            if (ei != null)
-                i = i.$columns(ei.$columns()).$values(ei.$values());
+            if (ei != null) {
+                if (ei.select() != null)
+                    i = i.$columns(ei.values().$columns()).$select(ei.select());
+                else
+                    i = i.$columns(ei.values().$columns()).$values(ei.values().$values());
+            }
             if (eu != null)
                 i = i.$updateSet(eu);
 

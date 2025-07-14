@@ -68,6 +68,7 @@ import static org.jooq.impl.Names.N_T;
 import static org.jooq.impl.QueryPartCollectionView.wrap;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.anyMatch;
+import static org.jooq.impl.Tools.fieldNames;
 import static org.jooq.impl.Tools.filter;
 import static org.jooq.impl.Tools.flatten;
 import static org.jooq.impl.Tools.flattenCollection;
@@ -160,6 +161,8 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
         rows = i.rows;
         nextRow = i.nextRow;
     }
+
+    static final record OrSelect(FieldMapsForInsert values, Select<?> select) {}
 
     // -------------------------------------------------------------------------
     // The QueryPart API
@@ -260,14 +263,17 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
         }
     }
 
-    final FieldMapsForInsert emulateUDTPaths(Context<?> ctx) {
+    final FieldMapsForInsert.OrSelect emulateUDTPaths(Context<?> ctx, Select<?> s) {
         if (EMULATE_UDT_PATHS.contains(ctx.dialect()) && anyMatch(values.keySet(), f -> f instanceof UDTPathField && table.indexOf(f) == -1)) {
             FieldMapsForInsert result = new FieldMapsForInsert(table);
             result.nextRow = nextRow;
             result.rows = rows;
             BiFunction<UDT<?>, Field<?>, Field<?>> init = (u, f) -> DSL.inline(null, f.getDataType());
+            Table<?> t = s != null ? s.asTable(N_T, fieldNames(values.size())) : null;
 
+            int j = 0;
             for (Entry<Field<?>, List<Field<?>>> e : values.entrySet()) {
+                int j0 = j;
                 Field<?> key = e.getKey();
                 List<Field<?>> value = e.getValue();
 
@@ -286,16 +292,28 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
                         }
 
                         for (int i = 0; i < value.size(); i++)
-                            patchUDTConstructor(u, (UDTConstructor<?>) v0.get(i), value.get(i), init);
+                            patchUDTConstructor(u,
+                                (UDTConstructor<?>) v0.get(i),
+                                t == null ? value.get(i) : t.field(j0),
+                                init
+                            );
 
                         return v0;
                     });
                 }
                 else
                     result.values.put(key, value);
+
+                j++;
             }
 
-            return result;
+            return new OrSelect(result, t == null
+                ? null
+                : select(Tools.map(
+                    result.values.entrySet(),
+                    (e, i) -> e.getValue().get(0) instanceof UDTConstructor ? e.getValue().get(0) : t.field(i)))
+                  .from(t)
+            );
         }
 
         return null;

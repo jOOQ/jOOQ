@@ -116,6 +116,7 @@ import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.concat;
 import static org.jooq.impl.Tools.isEmpty;
+import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.nullSafe;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES;
 
@@ -1484,13 +1485,38 @@ implements
     @Override
     public final void accept(Context<?> ctx) {
 
+        // [#15506] Transform the statement if UDT paths have to be emulated
+        if (anyMatch(notMatched, m -> m.insertMap.emulateUDTPaths(ctx, null) != null)
+            || anyMatch(notMatchedBySource, m -> m.updateMap.emulateUDTPaths(ctx) != null)
+            || anyMatch(matched, m -> m.updateMap.emulateUDTPaths(ctx) != null)) {
+
+            List<NotMatchedClause> cnm = map(notMatched, m -> m.copy(c -> {
+                c.insertMap.clear();
+                c.insertMap.from(m.insertMap.emulateUDTPaths(ctx, null).values());
+            }));
+            List<MatchedClause> cnmbs = map(notMatchedBySource, m -> m.copy(c -> {
+                c.updateMap.clear();
+                c.updateMap.putAll(m.updateMap.emulateUDTPaths(ctx));
+            }));
+            List<MatchedClause> cm = map(matched, m -> m.copy(c -> {
+                c.updateMap.clear();
+                c.updateMap.putAll(m.updateMap.emulateUDTPaths(ctx));
+            }));
+
+            ctx.visit(
+                 $whenNotMatched(cnm)
+                .$whenNotMatchedBySource(cnmbs)
+                .$whenMatched(cm)
+            );
+        }
 
 
 
 
 
 
-        accept0(ctx);
+        else
+            accept0(ctx);
     }
 
 

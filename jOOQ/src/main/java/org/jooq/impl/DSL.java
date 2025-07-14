@@ -107,6 +107,7 @@ import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.TRINO;
 // ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
+// ...
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.Names.N_COUNT;
 import static org.jooq.impl.Names.N_CUME_DIST;
@@ -22358,7 +22359,7 @@ public class DSL {
      * @param characters The binary characters to be removed.
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTEDB })
     public static Field<byte[]> binaryLtrim(byte[] bytes, byte[] characters) {
         return new BinaryLtrim(Tools.field(bytes), Tools.field(characters));
     }
@@ -22372,7 +22373,7 @@ public class DSL {
      * @param characters The binary characters to be removed.
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTEDB })
     public static Field<byte[]> binaryLtrim(byte[] bytes, Field<byte[]> characters) {
         return new BinaryLtrim(Tools.field(bytes), characters);
     }
@@ -22386,7 +22387,7 @@ public class DSL {
      * @param characters The binary characters to be removed.
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTEDB })
     public static Field<byte[]> binaryLtrim(Field<byte[]> bytes, byte[] characters) {
         return new BinaryLtrim(bytes, Tools.field(characters));
     }
@@ -22400,7 +22401,7 @@ public class DSL {
      * @param characters The binary characters to be removed.
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTEDB })
     public static Field<byte[]> binaryLtrim(Field<byte[]> bytes, Field<byte[]> characters) {
         return new BinaryLtrim(bytes, characters);
     }
@@ -22696,7 +22697,7 @@ public class DSL {
      * @param characters The characters to be removed.
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTEDB })
     public static Field<byte[]> binaryRtrim(byte[] bytes, byte[] characters) {
         return new BinaryRtrim(Tools.field(bytes), Tools.field(characters));
     }
@@ -22710,7 +22711,7 @@ public class DSL {
      * @param characters The characters to be removed.
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTEDB })
     public static Field<byte[]> binaryRtrim(byte[] bytes, Field<byte[]> characters) {
         return new BinaryRtrim(Tools.field(bytes), characters);
     }
@@ -22724,7 +22725,7 @@ public class DSL {
      * @param characters The characters to be removed.
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTEDB })
     public static Field<byte[]> binaryRtrim(Field<byte[]> bytes, byte[] characters) {
         return new BinaryRtrim(bytes, Tools.field(characters));
     }
@@ -22738,7 +22739,7 @@ public class DSL {
      * @param characters The characters to be removed.
      */
     @NotNull
-    @Support({ POSTGRES })
+    @Support({ POSTGRES, YUGABYTEDB })
     public static Field<byte[]> binaryRtrim(Field<byte[]> bytes, Field<byte[]> characters) {
         return new BinaryRtrim(bytes, characters);
     }

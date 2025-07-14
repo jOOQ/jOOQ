@@ -596,8 +596,18 @@ public enum SQLDialect {
 
     /**
      * The YugabyteDB dialect family.
+     * <p>
+     * This family behaves like the versioned dialect {@link #YUGABYTEDB_2_25}.
      */
-    YUGABYTEDB("YugabyteDB", false, true, new RequiredVersion(2, 9, null), SQLDialectCategory.POSTGRES),
+    YUGABYTEDB("YugabyteDB", false, true, new RequiredVersion(2, 25, null), SQLDialectCategory.POSTGRES),
+
+
+
+
+
+
+
+
 
 
 

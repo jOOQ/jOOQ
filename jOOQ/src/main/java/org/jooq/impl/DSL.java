@@ -14625,7 +14625,12 @@ public class DSL {
     @NotNull
     @Support({ DUCKDB, H2, POSTGRES, YUGABYTEDB })
     public static <T> Type<T> type(Name name, DataType<T> type) {
-        return new TypeImpl<>(name, CommentImpl.NO_COMMENT, type);
+        return new TypeImpl<>(
+            name.qualified() ? schema(name.qualifier()) : null,
+            name.unqualifiedName(),
+            CommentImpl.NO_COMMENT,
+            type
+        );
     }
 
     /**

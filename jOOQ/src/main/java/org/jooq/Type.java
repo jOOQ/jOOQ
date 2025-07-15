@@ -42,6 +42,6 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface Type<T> extends Typed<T> {
+public interface Type<T> extends Qualified, Typed<T> {
 
 }

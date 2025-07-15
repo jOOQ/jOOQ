@@ -37,20 +37,42 @@
  */
 package org.jooq.impl;
 
+import org.jooq.Catalog;
 import org.jooq.Comment;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Name;
+import org.jooq.Schema;
 import org.jooq.Type;
 import org.jooq.impl.QOM.UNotYetImplemented;
 
 /**
  * @author Lukas Eder
  */
-class TypeImpl<T> extends AbstractTypedNamed<T> implements Type<T>, UNotYetImplemented {
+class TypeImpl<T>
+extends
+    AbstractTypedNamed<T>
+implements
+    Type<T>,
+    UNotYetImplemented
+{
 
-    TypeImpl(Name name, Comment comment, DataType<T> type) {
-        super(name, comment, type);
+    final Schema schema;
+
+    TypeImpl(Schema schema, Name name, Comment comment, DataType<T> type) {
+        super(qualify(schema, name), comment, type);
+
+        this.schema = schema;
+    }
+
+    @Override
+    public final Catalog getCatalog() {
+        return getSchema() == null ? null : getSchema().getCatalog();
+    }
+
+    @Override
+    public final Schema getSchema() {
+        return schema;
     }
 
     // ------------------------------------------------------------------------
@@ -60,5 +82,14 @@ class TypeImpl<T> extends AbstractTypedNamed<T> implements Type<T>, UNotYetImple
     @Override
     public final void accept(Context<?> ctx) {
         ctx.visit(getQualifiedName());
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Schema $schema() {
+        return getSchema();
     }
 }

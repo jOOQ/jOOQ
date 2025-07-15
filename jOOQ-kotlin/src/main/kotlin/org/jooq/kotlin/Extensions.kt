@@ -717,6 +717,32 @@ fun MutableList<CheckConstraint>.checkConstraint(block: CheckConstraint.() -> Un
     add(e)
 }
 
+fun InformationSchema.userDefinedTypes(block: MutableList<UserDefinedType>.() -> Unit) {
+    block(userDefinedTypes)
+}
+
+@JvmName("mutableListUserDefinedType")
+fun MutableList<UserDefinedType>.userDefinedType(block: UserDefinedType.() -> Unit) {
+    val e = UserDefinedType()
+    block(e)
+    add(e)
+}
+
+fun InformationSchema.attributes(block: MutableList<Attributes>.() -> Unit) {
+    block(attributes)
+}
+
+@JvmName("mutableListAttributes")
+fun MutableList<Attributes>.attribute(block: Attributes.() -> Unit) {
+    val e = Attributes()
+    block(e)
+    add(e)
+}
+
+fun Attributes.attribute(block: MutableList<Attributes>.() -> Unit) {
+    block(attribute)
+}
+
 fun InformationSchema.domains(block: MutableList<org.jooq.util.xml.jaxb.Domain>.() -> Unit) {
     block(domains)
 }

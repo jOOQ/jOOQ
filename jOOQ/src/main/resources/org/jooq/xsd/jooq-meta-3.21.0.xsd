@@ -21,6 +21,8 @@
                 <element name="key_column_usages" type="tns:KeyColumnUsages" minOccurs="0" maxOccurs="1" />
                 <element name="referential_constraints" type="tns:ReferentialConstraints" minOccurs="0" maxOccurs="1" />
                 <element name="check_constraints" type="tns:CheckConstraints" minOccurs="0" maxOccurs="1" />
+                <element name="user_defined_types" type="tns:UserDefinedTypes" minOccurs="0" maxOccurs="1" />
+                <element name="attributes" type="tns:Attributes" minOccurs="0" maxOccurs="1" />
                 <element name="domains" type="tns:Domains" minOccurs="0" maxOccurs="1" />
                 <element name="domain_constraints" type="tns:DomainConstraints" minOccurs="0" maxOccurs="1" />
                 <element name="indexes" type="tns:Indexes" minOccurs="0" maxOccurs="1" />
@@ -111,6 +113,48 @@
             <element name="domain_catalog" type="string" minOccurs="0" maxOccurs="1" />
             <element name="domain_schema" type="string" minOccurs="0" maxOccurs="1" />
             <element name="domain_name" type="string" minOccurs="1" maxOccurs="1" />
+        </all>
+    </complexType>
+    
+    <complexType name="UserDefinedTypes">
+        <sequence>
+            <element name="userDefinedType" type="tns:UserDefinedType" minOccurs="0" maxOccurs="unbounded"/>
+        </sequence>
+    </complexType>
+    
+    <complexType name="UserDefinedType">
+        <all>
+            <element name="user_defined_type_catalog" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="user_defined_type_schema" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="user_defined_type_name" type="string" minOccurs="1" maxOccurs="1" />
+            <element name="user_defined_type_category" type="tns:UserDefinedTypeCategory" minOccurs="0" maxOccurs="1" />
+            <element name="is_instantiable" type="boolean" minOccurs="0" maxOccurs="1" />
+            <element name="is_final" type="boolean" minOccurs="0" maxOccurs="1" />
+        </all>
+    </complexType>
+
+    <complexType name="Attributes">
+        <sequence>
+            <element name="attribute" type="tns:Attributes" minOccurs="0" maxOccurs="unbounded"/>
+        </sequence>
+    </complexType>
+    
+    <complexType name="Attribute">
+        <all>
+            <element name="udt_catalog" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="udt_schema" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="udt_name" type="string" minOccurs="1" maxOccurs="1" />
+            <element name="attribute_name" type="string" minOccurs="1" maxOccurs="1" />
+            <element name="ordinal_position" type="int" minOccurs="1" maxOccurs="1" />
+            <element name="attribute_default" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="data_type" type="string" minOccurs="1" maxOccurs="1" />
+            <element name="character_maximum_length" type="int" minOccurs="0" maxOccurs="1" />
+            <element name="numeric_precision" type="int" minOccurs="0" maxOccurs="1" />
+            <element name="numeric_scale" type="int" minOccurs="0" maxOccurs="1" />
+            <element name="attribute_udt_catalog" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="attribute_udt_schema" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="attribute_udt_name" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="comment" type="string" minOccurs="0" maxOccurs="1" />
         </all>
     </complexType>
     
@@ -462,6 +506,13 @@
             <enumeration value="INSTEAD_OF">
                 <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether the trigger should fire INSTEAD OF each {@link TriggerActionOrientation#ROW} or {@link TriggerActionOrientation#STATEMENT}.]]></jxb:javadoc></jxb:property></appinfo></annotation>
             </enumeration>
+        </restriction>
+    </simpleType>
+    
+    <simpleType name="UserDefinedTypeCategory">
+        <restriction base="string">
+            <enumeration value="STRUCTURED"/>
+            <enumeration value="DISTINCT"/>
         </restriction>
     </simpleType>
     

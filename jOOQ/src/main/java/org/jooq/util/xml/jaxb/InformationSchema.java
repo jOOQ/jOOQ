@@ -35,6 +35,8 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *         &lt;element name="key_column_usages" type="{http://www.jooq.org/xsd/jooq-meta-3.21.0.xsd}KeyColumnUsages" minOccurs="0"/&gt;
  *         &lt;element name="referential_constraints" type="{http://www.jooq.org/xsd/jooq-meta-3.21.0.xsd}ReferentialConstraints" minOccurs="0"/&gt;
  *         &lt;element name="check_constraints" type="{http://www.jooq.org/xsd/jooq-meta-3.21.0.xsd}CheckConstraints" minOccurs="0"/&gt;
+ *         &lt;element name="user_defined_types" type="{http://www.jooq.org/xsd/jooq-meta-3.21.0.xsd}UserDefinedTypes" minOccurs="0"/&gt;
+ *         &lt;element name="attributes" type="{http://www.jooq.org/xsd/jooq-meta-3.21.0.xsd}Attributes" minOccurs="0"/&gt;
  *         &lt;element name="domains" type="{http://www.jooq.org/xsd/jooq-meta-3.21.0.xsd}Domains" minOccurs="0"/&gt;
  *         &lt;element name="domain_constraints" type="{http://www.jooq.org/xsd/jooq-meta-3.21.0.xsd}DomainConstraints" minOccurs="0"/&gt;
  *         &lt;element name="indexes" type="{http://www.jooq.org/xsd/jooq-meta-3.21.0.xsd}Indexes" minOccurs="0"/&gt;
@@ -94,6 +96,12 @@ public class InformationSchema implements Serializable, XMLAppendable
     @XmlElementWrapper(name = "check_constraints")
     @XmlElement(name = "check_constraint")
     protected List<CheckConstraint> checkConstraints;
+    @XmlElementWrapper(name = "user_defined_types")
+    @XmlElement(name = "userDefinedType")
+    protected List<UserDefinedType> userDefinedTypes;
+    @XmlElementWrapper(name = "attributes")
+    @XmlElement(name = "attribute")
+    protected List<Attributes> attributes;
     @XmlElementWrapper(name = "domains")
     @XmlElement(name = "domain")
     protected List<Domain> domains;
@@ -230,6 +238,28 @@ public class InformationSchema implements Serializable, XMLAppendable
 
     public void setCheckConstraints(List<CheckConstraint> checkConstraints) {
         this.checkConstraints = checkConstraints;
+    }
+
+    public List<UserDefinedType> getUserDefinedTypes() {
+        if (userDefinedTypes == null) {
+            userDefinedTypes = new ArrayList<UserDefinedType>();
+        }
+        return userDefinedTypes;
+    }
+
+    public void setUserDefinedTypes(List<UserDefinedType> userDefinedTypes) {
+        this.userDefinedTypes = userDefinedTypes;
+    }
+
+    public List<Attributes> getAttributes() {
+        if (attributes == null) {
+            attributes = new ArrayList<Attributes>();
+        }
+        return attributes;
+    }
+
+    public void setAttributes(List<Attributes> attributes) {
+        this.attributes = attributes;
     }
 
     public List<Domain> getDomains() {
@@ -541,6 +571,48 @@ public class InformationSchema implements Serializable, XMLAppendable
         return this;
     }
 
+    public InformationSchema withUserDefinedTypes(UserDefinedType... values) {
+        if (values!= null) {
+            for (UserDefinedType value: values) {
+                getUserDefinedTypes().add(value);
+            }
+        }
+        return this;
+    }
+
+    public InformationSchema withUserDefinedTypes(Collection<UserDefinedType> values) {
+        if (values!= null) {
+            getUserDefinedTypes().addAll(values);
+        }
+        return this;
+    }
+
+    public InformationSchema withUserDefinedTypes(List<UserDefinedType> userDefinedTypes) {
+        setUserDefinedTypes(userDefinedTypes);
+        return this;
+    }
+
+    public InformationSchema withAttributes(Attributes... values) {
+        if (values!= null) {
+            for (Attributes value: values) {
+                getAttributes().add(value);
+            }
+        }
+        return this;
+    }
+
+    public InformationSchema withAttributes(Collection<Attributes> values) {
+        if (values!= null) {
+            getAttributes().addAll(values);
+        }
+        return this;
+    }
+
+    public InformationSchema withAttributes(List<Attributes> attributes) {
+        setAttributes(attributes);
+        return this;
+    }
+
     public InformationSchema withDomains(Domain... values) {
         if (values!= null) {
             for (Domain value: values) {
@@ -742,6 +814,8 @@ public class InformationSchema implements Serializable, XMLAppendable
         builder.append("key_column_usages", "key_column_usage", keyColumnUsages);
         builder.append("referential_constraints", "referential_constraint", referentialConstraints);
         builder.append("check_constraints", "check_constraint", checkConstraints);
+        builder.append("user_defined_types", "userDefinedType", userDefinedTypes);
+        builder.append("attributes", "attribute", attributes);
         builder.append("domains", "domain", domains);
         builder.append("domain_constraints", "domainConstraint", domainConstraints);
         builder.append("indexes", "index", indexes);
@@ -862,6 +936,24 @@ public class InformationSchema implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if ((userDefinedTypes == null)||userDefinedTypes.isEmpty()) {
+            if ((other.userDefinedTypes!= null)&&(!other.userDefinedTypes.isEmpty())) {
+                return false;
+            }
+        } else {
+            if (!userDefinedTypes.equals(other.userDefinedTypes)) {
+                return false;
+            }
+        }
+        if ((attributes == null)||attributes.isEmpty()) {
+            if ((other.attributes!= null)&&(!other.attributes.isEmpty())) {
+                return false;
+            }
+        } else {
+            if (!attributes.equals(other.attributes)) {
+                return false;
+            }
+        }
         if ((domains == null)||domains.isEmpty()) {
             if ((other.domains!= null)&&(!other.domains.isEmpty())) {
                 return false;
@@ -960,6 +1052,8 @@ public class InformationSchema implements Serializable, XMLAppendable
         result = ((prime*result)+(((keyColumnUsages == null)||keyColumnUsages.isEmpty())? 0 :keyColumnUsages.hashCode()));
         result = ((prime*result)+(((referentialConstraints == null)||referentialConstraints.isEmpty())? 0 :referentialConstraints.hashCode()));
         result = ((prime*result)+(((checkConstraints == null)||checkConstraints.isEmpty())? 0 :checkConstraints.hashCode()));
+        result = ((prime*result)+(((userDefinedTypes == null)||userDefinedTypes.isEmpty())? 0 :userDefinedTypes.hashCode()));
+        result = ((prime*result)+(((attributes == null)||attributes.isEmpty())? 0 :attributes.hashCode()));
         result = ((prime*result)+(((domains == null)||domains.isEmpty())? 0 :domains.hashCode()));
         result = ((prime*result)+(((domainConstraints == null)||domainConstraints.isEmpty())? 0 :domainConstraints.hashCode()));
         result = ((prime*result)+(((indexes == null)||indexes.isEmpty())? 0 :indexes.hashCode()));

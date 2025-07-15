@@ -1383,6 +1383,10 @@ public class MetaExtensions {
             return isHidden();
         }
 
+        public Boolean getRedacted() {
+            return isRedacted();
+        }
+
         public Boolean getAuditInsertTimestamp() {
             return isAuditInsertTimestamp();
         }
@@ -1467,6 +1471,10 @@ public class MetaExtensions {
             return isHidden();
         }
 
+        public Boolean getRedacted() {
+            return isRedacted();
+        }
+
         public Boolean getAuditInsertTimestamp() {
             return isAuditInsertTimestamp();
         }
@@ -1541,6 +1549,10 @@ public class MetaExtensions {
 
         public Boolean getUdtPaths() {
             return isUdtPaths();
+        }
+
+        public Boolean getUdtConstructors() {
+            return isUdtConstructors();
         }
 
         public Boolean getImplicitJoinPathsToOne() {
@@ -1981,6 +1993,10 @@ public class MetaExtensions {
 
         public Boolean getHiddenColumnsInInterfaces() {
             return isHiddenColumnsInInterfaces();
+        }
+
+        public Boolean getRedactedColumnsInPojos() {
+            return isRedactedColumnsInPojos();
         }
     }
 

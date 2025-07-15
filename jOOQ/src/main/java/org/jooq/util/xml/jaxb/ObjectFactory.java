@@ -38,6 +38,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Attributes }
+     * 
+     */
+    public Attributes createAttributes() {
+        return new Attributes();
+    }
+
+    /**
      * Create an instance of {@link Catalog }
      * 
      */
@@ -67,6 +75,22 @@ public class ObjectFactory {
      */
     public DomainConstraint createDomainConstraint() {
         return new DomainConstraint();
+    }
+
+    /**
+     * Create an instance of {@link UserDefinedType }
+     * 
+     */
+    public UserDefinedType createUserDefinedType() {
+        return new UserDefinedType();
+    }
+
+    /**
+     * Create an instance of {@link Attribute }
+     * 
+     */
+    public Attribute createAttribute() {
+        return new Attribute();
     }
 
     /**

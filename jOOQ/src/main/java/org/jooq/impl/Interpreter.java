@@ -114,12 +114,12 @@ import org.jooq.TableOptions.TableType;
 // ...
 // ...
 import org.jooq.Type;
+import org.jooq.UDT;
 import org.jooq.UniqueKey;
 import org.jooq.Update;
 import org.jooq.conf.InterpreterNameLookupCaseSensitivity;
 import org.jooq.conf.InterpreterQuotedNames;
 import org.jooq.conf.InterpreterSearchSchema;
-import org.jooq.conf.RenderQuotedNames;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataDefinitionException;
 import org.jooq.impl.DefaultParseContext.IgnoreQuery;
@@ -153,6 +153,7 @@ final class Interpreter {
     private final Map<Name, UniqueKeyImpl<Record>>               interpretedUniqueKeys     = new HashMap<>();
     private final Map<Name, ReferenceImpl<Record, ?>>            interpretedForeignKeys    = new HashMap<>();
     private final Map<Name, Index>                               interpretedIndexes        = new HashMap<>();
+    private final Map<Name, MutableUDT.InterpretedUDT>         interpretedTypes          = new HashMap<>();
     private final Map<Name, MutableDomain.InterpretedDomain>     interpretedDomains        = new HashMap<>();
     private final Map<Name, MutableSequence.InterpretedSequence> interpretedSequences      = new HashMap<>();
 
@@ -251,6 +252,10 @@ final class Interpreter {
             accept0(q);
 
         else if (query instanceof CreateTypeImpl q)
+            accept0(q);
+        else if (query instanceof AlterTypeImpl q)
+            accept0(q);
+        else if (query instanceof DropTypeImpl q)
             accept0(q);
 
         else if (query instanceof CreateDomainImpl<?> q)
@@ -897,6 +902,23 @@ final class Interpreter {
             existing.fields.add(index, field);
     }
 
+    private final void addField(MutableUDT existing, int index, UnqualifiedName name, DataType<?> dataType) {
+        MutableUDTField field = new MutableUDTField(name, existing, dataType);
+
+        for (MutableUDTField mf : existing.fields)
+            if (mf.nameEquals(field.name())) {
+                if (throwIfMetaLookupFails())
+                    throw attributeAlreadyExists(field.qualifiedName());
+                else
+                    return;
+            }
+
+        if (index == Integer.MAX_VALUE)
+            existing.fields.add(field);
+        else
+            existing.fields.add(index, field);
+    }
+
     private final void addConstraint(Query query, Constraint constraint, MutableTable existing) {
         if (!constraint.getUnqualifiedName().empty() && existing.constraint(constraint) != null)
             if (throwIfMetaLookupFails())
@@ -1341,7 +1363,66 @@ final class Interpreter {
 
     private final void accept0(CreateTypeImpl query) {
         Type<?> type = query.$type();
-        getSchema(type.getSchema(), true);
+        MutableSchema schema = getSchema(type.getSchema(), true);
+
+        MutableUDT existing = schema.udt(type);
+        if (existing != null) {
+            if (!query.$ifNotExists() && throwIfMetaLookupFails())
+                throw alreadyExists(type);
+
+            return;
+        }
+
+        MutableUDT mt = new MutableUDT((UnqualifiedName) type.getUnqualifiedName(), schema);
+
+        for (Field<?> attribute : query.$attributes())
+            addField(mt,
+                Integer.MAX_VALUE,
+                (UnqualifiedName) attribute.getUnqualifiedName(),
+                attribute.getDataType()
+            );
+    }
+
+    private final void accept0(AlterTypeImpl query) {
+        Type<?> type = query.$type();
+        MutableSchema schema = getSchema(type.getSchema());
+        MutableUDT existing = schema.udt(type);
+        if (existing == null) {
+            if (!query.$ifExists() && throwIfMetaLookupFails())
+                throw notExists(type);
+
+            return;
+        }
+
+        if (query.$renameTo() != null && checkNotExists(schema, query.$renameTo())) {
+            existing.name((UnqualifiedName) query.$renameTo().getUnqualifiedName());
+        }
+        else
+            throw unsupportedQuery(query);
+    }
+
+    private final void accept0(DropTypeImpl query) {
+        List<? extends Type<?>> types = query.$types();
+
+        for (Type<?> type : query.$types()) {
+            MutableSchema schema = getSchema(type.getSchema());
+            MutableUDT existing = schema.udt(type);
+
+            if (existing == null) {
+                if (!query.$ifExists() && throwIfMetaLookupFails())
+                    throw notExists(type);
+            }
+        }
+
+        for (Type<?> type : query.$types()) {
+            MutableSchema schema = getSchema(type.getSchema());
+            MutableUDT existing = schema.udt(type);
+
+            if (existing != null)
+
+                // TODO: [#18778] Implement CASCADE
+                drop(schema.udts, existing);
+        }
     }
 
     private final void accept0(CreateDomainImpl<?> query) {
@@ -1556,6 +1637,10 @@ final class Interpreter {
         return exception("Column already exists: " + name);
     }
 
+    private final DataDefinitionException attributeAlreadyExists(Name name) {
+        return exception("Attribute already exists: " + name);
+    }
+
     private final DataDefinitionException notExists(Named named) {
         return notExists(typeName(named), named);
     }
@@ -1583,6 +1668,10 @@ final class Interpreter {
             return "Sequence";
         else if (named instanceof Domain)
             return "Domain";
+        else if (named instanceof Type)
+            return "Type";
+        else if (named instanceof UDT)
+            return "UDT";
 
 
 
@@ -1814,6 +1903,18 @@ final class Interpreter {
         if (mt != null)
             if (throwIfMetaLookupFails())
                 throw alreadyExists(table, mt);
+            else
+                return false;
+
+        return true;
+    }
+
+    private final boolean checkNotExists(MutableSchema schema, Type<?> type) {
+        MutableUDT mu = schema.udt(type);
+
+        if (mu != null)
+            if (throwIfMetaLookupFails())
+                throw alreadyExists(type);
             else
                 return false;
 
@@ -2088,6 +2189,7 @@ final class Interpreter {
     private final class MutableSchema extends MutableNamed  {
         MutableCatalog        catalog;
         List<MutableTable>    tables    = new MutableNamedList<>();
+        List<MutableUDT>      udts      = new MutableNamedList<>();
         List<MutableDomain>   domains   = new MutableNamedList<>();
         List<MutableSequence> sequences = new MutableNamedList<>();
 
@@ -2158,6 +2260,10 @@ final class Interpreter {
             return mt;
         }
 
+        final MutableUDT udt(Named t) {
+            return find(udts, t);
+        }
+
         final MutableDomain domain(Named d) {
             return find(domains, d);
         }
@@ -2183,6 +2289,11 @@ final class Interpreter {
             @Override
             public final List<Table<?>> getTables() {
                 return map(tables, t -> t.interpretedTable());
+            }
+
+            @Override
+            public final List<UDT<?>> getUDTs() {
+                return map(udts, u -> u.interpretedUDT());
             }
 
             @Override
@@ -2394,6 +2505,43 @@ final class Interpreter {
 
 
 
+        }
+    }
+
+    private final class MutableUDT extends MutableNamed {
+        MutableSchema         schema;
+        List<MutableUDTField> fields = new MutableNamedList<>();
+
+        MutableUDT(UnqualifiedName name, MutableSchema schema) {
+            super(name);
+
+            this.schema = schema;
+            schema.udts.add(this);
+        }
+
+        @Override
+        final void onDrop() {
+            schema.udts.remove(this);
+            fields.clear();
+            // TODO: Cascade
+        }
+
+        @Override
+        final MutableNamed parent() {
+            return schema;
+        }
+
+        final InterpretedUDT interpretedUDT() {
+            return interpretedTypes.computeIfAbsent(qualifiedName(), n -> new InterpretedUDT(schema.interpretedSchema()));
+        }
+
+        private final class InterpretedUDT extends UDTImpl {
+            InterpretedUDT(Schema schema) {
+                super(MutableUDT.this.name(), schema, null, comment(), false);
+
+                for (MutableUDTField field : MutableUDT.this.fields)
+                    createField(field.name(), field.type, this, field.comment() != null ? field.comment().getComment() : null);
+            }
         }
     }
 
@@ -2843,6 +2991,27 @@ final class Interpreter {
         @Override
         final MutableNamed parent() {
             return table;
+        }
+    }
+
+    private final class MutableUDTField extends MutableNamed {
+        MutableUDT  udt;
+        DataType<?> type;
+
+        MutableUDTField(UnqualifiedName name, MutableUDT udt, DataType<?> type) {
+            super(name);
+
+            this.udt = udt;
+            this.type = type;
+        }
+
+        @Override
+        final void onDrop() {
+        }
+
+        @Override
+        final MutableNamed parent() {
+            return udt;
         }
     }
 

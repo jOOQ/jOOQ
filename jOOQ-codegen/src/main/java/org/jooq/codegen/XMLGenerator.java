@@ -53,6 +53,7 @@ import java.util.List;
 import org.jooq.SortOrder;
 // ...
 // ...
+import org.jooq.meta.AttributeDefinition;
 import org.jooq.meta.CatalogDefinition;
 import org.jooq.meta.CheckConstraintDefinition;
 import org.jooq.meta.ColumnDefinition;
@@ -69,11 +70,13 @@ import org.jooq.meta.SequenceDefinition;
 // ...
 import org.jooq.meta.TableDefinition;
 // ...
+import org.jooq.meta.UDTDefinition;
 import org.jooq.meta.UniqueKeyDefinition;
 import org.jooq.tools.Convert;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 import org.jooq.util.jaxb.tools.MiniJAXB;
+import org.jooq.util.xml.jaxb.Attribute;
 import org.jooq.util.xml.jaxb.Catalog;
 import org.jooq.util.xml.jaxb.CheckConstraint;
 import org.jooq.util.xml.jaxb.Column;
@@ -96,6 +99,8 @@ import org.jooq.util.xml.jaxb.Trigger;
 import org.jooq.util.xml.jaxb.TriggerActionOrientation;
 import org.jooq.util.xml.jaxb.TriggerActionTiming;
 import org.jooq.util.xml.jaxb.TriggerEventManipulation;
+import org.jooq.util.xml.jaxb.UserDefinedType;
+import org.jooq.util.xml.jaxb.UserDefinedTypeCategory;
 import org.jooq.util.xml.jaxb.View;
 
 /**
@@ -152,6 +157,45 @@ public class XMLGenerator extends AbstractGenerator {
                     schema.setComment(s.getComment());
 
                 is.getSchemata().add(schema);
+
+                for (UDTDefinition u : db.getUDTs(s)) {
+                    String udtName = u.getOutputName();
+
+                    UserDefinedType udt = new UserDefinedType();
+                    udt.setUserDefinedTypeCatalog(catalogName);
+                    udt.setUserDefinedTypeSchema(schemaName);
+                    udt.setUserDefinedTypeName(udtName);
+                    udt.setUserDefinedTypeCategory(UserDefinedTypeCategory.STRUCTURED);
+                    udt.setIsInstantiable(u.isInstantiable());
+
+                    if (generateCommentsOnUDTs())
+                        udt.setComment(u.getComment());
+
+                    is.getUserDefinedTypes().add(udt);
+
+                    for (AttributeDefinition a : u.getAttributes()) {
+                        String attributeName = a.getOutputName();
+                        DataTypeDefinition type = a.getType();
+
+                        Attribute attribute = new Attribute();
+                        attribute.setUdtCatalog(catalogName);
+                        attribute.setUdtSchema(schemaName);
+                        attribute.setUdtName(udtName);
+                        attribute.setAttributeName(attributeName);
+
+                        if (generateCommentsOnAttributes())
+                            attribute.setComment(a.getComment());
+
+                        attribute.setCharacterMaximumLength(type.getLength());
+                        attribute.setAttributeDefault(type.getDefaultValue());
+                        attribute.setDataType(type.getType());
+                        attribute.setNumericPrecision(type.getPrecision());
+                        attribute.setNumericScale(type.getScale());
+                        attribute.setOrdinalPosition(a.getPosition());
+
+                        is.getAttributes().add(attribute);
+                    }
+                }
 
                 for (TableDefinition t : s.getTables()) {
                     String tableName = t.getOutputName();

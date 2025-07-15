@@ -69,8 +69,10 @@ import org.jooq.SortField;
 import org.jooq.SortOrder;
 // ...
 import org.jooq.Table;
+import org.jooq.UDT;
 import org.jooq.UniqueKey;
 import org.jooq.util.xml.XmlUtils;
+import org.jooq.util.xml.jaxb.Attribute;
 import org.jooq.util.xml.jaxb.CheckConstraint;
 import org.jooq.util.xml.jaxb.Column;
 import org.jooq.util.xml.jaxb.IndexColumnUsage;
@@ -80,6 +82,7 @@ import org.jooq.util.xml.jaxb.ReferentialConstraint;
 import org.jooq.util.xml.jaxb.TableConstraint;
 import org.jooq.util.xml.jaxb.TableConstraintType;
 import org.jooq.util.xml.jaxb.TableType;
+import org.jooq.util.xml.jaxb.UserDefinedTypeCategory;
 
 /**
  * @author Lukas Eder
@@ -174,6 +177,9 @@ final class InformationSchemaExport {
                 for (Domain<?> d : s.getDomains())
                     exportDomain0(configuration, result, d);
 
+                for (UDT<?> u : s.getUDTs())
+                    exportUDT0(configuration, result, u);
+
                 for (Table<?> t : s.getTables())
                     exportTable0(configuration, result, t, includedTables);
 
@@ -188,6 +194,55 @@ final class InformationSchemaExport {
         }
 
         return result;
+    }
+
+    private static final void exportUDT0(Configuration configuration, InformationSchema result, UDT<?> u) {
+        org.jooq.util.xml.jaxb.UserDefinedType is = new org.jooq.util.xml.jaxb.UserDefinedType();
+        String catalogName = catalogName(u);
+        String schemaName = schemaName(u);
+
+        if (!isBlank(catalogName))
+            is.setUserDefinedTypeCatalog(catalogName);
+
+        if (!isBlank(schemaName))
+            is.setUserDefinedTypeSchema(schemaName);
+
+        is.setUserDefinedTypeCategory(UserDefinedTypeCategory.STRUCTURED);
+        is.setUserDefinedTypeName(u.getName());
+        is.setComment(u.getComment());
+        result.getUserDefinedTypes().add(is);
+
+        Field<?>[] fields = u.fields();
+        for (int i = 0; i < fields.length; i++) {
+            Field<?> f = fields[i];
+            DataType<?> type = f.getDataType();
+            Attribute ia = new Attribute();
+
+            if (!isBlank(catalogName))
+                ia.setUdtCatalog(catalogName);
+
+            if (!isBlank(schemaName))
+                ia.setUdtSchema(schemaName);
+
+            ia.setUdtName(u.getName());
+            ia.setAttributeName(f.getName());
+            ia.setComment(f.getComment());
+            ia.setDataType(type.getTypeName(configuration));
+
+            if (type.lengthDefined())
+                ia.setCharacterMaximumLength(type.length());
+
+            if (type.precisionDefined())
+                ia.setNumericPrecision(type.precision());
+
+            if (type.scaleDefined())
+                ia.setNumericScale(type.scale());
+
+            ia.setAttributeDefault(DSL.using(configuration).render(type.defaultValue()));
+            ia.setOrdinalPosition(i + 1);
+
+            result.getAttributes().add(ia);
+        }
     }
 
     private static final void exportDomain0(Configuration configuration, InformationSchema result, Domain<?> d) {

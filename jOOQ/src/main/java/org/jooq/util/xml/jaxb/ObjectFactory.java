@@ -38,14 +38,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Attributes }
-     * 
-     */
-    public Attributes createAttributes() {
-        return new Attributes();
-    }
-
-    /**
      * Create an instance of {@link Catalog }
      * 
      */

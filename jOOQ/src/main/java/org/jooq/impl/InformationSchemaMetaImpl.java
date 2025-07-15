@@ -90,12 +90,13 @@ import org.jooq.TableOptions.TableType;
 // ...
 // ...
 // ...
+import org.jooq.UDT;
 import org.jooq.UniqueKey;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.QOM.ForeignKeyRule;
 import org.jooq.impl.QOM.GenerationOption;
 import org.jooq.tools.StringUtils;
-import org.jooq.util.xml.XmlUtils;
+import org.jooq.util.xml.jaxb.Attribute;
 import org.jooq.util.xml.jaxb.CheckConstraint;
 import org.jooq.util.xml.jaxb.Column;
 import org.jooq.util.xml.jaxb.IndexColumnUsage;
@@ -118,6 +119,9 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
     private final List<InformationSchemaTable>                  tables;
     private final Map<Name, InformationSchemaTable>             tablesByName;
     private final Map<Schema, List<InformationSchemaTable>>     tablesPerSchema;
+    private final List<InformationSchemaUDT>                    udts;
+    private final Map<Name, InformationSchemaUDT>               udtsByName;
+    private final Map<Schema, List<InformationSchemaUDT>>       udtsPerSchema;
     private final List<InformationSchemaDomain<?>>              domains;
     private final Map<Name, InformationSchemaDomain<?>>         domainsByName;
     private final Map<Schema, List<InformationSchemaDomain<?>>> domainsPerSchema;
@@ -149,6 +153,9 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
         this.tables = new ArrayList<>();
         this.tablesByName = new HashMap<>();
         this.tablesPerSchema = new HashMap<>();
+        this.udts = new ArrayList<>();
+        this.udtsByName = new HashMap<>();
+        this.udtsPerSchema = new HashMap<>();
         this.domains = new ArrayList<>();
         this.domainsByName = new HashMap<>();
         this.domainsPerSchema = new HashMap<>();
@@ -217,6 +224,70 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
             InformationSchemaSchema is = new InformationSchemaSchema(xs.getSchemaName(), catalog, xs.getComment());
             schemas.add(is);
             schemasByName.put(name(xs.getCatalogName(), xs.getSchemaName()), is);
+        }
+
+        // UDTs
+        // -------------------------------------------------------------------------------------------------------------
+        udtLoop:
+        for (org.jooq.util.xml.jaxb.UserDefinedType u : meta.getUserDefinedTypes()) {
+            Name schemaName = name(u.getUserDefinedTypeCatalog(), u.getUserDefinedTypeSchema());
+            Schema schema = schemasByName.get(schemaName);
+
+            if (schema == null) {
+                errors.add("Schema " + schemaName + " not defined for UDT " + u.getUserDefinedTypeName());
+                continue udtLoop;
+            }
+
+            Name udtName = name(u.getUserDefinedTypeCatalog(), u.getUserDefinedTypeSchema(), u.getUserDefinedTypeName());
+
+            InformationSchemaUDT udt = new InformationSchemaUDT(
+                name(u.getUserDefinedTypeName()),
+                schema,
+                comment(u.getComment())
+            );
+            udts.add(udt);
+            udtsByName.put(udtName, udt);
+        }
+
+        // Attributes
+        // -------------------------------------------------------------------------------------------------------------
+        List<Attribute> attributes = new ArrayList<>(meta.getAttributes());
+        attributes.sort((o1, o2) -> {
+            Integer p1 = o1.getOrdinalPosition();
+            Integer p2 = o2.getOrdinalPosition();
+
+            if (Objects.equals(p1, p2))
+                return 0;
+            if (p1 == null)
+                return -1;
+            if (p2 == null)
+                return 1;
+
+            return p1.compareTo(p2);
+        });
+
+        attributeLoop:
+        for (Attribute xa : attributes) {
+            String typeName = xa.getDataType();
+            int length = xa.getCharacterMaximumLength() == null ? 0 : xa.getCharacterMaximumLength();
+            int precision = xa.getNumericPrecision() == null ? 0 : xa.getNumericPrecision();
+            int scale = xa.getNumericScale() == null ? 0 : xa.getNumericScale();
+
+            // TODO: Exception handling should be moved inside SQLDataType
+            Name udtName = name(xa.getUdtCatalog(), xa.getUdtSchema(), xa.getUdtName());
+            InformationSchemaUDT udt = udtsByName.get(udtName);
+
+            if (udt == null) {
+                errors.add("UDT " + udtName + " not defined for column " + xa.getAttributeName());
+                continue attributeLoop;
+            }
+
+            UDTImpl.createField(
+                name(xa.getAttributeName()),
+                type(typeName, length, precision, scale, null, null, null, null, null),
+                udt,
+                xa.getComment()
+            );
         }
 
         // Domains
@@ -697,6 +768,9 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
         for (Schema s : schemas)
             initLookup(schemasPerCatalog, s.getCatalog(), s);
 
+        for (InformationSchemaUDT u : udts)
+            initLookup(udtsPerSchema, u.getSchema(), u);
+
         for (InformationSchemaDomain<?> d : domains)
             initLookup(domainsPerSchema, d.getSchema(), d);
 
@@ -728,9 +802,9 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
         int length,
         int precision,
         int scale,
-        boolean nullable,
-        boolean hidden,
-        boolean readonly,
+        Boolean nullable,
+        Boolean hidden,
+        Boolean readonly,
         Field<?> generatedAlwaysAs,
         GenerationOption generationOption
     ) {
@@ -738,9 +812,13 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
 
         try {
             type = DefaultDataType.getDataType(configuration.family(), typeName);
-            type = type.nullable(nullable);
-            type = type.hidden(hidden);
-            type = type.readonly(readonly);
+
+            if (nullable != null)
+                type = type.nullable(nullable);
+            if (hidden != null)
+                type = type.hidden(hidden);
+            if (readonly != null)
+                type = type.readonly(readonly);
 
             if (length != 0)
                 type = type.length(length);
@@ -773,6 +851,12 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
     @Override
     final List<Table<?>> getTables0() {
         return (List) tables;
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Override
+    final List<UDT<?>> getUDTs0() {
+        return (List) udts;
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -825,6 +909,11 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
 
         InformationSchemaSchema(String name, Catalog catalog, String comment) {
             super(name, catalog, comment);
+        }
+
+        @Override
+        public final List<UDT<?>> getUDTs() {
+            return InformationSchemaMetaImpl.unmodifiableList(udtsPerSchema.get(this));
         }
 
         @Override
@@ -892,6 +981,13 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
         @Override
         public List<Check<Record>> getChecks() {
             return InformationSchemaMetaImpl.unmodifiableList(checks);
+        }
+    }
+
+    private static final class InformationSchemaUDT extends UDTImpl<UDTRecordN> {
+
+        InformationSchemaUDT(Name name, Schema schema, Comment comment) {
+            super(name, schema, null, comment, false);
         }
     }
 

@@ -130,12 +130,13 @@
             <element name="user_defined_type_category" type="tns:UserDefinedTypeCategory" minOccurs="0" maxOccurs="1" />
             <element name="is_instantiable" type="boolean" minOccurs="0" maxOccurs="1" />
             <element name="is_final" type="boolean" minOccurs="0" maxOccurs="1" />
+            <element name="comment" type="string" minOccurs="0" maxOccurs="1" />
         </all>
     </complexType>
 
     <complexType name="Attributes">
         <sequence>
-            <element name="attribute" type="tns:Attributes" minOccurs="0" maxOccurs="unbounded"/>
+            <element name="attribute" type="tns:Attribute" minOccurs="0" maxOccurs="unbounded"/>
         </sequence>
     </complexType>
     

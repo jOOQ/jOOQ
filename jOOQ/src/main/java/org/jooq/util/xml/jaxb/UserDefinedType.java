@@ -29,6 +29,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *         &lt;element name="user_defined_type_category" type="{http://www.jooq.org/xsd/jooq-meta-3.21.0.xsd}UserDefinedTypeCategory" minOccurs="0"/&gt;
  *         &lt;element name="is_instantiable" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
  *         &lt;element name="is_final" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
+ *         &lt;element name="comment" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *       &lt;/all&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -64,6 +65,8 @@ public class UserDefinedType implements Serializable, XMLAppendable
     protected Boolean isInstantiable;
     @XmlElement(name = "is_final")
     protected Boolean isFinal;
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String comment;
 
     public String getUserDefinedTypeCatalog() {
         return userDefinedTypeCatalog;
@@ -145,6 +148,14 @@ public class UserDefinedType implements Serializable, XMLAppendable
         this.isFinal = value;
     }
 
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String value) {
+        this.comment = value;
+    }
+
     public UserDefinedType withUserDefinedTypeCatalog(String value) {
         setUserDefinedTypeCatalog(value);
         return this;
@@ -175,6 +186,11 @@ public class UserDefinedType implements Serializable, XMLAppendable
         return this;
     }
 
+    public UserDefinedType withComment(String value) {
+        setComment(value);
+        return this;
+    }
+
     @Override
     public final void appendTo(XMLBuilder builder) {
         builder.append("user_defined_type_catalog", userDefinedTypeCatalog);
@@ -183,6 +199,7 @@ public class UserDefinedType implements Serializable, XMLAppendable
         builder.append("user_defined_type_category", userDefinedTypeCategory);
         builder.append("is_instantiable", isInstantiable);
         builder.append("is_final", isFinal);
+        builder.append("comment", comment);
     }
 
     @Override
@@ -258,6 +275,15 @@ public class UserDefinedType implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (comment == null) {
+            if (other.comment!= null) {
+                return false;
+            }
+        } else {
+            if (!comment.equals(other.comment)) {
+                return false;
+            }
+        }
         return true;
     }
 
@@ -271,6 +297,7 @@ public class UserDefinedType implements Serializable, XMLAppendable
         result = ((prime*result)+((userDefinedTypeCategory == null)? 0 :userDefinedTypeCategory.hashCode()));
         result = ((prime*result)+((isInstantiable == null)? 0 :isInstantiable.hashCode()));
         result = ((prime*result)+((isFinal == null)? 0 :isFinal.hashCode()));
+        result = ((prime*result)+((comment == null)? 0 :comment.hashCode()));
         return result;
     }
 

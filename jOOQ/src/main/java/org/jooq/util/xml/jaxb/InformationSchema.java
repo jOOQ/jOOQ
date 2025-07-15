@@ -101,7 +101,7 @@ public class InformationSchema implements Serializable, XMLAppendable
     protected List<UserDefinedType> userDefinedTypes;
     @XmlElementWrapper(name = "attributes")
     @XmlElement(name = "attribute")
-    protected List<Attributes> attributes;
+    protected List<Attribute> attributes;
     @XmlElementWrapper(name = "domains")
     @XmlElement(name = "domain")
     protected List<Domain> domains;
@@ -251,14 +251,14 @@ public class InformationSchema implements Serializable, XMLAppendable
         this.userDefinedTypes = userDefinedTypes;
     }
 
-    public List<Attributes> getAttributes() {
+    public List<Attribute> getAttributes() {
         if (attributes == null) {
-            attributes = new ArrayList<Attributes>();
+            attributes = new ArrayList<Attribute>();
         }
         return attributes;
     }
 
-    public void setAttributes(List<Attributes> attributes) {
+    public void setAttributes(List<Attribute> attributes) {
         this.attributes = attributes;
     }
 
@@ -592,23 +592,23 @@ public class InformationSchema implements Serializable, XMLAppendable
         return this;
     }
 
-    public InformationSchema withAttributes(Attributes... values) {
+    public InformationSchema withAttributes(Attribute... values) {
         if (values!= null) {
-            for (Attributes value: values) {
+            for (Attribute value: values) {
                 getAttributes().add(value);
             }
         }
         return this;
     }
 
-    public InformationSchema withAttributes(Collection<Attributes> values) {
+    public InformationSchema withAttributes(Collection<Attribute> values) {
         if (values!= null) {
             getAttributes().addAll(values);
         }
         return this;
     }
 
-    public InformationSchema withAttributes(List<Attributes> attributes) {
+    public InformationSchema withAttributes(List<Attribute> attributes) {
         setAttributes(attributes);
         return this;
     }

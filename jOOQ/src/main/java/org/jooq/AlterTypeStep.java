@@ -85,6 +85,13 @@ public interface AlterTypeStep {
     AlterTypeFinalStep renameTo(Name renameTo);
 
     /**
+     * Add the <code>RENAME TO</code> clause to the <code>ALTER TYPE</code> statement.
+     */
+    @Support({ POSTGRES })
+    @NotNull @CheckReturnValue
+    AlterTypeFinalStep renameTo(Type<?> renameTo);
+
+    /**
      * Add the <code>SET SCHEMA</code> clause to the <code>ALTER TYPE</code> statement.
      */
     @Support({ POSTGRES })

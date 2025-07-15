@@ -72,6 +72,7 @@ final class FilteredMeta extends AbstractMeta {
 
     private final AbstractMeta                        meta;
     private final Predicate<? super Table<?>>         tableFilter;
+    private final Predicate<? super UDT<?>>        udtFilter;
     private final Predicate<? super Domain<?>>        domainFilter;
 
 
@@ -88,6 +89,7 @@ final class FilteredMeta extends AbstractMeta {
         Predicate<? super Catalog> catalogFilter,
         Predicate<? super Schema> schemaFilter,
         Predicate<? super Table<?>> tableFilter,
+        Predicate<? super UDT<?>> udtFilter,
         Predicate<? super Domain<?>> domainFilter,
 
 
@@ -103,6 +105,7 @@ final class FilteredMeta extends AbstractMeta {
 
         this.meta = meta.filtered0(catalogFilter, schemaFilter);
         this.tableFilter = tableFilter;
+        this.udtFilter = udtFilter;
         this.domainFilter = domainFilter;
 
 
@@ -158,6 +161,7 @@ final class FilteredMeta extends AbstractMeta {
             and(catalogFilter, filter),
             schemaFilter,
             tableFilter,
+            udtFilter,
             domainFilter,
 
 
@@ -178,6 +182,7 @@ final class FilteredMeta extends AbstractMeta {
             catalogFilter,
             and(schemaFilter, filter),
             tableFilter,
+            udtFilter,
             domainFilter,
 
 
@@ -198,6 +203,28 @@ final class FilteredMeta extends AbstractMeta {
             catalogFilter,
             schemaFilter,
             and(tableFilter, filter),
+            udtFilter,
+            domainFilter,
+
+
+
+
+            sequenceFilter,
+            primaryKeyFilter,
+            uniqueKeyFilter,
+            foreignKeyFilter,
+            indexFilter
+        );
+    }
+
+    @Override
+    public final FilteredMeta filterUDTs(Predicate<? super UDT<?>> filter) {
+        return new FilteredMeta(
+            meta,
+            catalogFilter,
+            schemaFilter,
+            tableFilter,
+            and(udtFilter, filter),
             domainFilter,
 
 
@@ -218,6 +245,7 @@ final class FilteredMeta extends AbstractMeta {
             catalogFilter,
             schemaFilter,
             tableFilter,
+            udtFilter,
             and(domainFilter, filter),
 
 
@@ -271,6 +299,8 @@ final class FilteredMeta extends AbstractMeta {
 
 
 
+
+
     @Override
     public final FilteredMeta filterSequences(Predicate<? super Sequence<?>> filter) {
         return new FilteredMeta(
@@ -278,6 +308,7 @@ final class FilteredMeta extends AbstractMeta {
             catalogFilter,
             schemaFilter,
             tableFilter,
+            udtFilter,
             domainFilter,
 
 
@@ -298,6 +329,7 @@ final class FilteredMeta extends AbstractMeta {
             catalogFilter,
             schemaFilter,
             tableFilter,
+            udtFilter,
             domainFilter,
 
 
@@ -318,6 +350,7 @@ final class FilteredMeta extends AbstractMeta {
             catalogFilter,
             schemaFilter,
             tableFilter,
+            udtFilter,
             domainFilter,
 
 
@@ -338,6 +371,7 @@ final class FilteredMeta extends AbstractMeta {
             catalogFilter,
             schemaFilter,
             tableFilter,
+            udtFilter,
             domainFilter,
 
 
@@ -358,6 +392,7 @@ final class FilteredMeta extends AbstractMeta {
             catalogFilter,
             schemaFilter,
             tableFilter,
+            udtFilter,
             domainFilter,
 
 
@@ -422,6 +457,7 @@ final class FilteredMeta extends AbstractMeta {
 
     private class FilteredSchema extends SchemaImpl {
         private final Schema                delegate;
+        private transient List<UDT<?>>      udts;
         private transient List<Domain<?>>   domains;
         private transient List<Table<?>>    tables;
         private transient List<Sequence<?>> sequences;
@@ -479,8 +515,16 @@ final class FilteredMeta extends AbstractMeta {
 
         @Override
         public final List<UDT<?>> getUDTs() {
-            // TODO: [#8475] Add Meta.getUDTs
-            return delegate.getUDTs();
+            if (udts == null) {
+                udts = new ArrayList<>();
+
+                for (UDT<?> u : delegate.getUDTs())
+                    if (udtFilter == null || udtFilter.test(u))
+                        // TODO: Schema is wrong here
+                        udts.add(u);
+            }
+
+            return Collections.unmodifiableList(udts);
         }
 
 

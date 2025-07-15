@@ -78,9 +78,9 @@ implements
     AlterTypeFinalStep
 {
 
-    final Name          type;
+    final Type<?>       type;
     final boolean       ifExists;
-          Name          renameTo;
+          Type<?>       renameTo;
           Schema        setSchema;
           Field<String> addValue;
           Field<String> renameValue;
@@ -88,7 +88,7 @@ implements
 
     AlterTypeImpl(
         Configuration configuration,
-        Name type,
+        Type<?> type,
         boolean ifExists
     ) {
         this(
@@ -105,9 +105,9 @@ implements
 
     AlterTypeImpl(
         Configuration configuration,
-        Name type,
+        Type<?> type,
         boolean ifExists,
-        Name renameTo,
+        Type<?> renameTo,
         Schema setSchema,
         Field<String> addValue,
         Field<String> renameValue,
@@ -130,11 +130,16 @@ implements
 
     @Override
     public final AlterTypeImpl renameTo(String renameTo) {
-        return renameTo(DSL.name(renameTo));
+        return renameTo(DSL.type(DSL.name(renameTo)));
     }
 
     @Override
     public final AlterTypeImpl renameTo(Name renameTo) {
+        return renameTo(DSL.type(renameTo));
+    }
+
+    @Override
+    public final AlterTypeImpl renameTo(Type<?> renameTo) {
         this.renameTo = renameTo;
         return this;
     }
@@ -229,7 +234,7 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Name $type() {
+    public final Type<?> $type() {
         return type;
     }
 
@@ -239,7 +244,7 @@ implements
     }
 
     @Override
-    public final Name $renameTo() {
+    public final Type<?> $renameTo() {
         return renameTo;
     }
 
@@ -264,7 +269,7 @@ implements
     }
 
     @Override
-    public final QOM.AlterType $type(Name newValue) {
+    public final QOM.AlterType $type(Type<?> newValue) {
         return $constructor().apply(newValue, $ifExists(), $renameTo(), $setSchema(), $addValue(), $renameValue(), $renameValueTo());
     }
 
@@ -274,7 +279,7 @@ implements
     }
 
     @Override
-    public final QOM.AlterType $renameTo(Name newValue) {
+    public final QOM.AlterType $renameTo(Type<?> newValue) {
         return $constructor().apply($type(), $ifExists(), newValue, $setSchema(), $addValue(), $renameValue(), $renameValueTo());
     }
 
@@ -298,7 +303,7 @@ implements
         return $constructor().apply($type(), $ifExists(), $renameTo(), $setSchema(), $addValue(), $renameValue(), newValue);
     }
 
-    public final Function7<? super Name, ? super Boolean, ? super Name, ? super Schema, ? super Field<String>, ? super Field<String>, ? super Field<String>, ? extends QOM.AlterType> $constructor() {
+    public final Function7<? super Type<?>, ? super Boolean, ? super Type<?>, ? super Schema, ? super Field<String>, ? super Field<String>, ? super Field<String>, ? extends QOM.AlterType> $constructor() {
         return (a1, a2, a3, a4, a5, a6, a7) -> new AlterTypeImpl(configuration(), a1, a2, a3, a4, a5, a6, a7);
     }
 

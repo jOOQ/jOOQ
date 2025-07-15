@@ -42,6 +42,7 @@ package org.jooq;
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.DUCKDB;
 import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 import static org.jooq.SQLDialect.H2;
@@ -223,6 +224,66 @@ public interface Meta extends Scope {
     @Nullable
     @Support
     Table<?> resolveTable(Name name) throws DataAccessException;
+
+    /**
+     * Get all {@link UDT} objects from the underlying meta data source.
+     *
+     * @throws DataAccessException If something went wrong fetching the meta
+     *             objects
+     */
+    @NotNull
+    @Support({ DUCKDB, POSTGRES, YUGABYTEDB })
+    List<UDT<?>> getUDTs() throws DataAccessException;
+
+    /**
+     * Get all {@link UDT} objects by name from the underlying meta data source.
+     *
+     * @throws DataAccessException If something went wrong fetching the meta
+     *             objects
+     */
+    @NotNull
+    @Support({ DUCKDB, POSTGRES, YUGABYTEDB })
+    List<UDT<?>> getUDTs(String name) throws DataAccessException;
+
+    /**
+     * Get all {@link UDT} objects by name from the underlying meta data source.
+     *
+     * @throws DataAccessException If something went wrong fetching the meta
+     *             objects
+     */
+    @NotNull
+    @Support({ DUCKDB, POSTGRES, YUGABYTEDB })
+    List<UDT<?>> getUDTs(Name name) throws DataAccessException;
+
+    /**
+     * Resolve a {@link UDT} by its name according to interpreter
+     * {@link Settings}.
+     * <p>
+     * Unlike {@link #getUDTs(String)}, which may list multiple UDTs by their
+     * case sensitive name, this method finds the best matching UDTs according
+     * to the argument as well as the underlying
+     * {@link Settings#getInterpreterNameLookupCaseSensitivity()} and
+     * {@link Settings#getInterpreterSearchPath()}, or returns <code>null</code>
+     * if no such UDTs was found.
+     */
+    @Nullable
+    @Support({ DUCKDB, POSTGRES, YUGABYTEDB })
+    UDT<?> resolveUDT(String name) throws DataAccessException;
+
+    /**
+     * Resolve a {@link UDT} by its name according to interpreter
+     * {@link Settings}.
+     * <p>
+     * Unlike {@link #getUDTs(Name)}, which may list multiple UDTs by their case
+     * sensitive name, this method finds the best matching UDTs according to the
+     * argument {@link Name#qualifier()} as well as the underlying
+     * {@link Settings#getInterpreterNameLookupCaseSensitivity()} and
+     * {@link Settings#getInterpreterSearchPath()}, or returns <code>null</code>
+     * if no such UDTs was found.
+     */
+    @Nullable
+    @Support({ DUCKDB, POSTGRES, YUGABYTEDB })
+    UDT<?> resolveUDT(Name name) throws DataAccessException;
 
     /**
      * Get all domain objects from the underlying meta data source.
@@ -650,6 +711,12 @@ public interface Meta extends Scope {
      */
     @NotNull
     Meta filterTables(Predicate<? super Table<?>> filter);
+
+    /**
+     * Create a wrapper {@link Meta} instance filtering out some UDTs.
+     */
+    @NotNull
+    Meta filterUDTs(Predicate<? super UDT<?>> filter);
 
     /**
      * Create a wrapper {@link Meta} instance filtering out some domains.

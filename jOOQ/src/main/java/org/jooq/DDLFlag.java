@@ -79,6 +79,11 @@ public enum DDLFlag {
     INDEX,
 
     /**
+     * Whether <code>UDT</code> statements should be generated.
+     */
+    UDT,
+
+    /**
      * Whether <code>DOMAIN</code> statements should be generated.
      */
     DOMAIN,

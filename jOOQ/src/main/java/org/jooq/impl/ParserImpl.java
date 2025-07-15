@@ -6257,8 +6257,9 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
     }
 
     private final DDLQuery parseAlterType() {
-        AlterTypeStep s1 = dsl.alterType(parseName());
-
+        AlterTypeStep s1 = parseKeywordIf("IF EXISTS")
+            ? dsl.alterTypeIfExists(parseName())
+            : dsl.alterType(parseName());
 
         if (parseKeywordIf("ADD VALUE"))
             return s1.addValue(parseStringLiteral());

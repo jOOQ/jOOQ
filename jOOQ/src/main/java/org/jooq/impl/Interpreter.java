@@ -113,6 +113,7 @@ import org.jooq.TableOptions.TableType;
 // ...
 // ...
 // ...
+import org.jooq.Type;
 import org.jooq.UniqueKey;
 import org.jooq.Update;
 import org.jooq.conf.InterpreterNameLookupCaseSensitivity;
@@ -247,6 +248,9 @@ final class Interpreter {
         else if (query instanceof AlterIndexImpl q)
             accept0(q);
         else if (query instanceof DropIndexImpl q)
+            accept0(q);
+
+        else if (query instanceof CreateTypeImpl q)
             accept0(q);
 
         else if (query instanceof CreateDomainImpl<?> q)
@@ -1333,6 +1337,11 @@ final class Interpreter {
 
         if (existing != null)
             existing.table.indexes.remove(existing);
+    }
+
+    private final void accept0(CreateTypeImpl query) {
+        Type<?> type = query.$type();
+        getSchema(type.getSchema(), true);
     }
 
     private final void accept0(CreateDomainImpl<?> query) {

@@ -48,6 +48,7 @@ import static org.jooq.DDLFlag.PRIMARY_KEY;
 import static org.jooq.DDLFlag.SCHEMA;
 import static org.jooq.DDLFlag.SEQUENCE;
 import static org.jooq.DDLFlag.TABLE;
+import static org.jooq.DDLFlag.UDT;
 import static org.jooq.DDLFlag.UNIQUE;
 // ...
 import static org.jooq.SQLDialect.SQLITE;
@@ -64,11 +65,8 @@ import static org.jooq.tools.StringUtils.isEmpty;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -88,6 +86,7 @@ import org.jooq.CreateTableOnCommitStep;
 // ...
 // ...
 // ...
+import org.jooq.CreateTypeStep;
 import org.jooq.CreateViewAsStep;
 import org.jooq.DDLExportConfiguration;
 import org.jooq.DDLExportConfiguration.InlineForeignKeyConstraints;
@@ -118,7 +117,7 @@ import org.jooq.TableOptions.TableType;
 // ...
 // ...
 // ...
-// ...
+import org.jooq.UDT;
 import org.jooq.UniqueKey;
 import org.jooq.impl.QOM.ForeignKeyRule;
 import org.jooq.tools.JooqLogger;
@@ -301,6 +300,14 @@ final class DDL {
             result = result.noCache();
 
         return result;
+    }
+
+    final Query createType(UDT<?> udt) {
+        CreateTypeStep s1 = configuration.createUDTIfNotExists()
+                    ? ctx.createTypeIfNotExists(udt.getQualifiedName())
+                    : ctx.createType(udt.getQualifiedName());
+
+        return s1.as(udt.fields());
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -656,6 +663,11 @@ final class DDL {
                 for (Table<?> table : sortIf(schema.getTables(), !configuration.respectTableOrder()))
                     for (Constraint constraint : foreignKeys(table))
                         queries.add(ctx.alterTable(table).add(constraint));
+
+        if (configuration.flags().contains(UDT))
+            for (Schema schema : schemas)
+                for (UDT<?> udt : sortIf(schema.getUDTs(), !configuration.respectUDTOrder()))
+                    queries.add(createType(udt));
 
         if (configuration.flags().contains(DOMAIN))
             for (Schema schema : schemas)

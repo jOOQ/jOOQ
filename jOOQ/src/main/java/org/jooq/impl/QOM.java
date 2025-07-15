@@ -2024,19 +2024,19 @@ public final class QOM {
         //permits
         //    AlterTypeImpl
     {
-        @NotNull Name $type();
+        @NotNull Type<?> $type();
         boolean $ifExists();
-        @Nullable Name $renameTo();
+        @Nullable Type<?> $renameTo();
         @Nullable Schema $setSchema();
         @Nullable Field<String> $addValue();
         @Nullable Field<String> $renameValue();
         @Nullable Field<String> $renameValueTo();
         @CheckReturnValue
-        @NotNull AlterType $type(Name type);
+        @NotNull AlterType $type(Type<?> type);
         @CheckReturnValue
         @NotNull AlterType $ifExists(boolean ifExists);
         @CheckReturnValue
-        @NotNull AlterType $renameTo(Name renameTo);
+        @NotNull AlterType $renameTo(Type<?> renameTo);
         @CheckReturnValue
         @NotNull AlterType $setSchema(Schema setSchema);
         @CheckReturnValue

@@ -74,6 +74,7 @@ import org.jooq.Sequence;
 import org.jooq.Table;
 import org.jooq.TableField;
 // ...
+import org.jooq.UDT;
 import org.jooq.UniqueKey;
 import org.jooq.conf.InterpreterNameLookupCaseSensitivity;
 import org.jooq.conf.InterpreterSearchSchema;
@@ -89,6 +90,7 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
     private Map<Name, Catalog>                cachedCatalogs;
     private Cached<Schema>                    cachedSchemas;
     private Cached<Table<?>>                  cachedTables;
+    private Cached<UDT<?>>                    cachedUDTs;
     private Cached<Domain<?>>                 cachedDomains;
     private Cached<Sequence<?>>               cachedSequences;
     private Cached<UniqueKey<?>>              cachedPrimaryKeys;
@@ -336,6 +338,50 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
 
     List<Table<?>> getTables0() {
         return flatMap(getSchemas(), s -> s.getTables());
+    }
+
+    @Override
+    public final List<UDT<?>> getUDTs(String name) {
+        return getUDTs(name(name));
+    }
+
+    @Override
+    public final List<UDT<?>> getUDTs(Name name) {
+        return getCachedUDTs().get(name);
+    }
+
+    @Override
+    public final UDT<?> resolveUDT(String name) {
+        return resolveUDT(name(name));
+    }
+
+    @Override
+    public final UDT<?> resolveUDT(Name name) {
+        return getCachedUDTs().getForLookup(name);
+    }
+
+    @Override
+    public final List<UDT<?>> getUDTs() {
+        getCachedUDTs();
+        return Collections.unmodifiableList(new ArrayList<>(getCachedUDTs().qualified.values()));
+    }
+
+    private final Cached<UDT<?>> getCachedUDTs() {
+        Cached<UDT<?>> u = cachedUDTs;
+
+        if (u == null) {
+            u = new Cached<>(configuration());
+            u.init(() -> getUDTs0().iterator());
+        }
+
+        if (caching())
+            cachedUDTs = u;
+
+        return u;
+    }
+
+    List<UDT<?>> getUDTs0() {
+        return flatMap(getSchemas(), s -> s.getUDTs());
     }
 
     @Override
@@ -698,6 +744,7 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
             null,
             null,
             null,
+            null,
 
 
 
@@ -718,6 +765,7 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
             filter,
             null,
             null,
+            null,
 
 
 
@@ -734,6 +782,28 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
     public Meta filterTables(Predicate<? super Table<?>> filter) {
         return new FilteredMeta(
             this,
+            null,
+            null,
+            filter,
+            null,
+            null,
+
+
+
+
+            null,
+            null,
+            null,
+            null,
+            null
+        );
+    }
+
+    @Override
+    public Meta filterUDTs(Predicate<? super UDT<?>> filter) {
+        return new FilteredMeta(
+            this,
+            null,
             null,
             null,
             filter,
@@ -757,6 +827,7 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
             null,
             null,
             null,
+            null,
             filter,
 
 
@@ -769,6 +840,8 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
             null
         );
     }
+
+
 
 
 
@@ -818,6 +891,7 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
             null,
             null,
             null,
+            null,
 
 
 
@@ -834,6 +908,7 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
     public Meta filterPrimaryKeys(Predicate<? super UniqueKey<?>> filter) {
         return new FilteredMeta(
             this,
+            null,
             null,
             null,
             null,
@@ -858,6 +933,7 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
             null,
             null,
             null,
+            null,
 
 
 
@@ -878,6 +954,7 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
             null,
             null,
             null,
+            null,
 
 
 
@@ -894,6 +971,7 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
     public Meta filterIndexes(Predicate<? super Index> filter) {
         return new FilteredMeta(
             this,
+            null,
             null,
             null,
             null,

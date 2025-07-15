@@ -3088,21 +3088,31 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public org.jooq.AlterTypeStep alterType(@Stringly.Name String type) {
-        return new AlterTypeImpl(configuration(), DSL.name(type), false);
+        return new AlterTypeImpl(configuration(), DSL.type(DSL.name(type)), false);
     }
 
     @Override
     public org.jooq.AlterTypeStep alterType(Name type) {
+        return new AlterTypeImpl(configuration(), DSL.type(type), false);
+    }
+
+    @Override
+    public org.jooq.AlterTypeStep alterType(Type<?> type) {
         return new AlterTypeImpl(configuration(), type, false);
     }
 
     @Override
     public org.jooq.AlterTypeStep alterTypeIfExists(@Stringly.Name String type) {
-        return new AlterTypeImpl(configuration(), DSL.name(type), true);
+        return new AlterTypeImpl(configuration(), DSL.type(DSL.name(type)), true);
     }
 
     @Override
     public org.jooq.AlterTypeStep alterTypeIfExists(Name type) {
+        return new AlterTypeImpl(configuration(), DSL.type(type), true);
+    }
+
+    @Override
+    public org.jooq.AlterTypeStep alterTypeIfExists(Type<?> type) {
         return new AlterTypeImpl(configuration(), type, true);
     }
 

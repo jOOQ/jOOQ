@@ -181,25 +181,31 @@ extends
                     UDTPathField<?, ?, ?> u = (UDTPathField<?, ?, ?>) key;
                     UDTPathTableField<?, ?, ?> f = u.getTableField();
 
-                    BiFunction<UDT<?>, Field<?>, Field<?>> init = (u0, f0) -> {
-                        return new UDTPathFieldImpl<>(
-                            f0.getUnqualifiedName(),
-                            f0.getDataType(),
-                            UDTPathFieldImpl.getPathFieldFor(u0, u).getQualifier(),
-                            u0,
-                            null
-                        );
-                    };
+                    // [#9666] [#18777] TODO: Offer throwing a MetaDataUnavailableException.
+                    if (f.getUDT() == null) {
+                        result.put(key, value);
+                    }
+                    else {
+                        BiFunction<UDT<?>, Field<?>, Field<?>> init = (u0, f0) -> {
+                            return new UDTPathFieldImpl<>(
+                                f0.getUnqualifiedName(),
+                                f0.getDataType(),
+                                UDTPathFieldImpl.getPathFieldFor(u0, u).getQualifier(),
+                                u0,
+                                null
+                            );
+                        };
 
-                    result.compute(f, (k, v) -> {
-                        FieldOrRowOrSelect v0 = v;
+                        result.compute(f, (k, v) -> {
+                            FieldOrRowOrSelect v0 = v;
 
-                        if (v0 == null)
-                            v0 = construct(f.getUDT(), init);
+                            if (v0 == null)
+                                v0 = construct(f.getUDT(), init);
 
-                        patchUDTConstructor(u, (UDTConstructor<?>) v0, (Field<?>) value, init);
-                        return v0;
-                    });
+                            patchUDTConstructor(u, (UDTConstructor<?>) v0, (Field<?>) value, init);
+                            return v0;
+                        });
+                    }
                 }
                 else
                     result.put(key, value);

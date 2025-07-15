@@ -281,25 +281,29 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
                     UDTPathField<?, ?, ?> u = (UDTPathField<?, ?, ?>) key;
                     UDTPathTableField<?, ?, ?> f = u.getTableField();
 
-                    result.values.compute(f, (k, v) -> {
-                        List<Field<?>> v0 = v;
+                    // [#9666] [#18777] TODO: Offer throwing a MetaDataUnavailableException.
+                    if (f.getUDT() == null)
+                        result.values.put(key, value);
+                    else
+                        result.values.compute(f, (k, v) -> {
+                            List<Field<?>> v0 = v;
 
-                        if (v0 == null) {
-                            v0 = new ArrayList<>();
+                            if (v0 == null) {
+                                v0 = new ArrayList<>();
+
+                                for (int i = 0; i < value.size(); i++)
+                                    v0.add(construct(f.getUDT(), init));
+                            }
 
                             for (int i = 0; i < value.size(); i++)
-                                v0.add(construct(f.getUDT(), init));
-                        }
+                                patchUDTConstructor(u,
+                                    (UDTConstructor<?>) v0.get(i),
+                                    t == null ? value.get(i) : t.field(j0),
+                                    init
+                                );
 
-                        for (int i = 0; i < value.size(); i++)
-                            patchUDTConstructor(u,
-                                (UDTConstructor<?>) v0.get(i),
-                                t == null ? value.get(i) : t.field(j0),
-                                init
-                            );
-
-                        return v0;
-                    });
+                            return v0;
+                        });
                 }
                 else
                     result.values.put(key, value);

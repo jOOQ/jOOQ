@@ -69,6 +69,7 @@ import org.jooq.UDT;
 import org.jooq.UDTPathField;
 import org.jooq.UDTPathTableField;
 import org.jooq.UDTRecord;
+import org.jooq.exception.MetaDataUnavailableException;
 import org.jooq.impl.QOM.UEmpty;
 import org.jooq.impl.QOM.UNotYetImplemented;
 import org.jooq.tools.StringUtils;
@@ -210,32 +211,41 @@ implements
 
         @Override
         public final Row fieldsRow() {
-            return getUDT().fieldsRow();
+            return getNonNullUDT().fieldsRow();
         }
 
         @Override
         public final Package getPackage() {
-            return getUDT().getPackage();
+            return getUDT() == null ? null : getUDT().getPackage();
         }
 
         @Override
         public final Class<? extends U> getRecordType() {
-            return getUDT().getRecordType();
+            return getNonNullUDT().getRecordType();
         }
 
         @Override
         public final DataType<U> getDataType() {
-            return getUDT().getDataType();
+            return getNonNullUDT().getDataType();
         }
 
         @Override
         public final U newRecord() {
-            return getUDT().newRecord();
+            return getNonNullUDT().newRecord();
         }
 
         @Override
         public final void accept(Context<?> ctx) {
             UDTPathFieldImpl.this.accept(ctx);
+        }
+
+        final UDT<U> getNonNullUDT() {
+            UDT<U> r = UDTPathFieldImpl.this.getUDT();
+
+            if (r == null)
+                throw new MetaDataUnavailableException("UDT meta data is unavailable for UDTPathField: " + this);
+
+            return r;
         }
     }
 

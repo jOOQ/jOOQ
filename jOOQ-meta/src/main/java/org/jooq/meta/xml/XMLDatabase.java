@@ -120,7 +120,6 @@ import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.jdbc.JDBCUtils;
 import org.jooq.util.jaxb.tools.MiniJAXB;
-import org.jooq.util.xml.XmlUtils;
 import org.jooq.util.xml.jaxb.CheckConstraint;
 import org.jooq.util.xml.jaxb.Index;
 import org.jooq.util.xml.jaxb.IndexColumnUsage;
@@ -136,6 +135,7 @@ import org.jooq.util.xml.jaxb.TableConstraint;
 import org.jooq.util.xml.jaxb.TableConstraintType;
 import org.jooq.util.xml.jaxb.Trigger;
 import org.jooq.util.xml.jaxb.TriggerActionOrientation;
+import org.jooq.util.xml.jaxb.UserDefinedType;
 import org.jooq.util.xml.jaxb.View;
 
 /**
@@ -701,6 +701,15 @@ public class XMLDatabase extends AbstractDatabase {
     @Override
     protected List<UDTDefinition> getUDTs0() {
         List<UDTDefinition> result = new ArrayList<>();
+
+        for (UserDefinedType udt : info().getUserDefinedTypes()) {
+            if (getInputSchemata().contains(udt.getUserDefinedTypeSchema())) {
+                SchemaDefinition schema = getSchema(udt.getUserDefinedTypeSchema());
+
+                result.add(new XMLUDTDefinition(schema, info(), udt, udt.getComment()));
+            }
+        }
+
         return result;
     }
 

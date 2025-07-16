@@ -153,7 +153,7 @@ final class Interpreter {
     private final Map<Name, UniqueKeyImpl<Record>>               interpretedUniqueKeys     = new HashMap<>();
     private final Map<Name, ReferenceImpl<Record, ?>>            interpretedForeignKeys    = new HashMap<>();
     private final Map<Name, Index>                               interpretedIndexes        = new HashMap<>();
-    private final Map<Name, MutableUDT.InterpretedUDT>         interpretedTypes          = new HashMap<>();
+    private final Map<Name, MutableUDT.InterpretedUDT>           interpretedTypes          = new HashMap<>();
     private final Map<Name, MutableDomain.InterpretedDomain>     interpretedDomains        = new HashMap<>();
     private final Map<Name, MutableSequence.InterpretedSequence> interpretedSequences      = new HashMap<>();
 
@@ -905,7 +905,7 @@ final class Interpreter {
     private final void addField(MutableUDT existing, int index, UnqualifiedName name, DataType<?> dataType) {
         MutableUDTField field = new MutableUDTField(name, existing, dataType);
 
-        for (MutableUDTField mf : existing.fields)
+        for (MutableUDTField mf : existing.attributes)
             if (mf.nameEquals(field.name())) {
                 if (throwIfMetaLookupFails())
                     throw attributeAlreadyExists(field.qualifiedName());
@@ -914,9 +914,9 @@ final class Interpreter {
             }
 
         if (index == Integer.MAX_VALUE)
-            existing.fields.add(field);
+            existing.attributes.add(field);
         else
-            existing.fields.add(index, field);
+            existing.attributes.add(index, field);
     }
 
     private final void addConstraint(Query query, Constraint constraint, MutableTable existing) {
@@ -1365,7 +1365,7 @@ final class Interpreter {
         Type<?> type = query.$type();
         MutableSchema schema = getSchema(type.getSchema(), true);
 
-        MutableUDT existing = schema.udt(type);
+        MutableType existing = schema.type(type);
         if (existing != null) {
             if (!query.$ifNotExists() && throwIfMetaLookupFails())
                 throw alreadyExists(type);
@@ -1402,8 +1402,6 @@ final class Interpreter {
     }
 
     private final void accept0(DropTypeImpl query) {
-        List<? extends Type<?>> types = query.$types();
-
         for (Type<?> type : query.$types()) {
             MutableSchema schema = getSchema(type.getSchema());
             MutableUDT existing = schema.udt(type);
@@ -1412,6 +1410,14 @@ final class Interpreter {
                 if (!query.$ifExists() && throwIfMetaLookupFails())
                     throw notExists(type);
             }
+            else if (query.$cascade() != CASCADE) {
+                if (!existing.referencedByFields.isEmpty())
+                    throw exception("UDT " + type.getQualifiedName() + " is still being referenced by fields: " + existing.referencedByFields);
+                else if (!existing.referencedByAttributes.isEmpty())
+                    throw exception("UDT " + type.getQualifiedName() + " is still being referenced by attributes: " + existing.referencedByAttributes);
+                else if (!existing.referencedByDomains.isEmpty())
+                    throw exception("UDT " + type.getQualifiedName() + " is still being referenced by domains: " + existing.referencedByDomains);
+            }
         }
 
         for (Type<?> type : query.$types()) {
@@ -1419,8 +1425,6 @@ final class Interpreter {
             MutableUDT existing = schema.udt(type);
 
             if (existing != null)
-
-                // TODO: [#18778] Implement CASCADE
                 drop(schema.udts, existing);
         }
     }
@@ -1429,7 +1433,7 @@ final class Interpreter {
         Domain<?> domain = query.$domain();
         MutableSchema schema = getSchema(domain.getSchema(), true);
 
-        MutableDomain existing = schema.domain(domain);
+        MutableType existing = schema.type(domain);
         if (existing != null) {
             if (!query.$ifNotExists() && throwIfMetaLookupFails())
                 throw alreadyExists(domain);
@@ -1440,7 +1444,7 @@ final class Interpreter {
         MutableDomain md = new MutableDomain((UnqualifiedName) domain.getUnqualifiedName(), schema, query.$dataType());
 
         if (query.$default_() != null)
-            md.dataType = md.dataType.default_((Field) query.$default_());
+            md.type = md.type.default_((Field) query.$default_());
 
         // TODO: Support NOT NULL constraints
         if (query.$constraints() != null)
@@ -1518,10 +1522,10 @@ final class Interpreter {
             mc.name((UnqualifiedName) renameConstraintTo.getUnqualifiedName());
         }
         else if (query.$setDefault() != null) {
-            existing.dataType = existing.dataType.defaultValue((Field) query.$setDefault());
+            existing.type = existing.type.defaultValue((Field) query.$setDefault());
         }
         else if (query.$dropDefault()) {
-            existing.dataType = existing.dataType.defaultValue((Field) null);
+            existing.type = existing.type.defaultValue((Field) null);
         }
 
         // TODO: Implement these
@@ -1543,12 +1547,19 @@ final class Interpreter {
             return;
         }
 
-        if (query.$cascade() != Cascade.CASCADE && !existing.fields.isEmpty())
-            throw exception("Domain " + domain.getQualifiedName() + " is still being referenced by fields.");
+        if (query.$cascade() != Cascade.CASCADE) {
+            if (!existing.referencedByFields.isEmpty())
+                throw exception("Domain " + domain.getQualifiedName() + " is still being referenced by fields: " + existing.referencedByFields);
+            else if (!existing.referencedByAttributes.isEmpty())
+                throw exception("Domain " + domain.getQualifiedName() + " is still being referenced by attributes: " + existing.referencedByAttributes);
+            else if (!existing.referencedByDomains.isEmpty())
+                throw exception("Domain " + domain.getQualifiedName() + " is still being referenced by domains: " + existing.referencedByDomains);
+        }
 
-        List<MutableField> field = new ArrayList<>(existing.fields);
-        for (MutableField mf : field)
-            dropColumns(mf.table, existing.fields, CASCADE);
+        for (MutableField mf : new ArrayList<>(existing.referencedByFields))
+            dropColumns(mf.table, existing.referencedByFields, CASCADE);
+        for (MutableUDTField mf : new ArrayList<>(existing.referencedByAttributes))
+            drop(mf.udt.attributes, mf);
 
         schema.domains.remove(existing);
     }
@@ -1667,11 +1678,11 @@ final class Interpreter {
         else if (named instanceof Sequence)
             return "Sequence";
         else if (named instanceof Domain)
-            return "Domain";
+            return "Domain or type";
         else if (named instanceof Type)
             return "Type";
         else if (named instanceof UDT)
-            return "UDT";
+            return "UDT or type";
 
 
 
@@ -2232,6 +2243,29 @@ final class Interpreter {
             return catalog;
         }
 
+        final List<MutableType> allTypes() {
+            return new AbstractList<>() {
+                @Override
+                public int size() {
+                    return domains.size() + udts.size();
+                }
+
+                @Override
+                public MutableType get(int index) {
+                    int index0 = index;
+
+                    if (index < domains.size())
+                        return domains.get(index);
+                    index -= domains.size();
+
+                    if (index < udts.size())
+                        return udts.get(index);
+
+                    throw new IndexOutOfBoundsException(index0);
+                }
+            };
+        }
+
         final InterpretedSchema interpretedSchema() {
             return interpretedSchemas.computeIfAbsent(qualifiedName(), n -> new InterpretedSchema(catalog.interpretedCatalog()));
         }
@@ -2258,6 +2292,10 @@ final class Interpreter {
 
 
             return mt;
+        }
+
+        final MutableType type(Named t) {
+            return find(allTypes(), t);
         }
 
         final MutableUDT udt(Named t) {
@@ -2322,8 +2360,22 @@ final class Interpreter {
             || options.type() == VIEW;
     }
 
-    private final class MutableTable extends MutableNamed {
-        MutableSchema           schema;
+    private abstract class MutableQualified extends MutableNamed {
+        MutableSchema schema;
+
+        MutableQualified(UnqualifiedName name, MutableSchema schema, Comment comment) {
+            super(name, comment);
+
+            this.schema = schema;
+        }
+
+        @Override
+        final MutableNamed parent() {
+            return schema;
+        }
+    }
+
+    private final class MutableTable extends MutableQualified {
         TableOptions            options;
         List<MutableField>      fields              = new MutableNamedList<>();
         MutableUniqueKey        primaryKey;
@@ -2339,9 +2391,8 @@ final class Interpreter {
 
 
         MutableTable(UnqualifiedName name, MutableSchema schema, Comment comment, TableOptions options) {
-            super(name, comment);
+            super(name, schema, comment);
 
-            this.schema = schema;
             this.options = options;
             schema.tables.add(this);
         }
@@ -2372,11 +2423,6 @@ final class Interpreter {
 
 
 
-
-        @Override
-        final MutableNamed parent() {
-            return schema;
-        }
 
         final InterpretedTable interpretedTable() {
             return interpretedTables.computeIfAbsent(qualifiedName(), n -> new InterpretedTable(schema.interpretedSchema()));
@@ -2508,27 +2554,39 @@ final class Interpreter {
         }
     }
 
-    private final class MutableUDT extends MutableNamed {
-        MutableSchema         schema;
-        List<MutableUDTField> fields = new MutableNamedList<>();
+    private abstract class MutableType extends MutableQualified {
+        List<MutableField>    referencedByFields     = new MutableNamedList<>();
+        List<MutableUDTField> referencedByAttributes = new MutableNamedList<>();
+        List<MutableDomain>   referencedByDomains    = new MutableNamedList<>();
+
+        MutableType(UnqualifiedName name, MutableSchema schema) {
+            super(name, schema, null);
+        }
+
+        @Override
+        /* non-final */ void onDrop() {
+            referencedByDomains.clear();
+            referencedByAttributes.clear();
+            referencedByFields.clear();
+        }
+    }
+
+    private final class MutableUDT extends MutableType {
+        List<MutableUDTField> attributes = new MutableNamedList<>();
 
         MutableUDT(UnqualifiedName name, MutableSchema schema) {
-            super(name);
+            super(name, schema);
 
-            this.schema = schema;
             schema.udts.add(this);
         }
 
         @Override
         final void onDrop() {
             schema.udts.remove(this);
-            fields.clear();
+            attributes.clear();
             // TODO: Cascade
-        }
 
-        @Override
-        final MutableNamed parent() {
-            return schema;
+            super.onDrop();
         }
 
         final InterpretedUDT interpretedUDT() {
@@ -2539,37 +2597,45 @@ final class Interpreter {
             InterpretedUDT(Schema schema) {
                 super(MutableUDT.this.name(), schema, null, comment(), false);
 
-                for (MutableUDTField field : MutableUDT.this.fields)
+                for (MutableUDTField field : MutableUDT.this.attributes)
                     createField(field.name(), field.type, this, field.comment() != null ? field.comment().getComment() : null);
             }
         }
     }
 
-    private final class MutableDomain extends MutableNamed {
-        MutableSchema      schema;
-        DataType<?>        dataType;
+    private final class MutableDomain extends MutableType {
+        DataType<?>        type;
         List<MutableCheck> checks = new MutableNamedList<>();
-        List<MutableField> fields = new MutableNamedList<>();
+        MutableDomain      referencedDomain;
+        MutableUDT         referencedUdt;
 
-        MutableDomain(UnqualifiedName name, MutableSchema schema, DataType<?> dataType) {
-            super(name);
+        MutableDomain(UnqualifiedName name, MutableSchema schema, DataType<?> type) {
+            super(name, schema);
 
-            this.schema = schema;
-            this.dataType = dataType;
+            this.type = type;
             schema.domains.add(this);
+
+            this.referencedDomain = schema.domain(type);
+            this.referencedUdt = schema.udt(type);
+
+            if (this.referencedDomain != null)
+                this.referencedDomain.referencedByDomains.add(this);
+            if (this.referencedUdt != null)
+                this.referencedUdt.referencedByDomains.add(this);
         }
 
         @Override
         final void onDrop() {
             schema.domains.remove(this);
-            // TODO: Cascade
-        }
+            // TODO: Cascade to tables, etc.
 
-        @Override
-        final MutableNamed parent() {
-            return schema;
-        }
+            if (this.referencedDomain != null)
+                this.referencedDomain.referencedByDomains.remove(this);
+            if (this.referencedUdt != null)
+                this.referencedUdt.referencedByDomains.remove(this);
 
+            super.onDrop();
+        }
 
         final InterpretedDomain interpretedDomain() {
             return interpretedDomains.computeIfAbsent(qualifiedName(), n -> new InterpretedDomain(schema.interpretedSchema()));
@@ -2581,36 +2647,29 @@ final class Interpreter {
 
         private final class InterpretedDomain extends DomainImpl {
             InterpretedDomain(Schema schema) {
-                super(schema, MutableDomain.this.name(), comment(), dataType, interpretedChecks());
+                super(schema, MutableDomain.this.name(), comment(), type, interpretedChecks());
             }
         }
     }
 
-    private final class MutableSequence<T extends Number> extends MutableNamed {
+    private final class MutableSequence<T extends Number> extends MutableQualified {
 
-        MutableSchema schema;
-        DataType<T>   dataType;
-        Field<T>      startWith;
-        Field<T>      incrementBy;
-        Field<T>      minvalue;
-        Field<T>      maxvalue;
-        boolean       cycle;
-        Field<T>      cache;
+        DataType<T> dataType;
+        Field<T>    startWith;
+        Field<T>    incrementBy;
+        Field<T>    minvalue;
+        Field<T>    maxvalue;
+        boolean     cycle;
+        Field<T>    cache;
 
         MutableSequence(UnqualifiedName name, MutableSchema schema) {
-            super(name);
+            super(name, schema, null);
 
-            this.schema = schema;
             schema.sequences.add(this);
         }
 
         @Override
         final void onDrop() {}
-
-        @Override
-        final MutableNamed parent() {
-            return schema;
-        }
 
         final InterpretedSequence interpretedSequence() {
             return interpretedSequences.computeIfAbsent(qualifiedName(), n -> new InterpretedSequence(schema.interpretedSchema()));
@@ -2635,13 +2694,6 @@ final class Interpreter {
             }
         }
     }
-
-
-
-
-
-
-
 
 
 
@@ -2966,26 +3018,42 @@ final class Interpreter {
         }
     }
 
-    private final class MutableField extends MutableNamed {
-        MutableTable  table;
+    private abstract class MutableTyped extends MutableNamed {
         DataType<?>   type;
-        MutableDomain domain;
+        MutableDomain referencedDomain;
+        MutableUDT    referencedUdt;
 
-        MutableField(UnqualifiedName name, MutableTable table, DataType<?> type) {
+        MutableTyped(UnqualifiedName name, MutableQualified qualifier, DataType<?> type) {
             super(name);
 
-            this.table = table;
             this.type = type;
-            this.domain = table.schema.domain(type);
+            this.referencedDomain = qualifier.schema.domain(type);
+            this.referencedUdt = qualifier.schema.udt(type);
+        }
+    }
 
-            if (this.domain != null)
-                this.domain.fields.add(this);
+    private final class MutableField extends MutableTyped {
+        MutableTable table;
+
+        MutableField(UnqualifiedName name, MutableTable table, DataType<?> type) {
+            super(name, table, type);
+
+            this.table = table;
+
+            if (this.referencedDomain != null)
+                this.referencedDomain.referencedByFields.add(this);
+            if (this.referencedUdt != null)
+                this.referencedUdt.referencedByFields.add(this);
         }
 
         @Override
         final void onDrop() {
-            if (this.domain != null)
-                this.domain.fields.remove(this);
+            table.fields.remove(this);
+
+            if (this.referencedDomain != null)
+                this.referencedDomain.referencedByFields.remove(this);
+            if (this.referencedUdt != null)
+                this.referencedUdt.referencedByFields.remove(this);
         }
 
         @Override
@@ -2994,19 +3062,28 @@ final class Interpreter {
         }
     }
 
-    private final class MutableUDTField extends MutableNamed {
-        MutableUDT  udt;
-        DataType<?> type;
+    private final class MutableUDTField extends MutableTyped {
+        MutableUDT udt;
 
         MutableUDTField(UnqualifiedName name, MutableUDT udt, DataType<?> type) {
-            super(name);
+            super(name, udt, type);
 
             this.udt = udt;
-            this.type = type;
+
+            if (this.referencedDomain != null)
+                this.referencedDomain.referencedByAttributes.add(this);
+            if (this.referencedUdt != null)
+                this.referencedUdt.referencedByAttributes.add(this);
         }
 
         @Override
         final void onDrop() {
+            udt.attributes.remove(this);
+
+            if (this.referencedDomain != null)
+                this.referencedDomain.referencedByAttributes.remove(this);
+            if (this.referencedUdt != null)
+                this.referencedUdt.referencedByAttributes.remove(this);
         }
 
         @Override

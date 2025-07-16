@@ -728,19 +728,15 @@ fun MutableList<UserDefinedType>.userDefinedType(block: UserDefinedType.() -> Un
     add(e)
 }
 
-fun InformationSchema.attributes(block: MutableList<Attributes>.() -> Unit) {
+fun InformationSchema.attributes(block: MutableList<Attribute>.() -> Unit) {
     block(attributes)
 }
 
-@JvmName("mutableListAttributes")
-fun MutableList<Attributes>.attribute(block: Attributes.() -> Unit) {
-    val e = Attributes()
+@JvmName("mutableListAttribute")
+fun MutableList<Attribute>.attribute(block: Attribute.() -> Unit) {
+    val e = Attribute()
     block(e)
     add(e)
-}
-
-fun Attributes.attribute(block: MutableList<Attributes>.() -> Unit) {
-    block(attribute)
 }
 
 fun InformationSchema.domains(block: MutableList<org.jooq.util.xml.jaxb.Domain>.() -> Unit) {

@@ -54,6 +54,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.TRINO;
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.conf.ParamType.INLINED;
 // ...
@@ -591,6 +592,16 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
             case H2:
             case FIREBIRD:
                 break;
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -1060,7 +1060,7 @@ public interface DSLContext extends Scope {
      * @see DSL#begin(Statement...)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     Block begin(Statement... statements);
 
     /**
@@ -1069,7 +1069,7 @@ public interface DSLContext extends Scope {
      * @see DSL#begin(Collection)
      */
     @NotNull @CheckReturnValue
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     Block begin(Collection<? extends Statement> statements);
 
 

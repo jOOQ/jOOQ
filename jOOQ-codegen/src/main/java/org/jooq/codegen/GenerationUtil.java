@@ -642,12 +642,14 @@ class GenerationUtil {
                 return new BaseType(u.last().substring(1), u);
             else if (u.last().toUpperCase().endsWith(" ARRAY"))
                 return new BaseType(u.last().replaceFirst("(?i: ARRAY)", ""), u);
-            else if (t.toUpperCase().endsWith(" ARRAY"))
-                return new BaseType(t.replaceFirst("(?i: ARRAY)", ""), u);
         }
 
+        if (t.toUpperCase().endsWith(" ARRAY"))
+            return new BaseType(t.replaceFirst("(?i: ARRAY)", ""), u);
+
         // But there are also arrays with a "vector" suffix
-        return new BaseType(t, u);
+        else
+            return new BaseType(t, u);
     }
 
     static ExpressionType expressionType(String expression) {

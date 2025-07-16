@@ -198,7 +198,7 @@ public class XMLGenerator extends AbstractGenerator {
                         attribute.setCharacterMaximumLength(type.getLength());
                         attribute.setAttributeDefault(type.getDefaultValue());
                         attribute.setDataType(type.getType());
-                        setUdtName(type.getQualifiedUserType(),
+                        setUdtName(type,
                             attribute,
                             Attribute::setAttributeUdtCatalog,
                             Attribute::setAttributeUdtSchema,
@@ -263,7 +263,7 @@ public class XMLGenerator extends AbstractGenerator {
                         column.setCharacterMaximumLength(type.getLength());
                         column.setColumnDefault(type.getDefaultValue());
                         column.setDataType(type.getType());
-                        setUdtName(type.getQualifiedUserType(),
+                        setUdtName(type,
                             column,
                             Column::setUdtCatalog,
                             Column::setUdtSchema,
@@ -556,6 +556,11 @@ public class XMLGenerator extends AbstractGenerator {
         else {
             routine.setRoutineType(RoutineType.FUNCTION);
             routine.setDataType(r.getReturnType().getType());
+            setUdtName(r.getReturnType(),
+                routine,
+                Routine::setUdtCatalog,
+                Routine::setUdtSchema,
+                Routine::setUdtName);
             routine.setCharacterMaximumLength(r.getReturnType().getLength());
             routine.setNumericPrecision(r.getReturnType().getPrecision());
             routine.setNumericScale(r.getReturnType().getScale());
@@ -592,6 +597,11 @@ public class XMLGenerator extends AbstractGenerator {
                     parameter.setParameterMode(ParameterMode.OUT);
 
                 parameter.setDataType(p.getType().getType());
+                setUdtName(p.getType(),
+                    parameter,
+                    Parameter::setUdtCatalog,
+                    Parameter::setUdtSchema,
+                    Parameter::setUdtName);
                 parameter.setCharacterMaximumLength(p.getType().getLength());
                 parameter.setNumericPrecision(p.getType().getPrecision());
                 parameter.setNumericScale(p.getType().getScale());
@@ -603,22 +613,26 @@ public class XMLGenerator extends AbstractGenerator {
     }
 
     private <T> void setUdtName(
-        Name name,
+        DataTypeDefinition type,
         T object,
         BiConsumer<T, String> udtCatalog,
         BiConsumer<T, String> udtSchema,
         BiConsumer<T, String> udtName
     ) {
-        if (name != null) {
-            udtName.accept(object, name.last());
+        if (type.isUDT()) {
+            Name name = type.getQualifiedUserType();
 
-            Name us = name.qualifier();
-            if (us != null) {
-                udtSchema.accept(object, us.last());
+            if (name != null) {
+                udtName.accept(object, name.last());
 
-                Name uc = us.qualifier();
-                if (uc != null)
-                    udtCatalog.accept(object, uc.last());
+                Name us = name.qualifier();
+                if (us != null) {
+                    udtSchema.accept(object, us.last());
+
+                    Name uc = us.qualifier();
+                    if (uc != null)
+                        udtCatalog.accept(object, uc.last());
+                }
             }
         }
     }

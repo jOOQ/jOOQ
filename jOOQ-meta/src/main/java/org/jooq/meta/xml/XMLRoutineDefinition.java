@@ -86,7 +86,10 @@ public class XMLRoutineDefinition extends AbstractRoutineDefinition {
                 routine.getNumericPrecision(),
                 routine.getNumericScale(),
                 null,
-                (String) null
+                (String) null,
+                StringUtils.isEmpty(routine.getUdtName())
+                    ? null
+                    : name(routine.getUdtCatalog(), routine.getUdtSchema(), routine.getUdtName())
             );
 
             this.returnValue = new DefaultParameterDefinition(this, "RETURN_VALUE", -1, type);
@@ -147,7 +150,10 @@ public class XMLRoutineDefinition extends AbstractRoutineDefinition {
                     parameter.getNumericPrecision(),
                     parameter.getNumericScale(),
                     null,
-                    parameter.getParameterDefault()
+                    parameter.getParameterDefault(),
+                    StringUtils.isEmpty(parameter.getUdtName())
+                        ? null
+                        : name(parameter.getUdtCatalog(), parameter.getUdtSchema(), parameter.getUdtName())
                 );
 
                 ParameterDefinition p = new DefaultParameterDefinition(

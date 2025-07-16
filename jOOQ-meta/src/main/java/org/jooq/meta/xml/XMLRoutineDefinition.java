@@ -50,6 +50,7 @@ import org.jooq.meta.PackageDefinition;
 import org.jooq.meta.ParameterDefinition;
 import org.jooq.meta.SchemaDefinition;
 import org.jooq.tools.StringUtils;
+import org.jooq.util.xml.jaxb.Column;
 import org.jooq.util.xml.jaxb.InformationSchema;
 import org.jooq.util.xml.jaxb.Parameter;
 import org.jooq.util.xml.jaxb.Routine;
@@ -133,50 +134,41 @@ public class XMLRoutineDefinition extends AbstractRoutineDefinition {
 
     @Override
     protected void init0() {
-        for (Parameter parameter : info.getParameters()) {
-            Name parameterRoutineName = name(
-                parameter.getSpecificCatalog(),
-                parameter.getSpecificSchema(),
-                parameter.getSpecificPackage(),
-                parameter.getSpecificName()
+        for (Parameter parameter : ((XMLDatabase) getDatabase()).getParametersByRoutineName(specificName)) {
+            DataTypeDefinition type = new DefaultDataTypeDefinition(
+                getDatabase(),
+                getSchema(),
+                parameter.getDataType(),
+                parameter.getCharacterMaximumLength(),
+                parameter.getNumericPrecision(),
+                parameter.getNumericScale(),
+                null,
+                parameter.getParameterDefault(),
+                StringUtils.isEmpty(parameter.getUdtName())
+                    ? null
+                    : name(parameter.getUdtCatalog(), parameter.getUdtSchema(), parameter.getUdtName())
             );
 
-            if (specificName.equals(parameterRoutineName)) {
-                DataTypeDefinition type = new DefaultDataTypeDefinition(
-                    getDatabase(),
-                    getSchema(),
-                    parameter.getDataType(),
-                    parameter.getCharacterMaximumLength(),
-                    parameter.getNumericPrecision(),
-                    parameter.getNumericScale(),
-                    null,
-                    parameter.getParameterDefault(),
-                    StringUtils.isEmpty(parameter.getUdtName())
-                        ? null
-                        : name(parameter.getUdtCatalog(), parameter.getUdtSchema(), parameter.getUdtName())
-                );
+            ParameterDefinition p = new DefaultParameterDefinition(
+                this,
+                parameter.getParameterName(),
+                parameter.getOrdinalPosition(),
+                type,
+                !StringUtils.isBlank(parameter.getParameterDefault()),
+                StringUtils.isBlank(parameter.getParameterName()),
+                parameter.getComment()
+            );
 
-                ParameterDefinition p = new DefaultParameterDefinition(
-                    this,
-                    parameter.getParameterName(),
-                    parameter.getOrdinalPosition(),
-                    type,
-                    !StringUtils.isBlank(parameter.getParameterDefault()),
-                    StringUtils.isBlank(parameter.getParameterName()),
-                    parameter.getComment()
-                );
-
-                switch (parameter.getParameterMode()) {
-                    case IN:
-                        addParameter(InOutDefinition.IN, p);
-                        break;
-                    case INOUT:
-                        addParameter(InOutDefinition.INOUT, p);
-                        break;
-                    case OUT:
-                        addParameter(InOutDefinition.OUT, p);
-                        break;
-                }
+            switch (parameter.getParameterMode()) {
+                case IN:
+                    addParameter(InOutDefinition.IN, p);
+                    break;
+                case INOUT:
+                    addParameter(InOutDefinition.INOUT, p);
+                    break;
+                case OUT:
+                    addParameter(InOutDefinition.OUT, p);
+                    break;
             }
         }
     }

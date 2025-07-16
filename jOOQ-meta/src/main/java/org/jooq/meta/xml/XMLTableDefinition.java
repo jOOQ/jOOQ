@@ -87,47 +87,44 @@ public class XMLTableDefinition extends AbstractTableDefinition {
     protected List<ColumnDefinition> getElements0() throws SQLException {
         List<ColumnDefinition> result = new ArrayList<>();
 
-        for (Column column : info.getColumns()) {
-            if (StringUtils.equals(defaultIfNull(table.getTableCatalog(), ""), defaultIfNull(column.getTableCatalog(), "")) &&
-                StringUtils.equals(defaultIfNull(table.getTableSchema(), ""), defaultIfNull(column.getTableSchema(), "")) &&
-                StringUtils.equals(defaultIfNull(table.getTableName(), ""), defaultIfNull(column.getTableName(), ""))) {
+        for (Column column : ((XMLDatabase) getDatabase()).getColumnsByTableName(
+            name(table.getTableCatalog(), table.getTableSchema(), table.getTableName())
+        )) {
+            SchemaDefinition schema = getDatabase().getSchema(column.getTableSchema());
 
-                SchemaDefinition schema = getDatabase().getSchema(column.getTableSchema());
+            DefaultDataTypeDefinition type = new DefaultDataTypeDefinition(
+                getDatabase(),
+                schema,
+                column.getDataType(),
+                unbox(column.getCharacterMaximumLength()),
+                unbox(column.getNumericPrecision()),
+                unbox(column.getNumericScale()),
+                column.isIsNullable(),
+                column.getColumnDefault(),
+                StringUtils.isEmpty(column.getUdtName())
+                    ? null
+                    : name(column.getUdtCatalog(), column.getUdtSchema(), column.getUdtName())
+            )
+                .generatedAlwaysAs(TRUE.equals(column.isIsGenerated()) ? column.getGenerationExpression() : null)
+                .generationOption(TRUE.equals(column.isIsGenerated())
+                    ? "STORED".equalsIgnoreCase(column.getGenerationOption())
+                        ? STORED
+                        : "VIRTUAL".equalsIgnoreCase(column.getGenerationOption())
+                        ? VIRTUAL
+                        : null
+                    : null)
+                .hidden(TRUE.equals(column.isHidden()));
 
-                DefaultDataTypeDefinition type = new DefaultDataTypeDefinition(
-                    getDatabase(),
-                    schema,
-                    column.getDataType(),
-                    unbox(column.getCharacterMaximumLength()),
-                    unbox(column.getNumericPrecision()),
-                    unbox(column.getNumericScale()),
-                    column.isIsNullable(),
-                    column.getColumnDefault(),
-                    StringUtils.isEmpty(column.getUdtName())
-                        ? null
-                        : name(column.getUdtCatalog(), column.getUdtSchema(), column.getUdtName())
-                )
-                    .generatedAlwaysAs(TRUE.equals(column.isIsGenerated()) ? column.getGenerationExpression() : null)
-                    .generationOption(TRUE.equals(column.isIsGenerated())
-                        ? "STORED".equalsIgnoreCase(column.getGenerationOption())
-                            ? STORED
-                            : "VIRTUAL".equalsIgnoreCase(column.getGenerationOption())
-                            ? VIRTUAL
-                            : null
-                        : null)
-                    .hidden(TRUE.equals(column.isHidden()));
-
-                result.add(new DefaultColumnDefinition(
-                    this,
-                    column.getColumnName(),
-                    unbox(column.getOrdinalPosition()),
-                    type,
-                    column.getIdentityGeneration() != null,
-                    TRUE.equals(column.isHidden()),
-                    TRUE.equals(column.isReadonly()),
-                    column.getComment()
-                ));
-            }
+            result.add(new DefaultColumnDefinition(
+                this,
+                column.getColumnName(),
+                unbox(column.getOrdinalPosition()),
+                type,
+                column.getIdentityGeneration() != null,
+                TRUE.equals(column.isHidden()),
+                TRUE.equals(column.isReadonly()),
+                column.getComment()
+            ));
         }
 
         return result;

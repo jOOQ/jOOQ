@@ -53,6 +53,7 @@ import org.jooq.meta.RoutineDefinition;
 import org.jooq.meta.SchemaDefinition;
 import org.jooq.tools.StringUtils;
 import org.jooq.util.xml.jaxb.Attribute;
+import org.jooq.util.xml.jaxb.Column;
 import org.jooq.util.xml.jaxb.InformationSchema;
 import org.jooq.util.xml.jaxb.UserDefinedType;
 
@@ -75,35 +76,32 @@ public class XMLUDTDefinition extends AbstractUDTDefinition {
     protected List<AttributeDefinition> getElements0() throws SQLException {
         List<AttributeDefinition> result = new ArrayList<>();
 
-        for (Attribute attribute : info.getAttributes()) {
-            if (StringUtils.equals(defaultIfNull(udt.getUserDefinedTypeCatalog(), ""), defaultIfNull(attribute.getUdtCatalog(), "")) &&
-                StringUtils.equals(defaultIfNull(udt.getUserDefinedTypeSchema(), ""), defaultIfNull(attribute.getUdtSchema(), "")) &&
-                StringUtils.equals(defaultIfNull(udt.getUserDefinedTypeName(), ""), defaultIfNull(attribute.getUdtName(), ""))) {
+        for (Attribute attribute : ((XMLDatabase) getDatabase()).getAttributesByUDTName(
+            name(udt.getUserDefinedTypeCatalog(), udt.getUserDefinedTypeSchema(), udt.getUserDefinedTypeName())
+        )) {
+            SchemaDefinition schema = getDatabase().getSchema(attribute.getUdtSchema());
 
-                SchemaDefinition schema = getDatabase().getSchema(attribute.getUdtSchema());
+            DefaultDataTypeDefinition type = new DefaultDataTypeDefinition(
+                getDatabase(),
+                schema,
+                attribute.getDataType(),
+                unbox(attribute.getCharacterMaximumLength()),
+                unbox(attribute.getNumericPrecision()),
+                unbox(attribute.getNumericScale()),
+                true,
+                attribute.getAttributeDefault(),
+                StringUtils.isEmpty(attribute.getAttributeUdtName())
+                    ? null
+                    : name(attribute.getAttributeUdtCatalog(), attribute.getAttributeUdtSchema(), attribute.getAttributeUdtName())
+            );
 
-                DefaultDataTypeDefinition type = new DefaultDataTypeDefinition(
-                    getDatabase(),
-                    schema,
-                    attribute.getDataType(),
-                    unbox(attribute.getCharacterMaximumLength()),
-                    unbox(attribute.getNumericPrecision()),
-                    unbox(attribute.getNumericScale()),
-                    true,
-                    attribute.getAttributeDefault(),
-                    StringUtils.isEmpty(attribute.getAttributeUdtName())
-                        ? null
-                        : name(attribute.getAttributeUdtCatalog(), attribute.getAttributeUdtSchema(), attribute.getAttributeUdtName())
-                );
-
-                result.add(new DefaultAttributeDefinition(
-                    this,
-                    attribute.getAttributeName(),
-                    unbox(attribute.getOrdinalPosition()),
-                    type,
-                    attribute.getComment()
-                ));
-            }
+            result.add(new DefaultAttributeDefinition(
+                this,
+                attribute.getAttributeName(),
+                unbox(attribute.getOrdinalPosition()),
+                type,
+                attribute.getComment()
+            ));
         }
 
         return result;

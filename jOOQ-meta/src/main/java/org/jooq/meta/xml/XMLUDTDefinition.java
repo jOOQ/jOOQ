@@ -37,6 +37,7 @@
  */
 package org.jooq.meta.xml;
 
+import static org.jooq.impl.DSL.name;
 import static org.jooq.meta.xml.XMLDatabase.unbox;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
@@ -63,12 +64,8 @@ public class XMLUDTDefinition extends AbstractUDTDefinition {
     private final InformationSchema info;
     private final UserDefinedType   udt;
 
-    public XMLUDTDefinition(SchemaDefinition schema, InformationSchema info, UserDefinedType udt) {
-        this(schema, info, udt, "");
-    }
-
-    public XMLUDTDefinition(SchemaDefinition schema, InformationSchema info, UserDefinedType udt, String comment) {
-        super(schema, udt.getUserDefinedTypeName(), comment);
+    public XMLUDTDefinition(SchemaDefinition schema, InformationSchema info, UserDefinedType udt, String comment, SchemaDefinition superTypeSchema, String superTypeName, boolean isInstantiable) {
+        super(schema, null, udt.getUserDefinedTypeName(), false, comment, superTypeSchema, superTypeName, isInstantiable);
 
         this.info = info;
         this.udt = udt;
@@ -93,7 +90,10 @@ public class XMLUDTDefinition extends AbstractUDTDefinition {
                     unbox(attribute.getNumericPrecision()),
                     unbox(attribute.getNumericScale()),
                     true,
-                    attribute.getAttributeDefault()
+                    attribute.getAttributeDefault(),
+                    StringUtils.isEmpty(attribute.getAttributeUdtName())
+                        ? null
+                        : name(attribute.getAttributeUdtCatalog(), attribute.getAttributeUdtSchema(), attribute.getAttributeUdtName())
                 );
 
                 result.add(new DefaultAttributeDefinition(

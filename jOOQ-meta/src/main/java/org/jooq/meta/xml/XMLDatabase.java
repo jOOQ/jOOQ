@@ -44,6 +44,7 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.tools.StringUtils.defaultIfBlank;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 import static org.jooq.tools.StringUtils.isBlank;
+import static org.jooq.tools.StringUtils.isEmpty;
 import static org.jooq.util.xml.XmlUtils.foreignKeyRule;
 import static org.jooq.util.xml.jaxb.TableConstraintType.PRIMARY_KEY;
 import static org.jooq.util.xml.jaxb.TableConstraintType.UNIQUE;
@@ -705,8 +706,19 @@ public class XMLDatabase extends AbstractDatabase {
         for (UserDefinedType udt : info().getUserDefinedTypes()) {
             if (getInputSchemata().contains(udt.getUserDefinedTypeSchema())) {
                 SchemaDefinition schema = getSchema(udt.getUserDefinedTypeSchema());
+                SchemaDefinition superTypeSchema = isEmpty(udt.getSuperTypeName())
+                    ? null
+                    : getSchema(udt.getUserDefinedTypeSchema());
 
-                result.add(new XMLUDTDefinition(schema, info(), udt, udt.getComment()));
+                result.add(new XMLUDTDefinition(
+                    schema,
+                    info(),
+                    udt,
+                    udt.getComment(),
+                    superTypeSchema,
+                    udt.getSuperTypeName(),
+                    !FALSE.equals(udt.isIsInstantiable())
+                ));
             }
         }
 

@@ -130,6 +130,9 @@
             <element name="user_defined_type_category" type="tns:UserDefinedTypeCategory" minOccurs="0" maxOccurs="1" />
             <element name="is_instantiable" type="boolean" minOccurs="0" maxOccurs="1" />
             <element name="is_final" type="boolean" minOccurs="0" maxOccurs="1" />
+            <element name="super_type_catalog" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="super_type_schema" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="super_type_name" type="string" minOccurs="0" maxOccurs="1" />
             <element name="comment" type="string" minOccurs="0" maxOccurs="1" />
         </all>
     </complexType>

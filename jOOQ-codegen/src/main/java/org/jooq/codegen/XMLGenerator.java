@@ -49,7 +49,9 @@ import static org.jooq.util.xml.jaxb.TableConstraintType.UNIQUE;
 import java.io.StringWriter;
 import java.math.BigInteger;
 import java.util.List;
+import java.util.function.BiConsumer;
 
+import org.jooq.Name;
 import org.jooq.SortOrder;
 // ...
 // ...
@@ -166,6 +168,13 @@ public class XMLGenerator extends AbstractGenerator {
                     udt.setUserDefinedTypeSchema(schemaName);
                     udt.setUserDefinedTypeName(udtName);
                     udt.setUserDefinedTypeCategory(UserDefinedTypeCategory.STRUCTURED);
+
+                    if (u.getSupertype() != null) {
+                        udt.setSuperTypeCatalog(u.getSupertype().getCatalog().getOutputName());
+                        udt.setSuperTypeSchema(u.getSupertype().getSchema().getOutputName());
+                        udt.setSuperTypeName(u.getSupertype().getOutputName());
+                    }
+
                     udt.setIsInstantiable(u.isInstantiable());
 
                     if (generateCommentsOnUDTs())
@@ -189,6 +198,11 @@ public class XMLGenerator extends AbstractGenerator {
                         attribute.setCharacterMaximumLength(type.getLength());
                         attribute.setAttributeDefault(type.getDefaultValue());
                         attribute.setDataType(type.getType());
+                        setUdtName(type.getQualifiedUserType(),
+                            attribute,
+                            Attribute::setAttributeUdtCatalog,
+                            Attribute::setAttributeUdtSchema,
+                            Attribute::setAttributeUdtName);
                         attribute.setNumericPrecision(type.getPrecision());
                         attribute.setNumericScale(type.getScale());
                         attribute.setOrdinalPosition(a.getPosition());
@@ -249,6 +263,12 @@ public class XMLGenerator extends AbstractGenerator {
                         column.setCharacterMaximumLength(type.getLength());
                         column.setColumnDefault(type.getDefaultValue());
                         column.setDataType(type.getType());
+                        setUdtName(type.getQualifiedUserType(),
+                            column,
+                            Column::setUdtCatalog,
+                            Column::setUdtSchema,
+                            Column::setUdtName);
+
                         if (co.isIdentity())
                             column.setIdentityGeneration("YES");
                         column.setIsNullable(type.isNullable());
@@ -578,6 +598,27 @@ public class XMLGenerator extends AbstractGenerator {
                 parameter.setParameterDefault(p.getType().getDefaultValue());
 
                 is.getParameters().add(parameter);
+            }
+        }
+    }
+
+    private <T> void setUdtName(
+        Name name,
+        T object,
+        BiConsumer<T, String> udtCatalog,
+        BiConsumer<T, String> udtSchema,
+        BiConsumer<T, String> udtName
+    ) {
+        if (name != null) {
+            udtName.accept(object, name.last());
+
+            Name us = name.qualifier();
+            if (us != null) {
+                udtSchema.accept(object, us.last());
+
+                Name uc = us.qualifier();
+                if (uc != null)
+                    udtCatalog.accept(object, uc.last());
             }
         }
     }

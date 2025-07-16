@@ -38,6 +38,7 @@
 package org.jooq.meta.xml;
 
 import static java.lang.Boolean.TRUE;
+import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.QOM.GenerationOption.STORED;
 import static org.jooq.impl.QOM.GenerationOption.VIRTUAL;
 import static org.jooq.meta.xml.XMLDatabase.unbox;
@@ -48,6 +49,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.TableOptions.TableType;
+import org.jooq.impl.DSL;
 import org.jooq.meta.AbstractTableDefinition;
 import org.jooq.meta.ColumnDefinition;
 import org.jooq.meta.DefaultColumnDefinition;
@@ -100,7 +102,10 @@ public class XMLTableDefinition extends AbstractTableDefinition {
                     unbox(column.getNumericPrecision()),
                     unbox(column.getNumericScale()),
                     column.isIsNullable(),
-                    column.getColumnDefault()
+                    column.getColumnDefault(),
+                    StringUtils.isEmpty(column.getUdtName())
+                        ? null
+                        : name(column.getUdtCatalog(), column.getUdtSchema(), column.getUdtName())
                 )
                     .generatedAlwaysAs(TRUE.equals(column.isIsGenerated()) ? column.getGenerationExpression() : null)
                     .generationOption(TRUE.equals(column.isIsGenerated())

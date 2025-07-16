@@ -121,10 +121,12 @@ import org.jooq.tools.jdbc.JDBCUtils;
 import org.jooq.util.jaxb.tools.MiniJAXB;
 import org.jooq.util.xml.XmlUtils;
 import org.jooq.util.xml.jaxb.CheckConstraint;
+import org.jooq.util.xml.jaxb.Column;
 import org.jooq.util.xml.jaxb.Index;
 import org.jooq.util.xml.jaxb.IndexColumnUsage;
 import org.jooq.util.xml.jaxb.InformationSchema;
 import org.jooq.util.xml.jaxb.KeyColumnUsage;
+import org.jooq.util.xml.jaxb.Parameter;
 import org.jooq.util.xml.jaxb.ReferentialConstraint;
 import org.jooq.util.xml.jaxb.Routine;
 import org.jooq.util.xml.jaxb.Schema;
@@ -147,6 +149,8 @@ public class XMLDatabase extends AbstractDatabase {
     private static final JooqLogger log        = JooqLogger.getLogger(XMLDatabase.class);
 
     InformationSchema               info;
+    Map<Name, List<Column>>         columnsByTableName;
+    Map<Name, List<Parameter>>      parametersByRoutineName;
 
     private InformationSchema info() {
         if (info == null) {
@@ -746,5 +750,35 @@ public class XMLDatabase extends AbstractDatabase {
 
     static long unbox(Long l) {
         return l == null ? 0L : l.longValue();
+    }
+
+    List<Column> getColumnsByTableName(Name tableName) {
+        if (columnsByTableName == null) {
+            columnsByTableName = new LinkedHashMap<>();
+
+            for (Column column : info().getColumns()) {
+                columnsByTableName.computeIfAbsent(
+                    name(column.getTableCatalog(), column.getTableSchema(), column.getTableName()),
+                    n -> new ArrayList<>()
+                ).add(column);
+            }
+        }
+
+        return columnsByTableName.get(tableName);
+    }
+
+    List<Parameter> getParametersByRoutineName(Name specificName) {
+        if (parametersByRoutineName == null) {
+            parametersByRoutineName = new LinkedHashMap<>();
+
+            for (Parameter parameter : info().getParameters()) {
+                parametersByRoutineName.computeIfAbsent(
+                    name(parameter.getSpecificCatalog(), parameter.getSpecificSchema(), parameter.getSpecificPackage(), parameter.getSpecificName()),
+                    n -> new ArrayList<>()
+                ).add(parameter);
+            }
+        }
+
+        return parametersByRoutineName.get(specificName);
     }
 }

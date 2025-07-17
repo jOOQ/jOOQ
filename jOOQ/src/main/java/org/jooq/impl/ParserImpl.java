@@ -71,6 +71,7 @@ import static org.jooq.VisitListener.onVisitStart;
 import static org.jooq.conf.ParseWithMetaLookups.IGNORE_ON_FAILURE;
 import static org.jooq.conf.ParseWithMetaLookups.THROW_ON_FAILURE;
 import static org.jooq.impl.AbstractName.NO_NAME;
+import static org.jooq.impl.Convert.convert;
 import static org.jooq.impl.DSL.abs;
 import static org.jooq.impl.DSL.acos;
 import static org.jooq.impl.DSL.acosh;
@@ -468,6 +469,7 @@ import static org.jooq.impl.SQLDataType.BOOLEAN;
 import static org.jooq.impl.SQLDataType.CHAR;
 import static org.jooq.impl.SQLDataType.CLOB;
 import static org.jooq.impl.SQLDataType.DATE;
+import static org.jooq.impl.SQLDataType.DECFLOAT;
 import static org.jooq.impl.SQLDataType.DECIMAL;
 import static org.jooq.impl.SQLDataType.DOUBLE;
 import static org.jooq.impl.SQLDataType.FLOAT;
@@ -9515,6 +9517,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                     return parseFunctionArgs1(DSL::binToUuid);
                 else if ((value = parseBitLiteralIf()) != null)
                     return DSL.inline((Boolean) value);
+                else if ((field = parseTypedLiteralIf("BIGINT", BIGINT)) != null)
+                    return field;
 
                 break;
 
@@ -9604,6 +9608,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
 
 
+                else if ((field = parseTypedLiteralIf("CHAR", CHAR)) != null)
+                    return field;
 
                 break;
 
@@ -9672,6 +9678,14 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                 }
                 else if (parseFunctionNameIf("DIV", "DIVIDE"))
                     return parseFunctionArgs2(Field::div);
+                else if ((field = parseTypedLiteralIf("DECIMAL", DECIMAL)) != null)
+                    return field;
+                else if ((field = parseTypedLiteralIf("DECFLOAT", DECFLOAT)) != null)
+                    return field;
+                else if ((field = parseTypedLiteralIf("DOUBLE PRECISION", DOUBLE)) != null)
+                    return field;
+                else if ((field = parseTypedLiteralIf("DOUBLE", DOUBLE)) != null)
+                    return field;
 
                 break;
 
@@ -9702,6 +9716,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                 else if ((field = parseFieldFirstValueIf()) != null)
                     return field;
                 else if ((field = parseFieldFieldIf()) != null)
+                    return field;
+                else if ((field = parseTypedLiteralIf("FLOAT", FLOAT)) != null)
                     return field;
 
                 break;
@@ -9774,6 +9790,10 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                 else if (parseFunctionNameIf("ISNULL"))
                     return parseFunctionArgs2(f -> f.isNull(), (f1, f2) -> isnull((Field<?>) f1, (Field<?>) f2));
                 else if ((field = parseFieldIfIf()) != null)
+                    return field;
+                else if ((field = parseTypedLiteralIf("INTEGER", INTEGER)) != null)
+                    return field;
+                else if ((field = parseTypedLiteralIf("INT", INTEGER)) != null)
                     return field;
                 else
                     break;
@@ -9931,6 +9951,10 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                     return parseFunctionArgs1(DSL::neg);
                 else if (parseFunctionNameIf("NONE_MATCH"))
                     return parseArrayLambdaFunction(DSL::arrayNoneMatch);
+                else if ((field = parseTypedLiteralIf("NUMERIC", NUMERIC)) != null)
+                    return field;
+                else if ((field = parseTypedLiteralIf("NUMBER", NUMERIC)) != null)
+                    return field;
 
                 break;
 
@@ -10028,6 +10052,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                     return parseFunctionArgs2(DSL::sqrt, DSL::root);
                 else if (parseFunctionNameIf("ROW"))
                     return parseTuple();
+                else if ((field = parseTypedLiteralIf("REAL", REAL)) != null)
+                    return field;
 
                 break;
 
@@ -10326,6 +10352,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                 }
                 else if (parseFunctionNameIf("SUB", "SUBTRACT"))
                     return parseFunctionArgs2(Field::sub);
+                else if ((field = parseTypedLiteralIf("SMALLINT", SMALLINT)) != null)
+                    return field;
 
                 break;
 
@@ -10384,6 +10412,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                         ),
                         inline(BigDecimal.ZERO)
                     );
+                else if ((field = parseTypedLiteralIf("TINYINT", TINYINT)) != null)
+                    return field;
 
                 break;
 
@@ -10405,6 +10435,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
             case 'V':
                 if (TRUE.equals(data(DATA_PARSE_ON_CONFLICT)) && (parseFunctionNameIf("VALUES") || parseFunctionNameIf("VALUE")))
                     return excluded(parseFieldParenthesised());
+                else if ((field = parseTypedLiteralIf("VARCHAR", VARCHAR)) != null)
+                    return field;
 
             case 'W':
                 if (parseFunctionNameIf("WIDTH_BUCKET", "widthBucket"))
@@ -10572,6 +10604,21 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
         else
             return parseFieldNameOrSequenceExpression();
+    }
+
+    private final <T> Field<T> parseTypedLiteralIf(String keyword, DataType<T> type) {
+        int p = position();
+
+        if (parseKeywordIf(keyword)) {
+            if (peek('\'')) {
+                String s = parseStringLiteral();
+                return inline(convert(s, type.getType()), type);
+            }
+            else
+                position(p);
+        }
+
+        return null;
     }
 
 

@@ -533,6 +533,7 @@ implements
 
                 case FIREBIRD:
                 case H2:
+                case TRINO:
 
 
 

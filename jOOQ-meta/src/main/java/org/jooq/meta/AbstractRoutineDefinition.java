@@ -71,7 +71,11 @@ public abstract class AbstractRoutineDefinition extends AbstractDefinition imple
     }
 
     public AbstractRoutineDefinition(SchemaDefinition schema, PackageDefinition pkg, String name, String comment, String overload, boolean aggregate) {
-        super(schema.getDatabase(), schema, pkg, name, comment, overload);
+        this(schema, pkg, name, comment, overload, aggregate, null);
+    }
+
+    public AbstractRoutineDefinition(SchemaDefinition schema, PackageDefinition pkg, String name, String comment, String overload, boolean aggregate, String source) {
+        super(schema.getDatabase(), schema, pkg, name, comment, overload, source);
         this.aggregate = aggregate;
     }
 

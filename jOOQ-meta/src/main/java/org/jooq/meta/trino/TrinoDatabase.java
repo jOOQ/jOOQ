@@ -39,8 +39,10 @@
 package org.jooq.meta.trino;
 
 import static org.jooq.Records.mapping;
+import static org.jooq.impl.DSL.currentCatalog;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.lower;
+import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.trim;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.meta.hsqldb.information_schema.Tables.SCHEMATA;
@@ -50,19 +52,23 @@ import static org.jooq.meta.hsqldb.information_schema.Tables.VIEWS;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.PrimitiveIterator.OfInt;
+import java.util.stream.IntStream;
 
 import org.jooq.DSLContext;
+import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Record12;
 import org.jooq.Record14;
 import org.jooq.Record4;
 import org.jooq.Record5;
 import org.jooq.Record6;
+import org.jooq.Result;
 import org.jooq.ResultQuery;
 import org.jooq.SQLDialect;
-// ...
-// ...
 import org.jooq.TableOptions.TableType;
 import org.jooq.impl.DSL;
 import org.jooq.meta.AbstractDatabase;
@@ -77,9 +83,10 @@ import org.jooq.meta.RoutineDefinition;
 import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.SequenceDefinition;
 import org.jooq.meta.TableDefinition;
-// ...
 import org.jooq.meta.UDTDefinition;
 import org.jooq.meta.XMLSchemaCollectionDefinition;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * The Trino database
@@ -225,7 +232,44 @@ public class TrinoDatabase extends AbstractDatabase implements ResultQueryDataba
 
     @Override
     protected List<RoutineDefinition> getRoutines0() throws SQLException {
-        return new ArrayList<>();
+        List<RoutineDefinition> result = new ArrayList<>();
+
+        String catalog = create().fetchValue(currentCatalog());
+        for (SchemaDefinition schema : getSchemata()) {
+            Name schemaName = schema.getQualifiedInputNamePart();
+
+            if (!schemaName.qualified())
+                schemaName = name(catalog).append(schemaName);
+
+            // See https://trino.io/docs/current/sql/show-functions.html
+            Result<Record> functions = create().fetch("show functions from {0}", schemaName);
+            Map<String, OfInt> overloads = new LinkedHashMap<>();
+            functions.intoGroups(0).forEach((k, v) ->
+                overloads.put(k.toString(), v.size() == 1 ? null : IntStream.rangeClosed(1, v.size()).iterator())
+            );
+            Map<String, List<String>> sources = new LinkedHashMap<>();
+
+            for (Record record : create().fetch("show functions from {0}", schemaName)) {
+                String name = record.get(0, String.class);
+                Name qualifiedName = schemaName.append(name);
+
+                // The ordering doesn't really matter as long as we process each overload exactly once.
+                List<String> s = sources.computeIfAbsent(name, n -> create().fetch("show create function {0}", qualifiedName).getValues(0, String.class));
+                Integer overload = overloads.get(name) == null ? null : overloads.get(name).next();
+
+                result.add(new TrinoRoutineDefinition(
+                    schema,
+                    name,
+                    record.get(5, String.class),
+                    overload == null ? null : overload.toString(),
+                    record.get(1, String.class),
+                    record.get(2, String.class),
+                    overload == null ? s.get(0) : s.get(overload - 1)
+                ));
+            }
+        }
+
+        return result;
     }
 
     @Override

@@ -24390,7 +24390,7 @@ public class DSL {
      * The CURRENT_CATALOG of the current session
      */
     @NotNull
-    @Support({ CLICKHOUSE, FIREBIRD, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ CLICKHOUSE, FIREBIRD, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static Field<String> currentCatalog() {
         return new CurrentCatalog();
     }

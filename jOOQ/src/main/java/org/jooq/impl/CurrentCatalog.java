@@ -111,6 +111,9 @@ implements
             case CLICKHOUSE:
                 return true;
 
+            case TRINO:
+                return false;
+
             default:
                 return true;
         }
@@ -150,6 +153,10 @@ implements
 
             case CLICKHOUSE:
                 ctx.visit(function(N_currentDatabase, getDataType()));
+                break;
+
+            case TRINO:
+                ctx.visit(DSL.field("{0}", getDataType(), N_CURRENT_CATALOG));
                 break;
 
             default:

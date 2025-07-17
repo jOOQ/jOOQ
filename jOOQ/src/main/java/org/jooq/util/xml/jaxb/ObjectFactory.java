@@ -86,6 +86,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link DirectSupertype }
+     * 
+     */
+    public DirectSupertype createDirectSupertype() {
+        return new DirectSupertype();
+    }
+
+    /**
      * Create an instance of {@link Domain }
      * 
      */

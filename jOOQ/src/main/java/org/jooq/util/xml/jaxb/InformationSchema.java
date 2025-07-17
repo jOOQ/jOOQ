@@ -37,6 +37,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *         &lt;element name="check_constraints" type="{http://www.jooq.org/xsd/jooq-meta-3.21.0.xsd}CheckConstraints" minOccurs="0"/&gt;
  *         &lt;element name="user_defined_types" type="{http://www.jooq.org/xsd/jooq-meta-3.21.0.xsd}UserDefinedTypes" minOccurs="0"/&gt;
  *         &lt;element name="attributes" type="{http://www.jooq.org/xsd/jooq-meta-3.21.0.xsd}Attributes" minOccurs="0"/&gt;
+ *         &lt;element name="direct_supertypes" type="{http://www.jooq.org/xsd/jooq-meta-3.21.0.xsd}DirectSupertypes" minOccurs="0"/&gt;
  *         &lt;element name="domains" type="{http://www.jooq.org/xsd/jooq-meta-3.21.0.xsd}Domains" minOccurs="0"/&gt;
  *         &lt;element name="domain_constraints" type="{http://www.jooq.org/xsd/jooq-meta-3.21.0.xsd}DomainConstraints" minOccurs="0"/&gt;
  *         &lt;element name="indexes" type="{http://www.jooq.org/xsd/jooq-meta-3.21.0.xsd}Indexes" minOccurs="0"/&gt;
@@ -102,6 +103,9 @@ public class InformationSchema implements Serializable, XMLAppendable
     @XmlElementWrapper(name = "attributes")
     @XmlElement(name = "attribute")
     protected List<Attribute> attributes;
+    @XmlElementWrapper(name = "direct_supertypes")
+    @XmlElement(name = "directSupertype")
+    protected List<DirectSupertype> directSupertypes;
     @XmlElementWrapper(name = "domains")
     @XmlElement(name = "domain")
     protected List<Domain> domains;
@@ -260,6 +264,17 @@ public class InformationSchema implements Serializable, XMLAppendable
 
     public void setAttributes(List<Attribute> attributes) {
         this.attributes = attributes;
+    }
+
+    public List<DirectSupertype> getDirectSupertypes() {
+        if (directSupertypes == null) {
+            directSupertypes = new ArrayList<DirectSupertype>();
+        }
+        return directSupertypes;
+    }
+
+    public void setDirectSupertypes(List<DirectSupertype> directSupertypes) {
+        this.directSupertypes = directSupertypes;
     }
 
     public List<Domain> getDomains() {
@@ -613,6 +628,27 @@ public class InformationSchema implements Serializable, XMLAppendable
         return this;
     }
 
+    public InformationSchema withDirectSupertypes(DirectSupertype... values) {
+        if (values!= null) {
+            for (DirectSupertype value: values) {
+                getDirectSupertypes().add(value);
+            }
+        }
+        return this;
+    }
+
+    public InformationSchema withDirectSupertypes(Collection<DirectSupertype> values) {
+        if (values!= null) {
+            getDirectSupertypes().addAll(values);
+        }
+        return this;
+    }
+
+    public InformationSchema withDirectSupertypes(List<DirectSupertype> directSupertypes) {
+        setDirectSupertypes(directSupertypes);
+        return this;
+    }
+
     public InformationSchema withDomains(Domain... values) {
         if (values!= null) {
             for (Domain value: values) {
@@ -816,6 +852,7 @@ public class InformationSchema implements Serializable, XMLAppendable
         builder.append("check_constraints", "check_constraint", checkConstraints);
         builder.append("user_defined_types", "userDefinedType", userDefinedTypes);
         builder.append("attributes", "attribute", attributes);
+        builder.append("direct_supertypes", "directSupertype", directSupertypes);
         builder.append("domains", "domain", domains);
         builder.append("domain_constraints", "domainConstraint", domainConstraints);
         builder.append("indexes", "index", indexes);
@@ -954,6 +991,15 @@ public class InformationSchema implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if ((directSupertypes == null)||directSupertypes.isEmpty()) {
+            if ((other.directSupertypes!= null)&&(!other.directSupertypes.isEmpty())) {
+                return false;
+            }
+        } else {
+            if (!directSupertypes.equals(other.directSupertypes)) {
+                return false;
+            }
+        }
         if ((domains == null)||domains.isEmpty()) {
             if ((other.domains!= null)&&(!other.domains.isEmpty())) {
                 return false;
@@ -1054,6 +1100,7 @@ public class InformationSchema implements Serializable, XMLAppendable
         result = ((prime*result)+(((checkConstraints == null)||checkConstraints.isEmpty())? 0 :checkConstraints.hashCode()));
         result = ((prime*result)+(((userDefinedTypes == null)||userDefinedTypes.isEmpty())? 0 :userDefinedTypes.hashCode()));
         result = ((prime*result)+(((attributes == null)||attributes.isEmpty())? 0 :attributes.hashCode()));
+        result = ((prime*result)+(((directSupertypes == null)||directSupertypes.isEmpty())? 0 :directSupertypes.hashCode()));
         result = ((prime*result)+(((domains == null)||domains.isEmpty())? 0 :domains.hashCode()));
         result = ((prime*result)+(((domainConstraints == null)||domainConstraints.isEmpty())? 0 :domainConstraints.hashCode()));
         result = ((prime*result)+(((indexes == null)||indexes.isEmpty())? 0 :indexes.hashCode()));

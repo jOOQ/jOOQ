@@ -29,9 +29,6 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *         &lt;element name="user_defined_type_category" type="{http://www.jooq.org/xsd/jooq-meta-3.21.0.xsd}UserDefinedTypeCategory" minOccurs="0"/&gt;
  *         &lt;element name="is_instantiable" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
  *         &lt;element name="is_final" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="super_type_catalog" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="super_type_schema" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="super_type_name" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="comment" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *       &lt;/all&gt;
  *     &lt;/restriction&gt;
@@ -68,15 +65,6 @@ public class UserDefinedType implements Serializable, XMLAppendable
     protected Boolean isInstantiable;
     @XmlElement(name = "is_final")
     protected Boolean isFinal;
-    @XmlElement(name = "super_type_catalog")
-    @XmlJavaTypeAdapter(StringAdapter.class)
-    protected String superTypeCatalog;
-    @XmlElement(name = "super_type_schema")
-    @XmlJavaTypeAdapter(StringAdapter.class)
-    protected String superTypeSchema;
-    @XmlElement(name = "super_type_name")
-    @XmlJavaTypeAdapter(StringAdapter.class)
-    protected String superTypeName;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String comment;
 
@@ -160,30 +148,6 @@ public class UserDefinedType implements Serializable, XMLAppendable
         this.isFinal = value;
     }
 
-    public String getSuperTypeCatalog() {
-        return superTypeCatalog;
-    }
-
-    public void setSuperTypeCatalog(String value) {
-        this.superTypeCatalog = value;
-    }
-
-    public String getSuperTypeSchema() {
-        return superTypeSchema;
-    }
-
-    public void setSuperTypeSchema(String value) {
-        this.superTypeSchema = value;
-    }
-
-    public String getSuperTypeName() {
-        return superTypeName;
-    }
-
-    public void setSuperTypeName(String value) {
-        this.superTypeName = value;
-    }
-
     public String getComment() {
         return comment;
     }
@@ -222,21 +186,6 @@ public class UserDefinedType implements Serializable, XMLAppendable
         return this;
     }
 
-    public UserDefinedType withSuperTypeCatalog(String value) {
-        setSuperTypeCatalog(value);
-        return this;
-    }
-
-    public UserDefinedType withSuperTypeSchema(String value) {
-        setSuperTypeSchema(value);
-        return this;
-    }
-
-    public UserDefinedType withSuperTypeName(String value) {
-        setSuperTypeName(value);
-        return this;
-    }
-
     public UserDefinedType withComment(String value) {
         setComment(value);
         return this;
@@ -250,9 +199,6 @@ public class UserDefinedType implements Serializable, XMLAppendable
         builder.append("user_defined_type_category", userDefinedTypeCategory);
         builder.append("is_instantiable", isInstantiable);
         builder.append("is_final", isFinal);
-        builder.append("super_type_catalog", superTypeCatalog);
-        builder.append("super_type_schema", superTypeSchema);
-        builder.append("super_type_name", superTypeName);
         builder.append("comment", comment);
     }
 
@@ -329,33 +275,6 @@ public class UserDefinedType implements Serializable, XMLAppendable
                 return false;
             }
         }
-        if (superTypeCatalog == null) {
-            if (other.superTypeCatalog!= null) {
-                return false;
-            }
-        } else {
-            if (!superTypeCatalog.equals(other.superTypeCatalog)) {
-                return false;
-            }
-        }
-        if (superTypeSchema == null) {
-            if (other.superTypeSchema!= null) {
-                return false;
-            }
-        } else {
-            if (!superTypeSchema.equals(other.superTypeSchema)) {
-                return false;
-            }
-        }
-        if (superTypeName == null) {
-            if (other.superTypeName!= null) {
-                return false;
-            }
-        } else {
-            if (!superTypeName.equals(other.superTypeName)) {
-                return false;
-            }
-        }
         if (comment == null) {
             if (other.comment!= null) {
                 return false;
@@ -378,9 +297,6 @@ public class UserDefinedType implements Serializable, XMLAppendable
         result = ((prime*result)+((userDefinedTypeCategory == null)? 0 :userDefinedTypeCategory.hashCode()));
         result = ((prime*result)+((isInstantiable == null)? 0 :isInstantiable.hashCode()));
         result = ((prime*result)+((isFinal == null)? 0 :isFinal.hashCode()));
-        result = ((prime*result)+((superTypeCatalog == null)? 0 :superTypeCatalog.hashCode()));
-        result = ((prime*result)+((superTypeSchema == null)? 0 :superTypeSchema.hashCode()));
-        result = ((prime*result)+((superTypeName == null)? 0 :superTypeName.hashCode()));
         result = ((prime*result)+((comment == null)? 0 :comment.hashCode()));
         return result;
     }

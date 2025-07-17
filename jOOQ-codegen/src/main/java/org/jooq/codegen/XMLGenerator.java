@@ -82,6 +82,7 @@ import org.jooq.util.xml.jaxb.Attribute;
 import org.jooq.util.xml.jaxb.Catalog;
 import org.jooq.util.xml.jaxb.CheckConstraint;
 import org.jooq.util.xml.jaxb.Column;
+import org.jooq.util.xml.jaxb.DirectSupertype;
 import org.jooq.util.xml.jaxb.Index;
 import org.jooq.util.xml.jaxb.IndexColumnUsage;
 import org.jooq.util.xml.jaxb.InformationSchema;
@@ -170,9 +171,16 @@ public class XMLGenerator extends AbstractGenerator {
                     udt.setUserDefinedTypeCategory(UserDefinedTypeCategory.STRUCTURED);
 
                     if (u.getSupertype() != null) {
-                        udt.setSuperTypeCatalog(u.getSupertype().getCatalog().getOutputName());
-                        udt.setSuperTypeSchema(u.getSupertype().getSchema().getOutputName());
-                        udt.setSuperTypeName(u.getSupertype().getOutputName());
+                        DirectSupertype sup = new DirectSupertype();
+
+                        sup.setUdtCatalog(catalogName);
+                        sup.setUdtSchema(schemaName);
+                        sup.setUdtName(udtName);
+                        sup.setSupertypeCatalog(u.getSupertype().getCatalog().getOutputName());
+                        sup.setSupertypeSchema(u.getSupertype().getSchema().getOutputName());
+                        sup.setSupertypeName(u.getSupertype().getOutputName());
+
+                        is.getDirectSupertypes().add(sup);
                     }
 
                     udt.setIsInstantiable(u.isInstantiable());

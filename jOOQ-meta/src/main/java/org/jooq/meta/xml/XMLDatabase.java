@@ -124,6 +124,7 @@ import org.jooq.util.jaxb.tools.MiniJAXB;
 import org.jooq.util.xml.jaxb.Attribute;
 import org.jooq.util.xml.jaxb.CheckConstraint;
 import org.jooq.util.xml.jaxb.Column;
+import org.jooq.util.xml.jaxb.DirectSupertype;
 import org.jooq.util.xml.jaxb.Index;
 import org.jooq.util.xml.jaxb.IndexColumnUsage;
 import org.jooq.util.xml.jaxb.InformationSchema;
@@ -149,12 +150,14 @@ import org.jooq.util.xml.jaxb.View;
  */
 public class XMLDatabase extends AbstractDatabase {
 
-    private static final JooqLogger log        = JooqLogger.getLogger(XMLDatabase.class);
+    private static final JooqLogger  log = JooqLogger.getLogger(XMLDatabase.class);
 
-    InformationSchema               info;
-    Map<Name, List<Column>>         columnsByTableName;
-    Map<Name, List<Parameter>>      parametersByRoutineName;
-    Map<Name, List<Attribute>>      attributesByUDTName;
+    InformationSchema                info;
+    Map<Name, List<Column>>          columnsByTableName;
+    Map<Name, List<Parameter>>       parametersByRoutineName;
+    Map<Name, List<Attribute>>       attributesByUDTName;
+    Map<Name, UserDefinedType>       userDefinedTypeByUDTName;
+    Map<Name, List<UserDefinedType>> supertypesByUDTName;
 
     private InformationSchema info() {
         if (info == null) {
@@ -712,17 +715,22 @@ public class XMLDatabase extends AbstractDatabase {
         for (UserDefinedType udt : info().getUserDefinedTypes()) {
             if (getInputSchemata().contains(udt.getUserDefinedTypeSchema())) {
                 SchemaDefinition schema = getSchema(udt.getUserDefinedTypeSchema());
-                SchemaDefinition superTypeSchema = isEmpty(udt.getSuperTypeName())
+                List<UserDefinedType> supertypes = getSupertypesByUDTName(name(udt.getUserDefinedTypeCatalog(), udt.getUserDefinedTypeSchema(), udt.getUserDefinedTypeName()));
+
+                SchemaDefinition supertypeSchema = supertypes == null || supertypes.isEmpty()
                     ? null
-                    : getSchema(udt.getUserDefinedTypeSchema());
+                    : getSchema(supertypes.get(0).getUserDefinedTypeSchema());
+                String supertypeName = supertypes == null || supertypes.isEmpty()
+                    ? null
+                    : supertypes.get(0).getUserDefinedTypeName();
 
                 result.add(new XMLUDTDefinition(
                     schema,
                     info(),
                     udt,
                     udt.getComment(),
-                    superTypeSchema,
-                    udt.getSuperTypeName(),
+                    supertypeSchema,
+                    supertypeName,
                     !FALSE.equals(udt.isIsInstantiable())
                 ));
             }
@@ -785,7 +793,7 @@ public class XMLDatabase extends AbstractDatabase {
         return l == null ? 0L : l.longValue();
     }
 
-    List<Column> getColumnsByTableName(Name tableName) {
+    final List<Column> getColumnsByTableName(Name tableName) {
         if (columnsByTableName == null) {
             columnsByTableName = new LinkedHashMap<>();
 
@@ -800,7 +808,7 @@ public class XMLDatabase extends AbstractDatabase {
         return columnsByTableName.get(tableName);
     }
 
-    List<Attribute> getAttributesByUDTName(Name udtName) {
+    final List<Attribute> getAttributesByUDTName(Name udtName) {
         if (attributesByUDTName == null) {
             attributesByUDTName = new LinkedHashMap<>();
 
@@ -815,7 +823,37 @@ public class XMLDatabase extends AbstractDatabase {
         return attributesByUDTName.get(udtName);
     }
 
-    List<Parameter> getParametersByRoutineName(Name specificName) {
+    final UserDefinedType getUserDefinedTypeByUDTName(Name udtName) {
+        if (userDefinedTypeByUDTName == null) {
+            userDefinedTypeByUDTName = new LinkedHashMap<>();
+
+            for (UserDefinedType udt : info().getUserDefinedTypes()) {
+                userDefinedTypeByUDTName.put(
+                    name(udt.getUserDefinedTypeCatalog(), udt.getUserDefinedTypeSchema(), udt.getUserDefinedTypeName()),
+                    udt
+                );
+            }
+        }
+
+        return userDefinedTypeByUDTName.get(udtName);
+    }
+
+    final List<UserDefinedType> getSupertypesByUDTName(Name udtName) {
+        if (supertypesByUDTName == null) {
+            supertypesByUDTName = new LinkedHashMap<>();
+
+            for (DirectSupertype supertype : info().getDirectSupertypes()) {
+                supertypesByUDTName.computeIfAbsent(
+                    name(supertype.getUdtCatalog(), supertype.getUdtSchema(), supertype.getUdtName()),
+                    n -> new ArrayList<>()
+                ).add(getUserDefinedTypeByUDTName(name(supertype.getSupertypeCatalog(), supertype.getSupertypeSchema(), supertype.getSupertypeName())));
+            }
+        }
+
+        return supertypesByUDTName.get(udtName);
+    }
+
+    final List<Parameter> getParametersByRoutineName(Name specificName) {
         if (parametersByRoutineName == null) {
             parametersByRoutineName = new LinkedHashMap<>();
 

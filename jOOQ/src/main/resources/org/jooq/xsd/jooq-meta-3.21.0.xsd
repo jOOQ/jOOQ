@@ -23,6 +23,7 @@
                 <element name="check_constraints" type="tns:CheckConstraints" minOccurs="0" maxOccurs="1" />
                 <element name="user_defined_types" type="tns:UserDefinedTypes" minOccurs="0" maxOccurs="1" />
                 <element name="attributes" type="tns:Attributes" minOccurs="0" maxOccurs="1" />
+                <element name="direct_supertypes" type="tns:DirectSupertypes" minOccurs="0" maxOccurs="1" />
                 <element name="domains" type="tns:Domains" minOccurs="0" maxOccurs="1" />
                 <element name="domain_constraints" type="tns:DomainConstraints" minOccurs="0" maxOccurs="1" />
                 <element name="indexes" type="tns:Indexes" minOccurs="0" maxOccurs="1" />
@@ -130,9 +131,6 @@
             <element name="user_defined_type_category" type="tns:UserDefinedTypeCategory" minOccurs="0" maxOccurs="1" />
             <element name="is_instantiable" type="boolean" minOccurs="0" maxOccurs="1" />
             <element name="is_final" type="boolean" minOccurs="0" maxOccurs="1" />
-            <element name="super_type_catalog" type="string" minOccurs="0" maxOccurs="1" />
-            <element name="super_type_schema" type="string" minOccurs="0" maxOccurs="1" />
-            <element name="super_type_name" type="string" minOccurs="0" maxOccurs="1" />
             <element name="comment" type="string" minOccurs="0" maxOccurs="1" />
         </all>
     </complexType>
@@ -159,6 +157,23 @@
             <element name="attribute_udt_schema" type="string" minOccurs="0" maxOccurs="1" />
             <element name="attribute_udt_name" type="string" minOccurs="0" maxOccurs="1" />
             <element name="comment" type="string" minOccurs="0" maxOccurs="1" />
+        </all>
+    </complexType>
+
+    <complexType name="DirectSupertypes">
+        <sequence>
+            <element name="directSupertype" type="tns:DirectSupertype" minOccurs="0" maxOccurs="unbounded"/>
+        </sequence>
+    </complexType>
+    
+    <complexType name="DirectSupertype">
+        <all>
+            <element name="udt_catalog" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="udt_schema" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="udt_name" type="string" minOccurs="1" maxOccurs="1" />
+            <element name="supertype_catalog" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="supertype_schema" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="supertype_name" type="string" minOccurs="1" maxOccurs="1" />
         </all>
     </complexType>
     

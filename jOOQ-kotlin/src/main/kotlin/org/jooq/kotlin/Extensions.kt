@@ -739,6 +739,17 @@ fun MutableList<Attribute>.attribute(block: Attribute.() -> Unit) {
     add(e)
 }
 
+fun InformationSchema.directSupertypes(block: MutableList<DirectSupertype>.() -> Unit) {
+    block(directSupertypes)
+}
+
+@JvmName("mutableListDirectSupertype")
+fun MutableList<DirectSupertype>.directSupertype(block: DirectSupertype.() -> Unit) {
+    val e = DirectSupertype()
+    block(e)
+    add(e)
+}
+
 fun InformationSchema.domains(block: MutableList<org.jooq.util.xml.jaxb.Domain>.() -> Unit) {
     block(domains)
 }

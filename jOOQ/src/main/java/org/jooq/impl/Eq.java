@@ -104,7 +104,28 @@ implements
 
 
 
-        Eq.acceptCompareCondition(ctx, this, arg1, org.jooq.Comparator.EQUALS, arg2, RowN::eq, RowN::eq, (c, a1, a2) -> c.visit(a1).sql(" = ").visit(a2));
+        Eq.acceptCompareCondition(ctx,
+            this,
+            arg1,
+            org.jooq.Comparator.EQUALS,
+            arg2,
+            RowN::eq,
+            RowN::eq,
+            (c, a1, a2) -> {
+                switch (c.family()) {
+
+
+
+
+
+
+
+
+                    default:
+                        return c.visit(a1).sql(" = ").visit(a2);
+                }
+            }
+        );
     }
 
     @Override

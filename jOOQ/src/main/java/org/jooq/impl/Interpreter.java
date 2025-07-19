@@ -2244,7 +2244,7 @@ final class Interpreter {
         }
 
         final List<MutableType> allTypes() {
-            return new AbstractList<>() {
+            return new AbstractList<MutableType>() {
                 @Override
                 public int size() {
                     return domains.size() + udts.size();

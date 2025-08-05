@@ -2261,7 +2261,7 @@ final class Interpreter {
                     if (index < udts.size())
                         return udts.get(index);
 
-                    throw new IndexOutOfBoundsException(index0);
+                    throw new IndexOutOfBoundsException("" + index0);
                 }
             };
         }

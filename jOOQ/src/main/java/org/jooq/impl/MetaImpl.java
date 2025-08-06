@@ -1657,6 +1657,13 @@ final class MetaImpl extends AbstractMeta {
 
 
 
+
+
+
+
+
+
+
                     // [#17284] Computed columns are reported as defaults
                     case DERBY:
                         if (defaultValue != null && defaultValue.toUpperCase().startsWith("GENERATED ALWAYS AS")) {

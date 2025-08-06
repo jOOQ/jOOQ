@@ -49,11 +49,14 @@ import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.SQLITE;
 // ...
+import static org.jooq.conf.RenderQuotedNames.EXPLICIT_DEFAULT_QUOTED;
+import static org.jooq.impl.DSL.catalog;
 import static org.jooq.impl.DSL.concat;
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.partitionBy;
@@ -355,6 +358,7 @@ public abstract class AbstractDatabase implements Database {
     private transient Map<SchemaDefinition, List<RoutineDefinition>>             routinesBySchema;
     private transient Map<SchemaDefinition, List<PackageDefinition>>             packagesBySchema;
     private transient boolean                                                    initialised;
+    private transient Set<CatalogDefinition>                                     unusableCatalogs                        = new HashSet<>();
 
     // Other caches
     private final List<Definition>                                               all;
@@ -419,6 +423,47 @@ public abstract class AbstractDatabase implements Database {
 
     public boolean requireCommercial(Supplier<String> logMessage) {
         return create().configuration().requireCommercial(logMessage);
+    }
+
+    protected final void forEachCatalog(Consumer<? super CatalogDefinition> runnable) {
+        catalogLoop:
+        for (CatalogDefinition catalog : getCatalogs()) {
+            if (!unusableCatalogs.contains(catalog)) {
+                try {
+                    use(catalog);
+                }
+                catch (Exception e) {
+                    Logging.log(
+                        onMetadataProblem(),
+                        () -> "Catalog not usable: " + e.getMessage(),
+                        e
+                    );
+
+                    unusableCatalogs.add(catalog);
+                    continue catalogLoop;
+                }
+
+                try {
+                    runnable.accept(catalog);
+                }
+                catch (Exception e) {
+                    log.error("Could not run for catalog " + catalog, e);
+                }
+            }
+        }
+    }
+
+    public final void use(CatalogDefinition catalog) {
+
+        // Some dialect's INFORMATION_SCHEMA only produces content from
+        // the "current" database / catalog.
+        if (!catalog.isDefaultCatalog()) {
+            DSLContext ctx = create(true);
+
+            // [#9511] [#10751] USE command must use quoted identifiers
+            ctx.settings().setRenderQuotedNames(EXPLICIT_DEFAULT_QUOTED);
+            ctx.setCatalog(catalog(name(catalog.getName()))).execute();
+        }
     }
 
     @Override

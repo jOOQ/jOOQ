@@ -11986,12 +11986,12 @@ public class JavaGenerator extends AbstractGenerator {
             // [#18827] In some cases, we can't report the length/precision/scale from jOOQ-meta
             //          as it isn't encoded formally in the INFORMATION_SCHEMA (e.g. array component type length),
             //          but it's available in text form
-            if (dataType.precisionDefined() && precision == 0)
-                precision = dataType.precision();
-            if (dataType.scaleDefined() && scale == 0)
-                scale = dataType.scale();
-            if (dataType.lengthDefined() && length == 0)
-                length = dataType.length();
+            if (dataType.precisionDefined() && p == 0)
+                p = dataType.precision();
+            if (dataType.scaleDefined() && s == 0)
+                s = dataType.scale();
+            if (dataType.lengthDefined() && l == 0)
+                l = dataType.length();
 
             // If there is a standard SQLDataType available for the dialect-
             // specific DataType t, then reference that one.

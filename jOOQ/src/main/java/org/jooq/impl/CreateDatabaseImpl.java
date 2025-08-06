@@ -111,7 +111,19 @@ implements
     }
 
     private final void accept0(Context<?> ctx) {
-        ctx.visit(K_CREATE).sql(' ').visit(K_DATABASE);
+        ctx.visit(K_CREATE).sql(' ');
+
+        switch (ctx.family()) {
+
+
+
+
+
+
+            default:
+                ctx.visit(K_DATABASE);
+                break;
+        }
 
         if (ifNotExists && supportsIfNotExists(ctx))
             ctx.sql(' ').visit(K_IF_NOT_EXISTS);

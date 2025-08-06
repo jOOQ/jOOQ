@@ -111,12 +111,29 @@ implements
     }
 
     private void accept0(Context<?> ctx) {
-        ctx.visit(K_DROP).sql(' ').visit(K_DATABASE);
+        ctx.visit(K_DROP).sql(' ');
+
+        switch (ctx.family()) {
+
+
+
+
+
+
+            default:
+                ctx.visit(K_DATABASE);
+                break;
+        }
 
         if (ifExists && supportsIfExists(ctx))
             ctx.sql(' ').visit(K_IF_EXISTS);
 
         ctx.sql(' ').visit(database);
+
+
+
+
+
     }
 
 

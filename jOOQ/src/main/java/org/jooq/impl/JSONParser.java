@@ -160,13 +160,21 @@ final class JSONParser extends AbstractParseContext {
     private final String parseStringLiteral() {
         parse('"', false);
 
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = null;
+        int p0 = position();
+        int p1 = p0;
 
-        for (int i = position(); i < chars.length; i++) {
+        for (int i = p0; i < chars.length; i++) {
             char c1 = character(i);
 
             switch (c1) {
                 case '\\': {
+                    if (sb == null) {
+                        sb = new StringBuilder();
+                        sb.append(chars, p0, i - p0);
+                    }
+                    else
+                        sb.append(chars, p1, i - p1);
 
                     i++;
                     char c2 = character(i);
@@ -200,17 +208,23 @@ final class JSONParser extends AbstractParseContext {
                             break;
                     }
 
+                    p1 = i + 1;
+                    sb.append(c1);
                     break;
                 }
 
                 case '"': {
                     position(i + 1);
                     parseWhitespaceIf();
-                    return sb.toString();
+
+                    if (sb != null) {
+                        sb.append(chars, p1, i - p1);
+                        return sb.toString();
+                    }
+                    else
+                        return new String(chars, p0, i - p0);
                 }
             }
-
-            sb.append(c1);
         }
 
         throw exception("String literal not terminated");

@@ -47,6 +47,8 @@ import static org.jooq.DatePart.HOUR;
 import static org.jooq.DatePart.MINUTE;
 import static org.jooq.DatePart.MONTH;
 import static org.jooq.DatePart.SECOND;
+import static org.jooq.JSON.json;
+import static org.jooq.JSONB.jsonb;
 import static org.jooq.JoinType.JOIN;
 // ...
 // ...
@@ -11268,10 +11270,15 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
     }
 
     private final Field<?> parseFieldJSONLiteralIf() {
-        if (parseKeywordIf("JSON")) {
+        boolean jsonb = parseKeywordIf("JSONB");
+        boolean json = !jsonb && parseKeywordIf("JSON");
+
+        if (jsonb || json) {
+            String s;
+
             if (parseIf('{')) {
                 if (parseIf('}'))
-                    return jsonObject();
+                    return jsonb ? jsonbObject() : jsonObject();
 
                 List<JSONEntry<?>> entries = parseList(',', ctx -> {
                     Field key = parseField();
@@ -11280,18 +11287,21 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                 });
 
                 parse('}');
-                return jsonObject(entries);
+                return jsonb ? jsonbObject(entries) : jsonObject(entries);
             }
             else if (parseIf('[')) {
                 if (parseIf(']'))
-                    return jsonArray();
+                    return jsonb ? jsonbArray() : jsonArray();
 
                 List<Field<?>> fields = parseList(',', c -> parseField());
                 parse(']');
-                return jsonArray(fields);
+                return jsonb ? jsonbArray(fields) : jsonArray(fields);
+            }
+            else if ((s = parseStringLiteralIf()) != null) {
+                return jsonb ? inline(jsonb(s)) : inline(json(s));
             }
             else
-                throw expected("[", "{");
+                throw expected("[", "{", "string literal");
         }
 
         return null;

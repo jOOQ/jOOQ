@@ -319,7 +319,7 @@ public final class Source {
     public final String readString() throws IOException {
 
         // [#18817] Skip the allocations if we already have a string.
-        if (string != null && !resolve)
+        if (string != null)
             return string;
 
         StringWriter w = new StringWriter();

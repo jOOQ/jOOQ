@@ -4466,7 +4466,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         static final <R extends Record> Result<R> readMultisetJSON(Scope ctx, AbstractRow<R> row, Class<R> recordType, String s) {
             if (s.startsWith("{") || s.startsWith("["))
-                return new JSONReader<>(originalScope(ctx), row, recordType, true).read(new StringReader(patchSnowflakeJSON(ctx, s)), true);
+                return new JSONReader<>(originalScope(ctx), row, recordType, true).read(Source.of(patchSnowflakeJSON(ctx, s)), true);
             else
                 return readMultisetScalar(ctx, row, recordType, s);
         }

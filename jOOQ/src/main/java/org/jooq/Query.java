@@ -136,6 +136,23 @@ public interface Query extends Statement, AttachableQueryPart {
      * {@link #keepStatement(boolean)}, the underlying
      * <code>PreparedStatement</code> will be closed automatically in order for
      * new bind values to have an effect.
+     * <h3>Performance consideration</h3>
+     * <p>
+     * Historically, the bind value is
+     * inserted into the mutable {@link Query}, which means that the
+     * {@link Query} needs to be traversed in order to find the bind value and
+     * change it.
+     * <p>
+     * As such, it is usually better to supply bind values directly with the
+     * input of an expression, e.g.:
+     * <ul>
+     * <li>Directly with the {@link DSL} method, such as
+     * {@link DSL#log(Field, Field)}, for example.</li>
+     * <li>With the plain SQL template constructor, e.g.
+     * {@link DSL#field(String, Object...)}</li>
+     * <li>With the parser method, e.g.
+     * {@link Parser#parseField(String, Object...)}</li>
+     * </ul>
      *
      * @param param The named parameter name. If this is a number, then this is
      *            the same as calling {@link #bind(int, Object)}
@@ -164,6 +181,12 @@ public interface Query extends Statement, AttachableQueryPart {
      * <p>
      * Some bind values may even be repeated by a dialect specific emulation,
      * leading to duplication and index-shifting.
+     * <h3>Performance consideration</h3>
+     * <p>
+     * Historically, the bind value is
+     * inserted into the mutable {@link Query}, which means that the
+     * {@link Query} needs to be traversed in order to find the bind value and
+     * change it.
      * <p>
      * As such, it is usually better to supply bind values directly with the
      * input of an expression, e.g.:

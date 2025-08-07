@@ -61,8 +61,6 @@ import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.newRecord;
 import static org.jooq.tools.StringUtils.defaultIfBlank;
 
-import java.io.Reader;
-import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -94,28 +92,22 @@ final class JSONReader<R extends Record> {
     private final DSLContext         ctx;
     private final AbstractRow<R>     row;
     private final Class<? extends R> recordType;
-    private final boolean            multiset;
 
     JSONReader(DSLContext ctx, AbstractRow<R> row, Class<? extends R> recordType, boolean multiset) {
         this.ctx = ctx;
         this.row = row;
         this.recordType = recordType != null ? recordType : (Class<? extends R>) Record.class;
-        this.multiset = multiset;
     }
 
-    final Result<R> read(String string) {
-        return read(new StringReader(string));
+    final Result<R> read(final Source source) {
+        return read(source, false);
     }
 
-    final Result<R> read(final Reader reader) {
-        return read(reader, false);
-    }
-
-    final Result<R> read(final Reader reader, boolean multiset) {
+    final Result<R> read(final Source source, boolean ms) {
         try {
             DefaultJSONContentHandler handler = new DefaultJSONContentHandler();
-            new JSONParser(ctx, Source.of(reader).readString(), handler).parse();
-            return read(ctx, row, recordType, multiset, handler.result());
+            new JSONParser(ctx, source.readString(), handler).parse();
+            return read(ctx, row, recordType, ms, handler.result());
         }
         catch (Exception e) {
             throw new RuntimeException(e);

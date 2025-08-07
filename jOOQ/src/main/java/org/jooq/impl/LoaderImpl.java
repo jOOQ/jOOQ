@@ -686,7 +686,7 @@ final class LoaderImpl<R extends Record> implements
 
         try {
             reader = input.reader();
-            Result<Record> r = new JSONReader<>(configuration.dsl(), null, null, false).read(reader);
+            Result<Record> r = new JSONReader<>(configuration.dsl(), null, null, false).read(Source.of(reader));
             source = r.fields();
 
             // The current json format is not designed for streaming. Thats why

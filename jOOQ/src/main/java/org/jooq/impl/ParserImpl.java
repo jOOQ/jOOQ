@@ -9521,6 +9521,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                     return DSL.inline((Boolean) value);
                 else if ((field = parseTypedLiteralIf("BIGINT", BIGINT)) != null)
                     return field;
+                else if ((field = parseTypedLiteralIf("BOOLEAN", BOOLEAN)) != null)
+                    return field;
 
                 break;
 
@@ -10431,6 +10433,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
                 else if (parseFunctionNameIf("UNIX_TIMESTAMP"))
                     return epoch(parseFieldParenthesised());
+                else if ((field = parseTypedLiteralIf("UUID", SQLDataType.UUID)) != null)
+                    return field;
 
                 break;
 

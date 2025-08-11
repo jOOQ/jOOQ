@@ -710,7 +710,7 @@ public class GenerationTool {
             if (d.getEnumTypes().size() > 0)
                 log.warn("DEPRECATED", "The configuration property /configuration/generator/database/enumTypes is experimental and deprecated and will be removed in the future.");
             if (Boolean.TRUE.equals(d.isDateAsTimestamp()))
-                log.warn("DEPRECATED", "The configuration property /configuration/generator/database/dateAsTimestamp is deprecated as it is superseded by custom bindings and converters, or by using org.jooq.impl.DateAsTimestampBinding. It will thus be removed in the future. More information here: https://www.jooq.org/doc/latest/manual/reference/reference-data-types/data-types-oracle-date/");
+                log.warn("DEPRECATED", "The configuration property /configuration/generator/database/dateAsTimestamp is deprecated as it is superseded by custom bindings and converters, or by using org.jooq.impl.DateAsTimestampBinding or org.jooq.impl.LocalDateAsLocalDateTimeBinding. It will thus be removed in the future. More information here: https://www.jooq.org/doc/latest/manual/reference/reference-data-types/data-types-oracle-date/");
             if (Boolean.TRUE.equals(d.isIgnoreProcedureReturnValues()))
                 log.warn("DEPRECATED", "The <ignoreProcedureReturnValues/> flag is deprecated and used for backwards-compatibility only. It will be removed in the future.");
 

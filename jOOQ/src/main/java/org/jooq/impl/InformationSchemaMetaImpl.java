@@ -811,7 +811,13 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
         DataType<?> type = null;
 
         try {
-            type = DefaultDataType.getDataType(configuration.family(), typeName);
+            type = DefaultDataType.getDataType(
+                configuration.family(),
+                typeName,
+                Math.max(length, precision),
+                scale,
+                !FALSE.equals(configuration.settings().isForceIntegerTypesOnZeroScaleDecimals())
+            );
 
             if (nullable != null)
                 type = type.nullable(nullable);

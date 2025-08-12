@@ -72,7 +72,7 @@ final class FilteredMeta extends AbstractMeta {
 
     private final AbstractMeta                        meta;
     private final Predicate<? super Table<?>>         tableFilter;
-    private final Predicate<? super UDT<?>>        udtFilter;
+    private final Predicate<? super UDT<?>>           udtFilter;
     private final Predicate<? super Domain<?>>        domainFilter;
 
 

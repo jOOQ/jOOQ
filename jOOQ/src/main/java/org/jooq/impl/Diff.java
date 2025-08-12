@@ -87,6 +87,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.function.ToLongFunction;
+import java.util.regex.Pattern;
 
 import org.jooq.AlterSequenceFlagsStep;
 import org.jooq.Catalog;
@@ -117,7 +118,9 @@ import org.jooq.Table;
 import org.jooq.TableOptions.TableType;
 // ...
 import org.jooq.UniqueKey;
+import org.jooq.conf.ParseUnknownFunctions;
 import org.jooq.conf.Settings;
+import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 
 /**
@@ -127,7 +130,9 @@ import org.jooq.tools.StringUtils;
  */
 final class Diff extends AbstractScope {
 
+    private static final JooqLogger      log                 = JooqLogger.getLogger(Diff.class);
     private static final Set<SQLDialect> NO_SUPPORT_PK_NAMES = SQLDialect.supportedBy(IGNITE, MARIADB, MYSQL);
+    private static final Pattern         P_CREATE            = Pattern.compile("^(?ism:\\s*CREATE.*)$");
 
     private final MigrationConfiguration migrateConf;
     private final DDLExportConfiguration exportConf;
@@ -458,8 +463,13 @@ final class Diff extends AbstractScope {
 
             if (v1 && v2 || m1 && m2) {
                 if (!Arrays.equals(t1.fields(), t2.fields())
-                      || t2.getOptions().select() != null && !t2.getOptions().select().equals(t1.getOptions().select())
-                      || t2.getOptions().source() != null && !t2.getOptions().source().equals(t1.getOptions().source())) {
+                      || t2.getOptions().select() != null
+                              && t1.getOptions().select() != null
+                              && !t2.getOptions().select().equals(t1.getOptions().select())
+                      || t2.getOptions().source() != null
+                              && !t2.getOptions().source().equals(t1.getOptions().source())
+                              && !parseEquals(t2, t2.getOptions().source(), t1, t1.getOptions().source())
+                ) {
                     replaceView(r, t1, t2, true);
                     return;
                 }
@@ -494,6 +504,57 @@ final class Diff extends AbstractScope {
                     r.queries.add(ctx.commentOnMaterializedView(t2).is(c2));
                 else
                     r.queries.add(ctx.commentOnTable(t2).is(c2));
+        }
+
+        private boolean parseEquals(Table<?> t2, String s2, Table<?> t1, String s1) {
+            if (!FALSE.equals(settings().isMigrationIgnoreWhitespaceDiffs())) {
+                String s2q = s2;
+                String s2u = s2;
+                String s1q = s1;
+                String s1u = s1;
+
+                // [#18818] [#18857] When prefixing view sources with CREATE VIEW in
+                //                   MetaSQL or MetaImpl, we don't always qualify the view.
+                //                   Also, some RDBMS may report unqualified view names.
+                //                   Let's be lenient here, as the diff already organises
+                //                   its traversal by schema, so we can ignore the qualification.
+                if (!P_CREATE.matcher(s2).matches()) {
+                    s2q = "create view " + t2.getQualifiedName() + " as " + s2;
+                    s2u = "create view " + t2.getUnqualifiedName() + " as " + s2;
+                }
+                if (!P_CREATE.matcher(s1).matches()) {
+                    s1q = "create view " + t1.getQualifiedName() + " as " + s1;
+                    s1u = "create view " + t1.getUnqualifiedName() + " as " + s1;
+                }
+
+                Query q2q = parseCreateView(s2q);
+                Query q2u = parseCreateView(s2u);
+                Query q1q = parseCreateView(s1q);
+                Query q1u = parseCreateView(s1u);
+
+                if (q2q != null && q2u != null && q1q != null && q1u != null)
+                    return q2q.equals(q1q)
+                        || q2u.equals(q1u);
+            }
+
+            return false;
+        }
+
+        private Query parseCreateView(String sql) {
+            try {
+                return dsl()
+                    .configuration()
+                    .deriveSettings(s -> s
+                        .withParseDialect(dialect())
+                        .withParseUnknownFunctions(ParseUnknownFunctions.IGNORE))
+                    .dsl()
+                    .parser()
+                    .parseQuery(sql);
+            }
+            catch (ParserException e) {
+                log.info("Cannot parse view source (to skip parsing, use Settings.migrationIgnoreWhitespaceDiffs): " + sql, e);
+                return null;
+            }
         }
 
         private void replaceView(DiffResult r, Table<?> v1, Table<?> v2, boolean canReplace) {

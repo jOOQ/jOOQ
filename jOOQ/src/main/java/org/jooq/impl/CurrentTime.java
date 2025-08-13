@@ -43,6 +43,7 @@ import static org.jooq.impl.Keywords.K_TIME;
 import static org.jooq.impl.Names.N_CONVERT;
 import static org.jooq.impl.Names.N_CURRENT_TIME;
 import static org.jooq.impl.Names.N_CURRENT_TIMESTAMP;
+import static org.jooq.impl.SQLDataType.TIME;
 
 import java.sql.Time;
 
@@ -107,8 +108,13 @@ final class CurrentTime<T> extends AbstractField<T> implements QOM.CurrentTime<T
                 ctx.visit(N_CURRENT_TIME).sql("()");
                 break;
 
+            // [#18865] DuckDB's CURRENT_TIME expression is of type TIMETZ
+            case DUCKDB:
+                Cast.renderCast(ctx, c -> c.visit(N_CURRENT_TIME), c -> c.visit(K_TIME));
+                break;
+
             default:
-                ctx.visit(K_CURRENT).sql('_').visit(K_TIME);
+                ctx.visit(N_CURRENT_TIME);
                 break;
         }
     }

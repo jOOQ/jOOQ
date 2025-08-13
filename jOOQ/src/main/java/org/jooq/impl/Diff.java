@@ -60,6 +60,7 @@ import static org.jooq.impl.ConstraintType.UNIQUE;
 import static org.jooq.impl.CreateTableImpl.SUPPORT_NULLABLE_PRIMARY_KEY;
 import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.impl.HistoryImpl.initCtx;
+import static org.jooq.impl.Tools.NO_SUPPORT_TIMESTAMPTZ_PRECISION;
 import static org.jooq.impl.Tools.NO_SUPPORT_TIMESTAMP_PRECISION;
 import static org.jooq.impl.Tools.NO_SUPPORT_TIME_PRECISION;
 import static org.jooq.impl.Tools.allMatch;
@@ -682,7 +683,10 @@ final class Diff extends AbstractScope {
                     if ((type.isTime() || type.isTimeWithTimeZone()) && NO_SUPPORT_TIME_PRECISION.contains(ctx.dialect()))
                         return true;
 
-                    if (!type.isTime() && !type.isTimeWithTimeZone() && NO_SUPPORT_TIMESTAMP_PRECISION.contains(ctx.dialect()))
+                    if (type.isTimestampWithTimeZone() && NO_SUPPORT_TIMESTAMPTZ_PRECISION.contains(ctx.dialect()))
+                        return true;
+
+                    if (!type.isTime() && !type.isTimeWithTimeZone() && !type.isTimestampWithTimeZone() && NO_SUPPORT_TIMESTAMP_PRECISION.contains(ctx.dialect()))
                         return true;
 
                     if (FALSE.equals(ctx.settings().isMigrationIgnoreDefaultTimestampPrecisionDiffs()))

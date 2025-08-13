@@ -186,8 +186,6 @@ public class DataAccessException extends RuntimeException {
             return SQLStateClass.fromSQLiteVendorCode(e.getErrorCode());
         else if (causePrefix(e, "io.trino"))
             return SQLStateClass.fromTrinoVendorCode(e.getErrorCode());
-        else if (e.getMessage().toLowerCase().contains("constraint"))
-            return SQLStateClass.C23_INTEGRITY_CONSTRAINT_VIOLATION;
         else
             return SQLStateClass.NONE;
     }

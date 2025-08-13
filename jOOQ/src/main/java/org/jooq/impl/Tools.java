@@ -3667,10 +3667,7 @@ final class Tools {
                     case DUCKDB: {
                         String m = e.getMessage().toLowerCase();
 
-                        if (m.contains("constraint violated: duplicate key")
-                            || m.contains("constraint error: duplicate key")
-                            || m.contains("constraint error: not null constraint failed")
-                            || m.contains("constraint error: check constraint failed"))
+                        if (m.contains("constraint"))
                             return new IntegrityConstraintViolationException("SQL [" + sql + "]; " + e.getMessage(), e);
                     }
 

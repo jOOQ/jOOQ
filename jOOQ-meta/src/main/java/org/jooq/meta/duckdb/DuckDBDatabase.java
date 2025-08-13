@@ -288,7 +288,7 @@ public class DuckDBDatabase extends AbstractDatabase implements ResultQueryDatab
             CatalogDefinition catalog = getCatalog(record.get("database_name", String.class));
 
             if (catalog != null) {
-                SchemaDefinition schema = getSchema(record.get("schema_name", String.class));
+                SchemaDefinition schema = catalog.getSchema(record.get("schema_name", String.class));
 
                 if (schema != null) {
                     DataTypeDefinition type = new DefaultDataTypeDefinition(

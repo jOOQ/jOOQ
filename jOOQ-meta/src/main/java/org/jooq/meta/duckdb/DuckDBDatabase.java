@@ -253,7 +253,9 @@ public class DuckDBDatabase extends AbstractDatabase implements ResultQueryDatab
                 .on(pkKcu.CONSTRAINT_SCHEMA.eq(TABLE_CONSTRAINTS.CONSTRAINT_SCHEMA))
                 .and(pkKcu.CONSTRAINT_NAME.eq(TABLE_CONSTRAINTS.CONSTRAINT_NAME))
                 .and(pkKcu.ORDINAL_POSITION.eq(fkKcu.POSITION_IN_UNIQUE_CONSTRAINT.coerce(pkKcu.ORDINAL_POSITION)))
-            .where(fkKcu.TABLE_SCHEMA.in(getInputSchemata()))
+            .where(row(fkKcu.TABLE_CATALOG, fkKcu.TABLE_SCHEMA).in(
+                getInputCatalogsAndSchemata().stream().map(e -> row(e.getKey(), e.getValue())).collect(toList())
+            ))
             .orderBy(
                 fkKcu.TABLE_SCHEMA.asc(),
                 fkKcu.TABLE_NAME.asc(),
@@ -463,7 +465,7 @@ public class DuckDBDatabase extends AbstractDatabase implements ResultQueryDatab
             CatalogDefinition catalog = getCatalog(record.get("database_name", String.class));
 
             if (catalog != null) {
-                SchemaDefinition schema = getSchema(record.get("schema_name", String.class));
+                SchemaDefinition schema = catalog.getSchema(record.get("schema_name", String.class));
 
                 if (schema != null) {
                     DataTypeDefinition type = new DefaultDataTypeDefinition(

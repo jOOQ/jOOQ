@@ -70,6 +70,7 @@ import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Row;
 import org.jooq.SelectField;
+import org.jooq.conf.NestedCollectionEmulation;
 import org.jooq.tools.JooqLogger;
 
 /**
@@ -133,7 +134,8 @@ implements
         Context<?> ctx,
         BooleanSupplier degreeCheck
     ) {
-        return
+        // [#18870] If users want native MULTISET / ROW behaviour, we mustn't enforce emulations
+        return ctx.settings().getEmulateMultiset() != NestedCollectionEmulation.NATIVE && (
 
             // All types of row expressions must be emulated using MULTISET
             // emulations if nested in some sort of MULTISET content
@@ -149,7 +151,8 @@ implements
                     && !ctx.predicandSubquery()
                     && !ctx.derivedTableSubquery()
                     && !ctx.setOperationSubquery()
-                    && degreeCheck.getAsBoolean();
+                    && degreeCheck.getAsBoolean()
+        );
     }
 
     static final boolean forceRowContent(Context<?> ctx) {

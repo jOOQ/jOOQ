@@ -960,9 +960,10 @@ final class MetaImpl extends AbstractMeta {
                     : M_SEQUENCES(dialect());
 
                 if (sql != null) {
-                    Result<Record> result = meta(
-                        () -> "Error while fetching sequences for schema: " + this,
-                        meta -> ctx(meta).resultQuery(sql, MetaSchema.this.getName()).fetch()
+                    Result<Record> result = meta(() -> "Error while fetching sequences for schema: " + this, meta ->
+                        withCatalog(getCatalog(), ctx(meta), ctx ->
+                            ctx.resultQuery(sql, MetaSchema.this.getName()).fetch()
+                        )
                     );
 
                     // TODO Support catalogs as well

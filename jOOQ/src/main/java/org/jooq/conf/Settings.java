@@ -517,7 +517,7 @@ public class Settings
     @XmlElement(defaultValue = "true")
     protected Boolean migrationIgnoreImplicitPrimaryKeyNotNullConstraints = true;
     @XmlElement(defaultValue = "true")
-    protected Boolean migrationIgnoreWhitespaceDiffs = true;
+    protected Boolean migrationIgnoreUnparsedDiffs = true;
     @XmlElement(type = String.class)
     @XmlJavaTypeAdapter(LocaleAdapter.class)
     protected Locale locale;
@@ -6597,27 +6597,27 @@ public class Settings
     }
 
     /**
-     * Various <code>migrateTo()</code> methods (e.g. {@link org.jooq.Meta#migrateTo(org.jooq.Meta)}) ignore differences in whitespace (and comments!) of SQL expressions, e.g. in views, stored functions, default expressions, etc. This flag allows for overriding this behaviour.
+     * Various <code>migrateTo()</code> methods (e.g. {@link org.jooq.Meta#migrateTo(org.jooq.Meta)}) ignore differences in whitespace, comments, and other non-semantic differences of SQL expressions such as <code>LEFT JOIN</code> vs <code>LEFT OUTER JOIN</code>, e.g. in views, stored functions, default expressions, etc. This flag allows for overriding this behaviour.
      * 
      * @return
      *     possible object is
      *     {@link Boolean }
      *     
      */
-    public Boolean isMigrationIgnoreWhitespaceDiffs() {
-        return migrationIgnoreWhitespaceDiffs;
+    public Boolean isMigrationIgnoreUnparsedDiffs() {
+        return migrationIgnoreUnparsedDiffs;
     }
 
     /**
-     * Various <code>migrateTo()</code> methods (e.g. {@link org.jooq.Meta#migrateTo(org.jooq.Meta)}) ignore differences in whitespace (and comments!) of SQL expressions, e.g. in views, stored functions, default expressions, etc. This flag allows for overriding this behaviour.
+     * Various <code>migrateTo()</code> methods (e.g. {@link org.jooq.Meta#migrateTo(org.jooq.Meta)}) ignore differences in whitespace, comments, and other non-semantic differences of SQL expressions such as <code>LEFT JOIN</code> vs <code>LEFT OUTER JOIN</code>, e.g. in views, stored functions, default expressions, etc. This flag allows for overriding this behaviour.
      * 
      * @param value
      *     allowed object is
      *     {@link Boolean }
      *     
      */
-    public void setMigrationIgnoreWhitespaceDiffs(Boolean value) {
-        this.migrationIgnoreWhitespaceDiffs = value;
+    public void setMigrationIgnoreUnparsedDiffs(Boolean value) {
+        this.migrationIgnoreUnparsedDiffs = value;
     }
 
     /**
@@ -9917,11 +9917,11 @@ public class Settings
     }
 
     /**
-     * Various <code>migrateTo()</code> methods (e.g. {@link org.jooq.Meta#migrateTo(org.jooq.Meta)}) ignore differences in whitespace (and comments!) of SQL expressions, e.g. in views, stored functions, default expressions, etc. This flag allows for overriding this behaviour.
+     * Various <code>migrateTo()</code> methods (e.g. {@link org.jooq.Meta#migrateTo(org.jooq.Meta)}) ignore differences in whitespace, comments, and other non-semantic differences of SQL expressions such as <code>LEFT JOIN</code> vs <code>LEFT OUTER JOIN</code>, e.g. in views, stored functions, default expressions, etc. This flag allows for overriding this behaviour.
      * 
      */
-    public Settings withMigrationIgnoreWhitespaceDiffs(Boolean value) {
-        setMigrationIgnoreWhitespaceDiffs(value);
+    public Settings withMigrationIgnoreUnparsedDiffs(Boolean value) {
+        setMigrationIgnoreUnparsedDiffs(value);
         return this;
     }
 
@@ -10516,7 +10516,7 @@ public class Settings
         builder.append("migrationIgnoreDefaultTimestampPrecisionDiffs", migrationIgnoreDefaultTimestampPrecisionDiffs);
         builder.append("migrationIgnoreUnnamedConstraintDiffs", migrationIgnoreUnnamedConstraintDiffs);
         builder.append("migrationIgnoreImplicitPrimaryKeyNotNullConstraints", migrationIgnoreImplicitPrimaryKeyNotNullConstraints);
-        builder.append("migrationIgnoreWhitespaceDiffs", migrationIgnoreWhitespaceDiffs);
+        builder.append("migrationIgnoreUnparsedDiffs", migrationIgnoreUnparsedDiffs);
         builder.append("locale", locale);
         builder.append("parseDialect", parseDialect);
         builder.append("parseLocale", parseLocale);
@@ -12508,12 +12508,12 @@ public class Settings
                 return false;
             }
         }
-        if (migrationIgnoreWhitespaceDiffs == null) {
-            if (other.migrationIgnoreWhitespaceDiffs!= null) {
+        if (migrationIgnoreUnparsedDiffs == null) {
+            if (other.migrationIgnoreUnparsedDiffs!= null) {
                 return false;
             }
         } else {
-            if (!migrationIgnoreWhitespaceDiffs.equals(other.migrationIgnoreWhitespaceDiffs)) {
+            if (!migrationIgnoreUnparsedDiffs.equals(other.migrationIgnoreUnparsedDiffs)) {
                 return false;
             }
         }
@@ -13054,7 +13054,7 @@ public class Settings
         result = ((prime*result)+((migrationIgnoreDefaultTimestampPrecisionDiffs == null)? 0 :migrationIgnoreDefaultTimestampPrecisionDiffs.hashCode()));
         result = ((prime*result)+((migrationIgnoreUnnamedConstraintDiffs == null)? 0 :migrationIgnoreUnnamedConstraintDiffs.hashCode()));
         result = ((prime*result)+((migrationIgnoreImplicitPrimaryKeyNotNullConstraints == null)? 0 :migrationIgnoreImplicitPrimaryKeyNotNullConstraints.hashCode()));
-        result = ((prime*result)+((migrationIgnoreWhitespaceDiffs == null)? 0 :migrationIgnoreWhitespaceDiffs.hashCode()));
+        result = ((prime*result)+((migrationIgnoreUnparsedDiffs == null)? 0 :migrationIgnoreUnparsedDiffs.hashCode()));
         result = ((prime*result)+((locale == null)? 0 :locale.hashCode()));
         result = ((prime*result)+((parseDialect == null)? 0 :parseDialect.hashCode()));
         result = ((prime*result)+((parseLocale == null)? 0 :parseLocale.hashCode()));

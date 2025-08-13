@@ -507,7 +507,7 @@ final class Diff extends AbstractScope {
         }
 
         private boolean parseEquals(Table<?> t2, String s2, Table<?> t1, String s1) {
-            if (!FALSE.equals(settings().isMigrationIgnoreWhitespaceDiffs())) {
+            if (!FALSE.equals(settings().isMigrationIgnoreUnparsedDiffs())) {
                 String s2q = s2;
                 String s2u = s2;
                 String s1q = s1;
@@ -552,7 +552,7 @@ final class Diff extends AbstractScope {
                     .parseQuery(sql);
             }
             catch (ParserException e) {
-                log.info("Cannot parse view source (to skip parsing, use Settings.migrationIgnoreWhitespaceDiffs): " + sql, e);
+                log.info("Cannot parse view source (to skip parsing, use Settings.migrationIgnoreUnparsedDiffs): " + sql, e);
                 return null;
             }
         }

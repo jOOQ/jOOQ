@@ -1609,8 +1609,8 @@ This setting does not affect any plain SQL usage.]]></jxb:javadoc></jxb:property
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Various <code>migrateTo()</code> methods (e.g. {@link org.jooq.Meta#migrateTo(org.jooq.Meta)}) ignore the presence or absence of implicit <code>NOT NULL</code> constraints on <code>PRIMARY KEY</code> columns if the constraint is really implicit for a given dialect. This flag allows for overriding this behaviour.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
-      <element name="migrationIgnoreWhitespaceDiffs" type="boolean" minOccurs="0" maxOccurs="1" default="true">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Various <code>migrateTo()</code> methods (e.g. {@link org.jooq.Meta#migrateTo(org.jooq.Meta)}) ignore differences in whitespace (and comments!) of SQL expressions, e.g. in views, stored functions, default expressions, etc. This flag allows for overriding this behaviour.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      <element name="migrationIgnoreUnparsedDiffs" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Various <code>migrateTo()</code> methods (e.g. {@link org.jooq.Meta#migrateTo(org.jooq.Meta)}) ignore differences in whitespace, comments, and other non-semantic differences of SQL expressions such as <code>LEFT JOIN</code> vs <code>LEFT OUTER JOIN</code>, e.g. in views, stored functions, default expressions, etc. This flag allows for overriding this behaviour.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
       <element name="locale" type="string" minOccurs="0" maxOccurs="1">

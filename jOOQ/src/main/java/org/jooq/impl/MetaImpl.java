@@ -966,7 +966,6 @@ final class MetaImpl extends AbstractMeta {
                         )
                     );
 
-                    // TODO Support catalogs as well
                     Map<Record, Result<Record>> groups = result.intoGroups(new Field[] { result.field(0), result.field(1) });
                     sequenceCache = new LinkedHashMap<>();
 

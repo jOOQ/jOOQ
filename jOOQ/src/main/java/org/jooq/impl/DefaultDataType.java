@@ -90,6 +90,7 @@ import static org.jooq.impl.SQLDataType.TINYINT;
 import static org.jooq.impl.SQLDataType.VARBINARY;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.SQLDataType.XML;
+import static org.jooq.impl.Tools.NO_SUPPORT_TIMESTAMPTZ_PRECISION;
 import static org.jooq.impl.Tools.NO_SUPPORT_TIME_PRECISION;
 import static org.jooq.impl.Tools.getRecordQualifier;
 import static org.jooq.tools.reflect.Reflect.wrapper;
@@ -1220,7 +1221,9 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
             return false;
         else if ((type.isTime() || type.isTimeWithTimeZone()) && NO_SUPPORT_TIME_PRECISION.contains(ctx.dialect()))
             return true;
-        else if (!type.isTime() && !type.isTimeWithTimeZone() && Tools.NO_SUPPORT_TIMESTAMP_PRECISION.contains(ctx.dialect()))
+        else if (type.isTimestampWithTimeZone() && NO_SUPPORT_TIMESTAMPTZ_PRECISION.contains(ctx.dialect()))
+            return true;
+        else if (!type.isTime() && !type.isTimeWithTimeZone() && !type.isTimestampWithTimeZone() && Tools.NO_SUPPORT_TIMESTAMP_PRECISION.contains(ctx.dialect()))
             return true;
         else
             return false;

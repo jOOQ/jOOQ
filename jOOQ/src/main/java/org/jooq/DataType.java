@@ -208,11 +208,11 @@ public interface DataType<T> extends Named {
      * <p>
      * <pre><code>
      * // Doesn't work
-     * DataType<UserType[]> t1 =
+     * DataType&lt;UserType[]> t1 =
      *   SQLDataType.INTEGER.asConvertedDataType(binding).getArrayDataType();
      *
      * // Works
-     * DataType<UserType[]> t2 =
+     * DataType&lt;UserType[]> t2 =
      *   SQLDataType.INTEGER.getArrayDataType().asConvertedDataType(arrayBinding);
      * </code></pre>
      *
@@ -234,7 +234,7 @@ public interface DataType<T> extends Named {
      * Retrieve the Java component type if this is an ARRAY type, or
      * <code>null</code>, otherwise.
      * <p>
-     * E.g. for <code>DataType<String[][][]></code>, this will return
+     * E.g. for <code>DataType&lt;String[][][]></code>, this will return
      * <code>String[][]</code>.
      */
     @Nullable
@@ -244,7 +244,7 @@ public interface DataType<T> extends Named {
      * Retrieve the Java component data type if this is an ARRAY type, or
      * <code>null</code>, otherwise.
      * <p>
-     * E.g. for <code>DataType<String[][][]></code>, this will return
+     * E.g. for <code>DataType&lt;String[][][]></code>, this will return
      * <code>DataType&lt;String[][]></code>.
      */
     @Nullable
@@ -254,7 +254,7 @@ public interface DataType<T> extends Named {
      * Retrieve the Java base type if this is an ARRAY type, or
      * {@link #getType()}, otherwise.
      * <p>
-     * E.g. for <code>DataType<String[][][]></code>, this will return
+     * E.g. for <code>DataType&lt;String[][][]></code>, this will return
      * <code>String</code>.
      */
     @NotNull
@@ -264,7 +264,7 @@ public interface DataType<T> extends Named {
      * Retrieve the Java component data type if this is an ARRAY type, or
      * <code>this</code>, otherwise.
      * <p>
-     * E.g. for <code>DataType<String[][][]></code>, this will return
+     * E.g. for <code>DataType&lt;String[][][]></code>, this will return
      * <code>DataType&lt;String></code>.
      */
     @NotNull

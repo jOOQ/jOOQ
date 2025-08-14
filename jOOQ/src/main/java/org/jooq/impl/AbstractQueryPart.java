@@ -41,9 +41,6 @@ package org.jooq.impl;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.Tools.CONFIG;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.sql.SQLException;
 
 import org.jooq.Attachable;
@@ -57,7 +54,6 @@ import org.jooq.QueryPartInternal;
 import org.jooq.RenderContext;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.SQLDialectNotSupportedException;
-import org.jooq.tools.JooqLogger;
 
 /**
  * @author Lukas Eder
@@ -129,6 +125,15 @@ abstract class AbstractQueryPart implements QueryPartInternal {
     public boolean declaresCTE() {
         return false;
     }
+
+
+
+
+
+
+
+
+
 
 
 

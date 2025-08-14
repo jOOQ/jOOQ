@@ -127,6 +127,8 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
 
 
+
+
     int                                            subquery;
     BitSet                                         subqueryScopedNestedSetOperations;
     boolean                                        predicandSubquery;
@@ -355,6 +357,13 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
                     visit0(internal);
                     declareCTE(true);
                 }
+
+
+
+
+
+
+
 
 
 
@@ -726,6 +735,35 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
         return (C) this;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

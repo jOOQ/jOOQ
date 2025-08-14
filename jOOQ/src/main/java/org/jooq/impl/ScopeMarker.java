@@ -39,7 +39,6 @@ package org.jooq.impl;
 
 // ...
 // ...
-// ...
 import static org.jooq.impl.Keywords.K_DECLARE;
 import static org.jooq.impl.Tools.increment;
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_TOP_LEVEL_CTE;
@@ -218,6 +217,12 @@ enum ScopeMarker {
         public final boolean declaresCTE() {
             return false;
         }
+
+
+
+
+
+
 
 
 

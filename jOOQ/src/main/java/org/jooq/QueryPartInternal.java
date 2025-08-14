@@ -149,6 +149,18 @@ public interface QueryPartInternal extends QueryPart {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * Check whether this {@link QueryPart} is able to generate
      * <code>CAST</code> expressions around bind variables.

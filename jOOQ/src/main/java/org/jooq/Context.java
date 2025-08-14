@@ -252,6 +252,28 @@ public interface Context<C extends Context<C>> extends ExecuteScope {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * Whether the current context is rendering a common table expression (e.g.
      * a {@link CommonTableExpression} in the <code>WITH</code> clause of the

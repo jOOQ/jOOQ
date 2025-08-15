@@ -77,3 +77,10 @@ package org.jooq;
 
 
 
+
+
+
+
+
+
+

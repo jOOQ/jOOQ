@@ -611,6 +611,12 @@ final class BlockImpl extends AbstractRowCountQuery implements Block {
 
 
 
+
+
+
+
+
+
     // -------------------------------------------------------------------------
     // XXX: Query Object Model
     // -------------------------------------------------------------------------

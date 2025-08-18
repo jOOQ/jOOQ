@@ -110,7 +110,7 @@ final class CurrentTime<T> extends AbstractField<T> implements QOM.CurrentTime<T
                 break;
 
             default:
-                ctx.visit(N_CURRENT_TIME);
+                ctx.visit(K_CURRENT).sql('_').visit(K_TIME);
                 break;
         }
     }

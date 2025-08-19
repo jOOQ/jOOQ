@@ -59,6 +59,9 @@
                             com.google.gson;resolution:=optional,
                             *
                         </Import-Package>
+                        <Require-Capability>
+                            osgi.ee;filter:="(&amp;(osgi.ee=JavaSE)(version=17))"
+                        </Require-Capability>
                         <_versionpolicy>[$(version;==;$(@)),$(version;+;$(@)))</_versionpolicy>
                     </instructions>
                 </configuration>

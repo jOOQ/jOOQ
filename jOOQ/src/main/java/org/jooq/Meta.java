@@ -85,7 +85,12 @@ import org.jetbrains.annotations.NotNull;
  * </ol>
  * <p>
  * This type is a {@link Scope} with independent lifecycle and its own
- * {@link #data()} map.
+ * {@link #data()} map. Its implementations are not required to be thread safe
+ * and are likely not. Clients should access separate instances per thread and
+ * use-case. Implementations are allowed to cache meta data for faster
+ * subsequent access, e.g. by means of {@link #snapshot()}. Clients should
+ * assume that meta data is not up to date if other processes alter the database
+ * at the same time as clients access this API.
  *
  * @author Lukas Eder
  */

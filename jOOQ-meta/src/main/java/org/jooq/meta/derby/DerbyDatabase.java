@@ -81,6 +81,7 @@ import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Record12;
 import org.jooq.Record14;
+import org.jooq.Record15;
 import org.jooq.Record4;
 import org.jooq.Record5;
 import org.jooq.Record6;
@@ -474,6 +475,11 @@ public class DerbyDatabase extends AbstractDatabase implements ResultQueryDataba
 
     @Override
     public ResultQuery<Record5<String, String, String, String, String>> comments(List<String> schemas) {
+        return null;
+    }
+
+    @Override
+    public ResultQuery<Record15<String, String, String, String, String, Integer, String, Integer, Integer, Boolean, String, String, String, String, String>> attributes(List<String> schemas) {
         return null;
     }
 

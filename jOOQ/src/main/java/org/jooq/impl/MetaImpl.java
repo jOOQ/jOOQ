@@ -80,6 +80,7 @@ import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.row;
+import static org.jooq.impl.MetaSQL.M_ATTRIBUTES;
 import static org.jooq.impl.MetaSQL.M_COMMENTS;
 import static org.jooq.impl.MetaSQL.M_SEQUENCES;
 import static org.jooq.impl.MetaSQL.M_SEQUENCES_INCLUDING_SYSTEM_SEQUENCES;
@@ -91,7 +92,6 @@ import static org.jooq.impl.SQLDataType.SMALLINT;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.EMPTY_OBJECT;
 import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
-import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.flatMap;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.tools.StringUtils.defaultIfEmpty;
@@ -112,7 +112,6 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -147,6 +146,8 @@ import org.jooq.TableOptions.TableType;
 // ...
 // ...
 // ...
+import org.jooq.UDT;
+import org.jooq.UDTRecord;
 import org.jooq.UniqueKey;
 import org.jooq.conf.ParseUnknownFunctions;
 import org.jooq.conf.Settings;
@@ -154,13 +155,9 @@ import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataDefinitionException;
 import org.jooq.exception.DataTypeException;
 import org.jooq.exception.SQLDialectNotSupportedException;
-import org.jooq.impl.QOM.ForeignKeyRule;
 import org.jooq.impl.QOM.GenerationOption;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
-import org.jooq.tools.jdbc.JDBCUtils;
-
-import org.jetbrains.annotations.Nullable;
 
 /**
  * An implementation of the public {@link Meta} type.
@@ -482,6 +479,7 @@ final class MetaImpl extends AbstractMeta {
         private transient volatile Map<Name, Result<Record>> sequenceCache;
         private transient volatile Map<Name, String>         sourceCache;
         private transient volatile Map<Name, String>         commentCache;
+        private transient volatile Map<Name, Result<Record>> attributeCache;
 
 
 
@@ -981,6 +979,60 @@ final class MetaImpl extends AbstractMeta {
                 return null;
         }
 
+        @Override
+        public List<UDT<?>> getUDTs() {
+            if (empty)
+                return emptyList();
+
+            Result<Record> udts = getUDTs0();
+            List<UDT<?>> result = new ArrayList<>();
+
+            if (udts != null) {
+
+                // [#8475] TODO: Support package UDTs
+                Map<Record, Result<Record>> groups = udts.intoGroups(new Field[] { udts.field(0), udts.field(1), udts.field(2), udts.field(3) });
+
+
+
+                groups.forEach((k, v) -> {
+                    result.add(new MetaUDT<>(
+                        DSL.name(k.get(0, String.class), k.get(1, String.class), k.get(3, String.class)),
+                        this,
+                        v
+                    ));
+                });
+            }
+
+            return result;
+        }
+
+        private final Result<Record> getUDTs0() {
+            if (attributeCache == null) {
+                final String sql = M_ATTRIBUTES(dialect());
+
+                if (sql != null) {
+                    Result<Record> result = meta(() -> "Error while fetching attributes for schema: " + this, meta ->
+                        withCatalog(getCatalog(), ctx(meta), ctx ->
+                            ctx.resultQuery(sql, MetaSchema.this.getName()).fetch()
+                        )
+                    );
+
+                    Map<Record, Result<Record>> groups = result.intoGroups(new Field[] { result.field(0), result.field(1) });
+                    attributeCache = new LinkedHashMap<>();
+
+                    groups.forEach((k, v) -> attributeCache.put(
+                        name(k.get(0, String.class), k.get(1, String.class)), v
+                    ));
+                }
+            }
+
+            // [#8475] TODO: Support package UDTs
+            if (attributeCache != null)
+                return attributeCache.get(name(MetaSchema.this.getCatalog().getName(), MetaSchema.this.getName()));
+            else
+                return null;
+        }
+
         final String source(TableType type, String tableName) {
             if (sourceCache == null) {
                 String sql = M_SOURCES(dialect());
@@ -1161,6 +1213,73 @@ final class MetaImpl extends AbstractMeta {
         }
 
         return TableOptions.of(tableType);
+    }
+
+    private final class MetaUDT<R extends UDTRecord<R>> extends UDTImpl<R> {
+
+        MetaUDT(Name name, Schema schema, Result<Record> attributes) {
+            super(name, schema);
+
+            initAttributes(attributes);
+        }
+
+        private final void initAttributes(Result<Record> attributes) {
+            for (Record attribute : attributes) {
+                DataType<?> type = null;
+                String attributeName = attribute.get(4, String.class);
+                String typeName = attribute.get(6, String.class);
+                String udtSchema = attribute.get(12, String.class);
+                String udtName = attribute.get(14, String.class);
+
+                try {
+                    if ("USER-DEFINED".equals(typeName)) {
+
+                        // [#18792] TODO: This produces a StackOverflowError, currently
+//                        UDT<?> udt = resolveUDT(DSL.name(udtSchema, udtName));
+//
+//                        if (udt != null)
+//                            type = udt.getDataType();
+                    }
+
+                    if (type == null)
+                        type = DefaultDataType.getDataType(
+                            family(),
+                            typeName,
+                            attribute.get(10, int.class),
+                            attribute.get(11, int.class),
+                            !FALSE.equals(settings().isForceIntegerTypesOnZeroScaleDecimals())
+                        );
+                }
+                catch (SQLDialectNotSupportedException e) {
+
+                    // [#15303] Register unknown data types in the type registry, to at least maintain
+                    //          type information.
+                    if (log.isDebugEnabled())
+                        log.debug("Unknown type", "Registering unknown data type: " + typeName + " for attribute " + attributeName + " of UDT " + this);
+
+                    type = new DefaultDataType(family(), Object.class, typeName);
+                }
+
+                createField(
+                    DSL.name(attribute.get(4, String.class)),
+                    type,
+                    this,
+                    ""
+                );
+            }
+        }
+
+        private final boolean isSystemSchema(String typeSchema) {
+            switch (family()) {
+
+
+                case POSTGRES:
+                case YUGABYTEDB:
+                    return "pg_catalog".equals(typeSchema);
+                default:
+                    return false;
+            }
+        }
     }
 
     private final class MetaTable extends TableImpl<Record> {

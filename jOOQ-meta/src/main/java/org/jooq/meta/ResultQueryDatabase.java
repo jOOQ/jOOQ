@@ -44,6 +44,7 @@ import org.jooq.DataType;
 import org.jooq.Meta;
 import org.jooq.Record12;
 import org.jooq.Record14;
+import org.jooq.Record15;
 import org.jooq.Record4;
 import org.jooq.Record5;
 import org.jooq.Record6;
@@ -182,6 +183,34 @@ public interface ResultQueryDatabase extends Database {
     @Internal
     @Nullable
     ResultQuery<Record5<String, String, String, String, String>> comments(List<String> schemas);
+
+    /**
+     * A query that produces UDT attributes for a set of input schemas.
+     * <p>
+     * The resulting columns are:
+     * <ol>
+     * <li>Catalog name</li>
+     * <li>Schema name</li>
+     * <li>Package name</li>
+     * <li>Type name</li>
+     * <li>Attribute name</li>
+     * <li>Attribute position</li>
+     * <li>Data type name</li>
+     * <li>Data type precision</li>
+     * <li>Data type scale</li>
+     * <li>Data type nullability</li>
+     * <li>Data type default</li>
+     * <li>UDT catalog name</li>
+     * <li>UDT schema name</li>
+     * <li>UDT package name</li>
+     * <li>UDT name</li>
+     * </ol>
+     *
+     * @return The query or <code>null</code> if this implementation doesn't support the query.
+     */
+    @Internal
+    @Nullable
+    ResultQuery<Record15<String, String, String, String, String, Integer, String, Integer, Integer, Boolean, String, String, String, String, String>> attributes(List<String> schemas);
 
 
 

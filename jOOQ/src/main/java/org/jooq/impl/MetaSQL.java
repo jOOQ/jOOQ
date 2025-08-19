@@ -14,6 +14,7 @@ final class MetaSQL {
     private static final EnumMap<SQLDialect, String> M_ENUMS = new EnumMap<>(SQLDialect.class);
     private static final EnumMap<SQLDialect, String> M_SOURCES = new EnumMap<>(SQLDialect.class);
     private static final EnumMap<SQLDialect, String> M_COMMENTS = new EnumMap<>(SQLDialect.class);
+    private static final EnumMap<SQLDialect, String> M_ATTRIBUTES = new EnumMap<>(SQLDialect.class);
     private static final EnumMap<SQLDialect, String> M_TRIGGERS = new EnumMap<>(SQLDialect.class);
     private static final EnumMap<SQLDialect, String> M_SYNONYMS = new EnumMap<>(SQLDialect.class);
     private static final EnumMap<SQLDialect, String> M_GENERATORS = new EnumMap<>(SQLDialect.class);
@@ -46,6 +47,11 @@ final class MetaSQL {
     static final String M_COMMENTS(SQLDialect dialect) {
         String result = M_COMMENTS.get(dialect);
         return result != null ? result : M_COMMENTS.get(dialect.family());
+    }
+
+    static final String M_ATTRIBUTES(SQLDialect dialect) {
+        String result = M_ATTRIBUTES.get(dialect);
+        return result != null ? result : M_ATTRIBUTES.get(dialect.family());
     }
 
     static final String M_TRIGGERS(SQLDialect dialect) {
@@ -422,6 +428,30 @@ final class MetaSQL {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        M_ATTRIBUTES.put(POSTGRES, "select null as catalog_name, alias_87241969.nspname, null as package_name, pg_catalog.pg_class.relname, a.attribute_name, a.ordinal_position, coalesce(d.data_type, case when (a.data_type = 'USER-DEFINED' and a.attribute_udt_name = 'geometry') then 'geometry' else case when a.data_type = 'ARRAY' then (substring(a.attribute_udt_name, 2) || repeat(' ARRAY', greatest(coalesce(pg_a.attndims, 0), 1))) else a.data_type end end) as data_type, coalesce(d.character_maximum_length, a.character_maximum_length, d.numeric_precision, a.numeric_precision) as numeric_precision, coalesce(d.numeric_scale, a.numeric_scale) as numeric_scale, a.is_nullable as is_nullable, a.attribute_default, null as data_type_catalog_name, a.attribute_udt_schema, null as data_type_package_name, coalesce(d.data_type, case when a.data_type = 'USER-DEFINED' then a.attribute_udt_name else case when a.data_type = 'ARRAY' then (substring(a.attribute_udt_name, 2) || repeat(' ARRAY', greatest(coalesce(pg_a.attndims, 0), 1))) else a.data_type end end) as data_type from (pg_catalog.pg_class join pg_catalog.pg_namespace as alias_87241969 on pg_catalog.pg_class.relnamespace = alias_87241969.oid) join (pg_catalog.pg_attribute as pg_a join (pg_catalog.pg_class as alias_51947009 join pg_catalog.pg_namespace as alias_41153833 on alias_51947009.relnamespace = alias_41153833.oid) on pg_a.attrelid = alias_51947009.oid) on pg_a.attrelid = pg_catalog.pg_class.oid join information_schema.attributes as a on (a.attribute_name = pg_a.attname and a.udt_name = alias_51947009.relname and a.udt_schema = alias_41153833.nspname) left outer join information_schema.domains as d on (a.attribute_udt_catalog = d.domain_catalog and a.attribute_udt_schema = d.domain_schema and a.attribute_udt_name = d.domain_name) where (pg_catalog.pg_class.relkind = 'c' and alias_87241969.nspname in (?)) order by alias_87241969.nspname, pg_catalog.pg_class.relname, a.ordinal_position");
+        M_ATTRIBUTES.put(YUGABYTEDB, "select null as catalog_name, alias_87241969.nspname, null as package_name, pg_catalog.pg_class.relname, a.attribute_name, a.ordinal_position, coalesce(d.data_type, case when (a.data_type = 'USER-DEFINED' and a.attribute_udt_name = 'geometry') then 'geometry' else case when a.data_type = 'ARRAY' then (substring(a.attribute_udt_name, 2) || repeat(' ARRAY', greatest(coalesce(pg_a.attndims, 0), 1))) else a.data_type end end) as data_type, coalesce(d.character_maximum_length, a.character_maximum_length, d.numeric_precision, a.numeric_precision) as numeric_precision, coalesce(d.numeric_scale, a.numeric_scale) as numeric_scale, a.is_nullable as is_nullable, a.attribute_default, null as data_type_catalog_name, a.attribute_udt_schema, null as data_type_package_name, coalesce(d.data_type, case when a.data_type = 'USER-DEFINED' then a.attribute_udt_name else case when a.data_type = 'ARRAY' then (substring(a.attribute_udt_name, 2) || repeat(' ARRAY', greatest(coalesce(pg_a.attndims, 0), 1))) else a.data_type end end) as data_type from (pg_catalog.pg_class join pg_catalog.pg_namespace as alias_87241969 on pg_catalog.pg_class.relnamespace = alias_87241969.oid) join (pg_catalog.pg_attribute as pg_a join (pg_catalog.pg_class as alias_51947009 join pg_catalog.pg_namespace as alias_41153833 on alias_51947009.relnamespace = alias_41153833.oid) on pg_a.attrelid = alias_51947009.oid) on pg_a.attrelid = pg_catalog.pg_class.oid join information_schema.attributes as a on (a.attribute_name = pg_a.attname and a.udt_name = alias_51947009.relname and a.udt_schema = alias_41153833.nspname) left outer join information_schema.domains as d on (a.attribute_udt_catalog = d.domain_catalog and a.attribute_udt_schema = d.domain_schema and a.attribute_udt_name = d.domain_name) where (pg_catalog.pg_class.relkind = 'c' and alias_87241969.nspname in (?)) order by alias_87241969.nspname, pg_catalog.pg_class.relname, a.ordinal_position");
 
 
 

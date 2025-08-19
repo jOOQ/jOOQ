@@ -131,6 +131,7 @@ import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Record12;
 import org.jooq.Record14;
+import org.jooq.Record15;
 import org.jooq.Record4;
 import org.jooq.Record5;
 import org.jooq.Record6;
@@ -178,17 +179,22 @@ import org.jooq.meta.UDTDefinition;
 import org.jooq.meta.UniqueKeyDefinition;
 import org.jooq.meta.XMLSchemaCollectionDefinition;
 import org.jooq.meta.hsqldb.HSQLDBDatabase;
+import org.jooq.meta.postgres.information_schema.tables.Attributes;
 import org.jooq.meta.postgres.information_schema.tables.CheckConstraints;
+import org.jooq.meta.postgres.information_schema.tables.Domains;
 import org.jooq.meta.postgres.information_schema.tables.KeyColumnUsage;
 import org.jooq.meta.postgres.information_schema.tables.Parameters;
 import org.jooq.meta.postgres.information_schema.tables.Routines;
 import org.jooq.meta.postgres.information_schema.tables.Triggers;
+import org.jooq.meta.postgres.pg_catalog.tables.PgAttribute;
 import org.jooq.meta.postgres.pg_catalog.tables.PgClass;
 import org.jooq.meta.postgres.pg_catalog.tables.PgConstraint;
 import org.jooq.meta.postgres.pg_catalog.tables.PgIndex;
 import org.jooq.meta.postgres.pg_catalog.tables.PgInherits;
 import org.jooq.meta.postgres.pg_catalog.tables.PgType;
 import org.jooq.tools.JooqLogger;
+
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Postgres uses the ANSI default INFORMATION_SCHEMA, but unfortunately ships
@@ -767,6 +773,88 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
             .from(c)
             .where(c.field("schema_name", VARCHAR).in(schemas))
             .orderBy(1, 2, 3, 4);
+    }
+
+    /**
+     * A query that produces UDT attributes for a set of input schemas.
+     * <p>
+     * The resulting columns are:
+     * <ol>
+     * <li>Catalog name</li>
+     * <li>Schema name</li>
+     * <li>Package name</li>
+     * <li>Type name</li>
+     * <li>Attribute name</li>
+     * <li>Attribute position</li>
+     * <li>Data type name</li>
+     * <li>Data type precision</li>
+     * <li>Data type scale</li>
+     * <li>Data type nullability</li>
+     * <li>Data type default</li>
+     * <li>UDT catalog name</li>
+     * <li>UDT schema name</li>
+     * <li>UDT package name</li>
+     * <li>UDT name</li>
+     * </ol>
+     *
+     * @return The query or <code>null</code> if this implementation doesn't support the query.
+     */
+    @Override
+    public ResultQuery<Record15<String, String, String, String, String, Integer, String, Integer, Integer, Boolean, String, String, String, String, String>> attributes(List<String> schemas) {
+        switch (create().family()) {
+
+
+
+
+
+            default: {
+                Attributes a = ATTRIBUTES.as("a");
+                Domains d = DOMAINS.as("d");
+                PgAttribute pg_a = PG_ATTRIBUTE.as("pg_a");
+
+                return create()
+                    .select(
+                        inline(null, VARCHAR).as("catalog_name"),
+                        PG_CLASS.pgNamespace().NSPNAME,
+                        inline(null, VARCHAR).as("package_name"),
+                        PG_CLASS.RELNAME,
+                        a.ATTRIBUTE_NAME,
+                        a.ORDINAL_POSITION,
+                        coalesce(
+                            d.DATA_TYPE,
+                            when(a.DATA_TYPE.eq(inline("USER-DEFINED")).and(a.ATTRIBUTE_UDT_NAME.eq(inline("geometry"))), inline("geometry"))
+                            .else_(arrayDataType(a.DATA_TYPE, a.ATTRIBUTE_UDT_NAME, pg_a.ATTNDIMS))
+                        ).as(a.DATA_TYPE),
+                        coalesce(d.CHARACTER_MAXIMUM_LENGTH, a.CHARACTER_MAXIMUM_LENGTH, d.NUMERIC_PRECISION, a.NUMERIC_PRECISION).as(a.NUMERIC_PRECISION),
+                        coalesce(d.NUMERIC_SCALE, a.NUMERIC_SCALE).as(a.NUMERIC_SCALE),
+                        a.IS_NULLABLE.coerce(BOOLEAN).as(a.IS_NULLABLE),
+                        a.ATTRIBUTE_DEFAULT,
+                        inline(null, VARCHAR).as("data_type_catalog_name"),
+                        a.ATTRIBUTE_UDT_SCHEMA,
+                        inline(null, VARCHAR).as("data_type_package_name"),
+                        coalesce(
+                            d.DATA_TYPE,
+                            when(a.DATA_TYPE.eq(inline("USER-DEFINED")), a.ATTRIBUTE_UDT_NAME)
+                            .else_(arrayDataType(a.DATA_TYPE, a.ATTRIBUTE_UDT_NAME, pg_a.ATTNDIMS))
+                        ).as(a.DATA_TYPE))
+                    .from(PG_CLASS)
+                    .join(pg_a).on(pg_a.ATTRELID.eq(PG_CLASS.OID))
+                    .join(a)
+                        .on(a.ATTRIBUTE_NAME.eq(pg_a.ATTNAME))
+                        .and(a.UDT_NAME.eq(pg_a.pgClass().RELNAME))
+                        .and(a.UDT_SCHEMA.eq(pg_a.pgClass().pgNamespace().NSPNAME))
+                    .leftJoin(d)
+                        .on(a.ATTRIBUTE_UDT_CATALOG.eq(d.DOMAIN_CATALOG))
+                        .and(a.ATTRIBUTE_UDT_SCHEMA.eq(d.DOMAIN_SCHEMA))
+                        .and(a.ATTRIBUTE_UDT_NAME.eq(d.DOMAIN_NAME))
+                    .where(PG_CLASS.RELKIND.eq(inline("c")))
+                    .and(PG_CLASS.pgNamespace().NSPNAME.in(schemas))
+                    .orderBy(
+                        PG_CLASS.pgNamespace().NSPNAME,
+                        PG_CLASS.RELNAME,
+                        a.ORDINAL_POSITION);
+            }
+        }
     }
 
     @Override

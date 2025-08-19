@@ -66,6 +66,7 @@ import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Record12;
 import org.jooq.Record14;
+import org.jooq.Record15;
 import org.jooq.Record4;
 import org.jooq.Record5;
 import org.jooq.Record6;
@@ -290,6 +291,11 @@ public class ClickHouseDatabase extends AbstractDatabase implements ResultQueryD
             .from(c)
             .where(c.field(SYSTEM.TABLES.DATABASE).in(schemas))
             .orderBy(1, 2, 3, 4);
+    }
+
+    @Override
+    public ResultQuery<Record15<String, String, String, String, String, Integer, String, Integer, Integer, Boolean, String, String, String, String, String>> attributes(List<String> schemas) {
+        return null;
     }
 
     @Override

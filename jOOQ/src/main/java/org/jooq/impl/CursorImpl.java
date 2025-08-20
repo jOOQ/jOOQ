@@ -95,20 +95,23 @@ import org.jooq.tools.jdbc.JDBCUtils;
  */
 final class CursorImpl<R extends Record> extends AbstractCursor<R> {
 
-    private static final JooqLogger     log = JooqLogger.getLogger(CursorImpl.class);
+    private static final JooqLogger            log = JooqLogger.getLogger(CursorImpl.class);
 
-    final ExecuteContext                ctx;
-    final ExecuteListener               listener;
-    private final boolean               keepResultSet;
-    private final boolean               keepStatement;
-    private final boolean               autoclosing;
-    private final int                   maxRows;
-    private final Supplier<? extends R> factory;
-    private boolean                     isClosed;
+    final ExecuteContext                       ctx;
+    final ExecuteListener                      listener;
+    private final boolean                      keepResultSet;
+    private final boolean                      keepStatement;
+    private final boolean                      autoclosing;
+    private final int                          maxRows;
+    private final Supplier<? extends R>        factory;
 
-    private transient CursorResultSet   rs;
-    private transient Iterator<R>       iterator;
-    private transient int               rows;
+    private volatile transient CursorResultSet rs;
+    private volatile transient Iterator<R>     iterator;
+
+    // [#18893] A cursor may be accessed concurrently by blocking subscriptions.
+    // The subscriptions must ensure mutex access
+    private volatile boolean                   isClosed;
+    private volatile int                       rows;
 
     @SuppressWarnings("unchecked")
     CursorImpl(ExecuteContext ctx, ExecuteListener listener, Field<?>[] fields, boolean keepStatement, boolean keepResultSet) {
@@ -1319,7 +1322,7 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> {
         /**
          * The (potentially) pre-fetched next record
          */
-        private R                                    next;
+        private volatile R                           next;
 
         /**
          * Whether the underlying {@link ResultSet} has a next record. This
@@ -1330,7 +1333,7 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> {
          * <li>false: there aren't any next records</li>
          * </ul>
          */
-        private Boolean                              hasNext;
+        private volatile Boolean                     hasNext;
 
         /**
          * [#11099] Cache this instance for the entire cursor.
@@ -1424,7 +1427,7 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> {
         private final ExecuteContext                       ctx;
         private final ExecuteListener                      listener;
         private final AbstractRow<?>                       initialiserFields;
-        private int                                        offset;
+        private volatile int                               offset;
 
 
 

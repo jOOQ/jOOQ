@@ -82,6 +82,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.concurrent.locks.Lock;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -1714,6 +1715,11 @@ final class R2DBC {
     // XXX: Legacy implementation
     // -------------------------------------------------------------------------
 
+    /**
+     * [#18893] It might be possible to work with a more fine grained
+     * {@link Lock} instead of synchronizing all subscription access to allow
+     * for interleaving concurrent processing of individually requested rows.
+     */
     static final class BlockingRecordSubscription<R extends Record> extends AbstractSubscription<R> {
         private final ResultQueryTrait<R> query;
         private volatile Cursor<R>        c;
@@ -1749,7 +1755,7 @@ final class R2DBC {
         }
 
         @Override
-        final void cancel0(boolean closeAfterTransaction, Runnable onComplete) {
+        final synchronized void cancel0(boolean closeAfterTransaction, Runnable onComplete) {
             safeClose(c);
             onComplete.run();
         }

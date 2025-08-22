@@ -67,6 +67,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.jooq.ContextConverter;
 import org.jooq.ConverterContext;
@@ -78,6 +80,7 @@ import org.jooq.QualifiedRecord;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
+import org.jooq.SQLDialectCategory;
 import org.jooq.Source;
 
 /**
@@ -232,6 +235,7 @@ final class JSONReader<R extends Record> {
 
     private static final Set<SQLDialect> ENCODE_BINARY_AS_HEX  = SQLDialect.supportedBy(H2, POSTGRES, SQLITE, TRINO, YUGABYTEDB);
     private static final Set<SQLDialect> ENCODE_BINARY_AS_TEXT = SQLDialect.supportedBy(MARIADB);
+    private static final Pattern         P_MYSQL_BINARY_PREFIX = Pattern.compile("^base64:type\\d+:(.*)$");
 
     private static final List<Object> patchRecord(DSLContext ctx, boolean multiset, Fields result, List<Object> record) {
         ConverterContext cc = null;
@@ -245,6 +249,7 @@ final class JSONReader<R extends Record> {
             //         not according to org.jooq.tools.Convert
             if (t.isBinary() && value instanceof String s) {
                 if (multiset) {
+                    Matcher m;
 
                     // [#12134] PostgreSQL encodes binary data as hex
                     // TODO [#13427] This doesn't work if bytea_output is set to escape
@@ -258,9 +263,17 @@ final class JSONReader<R extends Record> {
                     else if (ENCODE_BINARY_AS_TEXT.contains(ctx.dialect()))
                         record.set(i, s);
 
-                    // [#12134] MySQL encodes binary data as prefixed base64
-                    else if (s.startsWith("base64:type15:"))
-                        record.set(i, Base64.getDecoder().decode(s.substring(14)));
+                    // [#12134] [#18876] MySQL encodes binary data as prefixed base64
+                    // - type15: VARBINARY
+                    // - type16: BIT
+                    // - type249: TINYBLOB
+                    // - type250: MEDIUMBLOB and LONG VARBINARY
+                    // - type251: LONGBLOB
+                    // - type252: BLOB
+                    // - type254: BINARY
+                    else if (ctx.family().category() == SQLDialectCategory.MYSQL
+                            && (m = P_MYSQL_BINARY_PREFIX.matcher(s)).matches())
+                        record.set(i, Base64.getDecoder().decode(m.replaceFirst("$1")));
                     else
                         record.set(i, Base64.getDecoder().decode(s));
                 }

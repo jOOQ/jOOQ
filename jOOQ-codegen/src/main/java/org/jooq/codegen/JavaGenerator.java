@@ -8455,15 +8455,24 @@ public class JavaGenerator extends AbstractGenerator {
             if (bitLength > Long.SIZE - 1)
                 return "new java.math.BigInteger(\"" + bi.toString() + "\")";
             else if (bitLength > Integer.SIZE - 1)
-                return Long.toString(n.longValue()) + 'L';
+                return longLiteral(n.longValue());
             else
                 return Integer.toString(n.intValue());
         }
         else if (n instanceof Integer || n instanceof Short || n instanceof Byte)
             return Integer.toString(n.intValue());
         else if (n != null)
-            return Long.toString(n.longValue()) + 'L';
+            return longLiteral(n.longValue());
         return "null";
+    }
+
+    private String longLiteral(long n) {
+
+        // [#18910] Work around a Kotlin compiler bug ("design flaw")
+        if (kotlin && n == Long.MIN_VALUE)
+            return "Long.MIN_VALUE";
+        else
+            return Long.toString(n) + 'L';
     }
 
     protected void generateGlobalObjectNames(Definition container, Class<? extends Definition> objectType) {

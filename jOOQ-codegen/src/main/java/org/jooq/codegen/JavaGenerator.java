@@ -7651,7 +7651,10 @@ public class JavaGenerator extends AbstractGenerator {
             BigInteger bi = (BigInteger) n;
             int bitLength = ((BigInteger) n).bitLength();
             if (bitLength > Long.SIZE - 1)
-                return "new java.math.BigInteger(\"" + bi.toString() + "\")";
+                if (kotlin)
+                    return "java.math.BigInteger(\"" + bi.toString() + "\")";
+                else
+                    return "new java.math.BigInteger(\"" + bi.toString() + "\")";
             else if (bitLength > Integer.SIZE - 1)
                 return longLiteral(n.longValue());
             else

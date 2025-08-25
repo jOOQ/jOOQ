@@ -14813,6 +14813,22 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         }
     }
 
+    private final void parseDigitsOrSign() {
+        char s = character();
+
+        if (s == '-' || s == '+')
+            positionInc();
+
+        for (;;) {
+            char c = character();
+
+            if (c >= '0' && c <= '9')
+                positionInc();
+            else
+                break;
+        }
+    }
+
     private final Field<Integer> parseZeroOne() {
         if (parseIf('0'))
             return zero();
@@ -14845,19 +14861,15 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
     @Override
     public final Long parseSignedIntegerLiteralIf() {
-        Sign sign = parseSign();
-        Long unsigned;
+        int p = position();
+        parseDigitsOrSign();
 
-        if (sign == Sign.MINUS)
-            unsigned = parseUnsignedIntegerLiteral();
-        else
-            unsigned = parseUnsignedIntegerLiteralIf();
+        if (p == position())
+            return null;
 
-        return unsigned == null
-             ? null
-             : sign == Sign.MINUS
-             ? -unsigned
-             : unsigned;
+        String s = substring(p, position());
+        parseWhitespaceIf();
+        return Long.valueOf(s);
     }
 
     private final <T> List<T> parseList(char separator, Function<? super ParseContext, ? extends T> element) {

@@ -2722,7 +2722,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
             // TODO: [#9780] Are there any possible syntaxes and data types?
             parseIf('=');
-            Object value = parseSignedIntegerLiteralIf();
+            Object value = parseSignedIntegerLiteralIf0(true);
             return dsl.set(name, value != null ? inline(value) : inline(parseStringLiteral()));
         }
 
@@ -5172,7 +5172,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                     identityOption = true;
                     continue;
                 }
-                else if (parseSignedIntegerLiteralIf() != null) {
+                else if (parseSignedIntegerLiteralIf0(true) != null) {
                     identityOption = true;
                     continue;
                 }
@@ -14075,6 +14075,11 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
     @Override
     public final Long parseSignedIntegerLiteralIf() {
+        Number result = parseSignedIntegerLiteralIf0(false);
+        return result == null ? null : result.longValue();
+    }
+
+    private final Number parseSignedIntegerLiteralIf0(boolean allowBigInteger) {
         int p = position();
         parseDigitsOrSign();
 
@@ -14083,7 +14088,16 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
         String s = substring(p, position());
         parseWhitespaceIf();
-        return Long.valueOf(s);
+
+        try {
+            return Long.valueOf(s);
+        }
+        catch (Exception e) {
+            if (allowBigInteger)
+                return new BigInteger(s);
+            else
+                throw e;
+        }
     }
 
     private final <T> List<T> parseList(char separator, Function<? super ParseContext, ? extends T> element) {
@@ -14149,22 +14163,22 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
     }
 
     private final Field<? extends Number> parseCastIntegerOrBindVariable0(
-        Supplier<Long> l
+        Supplier<Number> l
     ) {
-        Long i = l.get();
+        Number i = l.get();
 
         if (i != null)
             return DSL.inline(i);
 
         Field<?> f = parseBindVariableIf();
         if (f != null)
-            return (Field<Long>) f;
+            return (Field<Number>) f;
 
         throw expected("Integer or bind variable");
     }
 
     private final Field<? extends Number> parseCastIntegerOrBindVariable(
-        Supplier<Long> l
+        Supplier<Number> l
     ) {
         if (parseFunctionNameIf("CAST")) {
             parse('(');
@@ -14180,11 +14194,11 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
     }
 
     private final Field<? extends Number> parseUnsignedIntegerOrBindVariable() {
-        return parseCastIntegerOrBindVariable(this::parseUnsignedIntegerLiteralIf);
+        return parseCastIntegerOrBindVariable(() -> parseUnsignedIntegerLiteralIf0(true));
     }
 
     private final Field<? extends Number> parseSignedIntegerOrBindVariable() {
-        return parseCastIntegerOrBindVariable(this::parseSignedIntegerLiteralIf);
+        return parseCastIntegerOrBindVariable(() -> parseSignedIntegerLiteralIf0(true));
     }
 
     @Override
@@ -14199,6 +14213,11 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
     @Override
     public final Long parseUnsignedIntegerLiteralIf() {
+        Number result = parseUnsignedIntegerLiteralIf0(false);
+        return result == null ? null : result.longValue();
+    }
+
+    private final Number parseUnsignedIntegerLiteralIf0(boolean allowBigInteger) {
         int p = position();
         parseDigits();
 
@@ -14207,7 +14226,16 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
         String s = substring(p, position());
         parseWhitespaceIf();
-        return Long.valueOf(s);
+
+        try {
+            return Long.valueOf(s);
+        }
+        catch (Exception e) {
+            if (allowBigInteger)
+                return new BigInteger(s);
+            else
+                throw e;
+        }
     }
 
     private static final record Join(JoinType type, JoinHint hint) {}

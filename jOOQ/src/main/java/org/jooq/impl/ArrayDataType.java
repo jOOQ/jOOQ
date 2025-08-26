@@ -39,9 +39,14 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Tools.CONFIG;
 
+import java.lang.reflect.Array;
+import java.util.Collection;
+import java.util.List;
+
 import org.jooq.CharacterSet;
 import org.jooq.Collation;
 import org.jooq.Configuration;
+import org.jooq.ConverterContext;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Generator;
@@ -126,6 +131,33 @@ final class ArrayDataType<T> extends DefaultDataType<T[]> {
             newIdentity,
             (Field) newDefaultValue
         );
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    final T[] convert(Object object, ConverterContext cc) {
+
+        // [#1441] Avoid unneeded type conversions to improve performance
+        if (object == null)
+            return null;
+        else if (object.getClass() == getType())
+            return (T[]) object;
+
+        Object[] array =
+            object instanceof Object[] ? (Object[]) object
+          : object instanceof Collection ? ((Collection<?>) object).toArray()
+          : null;
+
+        if (array != null && elementType.getType() != Object.class) {
+            T[] result = (T[]) Array.newInstance(elementType.getType(), array.length);
+
+            for (int i = 0; i < array.length; i++)
+                result[i] = convert0(elementType, array[i], cc);
+
+            return result;
+        }
+        else
+            return super.convert(object, cc);
     }
 
     @Override

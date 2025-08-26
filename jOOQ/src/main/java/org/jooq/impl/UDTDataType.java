@@ -68,7 +68,21 @@ final class UDTDataType<R extends UDTRecord<R>> extends DefaultDataType<R> {
     }
 
     @Override
-    public final Class<? extends Record> getRecordType() {
+    public final Class<? extends R> getRecordType() {
         return udt.getRecordType();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    final R convert(Object object, ConverterContext cc) {
+
+        // [#18905] Re-use the untyped record conversion logic, mostly for MULTISET usage
+        return RecordDataType.convert0(
+            object,
+            cc,
+            getRecordType(),
+            (AbstractRow<R>) getRow(),
+            super::convert
+        );
     }
 }

@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.toList;
+import static org.jooq.impl.Tools.allMatch;
 import static org.jooq.impl.Tools.newRecord;
 import static org.jooq.impl.Tools.recordType;
 
@@ -51,12 +52,16 @@ import org.jooq.CharacterSet;
 import org.jooq.Collation;
 import org.jooq.ConverterContext;
 import org.jooq.Field;
+import org.jooq.Function2;
 import org.jooq.Generator;
 import org.jooq.Nullability;
+import org.jooq.QualifiedRecord;
 import org.jooq.Record;
 import org.jooq.Row;
 import org.jooq.impl.QOM.GenerationLocation;
 import org.jooq.impl.QOM.GenerationOption;
+
+import org.jetbrains.annotations.Nullable;
 
 /**
  * A wrapper for anonymous row data types.
@@ -162,6 +167,16 @@ final class RecordDataType<R extends Record> extends DefaultDataType<R> {
     @SuppressWarnings("unchecked")
     @Override
     final R convert(Object object, ConverterContext cc) {
+        return convert0(object, cc, getRecordType(), row, super::convert);
+    }
+
+    static final <R extends Record> R convert0(
+        Object object,
+        ConverterContext cc,
+        Class<? extends R> recordType,
+        AbstractRow<R> row,
+        Function2<? super Object, ? super ConverterContext, ? extends R> delegate
+    ) {
 
         // [#12269] [#13403] Don't re-copy perfectly fine results.
         if (object instanceof Record && ((Record) object).fieldsRow().equals(row))
@@ -174,16 +189,23 @@ final class RecordDataType<R extends Record> extends DefaultDataType<R> {
          || object instanceof List
          || object instanceof Struct
         ) {
-            return newRecord(true, cc.configuration(), getRecordType(), row)
+            return newRecord(true, cc.configuration(), recordType, row)
                 .operate(r -> {
 
                     // [#12014] TODO: Fix this and remove workaround
-                    if (object instanceof Record)
+                    if (object instanceof Record) {
                         ((AbstractRecord) r).fromArray(((Record) object).intoArray());
+                    }
 
-                    // This sort is required if we use the JSONFormat.RecordFormat.OBJECT encoding (e.g. in SQL Server)
-                    else if (object instanceof Map)
-                        r.from(((Map<String, ?>) object).entrySet().stream().sorted(comparing(Entry::getKey)).map(Entry::getValue).collect(toList()));
+                    // [#18681] [#18905] The Map encoding of nested ROW values can happen for 2 reasons:
+                    // - We create it ourselves with "v1", "v2", ... keys because json objects work better than arrays in some RDBMS
+                    // - It's a UDT or similar, serialised into a JSON object, where keys are attribute names, not in order!
+                    else if (object instanceof Map<?, ?> map) {
+                        if (QualifiedRecord.class.isAssignableFrom(recordType) && allMatch(row.fields.fields, f -> map.containsKey(f.getName())))
+                            r.fromMap((Map<String, ?>) map);
+                        else
+                            r.from(((Map<String, ?>) object).entrySet().stream().sorted(comparing(Entry::getKey)).map(Entry::getValue).collect(toList()));
+                    }
                     else
                         r.from(object);
 
@@ -191,6 +213,6 @@ final class RecordDataType<R extends Record> extends DefaultDataType<R> {
                 });
         }
         else
-            return super.convert(object, cc);
+            return delegate.apply(object, cc);
     }
 }

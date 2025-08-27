@@ -340,7 +340,7 @@ public class PostgresUtils {
     @SuppressWarnings("null")
     private static List<String> toPGObjectOrArray(String input, char open, char close) {
         List<String> values = new ArrayList<String>();
-        int i = 0;
+        int i = 0, i0 = 0;
         PGState state = PG_OBJECT_INIT;
         int nestLevel = 0;
         StringBuilder sb = null;
@@ -357,7 +357,8 @@ public class PostgresUtils {
                     break;
 
                 case PG_OBJECT_BEFORE_VALUE:
-                    sb = new StringBuilder();
+                    sb = null;
+                    i0 = i;
 
                     if (c == ',') {
                         values.add(null);
@@ -369,6 +370,7 @@ public class PostgresUtils {
                     }
                     else if (c == '"') {
                         state = PG_OBJECT_QUOTED_VALUE;
+                        i0 = i + 1;
                     }
 
                     // [#13169] Consume "null", if this is an array literal
@@ -381,12 +383,12 @@ public class PostgresUtils {
 
                     // [#252] Consume nested array
                     else if (c == open) {
+                        sb = new StringBuilder();
                         sb.append(c);
                         state = PG_OBJECT_NESTED_VALUE;
                         nestLevel++;
                     }
                     else {
-                        sb.append(c);
                         state = PG_OBJECT_UNQUOTED_VALUE;
                     }
 
@@ -395,11 +397,18 @@ public class PostgresUtils {
                 case PG_OBJECT_QUOTED_VALUE:
                     if (c == '"') {
                         if (input.charAt(i + 1) == '"') {
+                            if (sb == null)
+                                sb = new StringBuilder().append(input.substring(i0, i));
+
                             sb.append(c);
                             i++;
                         }
                         else {
-                            values.add(sb.toString());
+                            if (sb == null)
+                                values.add(input.substring(i0, i));
+                            else
+                                values.add(sb.toString());
+
                             state = PG_OBJECT_AFTER_VALUE;
                         }
                     }
@@ -408,30 +417,31 @@ public class PostgresUtils {
 
                         // [#10467] Consume an escaped backslash or quote
                         if (n == '\\' || n == '"') {
+                            if (sb == null)
+                                sb = new StringBuilder().append(input.substring(i0, i));
+
                             sb.append(n);
                             i++;
                         }
 
                         // Consume an "illegal" backslash (?)
-                        else
+                        else if (sb != null)
                             sb.append(c);
                     }
-                    else
+                    else if (sb != null)
                         sb.append(c);
 
                     break;
 
                 case PG_OBJECT_UNQUOTED_VALUE:
                     if (c == close) {
-                        values.add(sb.toString());
+                        values.add(input.substring(i0, i));
                         state = PG_OBJECT_END;
                     }
                     else if (c == ',') {
-                        values.add(sb.toString());
+                        values.add(input.substring(i0, i));
                         state = PG_OBJECT_BEFORE_VALUE;
                     }
-                    else
-                        sb.append(c);
 
                     break;
 

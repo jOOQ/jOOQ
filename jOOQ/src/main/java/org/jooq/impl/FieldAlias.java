@@ -38,6 +38,8 @@
 
 package org.jooq.impl;
 
+import java.util.Objects;
+
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Field;
@@ -140,4 +142,22 @@ implements
 
 
 
+
+    // -------------------------------------------------------------------------
+    // The Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public int hashCode() {
+        return alias.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        if (that instanceof FieldAlias o) {
+            return Objects.equals(alias, o.alias);
+        }
+        else
+            return super.equals(that);
+    }
 }

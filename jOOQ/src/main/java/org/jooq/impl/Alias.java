@@ -98,8 +98,10 @@ import static org.jooq.impl.Tools.BooleanDataKey.DATA_WRAP_DERIVED_TABLES_IN_PAR
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_SELECT_ALIASES;
 import static org.jooq.impl.Values.NO_SUPPORT_VALUES;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.function.Predicate;
 
@@ -480,5 +482,26 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart implements UEmp
     @Override
     public final boolean declaresTables() {
         return true;
+    }
+
+    // -------------------------------------------------------------------------
+    // The Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public int hashCode() {
+        return alias.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        if (that instanceof Alias o) {
+
+            // [#18939] Historically, we did not compare the wrapped contents.
+            return Objects.equals(alias, o.alias)
+                && Arrays.equals(fieldAliases, o.fieldAliases);
+        }
+        else
+            return super.equals(that);
     }
 }

@@ -41,6 +41,7 @@ import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.io.Serializable;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Supplier;
 
@@ -121,8 +122,59 @@ final class Cache {
 
     /**
      * A 2-value key for caching.
+     * <p>
+     * [#18935] Note: A hand-written class with Eclipse-generated
+     * {@link #equals(Object)} and {@link #hashCode()} implementations
+     * significantly outperforms the Java 16 record alternative in a JMH
+     * benchmark.
      */
-    private static record Key2(Object key1, Object key2) implements Serializable {}
+    private static final class Key2 implements Serializable {
+        private final Object key1;
+        private final Object key2;
+
+        Key2(Object key1, Object key2) {
+            this.key1 = key1;
+            this.key2 = key2;
+        }
+
+        @Override
+        public int hashCode() {
+            final int prime = 31;
+            int result = 1;
+            result = prime * result + ((key1 == null) ? 0 : key1.hashCode());
+            result = prime * result + ((key2 == null) ? 0 : key2.hashCode());
+            return result;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj)
+                return true;
+            if (obj == null)
+                return false;
+            if (getClass() != obj.getClass())
+                return false;
+            Key2 other = (Key2) obj;
+            if (key1 == null) {
+                if (other.key1 != null)
+                    return false;
+            }
+            else if (!key1.equals(other.key1))
+                return false;
+            if (key2 == null) {
+                if (other.key2 != null)
+                    return false;
+            }
+            else if (!key2.equals(other.key2))
+                return false;
+            return true;
+        }
+
+        @Override
+        public String toString() {
+            return "Key2 [key1=" + key1 + ", key2=" + key2 + "]";
+        }
+    }
 
     /**
      * Create a single-value or multi-value key for caching.
@@ -133,6 +185,66 @@ final class Cache {
 
     /**
      * A 3-value key for caching.
+     * <p>
+     * [#18935] Note: A hand-written class with Eclipse-generated
+     * {@link #equals(Object)} and {@link #hashCode()} implementations
+     * significantly outperforms the Java 16 record alternative in a JMH
+     * benchmark.
      */
-    private static record Key3(Object key1, Object key2, Object key3) implements Serializable {}
+    private static final class Key3 implements Serializable {
+        private final Object key1;
+        private final Object key2;
+        private final Object key3;
+
+        Key3(Object key1, Object key2, Object key3) {
+            this.key1 = key1;
+            this.key2 = key2;
+            this.key3 = key3;
+        }
+
+        @Override
+        public int hashCode() {
+            final int prime = 31;
+            int result = 1;
+            result = prime * result + ((key1 == null) ? 0 : key1.hashCode());
+            result = prime * result + ((key2 == null) ? 0 : key2.hashCode());
+            result = prime * result + ((key3 == null) ? 0 : key3.hashCode());
+            return result;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj)
+                return true;
+            if (obj == null)
+                return false;
+            if (getClass() != obj.getClass())
+                return false;
+            Key3 other = (Key3) obj;
+            if (key1 == null) {
+                if (other.key1 != null)
+                    return false;
+            }
+            else if (!key1.equals(other.key1))
+                return false;
+            if (key2 == null) {
+                if (other.key2 != null)
+                    return false;
+            }
+            else if (!key2.equals(other.key2))
+                return false;
+            if (key3 == null) {
+                if (other.key3 != null)
+                    return false;
+            }
+            else if (!key3.equals(other.key3))
+                return false;
+            return true;
+        }
+
+        @Override
+        public String toString() {
+            return "Key3 [key1=" + key1 + ", key2=" + key2 + ", key3=" + key3 + "]";
+        }
+    }
 }

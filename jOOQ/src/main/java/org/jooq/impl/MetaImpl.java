@@ -49,6 +49,7 @@ import static java.util.Collections.emptyList;
 import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.DUCKDB;
 // ...
@@ -404,6 +405,7 @@ final class MetaImpl extends AbstractMeta {
             if (!inverseSchemaCatalog) {
                 Schemas schemas = meta(() -> "Error while fetching schemas for catalog: " + this, meta -> {
                     switch (family()) {
+
 
 
 

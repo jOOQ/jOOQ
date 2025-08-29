@@ -83,6 +83,16 @@ import org.jetbrains.annotations.NotNull;
  * While not strictly required, it is advisable to implement a
  * <code>RecordMapperProvider</code> whose behaviour is consistent with the
  * configured {@link RecordUnmapperProvider}.
+ * <p>
+ * The general expectation is for a {@link RecordMapperProvider} to be
+ * side-effect free. Two calls to {@link #provide(RecordType, Class)} should
+ * always produce the same {@link RecordMapper} logic and thus mapping
+ * behaviour, irrespective of context, other than the {@link Configuration} that
+ * hosts the {@link Configuration#recordMapperProvider()}. This effectively
+ * means that it is possible for jOOQ to cache the outcome of a
+ * {@link #provide(RecordType, Class)} call within the context of a
+ * {@link Configuration} or any derived context, such as an
+ * {@link ExecuteContext}, to greatly improve performance.
  *
  * @author Lukas Eder
  * @see RecordMapper

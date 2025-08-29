@@ -1671,6 +1671,14 @@ final class Tools {
     }
 
     /**
+     * Allows <code>null</code> arguments, unlike
+     * {@link ContextConverter#scoped(Converter)}.
+     */
+    static final <T, U> ContextConverter<T, U> scoped(Converter<T, U> converter) {
+        return converter != null ? ContextConverter.scoped(converter) : null;
+    }
+
+    /**
      * Get a converter from a {@link ConverterProvider} or <code>null</code> if
      * no converter could be provided.
      */
@@ -1687,7 +1695,7 @@ final class Tools {
         if (result == null && tType == Converters.UnknownType.class)
             result = converter(configuration, instance, (Class<T>) (instance == null ? Object.class : instance.getClass()), uType);
 
-        return result == null ? null : scoped(result);
+        return scoped(result);
     }
 
     /**

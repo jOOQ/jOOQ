@@ -50,6 +50,15 @@ import org.jetbrains.annotations.Nullable;
  * {@link RecordMapper}, e.g. when mapping {@link JSON} or {@link XML} data
  * types onto POJO types using third party libraries like Jackson, Gson, JAXB,
  * or others.
+ * <p>
+ * The general expectation is for a {@link ConverterProvider} to be side-effect
+ * free. Two calls to {@link #provide(Class, Class)} should always produce the
+ * same {@link Converter} logic and thus conversion behaviour, irrespective of
+ * context, other than the {@link Configuration} that hosts the
+ * {@link Configuration#converterProvider()}. This effectively means that it is
+ * possible for jOOQ to cache the outcome of a {@link #provide(Class, Class)}
+ * call within the context of a {@link Configuration} or any derived context,
+ * such as an {@link ExecuteContext}, to greatly improve performance.
  *
  * @author Lukas Eder
  */

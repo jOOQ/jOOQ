@@ -300,6 +300,7 @@ final class Names {
     static final Name N_TIMESTAMP_DIFF              = systemName("timestamp_diff");
     static final Name N_TIMESTAMP_SUB               = systemName("timestamp_sub");
     static final Name N_toJSONString                = systemName("toJSONString");
+    static final Name N_TO_BASE64                   = systemName("to_base64");
     static final Name N_TO_BLOB                     = systemName("to_blob");
     static final Name N_TO_BINARY                   = systemName("to_binary");
     static final Name N_TO_CLOB                     = systemName("to_clob");
@@ -677,7 +678,6 @@ final class Names {
     static final Name N_TAU                         = systemName("tau");
     static final Name N_TIMESTAMP_ADD               = systemName("timestamp_add");
     static final Name N_TO_BASE                     = systemName("to_base");
-    static final Name N_TO_BASE64                   = systemName("to_base64");
     static final Name N_TO_CHAR                     = systemName("to_char");
     static final Name N_TO_DATE                     = systemName("to_date");
     static final Name N_TO_HEX                      = systemName("to_hex");

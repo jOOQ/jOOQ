@@ -543,6 +543,7 @@ final class Names {
     static final Name N_TANH                        = systemName("tanh");
     static final Name N_TAU                         = systemName("tau");
     static final Name N_TIMESTAMP_ADD               = systemName("timestamp_add");
+    static final Name N_TO_BASE64                   = systemName("to_base64");
     static final Name N_TO_CHAR                     = systemName("to_char");
     static final Name N_TO_DATE                     = systemName("to_date");
     static final Name N_TO_HEX                      = systemName("to_hex");

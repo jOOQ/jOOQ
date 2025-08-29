@@ -609,6 +609,14 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
             }
         }
 
+        // [#18955] MySQL does this out of the box, but MariaDB doesn't
+        else if (t.isBinary()) {
+            switch (ctx.family()) {
+                case MARIADB:
+                    return function(Names.N_TO_BASE64, CLOB, field);
+            }
+        }
+
 
 
 

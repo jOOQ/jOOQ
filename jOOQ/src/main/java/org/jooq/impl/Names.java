@@ -275,6 +275,7 @@ final class Names {
     static final Name N_TIMESTAMPSUB                = systemName("timestampsub");
     static final Name N_TIMESTAMP_DIFF              = systemName("timestamp_diff");
     static final Name N_TIMESTAMP_SUB               = systemName("timestamp_sub");
+    static final Name N_TO_BASE64                   = systemName("to_base64");
     static final Name N_TO_BLOB                     = systemName("to_blob");
     static final Name N_TO_CLOB                     = systemName("to_clob");
     static final Name N_TO_NUMBER                   = systemName("to_number");

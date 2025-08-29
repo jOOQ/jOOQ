@@ -259,10 +259,8 @@ final class JSONReader<R extends Record> {
                         else
                             record.set(i, convertHexToBytes(s));
 
-                    // [#12134] MariaDB encodes binary data as text (?)
-                    else if (ENCODE_BINARY_AS_TEXT.contains(ctx.dialect()))
-                        record.set(i, s);
-
+                    // [#12134] [#18955] MariaDB encodes binary data as text (?) but we
+                    //                   encode it explicitly as base64 for MULTISET usage
                     // [#12134] [#18876] MySQL encodes binary data as prefixed base64
                     // - type15: VARBINARY
                     // - type16: BIT

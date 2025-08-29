@@ -6226,7 +6226,7 @@ final class Tools {
         }
 
         // [#5807] These databases cannot use the DataType.getCastTypeName() (which is simply char in this case)
-        if (type.getType() == UUID.class && NO_SUPPORT_CAST_TYPE_IN_DDL.contains(ctx.dialect())) {
+        if (type.getFromType() == UUID.class && NO_SUPPORT_CAST_TYPE_IN_DDL.contains(ctx.dialect())) {
             toSQLDDLTypeDeclaration(ctx, VARCHAR(36));
             return;
         }

@@ -40,10 +40,12 @@ package org.jooq.impl;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static java.util.Collections.emptyList;
+import static org.jooq.ContextConverter.scoped;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.configuration;
+import static org.jooq.impl.Tools.converterContext;
 import static org.jooq.impl.Tools.getAnnotatedGetter;
 import static org.jooq.impl.Tools.getAnnotatedMembers;
 import static org.jooq.impl.Tools.getAnnotatedSetters;
@@ -87,6 +89,7 @@ import java.util.stream.Stream;
 import org.jooq.Attachable;
 import org.jooq.Configuration;
 import org.jooq.ConstructorPropertiesProvider;
+import org.jooq.ContextConverter;
 import org.jooq.Converter;
 import org.jooq.ConverterProvider;
 import org.jooq.Field;
@@ -408,8 +411,9 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
         }
 
         // [#10071] Single-field Record1 types can be mapped if there is a ConverterProvider allowing for this mapping
-        if ((debugVTFL = fields.length == 1) && instance == null && (debugVTCP = Tools.converter(configuration, instance, (Class) fields[0].getType(), type) != null)) {
-            delegate = new ValueTypeMapper();
+        ContextConverter<?, E> c;
+        if ((debugVTFL = fields.length == 1) && instance == null && (debugVTCP = (c = Tools.converter(configuration, instance, (Class) fields[0].getType(), type)) != null)) {
+            delegate = new ValueTypeMapper(c);
             return;
         }
 
@@ -709,13 +713,21 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
 
     private class ValueTypeMapper extends AbstractDelegateMapper<R, E> {
 
+        private final ContextConverter<?, E> converter;
+
+        public ValueTypeMapper(ContextConverter<?, E> converter) {
+            this.converter = converter;
+        }
+
         @Override
         public final E map(R record) {
             int size = record.size();
             if (size != 1)
                 throw new MappingException("Cannot map multi-column record of degree " + size + " to value type " + type);
 
-            return record.get(0, type);
+            return converter != null
+                ? ((ContextConverter<Object, E>) converter).from(record.get(0), converterContext(record))
+                : record.get(0, type);
         }
     }
 
@@ -782,12 +794,12 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
      */
     private class MutablePOJOMapper extends AbstractDelegateMapper<R, E> {
 
-        private final Callable<E>                      constructor;
-        private final boolean                          useAnnotations;
-        private final List<java.lang.reflect.Field>[]  members;
-        private final List<java.lang.reflect.Method>[] methods;
-        private final Map<String, NestedMappingInfo>   nestedMappingInfos;
-        private final E                                instance;
+        private final Callable<E>                    constructor;
+        private final boolean                        useAnnotations;
+        private final List<MappedMember>[]           members;
+        private final List<MappedMethod>[]           methods;
+        private final Map<String, NestedMappingInfo> nestedMappingInfos;
+        private final E                              instance;
 
         MutablePOJOMapper(Callable<E> constructor, E instance) {
             this.constructor = constructor;
@@ -805,8 +817,8 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
 
                 // Annotations are available and present
                 if (useAnnotations) {
-                    members[i] = getAnnotatedMembers(configuration, type, name, true);
-                    methods[i] = getAnnotatedSetters(configuration, type, name, true);
+                    members[i] = getAnnotatedMembers(configuration, type, field, true);
+                    methods[i] = getAnnotatedSetters(configuration, type, field, true);
                 }
 
                 // No annotations are present
@@ -835,8 +847,8 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
 
                     // A top-level mapping is applied
                     else {
-                        members[i] = getMatchingMembers(configuration, type, name, true);
-                        methods[i] = getMatchingSetters(configuration, type, name, true);
+                        members[i] = getMatchingMembers(configuration, type, field, true);
+                        methods[i] = getMatchingSetters(configuration, type, field, true);
                     }
                 }
             }
@@ -847,27 +859,27 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                     nestedMappingInfo.row = Tools.row0(list);
                     nestedMappingInfo.recordDelegate = newRecord(true, configuration, recordType(nestedMappingInfo.row.size()), nestedMappingInfo.row);
 
-                    for (java.lang.reflect.Field member : getMatchingMembers(configuration, type, prefix, true))
+                    for (MappedMember member : getMatchingMembers(configuration, type, field(prefix), true))
                         nestedMappingInfo.mappers.add(
-                            nestedMappingInfo.row.fields.mapper(configuration, member.getType())
+                            nestedMappingInfo.row.fields.mapper(configuration, member.member().getType())
                         );
 
-                    for (Method method : getMatchingSetters(configuration, type, prefix, true))
+                    for (MappedMethod method : getMatchingSetters(configuration, type, field(prefix), true))
                         nestedMappingInfo.mappers.add(
-                            nestedMappingInfo.row.fields.mapper(configuration, method.getParameterTypes()[0])
+                            nestedMappingInfo.row.fields.mapper(configuration, method.method().getParameterTypes()[0])
                         );
                 });
             }
         }
 
         final boolean isMutable() {
-            for (List<Method> m : methods)
+            for (List<MappedMethod> m : methods)
                 if (!m.isEmpty())
                     return true;
 
-            for (List<java.lang.reflect.Field> m1 : members)
-                for (java.lang.reflect.Field m2 : m1)
-                    if ((m2.getModifiers() & Modifier.FINAL) == 0)
+            for (List<MappedMember> m1 : members)
+                for (MappedMember m2 : m1)
+                    if ((m2.member().getModifiers() & Modifier.FINAL) == 0)
                         return true;
 
             return false;
@@ -879,22 +891,24 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                 final E result = instance != null ? instance : constructor.call();
 
                 for (int i = 0; i < fields.length; i++) {
-                    for (java.lang.reflect.Field member : members[i])
+                    for (MappedMember member : members[i])
 
                         // [#935] Avoid setting final fields
-                        if ((member.getModifiers() & Modifier.FINAL) == 0)
+                        if ((member.member().getModifiers() & Modifier.FINAL) == 0)
                             map(record, result, member, i);
 
-                    for (java.lang.reflect.Method method : methods[i]) {
-                        Class<?> mType = method.getParameterTypes()[0];
-                        Object value = record.get(i, mType);
+                    for (MappedMethod method : methods[i]) {
+                        Class<?> mType = method.method().getParameterTypes()[0];
+                        Object value = method.converter() != null
+                            ? ((ContextConverter<Object, Object>) method.converter()).from(record.get(i), converterContext(record))
+                            : record.get(i, mType);
 
                         // [#3082] [#10910] Try mapping nested collection types
-                        Object list = tryConvertToListOrSet(value, mType, method.getGenericParameterTypes()[0]);
+                        Object list = tryConvertToListOrSet(value, mType, method.method().getGenericParameterTypes()[0]);
                         if (list != null)
-                            method.invoke(result, list);
+                            method.method().invoke(result, list);
                         else
-                            method.invoke(result, value);
+                            method.method().invoke(result, value);
                     }
                 }
 
@@ -908,15 +922,15 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                                 rec.set(index, record.get(indexes.get(index)));
 
                             Object value = mapper.map(rec);
-                            for (java.lang.reflect.Field member : getMatchingMembers(configuration, type, prefix, true)) {
+                            for (MappedMember member : getMatchingMembers(configuration, type, field(prefix), true)) {
 
                                 // [#935] Avoid setting final fields
-                                if ((member.getModifiers() & Modifier.FINAL) == 0)
-                                    map(value, result, member);
+                                if ((member.member().getModifiers() & Modifier.FINAL) == 0)
+                                    map(value, result, member.member());
                             }
 
-                            for (Method method : getMatchingSetters(configuration, type, prefix, true))
-                                method.invoke(result, value);
+                            for (MappedMethod method : getMatchingSetters(configuration, type, field(prefix), true))
+                                method.method().invoke(result, value);
 
                             return rec;
                         });
@@ -930,37 +944,39 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
             }
         }
 
-        private final void map(Record record, Object result, java.lang.reflect.Field member, int index) throws IllegalAccessException {
-            Class<?> mType = member.getType();
+        private final void map(Record record, Object result, MappedMember member, int index) throws IllegalAccessException {
+            Class<?> mType = member.member().getType();
 
             if (mType.isPrimitive()) {
                 if (mType == byte.class)
-                    map(record.get(index, byte.class), result, member);
+                    map(record.get(index, byte.class), result, member.member());
                 else if (mType == short.class)
-                    map(record.get(index, short.class), result, member);
+                    map(record.get(index, short.class), result, member.member());
                 else if (mType == int.class)
-                    map(record.get(index, int.class), result, member);
+                    map(record.get(index, int.class), result, member.member());
                 else if (mType == long.class)
-                    map(record.get(index, long.class), result, member);
+                    map(record.get(index, long.class), result, member.member());
                 else if (mType == float.class)
-                    map(record.get(index, float.class), result, member);
+                    map(record.get(index, float.class), result, member.member());
                 else if (mType == double.class)
-                    map(record.get(index, double.class), result, member);
+                    map(record.get(index, double.class), result, member.member());
                 else if (mType == boolean.class)
-                    map(record.get(index, boolean.class), result, member);
+                    map(record.get(index, boolean.class), result, member.member());
                 else if (mType == char.class)
-                    map(record.get(index, char.class), result, member);
+                    map(record.get(index, char.class), result, member.member());
             }
 
             else {
-                Object value = record.get(index, mType);
+                Object value = member.converter() != null
+                    ? ((ContextConverter<Object, Object>) member.converter()).from(record.get(index), converterContext(record))
+                    : record.get(index, mType);
 
                 // [#3082] [#10910] [#11213] Try mapping nested collection types
-                Object list = tryConvertToListOrSet(value, mType, member.getGenericType());
+                Object list = tryConvertToListOrSet(value, mType, member.member().getGenericType());
                 if (list != null)
-                    member.set(result, list);
+                    member.member().set(result, list);
                 else
-                    map(value, result, member);
+                    map(value, result, member.member());
             }
         }
 
@@ -1014,29 +1030,31 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
      */
     private class ImmutablePOJOMapper extends AbstractDelegateMapper<R, E> {
 
-        final Constructor<E>                          constructor;
-        final Class<?>[]                              parameterTypes;
-        private final boolean                         nested;
-        private final NestedMappingInfo[]             nestedMappingInfo;
-        private final Integer[]                       propertyIndexes;
+        final Constructor<E>               constructor;
+        final Class<?>[]                   parameterTypes;
+        final Converter<?, ?>[]            parameterConverters;
+        private final boolean              nested;
+        private final NestedMappingInfo[]  nestedMappingInfo;
+        private final Integer[]            propertyIndexes;
 
         // For named parameter mappings where the mapping is governed by JPA annotations
-        private final List<String>                    propertyNames;
-        private final boolean                         useAnnotations;
-        private final List<java.lang.reflect.Field>[] members;
-        private final java.lang.reflect.Method[]      methods;
+        private final List<String>         propertyNames;
+        private final boolean              useAnnotations;
+        private final List<MappedMember>[] members;
+        private final MappedMethod[]       methods;
 
         ImmutablePOJOMapper(Constructor<E> constructor, Class<?>[] parameterTypes, List<String> propertyNames, boolean supportsNesting) {
             int size = prefixes().size();
 
             this.constructor = accessible(constructor);
             this.parameterTypes = parameterTypes;
+            this.parameterConverters = new Converter[parameterTypes.length];
             this.nestedMappingInfo = new NestedMappingInfo[size];
             this.propertyIndexes = new Integer[fields.length];
             this.propertyNames = propertyNames;
             this.useAnnotations = hasColumnAnnotations(configuration, type);
             this.members = new List[fields.length];
-            this.methods = new Method[fields.length];
+            this.methods = new MappedMethod[fields.length];
 
             if (propertyNames.isEmpty()) {
                 if (!supportsNesting) {
@@ -1062,14 +1080,14 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
 
                     // Annotations are available and present
                     if (useAnnotations) {
-                        members[i] = getAnnotatedMembers(configuration, type, name, false);
-                        methods[i] = getAnnotatedGetter(configuration, type, name, true);
+                        members[i] = getAnnotatedMembers(configuration, type, field, false);
+                        methods[i] = getAnnotatedGetter(configuration, type, field, true);
                     }
 
                     // No annotations are present
                     else {
-                        members[i] = getMatchingMembers(configuration, type, name, false);
-                        methods[i] = getMatchingGetter(configuration, type, name, true);
+                        members[i] = getMatchingMembers(configuration, type, field, false);
+                        methods[i] = getMatchingGetter(configuration, type, field, true);
                     }
 
                     // [#3911] Liberal interpretation of the @ConstructorProperties specs:
@@ -1136,6 +1154,11 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                 }
             }
 
+            if (!hasNestedFields)
+                for (int i = 0; i < fields.length; i++)
+                    if (propertyIndexes[i] != null)
+                        parameterConverters[propertyIndexes[i]] = configuration.converterProvider().provide(fields[i].getType(), parameterTypes[propertyIndexes[i]]);
+
             this.nested = hasNestedFields;
         }
 
@@ -1164,22 +1187,30 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
 
             // TODO: This logic could be applicable to mapNested() as well?
             if (toIndex != null) {
-                to[toIndex] = from.get(fromIndex, parameterTypes[toIndex]);
+                to[toIndex] = parameterConverters[toIndex] != null
+                    ? ((ContextConverter<Object, Object>) parameterConverters[toIndex]).from(from.get(fromIndex), converterContext(from))
+                    : from.get(fromIndex, parameterTypes[toIndex]);
             }
             else {
-                for (java.lang.reflect.Field member : members[fromIndex]) {
-                    int index = propertyNames.indexOf(member.getName());
+                for (MappedMember member : members[fromIndex]) {
+                    int index = propertyNames.indexOf(member.member().getName());
 
                     if (index >= 0)
-                        to[index] = from.get(fromIndex, member.getType());
+                        to[index] = member.converter() != null
+                            ? ((ContextConverter<Object, Object>) member.converter()).from(from.get(fromIndex), converterContext(from))
+                            : from.get(fromIndex, member.member().getType());
                 }
 
-                if (methods[fromIndex] != null) {
-                    String name = getPropertyName(methods[fromIndex].getName());
+                MappedMethod m = methods[fromIndex];
+                if (m != null) {
+                    String name = getPropertyName(m.method().getName());
                     int index = propertyNames.indexOf(name);
 
                     if (index >= 0)
-                        to[index] = from.get(fromIndex, methods[fromIndex].getReturnType());
+                        to[index] = m.converter() != null
+                            ? ((ContextConverter<Object, Object>) m.converter()).from(from.get(fromIndex), converterContext(from))
+                            : from.get(fromIndex, m.method().getReturnType());
+
                 }
             }
         }
@@ -1256,6 +1287,10 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
             return "NestedMappingInfo " + indexLookup + "; (" + row + ")";
         }
     }
+
+    static final record MappedParameters(Class<?> parameter, ContextConverter<?, ?> converter) {}
+    static final record MappedMember(java.lang.reflect.Field member, ContextConverter<?, ?> converter) {}
+    static final record MappedMethod(java.lang.reflect.Method method, ContextConverter<?, ?> converter) {}
 
     @Override
     public String toString() {

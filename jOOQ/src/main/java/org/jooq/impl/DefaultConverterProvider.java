@@ -54,6 +54,7 @@ import java.util.UUID;
 // ...
 import org.jooq.Converter;
 import org.jooq.ConverterProvider;
+import org.jooq.Converters.UnknownType;
 import org.jooq.EnumType;
 import org.jooq.JSON;
 import org.jooq.JSONB;
@@ -71,10 +72,15 @@ import org.jetbrains.annotations.Nullable;
  */
 public final class DefaultConverterProvider implements ConverterProvider, Serializable {
 
+    @SuppressWarnings("unchecked")
     @Nullable
     @Override
     public final <T, U> Converter<T, U> provide(final Class<T> tType, final Class<U> uType) {
-        Class<T> tWrapper = wrapper(tType);
+
+        // [#16872] Our internal UnknownType literal encodes a type whose Class reference is unknown at Converter
+        //          lookup time, so conversion should be delayed until an actual value is available. The value
+        //          will typically be of type U already, as conversion has already taken place.
+        Class<T> tWrapper = tType == UnknownType.class ? (Class<T>) Object.class : wrapper(tType);
         Class<U> uWrapper = wrapper(uType);
 
         // TODO: [#10071] These checks are required to be able to return null in

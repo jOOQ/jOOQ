@@ -59,6 +59,8 @@ import org.jooq.RecordType;
 import org.jooq.RecordUnmapper;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.MappingException;
+import org.jooq.impl.DefaultRecordMapper.MappedMember;
+import org.jooq.impl.DefaultRecordMapper.MappedMethod;
 
 /**
  * A default implementation for unmapping a custom type to a {@link Record}.
@@ -242,26 +244,26 @@ public class DefaultRecordUnmapper<E, R extends Record> implements RecordUnmappe
                 boolean useAnnotations = hasColumnAnnotations(configuration, type);
 
                 for (Field<?> field : fields) {
-                    List<java.lang.reflect.Field> members;
-                    Method method;
+                    List<MappedMember> members;
+                    MappedMethod method;
 
                     // Annotations are available and present
                     if (useAnnotations) {
-                        members = getAnnotatedMembers(configuration, type, field.getName(), true);
-                        method = getAnnotatedGetter(configuration, type, field.getName(), true);
+                        members = getAnnotatedMembers(configuration, type, field, true);
+                        method = getAnnotatedGetter(configuration, type, field, true);
                     }
 
                     // No annotations are present
                     else {
-                        members = getMatchingMembers(configuration, type, field.getName(), true);
-                        method = getMatchingGetter(configuration, type, field.getName(), true);
+                        members = getMatchingMembers(configuration, type, field, true);
+                        method = getMatchingGetter(configuration, type, field, true);
                     }
 
                     // Use only the first applicable method or member
                     if (method != null)
-                        Tools.setValue(record, field, method.invoke(source), converterContext);
+                        Tools.setValue(record, field, method.method().invoke(source), converterContext);
                     else if (members.size() > 0)
-                        setValue(record, source, members.get(0), field, converterContext);
+                        setValue(record, source, members.get(0).member(), field, converterContext);
                 }
 
                 return (R) record;

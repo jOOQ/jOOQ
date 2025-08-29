@@ -374,6 +374,8 @@ import org.jooq.exception.NoDataFoundException;
 import org.jooq.exception.SQLStateClass;
 import org.jooq.exception.TemplatingException;
 import org.jooq.exception.TooManyRowsException;
+import org.jooq.impl.DefaultRecordMapper.MappedMember;
+import org.jooq.impl.DefaultRecordMapper.MappedMethod;
 import org.jooq.impl.QOM.Quantifier;
 import org.jooq.impl.ResultsImpl.ResultOrRowsImpl;
 import org.jooq.tools.Ints;
@@ -4454,29 +4456,29 @@ final class Tools {
     /**
      * Get all members annotated with a given column name
      */
-    static final List<java.lang.reflect.Field> getAnnotatedMembers(
+    static final List<MappedMember> getAnnotatedMembers(
         final Configuration configuration,
         final Class<?> type,
-        final String name,
+        final Field<?> field,
         final boolean makeAccessible
     ) {
         return Cache.run(configuration, () -> {
-            List<java.lang.reflect.Field> result = configuration.annotatedPojoMemberProvider().getMembers(type, name);
+            List<java.lang.reflect.Field> result = configuration.annotatedPojoMemberProvider().getMembers(type, field.getName());
 
             if (makeAccessible)
                 result.forEach(Reflect::accessible);
 
-            return result;
-        }, REFLECTION_CACHE_GET_ANNOTATED_MEMBERS, () -> Cache.key(type, name, makeAccessible));
+            return map(result, m -> new MappedMember(m, scoped(configuration.converterProvider().provide(field.getType(), m.getType()))));
+        }, REFLECTION_CACHE_GET_ANNOTATED_MEMBERS, () -> Cache.key(type, field.getName(), makeAccessible));
     }
 
     /**
      * Get all members matching a given column name
      */
-    static final List<java.lang.reflect.Field> getMatchingMembers(
+    static final List<MappedMember> getMatchingMembers(
         final Configuration configuration,
         final Class<?> type,
-        final String name,
+        final Field<?> field,
         final boolean makeAccessible
     ) {
         return Cache.run(configuration, () -> {
@@ -4484,63 +4486,63 @@ final class Tools {
 
             // [#1942] Caching these values before the field-loop significantly
             // accerates POJO mapping
-            String camelCaseLC = StringUtils.toCamelCaseLC(name);
+            String camelCaseLC = StringUtils.toCamelCaseLC(field.getName());
 
             for (java.lang.reflect.Field member : getInstanceMembers(type))
-                if (name.equals(member.getName()))
+                if (field.getName().equals(member.getName()))
                     result.add(accessible(member, makeAccessible));
                 else if (camelCaseLC.equals(member.getName()))
                     result.add(accessible(member, makeAccessible));
 
-            return result;
-        }, REFLECTION_CACHE_GET_MATCHING_MEMBERS, () -> Cache.key(type, name, makeAccessible));
+            return map(result, m -> new MappedMember(m, scoped(configuration.converterProvider().provide(field.getType(), m.getType()))));
+        }, REFLECTION_CACHE_GET_MATCHING_MEMBERS, () -> Cache.key(type, field.getName(), makeAccessible));
     }
 
     /**
      * Get all setter methods annotated with a given column name
      */
-    static final List<Method> getAnnotatedSetters(
+    static final List<MappedMethod> getAnnotatedSetters(
         final Configuration configuration,
         final Class<?> type,
-        final String name,
+        final Field<?> field,
         final boolean makeAccessible
     ) {
         return Cache.run(configuration, () -> {
             Set<SourceMethod> set = new LinkedHashSet<>();
 
-            for (Method m : configuration.annotatedPojoMemberProvider().getSetters(type, name))
+            for (Method m : configuration.annotatedPojoMemberProvider().getSetters(type, field.getName()))
                 set.add(new SourceMethod(accessible(m, makeAccessible)));
 
-            return SourceMethod.methods(set);
-        }, REFLECTION_CACHE_GET_ANNOTATED_SETTERS, () -> Cache.key(type, name, makeAccessible));
+            return map(SourceMethod.methods(set), m -> new MappedMethod(m, scoped(configuration.converterProvider().provide(field.getType(), m.getParameterTypes()[0]))));
+        }, REFLECTION_CACHE_GET_ANNOTATED_SETTERS, () -> Cache.key(type, field.getName(), makeAccessible));
     }
 
     /**
      * Get the first getter method annotated with a given column name
      */
-    static final Method getAnnotatedGetter(
+    static final @Nullable MappedMethod getAnnotatedGetter(
         final Configuration configuration,
         final Class<?> type,
-        final String name,
+        final Field<?> field,
         final boolean makeAccessible
     ) {
         return Cache.run(configuration, () -> {
-            List<Method> result = configuration.annotatedPojoMemberProvider().getGetters(type, name);
+            List<Method> result = configuration.annotatedPojoMemberProvider().getGetters(type, field.getName());
 
             if (makeAccessible)
                 result.forEach(Reflect::accessible);
 
-            return result.isEmpty() ? null : result.get(0);
-        }, REFLECTION_CACHE_GET_ANNOTATED_GETTER, () -> Cache.key(type, name, makeAccessible));
+            return result.isEmpty() ? null : new MappedMethod(result.get(0), scoped(configuration.converterProvider().provide(field.getType(), result.get(0).getReturnType())));
+        }, REFLECTION_CACHE_GET_ANNOTATED_GETTER, () -> Cache.key(type, field.getName(), makeAccessible));
     }
 
     /**
      * Get all setter methods matching a given column name
      */
-    static final List<Method> getMatchingSetters(
+    static final List<MappedMethod> getMatchingSetters(
         final Configuration configuration,
         final Class<?> type,
-        final String name,
+        final Field<?> field,
         final boolean makeAccessible
     ) {
         return Cache.run(configuration, () -> {
@@ -4550,60 +4552,69 @@ final class Tools {
 
             // [#1942] Caching these values before the method-loop significantly
             // accerates POJO mapping
-            String camelCase = StringUtils.toCamelCase(name);
+            String camelCase = StringUtils.toCamelCase(field.getName());
             String camelCaseLC = StringUtils.toLC(camelCase);
 
             for (Method method : getInstanceMethods(type)) {
                 Class<?>[] parameterTypes = method.getParameterTypes();
 
                 if (parameterTypes.length == 1)
-                    if (name.equals(method.getName()))
+                    if (field.getName().equals(method.getName()))
                         set.add(new SourceMethod(accessible(method, makeAccessible)));
                     else if (camelCaseLC.equals(method.getName()))
                         set.add(new SourceMethod(accessible(method, makeAccessible)));
-                    else if (("set" + name).equals(method.getName()))
+                    else if (("set" + field.getName()).equals(method.getName()))
                         set.add(new SourceMethod(accessible(method, makeAccessible)));
                     else if (("set" + camelCase).equals(method.getName()))
                         set.add(new SourceMethod(accessible(method, makeAccessible)));
             }
 
-            return SourceMethod.methods(set);
-        }, REFLECTION_CACHE_GET_MATCHING_SETTERS, () -> Cache.key(type, name, makeAccessible));
+            return map(SourceMethod.methods(set), m -> new MappedMethod(m, scoped(configuration.converterProvider().provide(field.getType(), m.getParameterTypes()[0]))));
+        }, REFLECTION_CACHE_GET_MATCHING_SETTERS, () -> Cache.key(type, field.getName(), makeAccessible));
     }
 
 
     /**
      * Get the first getter method matching a given column name
      */
-    static final Method getMatchingGetter(
+    static final @Nullable MappedMethod getMatchingGetter(
         final Configuration configuration,
         final Class<?> type,
-        final String name,
+        final Field<?> field,
         final boolean makeAccessible
     ) {
         return Cache.run(configuration, () -> {
             // [#1942] Caching these values before the method-loop significantly
             // accerates POJO mapping
-            String camelCase = StringUtils.toCamelCase(name);
+            String camelCase = StringUtils.toCamelCase(field.getName());
             String camelCaseLC = StringUtils.toLC(camelCase);
+            Method result = null;
 
-            for (Method method : getInstanceMethods(type))
-                if (method.getParameterTypes().length == 0)
-                    if (name.equals(method.getName()))
-                        return accessible(method, makeAccessible);
-                    else if (camelCaseLC.equals(method.getName()))
-                        return accessible(method, makeAccessible);
-                    else if (("get" + name).equals(method.getName()))
-                        return accessible(method, makeAccessible);
-                    else if (("get" + camelCase).equals(method.getName()))
-                        return accessible(method, makeAccessible);
-                    else if (("is" + name).equals(method.getName()))
-                        return accessible(method, makeAccessible);
-                    else if (("is" + camelCase).equals(method.getName()))
-                        return accessible(method, makeAccessible);
+            for (Method method : getInstanceMethods(type)) {
+                if (method.getParameterTypes().length == 0) {
+                    if (field.getName().equals(method.getName())) {
+                        result = accessible(method, makeAccessible); break;
+                    }
+                    else if (camelCaseLC.equals(method.getName())) {
+                        result = accessible(method, makeAccessible); break;
+                    }
+                    else if (("get" + field.getName()).equals(method.getName())) {
+                        result = accessible(method, makeAccessible); break;
+                    }
+                    else if (("get" + camelCase).equals(method.getName())) {
+                        result = accessible(method, makeAccessible); break;
+                    }
+                    else if (("is" + field.getName()).equals(method.getName())) {
+                        result = accessible(method, makeAccessible); break;
+                    }
+                    else if (("is" + camelCase).equals(method.getName())) {
+                        result = accessible(method, makeAccessible); break;
+                    }
+                }
+            }
 
-            return null;
-        }, REFLECTION_CACHE_GET_MATCHING_GETTER, () -> Cache.key(type, name, makeAccessible));
+            return result == null ? null : new MappedMethod(result, scoped(configuration.converterProvider().provide(field.getType(), result.getReturnType())));
+        }, REFLECTION_CACHE_GET_MATCHING_GETTER, () -> Cache.key(type, field.getName(), makeAccessible));
     }
 
     /**

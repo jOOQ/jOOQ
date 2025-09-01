@@ -4094,6 +4094,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
+
                 // Some dialects implement SQL standard time literals
                 default:
                     ctx.render().visit(K_TIME_WITH_TIME_ZONE).sql(" '").sql(escape(format(value), ctx.render())).sql('\'');

@@ -259,6 +259,7 @@ import java.util.function.Supplier;
 import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collector;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -6717,6 +6718,20 @@ final class Tools {
             result.add(e);
 
         return result;
+    }
+
+    /**
+     * [#18983] A simpler {@link Collector} accepting utility than
+     * {@link Stream#collect(Collector)} for internal, sequential only use.
+     */
+    static final <E, A, R> R collect(Iterable<E> iterable, Collector<? super E, A, R> collector) {
+        A a = collector.supplier().get();
+
+        BiConsumer<A, ? super E> acc = collector.accumulator();
+        for (E e : iterable)
+            acc.accept(a, e);
+
+        return collector.finisher().apply(a);
     }
 
     static final <E> Iterator<E> filter(Iterator<E> iterator, Predicate<? super E> predicate) {

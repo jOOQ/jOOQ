@@ -298,7 +298,10 @@ public interface DSLContext extends Scope {
      * Access the database meta data from explicit catalog information.
      * <p>
      * This will not connect to your database to get live meta information,
-     * unlike {@link #meta()} and {@link #meta(DatabaseMetaData)}.
+     * unlike {@link #meta()} and {@link #meta(DatabaseMetaData)}, but expects
+     * complete meta data to be available from the argument {@link Catalog}
+     * instances via {@link Catalog#getSchemas()}, such as made available from
+     * generated code, for example.
      */
     @NotNull
     Meta meta(Catalog... catalogs);
@@ -307,7 +310,10 @@ public interface DSLContext extends Scope {
      * Access the database meta data from explicit schema information.
      * <p>
      * This will not connect to your database to get live meta information,
-     * unlike {@link #meta()} and {@link #meta(DatabaseMetaData)}.
+     * unlike {@link #meta()} and {@link #meta(DatabaseMetaData)}, but expects
+     * complete meta data to be available from the argument {@link Schema}
+     * instances via {@link Schema#getTables()}, {@link Schema#getSequences()},
+     * etc., such as made available from generated code, for example..
      */
     @NotNull
     Meta meta(Schema... schemas);
@@ -316,7 +322,10 @@ public interface DSLContext extends Scope {
      * Access the database meta data from explicit table information.
      * <p>
      * This will not connect to your database to get live meta information,
-     * unlike {@link #meta()} and {@link #meta(DatabaseMetaData)}.
+     * unlike {@link #meta()} and {@link #meta(DatabaseMetaData)}, but expects
+     * complete meta data to be available from the argument {@link Table}
+     * instances via {@link Table#fields()}, such as made available from
+     * generated code, for example.
      */
     @NotNull
     Meta meta(Table<?>... tables);

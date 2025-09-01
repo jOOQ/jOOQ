@@ -55,6 +55,8 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.BiConsumer;
+import java.util.function.Supplier;
 import java.util.stream.Collector;
 
 import org.jooq.Attachable;
@@ -135,7 +137,7 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
 
     @Override
     public final <X, A> X collect(Collector<? super R, A, X> collector) {
-        return stream().collect(collector);
+        return Tools.collect(this, collector);
     }
 
     @Override

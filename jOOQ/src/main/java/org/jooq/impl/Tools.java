@@ -6051,8 +6051,14 @@ final class Tools {
             }
         }
 
+        String typeName = type.getTypeName(ctx.configuration());
+
         // [#5807] These databases cannot use the DataType.getCastTypeName() (which is simply char in this case)
-        if (type.getFromType() == UUID.class && NO_SUPPORT_CAST_TYPE_IN_DDL.contains(ctx.dialect())) {
+        // [#18965] Or, they require a length, but UUID.hasLength() is false
+        if (type.getFromType() == UUID.class && (
+            NO_SUPPORT_CAST_TYPE_IN_DDL.contains(ctx.dialect())
+            || typeName.startsWith("varchar")
+        )) {
             toSQLDDLTypeDeclaration(ctx, VARCHAR(36));
             return;
         }
@@ -6061,7 +6067,6 @@ final class Tools {
         if (type.isTimestamp() && (type.getBinding() instanceof DateAsTimestampBinding || type.getBinding() instanceof LocalDateAsLocalDateTimeBinding))
             type = SQLDataType.DATE;
 
-        String typeName = type.getTypeName(ctx.configuration());
 
 
 

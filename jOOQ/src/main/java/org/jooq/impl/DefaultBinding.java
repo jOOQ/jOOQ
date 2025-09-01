@@ -2274,12 +2274,19 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final void setNull0(BindingSetStatementContext<U> ctx) throws SQLException {
+            switch (ctx.family()) {
 
 
 
 
 
-            super.setNull0(ctx);
+
+
+
+                default:
+                    super.setNull0(ctx);
+                    break;
+            }
         }
 
         @Override
@@ -2539,6 +2546,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final void setNull0(BindingSetStatementContext<U> ctx) throws SQLException {
             switch (ctx.family()) {
+
+
 
 
 

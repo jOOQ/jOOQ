@@ -75,7 +75,7 @@ abstract class AbstractCursor<R extends Record> extends AbstractResult<R> implem
 
     @Override
     public final <X, A> X collect(Collector<? super R, A, X> collector) {
-        return stream().collect(collector);
+        return Tools.collect(this, collector);
     }
 
     @Override

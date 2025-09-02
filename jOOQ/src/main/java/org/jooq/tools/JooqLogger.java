@@ -41,6 +41,7 @@ import static java.util.Arrays.asList;
 
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.IntConsumer;
 import java.util.logging.SimpleFormatter;
 
 import org.jooq.Log;
@@ -186,14 +187,11 @@ public final class JooqLogger implements Log {
         return local.supports(global) ? global : local;
     }
 
-    private final void decrementLimitAndDo(Runnable runnable) {
-        try {
-            runnable.run();
-        }
-        finally {
-            if (limitMessages != null)
-                limitMessages.getAndUpdate(i -> Math.max(i - 1, 0));
-        }
+    private final void decrementLimitAndDo(IntConsumer runnable) {
+        runnable.accept(limitMessages != null
+            ? limitMessages.getAndUpdate(i -> Math.max(i - 1, 0))
+            : 1
+        );
     }
 
     /**
@@ -201,9 +199,13 @@ public final class JooqLogger implements Log {
      */
     @Override
     public boolean isTraceEnabled() {
+        return isTraceEnabled0(limitMessages != null && limitMessages.get() == 0);
+    }
+
+    private boolean isTraceEnabled0(boolean limitReached) {
         if (!threshold().supports(Log.Level.TRACE))
             return false;
-        else if (limitMessages != null && limitMessages.get() == 0)
+        else if (limitReached)
             return false;
         else if (slf4j != null)
             return slf4j.isTraceEnabled();
@@ -229,8 +231,8 @@ public final class JooqLogger implements Log {
      */
     @Override
     public void trace(Object message, Object details) {
-        decrementLimitAndDo(() -> {
-            if (!isTraceEnabled())
+        decrementLimitAndDo(i -> {
+            if (!isTraceEnabled0(i == 0))
                 return;
             else if (slf4j != null)
                 slf4j.trace(getMessage(message, details));
@@ -261,8 +263,8 @@ public final class JooqLogger implements Log {
      */
     @Override
     public void trace(Object message, Object details, Throwable throwable) {
-        decrementLimitAndDo(() -> {
-            if (!isTraceEnabled())
+        decrementLimitAndDo(i -> {
+            if (!isTraceEnabled0(i == 0))
                 return;
             else if (slf4j != null)
                 slf4j.trace(getMessage(message, details), throwable);
@@ -276,9 +278,13 @@ public final class JooqLogger implements Log {
      */
     @Override
     public boolean isDebugEnabled() {
+        return isDebugEnabled0(limitMessages != null && limitMessages.get() == 0);
+    }
+
+    private boolean isDebugEnabled0(boolean limitReached) {
         if (!threshold().supports(Log.Level.DEBUG))
             return false;
-        else if (limitMessages != null && limitMessages.get() == 0)
+        else if (limitReached)
             return false;
         else if (slf4j != null)
             return slf4j.isDebugEnabled();
@@ -304,8 +310,8 @@ public final class JooqLogger implements Log {
      */
     @Override
     public void debug(Object message, Object details) {
-        decrementLimitAndDo(() -> {
-            if (!isDebugEnabled())
+        decrementLimitAndDo(i -> {
+            if (!isDebugEnabled0(i == 0))
                 return;
             else if (slf4j != null)
                 slf4j.debug(getMessage(message, details));
@@ -336,8 +342,8 @@ public final class JooqLogger implements Log {
      */
     @Override
     public void debug(Object message, Object details, Throwable throwable) {
-        decrementLimitAndDo(() -> {
-            if (!isDebugEnabled())
+        decrementLimitAndDo(i -> {
+            if (!isDebugEnabled0(i == 0))
                 return;
             else if (slf4j != null)
                 slf4j.debug(getMessage(message, details), throwable);
@@ -351,9 +357,13 @@ public final class JooqLogger implements Log {
      */
     @Override
     public boolean isInfoEnabled() {
+        return isInfoEnabled0(limitMessages != null && limitMessages.get() == 0);
+    }
+
+    private boolean isInfoEnabled0(boolean limitReached) {
         if (!threshold().supports(Log.Level.INFO))
             return false;
-        else if (limitMessages != null && limitMessages.get() == 0)
+        else if (limitReached)
             return false;
         else if (slf4j != null)
             return slf4j.isInfoEnabled();
@@ -379,8 +389,8 @@ public final class JooqLogger implements Log {
      */
     @Override
     public void info(Object message, Object details) {
-        decrementLimitAndDo(() -> {
-            if (!isInfoEnabled())
+        decrementLimitAndDo(i -> {
+            if (!isInfoEnabled0(i == 0))
                 return;
             else if (slf4j != null)
                 slf4j.info(getMessage(message, details));
@@ -411,8 +421,8 @@ public final class JooqLogger implements Log {
      */
     @Override
     public void info(Object message, Object details, Throwable throwable) {
-        decrementLimitAndDo(() -> {
-            if (!isInfoEnabled())
+        decrementLimitAndDo(i -> {
+            if (!isInfoEnabled0(i == 0))
                 return;
             else if (slf4j != null)
                 slf4j.info(getMessage(message, details), throwable);
@@ -426,9 +436,13 @@ public final class JooqLogger implements Log {
      */
     @Override
     public boolean isWarnEnabled() {
+        return isWarnEnabled0(limitMessages != null && limitMessages.get() == 0);
+    }
+
+    private boolean isWarnEnabled0(boolean limitReached) {
         if (!threshold().supports(Log.Level.WARN))
             return false;
-        else if (limitMessages != null && limitMessages.get() == 0)
+        else if (limitReached)
             return false;
         else if (slf4j != null)
             return slf4j.isWarnEnabled();
@@ -454,8 +468,8 @@ public final class JooqLogger implements Log {
      */
     @Override
     public void warn(Object message, Object details) {
-        decrementLimitAndDo(() -> {
-            if (!isWarnEnabled())
+        decrementLimitAndDo(i -> {
+            if (!isWarnEnabled0(i == 0))
                 return;
             else if (slf4j != null)
                 slf4j.warn(getMessage(message, details));
@@ -486,8 +500,8 @@ public final class JooqLogger implements Log {
      */
     @Override
     public void warn(Object message, Object details, Throwable throwable) {
-        decrementLimitAndDo(() -> {
-            if (!isWarnEnabled())
+        decrementLimitAndDo(i -> {
+            if (!isWarnEnabled0(i == 0))
                 return;
             else if (slf4j != null)
                 slf4j.warn(getMessage(message, details), throwable);
@@ -501,9 +515,13 @@ public final class JooqLogger implements Log {
      */
     @Override
     public boolean isErrorEnabled() {
+        return isErrorEnabled0(limitMessages != null && limitMessages.get() == 0);
+    }
+
+    private boolean isErrorEnabled0(boolean limitReached) {
         if (!threshold().supports(Log.Level.ERROR))
             return false;
-        else if (limitMessages != null && limitMessages.get() == 0)
+        else if (limitReached)
             return false;
         else if (slf4j != null)
             return slf4j.isErrorEnabled();
@@ -529,8 +547,8 @@ public final class JooqLogger implements Log {
      */
     @Override
     public void error(Object message, Object details) {
-        decrementLimitAndDo(() -> {
-            if (!isErrorEnabled())
+        decrementLimitAndDo(i -> {
+            if (!isErrorEnabled0(i == 0))
                 return;
             else if (slf4j != null)
                 slf4j.error(getMessage(message, details));
@@ -561,8 +579,8 @@ public final class JooqLogger implements Log {
      */
     @Override
     public void error(Object message, Object details, Throwable throwable) {
-        decrementLimitAndDo(() -> {
-            if (!isErrorEnabled())
+        decrementLimitAndDo(i -> {
+            if (!isErrorEnabled0(i == 0))
                 return;
             else if (slf4j != null)
                 slf4j.error(getMessage(message, details), throwable);

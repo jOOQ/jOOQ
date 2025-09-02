@@ -45,6 +45,8 @@ import static org.jooq.impl.SchemaImpl.DEFAULT_SCHEMA;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_STORE_ASSIGNMENT;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
+import java.util.Objects;
+
 import org.jooq.Binding;
 import org.jooq.Catalog;
 import org.jooq.Clause;
@@ -247,17 +249,17 @@ implements
 
         if (getQualifier() instanceof Table && that instanceof TableField<?, ?> other) {
             return
-                StringUtils.equals(getQualifier(), other.getTable()) &&
-                StringUtils.equals(getName(), other.getName());
+                Objects.equals(getQualifier(), other.getTable()) &&
+                Objects.equals(getName(), other.getName());
         }
 
         // [#2144] UDTPathFieldImpl equality can be decided without executing the
         // rather expensive implementation of AbstractQueryPart.equals()
         else if (that instanceof UDTPathField<?, ?, ?> other) {
             return
-                StringUtils.equals(getQualifier(), other.getQualifier()) &&
-                StringUtils.equals(getUDT(), other.getUDT()) &&
-                StringUtils.equals(getName(), other.getName());
+                Objects.equals(getQualifier(), other.getQualifier()) &&
+                Objects.equals(getUDT(), other.getUDT()) &&
+                Objects.equals(getName(), other.getName());
         }
 
         return super.equals(that);

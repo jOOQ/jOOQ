@@ -64,6 +64,7 @@ import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.lang.reflect.Constructor;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -71,7 +72,6 @@ import org.jooq.Clause;
 import org.jooq.Comment;
 import org.jooq.Condition;
 import org.jooq.Context;
-import org.jooq.DDLQuery;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
@@ -90,7 +90,6 @@ import org.jooq.TableOptionalOnStep;
 import org.jooq.TableOptions;
 import org.jooq.impl.QOM.JoinHint;
 import org.jooq.impl.QOM.UEmpty;
-import org.jooq.tools.StringUtils;
 import org.jooq.tools.reflect.Reflect;
 
 import org.jetbrains.annotations.Nullable;
@@ -664,11 +663,11 @@ implements
             return
 
                 // [#7172] [#10274] Cannot use getQualifiedName() yet here
-                StringUtils.equals(
+                Objects.equals(
                     defaultIfNull(getSchema(), DEFAULT_SCHEMA.get()),
                     defaultIfNull(t.getSchema(), DEFAULT_SCHEMA.get())
                 ) &&
-                StringUtils.equals(getName(), t.getName()) &&
+                Objects.equals(getName(), t.getName()) &&
                 Arrays.equals(parameters, t.parameters);
         }
 

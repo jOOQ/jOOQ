@@ -58,6 +58,7 @@ import static org.jooq.impl.Tools.ExtendedDataKey.DATA_RENDER_TABLE;
 import static org.jooq.impl.UpdateQueryImpl.NO_SUPPORT_UPDATE_JOIN;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -310,8 +311,8 @@ implements
         if (that instanceof TableField) {
             TableField<?, ?> other = (TableField<?, ?>) that;
             return
-                StringUtils.equals(getTable(), other.getTable()) &&
-                StringUtils.equals(getName(), other.getName());
+                Objects.equals(getTable(), other.getTable()) &&
+                Objects.equals(getName(), other.getName());
         }
 
         return super.equals(that);

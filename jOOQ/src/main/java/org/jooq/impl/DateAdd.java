@@ -60,6 +60,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 
@@ -484,9 +485,9 @@ implements
     public boolean equals(Object that) {
         if (that instanceof QOM.DateAdd<?> o) {
             return
-                StringUtils.equals($date(), o.$date()) &&
-                StringUtils.equals($interval(), o.$interval()) &&
-                StringUtils.equals($datePart(), o.$datePart())
+                Objects.equals($date(), o.$date()) &&
+                Objects.equals($interval(), o.$interval()) &&
+                Objects.equals($datePart(), o.$datePart())
             ;
         }
         else

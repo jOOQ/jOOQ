@@ -60,6 +60,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import java.math.BigDecimal;
@@ -202,7 +203,7 @@ implements
     public boolean equals(Object that) {
         if (that instanceof QOM.Log10 o) {
             return
-                StringUtils.equals($value(), o.$value())
+                Objects.equals($value(), o.$value())
             ;
         }
         else

@@ -60,6 +60,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 
@@ -165,8 +166,8 @@ implements
     public boolean equals(Object that) {
         if (that instanceof QOM.BinaryLtrim o) {
             return
-                StringUtils.equals($bytes(), o.$bytes()) &&
-                StringUtils.equals($characters(), o.$characters())
+                Objects.equals($bytes(), o.$bytes()) &&
+                Objects.equals($characters(), o.$characters())
             ;
         }
         else

@@ -60,6 +60,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 
@@ -153,8 +154,8 @@ implements
     public boolean equals(Object that) {
         if (that instanceof QOM.GtQuantified<?> o) {
             return
-                StringUtils.equals($arg1(), o.$arg1()) &&
-                StringUtils.equals($arg2(), o.$arg2())
+                Objects.equals($arg1(), o.$arg1()) &&
+                Objects.equals($arg2(), o.$arg2())
             ;
         }
         else

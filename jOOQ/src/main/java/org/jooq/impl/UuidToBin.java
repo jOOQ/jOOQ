@@ -60,6 +60,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import java.util.UUID;
@@ -185,7 +186,7 @@ implements
     public boolean equals(Object that) {
         if (that instanceof QOM.UuidToBin o) {
             return
-                StringUtils.equals($uuid(), o.$uuid())
+                Objects.equals($uuid(), o.$uuid())
             ;
         }
         else

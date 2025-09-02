@@ -60,6 +60,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 
@@ -196,9 +197,9 @@ implements
     public boolean equals(Object that) {
         if (that instanceof QOM.BinarySubstring o) {
             return
-                StringUtils.equals($string(), o.$string()) &&
-                StringUtils.equals($startingPosition(), o.$startingPosition()) &&
-                StringUtils.equals($length(), o.$length())
+                Objects.equals($string(), o.$string()) &&
+                Objects.equals($startingPosition(), o.$startingPosition()) &&
+                Objects.equals($length(), o.$length())
             ;
         }
         else

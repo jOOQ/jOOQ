@@ -60,6 +60,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import java.math.BigDecimal;
@@ -185,7 +186,7 @@ implements
     public boolean equals(Object that) {
         if (that instanceof QOM.PercentileCont o) {
             return
-                StringUtils.equals($percentile(), o.$percentile())
+                Objects.equals($percentile(), o.$percentile())
             ;
         }
         else

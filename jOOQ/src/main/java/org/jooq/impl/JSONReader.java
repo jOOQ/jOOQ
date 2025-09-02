@@ -54,9 +54,7 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DefaultDataType.getDataType;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.allMatch;
-import static org.jooq.impl.Tools.configuration;
 import static org.jooq.impl.Tools.convertHexToBytes;
-import static org.jooq.impl.Tools.converterContext;
 import static org.jooq.impl.Tools.fields;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.newRecord;
@@ -98,9 +96,9 @@ final class JSONReader<R extends Record> {
     private final AbstractRow<R>     row;
     private final Class<? extends R> recordType;
 
-    JSONReader(DSLContext ctx, AbstractRow<R> row, Class<? extends R> recordType, boolean multiset) {
+    JSONReader(DSLContext ctx, ConverterContext cc, AbstractRow<R> row, Class<? extends R> recordType, boolean multiset) {
         this.ctx = ctx;
-        this.cc = converterContext(configuration(ctx));
+        this.cc = cc;
         this.row = row;
         this.recordType = recordType != null ? recordType : (Class<? extends R>) Record.class;
     }

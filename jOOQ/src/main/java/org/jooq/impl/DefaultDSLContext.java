@@ -65,6 +65,7 @@ import static org.jooq.impl.Tools.EMPTY_TABLE;
 import static org.jooq.impl.Tools.EMPTY_TABLE_RECORD;
 import static org.jooq.impl.Tools.EMPTY_UPDATABLE_RECORD;
 import static org.jooq.impl.Tools.blocking;
+import static org.jooq.impl.Tools.converterContext;
 import static org.jooq.impl.Tools.getMappedSchema;
 import static org.jooq.impl.Tools.getMappedTable;
 import static org.jooq.impl.Tools.list;
@@ -1452,7 +1453,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public Result<Record> fetchFromJSON(String string) {
-        return new JSONReader<Record>(this, null, null, false).read(Source.of(string));
+        return new JSONReader<Record>(this, converterContext(this), null, null, false).read(Source.of(string));
     }
 
     @Override

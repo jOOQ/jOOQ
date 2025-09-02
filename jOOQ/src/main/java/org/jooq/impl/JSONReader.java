@@ -54,6 +54,7 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DefaultDataType.getDataType;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.allMatch;
+import static org.jooq.impl.Tools.configuration;
 import static org.jooq.impl.Tools.convertHexToBytes;
 import static org.jooq.impl.Tools.converterContext;
 import static org.jooq.impl.Tools.fields;
@@ -93,11 +94,13 @@ import org.jooq.Source;
 final class JSONReader<R extends Record> {
 
     private final DSLContext         ctx;
+    private final ConverterContext   cc;
     private final AbstractRow<R>     row;
     private final Class<? extends R> recordType;
 
     JSONReader(DSLContext ctx, AbstractRow<R> row, Class<? extends R> recordType, boolean multiset) {
         this.ctx = ctx;
+        this.cc = converterContext(configuration(ctx));
         this.row = row;
         this.recordType = recordType != null ? recordType : (Class<? extends R>) Record.class;
     }
@@ -110,7 +113,7 @@ final class JSONReader<R extends Record> {
         try {
             DefaultJSONContentHandler handler = new DefaultJSONContentHandler();
             new JSONParser(ctx, source.readString(), handler).parse();
-            return read(ctx, row, recordType, ms, handler.result());
+            return read(ctx, cc, row, recordType, ms, handler.result());
         }
         catch (Exception e) {
             throw new RuntimeException(e);
@@ -119,6 +122,7 @@ final class JSONReader<R extends Record> {
 
     private static final <R extends Record> Result<R> read(
         DSLContext ctx,
+        ConverterContext cc,
         AbstractRow<R> actualRow,
         Class<? extends R> recordType,
         boolean multiset,
@@ -173,6 +177,7 @@ final class JSONReader<R extends Record> {
                     List<Object> list = multiset
                         ? patchRecord(
                             ctx,
+                            cc,
                             multiset,
                             actualRow,
 
@@ -201,7 +206,7 @@ final class JSONReader<R extends Record> {
                         result = new ResultImpl<>(ctx.configuration(), actualRow = (AbstractRow<R>) Tools.row0(header));
                     }
 
-                    patchRecord(ctx, multiset, actualRow, record);
+                    patchRecord(ctx, cc, multiset, actualRow, record);
 
                     // [#12930] NULL records are possible when nested ROW is
                     //          returned from an empty scalar subquery.
@@ -237,9 +242,13 @@ final class JSONReader<R extends Record> {
     private static final Set<SQLDialect> ENCODE_BINARY_AS_TEXT = SQLDialect.supportedBy(MARIADB);
     private static final Pattern         P_MYSQL_BINARY_PREFIX = Pattern.compile("^base64:type\\d+:(.*)$");
 
-    private static final List<Object> patchRecord(DSLContext ctx, boolean multiset, Fields result, List<Object> record) {
-        ConverterContext cc = null;
-
+    private static final List<Object> patchRecord(
+        DSLContext ctx,
+        ConverterContext cc,
+        boolean multiset,
+        Fields result,
+        List<Object> record
+    ) {
         for (int i = 0; i < result.fields().length; i++) {
             Field<?> field = result.field(i);
             Object value = record.get(i);
@@ -289,7 +298,7 @@ final class JSONReader<R extends Record> {
             ) {
                 record.set(i, ((ContextConverter<String, String>) t.getConverter()).from(
                     (String) value,
-                    cc == null ? (cc = converterContext(ctx.configuration())) : cc
+                    cc
                 ));
             }
 
@@ -297,6 +306,7 @@ final class JSONReader<R extends Record> {
             else if (multiset && t.isMultiset()) {
                 record.set(i, read(
                     ctx,
+                    cc,
                     (AbstractRow) t.getRow(),
                     (Class) t.getRecordType(),
                     multiset,
@@ -313,7 +323,7 @@ final class JSONReader<R extends Record> {
                 List<Object> l;
 
                 if (value instanceof List) {
-                    l = patchRecord(ctx, multiset, actualRow, (List<Object>) value);
+                    l = patchRecord(ctx, cc, multiset, actualRow, (List<Object>) value);
                 }
 
                 // [#18681] The Map encoding of nested ROW values can happen for 2 reasons:
@@ -321,9 +331,9 @@ final class JSONReader<R extends Record> {
                 //          - It's a UDT or similar, serialised into a JSON object, where keys are attribute names, not in order!
                 else if (value instanceof Map<?, ?> map) {
                     if (QualifiedRecord.class.isAssignableFrom(recordType) && allMatch(actualRow.fields.fields, f -> map.containsKey(f.getName())))
-                        l = patchRecord(ctx, multiset, actualRow, map(actualRow.fields.fields, f -> map.get(f.getName())));
+                        l = patchRecord(ctx, cc, multiset, actualRow, map(actualRow.fields.fields, f -> map.get(f.getName())));
                     else
-                        l = patchRecord(ctx, multiset, actualRow, new ArrayList<>(map.values()));
+                        l = patchRecord(ctx, cc, multiset, actualRow, new ArrayList<>(map.values()));
                 }
                 else
                     throw new IllegalStateException();

@@ -226,6 +226,7 @@ import static org.jooq.tools.StringUtils.defaultIfNull;
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
+import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Connection;
@@ -412,6 +413,7 @@ final class Tools {
     static final byte[]                     EMPTY_BYTE                    = {};
     static final Catalog[]                  EMPTY_CATALOG                 = {};
     static final Check<?>[]                 EMPTY_CHECK                   = {};
+    static final Class<?>[]                 EMPTY_CLASS                   = {};
     static final Clause[]                   EMPTY_CLAUSE                  = {};
     static final Collection<?>[]            EMPTY_COLLECTION              = {};
     static final CommonTableExpression<?>[] EMPTY_COMMON_TABLE_EXPRESSION = {};
@@ -435,6 +437,7 @@ final class Tools {
     static final Table<?>[]                 EMPTY_TABLE                   = {};
     static final TableField<?, ?>[]         EMPTY_TABLE_FIELD             = {};
     static final TableRecord<?>[]           EMPTY_TABLE_RECORD            = {};
+    static final Type[]                     EMPTY_TYPE                    = {};
     static final UpdatableRecord<?>[]       EMPTY_UPDATABLE_RECORD        = {};
 
     // ------------------------------------------------------------------------
@@ -4462,6 +4465,16 @@ final class Tools {
         return makeAccessible ? Reflect.accessible(object) : object;
     }
 
+    static final <T> ThrowingFunction<? super Method, ? extends T, RuntimeException> methodParams(
+        Function3<? super Method, ? super Class<?>[], ? super Type[], ? extends T> f
+    ) {
+
+        // [#18989] Allow for caching these expensive calls, avoiding unnecessary Class<?>[] allocations.
+        return m -> m.getParameterCount() == 0
+            ? f.apply(m, EMPTY_CLASS, EMPTY_TYPE)
+            : f.apply(m, m.getParameterTypes(), m.getGenericParameterTypes());
+    }
+
     /**
      * Get all members annotated with a given column name
      */
@@ -4522,7 +4535,7 @@ final class Tools {
             for (Method m : configuration.annotatedPojoMemberProvider().getSetters(type, field.getName()))
                 set.add(new SourceMethod(accessible(m, makeAccessible)));
 
-            return map(SourceMethod.methods(set), m -> new MappedMethod(m, scoped(configuration.converterProvider().provide(field.getType(), m.getParameterTypes()[0]))));
+            return map(SourceMethod.methods(set), methodParams((m, p, t) -> new MappedMethod(m, p, t, scoped(configuration.converterProvider().provide(field.getType(), p[0])))));
         }, REFLECTION_CACHE_GET_ANNOTATED_SETTERS, () -> Cache.key(type, field.getName(), makeAccessible));
     }
 
@@ -4541,7 +4554,7 @@ final class Tools {
             if (makeAccessible)
                 result.forEach(Reflect::accessible);
 
-            return result.isEmpty() ? null : new MappedMethod(result.get(0), scoped(configuration.converterProvider().provide(field.getType(), result.get(0).getReturnType())));
+            return result.isEmpty() ? null : new MappedMethod(result.get(0), EMPTY_CLASS, EMPTY_TYPE, scoped(configuration.converterProvider().provide(field.getType(), result.get(0).getReturnType())));
         }, REFLECTION_CACHE_GET_ANNOTATED_GETTER, () -> Cache.key(type, field.getName(), makeAccessible));
     }
 
@@ -4578,7 +4591,7 @@ final class Tools {
                         set.add(new SourceMethod(accessible(method, makeAccessible)));
             }
 
-            return map(SourceMethod.methods(set), m -> new MappedMethod(m, scoped(configuration.converterProvider().provide(field.getType(), m.getParameterTypes()[0]))));
+            return map(SourceMethod.methods(set), methodParams((m, p, t) -> new MappedMethod(m, p, t, scoped(configuration.converterProvider().provide(field.getType(), p[0])))));
         }, REFLECTION_CACHE_GET_MATCHING_SETTERS, () -> Cache.key(type, field.getName(), makeAccessible));
     }
 
@@ -4600,7 +4613,7 @@ final class Tools {
             Method result = null;
 
             for (Method method : getInstanceMethods(type)) {
-                if (method.getParameterTypes().length == 0) {
+                if (method.getParameterCount() == 0) {
                     if (field.getName().equals(method.getName())) {
                         result = accessible(method, makeAccessible); break;
                     }
@@ -4622,7 +4635,7 @@ final class Tools {
                 }
             }
 
-            return result == null ? null : new MappedMethod(result, scoped(configuration.converterProvider().provide(field.getType(), result.getReturnType())));
+            return result == null ? null : new MappedMethod(result, EMPTY_CLASS, EMPTY_TYPE, scoped(configuration.converterProvider().provide(field.getType(), result.getReturnType())));
         }, REFLECTION_CACHE_GET_MATCHING_GETTER, () -> Cache.key(type, field.getName(), makeAccessible));
     }
 

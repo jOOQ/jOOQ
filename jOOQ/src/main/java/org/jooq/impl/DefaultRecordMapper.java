@@ -40,7 +40,6 @@ package org.jooq.impl;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static java.util.Collections.emptyList;
-import static org.jooq.ContextConverter.scoped;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
@@ -91,6 +90,7 @@ import org.jooq.Configuration;
 import org.jooq.ConstructorPropertiesProvider;
 import org.jooq.ContextConverter;
 import org.jooq.Converter;
+import org.jooq.ConverterContext;
 import org.jooq.ConverterProvider;
 import org.jooq.Field;
 import org.jooq.JSON;
@@ -866,7 +866,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
 
                     for (MappedMethod method : getMatchingSetters(configuration, type, field(prefix), true))
                         nestedMappingInfo.mappers.add(
-                            nestedMappingInfo.row.fields.mapper(configuration, method.method().getParameterTypes()[0])
+                            nestedMappingInfo.row.fields.mapper(configuration, method.parameterTypes()[0])
                         );
                 });
             }
@@ -889,22 +889,23 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
         public final E map(R record) {
             try {
                 final E result = instance != null ? instance : constructor.call();
+                final ConverterContext cc = Tools.converterContext(record);
 
                 for (int i = 0; i < fields.length; i++) {
                     for (MappedMember member : members[i])
 
                         // [#935] Avoid setting final fields
                         if ((member.member().getModifiers() & Modifier.FINAL) == 0)
-                            map(record, result, member, i);
+                            map(record, cc, result, member, i);
 
                     for (MappedMethod method : methods[i]) {
-                        Class<?> mType = method.method().getParameterTypes()[0];
+                        Class<?> mType = method.parameterTypes()[0];
                         Object value = method.converter() != null
-                            ? ((ContextConverter<Object, Object>) method.converter()).from(record.get(i), converterContext(record))
+                            ? ((ContextConverter<Object, Object>) method.converter()).from(record.get(i), cc)
                             : record.get(i, mType);
 
                         // [#3082] [#10910] Try mapping nested collection types
-                        Object list = tryConvertToListOrSet(value, mType, method.method().getGenericParameterTypes()[0]);
+                        Object list = tryConvertToListOrSet(value, mType, method.genericParameterTypes()[0]);
                         if (list != null)
                             method.method().invoke(result, list);
                         else
@@ -944,7 +945,13 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
             }
         }
 
-        private final void map(Record record, Object result, MappedMember member, int index) throws IllegalAccessException {
+        private final void map(
+            Record record,
+            ConverterContext cc,
+            Object result,
+            MappedMember member,
+            int index
+        ) throws IllegalAccessException {
             Class<?> mType = member.member().getType();
 
             if (mType.isPrimitive()) {
@@ -968,7 +975,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
 
             else {
                 Object value = member.converter() != null
-                    ? ((ContextConverter<Object, Object>) member.converter()).from(record.get(index), converterContext(record))
+                    ? ((ContextConverter<Object, Object>) member.converter()).from(record.get(index), cc)
                     : record.get(index, mType);
 
                 // [#3082] [#10910] [#11213] Try mapping nested collection types
@@ -1288,9 +1295,22 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
         }
     }
 
-    static final record MappedParameters(Class<?> parameter, ContextConverter<?, ?> converter) {}
-    static final record MappedMember(java.lang.reflect.Field member, ContextConverter<?, ?> converter) {}
-    static final record MappedMethod(java.lang.reflect.Method method, ContextConverter<?, ?> converter) {}
+    static final record MappedParameters(
+        Class<?> parameter,
+        ContextConverter<?, ?> converter
+    ) {}
+
+    static final record MappedMember(
+        java.lang.reflect.Field member,
+        ContextConverter<?, ?> converter
+    ) {}
+
+    static final record MappedMethod(
+        java.lang.reflect.Method method,
+        Class<?>[] parameterTypes,
+        Type[] genericParameterTypes,
+        ContextConverter<?, ?> converter
+    ) {}
 
     @Override
     public String toString() {

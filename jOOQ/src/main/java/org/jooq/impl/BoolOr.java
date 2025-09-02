@@ -60,6 +60,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 
@@ -181,7 +182,7 @@ implements
     public boolean equals(Object that) {
         if (that instanceof QOM.BoolOr o) {
             return
-                StringUtils.equals($condition(), o.$condition())
+                Objects.equals($condition(), o.$condition())
             ;
         }
         else

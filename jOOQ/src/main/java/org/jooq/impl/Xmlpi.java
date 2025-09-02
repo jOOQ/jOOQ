@@ -60,6 +60,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 
@@ -178,8 +179,8 @@ implements
     public boolean equals(Object that) {
         if (that instanceof QOM.XMLPi o) {
             return
-                StringUtils.equals($target(), o.$target()) &&
-                StringUtils.equals($content(), o.$content())
+                Objects.equals($target(), o.$target()) &&
+                Objects.equals($content(), o.$content())
             ;
         }
         else

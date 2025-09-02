@@ -60,6 +60,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import java.math.BigDecimal;
@@ -174,8 +175,8 @@ implements
     public boolean equals(Object that) {
         if (that instanceof QOM.Atan2 o) {
             return
-                StringUtils.equals($x(), o.$x()) &&
-                StringUtils.equals($y(), o.$y())
+                Objects.equals($x(), o.$x()) &&
+                Objects.equals($y(), o.$y())
             ;
         }
         else

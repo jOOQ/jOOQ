@@ -60,6 +60,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 
@@ -189,8 +190,8 @@ implements
         if (that instanceof QOM.XMLSerialize<?> o) {
             return
                 $content() == o.$content() &&
-                StringUtils.equals($value(), o.$value()) &&
-                StringUtils.equals($type(), o.$type())
+                Objects.equals($value(), o.$value()) &&
+                Objects.equals($type(), o.$type())
             ;
         }
         else

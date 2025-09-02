@@ -60,6 +60,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 
@@ -199,8 +200,8 @@ implements
     public boolean equals(Object that) {
         if (that instanceof QOM.Ltrim o) {
             return
-                StringUtils.equals($string(), o.$string()) &&
-                StringUtils.equals($characters(), o.$characters())
+                Objects.equals($string(), o.$string()) &&
+                Objects.equals($characters(), o.$characters())
             ;
         }
         else

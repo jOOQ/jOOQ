@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import java.util.Objects;
+
 import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.DataType;
@@ -189,7 +191,7 @@ implements
     public boolean equals(Object that) {
         if (that instanceof Coerce<?> o) {
             return
-                StringUtils.equals($field(), o.$field())
+                Objects.equals($field(), o.$field())
             ;
         }
         else

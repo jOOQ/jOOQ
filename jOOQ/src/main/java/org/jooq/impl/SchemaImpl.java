@@ -51,6 +51,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Predicate;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 import org.jooq.Catalog;
@@ -369,11 +370,11 @@ implements
             return
 
                 // [#7172] [#10274] Cannot use getQualifiedName() yet here
-                StringUtils.equals(
+                Objects.equals(
                     defaultIfNull(getCatalog(), DEFAULT_CATALOG),
                     defaultIfNull(other.getCatalog(), DEFAULT_CATALOG)
                 ) &&
-                StringUtils.equals(getName(), other.getName());
+                Objects.equals(getName(), other.getName());
         }
 
         return super.equals(that);

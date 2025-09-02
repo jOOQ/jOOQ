@@ -65,6 +65,7 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import org.jooq.Commit;
@@ -680,7 +681,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
                 // [#9506] Make sure history record is re-created in case it was rolled back.
                 HistoryRecord record = history.currentHistoryRecord(false);
 
-                if (record == null || !StringUtils.equals(e.record.getId(), record.getId())) {
+                if (record == null || !Objects.equals(e.record.getId(), record.getId())) {
                     e.record.touched(true);
                     e.record.insert();
                 }

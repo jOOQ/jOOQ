@@ -65,6 +65,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -803,7 +804,7 @@ final class LoaderImpl<R extends Record> implements
                     // [#2741]         TODO: This logic will be externalised in new SPI
                     // [#8829]         JSON binary data has already been decoded at this point
                     for (int i = 0; i < row.length; i++)
-                        if (StringUtils.equals(nullString, row[i]))
+                        if (Objects.equals(nullString, row[i]))
                             row[i] = null;
                         else if (i < fields.length && fields[i] != null)
                             if (fields[i].getType() == byte[].class && row[i] instanceof String)

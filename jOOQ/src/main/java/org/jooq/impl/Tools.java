@@ -289,6 +289,7 @@ import java.util.stream.Stream;
 import org.jooq.Asterisk;
 import org.jooq.Attachable;
 import org.jooq.BindContext;
+import org.jooq.BindingScope;
 import org.jooq.Catalog;
 import org.jooq.Check;
 import org.jooq.Clause;
@@ -308,6 +309,7 @@ import org.jooq.EmbeddableRecord;
 import org.jooq.EnumType;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
+import org.jooq.ExecuteScope;
 import org.jooq.Field;
 import org.jooq.FieldOrRow;
 import org.jooq.FieldOrRowOrSelect;
@@ -7861,6 +7863,17 @@ final class Tools {
 
 
         return dataType;
+    }
+
+    static final ConverterContext converterContext(Scope scope) {
+        if (scope instanceof ExecuteContext s)
+            return s.converterContext();
+        else if (scope instanceof ExecuteScope s)
+            return s.converterContext();
+        else if (scope instanceof BindingScope s)
+            return s.converterContext();
+        else
+            return converterContext(scope.configuration());
     }
 
     static final ConverterContext converterContext(Attachable attachable) {

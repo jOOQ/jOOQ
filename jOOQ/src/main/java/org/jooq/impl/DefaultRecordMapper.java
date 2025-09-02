@@ -1183,19 +1183,20 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
 
             // [#10425] Initialise array to constructor parameter type init values
             Object[] converted = Tools.map(parameterTypes, c -> Reflect.initValue(c), Object[]::new);
+            ConverterContext cc = Tools.converterContext(record);
 
             for (int i = 0; i < record.size(); i++)
-                set(record, i, converted, propertyIndexes[i]);
+                set(record, cc, i, converted, propertyIndexes[i]);
 
             return converted;
         }
 
-        final void set(Record from, int fromIndex, Object[] to, Integer toIndex) {
+        final void set(Record from, ConverterContext cc, int fromIndex, Object[] to, Integer toIndex) {
 
             // TODO: This logic could be applicable to mapNested() as well?
             if (toIndex != null) {
                 to[toIndex] = parameterConverters[toIndex] != null
-                    ? ((ContextConverter<Object, Object>) parameterConverters[toIndex]).from(from.get(fromIndex), converterContext(from))
+                    ? ((ContextConverter<Object, Object>) parameterConverters[toIndex]).from(from.get(fromIndex), cc)
                     : from.get(fromIndex, parameterTypes[toIndex]);
             }
             else {
@@ -1204,7 +1205,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
 
                     if (index >= 0)
                         to[index] = member.converter() != null
-                            ? ((ContextConverter<Object, Object>) member.converter()).from(from.get(fromIndex), converterContext(from))
+                            ? ((ContextConverter<Object, Object>) member.converter()).from(from.get(fromIndex), cc)
                             : from.get(fromIndex, member.member().getType());
                 }
 
@@ -1215,7 +1216,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
 
                     if (index >= 0)
                         to[index] = m.converter() != null
-                            ? ((ContextConverter<Object, Object>) m.converter()).from(from.get(fromIndex), converterContext(from))
+                            ? ((ContextConverter<Object, Object>) m.converter()).from(from.get(fromIndex), cc)
                             : from.get(fromIndex, m.method().getReturnType());
 
                 }

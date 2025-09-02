@@ -60,6 +60,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 
@@ -241,10 +242,10 @@ implements
     public boolean equals(Object that) {
         if (that instanceof QOM.Overlay o) {
             return
-                StringUtils.equals($in(), o.$in()) &&
-                StringUtils.equals($placing(), o.$placing()) &&
-                StringUtils.equals($startIndex(), o.$startIndex()) &&
-                StringUtils.equals($length(), o.$length())
+                Objects.equals($in(), o.$in()) &&
+                Objects.equals($placing(), o.$placing()) &&
+                Objects.equals($startIndex(), o.$startIndex()) &&
+                Objects.equals($length(), o.$length())
             ;
         }
         else

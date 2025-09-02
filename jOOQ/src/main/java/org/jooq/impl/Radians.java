@@ -60,6 +60,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import java.math.BigDecimal;
@@ -196,7 +197,7 @@ implements
     public boolean equals(Object that) {
         if (that instanceof QOM.Radians o) {
             return
-                StringUtils.equals($degrees(), o.$degrees())
+                Objects.equals($degrees(), o.$degrees())
             ;
         }
         else

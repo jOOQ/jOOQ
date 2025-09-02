@@ -60,6 +60,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 
@@ -202,8 +203,8 @@ implements
     public boolean equals(Object that) {
         if (that instanceof QOM.ArrayOverlap<?> o) {
             return
-                StringUtils.equals($array1(), o.$array1()) &&
-                StringUtils.equals($array2(), o.$array2())
+                Objects.equals($array1(), o.$array1()) &&
+                Objects.equals($array2(), o.$array2())
             ;
         }
         else

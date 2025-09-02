@@ -61,6 +61,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 
@@ -449,10 +450,10 @@ implements
     public boolean equals(Object that) {
         if (that instanceof QOM.JSONObject<?> o) {
             return
-                StringUtils.equals($type(), o.$type()) &&
-                StringUtils.equals($entries(), o.$entries()) &&
-                StringUtils.equals($onNull(), o.$onNull()) &&
-                StringUtils.equals($returning(), o.$returning())
+                Objects.equals($type(), o.$type()) &&
+                Objects.equals($entries(), o.$entries()) &&
+                Objects.equals($onNull(), o.$onNull()) &&
+                Objects.equals($returning(), o.$returning())
             ;
         }
         else

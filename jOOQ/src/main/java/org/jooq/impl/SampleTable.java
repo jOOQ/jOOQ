@@ -62,6 +62,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 
@@ -372,11 +373,11 @@ implements
     public boolean equals(Object that) {
         if (that instanceof QOM.SampleTable<?> o) {
             return
-                StringUtils.equals($table(), o.$table()) &&
-                StringUtils.equals($size(), o.$size()) &&
-                StringUtils.equals($method(), o.$method()) &&
-                StringUtils.equals($sizeType(), o.$sizeType()) &&
-                StringUtils.equals($seed(), o.$seed())
+                Objects.equals($table(), o.$table()) &&
+                Objects.equals($size(), o.$size()) &&
+                Objects.equals($method(), o.$method()) &&
+                Objects.equals($sizeType(), o.$sizeType()) &&
+                Objects.equals($seed(), o.$seed())
             ;
         }
         else

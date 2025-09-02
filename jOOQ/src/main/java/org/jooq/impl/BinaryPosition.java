@@ -60,6 +60,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 
@@ -189,9 +190,9 @@ implements
     public boolean equals(Object that) {
         if (that instanceof QOM.BinaryPosition o) {
             return
-                StringUtils.equals($in(), o.$in()) &&
-                StringUtils.equals($search(), o.$search()) &&
-                StringUtils.equals($startIndex(), o.$startIndex())
+                Objects.equals($in(), o.$in()) &&
+                Objects.equals($search(), o.$search()) &&
+                Objects.equals($startIndex(), o.$startIndex())
             ;
         }
         else

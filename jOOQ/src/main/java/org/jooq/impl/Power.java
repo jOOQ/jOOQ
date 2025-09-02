@@ -60,6 +60,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import java.math.BigDecimal;
@@ -202,8 +203,8 @@ implements
     public boolean equals(Object that) {
         if (that instanceof QOM.Power o) {
             return
-                StringUtils.equals($base(), o.$base()) &&
-                StringUtils.equals($exponent(), o.$exponent())
+                Objects.equals($base(), o.$base()) &&
+                Objects.equals($exponent(), o.$exponent())
             ;
         }
         else

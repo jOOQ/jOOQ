@@ -60,6 +60,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import java.math.BigDecimal;
@@ -185,8 +186,8 @@ implements
     public boolean equals(Object that) {
         if (that instanceof QOM.RegrSlope o) {
             return
-                StringUtils.equals($y(), o.$y()) &&
-                StringUtils.equals($x(), o.$x())
+                Objects.equals($y(), o.$y()) &&
+                Objects.equals($x(), o.$x())
             ;
         }
         else

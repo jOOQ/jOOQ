@@ -60,6 +60,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 
@@ -147,7 +148,7 @@ implements
     public boolean equals(Object that) {
         if (that instanceof QOM.DenseRankAgg o) {
             return
-                StringUtils.equals($fields(), o.$fields())
+                Objects.equals($fields(), o.$fields())
             ;
         }
         else

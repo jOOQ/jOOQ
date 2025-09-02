@@ -60,6 +60,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 
@@ -199,8 +200,8 @@ implements
     public boolean equals(Object that) {
         if (that instanceof QOM.ArrayPrepend<?> o) {
             return
-                StringUtils.equals($prepend(), o.$prepend()) &&
-                StringUtils.equals($array(), o.$array())
+                Objects.equals($prepend(), o.$prepend()) &&
+                Objects.equals($array(), o.$array())
             ;
         }
         else

@@ -94,7 +94,8 @@ final class Cache {
         // contract. However since we cannot use ConcurrentHashMap.computeIfAbsent()
         // recursively, we have to revert to double checked locking nonetheless.
         // See also: https://stackoverflow.com/q/28840047/521799
-        // [#18999] Our new ConcurrentReadWriteMap could deadlock
+        // [#18999] Our new ConcurrentReadWriteMap could deadlock when nesting writes
+        // in internal iterations
         Map<Object, Object> cache = (Map<Object, Object>) cacheOrNull;
         Object k = key.get();
         Object v = cache.get(k);

@@ -38,11 +38,10 @@
 package org.jooq.impl;
 
 import static java.util.Collections.synchronizedMap;
-import static org.jooq.impl.Tools.settings;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
+import java.util.Collections;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import org.jooq.CacheContext;
 import org.jooq.CacheProvider;
@@ -58,10 +57,10 @@ final class DefaultCacheProvider implements CacheProvider {
     public Map<Object, Object> provide(CacheContext ctx) {
         switch (ctx.cacheType()) {
             case CACHE_PARSING_CONNECTION:
-                return new ConcurrentReadWriteMap<>(new LRUCache<>(defaultIfNull(ctx.settings().getCacheParsingConnectionLRUCacheSize(), 8192)));
+                return synchronizedMap(new LRUCache<>(defaultIfNull(ctx.settings().getCacheParsingConnectionLRUCacheSize(), 8192)));
 
             case CACHE_RECORD_MAPPERS:
-                return new ConcurrentReadWriteMap<>(new LRUCache<>(defaultIfNull(ctx.settings().getCacheRecordMappersLRUCacheSize(), 8192)));
+                return synchronizedMap(new LRUCache<>(defaultIfNull(ctx.settings().getCacheRecordMappersLRUCacheSize(), 8192)));
 
             case REFLECTION_CACHE_GET_ANNOTATED_GETTER:
             case REFLECTION_CACHE_GET_ANNOTATED_MEMBERS:
@@ -70,10 +69,10 @@ final class DefaultCacheProvider implements CacheProvider {
             case REFLECTION_CACHE_GET_MATCHING_MEMBERS:
             case REFLECTION_CACHE_GET_MATCHING_SETTERS:
             case REFLECTION_CACHE_HAS_COLUMN_ANNOTATIONS:
-                return new ConcurrentReadWriteMap<>(new LRUCache<>(defaultIfNull(ctx.settings().getReflectionCacheLRUCacheSize(), 32768)));
+                return synchronizedMap(new LRUCache<>(defaultIfNull(ctx.settings().getReflectionCacheLRUCacheSize(), 32768)));
 
             default:
-                return new ConcurrentReadWriteMap<>(new LRUCache<>(8192));
+                return synchronizedMap(new LRUCache<>(8192));
         }
     }
 }

@@ -37,12 +37,9 @@
  */
 package org.jooq.impl;
 
-import static java.util.Collections.synchronizedMap;
-import static org.jooq.impl.Tools.settings;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import org.jooq.CacheContext;
 import org.jooq.CacheProvider;
@@ -58,11 +55,11 @@ final class DefaultCacheProvider implements CacheProvider {
     public Map<Object, Object> provide(CacheContext ctx) {
         switch (ctx.cacheType()) {
             case CACHE_PARSING_CONNECTION:
-                return synchronizedMap(new LRUCache<>(defaultIfNull(ctx.settings().getCacheParsingConnectionLRUCacheSize(), 8192)));
+                return new ConcurrentReadWriteMap<>(new LRUCache<>(defaultIfNull(ctx.settings().getCacheParsingConnectionLRUCacheSize(), 8192)));
 
             // [#16696] Resizing this will be possible starting from jOOQ 3.20
             default:
-                return synchronizedMap(new LRUCache<>(8192));
+                return new ConcurrentReadWriteMap<>(new LRUCache<>(8192));
         }
     }
 }

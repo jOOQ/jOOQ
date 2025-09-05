@@ -92,7 +92,7 @@ final class BatchMultiple extends AbstractBatch {
 
     static int[] execute(Configuration configuration, Query[] queries) {
         DefaultExecuteContext ctx = new DefaultExecuteContext(configuration, BatchMode.MULTIPLE, queries);
-        ExecuteListener listener = ExecuteListeners.get(ctx);
+        ExecuteListener listener = ExecuteListeners.get(ctx, true);
 
         try {
 

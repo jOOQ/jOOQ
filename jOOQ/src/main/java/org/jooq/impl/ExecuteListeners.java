@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static java.lang.Boolean.FALSE;
 import static org.jooq.conf.InvocationOrder.REVERSE;
+import static org.jooq.impl.DefaultExecuteContext.GLOBAL_EXECUTE_CONTEXT;
 import static org.jooq.impl.Tools.EMPTY_EXECUTE_LISTENER;
 
 import java.util.ArrayList;
@@ -67,6 +68,7 @@ final class ExecuteListeners implements ExecuteListener {
 
 
     private final ExecuteListener[][]    listeners;
+    private final boolean                threadbound;
 
     // In some setups, these two events may get mixed up chronologically by the
     // Cursor. Postpone fetchEnd event until after resultEnd event, if there is
@@ -76,14 +78,18 @@ final class ExecuteListeners implements ExecuteListener {
 
     /**
      * Initialise the provided {@link ExecuteListener} set and return a wrapper.
+     *
+     * @param ctx The {@link ExecuteContext}.
+     * @param threadbound Whether the {@link ExecuteContext} is thread bound,
+     *            e.g. in ordinary JDBC use-cases, not reactive execution.
      */
-    static ExecuteListener get(ExecuteContext ctx) {
+    static final ExecuteListener get(ExecuteContext ctx, boolean threadbound) {
         ExecuteListener[][] listeners = listeners(ctx);
 
         if (listeners == null)
             return EMPTY_LISTENER;
         else
-            return new ExecuteListeners(listeners);
+            return new ExecuteListeners(listeners, threadbound);
     }
 
     /**
@@ -91,9 +97,13 @@ final class ExecuteListeners implements ExecuteListener {
      * <p>
      * Call this if the {@link ExecuteListener#start(ExecuteContext)} event
      * should be triggered eagerly.
+     *
+     * @param ctx The {@link ExecuteContext}.
+     * @param threadbound Whether the {@link ExecuteContext} is thread bound,
+     *            e.g. in ordinary JDBC use-cases, not reactive execution.
      */
-    static ExecuteListener getAndStart(ExecuteContext ctx) {
-        ExecuteListener result = get(ctx);
+    static final ExecuteListener getAndStart(ExecuteContext ctx, boolean threadbound) {
+        ExecuteListener result = get(ctx, threadbound);
         result.start(ctx);
         return result;
     }
@@ -150,12 +160,16 @@ final class ExecuteListeners implements ExecuteListener {
         return result == null ? new ArrayList<>() : result;
     }
 
-    private ExecuteListeners(ExecuteListener[][] listeners) {
+    private ExecuteListeners(ExecuteListener[][] listeners, boolean threadbound) {
         this.listeners = listeners;
+        this.threadbound = threadbound;
     }
 
     @Override
     public final void start(ExecuteContext ctx) {
+        if (threadbound && ctx instanceof DefaultExecuteContext c)
+            GLOBAL_EXECUTE_CONTEXT.set(c);
+
         for (ExecuteListener listener : listeners[0])
             listener.start(ctx);
     }
@@ -296,6 +310,8 @@ final class ExecuteListeners implements ExecuteListener {
     public final void end(ExecuteContext ctx) {
         for (ExecuteListener listener : listeners[1])
             listener.end(ctx);
+
+        GLOBAL_EXECUTE_CONTEXT.remove();
     }
 
     @Override

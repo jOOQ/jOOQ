@@ -37,10 +37,7 @@
  */
 package org.jooq.impl;
 
-<<<<<<< version-3.19.0-branch
-=======
 import static java.util.Collections.synchronizedMap;
->>>>>>> e858560 [jOOQ/jOOQ#18999] LRUCache::get isn't a read-only operation
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.util.Collections;

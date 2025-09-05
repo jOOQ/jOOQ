@@ -123,7 +123,7 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> {
         super(ctx.configuration(), (AbstractRow<R>) Tools.row0(fields));
 
         this.ctx = ctx;
-        this.listener = (listener != null ? listener : ExecuteListeners.getAndStart(ctx));
+        this.listener = (listener != null ? listener : ExecuteListeners.getAndStart(ctx, true));
         this.factory = recordFactory(table, type, this.fields);
         this.keepStatement = keepStatement;
         this.keepResultSet = keepResultSet;

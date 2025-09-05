@@ -41,11 +41,9 @@ import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.io.Serializable;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Supplier;
 
-import org.jooq.impl.CacheType;
 import org.jooq.Configuration;
 
 /**
@@ -74,17 +72,38 @@ final class Cache {
         if (!type.category.predicate.test(configuration.settings()))
             return operation.get();
 
-        Object cacheOrNull = configuration.data(type);
-        if (cacheOrNull == null) {
-            synchronized (type) {
-                cacheOrNull = configuration.data(type);
+        Object cacheOrNull = null;
+        DefaultExecuteContext ctx = null;
 
-                if (cacheOrNull == null)
-                    configuration.data(type, cacheOrNull = defaultIfNull(
-                        configuration.cacheProvider().provide(new DefaultCacheContext(configuration, type)),
-                        NULL
-                    ));
+        // [#19003] If a cache type allows for being lazy copied, then the current ExecuteContext
+        //          may hold a smaller instance of the cache containing only the data relevant
+        //          to the current execution, not the globally available data. Accessing this
+        //          thread-bound local copy is much faster as there is no contention among threads
+        //          when the data is being accessed repeatedly, as for example DefaultRecordMapper
+        //          instances when using heavily nested collection mapping.
+        if (type.lazyCopy)
+            ctx = DefaultExecuteContext.globalExecuteContext();
+
+        if (ctx != null)
+            cacheOrNull = ctx.data(type);
+
+        if (cacheOrNull == null) {
+            cacheOrNull = configuration.data(type);
+
+            if (cacheOrNull == null) {
+                synchronized (type) {
+                    cacheOrNull = configuration.data(type);
+
+                    if (cacheOrNull == null)
+                        configuration.data(type, cacheOrNull = defaultIfNull(
+                            configuration.cacheProvider().provide(new DefaultCacheContext(configuration, type)),
+                            NULL
+                        ));
+                }
             }
+
+            if (ctx != null && cacheOrNull != NULL)
+                ctx.data(type, cacheOrNull = new LazyCopyMap<>((Map<Object, Object>) cacheOrNull));
         }
 
         if (cacheOrNull == NULL)
@@ -94,8 +113,6 @@ final class Cache {
         // contract. However since we cannot use ConcurrentHashMap.computeIfAbsent()
         // recursively, we have to revert to double checked locking nonetheless.
         // See also: https://stackoverflow.com/q/28840047/521799
-        // [#18999] Our new ConcurrentReadWriteMap could deadlock when nesting writes
-        // in internal iterations
         Map<Object, Object> cache = (Map<Object, Object>) cacheOrNull;
         Object k = key.get();
         Object v = cache.get(k);

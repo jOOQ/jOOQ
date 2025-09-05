@@ -7635,11 +7635,18 @@ final class Tools {
     }
 
     static final ConverterContext converterContext(Attachable attachable) {
-        return new DefaultConverterContext(configuration(attachable));
+        return converterContext(configuration(attachable));
     }
 
     static final ConverterContext converterContext(Configuration configuration) {
-        return new DefaultConverterContext(configuration(configuration));
+        
+        // [#19003] Allow for accessing a cached instance of the ConverterContext, where available.
+        DefaultExecuteContext c = DefaultExecuteContext.globalExecuteContext();
+
+        if (c != null && c.originalConfiguration() == configuration)
+            return c.converterContext();
+        else
+            return new DefaultConverterContext(configuration(configuration));
     }
 
     /**

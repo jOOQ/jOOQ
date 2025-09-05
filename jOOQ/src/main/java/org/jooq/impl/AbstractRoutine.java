@@ -570,7 +570,7 @@ implements
 
     private final int executeCallableStatement() {
         ExecuteContext ctx = new DefaultExecuteContext(configuration, this);
-        ExecuteListener listener = ExecuteListeners.get(ctx);
+        ExecuteListener listener = ExecuteListeners.get(ctx, true);
 
         try {
             // [#8968] Keep start() event inside of lifecycle management

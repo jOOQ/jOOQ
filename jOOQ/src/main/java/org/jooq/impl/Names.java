@@ -350,6 +350,7 @@ final class Names {
     static final Name N_ARRAY_ANY_MATCH             = systemName("array_any_match");
     static final Name N_ARRAY_APPEND                = systemName("array_append");
     static final Name N_ARRAY_CONCAT                = systemName("array_concat");
+    static final Name N_ARRAY_CONTAINS              = systemName("array_contains");
     static final Name N_ARRAY_FILTER                = systemName("array_filter");
     static final Name N_ARRAY_GET                   = systemName("array_get");
     static final Name N_ARRAY_INTERSECT             = systemName("array_intersect");
@@ -530,6 +531,7 @@ final class Names {
     static final Name N_LENGTH                      = systemName("length");
     static final Name N_LENGTHB                     = systemName("lengthb");
     static final Name N_LEVEL                       = systemName("level");
+    static final Name N_LIST_CONTAINS               = systemName("list_contains");
     static final Name N_LN                          = systemName("ln");
     static final Name N_LOCAL_DATE_ADD              = systemName("local_date_add");
     static final Name N_LOCAL_DATE_TIME_ADD         = systemName("local_date_time_add");
@@ -560,6 +562,7 @@ final class Names {
     static final Name N_PERCENT_RANK                = systemName("percent_rank");
     static final Name N_PI                          = systemName("pi");
     static final Name N_POSITION                    = systemName("position");
+    static final Name N_POSITION_ARRAY              = systemName("position_array");
     static final Name N_POW                         = systemName("pow");
     static final Name N_PRINTF                      = systemName("printf");
     static final Name N_PRIOR                       = systemName("prior");
@@ -727,6 +730,7 @@ final class Names {
     static final Name N_currentUser                 = systemName("currentUser");
     static final Name N_endsWith                    = systemName("endsWith");
     static final Name N_generateUUIDv4              = systemName("generateUUIDv4");
+    static final Name N_has                         = systemName("has");
     static final Name N_startsWith                  = systemName("startsWith");
     static final Name N_substringIndex              = systemName("substringIndex");
 

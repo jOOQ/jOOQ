@@ -23623,6 +23623,62 @@ public class DSL {
     }
 
     /**
+     * The <code>ARRAY_CONTAINS</code> function.
+     * <p>
+     * Check if a value is contained in an array.
+     *
+     * @param array The array.
+     * @param value The array element.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    public static <T> Condition arrayContains(T[] array, T value) {
+        return new ArrayContains<>(Tools.field(array), Tools.field(value));
+    }
+
+    /**
+     * The <code>ARRAY_CONTAINS</code> function.
+     * <p>
+     * Check if a value is contained in an array.
+     *
+     * @param array The array.
+     * @param value The array element.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    public static <T> Condition arrayContains(T[] array, Field<T> value) {
+        return new ArrayContains<>(Tools.field(array), value);
+    }
+
+    /**
+     * The <code>ARRAY_CONTAINS</code> function.
+     * <p>
+     * Check if a value is contained in an array.
+     *
+     * @param array The array.
+     * @param value The array element.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    public static <T> Condition arrayContains(Field<T[]> array, T value) {
+        return new ArrayContains<>(array, Tools.field(value));
+    }
+
+    /**
+     * The <code>ARRAY_CONTAINS</code> function.
+     * <p>
+     * Check if a value is contained in an array.
+     *
+     * @param array The array.
+     * @param value The array element.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    public static <T> Condition arrayContains(Field<T[]> array, Field<T> value) {
+        return new ArrayContains<>(array, value);
+    }
+
+    /**
      * The <code>ARRAY_OVERLAP</code> function.
      * <p>
      * Check if 2 arrays overlap.

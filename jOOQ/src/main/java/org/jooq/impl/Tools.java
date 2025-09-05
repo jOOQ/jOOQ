@@ -7881,7 +7881,7 @@ final class Tools {
     }
 
     static final ConverterContext converterContext(Configuration configuration) {
-        
+
         // [#19003] Allow for accessing a cached instance of the ConverterContext, where available.
         DefaultExecuteContext c = DefaultExecuteContext.globalExecuteContext();
 

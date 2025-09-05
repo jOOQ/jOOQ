@@ -86,6 +86,7 @@ import static org.jooq.impl.DSL.arrayAgg;
 import static org.jooq.impl.DSL.arrayAggDistinct;
 import static org.jooq.impl.DSL.arrayAppend;
 import static org.jooq.impl.DSL.arrayConcat;
+import static org.jooq.impl.DSL.arrayContains;
 import static org.jooq.impl.DSL.arrayGet;
 import static org.jooq.impl.DSL.arrayOverlap;
 import static org.jooq.impl.DSL.arrayPrepend;
@@ -9463,6 +9464,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                     return parseFunctionArgs2((f1, f2) -> arrayAppend((Field<Void[]>) f1, (Field<Void>) f2));
                 else if (parseFunctionNameIf("ARRAY_CAT", "ARRAY_CONCAT", "arrayConcat"))
                     return parseFunctionArgs2((f1, f2) -> arrayConcat(f1, f2));
+                else if (parseFunctionNameIf("ARRAY_CONTAINS"))
+                    return parseFunctionArgs2((f1, f2) -> arrayContains((Field<Void[]>) f1, (Field<Void>) f2));
                 else if (parseFunctionNameIf("ARRAY_GET", "arrayElement"))
                     return parseFunctionArgs2((f1, f2) -> arrayGet(f1, f2));
                 else if (parseFunctionNameIf("ARRAY_FILTER", "arrayFilter"))
@@ -9562,7 +9565,10 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                 else if (parseFunctionNameIf("CBRT"))
                     return parseFunctionArgs1(DSL::cbrt);
                 else if (parseFunctionNameIf("CONTAINS"))
-                    return parseFunctionArgs2((f1, f2) -> f1.contains(f2));
+                    return parseFunctionArgs2((f1, f2) -> f1.getDataType().isArray()
+                        ? arrayContains((Field<Void[]>) f1, (Field<Void>) f2)
+                        : f1.contains(f2)
+                    );
                 else if ((field = parseNextvalCurrvalIf(SequenceMethod.CURRVAL)) != null)
                     return field;
                 else if (parseFunctionNameIf("CENTURY"))
@@ -9766,6 +9772,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                 if (parseFunctionNameIf("HOUR"))
                     return hour(parseFieldParenthesised());
 
+                else if (parseFunctionNameIf("has"))
+                    return parseFunctionArgs2((f1, f2) -> arrayContains((Field<Void[]>) f1, (Field<Void>) f2));
                 else if (parseFunctionNameIf("HASH_MD5"))
                     return parseFunctionArgs1(f -> binary(f) ? binaryMd5(f) : md5(f));
                 else if (parseFunctionNameIf("HEX"))
@@ -9857,6 +9865,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                     return parseFunctionArgs1(f -> binary(f) ? binaryLength(f) : length(f));
                 else if (parseFunctionNameIf("LENGTHB"))
                     return octetLength((Field) parseFieldParenthesised());
+                else if (parseFunctionNameIf("LIST_CONTAINS"))
+                    return parseFunctionArgs2((f1, f2) -> arrayContains((Field<Void[]>) f1, (Field<Void>) f2));
                 else if (parseFunctionNameIf("LN", "LOGN"))
                     return ln((Field) parseFieldNumericOpParenthesised());
                 else if (parseFunctionNameIf("LOG10"))

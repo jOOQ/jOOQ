@@ -196,6 +196,7 @@ class DefaultExecuteContext implements ExecuteContext {
         }
 
         LOCAL_CONNECTION.remove();
+        GLOBAL_EXECUTE_CONTEXT.remove();
     }
 
     /**
@@ -244,7 +245,7 @@ class DefaultExecuteContext implements ExecuteContext {
     // XXX: Static utility methods for handling Configuration lifecycle
     // ------------------------------------------------------------------------
 
-    private static final ThreadLocal<ExecuteContext> LOCAL_EXECUTE_CONTEXT = new ThreadLocal<>();
+    static final ThreadLocal<DefaultExecuteContext> GLOBAL_EXECUTE_CONTEXT = new ThreadLocal<>();
 
     /**
      * Get the registered {@link ExecuteContext}.
@@ -253,20 +254,41 @@ class DefaultExecuteContext implements ExecuteContext {
      * {@link ExecuteContext} has been established, until the statement is
      * closed.
      */
+    static final DefaultExecuteContext globalExecuteContext() {
+        return GLOBAL_EXECUTE_CONTEXT.get();
+    }
+
+    private static final ThreadLocal<ExecuteContext> LOCAL_EXECUTE_CONTEXT = new ThreadLocal<>();
+
+    /**
+     * Get the registered {@link ExecuteContext}.
+     *
+     * @deprecated - [#19003] - 3.21.0 - This is no longer necessary, now that
+     *             we have {@link #globalExecuteContext()}.
+     */
+    @Deprecated
     static final ExecuteContext localExecuteContext() {
         return LOCAL_EXECUTE_CONTEXT.get();
     }
 
     /**
      * Run a runnable with a new {@link #localExecuteContext()}.
+     *
+     * @deprecated - [#19003] - 3.21.0 - This is no longer necessary, now that
+     *             we have {@link #globalExecuteContext()}.
      */
+    @Deprecated
     static final <E extends Exception> void localExecuteContext(ExecuteContext ctx, ThrowingRunnable<E> runnable) throws E {
         localExecuteContext(ctx, () -> { runnable.run(); return null; });
     }
 
     /**
      * Run a supplier with a new {@link #localExecuteContext()}.
+     *
+     * @deprecated - [#19003] - 3.21.0 - This is no longer necessary, now that
+     *             we have {@link #globalExecuteContext()}.
      */
+    @Deprecated
     static final <T, E extends Exception> T localExecuteContext(ExecuteContext ctx, ThrowingSupplier<T, E> supplier) throws E {
         ExecuteContext old = localExecuteContext();
 

@@ -275,7 +275,7 @@ abstract class AbstractQuery<R extends Record> extends AbstractAttachableQueryPa
             //         in case this Query / Configuration was previously
             //         deserialised
             DefaultExecuteContext ctx = new DefaultExecuteContext(c, this);
-            ExecuteListener listener = ExecuteListeners.get(ctx);
+            ExecuteListener listener = ExecuteListeners.get(ctx, true);
 
             int result = 0;
             try {

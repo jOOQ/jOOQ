@@ -105,7 +105,7 @@ final class BatchMultiple extends AbstractBatch {
             return Stream.of(queries).mapToInt(configuration.dsl()::execute).toArray();
 
         DefaultExecuteContext ctx = new DefaultExecuteContext(configuration, BatchMode.MULTIPLE, queries);
-        ExecuteListener listener = ExecuteListeners.get(ctx);
+        ExecuteListener listener = ExecuteListeners.get(ctx, true);
 
         try {
 

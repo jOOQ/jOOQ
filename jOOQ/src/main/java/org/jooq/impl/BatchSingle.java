@@ -196,7 +196,7 @@ final class BatchSingle extends AbstractBatch implements BatchBindStep {
 
     private final int[] executePrepared() {
         DefaultExecuteContext ctx = new DefaultExecuteContext(configuration, BatchMode.SINGLE, new Query[] { query });
-        ExecuteListener listener = ExecuteListeners.get(ctx);
+        ExecuteListener listener = ExecuteListeners.get(ctx, true);
 
         try {
             // [#8968] Keep start() event inside of lifecycle management

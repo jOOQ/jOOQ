@@ -1011,17 +1011,19 @@ final class MetaImpl extends AbstractMeta {
     }
 
     private final class MetaTable extends TableImpl<Record> {
+        private final MetaSchema     schema;
         private final Result<Record> uks;
 
         MetaTable(String name, MetaSchema schema, Result<Record> columns, Result<Record> uks, String remarks, TableType tableType) {
             super(name(name), schema, null, null, null, null, comment(remarks), tableOption(dsl(), schema, name, tableType));
 
+            this.schema = schema;
+            this.uks = uks;
+
             // Possible scenarios for columns being null:
             // - The "table" is in fact a SYNONYM
             if (columns != null)
                 initColumns(columns);
-
-            this.uks = uks;
         }
 
         @Override

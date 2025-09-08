@@ -1479,12 +1479,11 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
 
 
 
+    protected Field<String> generationExpression(Field<String> generationExpression) {
 
-
-
-
-
-
+        // [#6492] CockroachDB doesn't implement the standard exactly
+        return generationExpression;
+    }
 
     protected Field<String> attgenerated(Field<String> attgenerated) {
 

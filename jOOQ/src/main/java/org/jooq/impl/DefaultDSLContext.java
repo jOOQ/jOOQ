@@ -1453,7 +1453,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public Result<Record> fetchFromJSON(String string) {
-        return new JSONReader<Record>(this, converterContext(this), null, null, false).read(Source.of(string));
+        return new JSONReader<Record>(this, converterContext(this), null, null).read(Source.of(string));
     }
 
     @Override

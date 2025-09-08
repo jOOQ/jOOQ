@@ -37,9 +37,9 @@
  */
 package org.jooq.impl;
 
-import static java.lang.Boolean.FALSE;
 import static org.jooq.conf.SettingsTools.parseLocale;
 
+import java.time.Instant;
 import java.util.Locale;
 
 import org.jooq.DSLContext;
@@ -57,8 +57,8 @@ abstract class AbstractParseContext extends AbstractLazyScope {
     int              position = 0;
     int              positionBeforeWhitespace;
 
-    public AbstractParseContext(DSLContext dsl, String chars) {
-        super(dsl.configuration());
+    public AbstractParseContext(DSLContext dsl, String chars, Instant creationTime) {
+        super(dsl.configuration(), null, creationTime);
 
         this.dsl = dsl;
         this.locale = parseLocale(dsl.settings());

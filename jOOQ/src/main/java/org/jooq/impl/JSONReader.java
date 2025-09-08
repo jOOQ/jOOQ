@@ -96,7 +96,7 @@ final class JSONReader<R extends Record> {
     private final AbstractRow<R>     row;
     private final Class<? extends R> recordType;
 
-    JSONReader(DSLContext ctx, ConverterContext cc, AbstractRow<R> row, Class<? extends R> recordType, boolean multiset) {
+    JSONReader(DSLContext ctx, ConverterContext cc, AbstractRow<R> row, Class<? extends R> recordType) {
         this.ctx = ctx;
         this.cc = cc;
         this.row = row;
@@ -110,7 +110,7 @@ final class JSONReader<R extends Record> {
     final Result<R> read(final Source source, boolean ms) {
         try {
             DefaultJSONContentHandler handler = new DefaultJSONContentHandler();
-            new JSONParser(ctx, source.readString(), handler).parse();
+            new JSONParser(ctx, source.readString(), handler, cc.creationTime()).parse();
             return read(ctx, cc, row, recordType, ms, handler.result());
         }
         catch (Exception e) {

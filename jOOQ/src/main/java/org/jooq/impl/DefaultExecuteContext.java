@@ -385,7 +385,7 @@ class DefaultExecuteContext implements ExecuteContext {
 
 
         this.routine = routine;
-        this.converterContext = new DefaultConverterContext(derivedConfiguration, data);
+        this.converterContext = new DefaultConverterContext(derivedConfiguration, data, creationTime);
 
         batchQueries0(batchQueries);
         clean();

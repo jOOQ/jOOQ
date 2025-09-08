@@ -733,6 +733,10 @@ final class MetaImpl extends AbstractMeta {
             }
         }
 
+        private final DSLContext ctx(DatabaseMetaData meta) throws SQLException {
+            return DSL.using(meta.getConnection(), dialect());
+        }
+
         private final void initUksSQLite(String catalog, String schema) {
             ukCache = new LinkedHashMap<>();
 

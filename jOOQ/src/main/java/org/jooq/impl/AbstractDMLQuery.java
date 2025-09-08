@@ -1254,7 +1254,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
             }
 
             ExecuteContext ctx2 = new DefaultExecuteContext(((DefaultExecuteContext) ctx).originalConfiguration());
-            ExecuteListener listener2 = ExecuteListeners.getAndStart(ctx2);
+            ExecuteListener listener2 = ExecuteListeners.getAndStart(ctx2, true);
 
             ctx2.resultSet(rs);
             returnedResult = new CursorImpl<>(ctx2, listener2, returningResolvedAsterisks.toArray(EMPTY_FIELD), null, false, true).fetch();

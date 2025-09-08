@@ -465,12 +465,7 @@ final class MetaImpl extends AbstractMeta {
         }
     }
 
-
-
-
-
-
-
+    static final record Generator(String expression, GenerationOption option) {}
 
     private final class MetaSchema extends SchemaImpl {
         private final boolean                                empty;
@@ -480,7 +475,7 @@ final class MetaImpl extends AbstractMeta {
         private transient volatile Map<Name, String>         sourceCache;
         private transient volatile Map<Name, String>         commentCache;
         private transient volatile Map<Name, Result<Record>> attributeCache;
-
+        private transient volatile Map<Name, Generator>      generatorCache;
 
 
 
@@ -1066,42 +1061,37 @@ final class MetaImpl extends AbstractMeta {
                 return null;
         }
 
+        final Generator generator(String tableName, String columnName) {
+            if (generatorCache == null) {
+                String sql = MetaSQL.M_GENERATORS(dialect());
 
+                if (sql != null) {
+                    Result<Record> result = meta(() -> "Error while fetching sources for schema " + this, meta ->
+                        withCatalog(getCatalog(), ctx(meta), ctx ->
+                            ctx.resultQuery(patchSchema(sql), MetaSchema.this.getName()).fetch()
+                        )
+                    );
 
+                    // TODO Support catalogs as well
+                    generatorCache = new LinkedHashMap<>();
+                    for (Record r : result) {
+                        String e = r.get(4, String.class);
 
+                        if (e != null) {
+                            generatorCache.put(
+                                name(r.get(1, String.class), r.get(2, String.class), r.get(3, String.class)),
+                                new Generator(r.get(4, String.class), r.get(5, GenerationOption.class))
+                            );
+                        }
+                    }
+                }
+            }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            if (generatorCache != null)
+                return generatorCache.get(name(MetaSchema.this.getName(), tableName, columnName));
+            else
+                return null;
+        }
 
         final String comment(String tableName) {
             return comment(tableName, null);
@@ -1875,7 +1865,10 @@ final class MetaImpl extends AbstractMeta {
                     type = new DefaultDataType(family(), Object.class, typeName);
                 }
 
-
+                // [#18988] MySQL JDBC reports DEFAULT CURRENT_TIMESTAMP columns as generated, not defaulted.
+                Generator g = schema.generator(getName(), columnName);
+                if (isGenerated && g == null && MYSQL == family())
+                    isGenerated = false;
 
 
 

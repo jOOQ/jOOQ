@@ -712,21 +712,21 @@ public class HSQLDBDatabase extends AbstractDatabase implements ResultQueryDatab
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    @Override
+    public ResultQuery<Record6<String, String, String, String, String, String>> generators(List<String> schemas) {
+        return create()
+            .select(
+                COLUMNS.TABLE_CATALOG,
+                COLUMNS.TABLE_SCHEMA,
+                COLUMNS.TABLE_NAME,
+                COLUMNS.COLUMN_NAME,
+                COLUMNS.GENERATION_EXPRESSION,
+                inline(GenerationOption.DEFAULT.name()))
+            .from(COLUMNS)
+            .where(COLUMNS.TABLE_SCHEMA.in(schemas))
+            .and(COLUMNS.GENERATION_EXPRESSION.isNotNull())
+            .orderBy(COLUMNS.ORDINAL_POSITION);
+    }
 
     @Override
     protected List<XMLSchemaCollectionDefinition> getXMLSchemaCollections0() throws SQLException {

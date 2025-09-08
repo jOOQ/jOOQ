@@ -1174,32 +1174,32 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
 
 
 
+    @Override
+    public ResultQuery<Record6<String, String, String, String, String, String>> generators(List<String> schemas) {
+        Field<String> generationExpression = COLUMNS.GENERATION_EXPRESSION;
+        Field<String> attgenerated = PG_ATTRIBUTE.ATTGENERATED;
 
+        generationExpression = generationExpression(generationExpression);
+        attgenerated = attgenerated(attgenerated);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        return create()
+            .select(
+                COLUMNS.TABLE_CATALOG,
+                COLUMNS.TABLE_SCHEMA,
+                COLUMNS.TABLE_NAME,
+                COLUMNS.COLUMN_NAME,
+                generationExpression.as(COLUMNS.GENERATION_EXPRESSION),
+                when(attgenerated.eq(inline("s")), inline(GenerationOption.STORED.name()))
+                .when(attgenerated.eq(inline("v")), inline(GenerationOption.VIRTUAL.name())))
+            .from(COLUMNS)
+            .join(PG_ATTRIBUTE)
+                .on(PG_ATTRIBUTE.ATTNAME.eq(COLUMNS.COLUMN_NAME))
+                .and(PG_ATTRIBUTE.pgClass().RELNAME.eq(COLUMNS.TABLE_NAME))
+                .and(PG_ATTRIBUTE.pgClass().pgNamespace().NSPNAME.eq(COLUMNS.TABLE_SCHEMA))
+            .where(COLUMNS.TABLE_SCHEMA.in(schemas))
+            .and(attgenerated.in(inline("s"), inline("v")))
+            .orderBy(COLUMNS.ORDINAL_POSITION);
+    }
 
     @Override
     protected List<XMLSchemaCollectionDefinition> getXMLSchemaCollections0() throws SQLException {

@@ -782,21 +782,21 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    @Override
+    public ResultQuery<Record6<String, String, String, String, String, String>> generators(List<String> schemas) {
+        return create()
+            .select(
+                COLUMNS.TABLE_CATALOG,
+                COLUMNS.TABLE_SCHEMA,
+                COLUMNS.TABLE_NAME,
+                COLUMNS.COLUMN_NAME,
+                Tables.COLUMNS.GENERATION_EXPRESSION,
+                inline(GenerationOption.DEFAULT.name()))
+            .from(COLUMNS)
+            .where(COLUMNS.TABLE_SCHEMA.in(schemas))
+            .and(Tables.COLUMNS.IS_GENERATED.eq(inline("ALWAYS")))
+            .orderBy(COLUMNS.ORDINAL_POSITION);
+    }
 
     @Override
     protected List<SequenceDefinition> getSequences0() throws SQLException {

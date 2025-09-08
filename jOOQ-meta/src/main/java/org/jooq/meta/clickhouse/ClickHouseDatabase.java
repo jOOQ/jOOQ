@@ -372,10 +372,10 @@ public class ClickHouseDatabase extends AbstractDatabase implements ResultQueryD
 
 
 
-
-
-
-
+    @Override
+    public ResultQuery<Record6<String, String, String, String, String, String>> generators(List<String> schemas) {
+        return null;
+    }
 
     @Override
     protected List<XMLSchemaCollectionDefinition> getXMLSchemaCollections0() throws SQLException {

@@ -15,9 +15,9 @@ final class MetaSQL {
     private static final EnumMap<SQLDialect, String> M_SOURCES = new EnumMap<>(SQLDialect.class);
     private static final EnumMap<SQLDialect, String> M_COMMENTS = new EnumMap<>(SQLDialect.class);
     private static final EnumMap<SQLDialect, String> M_ATTRIBUTES = new EnumMap<>(SQLDialect.class);
+    private static final EnumMap<SQLDialect, String> M_GENERATORS = new EnumMap<>(SQLDialect.class);
     private static final EnumMap<SQLDialect, String> M_TRIGGERS = new EnumMap<>(SQLDialect.class);
     private static final EnumMap<SQLDialect, String> M_SYNONYMS = new EnumMap<>(SQLDialect.class);
-    private static final EnumMap<SQLDialect, String> M_GENERATORS = new EnumMap<>(SQLDialect.class);
 
     static final String M_UNIQUE_KEYS(SQLDialect dialect) {
         String result = M_UNIQUE_KEYS.get(dialect);
@@ -54,6 +54,11 @@ final class MetaSQL {
         return result != null ? result : M_ATTRIBUTES.get(dialect.family());
     }
 
+    static final String M_GENERATORS(SQLDialect dialect) {
+        String result = M_GENERATORS.get(dialect);
+        return result != null ? result : M_GENERATORS.get(dialect.family());
+    }
+
     static final String M_TRIGGERS(SQLDialect dialect) {
         String result = M_TRIGGERS.get(dialect);
         return result != null ? result : M_TRIGGERS.get(dialect.family());
@@ -62,11 +67,6 @@ final class MetaSQL {
     static final String M_SYNONYMS(SQLDialect dialect) {
         String result = M_SYNONYMS.get(dialect);
         return result != null ? result : M_SYNONYMS.get(dialect.family());
-    }
-
-    static final String M_GENERATORS(SQLDialect dialect) {
-        String result = M_GENERATORS.get(dialect);
-        return result != null ? result : M_GENERATORS.get(dialect.family());
     }
 
     static {
@@ -484,13 +484,13 @@ final class MetaSQL {
 
 
 
-
-
-
-
-
-
-
+        M_GENERATORS.put(FIREBIRD, "select null catalog_name, null schema_name, trim(r.RDB$RELATION_NAME) RDB$RELATION_NAME, trim(r.RDB$FIELD_NAME) RDB$FIELD_NAME, f.RDB$COMPUTED_SOURCE, 'DEFAULT' from RDB$RELATION_FIELDS r join RDB$FIELDS f on r.RDB$FIELD_SOURCE = f.RDB$FIELD_NAME where f.RDB$COMPUTED_SOURCE is not null order by r.RDB$FIELD_POSITION");
+        M_GENERATORS.put(H2, "select INFORMATION_SCHEMA.COLUMNS.TABLE_CATALOG, INFORMATION_SCHEMA.COLUMNS.TABLE_SCHEMA, INFORMATION_SCHEMA.COLUMNS.TABLE_NAME, INFORMATION_SCHEMA.COLUMNS.COLUMN_NAME, INFORMATION_SCHEMA.COLUMNS.GENERATION_EXPRESSION, 'DEFAULT' from INFORMATION_SCHEMA.COLUMNS where (INFORMATION_SCHEMA.COLUMNS.TABLE_SCHEMA in (cast(? as varchar)) and INFORMATION_SCHEMA.COLUMNS.IS_GENERATED = 'ALWAYS') order by INFORMATION_SCHEMA.COLUMNS.ORDINAL_POSITION");
+        M_GENERATORS.put(HSQLDB, "select INFORMATION_SCHEMA.COLUMNS.TABLE_CATALOG, INFORMATION_SCHEMA.COLUMNS.TABLE_SCHEMA, INFORMATION_SCHEMA.COLUMNS.TABLE_NAME, INFORMATION_SCHEMA.COLUMNS.COLUMN_NAME, INFORMATION_SCHEMA.COLUMNS.GENERATION_EXPRESSION, 'DEFAULT' from INFORMATION_SCHEMA.COLUMNS where (INFORMATION_SCHEMA.COLUMNS.TABLE_SCHEMA in (cast(? as varchar(128))) and INFORMATION_SCHEMA.COLUMNS.GENERATION_EXPRESSION is not null) order by INFORMATION_SCHEMA.COLUMNS.ORDINAL_POSITION");
+        M_GENERATORS.put(MARIADB, "select null as table_catalog, information_schema.COLUMNS.TABLE_SCHEMA, information_schema.COLUMNS.TABLE_NAME, information_schema.COLUMNS.COLUMN_NAME, information_schema.COLUMNS.GENERATION_EXPRESSION, case when information_schema.COLUMNS.EXTRA in ('VIRTUAL', 'VIRTUAL GENERATED') then 'VIRTUAL' when information_schema.COLUMNS.EXTRA in ('PERSISTENT', 'STORED GENERATED') then 'STORED' end as generationOption from information_schema.COLUMNS where (information_schema.COLUMNS.TABLE_SCHEMA in (?) and information_schema.COLUMNS.EXTRA in ('VIRTUAL', 'VIRTUAL GENERATED', 'PERSISTENT', 'STORED GENERATED')) order by information_schema.COLUMNS.ORDINAL_POSITION");
+        M_GENERATORS.put(MYSQL, "select null as table_catalog, information_schema.COLUMNS.TABLE_SCHEMA, information_schema.COLUMNS.TABLE_NAME, information_schema.COLUMNS.COLUMN_NAME, information_schema.COLUMNS.GENERATION_EXPRESSION, case when information_schema.COLUMNS.EXTRA in ('VIRTUAL', 'VIRTUAL GENERATED') then 'VIRTUAL' when information_schema.COLUMNS.EXTRA in ('PERSISTENT', 'STORED GENERATED') then 'STORED' end as generationOption from information_schema.COLUMNS where (information_schema.COLUMNS.TABLE_SCHEMA in (?) and information_schema.COLUMNS.EXTRA in ('VIRTUAL', 'VIRTUAL GENERATED', 'PERSISTENT', 'STORED GENERATED')) order by information_schema.COLUMNS.ORDINAL_POSITION");
+        M_GENERATORS.put(POSTGRES, "select information_schema.columns.table_catalog, information_schema.columns.table_schema, information_schema.columns.table_name, information_schema.columns.column_name, information_schema.columns.generation_expression as generation_expression, case when pg_catalog.pg_attribute.attgenerated = 's' then 'STORED' when pg_catalog.pg_attribute.attgenerated = 'v' then 'VIRTUAL' end from information_schema.columns join (pg_catalog.pg_attribute join (pg_catalog.pg_class as alias_100646588 join pg_catalog.pg_namespace as alias_117804412 on alias_100646588.relnamespace = alias_117804412.oid) on pg_catalog.pg_attribute.attrelid = alias_100646588.oid) on (pg_catalog.pg_attribute.attname = information_schema.columns.column_name and alias_100646588.relname = information_schema.columns.table_name and alias_117804412.nspname = information_schema.columns.table_schema) where (information_schema.columns.table_schema in (?) and pg_catalog.pg_attribute.attgenerated in ('s', 'v')) order by information_schema.columns.ordinal_position");
+        M_GENERATORS.put(YUGABYTEDB, "select information_schema.columns.table_catalog, information_schema.columns.table_schema, information_schema.columns.table_name, information_schema.columns.column_name, information_schema.columns.generation_expression as generation_expression, case when 's' = 's' then 'STORED' when 's' = 'v' then 'VIRTUAL' end from information_schema.columns join (pg_catalog.pg_attribute join (pg_catalog.pg_class as alias_100646588 join pg_catalog.pg_namespace as alias_117804412 on alias_100646588.relnamespace = alias_117804412.oid) on pg_catalog.pg_attribute.attrelid = alias_100646588.oid) on (pg_catalog.pg_attribute.attname = information_schema.columns.column_name and alias_100646588.relname = information_schema.columns.table_name and alias_117804412.nspname = information_schema.columns.table_schema) where (information_schema.columns.table_schema in (?) and 's' in ('s', 'v')) order by information_schema.columns.ordinal_position");
 
 
 

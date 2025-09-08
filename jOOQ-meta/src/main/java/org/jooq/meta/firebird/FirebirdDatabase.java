@@ -722,25 +722,25 @@ public class FirebirdDatabase extends AbstractDatabase implements ResultQueryDat
 
 
 
+    @Override
+    public ResultQuery<Record6<String, String, String, String, String, String>> generators(List<String> schemas) {
+        Rdb$relationFields r = RDB$RELATION_FIELDS.as("r");
+        Rdb$fields f = RDB$FIELDS.as("f");
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        return create()
+            .select(
+                inline(null, VARCHAR).as("catalog_name"),
+                inline(null, VARCHAR).as("schema_name"),
+                trim(r.RDB$RELATION_NAME).as(r.RDB$RELATION_NAME),
+                trim(r.RDB$FIELD_NAME).as(r.RDB$FIELD_NAME),
+                f.RDB$COMPUTED_SOURCE,
+                inline(GenerationOption.DEFAULT.name())
+            )
+            .from(r)
+            .join(f).on(r.RDB$FIELD_SOURCE.eq(f.RDB$FIELD_NAME))
+            .where(f.RDB$COMPUTED_SOURCE.isNotNull())
+            .orderBy(r.RDB$FIELD_POSITION);
+    }
 
     @Override
     protected List<XMLSchemaCollectionDefinition> getXMLSchemaCollections0() throws SQLException {

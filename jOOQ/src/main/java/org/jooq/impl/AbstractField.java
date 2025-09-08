@@ -253,8 +253,8 @@ implements
 
     @SuppressWarnings("unchecked")
     @Override
-    public Field<T> as(Name alias) {
-        return new FieldAlias<>((Field<T>) (this instanceof Condition c ? DSL.field(c) : this), alias);
+    public /* non-final */ Field<T> as(Name alias) {
+        return new FieldAlias<>((Field<T>) (this instanceof Condition c ? DSL.field(c) : this), alias, getCommentPart());
     }
 
     @Override
@@ -277,7 +277,7 @@ implements
     }
 
     @Override
-    public final Field<T> comment(Comment comment) {
+    public /* non-final */ Field<T> comment(Comment comment) {
         return DSL.field(getQualifiedName(), getDataType(), comment);
     }
 

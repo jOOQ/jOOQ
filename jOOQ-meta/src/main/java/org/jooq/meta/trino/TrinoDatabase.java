@@ -199,6 +199,11 @@ public class TrinoDatabase extends AbstractDatabase implements ResultQueryDataba
 
 
     @Override
+    public ResultQuery<Record6<String, String, String, String, String, String>> generators(List<String> schemas) {
+        return null;
+    }
+
+    @Override
     protected List<CatalogDefinition> getCatalogs0() throws SQLException {
         List<CatalogDefinition> result = new ArrayList<>();
         result.add(new CatalogDefinition(this, "", ""));

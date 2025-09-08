@@ -419,6 +419,11 @@ public class DuckDBDatabase extends AbstractDatabase implements ResultQueryDatab
 
 
     @Override
+    public ResultQuery<Record6<String, String, String, String, String, String>> generators(List<String> schemas) {
+        return null;
+    }
+
+    @Override
     public ResultQuery<Record12<String, String, String, String, Integer, Integer, Long, Long, BigDecimal, BigDecimal, Boolean, Long>> sequences(List<String> schemas) {
         return create()
             .resultQuery(

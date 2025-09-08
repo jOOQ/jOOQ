@@ -112,6 +112,7 @@ import org.jooq.TableOptions.TableType;
 // ...
 import org.jooq.impl.DSL;
 import org.jooq.impl.QOM.ForeignKeyRule;
+import org.jooq.impl.QOM.GenerationOption;
 import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.AbstractIndexDefinition;
 import org.jooq.meta.ArrayDefinition;
@@ -716,6 +717,28 @@ public class MySQLDatabase extends AbstractDatabase implements ResultQueryDataba
 
 
 
+
+    @Override
+    public ResultQuery<Record6<String, String, String, String, String, String>> generators(List<String> schemas) {
+        return create()
+            .select(
+                inline(null, VARCHAR).as("table_catalog"),
+                COLUMNS.TABLE_SCHEMA,
+                COLUMNS.TABLE_NAME,
+                COLUMNS.COLUMN_NAME,
+                generationExpression(COLUMNS.GENERATION_EXPRESSION),
+                when(COLUMNS.EXTRA.in(inline("VIRTUAL"), inline("VIRTUAL GENERATED")), inline(GenerationOption.VIRTUAL.name()))
+                .when(COLUMNS.EXTRA.in(inline("PERSISTENT"), inline("STORED GENERATED")), inline(GenerationOption.STORED.name()))
+                .as("generationOption"))
+            .from(COLUMNS)
+            .where(COLUMNS.TABLE_SCHEMA.in(schemas))
+            .and(COLUMNS.EXTRA.in(
+                inline("VIRTUAL"),
+                inline("VIRTUAL GENERATED"),
+                inline("PERSISTENT"),
+                inline("STORED GENERATED")))
+            .orderBy(COLUMNS.ORDINAL_POSITION);
+    }
 
     @Override
     protected List<XMLSchemaCollectionDefinition> getXMLSchemaCollections0() throws SQLException {

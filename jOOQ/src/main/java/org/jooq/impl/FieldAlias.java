@@ -41,6 +41,7 @@ package org.jooq.impl;
 import java.util.Objects;
 
 import org.jooq.Clause;
+import org.jooq.Comment;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Name;
@@ -59,7 +60,11 @@ final class FieldAlias<T> extends AbstractField<T> implements QOM.FieldAlias<T>,
     private final Alias<Field<T>> alias;
 
     FieldAlias(Field<T> field, Name alias) {
-        super(alias, field.getDataType());
+        this(field, alias, null);
+    }
+
+    FieldAlias(Field<T> field, Name alias, Comment comment) {
+        super(alias, field.getDataType(), comment);
 
         this.alias = new Alias<>(field, this, alias);
     }
@@ -81,7 +86,12 @@ final class FieldAlias<T> extends AbstractField<T> implements QOM.FieldAlias<T>,
 
     @Override
     public final Field<T> as(Name as) {
-        return alias.wrapped().as(as);
+        return new FieldAlias<>(alias.wrapped(), as, getCommentPart());
+    }
+
+    @Override
+    public final Field<T> comment(Comment comment) {
+        return new FieldAlias<>(alias.wrapped(), alias.alias, comment);
     }
 
     @Override

@@ -153,9 +153,10 @@ implements
                 ctx.visit(function(N_LIST_CONTAINS, BOOLEAN, array, value));
                 break;
 
-            case HSQLDB:
+            case HSQLDB: {
                 ctx.sql('(').visit(N_POSITION_ARRAY).sql('(').visit(value).sql(' ').visit(K_IN).sql(' ').visit(array).sql(") > 0)");
                 break;
+            }
 
             case TRINO:
                 ctx.visit(function(N_CONTAINS, BOOLEAN, array, value));

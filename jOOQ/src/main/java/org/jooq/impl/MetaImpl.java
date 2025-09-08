@@ -84,7 +84,6 @@ import static org.jooq.impl.SQLDataType.SMALLINT;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.EMPTY_OBJECT;
 import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
-import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.flatMap;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.tools.StringUtils.defaultIfEmpty;
@@ -104,7 +103,6 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -142,10 +140,12 @@ import org.jooq.TableOptions.TableType;
 // ...
 import org.jooq.UniqueKey;
 import org.jooq.conf.ParseUnknownFunctions;
+import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataDefinitionException;
 import org.jooq.exception.DataTypeException;
 import org.jooq.exception.SQLDialectNotSupportedException;
+import org.jooq.impl.QOM.GenerationOption;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 
@@ -451,6 +451,8 @@ final class MetaImpl extends AbstractMeta {
         }
     }
 
+    static final record Generator(String expression, GenerationOption option) {}
+
     private final class MetaSchema extends SchemaImpl {
         private final boolean                                empty;
         private transient volatile Map<Name, Result<Record>> columnCache;
@@ -458,6 +460,7 @@ final class MetaImpl extends AbstractMeta {
         private transient volatile Map<Name, Result<Record>> sequenceCache;
         private transient volatile Map<Name, String>         sourceCache;
         private transient volatile Map<Name, String>         commentCache;
+        private transient volatile Map<Name, Generator>      generatorCache;
 
 
 
@@ -965,6 +968,38 @@ final class MetaImpl extends AbstractMeta {
 
             if (sourceCache != null)
                 return sourceCache.get(name(MetaSchema.this.getName(), tableName));
+            else
+                return null;
+        }
+
+        final Generator generator(String tableName, String columnName) {
+            if (generatorCache == null) {
+                String sql = MetaSQL.M_GENERATORS(dialect());
+
+                if (sql != null) {
+                    Result<Record> result = meta(() -> "Error while fetching sources for schema " + this, meta ->
+                        withCatalog(getCatalog(), ctx(meta), ctx ->
+                            ctx.resultQuery(patchSchema(sql), MetaSchema.this.getName()).fetch()
+                        )
+                    );
+
+                    // TODO Support catalogs as well
+                    generatorCache = new LinkedHashMap<>();
+                    for (Record r : result) {
+                        String e = r.get(4, String.class);
+
+                        if (e != null) {
+                            generatorCache.put(
+                                name(r.get(1, String.class), r.get(2, String.class), r.get(3, String.class)),
+                                new Generator(r.get(4, String.class), r.get(5, GenerationOption.class))
+                            );
+                        }
+                    }
+                }
+            }
+
+            if (generatorCache != null)
+                return generatorCache.get(name(MetaSchema.this.getName(), tableName, columnName));
             else
                 return null;
         }
@@ -1646,6 +1681,10 @@ final class MetaImpl extends AbstractMeta {
                     type = new DefaultDataType(family(), Object.class, typeName);
                 }
 
+                // [#18988] MySQL JDBC reports DEFAULT CURRENT_TIMESTAMP columns as generated, not defaulted.
+                Generator g = schema.generator(getName(), columnName);
+                if (isGenerated && g == null && MYSQL == family())
+                    isGenerated = false;
 
 
 

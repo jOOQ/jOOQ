@@ -59,9 +59,9 @@ import org.jooq.conf.Settings;
  */
 abstract class AbstractLazyScope implements Scope {
 
-    private final Configuration configuration;
+    final Configuration         configuration;
+    final Instant               creationTime;
     private Map<Object, Object> data;
-    private final Instant       creationTime;
 
     AbstractLazyScope(Configuration configuration) {
         this(configuration, null);

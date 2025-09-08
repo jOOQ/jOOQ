@@ -160,6 +160,7 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
 
     private static final long DEFAULT_SEQUENCE_CACHE    = 32;
     private static final long DEFAULT_SEQUENCE_MAXVALUE = Long.MAX_VALUE;
+    static final long MAX_VARCHAR_LENGTH                = 1000000000L;
 
     static final record ElementTypeLookupKey (String schema, String name, String identifier) {}
     static final record ElementType (String dataType, Long length, Long precision, Long scale, String identifier, int dimension) {}
@@ -178,7 +179,7 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
                     ).mapping(ElementTypeLookupKey::new),
                     row(
                         e.DATA_TYPE,
-                        e.CHARACTER_MAXIMUM_LENGTH,
+                        nullif(e.CHARACTER_MAXIMUM_LENGTH, inline(MAX_VARCHAR_LENGTH)),
                         coalesce(e.DATETIME_PRECISION, e.NUMERIC_PRECISION),
                         e.NUMERIC_SCALE,
                         e.DTD_IDENTIFIER,
@@ -1126,7 +1127,7 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
                 d.DOMAIN_SCHEMA,
                 d.DOMAIN_NAME,
                 d.DATA_TYPE,
-                d.CHARACTER_MAXIMUM_LENGTH,
+                nullif(d.CHARACTER_MAXIMUM_LENGTH, inline(MAX_VARCHAR_LENGTH)).as(d.CHARACTER_MAXIMUM_LENGTH),
                 coalesce(d.NUMERIC_PRECISION, d.DATETIME_PRECISION).as(d.NUMERIC_PRECISION),
                 d.NUMERIC_SCALE,
                 d.DOMAIN_DEFAULT,

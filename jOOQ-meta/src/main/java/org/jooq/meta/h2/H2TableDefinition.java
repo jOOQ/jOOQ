@@ -45,8 +45,10 @@ import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.nvl;
+import static org.jooq.impl.DSL.nullif;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.SQLDataType.BOOLEAN;
+import static org.jooq.meta.h2.H2Database.MAX_VARCHAR_LENGTH;
 import static org.jooq.meta.h2.information_schema.Tables.COLUMNS;
 import static org.jooq.tools.StringUtils.defaultString;
 
@@ -118,7 +120,7 @@ public class H2TableDefinition extends AbstractTableDefinition {
                 when(COLUMNS.INTERVAL_TYPE.like(any(inline("%YEAR%"), inline("%MONTH%"))), inline("INTERVAL YEAR TO MONTH"))
                 .when(COLUMNS.INTERVAL_TYPE.like(any(inline("%DAY%"), inline("%HOUR%"), inline("%MINUTE%"), inline("%SECOND%"))), inline("INTERVAL DAY TO SECOND"))
                 .else_(Tables.COLUMNS.DATA_TYPE).as(COLUMNS.TYPE_NAME),
-                COLUMNS.CHARACTER_MAXIMUM_LENGTH,
+                nullif(COLUMNS.CHARACTER_MAXIMUM_LENGTH, inline(MAX_VARCHAR_LENGTH)).as(COLUMNS.CHARACTER_MAXIMUM_LENGTH),
                 coalesce(
                     COLUMNS.DATETIME_PRECISION.coerce(COLUMNS.NUMERIC_PRECISION),
                     COLUMNS.NUMERIC_PRECISION).as(COLUMNS.NUMERIC_PRECISION),
@@ -214,7 +216,8 @@ public class H2TableDefinition extends AbstractTableDefinition {
                     : COLUMNS.TYPE_NAME
                 ).as(COLUMNS.TYPE_NAME),
                 choose().when(COLUMNS.NUMERIC_PRECISION.eq(maxP).and(COLUMNS.NUMERIC_SCALE.eq(maxS)), inline(0L))
-                        .otherwise(COLUMNS.CHARACTER_MAXIMUM_LENGTH).as(COLUMNS.CHARACTER_MAXIMUM_LENGTH),
+                        .otherwise(nullif(COLUMNS.CHARACTER_MAXIMUM_LENGTH, inline(MAX_VARCHAR_LENGTH)))
+                        .as(COLUMNS.CHARACTER_MAXIMUM_LENGTH),
                 COLUMNS.NUMERIC_PRECISION.decode(maxP, inline(0L), COLUMNS.NUMERIC_PRECISION).as(COLUMNS.NUMERIC_PRECISION),
                 COLUMNS.NUMERIC_SCALE.decode(maxS, inline(0L), COLUMNS.NUMERIC_SCALE).as(COLUMNS.NUMERIC_SCALE),
                 COLUMNS.IS_NULLABLE,

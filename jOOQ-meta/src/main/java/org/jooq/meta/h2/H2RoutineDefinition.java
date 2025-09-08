@@ -42,8 +42,10 @@ import static org.jooq.impl.DSL.concat;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.noCondition;
+import static org.jooq.impl.DSL.nullif;
 import static org.jooq.impl.DSL.nvl;
 import static org.jooq.impl.DSL.val;
+import static org.jooq.meta.h2.H2Database.MAX_VARCHAR_LENGTH;
 import static org.jooq.meta.h2.information_schema.Tables.FUNCTION_COLUMNS;
 import static org.jooq.meta.hsqldb.information_schema.Tables.ELEMENT_TYPES;
 import static org.jooq.meta.hsqldb.information_schema.Tables.PARAMETERS;
@@ -53,6 +55,7 @@ import java.sql.SQLException;
 
 import org.jooq.Record;
 import org.jooq.Result;
+import org.jooq.impl.DSL;
 import org.jooq.meta.AbstractRoutineDefinition;
 import org.jooq.meta.DataTypeDefinition;
 import org.jooq.meta.DefaultDataTypeDefinition;
@@ -107,7 +110,7 @@ public class H2RoutineDefinition extends AbstractRoutineDefinition {
                 PARAMETERS.PARAMETER_MODE,
                 PARAMETERS.PARAMETER_NAME,
                 nvl(concat(ELEMENT_TYPES.DATA_TYPE, inline(" ARRAY")), PARAMETERS.DATA_TYPE).as(PARAMETERS.DATA_TYPE),
-                nvl(ELEMENT_TYPES.CHARACTER_MAXIMUM_LENGTH, PARAMETERS.CHARACTER_MAXIMUM_LENGTH).as(PARAMETERS.CHARACTER_MAXIMUM_LENGTH),
+                nullif(nvl(ELEMENT_TYPES.CHARACTER_MAXIMUM_LENGTH, PARAMETERS.CHARACTER_MAXIMUM_LENGTH), inline(MAX_VARCHAR_LENGTH)).as(PARAMETERS.CHARACTER_MAXIMUM_LENGTH),
                 nvl(ELEMENT_TYPES.NUMERIC_PRECISION, PARAMETERS.NUMERIC_PRECISION).as(PARAMETERS.NUMERIC_PRECISION),
                 nvl(ELEMENT_TYPES.NUMERIC_SCALE, PARAMETERS.NUMERIC_SCALE).as(PARAMETERS.NUMERIC_SCALE),
                 PARAMETERS.ORDINAL_POSITION)

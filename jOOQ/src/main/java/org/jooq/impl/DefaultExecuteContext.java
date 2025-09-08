@@ -389,7 +389,7 @@ class DefaultExecuteContext implements ExecuteContext {
 
 
 
-        this.converterContext = new DefaultConverterContext(derivedConfiguration, data);
+        this.converterContext = new DefaultConverterContext(derivedConfiguration, data, creationTime);
 
         batchQueries0(batchQueries);
         clean();

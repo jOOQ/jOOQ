@@ -16512,7 +16512,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         String chars,
         Object[] bindings
     ) {
-        super(dsl, chars);
+        super(dsl, chars, null);
 
         this.meta = meta;
         this.metaLookups = metaLookups;

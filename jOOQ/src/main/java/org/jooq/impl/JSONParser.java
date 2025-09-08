@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import java.time.Instant;
+
 import org.jooq.DSLContext;
 
 /**
@@ -48,8 +50,8 @@ final class JSONParser extends AbstractParseContext {
 
     final JSONContentHandler handler;
 
-    JSONParser(DSLContext dsl, String chars, JSONContentHandler handler) {
-        super(dsl, chars);
+    JSONParser(DSLContext dsl, String chars, JSONContentHandler handler, Instant creationTime) {
+        super(dsl, chars, creationTime);
 
         this.handler = handler;
         parseWhitespaceIf();

@@ -64,10 +64,14 @@ abstract class AbstractLazyScope implements Scope {
     private Map<Object, Object> data;
 
     AbstractLazyScope(Configuration configuration) {
-        this(configuration, null);
+        this(configuration, null, null);
     }
 
     AbstractLazyScope(Configuration configuration, Map<Object, Object> data) {
+        this(configuration, data, null);
+    }
+
+    AbstractLazyScope(Configuration configuration, Map<Object, Object> data, Instant creationTime) {
 
         // The Configuration can be null when unattached objects are
         // executed or when unattached Records are stored...
@@ -76,7 +80,7 @@ abstract class AbstractLazyScope implements Scope {
 
         this.configuration = configuration;
         this.data = data;
-        this.creationTime = configuration.clock().instant();
+        this.creationTime = creationTime != null ? creationTime : configuration.clock().instant();
     }
 
     // ------------------------------------------------------------------------

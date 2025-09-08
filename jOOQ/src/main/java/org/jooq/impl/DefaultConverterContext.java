@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import java.time.Instant;
 import java.util.Map;
 
 import org.jooq.Configuration;
@@ -53,5 +54,9 @@ final class DefaultConverterContext extends AbstractLazyScope implements Convert
 
     DefaultConverterContext(Configuration configuration, Map<Object, Object> data) {
         super(configuration, data);
+    }
+
+    DefaultConverterContext(Configuration configuration, Map<Object, Object> data, Instant creationTime) {
+        super(configuration, data, creationTime);
     }
 }

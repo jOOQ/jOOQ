@@ -121,7 +121,7 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
             COLUMNS.CHARACTER_MAXIMUM_LENGTH,
             when(
                 COLUMNS.UDT_NAME.in(inline("_varchar"), inline("_bpchar"), inline("_char")),
-                PG_ATTRIBUTE.ATTTYPMOD.sub(inline(4))
+                nullif(PG_ATTRIBUTE.ATTTYPMOD, inline(-1)).sub(inline(4))
             )
         );
         Field<Integer> precision = coalesce(

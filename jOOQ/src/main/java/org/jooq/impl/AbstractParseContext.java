@@ -49,7 +49,7 @@ import org.jooq.DSLContext;
  *
  * @author Lukas Eder
  */
-abstract class AbstractParseContext extends AbstractScope {
+abstract class AbstractParseContext extends AbstractLazyScope {
 
     final DSLContext dsl;
     final Locale     locale;

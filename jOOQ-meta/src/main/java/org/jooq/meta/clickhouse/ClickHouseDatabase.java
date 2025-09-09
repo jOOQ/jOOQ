@@ -77,6 +77,7 @@ import org.jooq.SortOrder;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions.TableType;
+import org.jooq.conf.RenderOptionalKeyword;
 import org.jooq.impl.DSL;
 import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.AbstractIndexDefinition;
@@ -206,7 +207,7 @@ public class ClickHouseDatabase extends AbstractDatabase implements ResultQueryD
 
         return
         create().select(
-                    t.DATABASE,
+                    t.DATABASE.as("catalog"),
                     t.DATABASE,
                     t.NAME,
                     inline("KEY_").concat(t.NAME).concat(inline("_PRIMARY")).as("constraint_name"),
@@ -409,7 +410,11 @@ public class ClickHouseDatabase extends AbstractDatabase implements ResultQueryD
 
     @Override
     protected DSLContext create0() {
-        return DSL.using(getConnection(), SQLDialect.CLICKHOUSE);
+        return DSL
+            .using(getConnection(), SQLDialect.CLICKHOUSE)
+            .configuration()
+            .deriveSettings(s -> s.withRenderOptionalAsKeywordForFieldAliases(RenderOptionalKeyword.ON))
+            .dsl();
     }
 
     @Override

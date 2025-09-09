@@ -124,7 +124,6 @@ import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.SortOrder.DESC;
 // ...
 // ...
-// ...
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.SettingsTools.getRenderTable;
 import static org.jooq.impl.AsteriskImpl.NO_SUPPORT_UNQUALIFIED_COMBINED;
@@ -195,6 +194,8 @@ import static org.jooq.impl.Multiset.returningClob;
 import static org.jooq.impl.Names.N_LEVEL;
 import static org.jooq.impl.Names.N_ROWNUM;
 import static org.jooq.impl.Names.N_T;
+import static org.jooq.impl.QOM.NullOrdering.NULLS_FIRST;
+import static org.jooq.impl.QOM.NullOrdering.NULLS_LAST;
 import static org.jooq.impl.QueryPartCollectionView.wrap;
 import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.JSON;
@@ -338,6 +339,7 @@ import org.jooq.impl.ForLock.ForLockWaitMode;
 import org.jooq.impl.QOM.CompareCondition;
 import org.jooq.impl.QOM.JoinHint;
 import org.jooq.impl.QOM.Materialized;
+import org.jooq.impl.QOM.NullOrdering;
 import org.jooq.impl.QOM.UnmodifiableList;
 import org.jooq.impl.QOM.With;
 import org.jooq.impl.Tools.BooleanDataKey;
@@ -4611,15 +4613,13 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         Condition c = null;
         QueryPartList<Field<?>> s = getSeek();
 
-        // [#2786] TODO: Check if NULLS FIRST | NULLS LAST clauses are
-        // contained in the SortFieldList, in case of which, the below
-        // predicates will become a lot more complicated.
-        if (o.nulls()) {}
-
         // If we have uniform sorting, more efficient row value expression
-        // predicates can be applied, which can be heavily optimised on some
-        // databases.
-        if (o.size() > 1 && o.uniform() && !FALSE.equals(ctx.settings().isRenderRowConditionForSeekClause())) {
+        // predicates can be applied, which can be optimised in some databases.
+        if (o.size() > 1
+            && !o.nulls()
+            && o.uniform()
+            && !FALSE.equals(ctx.settings().isRenderRowConditionForSeekClause())
+        ) {
             List<Field<?>> l = o.fields();
             List<Field<?>> r = s;
 
@@ -4668,13 +4668,13 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
                 for (int j = 0; j < i; j++)
                     if (!(s.get(j) instanceof NoField))
-                        and.addConditions(((Field) o.get(j).$field()).eq(s.get(j)));
+                        and.addConditions(seekCondition(o.get(j), s.get(j), Field::eq));
 
                 SortField<?> sf = o.get(i);
                 if (sf.getOrder() != DESC ^ seekBefore)
-                    and.addConditions(((Field) sf.$field()).gt(s.get(i)));
+                    and.addConditions(seekCondition(sf, s.get(i), Field::gt));
                 else
-                    and.addConditions(((Field) sf.$field()).lt(s.get(i)));
+                    and.addConditions(seekCondition(sf, s.get(i), Field::lt));
 
                 or.addConditions(OR, and);
             }
@@ -4684,10 +4684,23 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
         if (o.size() > 1 && TRUE.equals(ctx.settings().isRenderRedundantConditionForSeekClause())) {
             if (o.get(0).getOrder() != DESC ^ seekBefore)
-                c = ((Field) o.get(0).$field()).ge(s.get(0)).and(c);
+                c = seekCondition(o.get(0), s.get(0), Field::ge).and(c);
             else
-                c = ((Field) o.get(0).$field()).le(s.get(0)).and(c);
+                c = seekCondition(o.get(0), s.get(0), Field::le).and(c);
         }
+
+        return c;
+    }
+
+    private final Condition seekCondition(
+        SortField<?> o,
+        Field<?> s,
+        BiFunction<? super Field<?>, ? super Field<?>, ? extends Condition> comp
+    ) {
+        Condition c = comp.apply(((Field) o.$field()), s);
+
+        if (o.$nullOrdering() == NULLS_LAST)
+            c = c.or(o.$field().isNull());
 
         return c;
     }

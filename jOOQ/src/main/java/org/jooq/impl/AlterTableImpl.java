@@ -1512,13 +1512,16 @@ implements
                 }
 
                 TableElement part = add.get(i);
-                ctx.qualify(false, c -> c.visit(Tools.uncollate(part)));
 
+                // [#19032] We already use DATA_CONSTRAINT_REFERENCE to declare qualified constraint references,
+                //          so constraints shouldn't be unqualified here.
                 if (part instanceof Field<?> f) {
-                    ctx.sql(' ');
+                    ctx.qualify(false, c -> c.visit(Tools.uncollate(part))).sql(' ');
                     toSQLDDLTypeDeclarationForAddition(ctx, table, f.getDataType());
                     CreateTableImpl.acceptColumnComment(ctx, f);
                 }
+                else
+                    ctx.visit(Tools.uncollate(part));
             }
 
             if (indent)

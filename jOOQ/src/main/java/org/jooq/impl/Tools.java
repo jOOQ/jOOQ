@@ -6241,6 +6241,10 @@ final class Tools {
             }
         }
 
+        // [#12019] [#12117] If dateAsTimestamp=true is active, we must declare a DATE instead.
+        if (type.isTimestamp() && (type.getBinding() instanceof DateAsTimestampBinding || type.getBinding() instanceof LocalDateAsLocalDateTimeBinding))
+            type = SQLDataType.DATE;
+
         String typeName = type.getTypeName(ctx.configuration());
 
         // [#5807] These databases cannot use the DataType.getCastTypeName() (which is simply char in this case)
@@ -6252,10 +6256,6 @@ final class Tools {
             toSQLDDLTypeDeclaration(ctx, VARCHAR(36));
             return;
         }
-
-        // [#12019] [#12117] If dateAsTimestamp=true is active, we must declare a DATE instead.
-        if (type.isTimestamp() && (type.getBinding() instanceof DateAsTimestampBinding || type.getBinding() instanceof LocalDateAsLocalDateTimeBinding))
-            type = SQLDataType.DATE;
 
         if (ctx.family() == CLICKHOUSE) {
             ctx.sql(type.getCastTypeName(ctx.configuration()));

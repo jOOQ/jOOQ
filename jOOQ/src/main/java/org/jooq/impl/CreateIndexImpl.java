@@ -274,6 +274,17 @@ implements
     }
 
     private final void accept0(Context<?> ctx) {
+        switch (ctx.family()) {
+            case CLICKHOUSE:
+                acceptClickhouse(ctx);
+                break;
+            default:
+                acceptDefault(ctx);
+                break;
+        }
+    }
+
+    private final void acceptDefault(Context<?> ctx) {
         ctx.visit(K_CREATE);
 
         if (unique)
@@ -326,10 +337,6 @@ implements
 
             ctx.sql('(').visit(list).sql(')');
 
-        // [#7539] A type is mandatory for ClickHouse. We currently default to minmax
-        if (ctx.family() == CLICKHOUSE)
-            ctx.sql(' ').visit(K_TYPE).sql(' ').visit(unquotedName("minmax"));
-
         if (supportsInclude && !include.isEmpty()) {
             Keyword keyword = K_INCLUDE;
 
@@ -364,6 +371,44 @@ implements
 
 
 
+    }
+
+    private final void acceptClickhouse(Context<?> ctx) {
+        ctx.visit(K_ALTER_TABLE)
+           .sql(' ')
+           .visit(table)
+           .sql(' ')
+           .visit(K_ADD).sql(' ')
+           .visit(K_INDEX).sql(' ');
+
+        if (ifNotExists && supportsIfNotExists(ctx))
+            ctx.visit(K_IF_NOT_EXISTS)
+               .sql(' ');
+
+        if (index != null)
+            ctx.qualify(false, c -> c.visit(index))
+               .sql(' ');
+        else
+            ctx.visit(generatedName())
+               .sql(' ');
+
+        QueryPartList<QueryPart> list = new QueryPartList<>().qualify(false);
+
+        // [#15366] Ignore explicit sort specification, if unsupported
+        if (NO_SUPPORT_SORT_SPEC.contains(ctx.dialect()))
+            list.addAll(map(sortFields(on), s -> s.$field()));
+        else
+            list.addAll(on);
+
+        // [#11284] Don't emulate the clause for UNIQUE indexes
+        if (!unique && include != null)
+            list.addAll(include);
+
+        ctx.sql('(').visit(list).sql(')');
+
+        // [#7539] A type is mandatory for ClickHouse. We currently default to minmax
+        if (ctx.family() == CLICKHOUSE)
+            ctx.sql(' ').visit(K_TYPE).sql(' ').visit(unquotedName("minmax"));
     }
 
     private final Name generatedName() {

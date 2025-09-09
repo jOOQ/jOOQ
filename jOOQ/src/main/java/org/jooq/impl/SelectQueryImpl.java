@@ -4763,12 +4763,13 @@ implements
         return c;
     }
 
+    @SuppressWarnings("rawtypes")
     private final Condition seekCondition(
         SortField<?> o,
         Field<?> s,
-        BiFunction<? super Field<?>, ? super Field<?>, ? extends Condition> comp
+        BiFunction<? super Field, ? super Field, ? extends Condition> comp
     ) {
-        Condition c = comp.apply(((Field) o.$field()), s);
+        Condition c = comp.apply(o.$field(), s);
 
         if (o.$nullOrdering() == NULLS_LAST)
             c = c.or(o.$field().isNull());

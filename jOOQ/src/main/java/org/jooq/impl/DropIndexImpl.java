@@ -168,7 +168,18 @@ implements
             accept0(ctx);
     }
 
-    private void accept0(Context<?> ctx) {
+    private final void accept0(Context<?> ctx) {
+        switch (ctx.family()) {
+            case CLICKHOUSE:
+                acceptClickhouse(ctx);
+                break;
+            default:
+                acceptDefault(ctx);
+                break;
+        }
+    }
+
+    private final void acceptDefault(Context<?> ctx) {
         ctx.visit(K_DROP).sql(' ').visit(K_INDEX).sql(' ');
 
         if (ifExists && supportsIfExists(ctx))
@@ -188,6 +199,22 @@ implements
                 ctx.sql(' ').visit(K_ON).sql(' ').visit(index.getTable());
 
         acceptCascade(ctx, cascade);
+    }
+
+    private final void acceptClickhouse(Context<?> ctx) {
+        ctx.visit(K_ALTER_TABLE)
+           .sql(' ')
+           .visit(on != null ? on : index.getTable())
+           .sql(' ')
+           .visit(K_DROP).sql(' ')
+           .visit(K_INDEX).sql(' ');
+
+        if (ifExists && supportsIfExists(ctx))
+            ctx.visit(K_IF_EXISTS).sql(' ');
+
+        if (index != null)
+            ctx.qualify(false, c -> c.visit(index))
+               .sql(' ');
     }
 
     @Override

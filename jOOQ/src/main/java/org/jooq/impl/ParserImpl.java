@@ -6068,9 +6068,14 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         if (!constraintOnly && parseIndexOrKeyIf()) {
             Name name = parseIdentifierIf();
 
-            return name == null
+            DDLQuery result = name == null
                 ? dsl.createIndex().on(tableName, parseParenthesisedSortSpecification(false).fields())
                 : dsl.createIndex(name).on(tableName, parseParenthesisedSortSpecification(false).fields());
+
+            if (parseKeywordIf("TYPE"))
+                parseIdentifier();
+
+            return result;
         }
 
         if (parseIf('(')) {
@@ -7048,6 +7053,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         if (fields == null)
             fields = parseParenthesisedSortSpecification(false).fields();
         parseUsingIndexTypeIf();
+        if (parseKeywordIf("TYPE"))
+            parseIdentifier();
 
         Name[] include = null;
         if (parseKeywordIf("INCLUDE", "COVERING", "STORING")) {

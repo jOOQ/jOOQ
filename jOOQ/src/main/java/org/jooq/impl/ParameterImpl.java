@@ -44,6 +44,7 @@ package org.jooq.impl;
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
+import static org.jooq.impl.Keywords.K_DEFAULT;
 import static org.jooq.impl.Keywords.K_IN;
 import static org.jooq.impl.Keywords.K_INOUT;
 import static org.jooq.impl.Keywords.K_OUT;
@@ -65,6 +66,9 @@ import org.jooq.Statement;
 // ...
 import org.jooq.impl.QOM.UEmpty;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 /**
  * A common base class for stored procedure parameters
  *
@@ -73,7 +77,6 @@ import org.jooq.impl.QOM.UEmpty;
 final class ParameterImpl<T> extends AbstractField<T> implements Parameter<T>, UEmpty, TypedReference<T> {
 
     private final ParamMode   paramMode;
-    private final boolean     isDefaulted;
     private final boolean     isUnnamed;
 
 
@@ -84,18 +87,17 @@ final class ParameterImpl<T> extends AbstractField<T> implements Parameter<T>, U
 
 
     ParameterImpl(ParamMode paramMode, Name name, DataType<T> type) {
-        this(paramMode, name, type, type.defaulted(), name == null || name.empty());
+        this(paramMode, name, type, name == null || name.empty());
     }
 
     /**
      * @deprecated - [#11327] - 3.15.0 - Do not reuse this constructor
      */
     @Deprecated
-    ParameterImpl(ParamMode paramMode, Name name, DataType<T> type, boolean isDefaulted, boolean isUnnamed) {
+    ParameterImpl(ParamMode paramMode, Name name, DataType<T> type, boolean isUnnamed) {
         super(name, type);
 
         this.paramMode = paramMode;
-        this.isDefaulted = isDefaulted;
         this.isUnnamed = isUnnamed;
 
 
@@ -118,6 +120,24 @@ final class ParameterImpl<T> extends AbstractField<T> implements Parameter<T>, U
 
     @Override
     public final void accept(Context<?> ctx) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -205,7 +225,7 @@ final class ParameterImpl<T> extends AbstractField<T> implements Parameter<T>, U
 
     @Override
     public final boolean isDefaulted() {
-        return isDefaulted;
+        return getDataType().defaulted();
     }
 
     @Override

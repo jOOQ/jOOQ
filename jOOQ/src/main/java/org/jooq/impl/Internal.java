@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.inline;
 // ...
 import static org.jooq.impl.Tools.CONFIG;
 import static org.jooq.impl.Tools.CTX;
@@ -115,6 +116,7 @@ import org.jooq.exception.MappingException;
 import org.jooq.impl.QOM.CreateTable;
 import org.jooq.impl.QOM.ForeignKeyRule;
 import org.jooq.impl.QOM.GenerationLocation;
+import org.jooq.tools.JooqLogger;
 import org.jooq.tools.reflect.Reflect;
 import org.jooq.tools.reflect.ReflectException;
 // ...
@@ -132,6 +134,8 @@ import org.jetbrains.annotations.NotNull;
  */
 @org.jooq.Internal
 public final class Internal {
+
+    private static final JooqLogger log = JooqLogger.getLogger(Internal.class);
 
     public static final <R extends Record, T, P extends UDTPathTableField<R, ?, T>> P createUDTPathTableField(
         Name name,
@@ -727,7 +731,10 @@ public final class Internal {
 
     /**
      * Factory method for parameters.
+     *
+     * @deprecated - 3.21.0 - [#19044] - Use {@link #createParameter(String, DataType, boolean)} instead.
      */
+    @Deprecated(forRemoval = true)
     @NotNull
     public static final <T> Parameter<T> createParameter(String name, DataType<? extends T> type, boolean isDefaulted, boolean isUnnamed) {
         return createParameter(name, type, isDefaulted, isUnnamed, null, null);
@@ -735,7 +742,10 @@ public final class Internal {
 
     /**
      * Factory method for parameters.
+     *
+     * @deprecated - 3.21.0 - [#19044] - Use {@link #createParameter(String, DataType, boolean, Converter)} instead.
      */
+    @Deprecated(forRemoval = true)
     @NotNull
     public static final <T, U> Parameter<U> createParameter(String name, DataType<? extends T> type, boolean isDefaulted, boolean isUnnamed, Converter<T, U> converter) {
         return createParameter(name, type, isDefaulted, isUnnamed, converter, null);
@@ -743,7 +753,10 @@ public final class Internal {
 
     /**
      * Factory method for parameters.
+     *
+     * @deprecated - 3.21.0 - [#19044] - Use {@link #createParameter(String, DataType, boolean, Binding)} instead.
      */
+    @Deprecated(forRemoval = true)
     @NotNull
     public static final <T, U> Parameter<U> createParameter(String name, DataType<? extends T> type, boolean isDefaulted, boolean isUnnamed, Binding<T, U> binding) {
         return createParameter(name, type, isDefaulted, isUnnamed, null, binding);
@@ -751,17 +764,60 @@ public final class Internal {
 
     /**
      * Factory method for parameters.
+     *
+     * @deprecated - 3.21.0 - [#19044] - Use {@link #createParameter(String, DataType, boolean, Converter, Binding)} instead.
+     */
+    @SuppressWarnings("unchecked")
+    @Deprecated(forRemoval = true)
+    @NotNull
+    public static final <T, X, U> Parameter<U> createParameter(String name, DataType<? extends T> type, boolean isDefaulted, boolean isUnnamed, Converter<X, U> converter, Binding<T, X> binding) {
+        if (isDefaulted) {
+            log.warn("Deprecated", "The Internal::createParameter methods receiving a isDefaulted flag are deprecated. Please re-generate your code or use a non-deprecated alternative for parameter name: " + name + ". To pass default expressions, use DataType::default_");
+
+            if (!type.defaulted())
+                type = type.default_((Field) inline(null, type));
+        }
+
+        return createParameter(name, type, isUnnamed, converter, binding);
+    }
+
+    /**
+     * Factory method for parameters.
+     */
+    @NotNull
+    public static final <T> Parameter<T> createParameter(String name, DataType<? extends T> type, boolean isUnnamed) {
+        return createParameter(name, type, isUnnamed, null, null);
+    }
+
+    /**
+     * Factory method for parameters.
+     */
+    @NotNull
+    public static final <T, U> Parameter<U> createParameter(String name, DataType<? extends T> type, boolean isUnnamed, Converter<T, U> converter) {
+        return createParameter(name, type, isUnnamed, converter, null);
+    }
+
+    /**
+     * Factory method for parameters.
+     */
+    @NotNull
+    public static final <T, U> Parameter<U> createParameter(String name, DataType<? extends T> type, boolean isUnnamed, Binding<T, U> binding) {
+        return createParameter(name, type, isUnnamed, null, binding);
+    }
+
+    /**
+     * Factory method for parameters.
      */
     @NotNull
     @SuppressWarnings("unchecked")
-    public static final <T, X, U> Parameter<U> createParameter(String name, DataType<? extends T> type, boolean isDefaulted, boolean isUnnamed, Converter<X, U> converter, Binding<T, X> binding) {
+    public static final <T, X, U> Parameter<U> createParameter(String name, DataType<? extends T> type, boolean isUnnamed, Converter<X, U> converter, Binding<T, X> binding) {
         final Binding<T, U> actualBinding = DefaultBinding.newBinding(converter, type, binding);
         final DataType<U> actualType = converter == null && binding == null
             ? (DataType<U>) type
             : type.asConvertedDataType(actualBinding);
 
         // TODO: [#11327] Get the ParamMode right
-        return new ParameterImpl<>(ParamMode.IN, DSL.name(name), actualType, isDefaulted, isUnnamed);
+        return new ParameterImpl<>(ParamMode.IN, DSL.name(name), actualType, isUnnamed);
     }
 
 

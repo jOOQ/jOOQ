@@ -10698,7 +10698,6 @@ public class JavaGenerator extends AbstractGenerator {
                 final String paramTypeRef = getJavaTypeReference(parameter.getDatabase(), parameter.getType(resolver(out)), out);
                 final String paramId = out.ref(getStrategy().getJavaIdentifier(parameter), 2);
                 final String paramName = parameter.getName();
-                final String isDefaulted = parameter.isDefaulted() ? "true" : "false";
                 final String isUnnamed = parameter.isUnnamed() ? "true" : "false";
                 final List<String> converter = out.ref(list(parameter.getType(resolver(out)).getConverter()));
                 final List<String> binding = out.ref(list(parameter.getType(resolver(out)).getBinding()));
@@ -10706,8 +10705,8 @@ public class JavaGenerator extends AbstractGenerator {
                 if (!printDeprecationIfUnknownType(out, paramTypeFull))
                     out.javadoc("The parameter <code>%s</code>.[[before= ][%s]]", parameter.getQualifiedOutputName(), list(escapeEntities(comment(parameter))));
 
-                out.println("val %s: %s[%s] = %s.createParameter(\"%s\", %s, %s, %s" + converterTemplate(converter) + converterTemplate(binding) + ")",
-                    scalaWhitespaceSuffix(paramId), Parameter.class, paramType, Internal.class, escapeString(paramName), paramTypeRef, isDefaulted, isUnnamed, converter, binding);
+                out.println("val %s: %s[%s] = %s.createParameter(\"%s\", %s, %s" + converterTemplate(converter) + converterTemplate(binding) + ")",
+                    scalaWhitespaceSuffix(paramId), Parameter.class, paramType, Internal.class, escapeString(paramName), paramTypeRef, isUnnamed, converter, binding);
             }
 
             out.println("}");
@@ -10743,7 +10742,6 @@ public class JavaGenerator extends AbstractGenerator {
                 final String paramTypeRef = getJavaTypeReference(parameter.getDatabase(), parameter.getType(resolver(out)), out);
                 final String paramId = getStrategy().getJavaIdentifier(parameter);
                 final String paramName = parameter.getName();
-                final String isDefaulted = parameter.isDefaulted() ? "true" : "false";
                 final String isUnnamed = parameter.isUnnamed() ? "true" : "false";
                 final List<String> converter = out.ref(list(parameter.getType(resolver(out)).getConverter()));
                 final List<String> binding = out.ref(list(parameter.getType(resolver(out)).getBinding()));
@@ -10752,11 +10750,11 @@ public class JavaGenerator extends AbstractGenerator {
                     out.javadoc("The parameter <code>%s</code>.[[before= ][%s]]", parameter.getQualifiedOutputName(), list(escapeEntities(comment(parameter))));
 
                 if (kotlin)
-                    out.println("%sval %s: %s<%s?> = %s.createParameter(\"%s\", %s, %s, %s" + converterTemplate(converter) + converterTemplate(binding) + ")",
-                        visibility(), scalaWhitespaceSuffix(paramId), Parameter.class, paramType, Internal.class, escapeString(paramName), paramTypeRef, isDefaulted, isUnnamed, converter, binding);
+                    out.println("%sval %s: %s<%s?> = %s.createParameter(\"%s\", %s, %s" + converterTemplate(converter) + converterTemplate(binding) + ")",
+                        visibility(), scalaWhitespaceSuffix(paramId), Parameter.class, paramType, Internal.class, escapeString(paramName), paramTypeRef, isUnnamed, converter, binding);
                 else
-                    out.println("%sstatic final %s<%s> %s = %s.createParameter(\"%s\", %s, %s, %s" + converterTemplate(converter) + converterTemplate(binding) + ");",
-                        visibility(), Parameter.class, paramType, paramId, Internal.class, escapeString(paramName), paramTypeRef, isDefaulted, isUnnamed, converter, binding);
+                    out.println("%sstatic final %s<%s> %s = %s.createParameter(\"%s\", %s, %s" + converterTemplate(converter) + converterTemplate(binding) + ");",
+                        visibility(), Parameter.class, paramType, paramId, Internal.class, escapeString(paramName), paramTypeRef, isUnnamed, converter, binding);
             }
 
             if (kotlin)

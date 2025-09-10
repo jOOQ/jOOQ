@@ -1576,7 +1576,7 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
      * Translate the DATA_TYPE = 'ARRAY' to the UDT_NAME in standard SQL form,
      * for multi dimensional arrays.
      */
-    Field<String> arrayDataType(Field<String> dataType, Field<String> udtName, Field<Integer> dims) {
+    Field<String> arrayDataType(Field<String> dataType, Field<String> udtName, Field<Short> dims) {
         return when(dataType.eq(inline("ARRAY")),
                     substring(udtName, inline(2))
                     .concat(DSL.repeat(inline(" ARRAY"), greatest(coalesce(dims, inline(0)), inline(1)))))

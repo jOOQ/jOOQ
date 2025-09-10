@@ -15,7 +15,7 @@ import org.jooq.meta.postgres.pg_catalog.routines.FormatType;
 /**
  * Convenience access to all stored procedures and functions in pg_catalog.
  */
-@SuppressWarnings({ "all", "unchecked", "rawtypes" })
+@SuppressWarnings({ "all", "unchecked", "rawtypes", "this-escape" })
 public class Routines {
 
     /**

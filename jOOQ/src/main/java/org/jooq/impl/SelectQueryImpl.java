@@ -4442,7 +4442,12 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             c = or.getWhere();
         }
 
-        if (o.size() > 1 && TRUE.equals(ctx.settings().isRenderRedundantConditionForSeekClause())) {
+        // [#2786] Redundant conditions don't make sense when enabling NULL ordering on the
+        //         redundant condition's column.
+        if (o.size() > 1
+            && TRUE.equals(ctx.settings().isRenderRedundantConditionForSeekClause())
+            && o.get(0).$nullOrdering() == null
+        ) {
             if (o.get(0).getOrder() != DESC ^ seekBefore)
                 c = seekCondition(o.get(0), s.get(0), Field::ge).and(c);
             else
@@ -4460,10 +4465,32 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     ) {
         Condition c = comp.apply(o.$field(), s);
 
-        if (o.$nullOrdering() == NULLS_LAST)
-            c = c.or(o.$field().isNull());
-
-        return c;
+        if (o.$nullOrdering() == NULLS_LAST) {
+            if (Tools.isVal1(s, v -> v.getValue() == null)) {
+                if (c instanceof QOM.Eq)
+                    return o.$field().isNull();
+                else if (c instanceof QOM.Gt)
+                    return falseCondition();
+                else
+                    return o.$field().isNotNull();
+            }
+            else
+                return c.or(o.$field().isNull());
+        }
+        else if (o.$nullOrdering() == NULLS_FIRST) {
+            if (Tools.isVal1(s, v -> v.getValue() == null)) {
+                if (c instanceof QOM.Eq)
+                    return o.$field().isNull();
+                else if (c instanceof QOM.Gt)
+                    return o.$field().isNotNull();
+                else
+                    return falseCondition();
+            }
+            else
+                return c;
+        }
+        else
+            return c;
     }
 
 

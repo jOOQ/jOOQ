@@ -126,9 +126,15 @@ public interface SelectSeekStepN<R extends Record> extends SelectLimitStep<R> {
      * The seek column list length must match the <code>ORDER BY</code> expression
      * list length.
      * <p>
-     * The <code>SEEK AFTER</code> method currently does not support seeking
-     * <code>NULL</code> values, or operating with <code>NULLS FIRST</code>,
-     * <code>NULLS LAST</code> clauses in the <code>ORDER BY</code> clause.
+     * <h3><code>NULL</code> handling</h3>
+     * <p>
+     * <code>NULL</code> handling in the <code>SEEK</code> clause is enabled
+     * only for <code>ORDER BY</code> expressions when providing explicit
+     * {@link SortField#nullsFirst()} or {@link SortField#nullsLast()} clauses,
+     * in case of which the <code>SEEK</code> predicate is always composed of
+     * multiple predicates containing {@link Field#isNull()} or
+     * {@link Field#isNotNull()}, respectively, never of <code>ROW</code>
+     * predicates.
      *
      * @see <a
      *      href="http://use-the-index-luke.com/sql/partial-results/fetch-next-page">http://use-the-index-luke.com/sql/partial-results/fetch-next-page</a>
@@ -182,9 +188,15 @@ public interface SelectSeekStepN<R extends Record> extends SelectLimitStep<R> {
      * The seek column list length must match the <code>ORDER BY</code> expression
      * list length.
      * <p>
-     * The <code>SEEK AFTER</code> method currently does not support seeking
-     * <code>NULL</code> values, or operating with <code>NULLS FIRST</code>,
-     * <code>NULLS LAST</code> clauses in the <code>ORDER BY</code> clause.
+     * <h3><code>NULL</code> handling</h3>
+     * <p>
+     * <code>NULL</code> handling in the <code>SEEK</code> clause is enabled
+     * only for <code>ORDER BY</code> expressions when providing explicit
+     * {@link SortField#nullsFirst()} or {@link SortField#nullsLast()} clauses,
+     * in case of which the <code>SEEK</code> predicate is always composed of
+     * multiple predicates containing {@link Field#isNull()} or
+     * {@link Field#isNotNull()}, respectively, never of <code>ROW</code>
+     * predicates.
      *
      * @see <a
      *      href="http://use-the-index-luke.com/sql/partial-results/fetch-next-page">http://use-the-index-luke.com/sql/partial-results/fetch-next-page</a>
@@ -238,9 +250,15 @@ public interface SelectSeekStepN<R extends Record> extends SelectLimitStep<R> {
      * The seek column list length must match the <code>ORDER BY</code> expression
      * list length.
      * <p>
-     * The <code>SEEK AFTER</code> method currently does not support seeking
-     * <code>NULL</code> values, or operating with <code>NULLS FIRST</code>,
-     * <code>NULLS LAST</code> clauses in the <code>ORDER BY</code> clause.
+     * <h3><code>NULL</code> handling</h3>
+     * <p>
+     * <code>NULL</code> handling in the <code>SEEK</code> clause is enabled
+     * only for <code>ORDER BY</code> expressions when providing explicit
+     * {@link SortField#nullsFirst()} or {@link SortField#nullsLast()} clauses,
+     * in case of which the <code>SEEK</code> predicate is always composed of
+     * multiple predicates containing {@link Field#isNull()} or
+     * {@link Field#isNotNull()}, respectively, never of <code>ROW</code>
+     * predicates.
      *
      * @see <a
      *      href="http://use-the-index-luke.com/sql/partial-results/fetch-next-page">http://use-the-index-luke.com/sql/partial-results/fetch-next-page</a>
@@ -293,9 +311,15 @@ public interface SelectSeekStepN<R extends Record> extends SelectLimitStep<R> {
      * The seek column list length must match the <code>ORDER BY</code> expression
      * list length.
      * <p>
-     * The <code>SEEK AFTER</code> method currently does not support seeking
-     * <code>NULL</code> values, or operating with <code>NULLS FIRST</code>,
-     * <code>NULLS LAST</code> clauses in the <code>ORDER BY</code> clause.
+     * <h3><code>NULL</code> handling</h3>
+     * <p>
+     * <code>NULL</code> handling in the <code>SEEK</code> clause is enabled
+     * only for <code>ORDER BY</code> expressions when providing explicit
+     * {@link SortField#nullsFirst()} or {@link SortField#nullsLast()} clauses,
+     * in case of which the <code>SEEK</code> predicate is always composed of
+     * multiple predicates containing {@link Field#isNull()} or
+     * {@link Field#isNotNull()}, respectively, never of <code>ROW</code>
+     * predicates.
      *
      * @see <a
      *      href="http://use-the-index-luke.com/sql/partial-results/fetch-next-page">http://use-the-index-luke.com/sql/partial-results/fetch-next-page</a>
@@ -348,9 +372,15 @@ public interface SelectSeekStepN<R extends Record> extends SelectLimitStep<R> {
      * The seek column list length must match the <code>ORDER BY</code> expression
      * list length.
      * <p>
-     * The <code>SEEK BEFORE</code> method currently does not support seeking
-     * <code>NULL</code> values, or operating with <code>NULLS FIRST</code>,
-     * <code>NULLS LAST</code> clauses in the <code>ORDER BY</code> clause.
+     * <h3><code>NULL</code> handling</h3>
+     * <p>
+     * <code>NULL</code> handling in the <code>SEEK</code> clause is enabled
+     * only for <code>ORDER BY</code> expressions when providing explicit
+     * {@link SortField#nullsFirst()} or {@link SortField#nullsLast()} clauses,
+     * in case of which the <code>SEEK</code> predicate is always composed of
+     * multiple predicates containing {@link Field#isNull()} or
+     * {@link Field#isNotNull()}, respectively, never of <code>ROW</code>
+     * predicates.
      *
      * @see <a
      *      href="http://use-the-index-luke.com/sql/partial-results/fetch-next-page">http://use-the-index-luke.com/sql/partial-results/fetch-next-page</a>
@@ -405,9 +435,15 @@ public interface SelectSeekStepN<R extends Record> extends SelectLimitStep<R> {
      * The seek column list length must match the <code>ORDER BY</code> expression
      * list length.
      * <p>
-     * The <code>SEEK BEFORE</code> method currently does not support seeking
-     * <code>NULL</code> values, or operating with <code>NULLS FIRST</code>,
-     * <code>NULLS LAST</code> clauses in the <code>ORDER BY</code> clause.
+     * <h3><code>NULL</code> handling</h3>
+     * <p>
+     * <code>NULL</code> handling in the <code>SEEK</code> clause is enabled
+     * only for <code>ORDER BY</code> expressions when providing explicit
+     * {@link SortField#nullsFirst()} or {@link SortField#nullsLast()} clauses,
+     * in case of which the <code>SEEK</code> predicate is always composed of
+     * multiple predicates containing {@link Field#isNull()} or
+     * {@link Field#isNotNull()}, respectively, never of <code>ROW</code>
+     * predicates.
      *
      * @see <a
      *      href="http://use-the-index-luke.com/sql/partial-results/fetch-next-page">http://use-the-index-luke.com/sql/partial-results/fetch-next-page</a>

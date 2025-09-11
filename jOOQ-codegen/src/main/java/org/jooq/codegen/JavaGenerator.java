@@ -12255,10 +12255,12 @@ public class JavaGenerator extends AbstractGenerator {
             appendTypeReferenceDefault(db, out, sb, defaultValue, sqlDataTypeRef, arrayAppender);
         }
         else if (db.getUDT(schema, u) != null) {
-            sb.append(out.ref(getStrategy().getFullJavaIdentifier(db.getUDT(schema, u)), 2));
+            final String sqlDataTypeRef = out.ref(getStrategy().getFullJavaIdentifier(db.getUDT(schema, u)), 2);
+            sb.append(sqlDataTypeRef);
 
             appendGetDataTypeCall(sb);
             arrayAppender.accept(sb);
+            appendTypeReferenceDefault(db, out, sb, defaultValue, appendGetDataTypeCall(new StringBuilder(sqlDataTypeRef)).toString(), arrayAppender);
         }
         // [#3942] [#7863] Dialects that support tables as UDTs
         // [#5334] In MySQL, the user type is (ab)used for synthetic enum types. This can lead to accidental matches here
@@ -12399,7 +12401,7 @@ public class JavaGenerator extends AbstractGenerator {
 
 
 
-            // [#5291] Some dialects report valid SQL expresions (e.g. PostgreSQL), others
+            // [#5291] Some dialects report valid SQL expressions (e.g. PostgreSQL), others
             //         report actual values (e.g. MySQL).
             if (dataType.defaulted())
                 appendTypeReferenceDefault(db, out, sb, defaultValue, sqlDataTypeRef, arrayAppender);
@@ -12408,13 +12410,13 @@ public class JavaGenerator extends AbstractGenerator {
         return sb.toString();
     }
 
-    private void appendGetDataTypeCall(StringBuilder sb) {
+    private StringBuilder appendGetDataTypeCall(StringBuilder sb) {
         if (kotlin)
-            sb.append(".dataType");
+            return sb.append(".dataType");
         else if (scala)
-            sb.append(".getDataType");
+            return sb.append(".getDataType");
         else
-            sb.append(".getDataType()");
+            return sb.append(".getDataType()");
     }
 
     private final void appendTypeReferenceNullability(Database db, JavaWriter out, StringBuilder sb, boolean n) {

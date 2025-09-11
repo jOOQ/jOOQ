@@ -46,6 +46,7 @@ import static org.jooq.Clause.FIELD_FUNCTION;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 // ...
@@ -169,6 +170,8 @@ import org.jooq.impl.QOM.UNotYetImplemented;
 import org.jooq.impl.QOM.UTransient;
 import org.jooq.impl.ResultsImpl.ResultOrRowsImpl;
 import org.jooq.tools.reflect.Reflect;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A common base class for stored procedures
@@ -2540,9 +2543,9 @@ implements
                             fields.add(getInValues().get(parameter));
                     else
                         if (pgArgNeedsCasting(parameter))
-                            fields.add(DSL.field("{0} := {1}", name(parameter.getName()), new Cast(getInValues().get(parameter), parameter.getDataType())));
+                            fields.add(namedArgument(ctx, parameter, new Cast(getInValues().get(parameter), parameter.getDataType())));
                         else
-                            fields.add(DSL.field("{0} := {1}", name(parameter.getName()), getInValues().get(parameter)));
+                            fields.add(namedArgument(ctx, parameter, getInValues().get(parameter)));
                 }
 
 
@@ -2585,6 +2588,27 @@ implements
                 result = DSL.select(result).asField();
 
             ctx.visit(result);
+        }
+
+        private final Field<Object> namedArgument(Context<?> ctx, Parameter<?> parameter, Field<?> value) {
+            switch (ctx.family()) {
+
+
+                case POSTGRES:
+                case YUGABYTEDB:
+                    return DSL.field("{0} := {1}", name(parameter.getName()), value);
+
+
+
+
+
+
+
+
+
+                default:
+                    return DSL.field("{0} => {1}", name(parameter.getName()), value);
+            }
         }
 
 

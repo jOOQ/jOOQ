@@ -39,8 +39,11 @@ package org.jooq.meta.firebird;
 
 import static org.jooq.impl.DSL.bitOr;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.lower;
 import static org.jooq.impl.DSL.nvl;
+import static org.jooq.impl.DSL.substring;
 import static org.jooq.impl.DSL.trim;
+import static org.jooq.impl.DSL.when;
 import static org.jooq.meta.firebird.FirebirdDatabase.CHARACTER_LENGTH;
 import static org.jooq.meta.firebird.FirebirdDatabase.FIELD_SCALE;
 import static org.jooq.meta.firebird.FirebirdDatabase.FIELD_TYPE;
@@ -50,7 +53,10 @@ import static org.jooq.meta.firebird.rdb.Tables.RDB$PROCEDURE_PARAMETERS;
 
 import java.sql.SQLException;
 
+import org.jooq.Field;
 import org.jooq.Record;
+import org.jooq.TableField;
+import org.jooq.impl.DSL;
 import org.jooq.meta.AbstractRoutineDefinition;
 import org.jooq.meta.DataTypeDefinition;
 import org.jooq.meta.DefaultDataTypeDefinition;
@@ -109,7 +115,7 @@ public class FirebirdRoutineDefinition extends AbstractRoutineDefinition {
                         f.RDB$FIELD_PRECISION,
                         FIELD_SCALE(f).as("FIELD_SCALE"),
                         bitOr(nvl(p.RDB$NULL_FLAG, inline((short) 0)), nvl(f.RDB$NULL_FLAG, inline((short) 0))).as(p.RDB$NULL_FLAG),
-                        p.RDB$DEFAULT_SOURCE)
+                        removeDefault(p.RDB$DEFAULT_SOURCE).as(p.RDB$DEFAULT_SOURCE))
                     .from(p)
                     .leftOuterJoin(f).on(p.RDB$FIELD_SOURCE.eq(f.RDB$FIELD_NAME))
                     .where(p.RDB$PROCEDURE_NAME.eq(getName()))
@@ -126,7 +132,7 @@ public class FirebirdRoutineDefinition extends AbstractRoutineDefinition {
                         f.RDB$FIELD_PRECISION,
                         FIELD_SCALE(f).as("FIELD_SCALE"),
                         bitOr(nvl(a.RDB$NULL_FLAG, inline((short) 0)), nvl(f.RDB$NULL_FLAG, inline((short) 0))).as(p.RDB$NULL_FLAG),
-                        a.RDB$DEFAULT_SOURCE)
+                        removeDefault(a.RDB$DEFAULT_SOURCE).as(p.RDB$DEFAULT_SOURCE))
                     .from(a)
                     .leftOuterJoin(f).on(a.RDB$FIELD_SOURCE.eq(f.RDB$FIELD_NAME))
                     .where(a.RDB$FUNCTION_NAME.eq(getName()))
@@ -155,5 +161,10 @@ public class FirebirdRoutineDefinition extends AbstractRoutineDefinition {
             addParameter(record.get(p.RDB$PARAMETER_TYPE, int.class).equals(0) ? InOutDefinition.IN : InOutDefinition.OUT, parameter);
         }
 
+    }
+
+    private Field<String> removeDefault(Field<String> f) {
+        return when(f.like(inline("=%")), trim(substring(f, inline(2))))
+            .when(lower(f).like("default %"), trim(substring(f, inline(8))));
     }
 }

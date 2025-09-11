@@ -12240,11 +12240,15 @@ public class JavaGenerator extends AbstractGenerator {
 
         if (db.getArray(schema, u) != null) {
             ArrayDefinition array = database.getArray(schema, u);
+            StringBuilder sqlDataTypeRefSb = new StringBuilder();
 
-            sb.append(getJavaTypeReference(db, array.getElementType(resolver(out)), out));
-            sb.append(array.getIndexType() != null ? ".asAssociativeArrayDataType(" : ".asArrayDataType(");
-            sb.append(classOf(out.ref(getStrategy().getFullJavaClassName(array, Mode.RECORD))));
-            sb.append(")");
+            sqlDataTypeRefSb.append(getJavaTypeReference(db, array.getElementType(resolver(out)), out));
+            sqlDataTypeRefSb.append(array.getIndexType() != null ? ".asAssociativeArrayDataType(" : ".asArrayDataType(");
+            sqlDataTypeRefSb.append(classOf(out.ref(getStrategy().getFullJavaClassName(array, Mode.RECORD))));
+            sqlDataTypeRefSb.append(")");
+
+            sb.append(sqlDataTypeRefSb);
+            appendTypeReferenceDefault(db, out, sb, defaultValue, sqlDataTypeRefSb.toString(), arrayAppender);
         }
         else if (db.getDomain(schema, u) != null) {
             final String sqlDataTypeRef = out.ref(getStrategy().getFullJavaIdentifier(db.getDomain(schema, u)), domainRefSegments()) + ".getDataType()";

@@ -195,6 +195,7 @@ implements
     private static final Set<SQLDialect>      REQUIRE_SELECT_FROM                = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
     private static final Set<SQLDialect>      REQUIRE_DISAMBIGUATE_OVERLOADS     = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
     private static final Set<SQLDialect>      SUPPORT_NAMED_ARGUMENTS            = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
+    private static final Set<SQLDialect>      NO_SUPPORT_NAMED_ARGUMENTS         = SQLDialect.supportedBy(FIREBIRD);
 
     // ------------------------------------------------------------------------
     // Meta-data attributes (the same for every call)
@@ -2092,6 +2093,20 @@ implements
 
 
 
+    private final boolean hasInValuesAfter(Parameter<?> parameter) {
+        boolean found = false;
+
+        for (Parameter<?> p : getInParameters()) {
+            if (found && inValuesNonDefaulted.contains(p))
+                return true;
+
+            if (p.equals(parameter))
+                found = true;
+        }
+
+        return false;
+    }
+
     private final boolean hasUnnamedParameters() {
         return hasUnnamedParameters;
     }
@@ -2494,14 +2509,27 @@ implements
 
             name = null;
 
+            boolean hasInValuesAfterParameter = true;
             for (Parameter<?> parameter : getInParameters0(ctx.configuration())) {
 
+                // [#19047] Dialects that support defaulted parameters, but not named parameters.
+                if (family == FIREBIRD) {
+                    if (inValuesDefaulted.contains(parameter)) {
+                        if (hasInValuesAfterParameter = (hasInValuesAfterParameter && hasInValuesAfter(parameter)))
+                            fields.add(parameter.getDataType().default_());
+                        else
+                            continue;
+                    }
+                    else
+                        fields.add(getInValues().get(parameter));
+                }
+
                 // [#1183] [#3533] Skip defaulted parameters
-                if (inValuesDefaulted.contains(parameter))
+                else if (inValuesDefaulted.contains(parameter))
                     continue;
 
                 // Disambiguate overloaded function signatures
-                if (REQUIRE_DISAMBIGUATE_OVERLOADS.contains(ctx.dialect()))
+                else if (REQUIRE_DISAMBIGUATE_OVERLOADS.contains(ctx.dialect())) {
 
                     // [#4920]  In case there are any unnamed parameters, we mustn't
                     // [#13947] Or, if named arguments aren't supported
@@ -2515,6 +2543,9 @@ implements
                             fields.add(DSL.field("{0} := {1}", name(parameter.getName()), new Cast(getInValues().get(parameter), parameter.getDataType())));
                         else
                             fields.add(DSL.field("{0} := {1}", name(parameter.getName()), getInValues().get(parameter)));
+                }
+
+
 
 
 

@@ -57,6 +57,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.XMLFormat.RecordFormat.COLUMN_NAME_ELEMENTS;
 import static org.jooq.conf.ThrowExceptions.THROW_NONE;
+import static org.jooq.impl.DSL.default_;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
@@ -2526,6 +2527,16 @@ implements
                     else
                         fields.add(getInValues().get(parameter));
                 }
+
+
+
+
+
+
+
+
+
+
 
                 // [#1183] [#3533] Skip defaulted parameters
                 else if (inValuesDefaulted.contains(parameter))

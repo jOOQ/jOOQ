@@ -47,6 +47,7 @@ import static org.jooq.Clause.FIELD_FUNCTION;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 // ...
@@ -2517,7 +2518,7 @@ implements
             for (Parameter<?> parameter : getInParameters0(ctx.configuration())) {
 
                 // [#19047] Dialects that support defaulted parameters, but not named parameters.
-                if (family == FIREBIRD) {
+                if (NO_SUPPORT_NAMED_ARGUMENTS.contains(ctx.dialect())) {
                     if (inValuesDefaulted.contains(parameter)) {
                         if (hasInValuesAfterParameter = (hasInValuesAfterParameter && hasInValuesAfter(parameter)))
                             fields.add(parameter.getDataType().default_());
@@ -2608,6 +2609,7 @@ implements
                 case POSTGRES:
                 case YUGABYTEDB:
                     return DSL.field("{0} := {1}", name(parameter.getName()), value);
+
 
 
 

@@ -2788,7 +2788,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                 context.formatSeparator()
                        .visit(K_WHERE)
                        .sql(' ')
-                       .qualify(false, c -> c.visit(getSeekCondition(context)));
+                       .qualify(false, c -> c.visit(getSeekCondition(context, false)));
             }
         }
 
@@ -3475,7 +3475,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     private final boolean applySeekOnDerivedTable() {
-        return !getSeek().isEmpty() && !getOrderBy().isEmpty() && !unionOp.isEmpty();
+        return !getSeek(false).isEmpty() && !getOrderBy(false).isEmpty() && !unionOp.isEmpty();
     }
 
     private final boolean wrapQueryExpressionBodyInDerivedTable(Context<?> ctx, boolean hasAlternativeFields) {
@@ -4355,8 +4355,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // - There is a SEEK clause (obvious case)
         // - There are no unions (union is nested in derived table
         //   and SEEK predicate is applied outside). See [#7459]
-        if (!getOrderBy().isEmpty() && !getSeek().isEmpty() && unionOp.isEmpty())
-            result.addConditions(getSeekCondition(ctx));
+        if (!getOrderBy(true).isEmpty() && !getSeek(true).isEmpty())
+            result.addConditions(getSeekCondition(ctx, true));
 
 
 
@@ -4368,10 +4368,10 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    final Condition getSeekCondition(Context<?> ctx) {
-        SortFieldList o = getOrderBy();
+    final Condition getSeekCondition(Context<?> ctx, boolean localSeek) {
+        SortFieldList o = getOrderBy(localSeek);
         Condition c = null;
-        QueryPartList<Field<?>> s = getSeek();
+        QueryPartList<Field<?>> s = getSeek(localSeek);
 
         // If we have uniform sorting, more efficient row value expression
         // predicates can be applied, which can be optimised in some databases.
@@ -4526,11 +4526,19 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     }
 
     final SortFieldList getOrderBy() {
-        return (unionOp.size() == 0) ? orderBy : unionOrderBy;
+        return getOrderBy(unionOp.size() == 0);
+    }
+
+    final SortFieldList getOrderBy(boolean localOrderBy) {
+        return localOrderBy ? orderBy : unionOrderBy;
     }
 
     final QueryPartList<Field<?>> getSeek() {
-        return (unionOp.size() == 0) ? seek : unionSeek;
+        return getSeek(unionOp.size() == 0);
+    }
+
+    final QueryPartList<Field<?>> getSeek(boolean localSeek) {
+        return localSeek ? seek : unionSeek;
     }
 
     final Limit getLimit() {

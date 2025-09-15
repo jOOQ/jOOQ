@@ -12910,30 +12910,35 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         boolean quoted = quoteEnd != 0;
 
         int start = position();
-        StringBuilder sb = new StringBuilder();
-        char c;
+        String s;
+
         if (quoted) {
+            StringBuilder sb = new StringBuilder();
+            char c;
+
             while ((c = character()) != quoteEnd && hasMore() && positionInc() || character(position + 1) == quoteEnd && hasMore(1) && positionInc(2))
                 sb.append(c);
+
+            s = sb.toString();
         }
         else {
             if (allowPartAsStart ? isIdentifierPart() : isIdentifierStart()) {
-                do {
-                    sb.append(character());
+                do
                     positionInc();
-                }
                 while (isIdentifierPart() && hasMore());
             }
+
+            s = substring(start, position());
         }
 
         if (position() == start)
             return null;
 
-        String name = normaliseNameCase(configuration(), sb.toString(), quoted, locale);
+        String name = normaliseNameCase(configuration(), s, quoted, locale);
 
         if (quoted) {
             if (character() != quoteEnd)
-                throw exception("Quoted identifier must terminate in " + quoteEnd + ". Start of identifier: " + StringUtils.abbreviate(sb.toString(), 30));
+                throw exception("Quoted identifier must terminate in " + quoteEnd + ". Start of identifier: " + StringUtils.abbreviate(s, 30));
 
             positionInc();
             parseWhitespaceIf();

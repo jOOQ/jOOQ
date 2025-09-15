@@ -3954,14 +3954,19 @@ final class Tools {
 
 
 
-    static final Lazy<Configuration> CONFIG          = Lazy.of(() -> new DefaultConfiguration());
-    static final Lazy<Configuration> CONFIG_UNQUOTED = Lazy.of(() -> {
-        DefaultConfiguration c = new DefaultConfiguration();
+    static final Lazy<Configuration> CONFIG           = Lazy.of(() -> new InternalConfiguration());
+    static final Lazy<Configuration> CONFIG_UNQUOTED  = Lazy.of(() -> {
+        DefaultConfiguration c = new InternalConfiguration();
         c.settings().setRenderQuotedNames(RenderQuotedNames.NEVER);
         return c;
     });
+    static final Lazy<Configuration> CONFIG_FORMATTED = Lazy.of(() -> {
+        DefaultConfiguration c = new InternalConfiguration();
+        c.settings().setRenderFormatted(true);
+        return c;
+    });
 
-    static final Lazy<DSLContext>    CTX             = Lazy.of(() -> DSL.using(CONFIG.get()));
+    static final Lazy<DSLContext>    CTX              = Lazy.of(() -> DSL.using(CONFIG.get()));
 
     /**
      * A possibly inefficient but stable way to generate an alias for any

@@ -39,6 +39,7 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.Tools.CONFIG;
+import static org.jooq.impl.Tools.CONFIG_FORMATTED;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -193,7 +194,12 @@ abstract class AbstractQueryPart implements QueryPartInternal {
 
             // [#8355] Subtypes may have null configuration
             Configuration configuration = Tools.configuration(configuration());
-            return create(configuration.deriveSettings(s -> s.withRenderFormatted(true))).renderInlined(this);
+
+            // [#19059] Avoid Configuration::derive and its internal allocations if we can, in case this is called in a hot loop.
+            if (configuration instanceof InternalConfiguration)
+                return create(CONFIG_FORMATTED.get()).renderInlined(this);
+            else
+                return create(configuration.deriveSettings(s -> s.withRenderFormatted(true))).renderInlined(this);
         }
         catch (SQLDialectNotSupportedException e) {
             return "[ ... " + e.getMessage() + " ... ]";

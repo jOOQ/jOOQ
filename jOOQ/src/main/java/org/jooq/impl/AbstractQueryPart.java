@@ -40,6 +40,7 @@ package org.jooq.impl;
 
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.Tools.CONFIG;
+import static org.jooq.impl.Tools.CONFIG_FORMATTED;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -194,7 +195,12 @@ abstract class AbstractQueryPart implements QueryPartInternal {
 
         // [#8355] Subtypes may have null configuration
         Configuration configuration = Tools.configuration(configuration());
-        return toString0(create(configuration.deriveSettings(s -> s.withRenderFormatted(true))).renderContext().paramType(INLINED));
+
+        // [#19059] Avoid Configuration::derive and its internal allocations if we can, in case this is called in a hot loop.
+        if (configuration instanceof InternalConfiguration)
+            return toString0(create(CONFIG_FORMATTED.get()).renderContext().paramType(INLINED));
+        else
+            return toString0(create(configuration.deriveSettings(s -> s.withRenderFormatted(true))).renderContext().paramType(INLINED));
     }
 
     String toString0(RenderContext ctx) {

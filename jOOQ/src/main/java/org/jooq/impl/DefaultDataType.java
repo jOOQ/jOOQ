@@ -351,6 +351,10 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
         this(dialect, null, type, systemName(typeName), typeName, castTypeName, null, null, null, Nullability.DEFAULT, null);
     }
 
+    DefaultDataType(SQLDialect dialect, Class<T> type, Binding<?, T> binding, String typeName, String castTypeName) {
+        this(dialect, null, type, binding, systemName(typeName), typeName, castTypeName, null, null, null, Nullability.DEFAULT, null);
+    }
+
     DefaultDataType(SQLDialect dialect, Class<T> type, String typeName, Nullability nullability) {
         this(dialect, null, type, systemName(typeName), typeName, typeName, null, null, null, nullability, null);
     }

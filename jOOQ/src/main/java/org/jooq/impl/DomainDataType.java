@@ -40,6 +40,7 @@ package org.jooq.impl;
 import org.jooq.CharacterSet;
 import org.jooq.Collation;
 import org.jooq.Configuration;
+import org.jooq.ConverterContext;
 import org.jooq.DataType;
 import org.jooq.Domain;
 import org.jooq.Field;
@@ -123,6 +124,14 @@ final class DomainDataType<T> extends DefaultDataType<T> {
                 newDefaultValue
             )
         );
+    }
+
+    @Override
+    final T convert(Object object, ConverterContext cc) {
+        if (baseType instanceof AbstractDataType<T> a)
+            return a.convert(object, cc);
+        else
+            return super.convert(object, cc);
     }
 
     @Override

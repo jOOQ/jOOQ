@@ -95,11 +95,13 @@ final class XMLHandler<R extends Record> extends DefaultHandler {
         boolean                  inResult;
         boolean                  inFields;
         int                      inRecord;
+        boolean                  nilRecord;
         boolean                  inColumn;
         boolean                  inElement;
         Result<R>                result;
         final List<Field<?>>     fields;
         final List<Object>       values;
+        Object                   element;
         List<Object>             elements;
         int                      column;
 
@@ -161,7 +163,7 @@ final class XMLHandler<R extends Record> extends DefaultHandler {
         this.s = new State<>(ctx, row, recordType);
     }
 
-    Result<R> read(String string) {
+    final Result<R> read(String string) {
         try {
             SAXParserFactory factory = SAXParserFactory.newInstance();
 
@@ -215,7 +217,7 @@ final class XMLHandler<R extends Record> extends DefaultHandler {
         else if (s.inColumn && "result".equalsIgnoreCase(qName)) {
             Field<?> f = s.row.field(s.column);
 
-            if (f.getDataType().isMultiset()) {
+            if (isMultisetOrArrayOfRecords(f)) {
                 states.push(s);
                 s = new State<>(ctx, (AbstractRow<R>) f.getDataType().getRow(), (Class<R>) f.getDataType().getRecordType());
                 s.inResult = true;
@@ -239,6 +241,7 @@ final class XMLHandler<R extends Record> extends DefaultHandler {
         else if (s.inResult && "records".equalsIgnoreCase(qName)) {}
         else if (s.inResult && "record".equalsIgnoreCase(qName)) {
             s.inRecord++;
+            s.nilRecord = isNil(attributes);
 
             if (s.inColumn) {
                 Field<?> f = s.row.field(s.column);
@@ -272,18 +275,34 @@ final class XMLHandler<R extends Record> extends DefaultHandler {
 
             s.inColumn = true;
 
+            Field<?> f = s.fields.get(s.column);
             DataType<?> t = s.fields.get(s.column).getDataType();
 
             // [#13181] String NULL and '' values cannot be distinguished without xsi:nil
-            if (t.isString() && !isNil(attributes))
+            if (t.isString() && !isNil(attributes)) {
                 s.values.add("");
-            else if (t.isArray() && !isNil(attributes))
+            }
+            else if (t.isArray() && !isArrayOfRecords(f) && !isNil(attributes)) {
+                s.values.add(null);
                 s.elements = new ArrayList<>();
+            }
 
             // [#18726] UDTs can be NULL, unlike nested records, which currently cannot be NULL yet.
             else if (!t.isMultiset() && !t.isRecord() || t.isUDTRecord())
                 s.values.add(null);
         }
+    }
+
+    private final boolean isMultisetOrArrayOfRecords(Field<?> f) {
+        return isMultiset(f) || isArrayOfRecords(f);
+    }
+
+    private final boolean isMultiset(Field<?> f) {
+        return f.getDataType().isMultiset();
+    }
+
+    private final boolean isArrayOfRecords(Field<?> f) {
+        return f.getDataType().isArray() && f.getDataType().getArrayComponentDataType().isQualifiedRecord();
     }
 
     private final boolean isNil(Attributes attributes) {
@@ -316,14 +335,18 @@ final class XMLHandler<R extends Record> extends DefaultHandler {
             s.inRecord--;
 
             initResult();
-            s.result.add(newRecord(true, ctx.configuration(), s.recordType, s.row).operate(s::into));
+            if (s.nilRecord)
+                s.result.add(null);
+            else
+                s.result.add(newRecord(true, ctx.configuration(), s.recordType, s.row).operate(s::into));
+
             s.values.clear();
             s.column = 0;
         }
         else if (s.inColumn && "element".equalsIgnoreCase(qName) && s.elements != null) {
             s.inElement = false;
-            s.elements.add(s.values.get(s.column));
-            s.values.remove(s.column);
+            s.elements.add(s.element);
+            s.element = null;
         }
 
         else x: {
@@ -332,7 +355,9 @@ final class XMLHandler<R extends Record> extends DefaultHandler {
                 Field<?> f = peek.row.field(peek.column);
 
                 if ("record".equalsIgnoreCase(qName) && f.getDataType().isRecord()) {
-                    R r = newRecord(true, ctx.configuration(), s.recordType, s.row).operate(s::into);
+                    R r = s.nilRecord
+                        ? null
+                        : newRecord(true, ctx.configuration(), s.recordType, s.row).operate(s::into);
 
                     // [#18726] UDTs can be NULL, unlike nested records, which currently cannot be NULL yet.
                     if (f.getDataType().isUDTRecord())
@@ -344,15 +369,21 @@ final class XMLHandler<R extends Record> extends DefaultHandler {
                     s.inRecord--;
                     break x;
                 }
-                else if ("result".equalsIgnoreCase(qName) && f.getDataType().isMultiset()) {
+                else if ("result".equalsIgnoreCase(qName) && isMultisetOrArrayOfRecords(f)) {
                     initResult();
-                    peek.values.add(s.result);
+
+                    if (isMultiset(f))
+                        peek.values.add(s.result);
+                    else
+                        peek.values.set(peek.values.size() - 1, s.result);
+
                     s = states.pop();
                     break x;
                 }
             }
-            else if (s.elements != null) {
-                s.values.add(s.elements);
+
+            if (s.elements != null) {
+                s.values.set(s.values.size() - 1, s.elements);
                 s.elements = null;
             }
 
@@ -362,7 +393,7 @@ final class XMLHandler<R extends Record> extends DefaultHandler {
     }
 
     @SuppressWarnings("unchecked")
-    private void initResult() {
+    private final void initResult() {
         if (s.result == null) {
             if (s.row == null)
 
@@ -395,10 +426,13 @@ final class XMLHandler<R extends Record> extends DefaultHandler {
             String value = new String(ch, start, length);
             Object old;
 
-            // [#13872] If we're reading an array (s.inElement), the element
-            //          content is still appended to s.values for now, until
-            //          "element" is finished
-            if (s.values.size() == s.column)
+            if (s.inElement) {
+                if (s.element == null)
+                    s.element = value;
+                else
+                    s.element = s.element + value;
+            }
+            else if (s.values.size() == s.column)
                 s.values.add(value);
             else if ((old = s.values.get(s.column)) == null)
                 s.values.set(s.column, value);

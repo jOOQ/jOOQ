@@ -121,6 +121,7 @@ final class Names {
     static final Name N_DUAL                        = systemName("dual");
     static final Name N_ELEMENT_AT                  = systemName("element_at");
     static final Name N_ELT                         = systemName("elt");
+    static final Name N_ELEMENT                     = systemName("element");
     static final Name N_ENCODE                      = systemName("encode");
     static final Name N_EVERY                       = systemName("every");
     static final Name N_EXPLODE                     = systemName("explode");
@@ -223,6 +224,7 @@ final class Names {
     static final Name N_NULL                        = systemName("null");
     static final Name N_NUMBERS                     = systemName("numbers");
     static final Name N_NVL2                        = systemName("nvl2");
+    static final Name N_O                           = systemName("o");
     static final Name N_OBJECT_AGG                  = systemName("object_agg");
     static final Name N_OBJECT_CONSTRUCT            = systemName("object_construct");
     static final Name N_OBJECT_CONSTRUCT_KEEP_NULL  = systemName("object_construct_keep_null");

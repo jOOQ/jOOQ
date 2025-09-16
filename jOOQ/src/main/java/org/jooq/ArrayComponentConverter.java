@@ -39,6 +39,7 @@ package org.jooq;
 
 import java.lang.reflect.Array;
 
+import org.jooq.Converters.UnknownType;
 import org.jooq.impl.AbstractContextConverter;
 
 /**
@@ -50,9 +51,15 @@ final class ArrayComponentConverter<T, U> extends AbstractContextConverter<T, U>
     final ContextConverter<T[], U[]> converter;
 
     public ArrayComponentConverter(ContextConverter<T[], U[]> converter) {
-        super((Class<T>) converter.fromType().getComponentType(), (Class<U>) converter.toType().getComponentType());
+        super((Class<T>) componentType(converter.fromType()), (Class<U>) componentType(converter.toType()));
 
         this.converter = converter;
+    }
+
+    static final Class<?> componentType(Class<?> type) {
+        return type == UnknownType.class
+             ? UnknownType.class
+             : type.getComponentType();
     }
 
     @Override

@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
 import static java.util.Arrays.asList;
+import static java.util.Collections.emptyList;
 // ...
 // ...
 // ...
@@ -50,16 +51,22 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.TRINO;
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.impl.DSL.arrayAgg;
+import static org.jooq.impl.DSL.arrayGet;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.jsonArray;
+import static org.jooq.impl.DSL.jsonArrayAgg;
 import static org.jooq.impl.DSL.jsonEntry;
 import static org.jooq.impl.DSL.jsonbArray;
+import static org.jooq.impl.DSL.jsonbArrayAgg;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectFrom;
 // ...
 // ...
+import static org.jooq.impl.DSL.table;
+import static org.jooq.impl.DSL.unnest;
+import static org.jooq.impl.DSL.values;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.DSL.xmlagg;
 import static org.jooq.impl.DSL.xmlattributes;
@@ -70,14 +77,18 @@ import static org.jooq.impl.JSONArrayAgg.patchOracleArrayAggBug;
 import static org.jooq.impl.Keywords.K_ARRAY;
 import static org.jooq.impl.Keywords.K_MULTISET;
 import static org.jooq.impl.Names.NQ_RESULT;
+import static org.jooq.impl.Names.N_ELEMENT;
 import static org.jooq.impl.Names.N_HEX;
 import static org.jooq.impl.Names.N_JSON_QUERY;
 import static org.jooq.impl.Names.N_MULTISET;
+import static org.jooq.impl.Names.N_O;
 import static org.jooq.impl.Names.N_RECORD;
 import static org.jooq.impl.Names.N_RESULT;
 import static org.jooq.impl.Names.N_T;
+import static org.jooq.impl.Names.N_U;
 import static org.jooq.impl.SQLDataType.BLOB;
 import static org.jooq.impl.SQLDataType.CLOB;
+import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.JSON;
 import static org.jooq.impl.SQLDataType.JSONB;
 import static org.jooq.impl.SQLDataType.VARCHAR;
@@ -97,16 +108,21 @@ import static org.jooq.impl.Tools.BooleanDataKey.DATA_MULTISET_CONTENT;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 import org.jooq.AggregateFilterStep;
 import org.jooq.ArrayAggOrderByStep;
+import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Fields;
+import org.jooq.Formatter;
 import org.jooq.JSON;
 import org.jooq.JSONArrayAggOrderByStep;
 import org.jooq.JSONArrayAggReturningStep;
@@ -121,7 +137,6 @@ import org.jooq.Name;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Record1;
-import org.jooq.RecordQualifier;
 // ...
 import org.jooq.Result;
 import org.jooq.SQLDialect;
@@ -134,8 +149,6 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableLike;
 // ...
-import org.jooq.UDT;
-import org.jooq.UDTField;
 import org.jooq.UDTPathField;
 import org.jooq.XML;
 import org.jooq.XMLAggOrderByStep;
@@ -599,9 +612,25 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
     @SuppressWarnings("unchecked")
     static final Field<?> castForJSON(Context<?> ctx, Field<?> field) {
         DataType<?> t = field.getDataType();
+        Formatter f;
+
+        if ((f = field.getBinding().formatter()) != null) {
+            DefaultFormatterContext fctx = new DefaultFormatterContext(ctx, true, field);
+
+            if (field.getDataType().getFromType() == JSONB.class)
+                f.formatJSON(fctx);
+            else
+                f.formatJSONB(fctx);
+
+            return fctx.formatted;
+        }
+
+        else if (field.getDataType().isUDTRecord() || field.getDataType().isArray()) {
+            return toJSONArrays(ctx, field);
+        }
 
         // [#10880] [#17067] Many dialects don't support NaN and other float values in JSON documents as numbers
-        if (t.isFloat()) {
+        else if (t.isFloat()) {
             switch (ctx.family()) {
 
                 case H2:
@@ -643,7 +672,15 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
 
     @SuppressWarnings("unchecked")
     static final Field<?> castForXML(Context<?> ctx, Field<?> field) {
-        if (field.getDataType().isUDTRecord()) {
+        Formatter f;
+
+        if ((f = field.getBinding().formatter()) != null) {
+            DefaultFormatterContext fctx = new DefaultFormatterContext(ctx, true, field);
+            f.formatXML(fctx);
+            return fctx.formatted;
+        }
+
+        else if (field.getDataType().isUDTRecord() || field.getDataType().isArray()) {
             return toXMLElements(ctx, field);
         }
 
@@ -664,56 +701,276 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
         return field;
     }
 
-    private static final Field<?> toXMLElements(Context<?> ctx, Field<?> field) {
-        if (field.getDataType() instanceof UDTDataType<?> ut) {
+    private static final Field<?> transformNestedTypes(
+        Field<?> field,
+        Function<? super UDTDataType<?>, ? extends Field<?>> arrayOfUDT,
+        Supplier<? extends Field<?>> arrayOfFormatted,
+        Supplier<? extends Field<?>> arrayOfUnformatted,
+        BiFunction<? super UDTDataType<?>, ? super UDTPathField<?, ?, ?>, ? extends Field<?>> udt
+    ) {
+        DataType<?> t = field.getDataType();
+
+        if (t.isArray()) {
+
+            // [#19067] This currently applies to arrays of UDTs only. Let's not complicate things for ordinary arrays.
+            if (ConvertedDataType.delegate(t.getArrayComponentDataType()) instanceof UDTDataType<?> ut)
+                return arrayOfUDT.apply(ut);
+            else if (t.getArrayComponentDataType().getBinding().formatter() != null)
+                return arrayOfFormatted.get();
+            else
+                return arrayOfUnformatted.get();
+        }
+        else if (ConvertedDataType.delegate(t) instanceof UDTDataType<?> ut) {
             UDTPathField<?, ?, ?> up;
 
             if (field instanceof UDTPathField<?, ?, ?> u)
                 up = u;
             else if (field instanceof TableField<?, ?> tf)
-                up = new UDTPathFieldImpl<>(field.getUnqualifiedName(), field.getDataType(), tf.getTable(), ut.udt, null);
+                up = new UDTPathFieldImpl<>(field.getUnqualifiedName(), t, tf.getTable(), ut.udt, null);
             else
                 up = null;
 
-            if (up != null) {
-                return when(field.isNotNull(), xmlelement(N_RECORD,
-                    map(field.getDataType().getRow().fields(),
-                        (f, i) -> wrapXmlelement(
-                            ctx,
-                            toXMLElements(ctx, new UDTPathFieldImpl<>(
-                                f.getUnqualifiedName(), f.getDataType(), up.asQualifier(), ut.udt, null
-                            )),
-                            fieldNameString(i)
-                        )
-                    )
-                ));
-            }
+            if (up != null)
+                return udt.apply(ut, up);
         }
 
         return field;
     }
 
-    static final XMLAggOrderByStep<XML> xmlaggEmulation(Context<?> ctx, Fields fields, boolean agg) {
-        return xmlagg(
-            xmlelement(N_RECORD,
-                map(fields.fields(), (f, i) -> {
-                    Field<?> v = castForXML(ctx, agg ? f : DSL.field(N_T.append(fieldName(i)), f.getDataType()));
-                    String n = fieldNameString(i);
-                    return wrapXmlelement(ctx, v, n);
-                })
+    private static final JSONArrayAggOrderByStep<?> jsonxArrayAgg(Context<?> ctx, Field<?> field) {
+        switch (emulateMultiset(ctx.configuration())) {
+            case JSON:
+                return jsonArrayAgg(field);
+            case JSONB:
+                return jsonbArrayAgg(field);
+            default:
+                throw new IllegalStateException();
+        }
+    }
+
+    private static final JSONArrayNullStep<?> jsonxArray(Context<?> ctx, List<? extends Field<?>> fields) {
+        switch (emulateMultiset(ctx.configuration())) {
+            case JSON:
+                return DSL.jsonArray(fields);
+            case JSONB:
+                return DSL.jsonbArray(fields);
+            default:
+                throw new IllegalStateException();
+        }
+    }
+
+    private static final Field<?> toJSONArrays(Context<?> ctx, Field<?> field) {
+        return transformNestedTypes(
+            field,
+            toJSONArrayOfUDTs(ctx, field),
+            toJSONArrayOfFormatted(ctx, field),
+            () -> field,
+            toJSONUDT(ctx, field)
+        );
+    }
+
+    private static final Function<? super UDTDataType<?>, ? extends Field<?>> toJSONArrayOfUDTs(Context<?> ctx, Field<?> field) {
+        return ut -> {
+            DataType<Object[]> t = (DataType<Object[]>) field.getDataType();
+            Field<Integer> o = DSL.field(N_O, INTEGER);
+
+            return when(udtNotNull(ctx, field),
+                DSL.field(
+                    select(DSL.coalesce(
+                        jsonxArrayAgg(ctx,
+
+                            // [#19067] Both NULL::UDT and (NULL, NULL)::UDT unnest as (NULL, NULL), so we need to distinguish
+                            //          the cases a bit more laboriously
+                            when(
+                                udtNotNull(ctx, arrayGet(DSL.field(N_T, t), o)),
+                                jsonxArray(ctx, map(ut.getRow().fields(),
+                                    (f, i) -> castForJSON(ctx, f)
+                                ))
+                            )
+                        ).orderBy(o),
+                        jsonxArray(ctx, emptyList())
+                    ))
+                    .from(
+                        values(row(field)).as(N_T, N_T),
+                        unnest(DSL.field(N_T, t))
+                            .withOrdinality()
+                            .as(table(N_U), Tools.concat(asList(ut.getRow().fields()), asList(o)))
+                    )
+                )
+            );
+        };
+    }
+
+    private static final Supplier<Field<?>> toJSONArrayOfFormatted(Context<?> ctx, Field<?> field) {
+        return () -> when(field.isNotNull(),
+            DSL.field(
+                select(jsonxArrayAgg(ctx,
+                    when(
+                        DSL.field(N_T).isNotNull(),
+                        castForJSON(ctx, DSL.field(N_T, field.getDataType().getArrayComponentDataType()))
+                    )
+                ))
+                .from(unnest(field).as(N_T, N_T))
             )
         );
     }
 
-    static final Field<XML> wrapXmlelement(Context<?> ctx, Field<?> v, String n) {
-        DataType<?> t = v.getDataType();
+    private static final BiFunction<? super UDTDataType<?>, ? super UDTPathField<?, ?, ?>, ? extends Field<?>> toJSONUDT(
+        Context<?> ctx,
+        Field<?> field
+    ) {
+        return (ut, up) -> when(udtNotNull(ctx, field), jsonArray(
+            map(field.getDataType().getRow().fields(),
+                (f, i) -> castForJSON(ctx,
+                    new UDTPathFieldImpl<>(
+                        f.getUnqualifiedName(), f.getDataType(), up.asQualifier(), ut.udt, null
+                    )
+                )
+            )
+        ));
+    }
+
+    private static final Field<?> toXMLElements(Context<?> ctx, Field<?> field) {
+        return transformNestedTypes(
+            field,
+            toXMLArrayOfUDT(ctx, field),
+            toXMLElementsArrayOfFormatted(ctx, field),
+            toXMLElementsArrayOfFormatted(ctx, field),
+            toXMLUDT(ctx, field)
+        );
+    }
+
+    @SuppressWarnings("unchecked")
+    private static final Function<? super UDTDataType<?>, ? extends Field<?>> toXMLArrayOfUDT(Context<?> ctx, Field<?> field) {
+        return ut -> {
+            DataType<Object[]> t = (DataType<Object[]>) field.getDataType();
+            Field<Integer> o = DSL.field(N_O, INTEGER);
+
+            return when(udtNotNull(ctx, field),
+                DSL.field(
+                    select(xmlelement(nResult(ctx), xmlagg(
+
+                        // [#19067] Both NULL::UDT and (NULL, NULL)::UDT unnest as (NULL, NULL), so we need to distinguish
+                        //          the cases a bit more laboriously
+                        when(
+                            udtNotNull(ctx, arrayGet(DSL.field(N_T, t), o)),
+                            xmlelement(N_RECORD, map(ut.getRow().fields(),
+                                (f, i) -> wrapXmlelement(
+                                    ctx,
+                                    fieldName(i),
+                                    castForXML(ctx, f),
+                                    f
+                                )
+                            ))
+                        )
+                        .else_(xmlelement(N_RECORD, xmlattributes(inline("true").as(xsiNil(ctx)))))
+                    ).orderBy(o)))
+                    .from(
+                        values(row(field)).as(N_T, N_T),
+                        unnest(DSL.field(N_T, t))
+                            .withOrdinality()
+                            .as(table(N_U), Tools.concat(asList(ut.getRow().fields()), asList(o)))
+                    )
+                )
+            );
+        };
+    }
+
+    private static final BiFunction<? super UDTDataType<?>, ? super UDTPathField<?, ?, ?>, ? extends Field<?>> toXMLUDT(
+        Context<?> ctx,
+        Field<?> field
+    ) {
+        return (ut, up) -> when(udtNotNull(ctx, field), xmlelement(N_RECORD,
+            map(field.getDataType().getRow().fields(),
+                (f, i) -> {
+                    Field<?> up2 = new UDTPathFieldImpl<>(
+                        f.getUnqualifiedName(), f.getDataType(), up.asQualifier(), ut.udt, null
+                    );
+
+                    return wrapXmlelement(
+                        ctx,
+                        fieldName(i),
+                        castForXML(ctx, up2),
+                        up2
+                    );
+                }
+            )
+        ));
+    }
+
+    private static final Supplier<Field<?>> toXMLElementsArrayOfFormatted(Context<?> ctx, Field<?> field) {
+        return () -> when(field.isNotNull(),
+            DSL.field(
+                select(xmlagg(
+                    when(
+                        DSL.field(N_T).isNotNull(),
+                        wrapXmlelement(
+                            ctx,
+                            N_ELEMENT,
+                            castForXML(ctx, DSL.field(N_T, field.getDataType().getArrayComponentDataType()))
+                        )
+                    )
+                    .else_(xmlelement(N_ELEMENT, xmlattributes(inline("true").as(xsiNil(ctx)))))
+                ))
+                .from(unnest(field).as(N_T, N_T))
+            )
+        );
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    private static final Condition udtNotNull(Context<?> ctx, Field<?> field) {
+
+        // [#13872] UDTs are rows and (NULL, NULL) IS NULL is TRUE but (NULL, NULL) IS DISTINCT FROM NULL is FALSE.
+        switch (ctx.family()) {
+
+
+            case POSTGRES:
+            case YUGABYTEDB:
+                return field.isDistinctFrom((Field) inline(null, field.getDataType()));
+
+            default:
+                return field.isNotNull();
+        }
+    }
+
+    static final XMLAggOrderByStep<XML> xmlaggEmulation(Context<?> ctx, Fields fields, boolean agg) {
+        return xmlagg(
+            xmlelement(N_RECORD,
+                map(fields.fields(), (f, i) -> wrapXmlelement(
+                    ctx,
+                    fieldName(i),
+                    castForXML(ctx, agg ? f : DSL.field(N_T.append(fieldName(i)), f.getDataType())),
+                    f
+                ))
+            )
+        );
+    }
+
+    static final Field<XML> wrapXmlelement(
+        Context<?> ctx,
+        Name name,
+        Field<?> xmlContent
+    ) {
+        return wrapXmlelement(ctx, name, xmlContent, xmlContent);
+    }
+
+    static final Field<XML> wrapXmlelement(
+        Context<?> ctx,
+        Name name,
+        Field<?> xmlContent,
+        Field<?> nullCheck
+    ) {
+        DataType<?> t1 = xmlContent.getDataType();
+        DataType<?> t2 = nullCheck.getDataType();
 
         // [#13181] We must make the '' vs NULL distinction explicit in XML
         // [#13872] Same with ARRAY[] vs NULL
-        if (t.isString() || t.isArray())
-            return xmlelement(n, xmlattributes(when(v.isNull(), inline("true")).as(xsiNil(ctx))), v);
+        if (t1.isString() || t1.isArray() ||
+            t2.isString() || t2.isArray()
+        )
+            return xmlelement(name, xmlattributes(when(nullCheck.isNull(), inline("true")).as(xsiNil(ctx))), xmlContent);
         else
-            return xmlelement(n, v);
+            return xmlelement(name, xmlContent);
     }
 
     static final ArrayAggOrderByStep<?> arrayAggEmulation(Fields fields, boolean agg) {

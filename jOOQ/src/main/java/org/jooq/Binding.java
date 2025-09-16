@@ -47,12 +47,14 @@ import java.sql.SQLOutput;
 import java.sql.Timestamp;
 import java.util.function.Consumer;
 
+import org.jooq.conf.NestedCollectionEmulation;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultBinding;
 import org.jooq.impl.SQLDataType;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * An SPI (Service Provider Interface) that exposes all low-level interactions
@@ -126,6 +128,51 @@ public interface Binding<T, U> extends Serializable {
      */
     @NotNull
     Converter<T, U> converter();
+
+    /**
+     * Get an optional {@link Formatter} implementation, instructing jOOQ on how
+     * to embed the user type in {@link SQLDataType#JSON},
+     * {@link SQLDataType#JSONB}, and {@link SQLDataType#XML} contexts.
+     * <p>
+     * This may be necessary when embedding user-defined types in
+     * {@link DSL#multiset(TableLike)} queries, when the user-defined type
+     * serialises differently in a {@link NestedCollectionEmulation#JSONB}
+     * emulation than standalone, for example.
+     * <p>
+     * A <code>null</code> formatter will have no effect on generated SQL.
+     * <p>
+     * <strong>Note:</strong> while it is possible to implement a custom
+     * formatter for array types, it is usually simpler to just delegate to the
+     * {@link #arrayComponentBinding()} for this, and let jOOQ's internals
+     * handle the intricate mapping of generic arrays to XML or JSON.
+     */
+    @Nullable
+    default Formatter formatter() {
+        return null;
+    }
+
+    /**
+     * Get an array binding for this binding, or <code>null</code> if no such
+     * array binding is available.
+     */
+    @Nullable
+    default Binding<T[], U[]> arrayBinding() {
+        return null;
+    }
+
+    /**
+     * Get an array component binding for this binding, or <code>null</code> if
+     * this binding isn't for an array type.
+     * <p>
+     * Implementations must ensure that the resulting type is
+     * <code>Binding&lt;X, Y></code>, if this Binding's type variables resolve
+     * to <code>T = X[]</code> and <code>U = Y[]</code>, as this cannot be
+     * enforced by the Java compiler.
+     */
+    @Nullable
+    default Binding<?, ?> arrayComponentBinding() {
+        return null;
+    }
 
     /**
      * Generate SQL code for the bind variable.

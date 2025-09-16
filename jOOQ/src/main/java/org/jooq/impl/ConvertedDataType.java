@@ -37,8 +37,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Internal.converterContext;
-
 import java.util.List;
 import java.util.Map;
 
@@ -46,6 +44,7 @@ import org.jooq.Binding;
 import org.jooq.CharacterSet;
 import org.jooq.Collation;
 import org.jooq.Configuration;
+import org.jooq.ContextConverter;
 import org.jooq.Converter;
 import org.jooq.ConverterContext;
 import org.jooq.Converters;
@@ -57,7 +56,6 @@ import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
-import org.jooq.ContextConverter;
 import org.jooq.exception.DataTypeException;
 import org.jooq.impl.DefaultBinding.InternalBinding;
 import org.jooq.impl.QOM.GenerationLocation;
@@ -147,17 +145,23 @@ final class ConvertedDataType<T, U> extends AbstractDataTypeX<U> {
 
     @Override
     public final DataType<U[]> getArrayDataType() {
-        if (getBinding() instanceof InternalBinding)
+        if (binding.arrayBinding() != null)
+            return delegate.getArrayDataType().asConvertedDataType(binding.arrayBinding());
+        else if (getBinding() instanceof InternalBinding)
             return delegate.getArrayDataType().asConvertedDataType(Converters.forArrays(binding.converter()));
         else
-            throw new DataTypeException("Cannot create array data types from custom data types with custom bindings.");
+            throw new DataTypeException("Cannot create array data types from custom data types with custom bindings. Implement Binding::arrayBinding");
     }
 
     @Override
     public final DataType<?> getArrayComponentDataType() {
         DataType<?> d = delegate.getArrayComponentDataType();
 
-        return d == null ? null : d.asConvertedDataType(Converters.forArrayComponents((Converter) binding.converter()));
+        return d == null
+             ? null
+             : binding.arrayComponentBinding() != null
+             ? d.asConvertedDataType((Binding) binding.arrayComponentBinding())
+             : d.asConvertedDataType(Converters.forArrayComponents((Converter) binding.converter()));
     }
 
     @Override

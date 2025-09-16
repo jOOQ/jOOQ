@@ -41,7 +41,6 @@ import static org.jooq.impl.Tools.CONFIG;
 
 import java.lang.reflect.Array;
 import java.util.Collection;
-import java.util.List;
 
 import org.jooq.CharacterSet;
 import org.jooq.Collation;
@@ -67,7 +66,13 @@ final class ArrayDataType<T> extends DefaultDataType<T[]> {
     final DataType<T> elementType;
 
     public ArrayDataType(DataType<T> elementType) {
-        super(null, elementType.getArrayType(), elementType.getTypeName() + " array", elementType.getCastTypeName() + " array");
+        super(
+            null,
+            elementType.getArrayType(),
+            elementType.getBinding().arrayBinding(),
+            elementType.getTypeName() + " array",
+            elementType.getCastTypeName() + " array"
+        );
 
         this.elementType = elementType;
     }

@@ -248,6 +248,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.OffsetDateTime;
 import java.time.OffsetTime;
+import java.util.AbstractList;
 import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -6888,6 +6889,21 @@ final class Tools {
 
     static final boolean hasEmbeddedFields(Iterable<? extends Field<?>> fields) {
         return anyMatch(fields, f -> f.getDataType().isEmbeddable());
+    }
+
+    static final <E> List<E> concat(List<E> l1, List<E> l2) {
+        return new AbstractList<E>() {
+            @Override
+            public int size() {
+                return l1.size() + l2.size();
+            }
+
+            @Override
+            public E get(int index) {
+                int size = l1.size();
+                return index < size ? l1.get(index) : l2.get(index - size);
+            }
+        };
     }
 
     static final <E> Iterable<E> concat(Iterable<E> i1, Iterable<E> i2) {

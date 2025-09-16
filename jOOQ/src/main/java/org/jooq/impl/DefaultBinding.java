@@ -272,6 +272,8 @@ import org.jooq.Decfloat;
 import org.jooq.EnumType;
 import org.jooq.ExecuteScope;
 import org.jooq.Field;
+import org.jooq.Formatter;
+import org.jooq.FormatterContext;
 import org.jooq.Geography;
 import org.jooq.Geometry;
 import org.jooq.JSON;
@@ -322,6 +324,8 @@ import org.jooq.types.UShort;
 import org.jooq.types.YearToMonth;
 import org.jooq.types.YearToSecond;
 import org.jooq.util.postgres.PostgresUtils;
+
+import org.jetbrains.annotations.Nullable;
 
 // ...
 // ...

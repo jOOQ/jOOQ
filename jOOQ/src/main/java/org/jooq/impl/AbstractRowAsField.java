@@ -51,6 +51,7 @@ import static org.jooq.impl.Multiset.wrapXmlelement;
 import static org.jooq.impl.Names.N_RECORD;
 import static org.jooq.impl.RowAsField.NO_NATIVE_SUPPORT;
 import static org.jooq.impl.Tools.emulateMultiset;
+import static org.jooq.impl.Tools.fieldName;
 import static org.jooq.impl.Tools.fieldNameString;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.row0;
@@ -234,7 +235,7 @@ implements
 
                         default:
                             ctx.visit(alias(ctx, alias, xmlelement(N_RECORD,
-                                map(row.fields(), (f, i) -> wrapXmlelement(ctx, f, fieldNameString(i)))
+                                map(row.fields(), (f, i) -> wrapXmlelement(ctx, fieldName(i), f))
                             )));
 
                             break;

@@ -37,6 +37,7 @@
  */
 package org.jooq.postgres.extensions.bindings;
 
+import org.jooq.Binding;
 import org.jooq.Converter;
 import org.jooq.postgres.extensions.converters.OffsetDateTimeRangeConverter;
 import org.jooq.postgres.extensions.types.OffsetDateTimeRange;
@@ -58,5 +59,10 @@ public class OffsetDateTimeRangeArrayBinding extends AbstractPostgresArrayBindin
     @Override
     protected String castType() {
         return "tstzrange[]";
+    }
+
+    @Override
+    public Binding<?, ?> arrayComponentBinding() {
+        return new OffsetDateTimeRangeBinding();
     }
 }

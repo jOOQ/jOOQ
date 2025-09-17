@@ -99,9 +99,12 @@ import static org.jooq.impl.Convert.convert;
 import static org.jooq.impl.Convert.patchIso8601Timestamp;
 import static org.jooq.impl.DSL.cast;
 import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.log;
 import static org.jooq.impl.DSL.name;
+// ...
+// ...
 import static org.jooq.impl.DSL.using;
 import static org.jooq.impl.DefaultBinding.DefaultDoubleBinding.REQUIRES_LITERAL_CAST;
 import static org.jooq.impl.DefaultBinding.DefaultDoubleBinding.infinity;
@@ -141,6 +144,7 @@ import static org.jooq.impl.Keywords.K_TRUE;
 import static org.jooq.impl.Keywords.K_YEAR_TO_DAY;
 import static org.jooq.impl.Keywords.K_YEAR_TO_FRACTION;
 import static org.jooq.impl.Names.N_BYTEA;
+import static org.jooq.impl.Names.N_HEX;
 import static org.jooq.impl.Names.N_JSON_PARSE;
 import static org.jooq.impl.Names.N_PARSE_JSON;
 import static org.jooq.impl.Names.N_ST_GEOMFROMTEXT;
@@ -151,6 +155,7 @@ import static org.jooq.impl.SQLDataType.BIGINT;
 import static org.jooq.impl.SQLDataType.BLOB;
 import static org.jooq.impl.SQLDataType.BOOLEAN;
 import static org.jooq.impl.SQLDataType.CHAR;
+import static org.jooq.impl.SQLDataType.CLOB;
 import static org.jooq.impl.SQLDataType.DATE;
 import static org.jooq.impl.SQLDataType.DECFLOAT;
 import static org.jooq.impl.SQLDataType.DECIMAL_INTEGER;
@@ -2224,6 +2229,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
+        public final Formatter formatter() {
+            return FloatingPointFormatter.INSTANCE;
+        }
+
+        @Override
         final void sqlInline0(org.jooq.BindingSQLContext<U> ctx, Decfloat value) throws SQLException {
 
             // [#5249] [#6912] [#8063] [#11701] [#11076] Special inlining of special floating point values
@@ -2536,7 +2546,31 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
     }
 
+    static final class BytesFormatter implements Formatter {
+
+        @Override
+        public final void formatJSON(FormatterContext ctx) {
+
+            // [#18955] MySQL does this out of the box, but MariaDB doesn't
+            switch (ctx.family()) {
+                case MARIADB:
+                    ctx.field(function(Names.N_TO_BASE64, CLOB, ctx.field()));
+                    break;
+            }
+        }
+
+        @Override
+        public final void formatJSONB(FormatterContext ctx) {
+            formatJSON(ctx);
+        }
+
+        @Override
+        public final void formatXML(FormatterContext ctx) {}
+    }
+
     static final class DefaultBytesBinding<U> extends InternalBinding<byte[], U> {
+
+        static final Formatter    FORMATTER = new BytesFormatter();
 
         // [#12956] Starting from H2 2.0, we can't use byte[] for BLOB anymore, if they're
         //          larger than 1MB
@@ -2546,6 +2580,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             super(dataType, converter);
 
             this.blobs = new BlobBinding();
+        }
+
+        @Override
+        public final Formatter formatter() {
+            return FORMATTER;
         }
 
         @Override
@@ -3158,6 +3197,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             super(dataType, converter);
         }
 
+        @Override
+        public final Formatter formatter() {
+            return FloatingPointFormatter.INSTANCE;
+        }
+
 
 
 
@@ -3431,10 +3475,41 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
     }
 
+    static final class FloatingPointFormatter implements Formatter {
+
+        static final Formatter INSTANCE = new FloatingPointFormatter();
+
+        @Override
+        public void formatJSON(FormatterContext ctx) {
+
+            // [#10880] [#17067] Many dialects don't support NaN and other float values in JSON documents as numbers
+            switch (ctx.family()) {
+
+                case H2:
+                    ctx.field(ctx.field().cast(VARCHAR));
+                    break;
+            }
+        }
+
+        @Override
+        public void formatJSONB(FormatterContext ctx) {
+            formatJSON(ctx);
+        }
+
+        @Override
+        public void formatXML(FormatterContext ctx) {
+        }
+    }
+
     static final class DefaultFloatBinding<U> extends InternalBinding<Float, U> {
 
         DefaultFloatBinding(DataType<Float> dataType, Converter<Float, U> converter) {
             super(dataType, converter);
+        }
+
+        @Override
+        public final Formatter formatter() {
+            return FloatingPointFormatter.INSTANCE;
         }
 
         static final Float fixInfinity(
@@ -5694,6 +5769,63 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             }
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

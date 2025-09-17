@@ -37,6 +37,7 @@
  */
 package org.jooq.postgres.extensions.bindings;
 
+import org.jooq.Binding;
 import org.jooq.Converter;
 import org.jooq.postgres.extensions.converters.CidrConverter;
 import org.jooq.postgres.extensions.types.Cidr;
@@ -58,5 +59,10 @@ public class CidrArrayBinding extends AbstractPostgresArrayBinding<Cidr> {
     @Override
     protected String castType() {
         return "cidr[]";
+    }
+
+    @Override
+    public Binding<?, ?> arrayComponentBinding() {
+        return new CidrBinding();
     }
 }

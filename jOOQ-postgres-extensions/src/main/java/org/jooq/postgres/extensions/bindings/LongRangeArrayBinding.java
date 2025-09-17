@@ -37,6 +37,7 @@
  */
 package org.jooq.postgres.extensions.bindings;
 
+import org.jooq.Binding;
 import org.jooq.Converter;
 import org.jooq.postgres.extensions.converters.LongRangeConverter;
 import org.jooq.postgres.extensions.types.LongRange;
@@ -58,5 +59,10 @@ public class LongRangeArrayBinding extends AbstractPostgresArrayBinding<LongRang
     @Override
     protected String castType() {
         return "int8range[]";
+    }
+
+    @Override
+    public Binding<?, ?> arrayComponentBinding() {
+        return new LongRangeBinding();
     }
 }

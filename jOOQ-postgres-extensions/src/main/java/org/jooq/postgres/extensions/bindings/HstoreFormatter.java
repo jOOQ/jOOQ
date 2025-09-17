@@ -37,32 +37,30 @@
  */
 package org.jooq.postgres.extensions.bindings;
 
-import org.jooq.Binding;
-import org.jooq.Converter;
-import org.jooq.postgres.extensions.converters.LocalDateRangeConverter;
-import org.jooq.postgres.extensions.types.LocalDateRange;
+import static org.jooq.impl.SQLDataType.CLOB;
+
+import org.jooq.Formatter;
+import org.jooq.FormatterContext;
 
 /**
- * A binding for the PostgreSQL <code>daterange</code> data type.
+ * A formatter for the PostgreSQL <code>hstore</code> data type.
  *
  * @author Lukas Eder
  */
-public class LocalDateRangeBinding extends AbstractPostgresVarcharBinding<LocalDateRange> {
-
-    private static final Converter<Object, LocalDateRange> CONVERTER = new LocalDateRangeConverter();
+public class HstoreFormatter implements Formatter {
 
     @Override
-    public Converter<Object, LocalDateRange> converter() {
-        return CONVERTER;
+    public void formatJSON(FormatterContext ctx) {
+        ctx.field(ctx.field().cast(CLOB));
     }
 
     @Override
-    protected String castType() {
-        return "daterange";
+    public void formatJSONB(FormatterContext ctx) {
+        ctx.field(ctx.field().cast(CLOB));
     }
 
     @Override
-    public final Binding<Object[], LocalDateRange[]> arrayBinding() {
-        return new LocalDateRangeArrayBinding();
+    public void formatXML(FormatterContext ctx) {
+        ctx.field(ctx.field().cast(CLOB));
     }
 }

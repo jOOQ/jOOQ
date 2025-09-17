@@ -37,6 +37,7 @@
  */
 package org.jooq.postgres.extensions.bindings;
 
+import org.jooq.Binding;
 import org.jooq.Converter;
 import org.jooq.postgres.extensions.converters.CitextConverter;
 
@@ -57,5 +58,10 @@ public class CitextBinding extends AbstractPostgresVarcharBinding<String> {
     @Override
     protected String castType() {
         return "citext";
+    }
+
+    @Override
+    public Binding<Object[], String[]> arrayBinding() {
+        return new CitextArrayBinding();
     }
 }

@@ -37,6 +37,7 @@
  */
 package org.jooq.postgres.extensions.bindings;
 
+import org.jooq.Binding;
 import org.jooq.Converter;
 import org.jooq.postgres.extensions.converters.TimestampRangeConverter;
 import org.jooq.postgres.extensions.types.TimestampRange;
@@ -58,5 +59,10 @@ public class TimestampRangeArrayBinding extends AbstractPostgresArrayBinding<Tim
     @Override
     protected String castType() {
         return "tsrange[]";
+    }
+
+    @Override
+    public Binding<?, ?> arrayComponentBinding() {
+        return new TimestampRangeBinding();
     }
 }

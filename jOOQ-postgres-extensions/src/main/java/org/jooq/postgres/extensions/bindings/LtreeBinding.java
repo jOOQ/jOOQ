@@ -37,6 +37,7 @@
  */
 package org.jooq.postgres.extensions.bindings;
 
+import org.jooq.Binding;
 import org.jooq.Converter;
 import org.jooq.postgres.extensions.converters.LtreeConverter;
 import org.jooq.postgres.extensions.types.Ltree;
@@ -58,5 +59,10 @@ public class LtreeBinding extends AbstractPostgresVarcharBinding<Ltree> {
     @Override
     protected String castType() {
         return "ltree";
+    }
+
+    @Override
+    public final Binding<Object[], Ltree[]> arrayBinding() {
+        return new LtreeArrayBinding();
     }
 }

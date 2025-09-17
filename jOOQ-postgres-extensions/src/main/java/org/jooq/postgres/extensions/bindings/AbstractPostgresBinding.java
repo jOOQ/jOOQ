@@ -41,6 +41,7 @@ import static org.jooq.impl.DSL.keyword;
 
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
+import java.util.function.Consumer;
 
 import org.jooq.BindingGetSQLInputContext;
 import org.jooq.BindingSQLContext;

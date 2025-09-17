@@ -37,6 +37,7 @@
  */
 package org.jooq.postgres.extensions.bindings;
 
+import org.jooq.Binding;
 import org.jooq.Converter;
 import org.jooq.postgres.extensions.converters.IntegerRangeConverter;
 import org.jooq.postgres.extensions.types.IntegerRange;
@@ -58,5 +59,10 @@ public class IntegerRangeBinding extends AbstractPostgresVarcharBinding<IntegerR
     @Override
     protected String castType() {
         return "int4range";
+    }
+
+    @Override
+    public final Binding<Object[], IntegerRange[]> arrayBinding() {
+        return new IntegerRangeArrayBinding();
     }
 }

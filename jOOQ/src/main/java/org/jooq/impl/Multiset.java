@@ -609,9 +609,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
         }
     }
 
-    @SuppressWarnings("unchecked")
     static final Field<?> castForJSON(Context<?> ctx, Field<?> field) {
-        DataType<?> t = field.getDataType();
         Formatter f;
 
         if ((f = field.getBinding().formatter()) != null) {
@@ -629,48 +627,9 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
             return toJSONArrays(ctx, field);
         }
 
-        // [#10880] [#17067] Many dialects don't support NaN and other float values in JSON documents as numbers
-        else if (t.isFloat()) {
-            switch (ctx.family()) {
-
-                case H2:
-                    return field.cast(VARCHAR);
-            }
-        }
-
-        // [#18955] MySQL does this out of the box, but MariaDB doesn't
-        else if (t.isBinary()) {
-            switch (ctx.family()) {
-                case MARIADB:
-                    return function(Names.N_TO_BASE64, CLOB, field);
-            }
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         return field;
     }
 
-    @SuppressWarnings("unchecked")
     static final Field<?> castForXML(Context<?> ctx, Field<?> field) {
         Formatter f;
 
@@ -683,20 +642,6 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
         else if (field.getDataType().isUDTRecord() || field.getDataType().isArray()) {
             return toXMLElements(ctx, field);
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         return field;
     }

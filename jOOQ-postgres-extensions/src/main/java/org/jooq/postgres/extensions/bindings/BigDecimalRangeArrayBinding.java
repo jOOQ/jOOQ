@@ -37,6 +37,7 @@
  */
 package org.jooq.postgres.extensions.bindings;
 
+import org.jooq.Binding;
 import org.jooq.Converter;
 import org.jooq.postgres.extensions.converters.BigDecimalRangeConverter;
 import org.jooq.postgres.extensions.types.BigDecimalRange;
@@ -58,5 +59,10 @@ public class BigDecimalRangeArrayBinding extends AbstractPostgresArrayBinding<Bi
     @Override
     protected String castType() {
         return "numrange[]";
+    }
+
+    @Override
+    public final Binding<?, ?> arrayComponentBinding() {
+        return new BigDecimalRangeBinding();
     }
 }

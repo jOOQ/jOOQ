@@ -37,6 +37,7 @@
  */
 package org.jooq.postgres.extensions.bindings;
 
+import org.jooq.Binding;
 import org.jooq.Converter;
 import org.jooq.postgres.extensions.converters.InetConverter;
 import org.jooq.postgres.extensions.types.Inet;
@@ -58,5 +59,10 @@ public class InetArrayBinding extends AbstractPostgresArrayBinding<Inet> {
     @Override
     protected String castType() {
         return "inet[]";
+    }
+
+    @Override
+    public Binding<?, ?> arrayComponentBinding() {
+        return new InetBinding();
     }
 }

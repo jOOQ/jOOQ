@@ -37,7 +37,9 @@
  */
 package org.jooq.postgres.extensions.bindings;
 
+import org.jooq.Binding;
 import org.jooq.Converter;
+import org.jooq.Formatter;
 import org.jooq.postgres.extensions.converters.HstoreConverter;
 import org.jooq.postgres.extensions.types.Hstore;
 
@@ -59,5 +61,15 @@ public class HstoreBinding extends AbstractPostgresVarcharBinding<Hstore> {
     @Override
     protected String castType() {
         return "hstore";
+    }
+
+    @Override
+    public Formatter formatter() {
+        return new HstoreFormatter();
+    }
+
+    @Override
+    public Binding<Object[], Hstore[]> arrayBinding() {
+        return new HstoreArrayBinding();
     }
 }

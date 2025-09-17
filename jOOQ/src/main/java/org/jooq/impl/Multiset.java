@@ -62,8 +62,6 @@ import static org.jooq.impl.DSL.jsonbArrayAgg;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectFrom;
-// ...
-// ...
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.unnest;
 import static org.jooq.impl.DSL.values;
@@ -78,7 +76,6 @@ import static org.jooq.impl.Keywords.K_ARRAY;
 import static org.jooq.impl.Keywords.K_MULTISET;
 import static org.jooq.impl.Names.NQ_RESULT;
 import static org.jooq.impl.Names.N_ELEMENT;
-import static org.jooq.impl.Names.N_HEX;
 import static org.jooq.impl.Names.N_JSON_QUERY;
 import static org.jooq.impl.Names.N_MULTISET;
 import static org.jooq.impl.Names.N_O;
@@ -108,7 +105,6 @@ import static org.jooq.impl.Tools.BooleanDataKey.DATA_MULTISET_CONTENT;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.function.BiFunction;
@@ -144,7 +140,6 @@ import org.jooq.Scope;
 import org.jooq.Select;
 import org.jooq.SelectOrderByStep;
 import org.jooq.SortField;
-import org.jooq.Spatial;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableLike;
@@ -656,11 +651,12 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
         DataType<?> t = field.getDataType();
 
         if (t.isArray()) {
+            DataType<?> ct = t.getArrayComponentDataType();
 
             // [#19067] This currently applies to arrays of UDTs only. Let's not complicate things for ordinary arrays.
-            if (ConvertedDataType.delegate(t.getArrayComponentDataType()) instanceof UDTDataType<?> ut)
+            if (ConvertedDataType.delegate(ct) instanceof UDTDataType<?> ut)
                 return arrayOfUDT.apply(ut);
-            else if (t.getArrayComponentDataType().getBinding().formatter() != null)
+            else if (ct.getBinding().formatter() != null)
                 return arrayOfFormatted.get();
             else
                 return arrayOfUnformatted.get();
@@ -705,13 +701,43 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
     }
 
     private static final Field<?> toJSONArrays(Context<?> ctx, Field<?> field) {
-        return transformNestedTypes(
+        boolean transform = false;
+
+        switch (ctx.family()) {
+
+
+            case POSTGRES:
+            case YUGABYTEDB:
+                transform = hasFormattedTypes(field.getDataType());
+                break;
+        }
+
+        return !transform ? field : transformNestedTypes(
             field,
             toJSONArrayOfUDTs(ctx, field),
             toJSONArrayOfFormatted(ctx, field),
             () -> field,
             toJSONUDT(ctx, field)
         );
+    }
+
+    private static final boolean hasFormattedTypes(DataType<?> t) {
+        if (t.isArray()) {
+            DataType<?> ct = t.getArrayComponentDataType();
+
+            // [#19067] This currently applies to arrays of UDTs only. Let's not complicate things for ordinary arrays.
+            if (ConvertedDataType.delegate(ct) instanceof UDTDataType<?> ut)
+                return hasFormattedTypes(ut);
+            else
+                return ct.getBinding().formatter() != null;
+        }
+        else if (ConvertedDataType.delegate(t) instanceof UDTDataType<?> ut) {
+            for (Field<?> f : ut.getRow().fields())
+                if (hasFormattedTypes(f.getDataType()))
+                    return true;
+        }
+
+        return false;
     }
 
     private static final Function<? super UDTDataType<?>, ? extends Field<?>> toJSONArrayOfUDTs(Context<?> ctx, Field<?> field) {

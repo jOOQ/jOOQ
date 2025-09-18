@@ -127,16 +127,23 @@ import static org.jooq.impl.DDLStatementType.DROP_TABLE;
 import static org.jooq.impl.DDLStatementType.DROP_VIEW;
 import static org.jooq.impl.DSL.all;
 import static org.jooq.impl.DSL.any;
+import static org.jooq.impl.DSL.array;
+import static org.jooq.impl.DSL.arrayAgg;
+import static org.jooq.impl.DSL.arrayGet;
 import static org.jooq.impl.DSL.asterisk;
 import static org.jooq.impl.DSL.escape;
 import static org.jooq.impl.DSL.getDataType;
 import static org.jooq.impl.DSL.keyword;
+import static org.jooq.impl.DSL.lateral;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.noCondition;
+import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.DSL.unnest;
 import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.impl.DSL.val;
+import static org.jooq.impl.DSL.values;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.DefaultDataType.unsupportedDatetimePrecision;
 import static org.jooq.impl.DefaultExecuteContext.localConnection;
@@ -205,6 +212,10 @@ import static org.jooq.impl.Keywords.K_THROW;
 import static org.jooq.impl.Keywords.K_VIRTUAL;
 import static org.jooq.impl.Keywords.K_VISIBLE;
 import static org.jooq.impl.Keywords.K_WHEN;
+import static org.jooq.impl.Names.N_A;
+import static org.jooq.impl.Names.N_E;
+import static org.jooq.impl.Names.N_O;
+import static org.jooq.impl.Names.N_T;
 import static org.jooq.impl.QOM.GenerationOption.STORED;
 import static org.jooq.impl.QOM.GenerationOption.VIRTUAL;
 import static org.jooq.impl.SQLDataType.BLOB;
@@ -222,6 +233,8 @@ import static org.jooq.impl.ScalarSubquery.NO_SUPPORT_CORRELATED_SUBQUERY;
 import static org.jooq.impl.SubqueryCharacteristics.DERIVED_TABLE;
 import static org.jooq.impl.SubqueryCharacteristics.PREDICAND;
 import static org.jooq.impl.SubqueryCharacteristics.SET_OPERATION;
+import static org.jooq.impl.Tools.fieldNames;
+import static org.jooq.impl.Tools.ifNotNull;
 import static org.jooq.impl.Tools.ExtendedDataKey.DATA_OMIT_DATETIME_LITERAL_PREFIX;
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_BLOCK_NESTING;
 import static org.jooq.tools.StringUtils.defaultIfNull;
@@ -284,6 +297,8 @@ import java.util.stream.Collector;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import org.jooq.AggregateFilterStep;
+import org.jooq.ArrayAggOrderByStep;
 // ...
 // ...
 // ...
@@ -8099,5 +8114,47 @@ final class Tools {
             return string.substring(0, i + 1);
         else
             return string;
+    }
+
+    /**
+     * A utility for the transformation logic of udt and non-udt arrays, e.g. by
+     * {@link DSL#arrayMap(Field, Function1)}.
+     */
+    static final <T, U> Select<? extends Record1<?>> arrayTransform(
+        Field<T[]> array,
+        Field<T> element,
+        Field<U> mapper,
+        Condition predicate
+    ) {
+        DataType<T[]> t = array.getDataType();
+        DataType<T> tc = (DataType<T>) t.getArrayComponentDataType();
+        ArrayAggOrderByStep<U[]> agg = mapper == null ? null : arrayAgg(mapper);
+
+        if (ConvertedDataType.delegate(tc) instanceof UDTDataType<?> ut) {
+            Field<Integer> o = DSL.field(N_O, INTEGER);
+            Field<T[]> a = DSL.field(N_A, t);
+            Name[] names = fieldNames(tc.getRow().size());
+
+            return
+                select((Field<?>) (mapper == null
+                    ? one()
+                    : DSL.coalesce(agg.orderBy(o), ifNotNull(array, DSL.cast(array(), agg.getDataType())))))
+                .from(
+                    values(row(array)).as(N_A, N_A),
+                    unnest(a)
+                        .withOrdinality()
+                        .as(N_T, Tools.concat(Arrays.asList(names), Arrays.asList(N_O))),
+                    lateral(values(row(arrayGet(a, o)))).as(N_E, element.getUnqualifiedName())
+                )
+                .where(predicate);
+        }
+        else {
+            return
+                select((Field<?>) (mapper == null
+                    ? one()
+                    : DSL.coalesce(agg, ifNotNull(array, DSL.cast(array(), agg.getDataType())))))
+                .from(unnest(array).as(N_T, element.getUnqualifiedName()))
+                .where(predicate);
+        }
     }
 }

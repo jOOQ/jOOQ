@@ -120,6 +120,11 @@ final class QualifiedRecordConstant<R extends QualifiedRecord<R>> extends Abstra
 
 
 
+
+
+
+
+
             // Due to lack of UDT support in the Postgres JDBC drivers, all UDT's
             // have to be inlined
             case POSTGRES:

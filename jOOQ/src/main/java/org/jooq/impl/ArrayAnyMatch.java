@@ -138,11 +138,7 @@ implements
             case HSQLDB:
             case POSTGRES:
             case YUGABYTEDB:
-                ctx.visit(ifNotNull(array, exists(
-                    select(one())
-                    .from(unnest(array).as(N_T, predicate.$arg1().getUnqualifiedName()))
-                    .where(predicate.$result())
-                )));
+                ctx.visit(ifNotNull(array, exists(arrayTransform(array, predicate.$arg1(), null, predicate.$result()))));
                 break;
 
 

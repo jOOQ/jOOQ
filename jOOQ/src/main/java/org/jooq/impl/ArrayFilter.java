@@ -139,33 +139,7 @@ implements
             case HSQLDB:
             case POSTGRES:
             case YUGABYTEDB: {
-                DataType<T[]> t = array.getDataType();
-                DataType<T> tc = (DataType<T>) t.getArrayComponentDataType();
-
-                if (ConvertedDataType.delegate(tc) instanceof UDTDataType<?> ut) {
-                    Field<Integer> o = DSL.field(N_O, INTEGER);
-                    Field<T[]> a = DSL.field(N_A, t);
-                    Name[] names = fieldNames(tc.getRow().size());
-
-                    ctx.visit(DSL.field(
-                        select(DSL.coalesce(arrayAgg(predicate.$arg1()).orderBy(o), ifNotNull(array, DSL.cast(array(), getDataType()))))
-                        .from(
-                            values(row(array)).as(N_A, N_A),
-                            unnest(a)
-                                .withOrdinality()
-                                .as(N_T, Tools.concat(Arrays.asList(names), Arrays.asList(N_O))),
-                            lateral(values(row(arrayGet(a, o)))).as(N_E, predicate.$arg1().getUnqualifiedName())
-                        )
-                        .where(predicate.$result())
-                    ));
-                }
-                else {
-                    ctx.visit(DSL.field(
-                        select(DSL.coalesce(arrayAgg(predicate.$arg1()), ifNotNull(array, DSL.cast(array(), getDataType()))))
-                        .from(unnest(array).as(N_T, predicate.$arg1().getUnqualifiedName()))
-                        .where(predicate.$result())
-                    ));
-                }
+                ctx.visit(DSL.field(arrayTransform(array, predicate.$arg1(), predicate.$arg1(), predicate.$result())));
                 break;
             }
 

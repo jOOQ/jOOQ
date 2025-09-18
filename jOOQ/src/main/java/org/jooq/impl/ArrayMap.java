@@ -139,7 +139,7 @@ implements
             case HSQLDB:
             case POSTGRES:
             case YUGABYTEDB: {
-                ctx.visit(DSL.field(arrayTransform(array, mapper.$arg1(), mapper.$result(), noCondition())));
+                ctx.visit(arrayTransform(array, mapper.$arg1(), mapper.$result(), noCondition()).asField());
                 break;
             }
 

@@ -60,6 +60,7 @@
                             *
                         </Import-Package>
                         <_versionpolicy>[$(version;==;$(@)),$(version;+;$(@)))</_versionpolicy>
+                        <_noimportjava>true</_noimportjava>
                     </instructions>
                 </configuration>
             </plugin>

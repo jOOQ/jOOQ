@@ -138,12 +138,34 @@ implements
             case H2:
             case HSQLDB:
             case POSTGRES:
-            case YUGABYTEDB:
-                ctx.visit(DSL.field(
-                    select(DSL.coalesce(arrayAgg(mapper.$result()), ifNotNull(array, DSL.cast(array(), getDataType()))))
-                    .from(unnest(array).as(N_T, mapper.$arg1().getUnqualifiedName()))
-                ));
+            case YUGABYTEDB: {
+                DataType<T[]> t = array.getDataType();
+                DataType<T> tc = (DataType<T>) t.getArrayComponentDataType();
+
+                if (ConvertedDataType.delegate(tc) instanceof UDTDataType<?> ut) {
+                    Field<Integer> o = DSL.field(N_O, INTEGER);
+                    Field<T[]> a = DSL.field(N_A, t);
+                    Name[] names = fieldNames(tc.getRow().size());
+
+                    ctx.visit(DSL.field(
+                        select(DSL.coalesce(arrayAgg(mapper.$result()).orderBy(o), array))
+                        .from(
+                            values(row(array)).as(N_A, N_A),
+                            unnest(a)
+                                .withOrdinality()
+                                .as(N_T, Tools.concat(Arrays.asList(names), Arrays.asList(N_O))),
+                            lateral(values(row(arrayGet(a, o)))).as(N_E, mapper.$arg1().getUnqualifiedName())
+                        )
+                    ));
+                }
+                else {
+                    ctx.visit(DSL.field(
+                        select(DSL.coalesce(arrayAgg(mapper.$result()), array))
+                        .from(unnest(array).as(N_T, mapper.$arg1().getUnqualifiedName()))
+                    ));
+                }
                 break;
+            }
 
             case DUCKDB:
                 ctx.visit(function(N_ARRAY_TRANSFORM, getDataType(), array, DSL.field("{0}", OTHER, mapper)));

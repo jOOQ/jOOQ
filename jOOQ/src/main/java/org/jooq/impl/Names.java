@@ -59,6 +59,7 @@ final class Names {
     static final Name N_ARRAY_TABLE                 = name("array_table");
     static final Name N_COLUMN_VALUE                = name("COLUMN_VALUE");
 
+    static final Name N_A                           = systemName("a");
     static final Name N_accurateCastOrNull          = systemName("accurateCastOrNull");
     static final Name N_ADD                         = systemName("add");
     static final Name N_ADD_DAYS                    = systemName("add_days");

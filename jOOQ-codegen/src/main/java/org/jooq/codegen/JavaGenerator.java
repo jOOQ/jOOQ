@@ -2287,6 +2287,7 @@ public class JavaGenerator extends AbstractGenerator {
                     final ArrayDefinition array = database.getArray(t.getType(r).getSchema(), t.getType(r).getQualifiedUserType());
                     final String indexTypeFull = array == null || array.getIndexType() == null ? null : getJavaType(array.getIndexType(resolver(out)), out);
                     final boolean isArrayOfUDTs = isArrayOfUDTs(t, r);
+                    final boolean isConverted = t.getType(r).getConverter() != null || t.getType(r).getBinding() != null;
 
                     final String udtType = (isUDT || isArray)
                         ? out.ref(getJavaType(t.getType(r), out, Mode.RECORD))
@@ -2310,7 +2311,7 @@ public class JavaGenerator extends AbstractGenerator {
                                     getStrategy().getJavaMemberName(column, Mode.POJO),
                                     getStrategy().getJavaMemberName(column, Mode.POJO),
                                     udtArrayElementType);
-                            else if (isUDT || isArray)
+                            else if (isUDT && !isConverted || isArray)
                                 out.println("this.%s = value.%s?.let { %s(it) }",
                                     getStrategy().getJavaMemberName(column, Mode.POJO),
                                     getStrategy().getJavaMemberName(column, Mode.POJO),
@@ -2346,7 +2347,7 @@ public class JavaGenerator extends AbstractGenerator {
                                     getStrategy().getJavaGetterName(column, Mode.POJO),
                                     getStrategy().getJavaGetterName(column, Mode.POJO),
                                     udtArrayElementType);
-                            else if (isUDT || isArray)
+                            else if (isUDT && !isConverted || isArray)
                                 out.println("this.%s(if (value.%s == null) null else new %s(value.%s))",
                                     getStrategy().getJavaSetterName(column, Mode.RECORD),
                                     getStrategy().getJavaGetterName(column, Mode.POJO),
@@ -2408,7 +2409,7 @@ public class JavaGenerator extends AbstractGenerator {
                                     brackets
                                 );
                             }
-                            else if (isUDT || isArray) {
+                            else if (isUDT && !isConverted || isArray) {
                                 out.println("%s(value.%s() == null ? null : new %s(value.%s()));",
                                     getStrategy().getJavaSetterName(column, Mode.RECORD),
                                     getterName,

@@ -2619,6 +2619,7 @@ public class JavaGenerator extends AbstractGenerator {
                     final ArrayDefinition array = database.getArray(t.getType(r).getSchema(), t.getType(r).getQualifiedUserType());
                     final String indexTypeFull = array == null || array.getIndexType() == null ? null : getJavaType(array.getIndexType(resolver(out)), out);
                     final boolean isArrayOfUDTs = isArrayOfUDTs(t, r, Mode.RECORD);
+                    final boolean isConverted = t.getType(r).getConverter() != null || t.getType(r).getBinding() != null;
 
                     final String udtType = (isUDT || isArray)
                         ? out.ref(getJavaType(t.getType(r), out, Mode.RECORD))
@@ -2642,7 +2643,7 @@ public class JavaGenerator extends AbstractGenerator {
                                     getStrategy().getJavaMemberName(column, Mode.POJO),
                                     getStrategy().getJavaMemberName(column, Mode.POJO),
                                     udtArrayElementType);
-                            else if (isUDT || isArray)
+                            else if (isUDT && !isConverted || isArray)
                                 out.println("this.%s = value.%s?.let { %s(it) }",
                                     getStrategy().getJavaMemberName(column, Mode.POJO),
                                     getStrategy().getJavaMemberName(column, Mode.POJO),
@@ -2678,7 +2679,7 @@ public class JavaGenerator extends AbstractGenerator {
                                     getStrategy().getJavaGetterName(column, Mode.POJO),
                                     getStrategy().getJavaGetterName(column, Mode.POJO),
                                     udtArrayElementType);
-                            else if (isUDT || isArray)
+                            else if (isUDT && !isConverted || isArray)
                                 out.println("this.%s(if (value.%s == null) null else new %s(value.%s))",
                                     getStrategy().getJavaSetterName(column, Mode.RECORD),
                                     getStrategy().getJavaGetterName(column, Mode.POJO),
@@ -2740,7 +2741,7 @@ public class JavaGenerator extends AbstractGenerator {
                                     brackets
                                 );
                             }
-                            else if (isUDT || isArray) {
+                            else if (isUDT && !isConverted || isArray) {
                                 out.println("%s(value.%s() == null ? null : new %s(value.%s()));",
                                     getStrategy().getJavaSetterName(column, Mode.RECORD),
                                     getterName,
@@ -7429,9 +7430,14 @@ public class JavaGenerator extends AbstractGenerator {
                 final UDTDefinition columnUdt = column.getDatabase().getUDT(columnUdtSchema, column.getType().getUserType());
                 final String columnPathType = out.ref(getStrategy().getFullJavaClassName(columnUdt, Mode.PATH));
 
-                if (scala)
-                    out.println("%sval %s: %s[%s, %s] = %s.createUDTPathTableField[ %s, %s, %s[%s, %s] ](%s.name(\"%s\"), %s, this, \"%s\", classOf[ %s[%s, %s] ]" + converterTemplate(converter) + converterTemplate(binding) + ")",
-                        columnVisibility, scalaWhitespaceSuffix(columnId), columnPathType, recordType, columnType, Internal.class, recordType, columnType, columnPathType, recordType, columnType, DSL.class, escapeString(columnName), columnTypeRef, escapeString(comment(column)), columnPathType, recordType, columnType, converter, binding);
+                if (scala) {
+                    if (converter.isEmpty())
+                        out.println("%sval %s: %s[%s, %s] = %s.createUDTPathTableField[ %s, %s, %s[%s, %s] ](%s.name(\"%s\"), %s, this, \"%s\", classOf[ %s[%s, %s] ]" + converterTemplate(converter) + converterTemplate(binding) + ")",
+                            columnVisibility, scalaWhitespaceSuffix(columnId), columnPathType, recordType, columnType, Internal.class, recordType, columnType, columnPathType, recordType, columnType, DSL.class, escapeString(columnName), columnTypeRef, escapeString(comment(column)), columnPathType, recordType, columnType, converter, binding);
+                    else
+                        out.println("%sval %s: %s[%s, %s] = %s.createUDTPathTableField(%s.name(\"%s\"), %s, this, \"%s\", classOf[ %s[%s, %s] ]" + converterTemplate(converter) + converterTemplate(binding) + ")",
+                            columnVisibility, scalaWhitespaceSuffix(columnId), columnPathType, recordType, columnType, Internal.class, DSL.class, escapeString(columnName), columnTypeRef, escapeString(comment(column)), columnPathType, recordType, columnType, converter, binding);
+                }
                 else if (kotlin)
                     out.println("%sval %s: %s<%s, %s> = %s.createUDTPathTableField(%s.name(\"%s\"), %s, this, \"%s\", %s::class.java as %s<%s<%s, %s>>" + converterTemplate(converter) + converterTemplate(binding) + ")",
                         columnVisibility, columnId, columnPathType, recordType, columnType, Internal.class, DSL.class, escapeString(columnName), columnTypeRef, escapeString(comment(column)), columnPathType, Class.class, columnPathType, recordType, columnType, converter, binding);

@@ -39,6 +39,8 @@ package org.jooq.postgres.extensions.types;
 
 import static java.util.Objects.requireNonNull;
 
+import org.jooq.Data;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -47,7 +49,7 @@ import org.jetbrains.annotations.Nullable;
  *
  * @author Lukas Eder
  */
-public final class Ltree {
+public final class Ltree implements Data {
 
     private final String data;
 
@@ -57,6 +59,7 @@ public final class Ltree {
         this.data = data;
     }
 
+    @Override
     @NotNull
     public final String data() {
         return data;

@@ -15384,9 +15384,15 @@ public class DSL {
     @NotNull
     @Support
     public static Condition condition(Operator operator, Condition left, Condition right) {
-        if (left == null || left instanceof NoCondition)
+        if (left == null
+                || left instanceof NoCondition
+                || left == FalseCondition.OPTIONAL && operator == OR
+                || left == TrueCondition.OPTIONAL && operator == AND)
             return right == null ? noCondition() : right;
-        else if (right == null || right instanceof NoCondition)
+        else if (right == null
+                || right instanceof NoCondition
+                || right == FalseCondition.OPTIONAL && operator == OR
+                || right == TrueCondition.OPTIONAL && operator == AND)
             return left;
         else if (operator == AND)
             return new And(left, right);

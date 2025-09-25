@@ -30,7 +30,7 @@ public class MappedUDT
     implements Serializable, Cloneable, MappedSchemaObject, XMLAppendable
 {
 
-    private final static long serialVersionUID = 32003L;
+    private final static long serialVersionUID = 32008L;
     protected String input;
     @XmlElement(type = String.class)
     @XmlJavaTypeAdapter(RegexAdapter.class)

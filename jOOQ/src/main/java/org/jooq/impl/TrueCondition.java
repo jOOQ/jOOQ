@@ -82,8 +82,10 @@ implements
 {
 
     private static final Clause[] CLAUSES            = { CONDITION, CONDITION_COMPARISON };
-    static final TrueCondition    INSTANCE           = new TrueCondition();
     static final Set<SQLDialect>  NO_SUPPORT_BOOLEAN = SQLDialect.supportedBy(FIREBIRD, SQLITE);
+    static final TrueCondition    INSTANCE           = new TrueCondition(false);
+    static final TrueCondition    OPTIONAL           = new TrueCondition(true);
+    final boolean                 optional;
 
     @Override
     final boolean isNullable() {
@@ -112,5 +114,7 @@ implements
         return CLAUSES;
     }
 
-    private TrueCondition() {}
+    private TrueCondition(boolean optional) {
+        this.optional = optional;
+    }
 }

@@ -40,8 +40,6 @@ package org.jooq.impl;
 import static org.jooq.Nullability.NOT_NULL;
 import static org.jooq.impl.Tools.CONFIG;
 
-import java.util.function.Supplier;
-
 import org.jooq.CharacterSet;
 import org.jooq.Collation;
 import org.jooq.Comment;

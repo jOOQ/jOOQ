@@ -324,6 +324,7 @@ import org.jooq.ResultQuery;
 import org.jooq.Results;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
+import org.jooq.SQLDialectCategory;
 import org.jooq.Schema;
 import org.jooq.Scope;
 import org.jooq.Select;
@@ -6230,8 +6231,16 @@ final class Tools {
         // [#8070] Make sure VARCHAR(n) ARRAY types are generated as such in HSQLDB
         if (type.hasLength() || elementType.hasLength()) {
 
+            // [#4120] [#18742] LOB types can have length, but usually don't declare it
+            if (type.isLob()) {
+                if (ctx.family().category() == SQLDialectCategory.MYSQL)
+                    ctx.sql(mysqlLobTypeName(type));
+                else
+                    ctx.sql(type.getCastTypeName(ctx.configuration()));
+            }
+
             // [#6289] [#7191] Some databases don't support lengths on binary types
-            if (type.isBinary() && NO_SUPPORT_BINARY_TYPE_LENGTH.contains(ctx.dialect()))
+            else if (type.isBinary() && NO_SUPPORT_BINARY_TYPE_LENGTH.contains(ctx.dialect()))
                 ctx.sql(typeName);
 
 
@@ -6248,14 +6257,8 @@ final class Tools {
                     ctx.sql(CLOB.getTypeName(ctx.configuration()));
 
             // Some databases don't allow for length-less VARCHAR, VARBINARY types
-            else {
-                String castTypeName = type.getCastTypeName(ctx.configuration());
-
-                if (!typeName.equals(castTypeName))
-                    ctx.sql(castTypeName);
-                else
-                    ctx.sql(typeName);
-            }
+            else
+                ctx.sql(type.getCastTypeName(ctx.configuration()));
         }
         else if (type.hasPrecision()
             && type.precisionDefined()
@@ -6310,6 +6313,19 @@ final class Tools {
         // [#8011] Collations are vendor-specific storage clauses, which we might need to ignore
         if (type.collation() != null && ctx.configuration().data("org.jooq.ddl.ignore-storage-clauses") == null)
             ctx.sql(' ').visit(K_COLLATE).sql(' ').visit(type.collation());
+    }
+
+    static final String mysqlLobTypeName(DataType<?> type) {
+        if (type.lengthDefined()) {
+            if (type.length() <= 255)
+                return type.isBinary() ? "tinyblob" : "tinytext";
+            else if (type.length() <= 65535)
+                return type.isBinary() ? "blob" : "text";
+            else if (type.length() <= 16777215)
+                return type.isBinary() ? "mediumblob" : "mediumtext";
+        }
+
+        return type.isBinary() ? "longblob" : "longtext";
     }
 
     static final boolean storedEnumType(DataType<EnumType> enumType) {

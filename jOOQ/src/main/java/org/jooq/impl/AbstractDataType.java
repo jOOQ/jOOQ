@@ -357,10 +357,6 @@ implements
     final AbstractDataType<T> precision0(Integer p, Integer s) {
         if (eq(precision0(), p) && eq(scale0(), s))
             return this;
-
-        // [#4120] LOB types are not allowed to have precision
-        else if (isLob())
-            return this;
         else
             return precision1(p, s);
     }
@@ -402,10 +398,6 @@ implements
     final AbstractDataType<T> scale0(Integer s) {
         if (eq(scale0(), s))
             return this;
-
-        // [#4120] LOB types are not allowed to have scale
-        else if (isLob())
-            return this;
         else
             return scale1(s);
     }
@@ -430,10 +422,6 @@ implements
     final AbstractDataType<T> length0(Integer l) {
         if (eq(length0(), l))
             return this;
-
-        // [#4120] LOB types are not allowed to have length
-        else if (isLob())
-            return this;
         else
             return length1(l);
     }
@@ -449,7 +437,7 @@ implements
     @Override
     public final boolean hasLength() {
         Class<?> tType = tType0();
-        return (tType == byte[].class || tType == String.class) && !isLob();
+        return (tType == byte[].class || tType == String.class);
     }
 
     @Override
@@ -618,8 +606,13 @@ implements
         //         a null value, historically, so removing this check would
         //         introduce a lot of regressions!
         else if (lengthDefined() && length() > 0) {
-            if (isBinary() && NO_SUPPORT_BINARY_TYPE_LENGTH.contains(dialect))
+            if (isLob())
                 return castTypeName0();
+
+            else if (isBinary() && NO_SUPPORT_BINARY_TYPE_LENGTH.contains(dialect))
+                return castTypeName0();
+
+
 
 
 

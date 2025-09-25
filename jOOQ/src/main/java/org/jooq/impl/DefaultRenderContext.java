@@ -37,10 +37,13 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static org.jooq.ExecuteType.DDL;
+import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 import static org.jooq.SQLDialect.SQLITE;
+// ...
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.SettingsTools.executePreparedStatements;
 import static org.jooq.conf.SettingsTools.renderLocale;
@@ -699,6 +702,9 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
             sql(start);
 
+            if (literal.length() > maxIdentifierLength(ctx))
+                literal = "alias_" + Internal.hash0(literal);
+
             // [#4922] This micro optimisation does seem to have a significant
             //         effect as the replace call can be avoided in almost all
             //         situations
@@ -713,6 +719,80 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
             sql(literal, true);
 
         return this;
+    }
+
+    private static final int maxIdentifierLength(Context<?> ctx) {
+        if (!TRUE.equals(ctx.settings().isNameAutoAliasingIfMaxLengthExceeded()))
+            return Integer.MAX_VALUE;
+
+        Integer maxLength = ctx.settings().getNameMaxLength();
+        if (maxLength != null && maxLength != Integer.MAX_VALUE)
+            return maxLength;
+
+        switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            case H2:
+                return 256;
+
+
+
+
+
+
+
+
+
+            case DERBY:
+            case HSQLDB:
+                return 128;
+
+
+            case POSTGRES:
+            case YUGABYTEDB:
+                return 63;
+
+            case FIREBIRD:
+
+
+
+
+
+                return 63;
+
+
+
+
+            case MARIADB:
+            case MYSQL:
+
+                // [#17971] MySQL supports 256 characters for aliases, but only 64 characters for any other identifier:
+                // - https://dev.mysql.com/doc/refman/8.4/en/identifier-length.html
+                // - https://mariadb.com/docs/server/reference/sql-structure/sql-language-structure/identifier-names#maximum-length
+                return 64;
+
+            default:
+                return Integer.MAX_VALUE;
+        }
     }
 
     @Override

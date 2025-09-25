@@ -32,7 +32,7 @@ public class RenderMapping
     implements Serializable, Cloneable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 31800L;
+    private final static long serialVersionUID = 31834L;
     protected String defaultCatalog;
     protected String defaultSchema;
     @XmlElementWrapper(name = "catalogs")

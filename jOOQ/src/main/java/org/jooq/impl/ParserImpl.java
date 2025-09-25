@@ -510,6 +510,9 @@ import static org.jooq.impl.Tools.EMPTY_ROW;
 import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
 import static org.jooq.impl.Tools.EMPTY_STRING;
 import static org.jooq.impl.Tools.EMPTY_TABLE;
+import static org.jooq.impl.Tools.MYSQL_LOB_LENGTH;
+import static org.jooq.impl.Tools.MYSQL_MEDIUM_LOB_LENGTH;
+import static org.jooq.impl.Tools.MYSQL_TINY_LOB_LENGTH;
 import static org.jooq.impl.Tools.aliased;
 import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.asInt;
@@ -13865,6 +13868,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                                 return parseDataTypeLength(CLOB);
                             else
                                 throw expected("0", "BINARY", "1", "TEXT");
+                        else if (parseCategory() == SQLDialectCategory.MYSQL)
+                            return BLOB(MYSQL_LOB_LENGTH);
                         else
                             return parseDataTypeLength(BLOB);
                     else if (parseKeywordOrIdentifierIf("BOOLEAN") ||
@@ -13891,7 +13896,10 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                     else if (parseKeywordOrIdentifierIf("CITEXT"))
                         return parseDataTypeCollation(parseAndIgnoreDataTypeLength(CLOB));
                     else if (parseKeywordOrIdentifierIf("CLOB"))
-                        return parseDataTypeCollation(parseDataTypeLength(CLOB));
+                        if (parseCategory() == SQLDialectCategory.MYSQL)
+                            return parseDataTypeCollation(CLOB(MYSQL_LOB_LENGTH));
+                        else
+                            return parseDataTypeCollation(parseDataTypeLength(CLOB));
                 }
 
                 break;
@@ -14005,9 +14013,9 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                     return parseUnsigned(parseAndIgnoreDataTypeLength(INTEGER));
                 else if (!parseNumericOnly) {
                     if (parseKeywordOrIdentifierIf("MEDIUMBLOB"))
-                        return BLOB;
+                        return BLOB(MYSQL_MEDIUM_LOB_LENGTH);
                     else if (parseKeywordOrIdentifierIf("MEDIUMTEXT"))
-                        return parseDataTypeCollation(CLOB);
+                        return parseDataTypeCollation(CLOB(MYSQL_MEDIUM_LOB_LENGTH));
                 }
 
                 break;
@@ -14080,8 +14088,12 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                 if (parseKeywordOrIdentifierIf("TINYINT"))
                     return parseUnsigned(parseAndIgnoreDataTypeLength(TINYINT));
                 else if (!parseNumericOnly) {
-                    if (parseKeywordOrIdentifierIf("TEXT"))
-                        return parseDataTypeCollation(parseAndIgnoreDataTypeLength(CLOB));
+                    if (parseKeywordOrIdentifierIf("TEXT")) {
+                        if (parseCategory() == SQLDialectCategory.MYSQL)
+                            return parseDataTypeCollation(CLOB(MYSQL_LOB_LENGTH));
+                        else
+                            return parseDataTypeCollation(parseAndIgnoreDataTypeLength(CLOB));
+                    }
                     else if (parseKeywordOrIdentifierIf("TIMESTAMPTZ"))
                         return parseDataTypePrecisionIf(TIMESTAMPWITHTIMEZONE);
                     else if (parseKeywordOrIdentifierIf("TIMESTAMP")) {
@@ -14103,9 +14115,9 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                             return precision == null ? TIME : TIME(precision);
                     }
                     else if (parseKeywordOrIdentifierIf("TINYBLOB"))
-                        return BLOB;
+                        return BLOB(MYSQL_TINY_LOB_LENGTH);
                     else if (parseKeywordOrIdentifierIf("TINYTEXT"))
-                        return parseDataTypeCollation(CLOB);
+                        return parseDataTypeCollation(CLOB(MYSQL_TINY_LOB_LENGTH));
                 }
 
                 break;

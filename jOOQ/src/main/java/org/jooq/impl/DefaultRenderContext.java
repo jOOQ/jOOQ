@@ -37,7 +37,6 @@
  */
 package org.jooq.impl;
 
-import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static org.jooq.ExecuteType.DDL;
 import static org.jooq.SQLDialect.FIREBIRD;
@@ -68,7 +67,6 @@ import org.jooq.BindContext;
 import org.jooq.Configuration;
 import org.jooq.Constants;
 import org.jooq.ExecuteContext;
-import org.jooq.ExecuteContext.BatchMode;
 import org.jooq.Field;
 import org.jooq.Param;
 import org.jooq.Query;
@@ -76,6 +74,7 @@ import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
+import org.jooq.Scope;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.conf.RenderFormatting;
@@ -711,7 +710,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         return this;
     }
 
-    private static final int maxIdentifierLength(Context<?> ctx) {
+    private static final int maxIdentifierLength(Scope ctx) {
         if (!TRUE.equals(ctx.settings().isNameAutoAliasingIfMaxLengthExceeded()))
             return Integer.MAX_VALUE;
 

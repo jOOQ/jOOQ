@@ -62,7 +62,9 @@ implements
 {
 
     private static final Clause[] CLAUSES  = { CONDITION, CONDITION_COMPARISON };
-    static final FalseCondition   INSTANCE = new FalseCondition();
+    static final FalseCondition   INSTANCE = new FalseCondition(false);
+    static final FalseCondition   OPTIONAL = new FalseCondition(true);
+    final boolean                 optional;
 
     @Override
     final boolean isNullable() {
@@ -91,5 +93,7 @@ implements
         return CLAUSES;
     }
 
-    private FalseCondition() {}
+    private FalseCondition(boolean optional) {
+        this.optional = optional;
+    }
 }

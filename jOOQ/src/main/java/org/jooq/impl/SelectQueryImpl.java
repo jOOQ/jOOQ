@@ -4709,10 +4709,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             if (Tools.isVal1(s, v -> v.getValue() == null)) {
                 if (c instanceof QOM.Eq)
                     return o.$field().isNull();
-                else if (c instanceof QOM.Gt)
-                    return falseCondition();
                 else
-                    return o.$field().isNotNull();
+                    return FalseCondition.OPTIONAL;
             }
             else
                 return c.or(o.$field().isNull());
@@ -4721,10 +4719,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             if (Tools.isVal1(s, v -> v.getValue() == null)) {
                 if (c instanceof QOM.Eq)
                     return o.$field().isNull();
-                else if (c instanceof QOM.Gt)
-                    return o.$field().isNotNull();
                 else
-                    return falseCondition();
+                    return o.$field().isNotNull();
             }
             else
                 return c;

@@ -465,6 +465,10 @@ final class Tools {
     static final UpdatableRecord<?>[]       EMPTY_UPDATABLE_RECORD        = {};
     static final TransactionProperty[]      EMPTY_TRANSACTION_PROPERTY    = {};
 
+    static final int                        MYSQL_TINY_LOB_LENGTH         = 255;
+    static final int                        MYSQL_LOB_LENGTH              = 65535;
+    static final int                        MYSQL_MEDIUM_LOB_LENGTH       = 16777215;
+
     // ------------------------------------------------------------------------
     // Some constants for use with Context.data()
     // ------------------------------------------------------------------------
@@ -6382,11 +6386,11 @@ final class Tools {
 
     static final String mysqlLobTypeName(DataType<?> type) {
         if (type.lengthDefined()) {
-            if (type.length() <= 255)
+            if (type.length() <= MYSQL_TINY_LOB_LENGTH)
                 return type.isBinary() ? "tinyblob" : "tinytext";
-            else if (type.length() <= 65535)
+            else if (type.length() <= MYSQL_LOB_LENGTH)
                 return type.isBinary() ? "blob" : "text";
-            else if (type.length() <= 16777215)
+            else if (type.length() <= MYSQL_MEDIUM_LOB_LENGTH)
                 return type.isBinary() ? "mediumblob" : "mediumtext";
         }
 

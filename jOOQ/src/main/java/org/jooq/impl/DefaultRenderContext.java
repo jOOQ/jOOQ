@@ -699,7 +699,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
             sql(start);
 
-            if (literal.length() > maxIdentifierLength(ctx))
+            if (literal.length() > maxIdentifierLength(this))
                 literal = "alias_" + Internal.hash0(literal);
 
             // [#4922] This micro optimisation does seem to have a significant

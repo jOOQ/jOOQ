@@ -36,7 +36,7 @@ public class Settings
     implements Serializable, Cloneable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 31900L;
+    private final static long serialVersionUID = 31927L;
     @XmlElement(defaultValue = "true")
     protected Boolean forceIntegerTypesOnZeroScaleDecimals = true;
     @XmlElement(defaultValue = "true")
@@ -119,6 +119,10 @@ public class Settings
     protected Boolean renderPlainSQLTemplatesAsRaw = false;
     @XmlElement(defaultValue = "")
     protected String renderDollarQuotedStringToken = "";
+    @XmlElement(defaultValue = "false")
+    protected Boolean nameAutoAliasingIfMaxLengthExceeded = false;
+    @XmlElement(defaultValue = "2147483647")
+    protected Integer nameMaxLength = 2147483647;
     @XmlElement(defaultValue = ".")
     protected String namePathSeparator = ".";
     @XmlElement(defaultValue = "false")
@@ -1416,6 +1420,46 @@ public class Settings
      */
     public void setRenderDollarQuotedStringToken(String value) {
         this.renderDollarQuotedStringToken = value;
+    }
+
+    /**
+     * Whether to auto alias any unqualified name if the max length ({@link #nameMaxLength} if set, or dialect specific length) is exceeded.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isNameAutoAliasingIfMaxLengthExceeded() {
+        return nameAutoAliasingIfMaxLengthExceeded;
+    }
+
+    /**
+     * Whether to auto alias any unqualified name if the max length ({@link #nameMaxLength} if set, or dialect specific length) is exceeded.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setNameAutoAliasingIfMaxLengthExceeded(Boolean value) {
+        this.nameAutoAliasingIfMaxLengthExceeded = value;
+    }
+
+    /**
+     * The maximum length override for unqualified names.
+     * 
+     */
+    public Integer getNameMaxLength() {
+        return nameMaxLength;
+    }
+
+    /**
+     * The maximum length override for unqualified names.
+     * 
+     */
+    public void setNameMaxLength(Integer value) {
+        this.nameMaxLength = value;
     }
 
     /**
@@ -7060,6 +7104,24 @@ public class Settings
     }
 
     /**
+     * Whether to auto alias any unqualified name if the max length ({@link #nameMaxLength} if set, or dialect specific length) is exceeded.
+     * 
+     */
+    public Settings withNameAutoAliasingIfMaxLengthExceeded(Boolean value) {
+        setNameAutoAliasingIfMaxLengthExceeded(value);
+        return this;
+    }
+
+    /**
+     * The maximum length override for unqualified names.
+     * 
+     */
+    public Settings withNameMaxLength(Integer value) {
+        setNameMaxLength(value);
+        return this;
+    }
+
+    /**
      * The character(s) to be used as a separator in paths encoded in a {@link Name}
      * <p>
      * A few hierarchical mapping features work with paths encoded in names (specifically field aliases), such as the reflective mapping of nested values when aliasing fields as:
@@ -9441,6 +9503,8 @@ public class Settings
         builder.append("renderRedundantConditionForSeekClause", renderRedundantConditionForSeekClause);
         builder.append("renderPlainSQLTemplatesAsRaw", renderPlainSQLTemplatesAsRaw);
         builder.append("renderDollarQuotedStringToken", renderDollarQuotedStringToken);
+        builder.append("nameAutoAliasingIfMaxLengthExceeded", nameAutoAliasingIfMaxLengthExceeded);
+        builder.append("nameMaxLength", nameMaxLength);
         builder.append("namePathSeparator", namePathSeparator);
         builder.append("bindOffsetDateTimeType", bindOffsetDateTimeType);
         builder.append("bindOffsetTimeType", bindOffsetTimeType);
@@ -9955,6 +10019,24 @@ public class Settings
             }
         } else {
             if (!renderDollarQuotedStringToken.equals(other.renderDollarQuotedStringToken)) {
+                return false;
+            }
+        }
+        if (nameAutoAliasingIfMaxLengthExceeded == null) {
+            if (other.nameAutoAliasingIfMaxLengthExceeded!= null) {
+                return false;
+            }
+        } else {
+            if (!nameAutoAliasingIfMaxLengthExceeded.equals(other.nameAutoAliasingIfMaxLengthExceeded)) {
+                return false;
+            }
+        }
+        if (nameMaxLength == null) {
+            if (other.nameMaxLength!= null) {
+                return false;
+            }
+        } else {
+            if (!nameMaxLength.equals(other.nameMaxLength)) {
                 return false;
             }
         }
@@ -11709,6 +11791,8 @@ public class Settings
         result = ((prime*result)+((renderRedundantConditionForSeekClause == null)? 0 :renderRedundantConditionForSeekClause.hashCode()));
         result = ((prime*result)+((renderPlainSQLTemplatesAsRaw == null)? 0 :renderPlainSQLTemplatesAsRaw.hashCode()));
         result = ((prime*result)+((renderDollarQuotedStringToken == null)? 0 :renderDollarQuotedStringToken.hashCode()));
+        result = ((prime*result)+((nameAutoAliasingIfMaxLengthExceeded == null)? 0 :nameAutoAliasingIfMaxLengthExceeded.hashCode()));
+        result = ((prime*result)+((nameMaxLength == null)? 0 :nameMaxLength.hashCode()));
         result = ((prime*result)+((namePathSeparator == null)? 0 :namePathSeparator.hashCode()));
         result = ((prime*result)+((bindOffsetDateTimeType == null)? 0 :bindOffsetDateTimeType.hashCode()));
         result = ((prime*result)+((bindOffsetTimeType == null)? 0 :bindOffsetTimeType.hashCode()));

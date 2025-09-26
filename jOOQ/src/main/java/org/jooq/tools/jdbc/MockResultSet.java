@@ -93,7 +93,8 @@ public class MockResultSet extends JDBC41ResultSet implements ResultSet, Seriali
     private transient int           index;
     private transient Record        record;
     private transient boolean       wasNull;
-    private final Converter<?, ?>[] converters;
+    private final Converter<?, ?>[] converters1;
+    private final Converter2[]      converters2;
 
     public MockResultSet(Result<?> result) {
         this(result, 0);
@@ -106,13 +107,18 @@ public class MockResultSet extends JDBC41ResultSet implements ResultSet, Seriali
         if (result != null) {
             size = result.size();
             int l = result.fieldsRow().size();
-            this.converters = new Converter[l];
-            for (int i = 0; i < l; i++)
-                converters[i] = Converters.inverse(result.field(i).getConverter());
+
+            // [#11099] Avoid these lookups if we have 1 rows or less.
+            this.converters1 = new Converter[size > 0 ? l : 0];
+            this.converters2 = new Converter2[size > 1 ? l : 0];
+
+            for (int i = 0; i < converters1.length; i++)
+                converters1[i] = Converters.inverse(result.field(i).getConverter());
         }
         else {
             size = 0;
-            converters = new Converter[0];
+            converters1 = new Converter[0];
+            converters2 = new Converter2[0];
         }
     }
 
@@ -157,8 +163,8 @@ public class MockResultSet extends JDBC41ResultSet implements ResultSet, Seriali
             throw new SQLException("ResultSet index is at an illegal position : " + index);
     }
 
-    private Field<?> field(String columnLabel) throws SQLException {
-        Field<?> field = result.field(columnLabel);
+    private Field<?> field(int fieldIndex, String columnLabel) throws SQLException {
+        Field<?> field = result.field(fieldIndex);
 
         if (field == null)
             throw new SQLException("Unknown column label : " + columnLabel);
@@ -166,12 +172,34 @@ public class MockResultSet extends JDBC41ResultSet implements ResultSet, Seriali
         return field;
     }
 
-    private Converter<?, ?> converter(int columnIndex) throws SQLException {
-        if (columnIndex > 0 && columnIndex <= converters.length)
-            return converters[columnIndex - 1];
+    private Converter<?, ?> converter1(int fieldIndex) throws SQLException {
+        if (fieldIndex >= 0 && fieldIndex < converters1.length)
+            return converters1[fieldIndex];
         else
-            throw new SQLException("Unknown column index : " + columnIndex);
+            throw new SQLException("Unknown column index : " + fieldIndex + 1);
     }
+
+    private Converter<?, ?> converter2(int fieldIndex, Class<?> from, Class<?> to) {
+        if (fieldIndex >= 0 && fieldIndex < converters2.length) {
+            Converter2 c = converters2[fieldIndex];
+
+            if (c == null)
+                converters2[fieldIndex] = c = new Converter2(from, to, lookupConverter2(from, to));
+
+            if (c.from() == from && c.to() == to)
+                return c.converter;
+        }
+
+        return lookupConverter2(from, to);
+    }
+
+    private Converter<?, ?> lookupConverter2(Class<?> from, Class<?> to) {
+        return (record.configuration() == null ? new DefaultConfiguration() : record.configuration())
+            .converterProvider()
+            .provide(from, to);
+    }
+
+    private static final record Converter2(Class<?> from, Class<?> to, Converter<?, ?> converter) {}
 
     private long getMillis(Calendar cal, int year, int month, int day, int hour, int minute, int second, int millis) {
         cal = (Calendar) cal.clone();
@@ -444,23 +472,21 @@ public class MockResultSet extends JDBC41ResultSet implements ResultSet, Seriali
         checkInRange();
 
         // [#11099] TODO: Possibly optimise this logic similar to that of MockResultSet.get(int, Class)
-        Converter<?, ?> converter = Converters.inverse(field(columnLabel).getConverter());
-        return get0(record.get(columnLabel, converter), type);
+        int fieldIndex = result.indexOf(columnLabel);
+        Converter<?, ?> converter = Converters.inverse(field(fieldIndex, columnLabel).getConverter());
+        return get0(fieldIndex, record.get(fieldIndex, converter), type);
     }
 
     private <T> T get(int columnIndex, Class<T> type) throws SQLException {
         checkInRange();
 
-        return get0(record.get(columnIndex - 1, converter(columnIndex)), type);
+        int fieldIndex = columnIndex - 1;
+        return get0(fieldIndex, record.get(fieldIndex, converter1(fieldIndex)), type);
     }
 
-    @SuppressWarnings("unchecked")
-    private <T> T get0(Object value, Class<T> type) {
-        Converter<Object, T> converter =
-        (record.configuration() == null ? new DefaultConfiguration() : record.configuration())
-            .converterProvider()
-            .provide(value == null ? Object.class : (Class<Object>) value.getClass(), type);
-
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    private <T> T get0(int fieldIndex, Object value, Class<T> type) {
+        Converter<Object, T> converter = (Converter) converter2(fieldIndex, value == null ? Object.class : (Class<Object>) value.getClass(), type);
         T converted = converter == null ? null : scoped(converter).from(value, converterContext());
         wasNull = (converted == null);
         return converted;

@@ -97,6 +97,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Supplier;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 // ...
@@ -285,12 +287,12 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
         TYPES_BY_TYPE = new Map[SQLDialect.values().length];
 
         for (SQLDialect dialect : SQLDialect.values()) {
-            TYPES_BY_SQL_DATATYPE[dialect.ordinal()] = new LinkedHashMap<>();
-            TYPES_BY_NAME[dialect.ordinal()] = new LinkedHashMap<>();
-            TYPES_BY_TYPE[dialect.ordinal()] = new LinkedHashMap<>();
+            TYPES_BY_SQL_DATATYPE[dialect.ordinal()] = new ConcurrentHashMap<>();
+            TYPES_BY_NAME[dialect.ordinal()] = new ConcurrentHashMap<>();
+            TYPES_BY_TYPE[dialect.ordinal()] = new ConcurrentHashMap<>();
         }
 
-        SQL_DATATYPES_BY_TYPE = new LinkedHashMap<>();
+        SQL_DATATYPES_BY_TYPE = new ConcurrentHashMap<>();
 
         // [#2506] Transitively load all dialect-specific data types
         try {
@@ -852,8 +854,9 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
             }
 
             if (result == null) {
-                if (SQL_DATATYPES_BY_TYPE.get(type) != null)
-                    return (DataType<T>) SQL_DATATYPES_BY_TYPE.get(type);
+                DataType<?> r;
+                if ((r = SQL_DATATYPES_BY_TYPE.get(type)) != null)
+                    return (DataType<T>) r;
 
                 // If we have a "fallback" data type from an outer context
                 else if (fallbackDataType != null)
@@ -988,14 +991,6 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
         // Real numbers should not be represented as float or double
         else
             return BigDecimal.class;
-    }
-
-    static final Collection<Class<?>> types() {
-        return unmodifiableCollection(SQL_DATATYPES_BY_TYPE.keySet());
-    }
-
-    static final Collection<DefaultDataType<?>> dataTypes() {
-        return unmodifiableCollection(SQL_DATATYPES_BY_TYPE.values());
     }
 
     static final DataType<?> set(DataType<?> d, Integer l, Integer p, Integer s) {

@@ -2364,6 +2364,9 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("%s%sdef %s: %s", visibility(override), override ? "override " : "", scalaWhitespaceSuffix(getter), type);
         }
         else if (kotlin) {
+            if (!StringUtils.isBlank(comment(column)))
+                out.javadoc(escapeEntities(comment(column)));
+
             out.println("%s%s%s %s: %s%s", visibilityPublic(), (override || generateInterfaces() ? "override " : ""), (generateImmutableInterfaces() ? "val" : "var"), member, type, kotlinNullability(out, column, Mode.RECORD_TYPE));
         }
         else {
@@ -2887,7 +2890,10 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("}");
             }
             else if (kotlin) {
-                out.println();
+                if (!StringUtils.isBlank(comment(column)))
+                    out.javadoc(escapeEntities(comment(column)));
+                else
+                    out.println();
 
                 if (column instanceof ColumnDefinition)
                     printColumnJPAAnnotation(out, (ColumnDefinition) column);
@@ -3617,6 +3623,8 @@ public class JavaGenerator extends AbstractGenerator {
 
         if (!kotlin && !printDeprecationIfUnknownType(out, typeFull))
             out.javadoc("Getter for <code>%s</code>.[[before= ][%s]]", name, list(escapeEntities(comment(column))));
+        else if (kotlin && !StringUtils.isBlank(comment(column)))
+            out.javadoc(escapeEntities(comment(column)));
 
         if (column instanceof ColumnDefinition)
             printColumnJPAAnnotation(out, (ColumnDefinition) column);
@@ -6209,6 +6217,9 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("%s%s%sclass %s(", visibility(), abstract_, (generatePojosAsScalaCaseClasses() ? "case " : ""), className);
 
             forEach(replacingEmbeddablesAndUnreplacedColumns, (column, separator) -> {
+                if (!StringUtils.isBlank(comment(column)))
+                    out.javadoc(escapeEntities(comment(column)));
+
                 out.println("%s%s%s: %s%s",
                     visibility(generateInterfaces()),
                     udtAttributeOverride(column) && supportPojoInheritance()
@@ -6245,6 +6256,9 @@ public class JavaGenerator extends AbstractGenerator {
                         printKotlinSetterAnnotation(out, ted, Mode.POJO);
                 }
 
+                if (!StringUtils.isBlank(comment(column)))
+                    out.javadoc(escapeEntities(comment(column)));
+
                 out.println("%s%s%s%s %s: %s%s%s%s",
                     visibility(generateInterfaces()),
                     generateInterfaces() || override ? "override " : "",
@@ -6269,6 +6283,9 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("%srecord %s(", visibility(), className);
 
                 forEach(replacingEmbeddablesAndUnreplacedColumns, (column, separator) -> {
+                    if (!StringUtils.isBlank(comment(column)))
+                        out.javadoc(escapeEntities(comment(column)));
+
                     out.println("[[before=@][after= ][%s]]%s %s%s",
                         list(nullableOrNonnullAnnotation(out, column)),
                         getJavaTypeRef(column, out, Mode.POJO),
@@ -6313,6 +6330,9 @@ public class JavaGenerator extends AbstractGenerator {
 
             if (!generatePojosAsJavaRecordClasses())
                 for (Definition column : replacingEmbeddablesAndUnreplacedColumns) {
+                    if (!StringUtils.isBlank(comment(column)))
+                        out.javadoc(escapeEntities(comment(column)));
+
                     out.println("private %s%s %s;",
                         generateImmutablePojos() ? "final " : "",
                         getJavaTypeRef(column, out, Mode.POJO),

@@ -1654,6 +1654,17 @@ final class MetaImpl extends AbstractMeta {
 
 
 
+
+
+                    case POSTGRES:
+                    case YUGABYTEDB:
+
+                        // [#18742] The pgjdbc driver reports a meaningless TEXT[] length.
+                        if (precision == Integer.MAX_VALUE && "_text".equals(typeName))
+                            precision = 0;
+
+                        break;
+
                     // [#17284] Computed columns are reported as defaults
                     case DERBY:
                         if (defaultValue != null && defaultValue.toUpperCase().startsWith("GENERATED ALWAYS AS")) {

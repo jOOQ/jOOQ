@@ -420,6 +420,11 @@ implements
     }
 
     final AbstractDataType<T> length0(Integer l) {
+
+        // [#18742] There are no zero length strings or binary strings in SQL
+        if (l != null && l == 0)
+            l = null;
+
         if (eq(length0(), l))
             return this;
         else

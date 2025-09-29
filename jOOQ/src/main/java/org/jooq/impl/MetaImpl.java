@@ -1460,8 +1460,8 @@ final class MetaImpl extends AbstractMeta {
                             new MetaUniqueKey(pkTable, pkName, pkFields, true), // TODO: Can we know whether it is a PK or UK?
                             pkFields,
                             true,
-                            foreignKeyRule(k.get(3, int.class)),
-                            foreignKeyRule(k.get(4, int.class))
+                            foreignKeyRule(k.get(4, int.class)),
+                            foreignKeyRule(k.get(3, int.class))
                         ));
                     }
                 }
@@ -1899,8 +1899,8 @@ final class MetaImpl extends AbstractMeta {
                     this,
                     map(v, f -> (TableField<Record, ?>) getTable().field(f.get(3, String.class)), TableField[]::new),
                     true,
-                    foreignKeyRule(k.get(3, int.class)),
-                    foreignKeyRule(k.get(4, int.class))
+                    foreignKeyRule(k.get(4, int.class)),
+                    foreignKeyRule(k.get(3, int.class))
                 ));
             });
 

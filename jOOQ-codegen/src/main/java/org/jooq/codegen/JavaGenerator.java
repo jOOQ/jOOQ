@@ -6284,7 +6284,7 @@ public class JavaGenerator extends AbstractGenerator {
 
                 forEach(replacingEmbeddablesAndUnreplacedColumns, (column, separator) -> {
                     if (!StringUtils.isBlank(comment(column)))
-                        out.javadoc(escapeEntities(comment(column)));
+                        out.javadocAndAnnotations(column, escapeEntities(comment(column, true)));
 
                     out.println("[[before=@][after= ][%s]]%s %s%s",
                         list(nullableOrNonnullAnnotation(out, column)),
@@ -11494,6 +11494,10 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     private String comment(Definition definition) {
+        return comment(definition, false);
+    }
+
+    private String comment(Definition definition, boolean suppressDeprecation) {
         return definition instanceof CatalogDefinition && generateCommentsOnCatalogs()
             || definition instanceof SchemaDefinition && generateCommentsOnSchemas()
             || definition instanceof TableDefinition && generateCommentsOnTables()
@@ -11507,7 +11511,11 @@ public class JavaGenerator extends AbstractGenerator {
             || definition instanceof ParameterDefinition && generateCommentsOnParameters()
             || definition instanceof SequenceDefinition && generateCommentsOnSequences()
             || definition instanceof DomainDefinition && generateCommentsOnDomains()
-             ? StringUtils.defaultIfBlank(definition.getComment(), "")
+
+            // [#19120] Java record components are not allowed to have Javadoc tags, it seems
+             ? suppressDeprecation
+                 ? StringUtils.defaultIfBlank(definition.getComment(), "").replace("@deprecated ", "")
+                 : StringUtils.defaultIfBlank(definition.getComment(), "")
              : "";
     }
 

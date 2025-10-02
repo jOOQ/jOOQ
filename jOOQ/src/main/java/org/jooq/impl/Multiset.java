@@ -50,7 +50,6 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 import static org.jooq.SQLDialect.TRINO;
 import static org.jooq.SQLDialect.YUGABYTEDB;
-import static org.jooq.conf.NestedCollectionEmulation.JSONB;
 import static org.jooq.impl.DSL.arrayAgg;
 import static org.jooq.impl.DSL.arrayGet;
 import static org.jooq.impl.DSL.function;

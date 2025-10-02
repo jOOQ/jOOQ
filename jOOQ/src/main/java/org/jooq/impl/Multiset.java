@@ -50,6 +50,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 import static org.jooq.SQLDialect.TRINO;
 import static org.jooq.SQLDialect.YUGABYTEDB;
+import static org.jooq.conf.NestedCollectionEmulation.JSONB;
 import static org.jooq.impl.DSL.arrayAgg;
 import static org.jooq.impl.DSL.arrayGet;
 import static org.jooq.impl.DSL.function;
@@ -147,6 +148,7 @@ import org.jooq.TableLike;
 import org.jooq.UDTPathField;
 import org.jooq.XML;
 import org.jooq.XMLAggOrderByStep;
+import org.jooq.conf.NestedCollectionEmulation;
 
 /**
  * @author Lukas Eder
@@ -610,7 +612,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
         if ((f = field.getBinding().formatter()) != null) {
             DefaultFormatterContext fctx = new DefaultFormatterContext(ctx, true, field);
 
-            if (field.getDataType().getFromType() == JSONB.class)
+            if (emulateMultiset(ctx.configuration()) == NestedCollectionEmulation.JSONB)
                 f.formatJSONB(fctx);
             else
                 f.formatJSON(fctx);

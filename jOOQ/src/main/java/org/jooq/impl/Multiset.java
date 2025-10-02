@@ -611,9 +611,9 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
             DefaultFormatterContext fctx = new DefaultFormatterContext(ctx, true, field);
 
             if (field.getDataType().getFromType() == JSONB.class)
-                f.formatJSON(fctx);
-            else
                 f.formatJSONB(fctx);
+            else
+                f.formatJSON(fctx);
 
             return fctx.formatted;
         }

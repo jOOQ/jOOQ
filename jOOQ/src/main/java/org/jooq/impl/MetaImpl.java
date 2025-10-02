@@ -112,6 +112,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -155,9 +156,11 @@ import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataDefinitionException;
 import org.jooq.exception.DataTypeException;
 import org.jooq.exception.SQLDialectNotSupportedException;
+import org.jooq.impl.QOM.ForeignKeyRule;
 import org.jooq.impl.QOM.GenerationOption;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
+import org.jooq.tools.jdbc.JDBCUtils;
 
 /**
  * An implementation of the public {@link Meta} type.
@@ -1589,14 +1592,18 @@ final class MetaImpl extends AbstractMeta {
                             new MetaUniqueKey(pkTable, pkName, pkFields, true), // TODO: Can we know whether it is a PK or UK?
                             pkFields,
                             true,
-                            foreignKeyRule(k.get(4, int.class)),
-                            foreignKeyRule(k.get(3, int.class))
+                            foreignKeyRule(k.get(4, Integer.class)),
+                            foreignKeyRule(k.get(3, Integer.class))
                         ));
                     }
                 }
             });
 
             return references;
+        }
+
+        private final ForeignKeyRule foreignKeyRule(Integer code) {
+            return code == null ? null : JDBCUtils.foreignKeyRule(code);
         }
 
         @SuppressWarnings("unchecked")
@@ -2041,8 +2048,8 @@ final class MetaImpl extends AbstractMeta {
                     this,
                     map(v, f -> (TableField<Record, ?>) getTable().field(f.get(3, String.class)), TableField[]::new),
                     true,
-                    foreignKeyRule(k.get(4, int.class)),
-                    foreignKeyRule(k.get(3, int.class))
+                    foreignKeyRule(k.get(4, Integer.class)),
+                    foreignKeyRule(k.get(3, Integer.class))
                 ));
             });
 

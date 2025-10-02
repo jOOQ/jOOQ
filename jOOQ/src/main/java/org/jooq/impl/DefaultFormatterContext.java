@@ -78,4 +78,12 @@ final class DefaultFormatterContext extends AbstractLazyScope implements Formatt
     public final void field(Field<?> f) {
         this.formatted = f;
     }
+
+    @Override
+    public String toString() {
+        if (formatted == original)
+            return "FormatterContext [ " + original + " ]";
+        else
+            return "FormatterContext [ " + original + " -> " + formatted + " ]";
+    }
 }

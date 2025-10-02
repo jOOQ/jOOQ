@@ -49,13 +49,14 @@ import org.jooq.BindingSetSQLOutputContext;
 import org.jooq.BindingSetStatementContext;
 import org.jooq.Converter;
 import org.jooq.Converters;
+import org.jooq.Formatter;
 
 /**
  * A binding that chains a new converter to an existing binding / converter.
  *
  * @author Lukas Eder
  */
-class ChainedConverterBinding<T, U1, U2> implements Binding<T, U2> {
+final class ChainedConverterBinding<T, U1, U2> implements Binding<T, U2> {
 
     private final Binding<T, U1>    delegate;
     private final Converter<U1, U2> suffix;
@@ -68,42 +69,47 @@ class ChainedConverterBinding<T, U1, U2> implements Binding<T, U2> {
     }
 
     @Override
-    public Converter<T, U2> converter() {
+    public final Formatter formatter() {
+        return delegate.formatter();
+    }
+
+    @Override
+    public final Converter<T, U2> converter() {
         return chained;
     }
 
     @Override
-    public void sql(BindingSQLContext<U2> ctx) throws SQLException {
+    public final void sql(BindingSQLContext<U2> ctx) throws SQLException {
         delegate.sql(ctx.convert(suffix));
     }
 
     @Override
-    public void register(BindingRegisterContext<U2> ctx) throws SQLException {
+    public final void register(BindingRegisterContext<U2> ctx) throws SQLException {
         delegate.register(ctx.convert(suffix));
     }
 
     @Override
-    public void set(BindingSetStatementContext<U2> ctx) throws SQLException {
+    public final void set(BindingSetStatementContext<U2> ctx) throws SQLException {
         delegate.set(ctx.convert(suffix));
     }
 
     @Override
-    public void set(BindingSetSQLOutputContext<U2> ctx) throws SQLException {
+    public final void set(BindingSetSQLOutputContext<U2> ctx) throws SQLException {
         delegate.set(ctx.convert(suffix));
     }
 
     @Override
-    public void get(BindingGetResultSetContext<U2> ctx) throws SQLException {
+    public final void get(BindingGetResultSetContext<U2> ctx) throws SQLException {
         delegate.get(ctx.convert(suffix));
     }
 
     @Override
-    public void get(BindingGetStatementContext<U2> ctx) throws SQLException {
+    public final void get(BindingGetStatementContext<U2> ctx) throws SQLException {
         delegate.get(ctx.convert(suffix));
     }
 
     @Override
-    public void get(BindingGetSQLInputContext<U2> ctx) throws SQLException {
+    public final void get(BindingGetSQLInputContext<U2> ctx) throws SQLException {
         delegate.get(ctx.convert(suffix));
     }
 }

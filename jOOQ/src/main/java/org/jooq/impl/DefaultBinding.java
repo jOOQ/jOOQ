@@ -562,6 +562,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         this.delegate = binding(converter);
     }
 
+    /**
+     * @deprecated - 3.21.0 - [#19125] - This class will be removed from public
+     *             API, do not reuse.
+     */
+    @Deprecated(forRemoval = true)
     public DefaultBinding(Binding<T, U> delegate) {
         this.delegate = delegate;
     }
@@ -571,61 +576,14 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         final Binding<T, U> theBinding;
 
 
-        if (converter == null && binding == null) {
+        if (converter == null && binding == null)
             theBinding = (Binding) dataType.getBinding();
-        }
-        else if (converter == null) {
+        else if (converter == null)
             theBinding = (Binding) binding;
-        }
-        else if (binding == null) {
+        else if (binding == null)
             theBinding = binding(dataType, (ContextConverter<T, U>) scoped(converter));
-        }
-        else {
-            theBinding = new Binding<T, U>() {
-
-                final ContextConverter<T, U> theConverter = Converters.of(binding.converter(), converter);
-
-                @Override
-                public Converter<T, U> converter() {
-                    return theConverter;
-                }
-
-                @Override
-                public void sql(BindingSQLContext<U> ctx) throws SQLException {
-                    binding.sql(ctx.convert(converter));
-                }
-
-                @Override
-                public void register(BindingRegisterContext<U> ctx) throws SQLException {
-                    binding.register(ctx.convert(converter));
-                }
-
-                @Override
-                public void set(BindingSetStatementContext<U> ctx) throws SQLException {
-                    binding.set(ctx.convert(converter));
-                }
-
-                @Override
-                public void set(BindingSetSQLOutputContext<U> ctx) throws SQLException {
-                    binding.set(ctx.convert(converter));
-                }
-
-                @Override
-                public void get(BindingGetResultSetContext<U> ctx) throws SQLException {
-                    binding.get(ctx.convert(converter));
-                }
-
-                @Override
-                public void get(BindingGetStatementContext<U> ctx) throws SQLException {
-                    binding.get(ctx.convert(converter));
-                }
-
-                @Override
-                public void get(BindingGetSQLInputContext<U> ctx) throws SQLException {
-                    binding.get(ctx.convert(converter));
-                }
-            };
-        }
+        else
+            return new ChainedConverterBinding<>(binding, converter);
 
         return theBinding;
     }
@@ -712,6 +670,21 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     // -----------------------------------------------------------------------------------------------------------------
     // Implementation of Binding API for backwards compatibility
     // -----------------------------------------------------------------------------------------------------------------
+
+    @Override
+    public Formatter formatter() {
+        return delegate.formatter();
+    }
+
+    @Override
+    public Binding<T[], U[]> arrayBinding() {
+        return delegate.arrayBinding();
+    }
+
+    @Override
+    public Binding<?, ?> arrayComponentBinding() {
+        return delegate.arrayComponentBinding();
+    }
 
     @Override
     public Converter<T, U> converter() {

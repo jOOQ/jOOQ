@@ -28,6 +28,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import org.jooq.types.Interval;
+
 /**
  * @author FangYidong&lt;fangyidong@yahoo.com.cn&gt;
  */
@@ -54,6 +56,10 @@ public class JSONValue {
             out.write("null");
             return;
         }
+
+        // [#19152] Interval types are Numbers, but we should format them as strings
+        if (value instanceof Interval)
+            value = value.toString();
 
         if (value instanceof String s) {
             out.write('\"');

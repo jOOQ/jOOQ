@@ -39,6 +39,9 @@ package org.jooq;
 
 import static org.jooq.tools.StringUtils.rightPad;
 
+import java.util.Base64;
+import java.util.HexFormat;
+
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -87,6 +90,7 @@ public final class JSONFormat {
     boolean                        quoteNested;
     boolean                        nanAsString;
     boolean                        infinityAsString;
+    BinaryFormat                   binaryFormat;
 
     public JSONFormat() {
         this(
@@ -103,7 +107,8 @@ public final class JSONFormat {
             true,
             false,
             false,
-            false
+            false,
+            BinaryFormat.BASE64
         );
     }
 
@@ -121,7 +126,8 @@ public final class JSONFormat {
         boolean wrapSingleColumnRecords,
         boolean quoteNested,
         boolean nanAsString,
-        boolean infinityAsString
+        boolean infinityAsString,
+        BinaryFormat binaryFormat
     ) {
         this.mutable = mutable;
         this.format = format;
@@ -142,6 +148,7 @@ public final class JSONFormat {
         this.quoteNested = quoteNested;
         this.nanAsString = nanAsString;
         this.infinityAsString = infinityAsString;
+        this.binaryFormat = binaryFormat;
     }
 
     /**
@@ -171,7 +178,8 @@ public final class JSONFormat {
                 wrapSingleColumnRecords,
                 quoteNested,
                 nanAsString,
-                infinityAsString
+                infinityAsString,
+                binaryFormat
             );
         else
             return this;
@@ -201,7 +209,8 @@ public final class JSONFormat {
                 wrapSingleColumnRecords,
                 quoteNested,
                 nanAsString,
-                infinityAsString
+                infinityAsString,
+                binaryFormat
             );
     }
 
@@ -236,7 +245,8 @@ public final class JSONFormat {
                 wrapSingleColumnRecords,
                 quoteNested,
                 nanAsString,
-                infinityAsString
+                infinityAsString,
+                binaryFormat
             );
     }
 
@@ -272,7 +282,8 @@ public final class JSONFormat {
                 wrapSingleColumnRecords,
                 quoteNested,
                 nanAsString,
-                infinityAsString
+                infinityAsString,
+                binaryFormat
             );
     }
 
@@ -307,7 +318,8 @@ public final class JSONFormat {
                 wrapSingleColumnRecords,
                 quoteNested,
                 nanAsString,
-                infinityAsString
+                infinityAsString,
+                binaryFormat
             );
     }
 
@@ -358,7 +370,8 @@ public final class JSONFormat {
                 wrapSingleColumnRecords,
                 quoteNested,
                 nanAsString,
-                infinityAsString
+                infinityAsString,
+                binaryFormat
             );
     }
 
@@ -395,7 +408,8 @@ public final class JSONFormat {
                 wrapSingleColumnRecords,
                 quoteNested,
                 nanAsString,
-                infinityAsString
+                infinityAsString,
+                binaryFormat
             );
     }
 
@@ -433,7 +447,8 @@ public final class JSONFormat {
                 wrapSingleColumnRecords,
                 quoteNested,
                 nanAsString,
-                infinityAsString
+                infinityAsString,
+                binaryFormat
             );
     }
 
@@ -471,7 +486,8 @@ public final class JSONFormat {
                 wrapSingleColumnRecords,
                 quoteNested,
                 nanAsString,
-                infinityAsString
+                infinityAsString,
+                binaryFormat
             );
     }
 
@@ -508,7 +524,8 @@ public final class JSONFormat {
                 newWrapSingleColumnRecords,
                 quoteNested,
                 nanAsString,
-                infinityAsString
+                infinityAsString,
+                binaryFormat
             );
     }
 
@@ -544,7 +561,8 @@ public final class JSONFormat {
                 wrapSingleColumnRecords,
                 newQuoteNested,
                 nanAsString,
-                infinityAsString
+                infinityAsString,
+                binaryFormat
             );
     }
 
@@ -582,7 +600,8 @@ public final class JSONFormat {
                 wrapSingleColumnRecords,
                 quoteNested,
                 newNanAsString,
-                infinityAsString
+                infinityAsString,
+                binaryFormat
             );
     }
 
@@ -624,7 +643,8 @@ public final class JSONFormat {
                 wrapSingleColumnRecords,
                 quoteNested,
                 nanAsString,
-                newInfinityAsString
+                newInfinityAsString,
+                binaryFormat
             );
     }
 
@@ -638,6 +658,42 @@ public final class JSONFormat {
      */
     public final boolean infinityAsString() {
         return infinityAsString;
+    }
+
+    /**
+     * The {@link BinaryFormat} to use when formatting binary data.
+     */
+    @NotNull
+    public final JSONFormat binaryFormat(BinaryFormat newBinaryFormat) {
+        if (mutable) {
+            binaryFormat = newBinaryFormat;
+            return this;
+        }
+        else
+            return new JSONFormat(
+                mutable,
+                format,
+                newline,
+                globalIndent,
+                indent,
+                indented,
+                header,
+                recordFormat,
+                objectNulls,
+                arrayNulls,
+                wrapSingleColumnRecords,
+                quoteNested,
+                nanAsString,
+                infinityAsString,
+                newBinaryFormat
+            );
+    }
+
+    /**
+     * The {@link BinaryFormat} to use when formatting binary data.
+     */
+    public final BinaryFormat binaryFormat() {
+        return binaryFormat;
     }
 
     /**
@@ -681,5 +737,21 @@ public final class JSONFormat {
          * value in the JSON object (the key is absent) or array.
          */
         ABSENT_ON_NULL,
+    }
+
+    /**
+     * The format of binary values in JSON documents.
+     */
+    public enum BinaryFormat {
+
+        /**
+         * Binary values are formatted as {@link Base64} encoded strings.
+         */
+        BASE64,
+
+        /**
+         * Binary values are formatted as {@link HexFormat} encoded strings.
+         */
+        HEX
     }
 }

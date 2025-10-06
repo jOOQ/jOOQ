@@ -73,6 +73,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.jooq.CSVFormat;
 import org.jooq.ChartFormat;
 import org.jooq.ChartFormat.Display;
+import org.jooq.JSONFormat.BinaryFormat;
 import org.jooq.JSONFormat.NullFormat;
 import org.jooq.Configuration;
 import org.jooq.Constants;
@@ -635,7 +636,11 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
 
         // [#2741] TODO: This logic will be externalised in new SPI
         if (value instanceof byte[] a) {
-            JSONValue.writeJSONString(Base64.getEncoder().encodeToString(a), writer);
+            if (format.binaryFormat() == BinaryFormat.HEX)
+                JSONValue.writeJSONString(Tools.convertBytesToHex(a), writer);
+            else
+                JSONValue.writeJSONString(Base64.getEncoder().encodeToString(a), writer);
+
         }
 
         // [#6563] Arrays can be serialised natively in JSON

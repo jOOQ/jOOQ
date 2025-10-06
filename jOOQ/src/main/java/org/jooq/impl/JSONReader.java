@@ -236,9 +236,9 @@ final class JSONReader<R extends Record> {
         return result;
     }
 
-    private static final Set<SQLDialect> ENCODE_BINARY_AS_HEX  = SQLDialect.supportedBy(H2, POSTGRES, SQLITE, TRINO, YUGABYTEDB);
-    private static final Set<SQLDialect> ENCODE_BINARY_AS_TEXT = SQLDialect.supportedBy(MARIADB);
-    private static final Pattern         P_MYSQL_BINARY_PREFIX = Pattern.compile("^base64:type\\d+:(.*)$");
+    static final Set<SQLDialect> ENCODE_BINARY_AS_HEX  = SQLDialect.supportedBy(H2, POSTGRES, SQLITE, TRINO, YUGABYTEDB);
+    static final Set<SQLDialect> ENCODE_BINARY_AS_TEXT = SQLDialect.supportedBy(MARIADB);
+    private static final Pattern P_MYSQL_BINARY_PREFIX = Pattern.compile("^base64:type\\d+:(.*)$");
 
     private static final List<Object> patchRecord(
         DSLContext ctx,

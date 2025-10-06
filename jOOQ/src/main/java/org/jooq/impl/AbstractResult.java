@@ -41,6 +41,8 @@ import static java.lang.Math.max;
 import static java.lang.Math.min;
 import static java.util.stream.Collectors.joining;
 import static org.jooq.JSONFormat.NullFormat.ABSENT_ON_NULL;
+import static org.jooq.XMLFormat.NullFormat.ABSENT_ELEMENT;
+import static org.jooq.XMLFormat.NullFormat.XSI_NIL;
 import static org.jooq.XMLFormat.RecordFormat.COLUMN_NAME_ELEMENTS;
 import static org.jooq.XMLFormat.RecordFormat.VALUE_ELEMENTS_WITH_FIELD_ATTRIBUTE;
 import static org.jooq.conf.SettingsTools.renderLocale;
@@ -962,32 +964,37 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
                 ? escapeXML(field.getName())
                 : "value";
 
-            writer.append("<" + tag);
-            if (format.recordFormat() == VALUE_ELEMENTS_WITH_FIELD_ATTRIBUTE) {
-                writer.append(" field=\"");
-                writer.append(escapeXML(field.getName()));
-                writer.append("\"");
-            }
-
-            if (value == null) {
-                writer.append("/>");
-            }
-            else {
-                writer.append(">");
-
-                if (value instanceof Formattable f) {
-                    writer.append(newline).append(format.indentString(recordLevel + 2));
-                    int previous = format.globalIndent();
-                    f.formatXML(writer, format.globalIndent(format.globalIndent() + format.indent() * (recordLevel + 2)));
-                    format.globalIndent(previous);
-                    writer.append(newline).append(format.indentString(recordLevel + 1));
+            if (value != null || format.nullFormat() != ABSENT_ELEMENT) {
+                writer.append("<" + tag);
+                if (format.recordFormat() == VALUE_ELEMENTS_WITH_FIELD_ATTRIBUTE) {
+                    writer.append(" field=\"");
+                    writer.append(escapeXML(field.getName()));
+                    writer.append("\"");
                 }
-                else if (value instanceof XML && !format.quoteNested())
-                    writer.append(((XML) value).data());
-                else
-                    writer.append(escapeXML(format0(value, false, false)));
 
-                writer.append("</" + tag + ">");
+                if (value == null) {
+                    if (format.nullFormat() == XSI_NIL)
+                        writer.append(" xsi:nil=\"true\"");
+
+                    writer.append("/>");
+                }
+                else {
+                    writer.append(">");
+
+                    if (value instanceof Formattable f) {
+                        writer.append(newline).append(format.indentString(recordLevel + 2));
+                        int previous = format.globalIndent();
+                        f.formatXML(writer, format.globalIndent(format.globalIndent() + format.indent() * (recordLevel + 2)));
+                        format.globalIndent(previous);
+                        writer.append(newline).append(format.indentString(recordLevel + 1));
+                    }
+                    else if (value instanceof XML && !format.quoteNested())
+                        writer.append(((XML) value).data());
+                    else
+                        writer.append(escapeXML(format0(value, false, false)));
+
+                    writer.append("</" + tag + ">");
+                }
             }
         }
 

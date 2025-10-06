@@ -58,7 +58,7 @@ public class JSONValue {
 
         if (value instanceof Double d) {
             if (d.isInfinite() || d.isNaN())
-                out.write("null");
+                out.write("\"NaN\"");
             else
                 out.write(value.toString());
 
@@ -67,7 +67,7 @@ public class JSONValue {
 
         if (value instanceof Float f) {
             if (f.isInfinite() || f.isNaN())
-                out.write("null");
+                out.write("\"NaN\"");
             else
                 out.write(value.toString());
 

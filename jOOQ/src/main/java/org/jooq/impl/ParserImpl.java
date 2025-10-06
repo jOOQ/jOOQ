@@ -8043,7 +8043,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
     }
 
     private final String parseHints() {
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = null;
 
         do {
             int p = position();
@@ -8065,6 +8065,9 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
                 position(i + 2);
 
+                if (sb == null)
+                    sb = new StringBuilder();
+
                 if (sb.length() > 0)
                     sb.append(' ');
 
@@ -8074,7 +8077,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         while (parseWhitespaceIf());
 
         ignoreHints(true);
-        return sb.length() > 0 ? sb.toString() : null;
+        return sb != null && sb.length() > 0 ? sb.toString() : null;
     }
 
     private final Condition toCondition(QueryPart part) {

@@ -64,6 +64,7 @@ public final class XMLFormat {
     boolean                       header;
     RecordFormat                  recordFormat;
     boolean                       quoteNested;
+    NullFormat                    nullFormat;
 
     public XMLFormat() {
         this(
@@ -76,7 +77,8 @@ public final class XMLFormat {
             null,
             true,
             RecordFormat.VALUE_ELEMENTS_WITH_FIELD_ATTRIBUTE,
-            false
+            false,
+            NullFormat.EMPTY_ELEMENT
         );
     }
 
@@ -90,7 +92,8 @@ public final class XMLFormat {
         String[] indented,
         boolean header,
         RecordFormat recordFormat,
-        boolean quoteNested
+        boolean quoteNested,
+        NullFormat nullFormat
     ) {
         this.mutable = mutable;
         this.xmlns = xmlns;
@@ -107,6 +110,7 @@ public final class XMLFormat {
         this.header = header;
         this.recordFormat = recordFormat;
         this.quoteNested = quoteNested;
+        this.nullFormat = nullFormat;
     }
 
     /**
@@ -132,7 +136,8 @@ public final class XMLFormat {
                 indented,
                 header,
                 recordFormat,
-                quoteNested
+                quoteNested,
+                nullFormat
             );
         else
             return this;
@@ -158,7 +163,8 @@ public final class XMLFormat {
                 indented,
                 header,
                 recordFormat,
-                quoteNested
+                quoteNested,
+                nullFormat
             );
     }
 
@@ -189,7 +195,8 @@ public final class XMLFormat {
                 null,
                 header,
                 recordFormat,
-                quoteNested
+                quoteNested,
+                nullFormat
             );
     }
 
@@ -220,7 +227,8 @@ public final class XMLFormat {
                 indented,
                 header,
                 recordFormat,
-                quoteNested
+                quoteNested,
+                nullFormat
             );
     }
 
@@ -252,7 +260,8 @@ public final class XMLFormat {
                 null,
                 header,
                 recordFormat,
-                quoteNested
+                quoteNested,
+                nullFormat
             );
     }
 
@@ -283,7 +292,8 @@ public final class XMLFormat {
                 null,
                 header,
                 recordFormat,
-                quoteNested
+                quoteNested,
+                nullFormat
             );
     }
 
@@ -335,7 +345,8 @@ public final class XMLFormat {
                 indented,
                 newHeader,
                 recordFormat,
-                quoteNested
+                quoteNested,
+                nullFormat
             );
     }
 
@@ -367,7 +378,8 @@ public final class XMLFormat {
                 indented,
                 header,
                 newRecordFormat,
-                quoteNested
+                quoteNested,
+                nullFormat
             );
     }
 
@@ -401,7 +413,8 @@ public final class XMLFormat {
                 indented,
                 header,
                 recordFormat,
-                newQuoteNested
+                newQuoteNested,
+                nullFormat
             );
     }
 
@@ -411,6 +424,40 @@ public final class XMLFormat {
      */
     public final boolean quoteNested() {
         return quoteNested;
+    }
+
+    /**
+     * Whether nested {@link XML} content should be quoted like a string, or
+     * nested into XML formatted output.
+     */
+    @NotNull
+    public final XMLFormat nullFormat(NullFormat newNullFormat) {
+        if (mutable) {
+            nullFormat = newNullFormat;
+            return this;
+        }
+        else
+            return new XMLFormat(
+                mutable,
+                xmlns,
+                format,
+                newline,
+                globalIndent,
+                indent,
+                indented,
+                header,
+                recordFormat,
+                quoteNested,
+                newNullFormat
+            );
+    }
+
+    /**
+     * Whether nested {@link XML} content should be quoted like a string, or
+     * nested into XML formatted output.
+     */
+    public final NullFormat nullFormat() {
+        return nullFormat;
     }
 
     /**
@@ -432,5 +479,26 @@ public final class XMLFormat {
          * Simplified: <code>/record/colname/text()</code>.
          */
         COLUMN_NAME_ELEMENTS,
+    }
+
+    /**
+     * The format of a <code>null</code> value.
+     */
+    public enum NullFormat {
+
+        /**
+         * A <code>null</code> value is represented by an empty tag.
+         */
+        EMPTY_ELEMENT,
+
+        /**
+         * A <code>null</code> value is represented by an absent tag.
+         */
+        ABSENT_ELEMENT,
+
+        /**
+         * A <code>null</code> value is represented by a <code>xsi:nil="true"</code> attribute.
+         */
+        XSI_NIL
     }
 }

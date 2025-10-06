@@ -40,6 +40,16 @@ public class JSONValue {
      * @see JSONArray#writeJSONString(List, Writer)
      */
     public static void writeJSONString(Object value, Writer out) throws IOException {
+        writeJSONString(value, out, false, false);
+    }
+
+    /**
+     * Encode an object into JSON text and write it to out.
+     *
+     * @see JSONObject#writeJSONString(Map, Writer)
+     * @see JSONArray#writeJSONString(List, Writer)
+     */
+    public static void writeJSONString(Object value, Writer out, boolean nanAsString, boolean infinityAsString) throws IOException {
         if (value == null) {
             out.write("null");
             return;
@@ -53,8 +63,10 @@ public class JSONValue {
         }
 
         if (value instanceof Double d) {
-            if (d.isInfinite() || d.isNaN())
-                out.write("\"NaN\"");
+            if (d.isInfinite())
+                writeInfinityOrNaN(out, infinityAsString, d);
+            else if (d.isNaN())
+                writeInfinityOrNaN(out, nanAsString, d);
             else
                 out.write(value.toString());
 
@@ -62,8 +74,10 @@ public class JSONValue {
         }
 
         if (value instanceof Float f) {
-            if (f.isInfinite() || f.isNaN())
-                out.write("\"NaN\"");
+            if (f.isInfinite())
+                writeInfinityOrNaN(out, nanAsString, f);
+            else if (f.isNaN())
+                writeInfinityOrNaN(out, nanAsString, f);
             else
                 out.write(value.toString());
 
@@ -100,6 +114,16 @@ public class JSONValue {
         out.write('\"');
         out.write(escape(value.toString()));
         out.write('\"');
+    }
+
+    private static final void writeInfinityOrNaN(Writer out, boolean check, Number n) throws IOException {
+        if (check) {
+            out.write('"');
+            out.write(n.toString());
+            out.write('"');
+        }
+        else
+            out.write("null");
     }
 
     /**

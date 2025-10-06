@@ -85,6 +85,8 @@ public final class JSONFormat {
     NullFormat                     arrayNulls;
     boolean                        wrapSingleColumnRecords;
     boolean                        quoteNested;
+    boolean                        nanAsString;
+    boolean                        infinityAsString;
 
     public JSONFormat() {
         this(
@@ -99,6 +101,8 @@ public final class JSONFormat {
             NullFormat.NULL_ON_NULL,
             NullFormat.NULL_ON_NULL,
             true,
+            false,
+            false,
             false
         );
     }
@@ -115,7 +119,9 @@ public final class JSONFormat {
         NullFormat objectNulls,
         NullFormat arrayNulls,
         boolean wrapSingleColumnRecords,
-        boolean quoteNested
+        boolean quoteNested,
+        boolean nanAsString,
+        boolean infinityAsString
     ) {
         this.mutable = mutable;
         this.format = format;
@@ -134,6 +140,8 @@ public final class JSONFormat {
         this.arrayNulls = arrayNulls;
         this.wrapSingleColumnRecords = wrapSingleColumnRecords;
         this.quoteNested = quoteNested;
+        this.nanAsString = nanAsString;
+        this.infinityAsString = infinityAsString;
     }
 
     /**
@@ -161,7 +169,9 @@ public final class JSONFormat {
                 objectNulls,
                 arrayNulls,
                 wrapSingleColumnRecords,
-                quoteNested
+                quoteNested,
+                nanAsString,
+                infinityAsString
             );
         else
             return this;
@@ -189,7 +199,9 @@ public final class JSONFormat {
                 objectNulls,
                 arrayNulls,
                 wrapSingleColumnRecords,
-                quoteNested
+                quoteNested,
+                nanAsString,
+                infinityAsString
             );
     }
 
@@ -222,7 +234,9 @@ public final class JSONFormat {
                 objectNulls,
                 arrayNulls,
                 wrapSingleColumnRecords,
-                quoteNested
+                quoteNested,
+                nanAsString,
+                infinityAsString
             );
     }
 
@@ -256,7 +270,9 @@ public final class JSONFormat {
                 objectNulls,
                 arrayNulls,
                 wrapSingleColumnRecords,
-                quoteNested
+                quoteNested,
+                nanAsString,
+                infinityAsString
             );
     }
 
@@ -289,7 +305,9 @@ public final class JSONFormat {
                 objectNulls,
                 arrayNulls,
                 wrapSingleColumnRecords,
-                quoteNested
+                quoteNested,
+                nanAsString,
+                infinityAsString
             );
     }
 
@@ -338,7 +356,9 @@ public final class JSONFormat {
                 objectNulls,
                 arrayNulls,
                 wrapSingleColumnRecords,
-                quoteNested
+                quoteNested,
+                nanAsString,
+                infinityAsString
             );
     }
 
@@ -373,7 +393,9 @@ public final class JSONFormat {
                 objectNulls,
                 arrayNulls,
                 wrapSingleColumnRecords,
-                quoteNested
+                quoteNested,
+                nanAsString,
+                infinityAsString
             );
     }
 
@@ -409,7 +431,9 @@ public final class JSONFormat {
                 newObjectNulls,
                 arrayNulls,
                 wrapSingleColumnRecords,
-                quoteNested
+                quoteNested,
+                nanAsString,
+                infinityAsString
             );
     }
 
@@ -445,7 +469,9 @@ public final class JSONFormat {
                 objectNulls,
                 newArrayNulls,
                 wrapSingleColumnRecords,
-                quoteNested
+                quoteNested,
+                nanAsString,
+                infinityAsString
             );
     }
 
@@ -480,7 +506,9 @@ public final class JSONFormat {
                 objectNulls,
                 arrayNulls,
                 newWrapSingleColumnRecords,
-                quoteNested
+                quoteNested,
+                nanAsString,
+                infinityAsString
             );
     }
 
@@ -514,7 +542,9 @@ public final class JSONFormat {
                 objectNulls,
                 arrayNulls,
                 wrapSingleColumnRecords,
-                newQuoteNested
+                newQuoteNested,
+                nanAsString,
+                infinityAsString
             );
     }
 
@@ -524,6 +554,90 @@ public final class JSONFormat {
      */
     public final boolean quoteNested() {
         return quoteNested;
+    }
+
+    /**
+     * Whether {@link Double#NaN} and {@link Float#NaN} values should be
+     * formatted as <code>"NaN"</code> strings. The default is to format them as
+     * <code>null</code>, as JSON doesn't support <code>NaN</code> values.
+     */
+    @NotNull
+    public final JSONFormat nanAsString(boolean newNanAsString) {
+        if (mutable) {
+            nanAsString = newNanAsString;
+            return this;
+        }
+        else
+            return new JSONFormat(
+                mutable,
+                format,
+                newline,
+                globalIndent,
+                indent,
+                indented,
+                header,
+                recordFormat,
+                objectNulls,
+                arrayNulls,
+                wrapSingleColumnRecords,
+                quoteNested,
+                newNanAsString,
+                infinityAsString
+            );
+    }
+
+    /**
+     * Whether {@link Double#NaN} and {@link Float#NaN} values should be
+     * formatted as <code>"NaN"</code> strings. The default is to format them as
+     * <code>null</code>, as JSON doesn't support <code>NaN</code> values.
+     */
+    public final boolean nanAsString() {
+        return nanAsString;
+    }
+
+    /**
+     * Whether {@link Double#POSITIVE_INFINITY},
+     * {@link Double#NEGATIVE_INFINITY}, {@link Float#POSITIVE_INFINITY}, and
+     * {@link Float#NEGATIVE_INFINITY} values should be formatted as
+     * <code>"Infinity"</code> or <code>"-Infinity"</code> strings. The default
+     * is to format them as <code>null</code>, as JSON doesn't support
+     * <code>Infinity</code> values.
+     */
+    @NotNull
+    public final JSONFormat infinityAsString(boolean newInfinityAsString) {
+        if (mutable) {
+            infinityAsString = newInfinityAsString;
+            return this;
+        }
+        else
+            return new JSONFormat(
+                mutable,
+                format,
+                newline,
+                globalIndent,
+                indent,
+                indented,
+                header,
+                recordFormat,
+                objectNulls,
+                arrayNulls,
+                wrapSingleColumnRecords,
+                quoteNested,
+                nanAsString,
+                newInfinityAsString
+            );
+    }
+
+    /**
+     * Whether {@link Double#POSITIVE_INFINITY},
+     * {@link Double#NEGATIVE_INFINITY}, {@link Float#POSITIVE_INFINITY}, and
+     * {@link Float#NEGATIVE_INFINITY} values should be formatted as
+     * <code>"Infinity"</code> or <code>"-Infinity"</code> strings. The default
+     * is to format them as <code>null</code>, as JSON doesn't support
+     * <code>Infinity</code> values.
+     */
+    public final boolean infinityAsString() {
+        return infinityAsString;
     }
 
     /**

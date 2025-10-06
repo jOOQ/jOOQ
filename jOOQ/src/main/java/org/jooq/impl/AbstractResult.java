@@ -667,7 +667,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
         else if (value instanceof JSONB && !format.quoteNested())
             writer.write(((JSONB) value).data());
         else
-            JSONValue.writeJSONString(value, writer);
+            JSONValue.writeJSONString(value, writer, format.nanAsString(), format.infinityAsString());
     }
 
     static final void formatJSONMap0(

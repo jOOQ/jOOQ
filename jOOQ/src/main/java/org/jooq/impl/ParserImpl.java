@@ -13170,11 +13170,13 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
             case 'I':
                 if (parseKeywordOrIdentifierIf("INTEGER") ||
                     parseKeywordOrIdentifierIf("INT") ||
-                    parseKeywordOrIdentifierIf("INT4"))
+                    parseKeywordOrIdentifierIf("INT4") ||
+                    parseKeywordOrIdentifierIf("INT32"))
                     return parseUnsigned(parseAndIgnoreDataTypeLength(INTEGER));
                 else if (parseKeywordOrIdentifierIf("INT2"))
                     return SMALLINT;
-                else if (parseKeywordOrIdentifierIf("INT8"))
+                else if (parseKeywordOrIdentifierIf("INT8") ||
+                    parseKeywordOrIdentifierIf("INT64"))
                     return BIGINT;
                 else if (!parseNumericOnly && parseKeywordIf("INTERVAL")) {
                     if (parseKeywordIf("YEAR")) {

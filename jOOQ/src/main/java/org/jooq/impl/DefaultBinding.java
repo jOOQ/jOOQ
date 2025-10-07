@@ -52,6 +52,8 @@ import static java.util.regex.Matcher.quoteReplacement;
 import static org.jooq.ContextConverter.scoped;
 import static org.jooq.Geography.geography;
 import static org.jooq.Geometry.geometry;
+import static org.jooq.JSON.json;
+import static org.jooq.JSONB.jsonb;
 // ...
 // ...
 // ...
@@ -86,9 +88,11 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
+import static org.jooq.XML.xml;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.Convert.convert;
 import static org.jooq.impl.Convert.patchIso8601Timestamp;
+import static org.jooq.impl.DSL.array;
 import static org.jooq.impl.DSL.cast;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
@@ -108,6 +112,7 @@ import static org.jooq.impl.DefaultDataType.getDataType;
 import static org.jooq.impl.DefaultExecuteContext.localExecuteContext;
 import static org.jooq.impl.DefaultExecuteContext.localTargetConnection;
 import static org.jooq.impl.Internal.arrayType;
+import static org.jooq.impl.JSONReader.ENCODE_BINARY_AS_HEX;
 import static org.jooq.impl.Keywords.K_ARRAY;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_BLOB;
@@ -255,6 +260,8 @@ import org.jooq.Geography;
 import org.jooq.Geometry;
 import org.jooq.JSON;
 import org.jooq.JSONB;
+import org.jooq.JSONFormat;
+import org.jooq.JSONFormat.BinaryFormat;
 import org.jooq.Package;
 import org.jooq.Param;
 // ...
@@ -273,6 +280,9 @@ import org.jooq.UDT;
 import org.jooq.UDTField;
 import org.jooq.UDTRecord;
 import org.jooq.XML;
+import org.jooq.XMLFormat;
+import org.jooq.XMLFormat.ArrayFormat;
+import org.jooq.XMLFormat.NullFormat;
 import org.jooq.conf.NestedCollectionEmulation;
 import org.jooq.exception.ControlFlowSignal;
 import org.jooq.exception.DataTypeException;
@@ -4380,13 +4390,68 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
     static final class DefaultResultBinding<U> extends InternalBinding<org.jooq.Result<?>, U> {
 
+        static final JSONFormat          JSON_FORMAT_BASE64 = JSONFormat.DEFAULT_FOR_RECORDS.recordFormat(JSONFormat.RecordFormat.ARRAY).nanAsString(true).infinityAsString(true);
+        static final JSONFormat          JSON_FORMAT_HEX    = JSON_FORMAT_BASE64.binaryFormat(BinaryFormat.HEX);
+        static final XMLFormat           XML_FORMAT         = XMLFormat.DEFAULT_FOR_RECORDS.recordFormat(XMLFormat.RecordFormat.COLUMN_NAME_ELEMENTS).nullFormat(NullFormat.XSI_NIL).arrayFormat(ArrayFormat.ELEMENTS);
+
+        final DefaultXMLBinding<XML>     xmlBinding;
+        final DefaultJSONBinding<JSON>   jsonBinding;
+        final DefaultJSONBBinding<JSONB> jsonbBinding;
+
         DefaultResultBinding(DataType<Result<?>> dataType, Converter<Result<?>, U> converter) {
             super(dataType, converter);
+
+            xmlBinding = new DefaultXMLBinding<>(SQLDataType.XML, Converters.identity(XML.class));
+            jsonBinding = new DefaultJSONBinding<>(SQLDataType.JSON, Converters.identity(JSON.class));
+            jsonbBinding = new DefaultJSONBBinding<>(SQLDataType.JSONB, Converters.identity(JSONB.class));
+        }
+
+        final JSONFormat jsonFormat(Scope ctx) {
+            return ENCODE_BINARY_AS_HEX.contains(ctx.dialect()) ? JSON_FORMAT_HEX : JSON_FORMAT_BASE64;
+        }
+
+        @Override
+        final void sqlInline0(BindingSQLContext<U> ctx, Result<?> value) throws SQLException {
+            switch (emulateMultiset(ctx.configuration())) {
+                case JSON:
+                    jsonBinding.sqlInline0((BindingSQLContext) ctx, json(value.formatJSON(jsonFormat(ctx))));
+                    break;
+
+                case JSONB:
+                    jsonbBinding.sqlInline0((BindingSQLContext) ctx, jsonb(value.formatJSON(jsonFormat(ctx))));
+                    break;
+
+                case XML:
+                    xmlBinding.sqlInline0((BindingSQLContext) ctx, xml(value.formatXML(XML_FORMAT)));
+                    break;
+
+                case NATIVE:
+                    ctx.render().visit(array(map(value, r -> new RowAsField<>(r.valuesRow()))));
+                    break;
+
+                default:
+                    throw new UnsupportedOperationException("Cannot inline a value of type Result using " + emulateMultiset(ctx.configuration()) + " MULTISET emulation.");
+            }
         }
 
         @Override
         final void set0(BindingSetStatementContext<U> ctx, Result<?> value) throws SQLException {
-            throw new UnsupportedOperationException("Cannot bind a value of type Result to a PreparedStatement");
+            switch (emulateMultiset(ctx.configuration())) {
+                case JSON:
+                    jsonBinding.set0((BindingSetStatementContext) ctx, json(value.formatJSON(jsonFormat(ctx))));
+                    break;
+
+                case JSONB:
+                    jsonbBinding.set0((BindingSetStatementContext) ctx, jsonb(value.formatJSON(jsonFormat(ctx))));
+                    break;
+
+                case XML:
+                    xmlBinding.set0((BindingSetStatementContext) ctx, xml(value.formatXML(XML_FORMAT)));
+                    break;
+
+                default:
+                    throw new UnsupportedOperationException("Cannot bind a value of type Result using " + emulateMultiset(ctx.configuration()) + " MULTISET emulation.");
+            }
         }
 
         @Override

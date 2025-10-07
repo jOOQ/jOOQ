@@ -107,6 +107,7 @@ import org.jooq.tools.json.JSONValue;
 import org.w3c.dom.Document;
 import org.w3c.dom.DocumentFragment;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
@@ -888,12 +889,12 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
         for (int index = 0; index < size; index++) {
             Object value = record.get(index);
 
-            writer.append(newline).append(format.indentString(recordLevel + 1));
-            String tag = format.recordFormat() == COLUMN_NAME_ELEMENTS
-                ? escapeXML(fields.field(index).getName())
-                : "value";
-
             if (value != null || format.nullFormat() != ABSENT_ELEMENT) {
+                writer.append(newline).append(format.indentString(recordLevel + 1));
+                String tag = format.recordFormat() == COLUMN_NAME_ELEMENTS
+                    ? escapeXML(fields.field(index).getName())
+                    : "value";
+
                 writer.append("<" + tag);
                 if (format.recordFormat() == VALUE_ELEMENTS_WITH_FIELD_ATTRIBUTE) {
                     writer.append(" field=\"");
@@ -918,7 +919,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
         writer.append(newline).append(format.indentString(recordLevel)).append("</record>");
     }
 
-    private static void formatXMLContent(
+    private final static void formatXMLContent(
         Writer writer,
         XMLFormat format,
         int recordLevel,
@@ -1232,6 +1233,10 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
 
             if (format.xmlns())
                 eResult.setAttribute("xmlns", Constants.NS_EXPORT);
+
+            if (format.nullFormat() == XSI_NIL)
+                eResult.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
+
             document.appendChild(eResult);
 
             Element eRecordParent = eResult;
@@ -1279,21 +1284,19 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
                     Field<?> field = fields.field(index);
                     Object value = record.get(index);
 
-                    String tag = format.recordFormat() == COLUMN_NAME_ELEMENTS
-                        ? escapeXML(fields.field(index).getName())
-                        : "value";
+                    if (value != null || format.nullFormat() != ABSENT_ELEMENT) {
+                        String tag = format.recordFormat() == COLUMN_NAME_ELEMENTS
+                            ? escapeXML(fields.field(index).getName())
+                            : "value";
 
-                    Element eValue = document.createElement(tag);
+                        Element eValue = document.createElement(tag);
 
-                    if (format.recordFormat() == VALUE_ELEMENTS_WITH_FIELD_ATTRIBUTE)
-                        eValue.setAttribute("field", field.getName());
-                    eRecord.appendChild(eValue);
+                        if (format.recordFormat() == VALUE_ELEMENTS_WITH_FIELD_ATTRIBUTE)
+                            eValue.setAttribute("field", field.getName());
+                        eRecord.appendChild(eValue);
 
-                    if (value != null)
-                        if (value instanceof XML && !format.quoteNested())
-                            eValue.appendChild(createContent(builder, document, ((XML) value).data()));
-                        else
-                            eValue.setTextContent(format0(value, false, false));
+                        intoXMLContent(format, builder, document, value, eValue);
+                    }
                 }
             }
 
@@ -1302,6 +1305,67 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
         catch (ParserConfigurationException ignore) {
             throw new RuntimeException(ignore);
         }
+    }
+
+    private final void intoXMLContent(
+        XMLFormat format,
+        DocumentBuilder builder,
+        Document document,
+        Object value,
+        Element eParent
+    ) {
+        if (value == null) {
+            if (format.nullFormat() == XSI_NIL)
+                eParent.setAttribute("xsi:nil", "true");
+        }
+        else if (value instanceof Formattable f) {
+            Document d = f.intoXML(format);
+            Node n = document.importNode(d.getDocumentElement(), true);
+
+            // [#19158] [#19159] intoXML() wraps a <record/> in an unnecessary <result/>
+            if (value instanceof Record)
+                n = childElement(n);
+
+            eParent.appendChild(n);
+        }
+        else if (format.arrayFormat() == ArrayFormat.ELEMENTS && value instanceof Object[] a) {
+            for (Object o : a) {
+                if (o != null || format.nullFormat() != ABSENT_ELEMENT) {
+                    Element eElement = document.createElement("element");
+                    eParent.appendChild(eElement);
+
+                    if (o == null) {
+                        if (format.nullFormat() == XSI_NIL)
+                            eElement.setAttribute("xsi:nil", "true");
+                    }
+                    else
+                        intoXMLContent(format, builder, document, o, eElement);
+                }
+            }
+        }
+        else if (value instanceof XML && !format.quoteNested()) {
+            DocumentFragment content = createContent(builder, document, ((XML) value).data());
+
+            if (content != null)
+                eParent.appendChild(content);
+            else
+                eParent.setTextContent(((XML) value).data());
+        }
+        else
+            eParent.setTextContent(format0(value, false, false));
+    }
+
+    private final Node childElement(Node n) {
+        NodeList l = n.getChildNodes();
+
+        for (int i = 0; i < l.getLength(); i++) {
+            Node e = l.item(i);
+
+            if (e.getNodeType() == Node.ELEMENT_NODE)
+                return e;
+        }
+
+        return n;
     }
 
     // Taken from JOOX Util.createContent()

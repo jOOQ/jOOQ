@@ -39,6 +39,8 @@ package org.jooq;
 
 import static org.jooq.tools.StringUtils.rightPad;
 
+import java.util.Arrays;
+
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -68,6 +70,7 @@ public final class XMLFormat {
     RecordFormat                  recordFormat;
     boolean                       quoteNested;
     NullFormat                    nullFormat;
+    ArrayFormat                   arrayFormat;
 
     public XMLFormat() {
         this(
@@ -84,7 +87,8 @@ public final class XMLFormat {
             true,
             RecordFormat.VALUE_ELEMENTS_WITH_FIELD_ATTRIBUTE,
             false,
-            NullFormat.EMPTY_ELEMENT
+            NullFormat.EMPTY_ELEMENT,
+            ArrayFormat.STRING
         );
     }
 
@@ -102,7 +106,8 @@ public final class XMLFormat {
         boolean header,
         RecordFormat recordFormat,
         boolean quoteNested,
-        NullFormat nullFormat
+        NullFormat nullFormat,
+        ArrayFormat arrayFormat
     ) {
         this.mutable = mutable;
 
@@ -123,6 +128,7 @@ public final class XMLFormat {
         this.recordFormat = recordFormat;
         this.quoteNested = quoteNested;
         this.nullFormat = nullFormat;
+        this.arrayFormat = arrayFormat;
     }
 
     /**
@@ -152,11 +158,13 @@ public final class XMLFormat {
                 header,
                 recordFormat,
                 quoteNested,
-                nullFormat
+                nullFormat,
+                arrayFormat
             );
         else
             return this;
     }
+
 
 
 
@@ -221,7 +229,8 @@ public final class XMLFormat {
                 header,
                 recordFormat,
                 quoteNested,
-                nullFormat
+                nullFormat,
+                arrayFormat
             );
     }
 
@@ -256,7 +265,8 @@ public final class XMLFormat {
                 header,
                 recordFormat,
                 quoteNested,
-                nullFormat
+                nullFormat,
+                arrayFormat
             );
     }
 
@@ -291,7 +301,8 @@ public final class XMLFormat {
                 header,
                 recordFormat,
                 quoteNested,
-                nullFormat
+                nullFormat,
+                arrayFormat
             );
     }
 
@@ -327,7 +338,8 @@ public final class XMLFormat {
                 header,
                 recordFormat,
                 quoteNested,
-                nullFormat
+                nullFormat,
+                arrayFormat
             );
     }
 
@@ -362,7 +374,8 @@ public final class XMLFormat {
                 header,
                 recordFormat,
                 quoteNested,
-                nullFormat
+                nullFormat,
+                arrayFormat
             );
     }
 
@@ -418,7 +431,8 @@ public final class XMLFormat {
                 newHeader,
                 recordFormat,
                 quoteNested,
-                nullFormat
+                nullFormat,
+                arrayFormat
             );
     }
 
@@ -454,7 +468,8 @@ public final class XMLFormat {
                 header,
                 newRecordFormat,
                 quoteNested,
-                nullFormat
+                nullFormat,
+                arrayFormat
             );
     }
 
@@ -492,7 +507,8 @@ public final class XMLFormat {
                 header,
                 recordFormat,
                 newQuoteNested,
-                nullFormat
+                nullFormat,
+                arrayFormat
             );
     }
 
@@ -529,7 +545,8 @@ public final class XMLFormat {
                 header,
                 recordFormat,
                 quoteNested,
-                newNullFormat
+                newNullFormat,
+                arrayFormat
             );
     }
 
@@ -539,6 +556,42 @@ public final class XMLFormat {
      */
     public final NullFormat nullFormat() {
         return nullFormat;
+    }
+
+    /**
+     * The representation of array types.
+     */
+    @NotNull
+    public final XMLFormat arrayFormat(ArrayFormat newArrayFormat) {
+        if (mutable) {
+            arrayFormat = newArrayFormat;
+            return this;
+        }
+        else
+            return new XMLFormat(
+                mutable,
+
+
+
+                xmlns,
+                format,
+                newline,
+                globalIndent,
+                indent,
+                indented,
+                header,
+                recordFormat,
+                quoteNested,
+                nullFormat,
+                newArrayFormat
+            );
+    }
+
+    /**
+     * The representation of array types.
+     */
+    public final ArrayFormat arrayFormat() {
+        return arrayFormat;
     }
 
     /**
@@ -581,5 +634,24 @@ public final class XMLFormat {
          * A <code>null</code> value is represented by a <code>xsi:nil="true"</code> attribute.
          */
         XSI_NIL
+    }
+
+    /**
+     * The format of array values.
+     */
+    public enum ArrayFormat {
+
+        /**
+         * The array is exported as a [1, 2, ..., N] style string, similar to
+         * what {@link Arrays#toString(Object[])} produces, leaving parsing of
+         * the string to users.
+         */
+        STRING,
+
+        /**
+         * The array is exported as a PostgreSQL style set of
+         * <code>&lt;element/&gt;</code> elements.
+         */
+        ELEMENTS
     }
 }

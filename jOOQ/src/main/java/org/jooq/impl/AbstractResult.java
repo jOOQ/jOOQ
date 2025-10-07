@@ -100,6 +100,7 @@ import org.jooq.TableField;
 import org.jooq.TableRecord;
 import org.jooq.XML;
 import org.jooq.XMLFormat;
+import org.jooq.XMLFormat.ArrayFormat;
 import org.jooq.conf.Redact;
 import org.jooq.exception.IOException;
 import org.jooq.tools.StringUtils;
@@ -980,25 +981,56 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
                 }
                 else {
                     writer.append(">");
-
-                    if (value instanceof Formattable f) {
-                        writer.append(newline).append(format.indentString(recordLevel + 2));
-                        int previous = format.globalIndent();
-                        f.formatXML(writer, format.globalIndent(format.globalIndent() + format.indent() * (recordLevel + 2)));
-                        format.globalIndent(previous);
-                        writer.append(newline).append(format.indentString(recordLevel + 1));
-                    }
-                    else if (value instanceof XML && !format.quoteNested())
-                        writer.append(((XML) value).data());
-                    else
-                        writer.append(escapeXML(format0(value, false, false)));
-
+                    formatXMLContent(writer, format, recordLevel, newline, value);
                     writer.append("</" + tag + ">");
                 }
             }
         }
 
         writer.append(newline).append(format.indentString(recordLevel)).append("</record>");
+    }
+
+    private static void formatXMLContent(
+        Writer writer,
+        XMLFormat format,
+        int recordLevel,
+        String newline,
+        Object value
+    ) throws java.io.IOException  {
+        if (value instanceof Formattable f) {
+            writer.append(newline).append(format.indentString(recordLevel + 2));
+            int previous = format.globalIndent();
+            f.formatXML(writer, format.globalIndent(format.globalIndent() + format.indent() * (recordLevel + 2)));
+            format.globalIndent(previous);
+            writer.append(newline).append(format.indentString(recordLevel + 1));
+        }
+        else if (format.arrayFormat() == ArrayFormat.ELEMENTS && value instanceof Object[] a) {
+            for (Object o : a) {
+                if (o != null || format.nullFormat() != ABSENT_ELEMENT) {
+                    writer.append(newline).append(format.indentString(recordLevel + 2));
+                    writer.append("<element");
+
+                    if (o == null) {
+                        if (format.nullFormat() == XSI_NIL)
+                            writer.append(" xsi:nil=\"true\"");
+
+                        writer.append("/>");
+                    }
+                    else {
+                        writer.append(">");
+                        formatXMLContent(writer, format, recordLevel + 1, newline, o);
+                        writer.append("</element>");
+                    }
+                }
+            }
+
+            if (a.length > 0)
+                writer.append(newline).append(format.indentString(recordLevel + 1));
+        }
+        else if (value instanceof XML && !format.quoteNested())
+            writer.append(((XML) value).data());
+        else
+            writer.append(escapeXML(format0(value, false, false)));
     }
 
     @SuppressWarnings("unchecked")

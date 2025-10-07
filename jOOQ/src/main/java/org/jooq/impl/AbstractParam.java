@@ -59,6 +59,7 @@ import org.jooq.Name;
 import org.jooq.Param;
 import org.jooq.ParamMode;
 import org.jooq.QualifiedRecord;
+import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.conf.ParamType;
 import org.jooq.impl.DefaultBinding.InternalBinding;
@@ -108,6 +109,9 @@ abstract class AbstractParam<T> extends AbstractParamX<T> implements SimpleQuery
         return new LazyName(() -> DSL.name(
                paramName != null
              ? paramName
+
+             : value instanceof Result<?> r
+             ? r.fieldsRow().toString()
 
              // [#3707] Protect value.toString call for certain jOOQ types.
              : value instanceof QualifiedRecord<?> q

@@ -601,8 +601,21 @@ implements
     private final String getCastTypeName0(Configuration configuration) {
         SQLDialect dialect = configuration.dialect();
 
+        if (isMultiset()) {
+            switch (Tools.emulateMultiset(configuration)) {
+                case JSON:
+                    return SQLDataType.JSON.getCastTypeName(configuration);
+                case JSONB:
+                    return SQLDataType.JSONB.getCastTypeName(configuration);
+                case XML:
+                    return SQLDataType.XML.getCastTypeName(configuration);
+                default:
+                    return castTypeName0();
+            }
+        }
+
         // [#10277] Various qualified, user defined types
-        if (isEnum() || isUDT()) {
+        else if (isEnum() || isUDT()) {
             return renderedTypeName0(configuration);
         }
 

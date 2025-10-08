@@ -4875,6 +4875,26 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
+        final void sqlBind0(BindingSQLContext<U> ctx, Result<?> value) throws SQLException {
+            switch (emulateMultiset(ctx.configuration())) {
+                case JSON:
+                    jsonBinding.sqlBind0((BindingSQLContext) ctx, json(value.formatJSON(jsonFormat(ctx))));
+                    break;
+
+                case JSONB:
+                    jsonbBinding.sqlBind0((BindingSQLContext) ctx, jsonb(value.formatJSON(jsonFormat(ctx))));
+                    break;
+
+                case XML:
+                    xmlBinding.sqlBind0((BindingSQLContext) ctx, xml(value.formatXML(XML_FORMAT)));
+                    break;
+
+                default:
+                    throw new UnsupportedOperationException("Cannot inline a value of type Result using " + emulateMultiset(ctx.configuration()) + " MULTISET emulation.");
+            }
+        }
+
+        @Override
         final void set0(BindingSetStatementContext<U> ctx, Result<?> value) throws SQLException {
             switch (emulateMultiset(ctx.configuration())) {
                 case JSON:

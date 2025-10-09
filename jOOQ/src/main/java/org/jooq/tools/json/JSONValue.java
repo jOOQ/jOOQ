@@ -28,6 +28,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import org.jooq.Decfloat;
 import org.jooq.types.Interval;
 
 /**
@@ -73,24 +74,17 @@ public class JSONValue {
         }
 
         if (value instanceof Double d) {
-            if (d.isInfinite())
-                writeInfinityOrNaN(out, infinityAsString, d);
-            else if (d.isNaN())
-                writeInfinityOrNaN(out, nanAsString, d);
-            else
-                out.write(value.toString());
-
+            writeFloat(value, out, d.isNaN(), nanAsString, d.isInfinite(), infinityAsString, d);
             return;
         }
 
         if (value instanceof Float f) {
-            if (f.isInfinite())
-                writeInfinityOrNaN(out, nanAsString, f);
-            else if (f.isNaN())
-                writeInfinityOrNaN(out, nanAsString, f);
-            else
-                out.write(value.toString());
+            writeFloat(value, out, f.isNaN(), nanAsString, f.isInfinite(), infinityAsString, f);
+            return;
+        }
 
+        if (value instanceof Decfloat df) {
+            writeFloat(value, out, df.isNaN(), nanAsString, df.isPositiveInfinity() || df.isNegativeInfinity(), infinityAsString, df);
             return;
         }
 
@@ -124,6 +118,23 @@ public class JSONValue {
         out.write('\"');
         out.write(escape(value.toString()));
         out.write('\"');
+    }
+
+    private static final void writeFloat(
+        Object value,
+        Writer out,
+        boolean nan,
+        boolean nanAsString,
+        boolean infinity,
+        boolean infinityAsString,
+        Number n
+    ) throws IOException {
+        if (infinity)
+            writeInfinityOrNaN(out, infinityAsString, n);
+        else if (nan)
+            writeInfinityOrNaN(out, nanAsString, n);
+        else
+            out.write(value.toString());
     }
 
     private static final void writeInfinityOrNaN(Writer out, boolean check, Number n) throws IOException {

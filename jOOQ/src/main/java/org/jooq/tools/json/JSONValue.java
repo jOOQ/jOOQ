@@ -26,7 +26,6 @@ import java.io.Writer;
 import java.util.List;
 import java.util.Map;
 
-import org.jooq.Decfloat;
 import org.jooq.types.Interval;
 
 /**

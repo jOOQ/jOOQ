@@ -707,7 +707,7 @@ public class GenerationTool {
             database.setCatalogVersionProvider(cvp);
 
             if (!isBlank(d.getOrderProvider())) {
-                Class<?> orderProvider = Class.forName(d.getOrderProvider());
+                Class<?> orderProvider = ClassUtils.loadClass(d.getOrderProvider());
 
                 if (Comparator.class.isAssignableFrom(orderProvider))
                     database.setOrderProvider((Comparator<Definition>) orderProvider.newInstance());

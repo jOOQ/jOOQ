@@ -9635,14 +9635,50 @@ public class JavaGenerator extends AbstractGenerator {
                 case SCALA:
                     return "classOf[" + out.ref(type) + "]";
 
-                case KOTLIN:
-                    return out.ref("kotlin.Array".equals(rawtype) ? type : rawtype) + "::class.java" + (generic ? (" as " + out.ref(Class.class) + "<" + out.ref(type) + ">") : "");
+                case KOTLIN: {
+                    String ref = out.ref("kotlin.Array".equals(rawtype) ? type : rawtype);
+
+                    return kotlinPrimitive(type, ref) + "::class.java"
+                        + (generic ? (" as " + out.ref(Class.class) + "<" + out.ref(type) + ">") : "")
+                        + (kotlinPrimitive(type, ref) != ref ? (" as " + out.ref(Class.class) + "<" + ref + "?>") : "");
+                }
 
                 // The double cast is required only in Java 8 and less, not in Java 11
                 case JAVA:
                 default:
                     return (generic ? "(" + out.ref(Class.class) + "<" + out.ref(type) + ">) (" + out.ref(Class.class) + ") " : "") + out.ref(rawtype) + ".class";
             }
+        }
+
+        private String kotlinPrimitive(String type, String ref) {
+
+            // [#19178] out.ref() turns wrapper types to Kotlin native types, e.g. java.lang.Long to kotlin.Long.
+            //          When referencing these types as Class<?> literals, we still need the JDK types, though, to
+            //          avoid getting primitive type literals.
+            if (type.startsWith("java.lang.")) {
+                switch (ref) {
+                    case "Byte":
+                        return Byte.class.getName();
+                    case "Short":
+                        return Short.class.getName();
+                    case "Int":
+                        return Integer.class.getName();
+                    case "Long":
+                        return Long.class.getName();
+                    case "Float":
+                        return Float.class.getName();
+                    case "Double":
+                        return Double.class.getName();
+                    case "Boolean":
+                        return Boolean.class.getName();
+                    case "Char":
+                        return Character.class.getName();
+                    default:
+                        return ref;
+                }
+            }
+            else
+                return ref;
         }
 
         @Override

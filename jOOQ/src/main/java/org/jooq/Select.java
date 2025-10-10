@@ -255,6 +255,40 @@ extends
     @CheckReturnValue
     @NotNull Select<R> $distinctOn(Collection<? extends SelectFieldOrAsterisk> newDistinctOn);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
+     * Experimental query object model accessor method, see also {@link QOM}.
+     * Subject to change in future jOOQ versions, use at your own risk.
+     */
+    @Experimental
+    @Nullable Table<?> $intoTable();
+
+    /**
+     * Experimental query object model accessor method, see also {@link QOM}.
+     * Subject to change in future jOOQ versions, use at your own risk.
+     */
+    @Experimental
+    @CheckReturnValue
+    @NotNull Select<R> $intoTable(Table<?> newIntoTable);
+
     /**
      * Experimental query object model accessor method, see also {@link QOM}.
      * Subject to change in future jOOQ versions, use at your own risk.

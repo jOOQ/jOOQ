@@ -336,6 +336,9 @@ import org.jooq.impl.Tools.SimpleDataKey;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 
 /**
  * A sub-select is a <code>SELECT</code> statement that can be combined with
@@ -5134,6 +5137,39 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             s.distinctOn.addAll(newDistinctOn);
         });
     }
+
+    @Override
+    public final Table<?> $intoTable() {
+        return intoTable;
+    }
+
+    @Override
+    public final Select<R> $intoTable(Table<?> newIntoTable) {
+        return copy(s -> {
+            s.intoTable = newIntoTable;
+        });
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @Override
     public final UnmodifiableList<Table<?>> $from() {

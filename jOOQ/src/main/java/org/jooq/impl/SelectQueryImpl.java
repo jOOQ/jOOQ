@@ -584,6 +584,10 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     private final SelectQueryImpl<R> copyBetween(CopyClause start, CopyClause end, boolean scalarSelect, SelectQueryImpl<R> result) {
         if (CopyClause.START.between(start, end)) {
+            result.intoTable = intoTable;
+            if (intoVariables != null)
+                result.intoVariables = new QueryPartList<>(intoVariables);
+
             result.from.addAll(from);
             result.condition.setWhere(condition.getWhere());
 
@@ -5662,6 +5666,10 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         else
             return copy(s -> s.getLimit().setOffset(newOffset));
     }
+
+
+
+
 
 
 

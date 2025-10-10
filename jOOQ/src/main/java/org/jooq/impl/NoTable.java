@@ -44,14 +44,13 @@ import static org.jooq.impl.Names.N_DUAL;
 import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.Name;
+import org.jooq.Path;
 // ...
 // ...
 import org.jooq.Record;
 import org.jooq.SQL;
 import org.jooq.Table;
 import org.jooq.impl.QOM.UEmptyTable;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
@@ -60,10 +59,11 @@ final class NoTable
 extends
     AbstractTable<Record>
 implements
-    UEmptyTable<Record>
+    UEmptyTable<Record>,
+    Path<Record>
 {
 
-    static final NoTable      INSTANCE = new NoTable();
+    static final NoTable INSTANCE = new NoTable();
 
     @Override
     public final void accept(Context<?> ctx) {

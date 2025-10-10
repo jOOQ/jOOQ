@@ -315,6 +315,7 @@ import org.jooq.OrderedAggregateFunctionOfDeferredType;
 import org.jooq.Param;
 import org.jooq.ParamMode;
 import org.jooq.Parameter;
+import org.jooq.Path;
 // ...
 import org.jooq.PlainSQL;
 import org.jooq.Privilege;
@@ -13820,6 +13821,27 @@ public class DSL {
     @NotNull
     @Support
     public static Table<?> noTable() {
+        return NoTable.INSTANCE;
+    }
+
+    /**
+     * Return a {@link Table} that behaves like no {@link Path} table being
+     * present.
+     * <p>
+     * When creating dynamic SQL queries using expressions, it is often useful
+     * to be able to decide dynamically whether a clause is being added to a
+     * query or not. In case that clause accepts tables, the {@link #noPath()}
+     * can be used to avoid creating a <code>FROM</code> clause or a join
+     * operation.
+     * <p>
+     * <b>NOTE [#16918]</b> that this {@link Path} is meant to be used with the
+     * {@link DSL} API only, not with the {@link QOM} API, which cannot offer
+     * any no-op operations. The behaviour when used with the {@link QOM} API is
+     * undefined.
+     */
+    @NotNull
+    @Support
+    public static Path<?> noPath() {
         return NoTable.INSTANCE;
     }
 

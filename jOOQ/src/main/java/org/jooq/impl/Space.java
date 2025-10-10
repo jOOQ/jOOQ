@@ -111,6 +111,7 @@ implements
 
 
 
+
             case DERBY:
             case DUCKDB:
             case HSQLDB:
@@ -145,6 +146,7 @@ implements
                 ctx.visit(DSL.rpad(DSL.inline(' '), count));
                 break;
             }
+
 
 
 

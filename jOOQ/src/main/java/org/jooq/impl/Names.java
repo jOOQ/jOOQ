@@ -288,6 +288,7 @@ final class Names {
     static final Name N_STRFTIME                    = systemName("strftime");
     static final Name N_STRING_AGG                  = systemName("string_agg");
     static final Name N_STRING_SPLIT                = systemName("string_split");
+    static final Name N_STRPOS                      = systemName("strpos");
     static final Name N_STR_REPLACE                 = systemName("str_replace");
     static final Name N_SUB                         = systemName("sub");
     static final Name N_SUBSTR                      = systemName("substr");
@@ -356,6 +357,7 @@ final class Names {
     static final Name N_ARRAY_CONTAINS              = systemName("array_contains");
     static final Name N_ARRAY_FILTER                = systemName("array_filter");
     static final Name N_ARRAY_GET                   = systemName("array_get");
+    static final Name N_ARRAY_INCLUDES              = systemName("array_includes");
     static final Name N_ARRAY_INTERSECT             = systemName("array_intersect");
     static final Name N_ARRAY_JOIN                  = systemName("array_join");
     static final Name N_ARRAY_LENGTH                = systemName("array_length");
@@ -440,6 +442,7 @@ final class Names {
     static final Name N_CHECK_JSON                  = systemName("check_json");
     static final Name N_CHR                         = systemName("chr");
     static final Name N_COALESCE                    = systemName("coalesce");
+    static final Name N_CODE_POINTS_TO_STRING       = systemName("code_points_to_string");
     static final Name N_CONDITION                   = systemName("condition");
     static final Name N_CONNECT_BY_ISCYCLE          = systemName("connect_by_iscycle");
     static final Name N_CONNECT_BY_ISLEAF           = systemName("connect_by_isleaf");
@@ -685,6 +688,7 @@ final class Names {
     static final Name N_TIMESTAMP_ADD               = systemName("timestamp_add");
     static final Name N_TO_BASE                     = systemName("to_base");
     static final Name N_TO_CHAR                     = systemName("to_char");
+    static final Name N_TO_CODE_POINTS              = systemName("to_code_points");
     static final Name N_TO_DATE                     = systemName("to_date");
     static final Name N_TO_HEX                      = systemName("to_hex");
     static final Name N_TO_TIMESTAMP                = systemName("to_timestamp");

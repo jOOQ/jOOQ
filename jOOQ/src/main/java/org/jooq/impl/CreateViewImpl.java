@@ -286,6 +286,11 @@ implements
         if (rename && renameSupported)
             ctx.sql('(').visit(QueryPartListView.wrap(f).qualify(false)).sql(')');
 
+
+
+
+
+
         ctx.end(Clause.CREATE_VIEW_NAME)
            .formatSeparator()
            .visit(K_AS)

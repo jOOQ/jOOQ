@@ -94,6 +94,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
@@ -34039,7 +34040,7 @@ public class DSL {
      * @see #groupConcat(Field)
      */
     @NotNull
-    @Support({ CUBRID, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO })
+    @Support({ CUBRID, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO })
     public static OrderedAggregateFunction<String> listAgg(Field<?> field, Field<String> separator) {
         return new ListAgg(false, Tools.nullSafe(field), separator);
     }
@@ -34159,7 +34160,7 @@ public class DSL {
      * @see #groupConcat(Field)
      */
     @NotNull
-    @Support({ CUBRID, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO })
+    @Support({ CUBRID, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO })
     public static OrderedAggregateFunction<String> stringAgg(Field<?> field, Field<String> separator) {
         return listAgg(field, separator);
     }

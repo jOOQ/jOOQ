@@ -54,24 +54,21 @@ import static org.jooq.SQLDialect.MARIADB;
 // ...
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
+// ...
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
 // ...
-import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.query;
-import static org.jooq.impl.DSL.sql;
 import static org.jooq.impl.DSL.xmlserializeContent;
 import static org.jooq.impl.DSL.xmlserializeDocument;
-import static org.jooq.impl.Keywords.K_DISTINCT;
 import static org.jooq.impl.Keywords.K_SEPARATOR;
 import static org.jooq.impl.Names.N_GROUP_CONCAT;
 import static org.jooq.impl.Names.N_LIST;
 import static org.jooq.impl.Names.N_LISTAGG;
 import static org.jooq.impl.Names.N_STRING_AGG;
-import static org.jooq.impl.Names.N_XMLSERIALIZE;
 import static org.jooq.impl.Names.N_XMLTEXT;
 import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.SQLDataType.VARCHAR;

@@ -95,7 +95,33 @@ implements
 
     @Override
     final boolean parenthesised(Context<?> ctx) {
-        return true;
+        switch (ctx.family()) {
+
+
+
+
+
+
+
+
+            case HSQLDB:
+            case MARIADB:
+            case MYSQL:
+            case SQLITE:
+            case YUGABYTEDB:
+                return true;
+
+            case FIREBIRD:
+                return true;
+
+
+
+
+
+
+            default:
+                return true;
+        }
     }
 
     @Override
@@ -126,6 +152,12 @@ implements
             case FIREBIRD:
                 ctx.visit(function(N_ASCII_CHAR, getDataType(), value));
                 break;
+
+
+
+
+
+
 
             default:
                 ctx.visit(function(N_CHR, getDataType(), value));

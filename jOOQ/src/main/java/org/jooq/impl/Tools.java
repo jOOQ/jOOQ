@@ -45,7 +45,6 @@ import static java.util.Collections.emptyList;
 import static java.util.Collections.nCopies;
 import static java.util.Collections.singletonList;
 import static java.util.stream.Collectors.joining;
-import static org.jooq.ContextConverter.scoped;
 // ...
 // ...
 // ...
@@ -76,6 +75,7 @@ import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
+// ...
 // ...
 // ...
 // ...
@@ -164,6 +164,7 @@ import static org.jooq.impl.Keywords.K_AUTO_INCREMENT;
 import static org.jooq.impl.Keywords.K_BEGIN;
 import static org.jooq.impl.Keywords.K_BEGIN_CATCH;
 import static org.jooq.impl.Keywords.K_BEGIN_TRY;
+import static org.jooq.impl.Keywords.K_BIT_REVERSED_POSITIVE;
 import static org.jooq.impl.Keywords.K_BY;
 import static org.jooq.impl.Keywords.K_CHARACTER_SET;
 import static org.jooq.impl.Keywords.K_COLLATE;
@@ -233,8 +234,6 @@ import static org.jooq.impl.ScalarSubquery.NO_SUPPORT_CORRELATED_SUBQUERY;
 import static org.jooq.impl.SubqueryCharacteristics.DERIVED_TABLE;
 import static org.jooq.impl.SubqueryCharacteristics.PREDICAND;
 import static org.jooq.impl.SubqueryCharacteristics.SET_OPERATION;
-import static org.jooq.impl.Tools.fieldNames;
-import static org.jooq.impl.Tools.ifNotNull;
 import static org.jooq.impl.Tools.ExtendedDataKey.DATA_OMIT_DATETIME_LITERAL_PREFIX;
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_BLOCK_NESTING;
 import static org.jooq.tools.StringUtils.defaultIfNull;
@@ -297,7 +296,6 @@ import java.util.stream.Collector;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import org.jooq.AggregateFilterStep;
 import org.jooq.ArrayAggOrderByStep;
 // ...
 // ...
@@ -533,6 +531,7 @@ final class Tools {
          * <li>{@link org.jooq.SQLDialect#INGRES} : 1024</li>
          * <li>{@link org.jooq.SQLDialect#ORACLE} : 32767</li>
          * <li>{@link org.jooq.SQLDialect#POSTGRES} : 32767</li>
+         * <li>{@link org.jooq.SQLDialect#SPANNER} : 950</li>
          * <li>{@link org.jooq.SQLDialect#SQLITE} : 999</li>
          * <li>{@link org.jooq.SQLDialect#SQLSERVER} : 2100</li>
          * <li>{@link org.jooq.SQLDialect#TERADATA} : 2536</li>
@@ -1269,6 +1268,8 @@ final class Tools {
     static final Set<SQLDialect>         REQUIRES_PARENTHESISED_DEFAULT_FOR_LOBS    = SQLDialect.supportedBy(MYSQL);
     static final Set<SQLDialect>         NO_SUPPORT_DEFAULT_DATETIME_LITERAL_PREFIX = SQLDialect.supportedBy(MARIADB, MYSQL);
     static final Set<SQLDialect>         NO_SUPPORT_DEFAULT_CAST                    = SQLDialect.supportedBy(FIREBIRD);
+
+
 
 
 
@@ -5934,12 +5935,20 @@ final class Tools {
 
 
 
+
                 case MARIADB:
                 case MYSQL:  ctx.sql(' ').visit(K_AUTO_INCREMENT); break;
                 case DUCKDB: ctx.sql(' ').visit(K_DEFAULT).sql(' ').visit(identitySequence(table).nextval()); break;
             }
         }
     }
+
+
+
+
+
+
+
 
 
 

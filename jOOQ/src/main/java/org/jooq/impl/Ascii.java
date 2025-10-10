@@ -95,7 +95,23 @@ implements
 
     @Override
     final boolean parenthesised(Context<?> ctx) {
-        return true;
+        switch (ctx.family()) {
+
+
+
+
+
+            case FIREBIRD:
+                return true;
+
+
+
+
+
+
+            default:
+                return true;
+        }
     }
 
     @Override
@@ -116,6 +132,12 @@ implements
             case FIREBIRD:
                 ctx.visit(function(N_ASCII_VAL, getDataType(), string));
                 break;
+
+
+
+
+
+
 
             default:
                 ctx.visit(function(N_ASCII, getDataType(), string));

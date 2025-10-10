@@ -386,6 +386,8 @@ implements
 
 
 
+
+
     final QOM.UnmodifiableList<? extends Field<?>> $columns() {
         return QOM.unmodifiable(map(filter(tableElements, e -> e instanceof Field<?>), e -> (Field<?>) e));
     }
@@ -574,7 +576,12 @@ implements
             ctx.end(Clause.CREATE_TABLE_COLUMNS)
                .start(Clause.CREATE_TABLE_CONSTRAINTS);
 
-            for (Constraint constraint : $constraints())
+            for (Constraint constraint : $constraints()) {
+
+
+
+
+
 
                 // [#6841] SQLite has a weird requirement of the PRIMARY KEY keyword being on the column directly,
                 //         when there is an identity. Thus, we must not repeat the primary key specification here.
@@ -582,6 +589,7 @@ implements
                     ctx.sql(',')
                        .formatSeparator()
                        .visit(constraint);
+            }
 
             if (EMULATE_SOME_ENUM_TYPES_AS_CHECK.contains(ctx.dialect())) {
                 for (Field<?> field : $columns()) {
@@ -630,6 +638,14 @@ implements
 
             ctx.sqlIndentEnd(')');
         }
+
+
+
+
+
+
+
+
     }
 
     static void acceptColumnComment(Context<?> ctx, Field<?> field) {

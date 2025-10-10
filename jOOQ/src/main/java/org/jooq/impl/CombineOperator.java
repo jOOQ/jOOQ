@@ -115,6 +115,7 @@ enum CombineOperator {
     public final Keyword toKeyword(SQLDialect dialect) {
         switch (dialect.family()) {
 
+
             case CLICKHOUSE:
                 return keywordOptionalDistinct;
 

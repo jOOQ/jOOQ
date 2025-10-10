@@ -145,6 +145,7 @@ implements
 
 
 
+
             default:
                 ctx.visit(function(N_LOG, NUMERIC, base, value));
                 break;

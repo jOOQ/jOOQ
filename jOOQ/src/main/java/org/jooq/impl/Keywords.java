@@ -78,6 +78,7 @@ final class Keywords {
     static final Keyword K_BEGIN_TRY                = keyword("begin try");
     static final Keyword K_BETWEEN                  = keyword("between");
     static final Keyword K_BINARY                   = keyword("binary");
+    static final Keyword K_BIT_REVERSED_POSITIVE    = keyword("bit_reversed_positive");
     static final Keyword K_BLOB                     = keyword("blob");
     static final Keyword K_BLOCK                    = keyword("block");
     static final Keyword K_BOOLEAN                  = keyword("boolean");
@@ -109,6 +110,7 @@ final class Keywords {
     static final Keyword K_CONTINUE                 = keyword("continue");
     static final Keyword K_CONVERSION               = keyword("conversion");
     static final Keyword K_COUNT                    = keyword("count");
+    static final Keyword K_COUNTER                  = keyword("counter");
     static final Keyword K_CREATE                   = keyword("create");
     static final Keyword K_CUBE                     = keyword("cube");
     static final Keyword K_CURRENT                  = keyword("current");
@@ -235,6 +237,7 @@ final class Keywords {
     static final Keyword K_INTERVAL                 = keyword("interval");
     static final Keyword K_INTO                     = keyword("into");
     static final Keyword K_INVISIBLE                = keyword("invisible");
+    static final Keyword K_INVOKER                  = keyword("invoker");
     static final Keyword K_IS                       = keyword("is");
     static final Keyword K_IS_DOCUMENT              = keyword("is document");
     static final Keyword K_IS_JSON                  = keyword("is json");
@@ -390,12 +393,14 @@ final class Keywords {
     static final Keyword K_ROWS_WITH_TIES           = keyword("rows with ties");
     static final Keyword K_ROWSTORE                 = keyword("rowstore");
     static final Keyword K_SAMPLE                   = keyword("sample");
+    static final Keyword K_SAFE_ORDINAL             = keyword("safe_ordinal");
     static final Keyword K_SAVE                     = keyword("save");
     static final Keyword K_SAVEPOINT                = keyword("savepoint");
     static final Keyword K_SCHEMA                   = keyword("schema");
     static final Keyword K_SCN                      = keyword("scn");
     static final Keyword K_SEARCH_PATH              = keyword("search_path");
     static final Keyword K_SECOND                   = keyword("second");
+    static final Keyword K_SECURITY                 = keyword("security");
     static final Keyword K_SEED                     = keyword("seed");
     static final Keyword K_SELECT                   = keyword("select");
     static final Keyword K_SEMI_JOIN                = keyword("semi join");

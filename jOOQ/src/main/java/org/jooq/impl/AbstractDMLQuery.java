@@ -67,6 +67,7 @@ import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
@@ -91,11 +92,13 @@ import static org.jooq.impl.Keywords.K_IN;
 import static org.jooq.impl.Keywords.K_INTO;
 import static org.jooq.impl.Keywords.K_OPEN;
 import static org.jooq.impl.Keywords.K_OUTPUT;
+import static org.jooq.impl.Keywords.K_RETURN;
 import static org.jooq.impl.Keywords.K_RETURNING;
 import static org.jooq.impl.Keywords.K_ROWCOUNT;
 import static org.jooq.impl.Keywords.K_SELECT;
 import static org.jooq.impl.Keywords.K_SQL;
 import static org.jooq.impl.Keywords.K_TABLE;
+import static org.jooq.impl.Keywords.K_THEN;
 import static org.jooq.impl.Names.N_DELETED;
 import static org.jooq.impl.Names.N_INSERTED;
 import static org.jooq.impl.Names.N_JSON;
@@ -985,10 +988,19 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
                 if (unqualify)
                     ctx.qualify(false);
 
-                ctx.formatSeparator()
-                   .visit(K_RETURNING)
-                   .sql(' ')
-                   .declareFields(true, c -> c.visit(returningOrResolvedAsterisks(c)));
+                switch (ctx.family()) {
+
+
+
+
+
+
+                    default:
+                        ctx.formatSeparator().visit(K_RETURNING).sql(' ');
+                        break;
+                }
+
+                ctx.declareFields(true, c -> c.visit(returningOrResolvedAsterisks(c)));
 
                 if (unqualify)
                     ctx.qualify(qualify);
@@ -1238,6 +1250,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
                     executeReturningQuery(ctx, listener);
                     break;
+
 
 
 

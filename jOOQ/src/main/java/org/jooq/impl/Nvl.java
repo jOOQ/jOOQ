@@ -134,6 +134,7 @@ implements
 
 
 
+
             case CLICKHOUSE:
             case MARIADB:
             case MYSQL:
@@ -197,6 +198,7 @@ implements
             case YUGABYTEDB:
                 ctx.visit(function(N_COALESCE, getDataType(), value, defaultValue));
                 break;
+
 
 
 

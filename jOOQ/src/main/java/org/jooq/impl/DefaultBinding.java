@@ -1597,6 +1597,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
+
+
+
+
+
+
                 case POSTGRES: {
 
                     // [#12485] Passing the array string as OTHER (OID = unspecified) may prevent poor

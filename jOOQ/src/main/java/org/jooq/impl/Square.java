@@ -117,6 +117,7 @@ implements
 
 
 
+
             case CLICKHOUSE:
             case CUBRID:
             case DERBY:
@@ -149,6 +150,7 @@ implements
             case SQLITE:
                 ctx.visit(imul(value, value));
                 break;
+
 
 
 

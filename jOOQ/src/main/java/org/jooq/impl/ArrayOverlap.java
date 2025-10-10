@@ -102,6 +102,7 @@ implements
                 return false;
 
 
+
             case HSQLDB:
                 return false;
 
@@ -133,6 +134,7 @@ implements
                     .intersect(select(asterisk()).from(unnest(array2)))
                 ));
                 break;
+
 
 
             case HSQLDB:

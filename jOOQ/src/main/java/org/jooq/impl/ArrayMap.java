@@ -108,6 +108,7 @@ implements
             case YUGABYTEDB:
                 return false;
 
+
             case DUCKDB:
                 return true;
 
@@ -141,6 +142,7 @@ implements
             case YUGABYTEDB:
                 ctx.visit(arrayTransform(array, mapper.$arg1(), mapper.$result(), noCondition()).asField());
                 break;
+
 
             case DUCKDB:
                 ctx.visit(function(N_ARRAY_TRANSFORM, getDataType(), array, DSL.field("{0}", OTHER, mapper)));

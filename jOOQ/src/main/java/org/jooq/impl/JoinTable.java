@@ -98,6 +98,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
@@ -112,7 +113,6 @@ import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectFrom;
-import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.Keywords.K_ANTI_JOIN;
 import static org.jooq.impl.Keywords.K_ON;
 import static org.jooq.impl.Keywords.K_PARTITION_BY;
@@ -181,7 +181,7 @@ abstract class JoinTable<J extends JoinTable<J>> extends AbstractJoinTable<J> {
     static final Set<SQLDialect>  EMULATE_NATURAL_OUTER_JOIN = SQLDialect.supportedBy(CLICKHOUSE, CUBRID, H2, IGNITE, TRINO);
     static final Set<SQLDialect>  EMULATE_JOIN_USING         = SQLDialect.supportedBy(CUBRID, IGNITE);
     static final Set<SQLDialect>  EMULATE_APPLY              = SQLDialect.supportedBy(FIREBIRD, POSTGRES, TRINO, YUGABYTEDB);
-    static final Set<SQLDialect>  EMUlATE_SEMI_ANTI_JOIN     = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB);
+    static final Set<SQLDialect>  EMULATE_SEMI_ANTI_JOIN     = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB);
     static final Set<SQLDialect>  NO_SUPPORT_NESTED_JOIN     = SQLDialect.supportedBy(CLICKHOUSE);
 
     final Table<?>                lhs;
@@ -303,7 +303,7 @@ abstract class JoinTable<J extends JoinTable<J>> extends AbstractJoinTable<J> {
         switch (translatedType) {
             case LEFT_SEMI_JOIN:
             case LEFT_ANTI_JOIN:
-                if (EMUlATE_SEMI_ANTI_JOIN.contains(ctx.dialect())
+                if (EMULATE_SEMI_ANTI_JOIN.contains(ctx.dialect())
                     && TRUE.equals(ctx.data(DATA_COLLECT_SEMI_ANTI_JOIN))
                 ) {
 
@@ -510,6 +510,14 @@ abstract class JoinTable<J extends JoinTable<J>> extends AbstractJoinTable<J> {
 
         return keyword;
     }
+
+
+
+
+
+
+
+
 
 
 

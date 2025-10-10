@@ -52,4 +52,5 @@ module org.jooq.meta {
 
 
 
+
 }

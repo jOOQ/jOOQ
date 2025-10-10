@@ -103,6 +103,7 @@ implements
                 return false;
 
 
+
             case SQLITE:
             case TRINO:
                 return false;
@@ -124,6 +125,7 @@ implements
             case DERBY:
                 ctx.visit(DSL.substring(string, iadd(DSL.length(string), isub(one(), length))));
                 break;
+
 
 
             case SQLITE:

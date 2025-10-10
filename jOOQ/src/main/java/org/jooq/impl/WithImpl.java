@@ -44,6 +44,7 @@ import static org.jooq.Clause.WITH;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.one;
@@ -74,27 +75,6 @@ import org.jooq.Name;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Record1;
-import org.jooq.Record10;
-import org.jooq.Record11;
-import org.jooq.Record12;
-import org.jooq.Record13;
-import org.jooq.Record14;
-import org.jooq.Record15;
-import org.jooq.Record16;
-import org.jooq.Record17;
-import org.jooq.Record18;
-import org.jooq.Record19;
-import org.jooq.Record2;
-import org.jooq.Record20;
-import org.jooq.Record21;
-import org.jooq.Record22;
-import org.jooq.Record3;
-import org.jooq.Record4;
-import org.jooq.Record5;
-import org.jooq.Record6;
-import org.jooq.Record7;
-import org.jooq.Record8;
-import org.jooq.Record9;
 // ...
 import org.jooq.ResultQuery;
 import org.jooq.SQL;
@@ -132,8 +112,6 @@ import org.jooq.WithAsStep9;
 import org.jooq.WithStep;
 import org.jooq.impl.QOM.UnmodifiableList;
 import org.jooq.impl.QOM.With;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * This type models an intermediary DSL construction step, which leads towards

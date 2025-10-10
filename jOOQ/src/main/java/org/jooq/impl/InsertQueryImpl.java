@@ -67,6 +67,7 @@ import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
@@ -94,6 +95,7 @@ import static org.jooq.impl.Keywords.K_INTO;
 import static org.jooq.impl.Keywords.K_ON_CONFLICT;
 import static org.jooq.impl.Keywords.K_ON_CONSTRAINT;
 import static org.jooq.impl.Keywords.K_ON_DUPLICATE_KEY_UPDATE;
+import static org.jooq.impl.Keywords.K_OR;
 import static org.jooq.impl.Keywords.K_SET;
 import static org.jooq.impl.Keywords.K_VALUES;
 import static org.jooq.impl.Keywords.K_WHERE;
@@ -802,9 +804,21 @@ implements
         // [#1295] MySQL dialects have native syntax for INSERT IGNORE
         // [#4376] [#8433] for SQLite render using ON CONFLICT DO NOTHING
         //                 rather than INSERT OR IGNORE
-        if (onDuplicateKeyIgnore)
-            if (SUPPORT_INSERT_IGNORE.contains(ctx.dialect()))
-                ctx.visit(K_IGNORE).sql(' ');
+        if (onDuplicateKeyIgnore) {
+            if (SUPPORT_INSERT_IGNORE.contains(ctx.dialect())) {
+                switch (ctx.family()) {
+
+
+
+
+
+
+                    default:
+                        ctx.visit(K_IGNORE).sql(' ');
+                        break;
+                }
+            }
+        }
 
         ctx.visit(K_INTO)
            .sql(' ')

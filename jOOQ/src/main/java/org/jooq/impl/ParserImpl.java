@@ -9478,7 +9478,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                     return parseFunctionArgs2((f1, f2) -> arrayAppend((Field<Void[]>) f1, (Field<Void>) f2));
                 else if (parseFunctionNameIf("ARRAY_CAT", "ARRAY_CONCAT", "arrayConcat"))
                     return parseFunctionArgs2((f1, f2) -> arrayConcat(f1, f2));
-                else if (parseFunctionNameIf("ARRAY_CONTAINS"))
+                else if (parseFunctionNameIf("ARRAY_CONTAINS", "ARRAY_INCLUDES"))
                     return parseFunctionArgs2((f1, f2) -> arrayContains((Field<Void[]>) f1, (Field<Void>) f2));
                 else if (parseFunctionNameIf("ARRAY_GET", "arrayElement"))
                     return parseFunctionArgs2((f1, f2) -> arrayGet(f1, f2));
@@ -10096,6 +10096,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                     return parseFunctionArgs3(DSL::splitPart);
                 else if (parseFunctionNameIf("SPLIT", "STRING_TO_ARRAY"))
                     return parseFunctionArgs3(DSL::stringToArray, DSL::stringToArray);
+                else if (parseFunctionNameIf("STRPOS"))
+                    return parseFunctionArgs2((f1, f2) -> binary(f1, f2) ? DSL.binaryPosition(f1, f2) : DSL.position(f1, f2));
                 else if (parseFunctionNameIf("STR_REPLACE"))
                     return parseFunctionArgs3(DSL::replace, DSL::replace);
                 else if (parseFunctionNameIf("STARTS_WITH", "STARTSWITH"))

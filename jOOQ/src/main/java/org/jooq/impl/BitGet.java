@@ -131,6 +131,7 @@ implements
 
 
 
+
             case CUBRID:
             case DUCKDB:
             case FIREBIRD:
@@ -182,6 +183,7 @@ implements
             case H2:
                 ctx.visit(case_(function(N_BITGET, BOOLEAN, value, bit)).when(trueCondition(), inline(1)).when(falseCondition(), inline(0)));
                 break;
+
 
 
 

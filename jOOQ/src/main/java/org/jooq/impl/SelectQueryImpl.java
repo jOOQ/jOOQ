@@ -108,6 +108,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
@@ -333,7 +334,6 @@ import org.jooq.impl.ForLock.ForLockWaitMode;
 import org.jooq.impl.QOM.CompareCondition;
 import org.jooq.impl.QOM.JoinHint;
 import org.jooq.impl.QOM.Materialized;
-import org.jooq.impl.QOM.NullOrdering;
 import org.jooq.impl.QOM.UnmodifiableList;
 import org.jooq.impl.QOM.With;
 import org.jooq.impl.Tools.BooleanDataKey;
@@ -589,6 +589,10 @@ implements
 
     private final SelectQueryImpl<R> copyBetween(CopyClause start, CopyClause end, boolean scalarSelect, SelectQueryImpl<R> result) {
         if (CopyClause.START.between(start, end)) {
+            result.intoTable = intoTable;
+            if (intoVariables != null)
+                result.intoVariables = new QueryPartList<>(intoVariables);
+
             result.from.addAll(from);
             result.condition.setWhere(condition.getWhere());
 
@@ -5691,6 +5695,10 @@ implements
         else
             return copy(s -> s.getLimit().setOffset(newOffset));
     }
+
+
+
+
 
 
 

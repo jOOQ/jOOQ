@@ -140,6 +140,7 @@ import org.jooq.impl.QOM.JoinHint;
 import org.jooq.impl.QOM.UnmodifiableList;
 import org.jooq.impl.QOM.With;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -3817,6 +3818,30 @@ implements
     public final Select<R> $distinctOn(Collection<? extends SelectFieldOrAsterisk> newDistinctOn) {
         return getDelegate().$distinctOn(newDistinctOn);
     }
+
+    @Override
+    public final Table<?> $intoTable() {
+        return getDelegate().$intoTable();
+    }
+
+    @Override
+    public final Select<R> $intoTable(Table<?> newIntoTable) {
+        return getDelegate().$intoTable(newIntoTable);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @Override
     public final UnmodifiableList<? extends Table<?>> $from() {

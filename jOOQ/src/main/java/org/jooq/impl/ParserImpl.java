@@ -10323,7 +10323,9 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
     }
 
     private final Field<?> parseArrayValueConstructorIf(boolean requireArrayKeyword) {
-        if (requireArrayKeyword |= parseKeywordIf("ARRAY") || !requireArrayKeyword) {
+        boolean array = false;
+
+        if ((array = parseKeywordIf("ARRAY")) || !requireArrayKeyword) {
             if (parseIf('[')) {
                 List<Field<?>> fields;
 
@@ -10338,13 +10340,13 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                 // Prevent "wrong" javac method bind
                 return DSL.array((Collection) fields);
             }
-            else if (requireArrayKeyword && parseIf('(')) {
+            else if (array && parseIf('(')) {
                 SelectQueryImpl select = parseWithOrSelect(1);
                 parse(')');
 
                 return DSL.array(select);
             }
-            else if (requireArrayKeyword)
+            else if (array)
                 throw expected("[", "(");
         }
 

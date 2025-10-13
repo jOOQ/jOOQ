@@ -512,6 +512,7 @@ final class Names {
     static final Name N_JSONExtractRaw              = systemName("JSONExtractRaw");
     static final Name N_JSONExtractString           = systemName("JSONExtractString");
     static final Name N_JSON_ARRAY                  = systemName("json_array");
+    static final Name N_JSON_ARRAY_INSERT           = systemName("json_array_insert");
     static final Name N_JSON_ARRAY_LENGTH           = systemName("json_array_length");
     static final Name N_JSON_EXTRACT                = systemName("json_extract");
     static final Name N_JSON_GET_ATTRIBUTE          = systemName("json_get_attribute");

@@ -138,6 +138,7 @@ final class JSONExists extends AbstractCondition implements JSONExistsOnStep, UN
 
 
 
+
             case MYSQL:
                 ctx.visit(N_JSON_CONTAINS_PATH).sql('(').visit(json).sql(", 'one', ").visit(path).sql(')');
                 break;

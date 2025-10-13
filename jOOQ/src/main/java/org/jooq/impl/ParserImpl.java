@@ -9839,7 +9839,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                     return parseFunctionArgs1(DSL::jsonKeys);
                 else if (parseFunctionNameIf("JSON_KEY_EXISTS"))
                     return parseFunctionArgs2(DSL::jsonKeyExists);
-                else if (parseFunctionNameIf("JSON_INSERT"))
+                else if (parseFunctionNameIf("JSON_INSERT", "JSON_ARRAY_INSERT"))
                     return parseFunctionArgs3(DSL::jsonInsert);
                 else if (parseFunctionNameIf("JSON_REMOVE"))
                     return parseFunctionArgs2(DSL::jsonRemove);

@@ -31827,7 +31827,7 @@ public class DSL {
      * The JSON exists predicate.
      */
     @NotNull
-    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static JSONExistsOnStep jsonExists(Field<JSON> field, String path) {
         return jsonExists(field, Tools.field(path));
     }

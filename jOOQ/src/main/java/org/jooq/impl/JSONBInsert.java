@@ -120,6 +120,11 @@ implements
 
 
 
+
+
+
+
+
             default:
                 ctx.visit(function(N_JSON_INSERT, JSONB, field, path, JSONEntryImpl.jsonCast(ctx, value, true)));
                 break;

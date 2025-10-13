@@ -9175,7 +9175,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                 else if (parseFunctionNameIf("ASCII_CHAR"))
                     return chr((Field) parseFieldParenthesised());
 
-                else if ((field = parseArrayValueConstructorIf()) != null)
+                else if ((field = parseArrayValueConstructorIf(true)) != null)
                     return field;
 
                 else if (parseFunctionNameIf("ADD_YEARS"))
@@ -11153,8 +11153,15 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         return key(key).value(parseField());
     }
 
-    private final Field<?> parseArrayValueConstructorIf() {
-        if (parseKeywordIf("ARRAY")) {
+    private final Field<?> parseArrayValueConstructorOrField() {
+        if (peek('['))
+            return parseArrayValueConstructorIf(false);
+        else
+            return parseField();
+    }
+
+    private final Field<?> parseArrayValueConstructorIf(boolean requireArrayKeyword) {
+        if (requireArrayKeyword |= parseKeywordIf("ARRAY") || !requireArrayKeyword) {
             if (parseIf('[')) {
                 List<Field<?>> fields;
 
@@ -11162,20 +11169,20 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                     fields = emptyList();
                 }
                 else {
-                    fields = parseList(',', c -> c.parseField());
+                    fields = parseList(',', c -> parseArrayValueConstructorOrField());
                     parse(']');
                 }
 
                 // Prevent "wrong" javac method bind
                 return DSL.array((Collection) fields);
             }
-            else if (parseIf('(')) {
+            else if (requireArrayKeyword && parseIf('(')) {
                 SelectQueryImpl select = parseWithOrSelect(1);
                 parse(')');
 
                 return DSL.array(select);
             }
-            else
+            else if (requireArrayKeyword)
                 throw expected("[", "(");
         }
 

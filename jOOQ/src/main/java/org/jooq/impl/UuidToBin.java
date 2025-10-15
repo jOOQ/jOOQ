@@ -111,6 +111,12 @@ implements
             case YUGABYTEDB:
                 return false;
 
+
+
+
+
+
+
             default:
                 return true;
         }
@@ -139,8 +145,15 @@ implements
 
             case POSTGRES:
             case YUGABYTEDB:
-                ctx.visit(function(N_DECODE, UUID, DSL.replace(DSL.cast(uuid, VARCHAR), inline("-"), inline("")), inline("hex")));
+                ctx.visit(function(N_DECODE, BINARY(16), DSL.replace(DSL.cast(uuid, VARCHAR), inline("-"), inline("")), inline("hex")));
                 break;
+
+
+
+
+
+
+
 
             default:
                 ctx.visit(function(N_UUID_TO_BIN, getDataType(), uuid));

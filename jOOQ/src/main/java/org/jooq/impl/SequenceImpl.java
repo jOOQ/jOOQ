@@ -46,6 +46,7 @@ import static org.jooq.SQLDialect.HSQLDB;
 // ...
 import static org.jooq.SQLDialect.MARIADB;
 // ...
+import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.generateSeries;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DefaultMetaProvider.meta;
@@ -54,9 +55,11 @@ import static org.jooq.impl.Keywords.K_CURRVAL;
 import static org.jooq.impl.Keywords.K_NEXTVAL;
 import static org.jooq.impl.Keywords.K_NEXT_VALUE_FOR;
 import static org.jooq.impl.Keywords.K_PREVIOUS_VALUE_FOR;
+import static org.jooq.impl.Keywords.K_SEQUENCE;
 import static org.jooq.impl.Names.N_CURRVAL;
 import static org.jooq.impl.Names.N_GENERATE_SERIES;
 import static org.jooq.impl.Names.N_GEN_ID;
+import static org.jooq.impl.Names.N_GET_NEXT_SEQUENCE_VALUE;
 import static org.jooq.impl.Names.N_NEXTVAL;
 
 import org.jooq.Catalog;
@@ -217,6 +220,10 @@ implements
             SQLDialect family = configuration.family();
 
             switch (family) {
+
+
+
+
 
 
 

@@ -137,6 +137,7 @@ final class Names {
     static final Name N_GEN_ID                      = systemName("gen_id");
     static final Name N_GEN_UUID                    = systemName("gen_uuid");
     static final Name N_GETDATE                     = systemName("getdate");
+    static final Name N_GET_NEXT_SEQUENCE_VALUE     = systemName("get_next_sequence_value");
     static final Name N_GREATEST                    = systemName("greatest");
     static final Name N_GROUPING_SETS               = systemName("grouping sets");
     static final Name N_GROUP_CONCAT                = systemName("group_concat");
@@ -482,6 +483,7 @@ final class Names {
     static final Name N_FILTER                      = systemName("filter");
     static final Name N_FLOOR                       = systemName("floor");
     static final Name N_FORMAT                      = systemName("format");
+    static final Name N_FROM_HEX                    = systemName("from_hex");
     static final Name N_GENERATE_UUID               = systemName("generate_uuid");
     static final Name N_GENGUID                     = systemName("genguid");
     static final Name N_GEN_RANDOM_UUID             = systemName("gen_random_uuid");

@@ -4634,6 +4634,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                 break;
         }
 
+        parseKeywordIf("BIT_REVERSED_POSITIVE");
         return s;
     }
 
@@ -9749,6 +9750,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
             case 'G':
                 if (parseKeywordIf("GETDATE") && parseEmptyParens())
                     return currentTimestamp();
+                else if ((field = parseGetNextSequenceValueIf()) != null)
+                    return field;
                 else if (parseFunctionNameIf("GENGUID", "GENERATE_UUID", "GEN_RANDOM_UUID") && parseEmptyParens())
                     return uuid();
                 else if (parseFunctionNameIf("generateUUIDv4") && parseEmptyParensOr(c -> c.parseField() != null))
@@ -10978,6 +10981,19 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
             parse(')');
             return uuid();
+        }
+
+        return null;
+    }
+
+    private final Field<?> parseGetNextSequenceValueIf() {
+        if (parseFunctionNameIf("GET_NEXT_SEQUENCE_VALUE")) {
+            parse('(');
+            parseKeywordIf("SEQUENCE");
+            Name name = parseName();
+            parse(')');
+
+            return sequence(name).nextval();
         }
 
         return null;

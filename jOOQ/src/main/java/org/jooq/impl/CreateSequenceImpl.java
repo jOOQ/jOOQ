@@ -335,6 +335,11 @@ implements
             else if (noCache && !OMIT_NO_CACHE.contains(ctx.dialect()))
                 ctx.sql(' ').visit(K_NO).sql(noSeparator).visit(K_CACHE);
 
+
+
+
+
+
         ctx.end(Clause.CREATE_SEQUENCE_SEQUENCE);
     }
 

@@ -118,6 +118,7 @@ import static org.jooq.impl.DefaultBinding.DefaultEnumTypeBinding.pgEnumValue;
 import static org.jooq.impl.DefaultBinding.DefaultEnumTypeBinding.pgRenderEnumCast;
 import static org.jooq.impl.DefaultBinding.DefaultJSONBBinding.EMULATE_AS_BLOB;
 import static org.jooq.impl.DefaultBinding.DefaultJSONBinding.patchSnowflakeJSON;
+import static org.jooq.impl.DefaultBinding.DefaultJSONBinding.renderParseJSON;
 import static org.jooq.impl.DefaultBinding.DefaultResultBinding.readMultisetJSON;
 import static org.jooq.impl.DefaultBinding.DefaultResultBinding.readMultisetXML;
 import static org.jooq.impl.DefaultBinding.DefaultStringBinding.autoRtrim;
@@ -150,6 +151,7 @@ import static org.jooq.impl.Keywords.K_TRUE;
 import static org.jooq.impl.Keywords.K_YEAR_TO_DAY;
 import static org.jooq.impl.Keywords.K_YEAR_TO_FRACTION;
 import static org.jooq.impl.Names.N_BYTEA;
+import static org.jooq.impl.Names.N_FROM_HEX;
 import static org.jooq.impl.Names.N_HEX;
 import static org.jooq.impl.Names.N_JSON_PARSE;
 import static org.jooq.impl.Names.N_PARSE_JSON;
@@ -2652,6 +2654,13 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                        .sql(')');
 
                     break;
+
+
+
+
+
+
+
 
 
 
@@ -6525,6 +6534,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         void sqlInline0(BindingSQLContext<U> ctx, JSON value) throws SQLException {
+
+
+
+
+
             super.sqlInline0(ctx, value);
 
             if (ctx.family() == H2 && value != null)
@@ -6533,11 +6547,29 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         void sqlBind0(BindingSQLContext<U> ctx, JSON value) throws SQLException {
+
+
+
+
+
+
+
             super.sqlBind0(ctx, value);
 
             if (ctx.family() == H2 && value != null)
                 ctx.render().sql(' ').visit(K_FORMAT).sql(' ').visit(K_JSON);
         }
+
+
+
+
+
+
+
+
+
+
+
 
         @Override
         final void set0(BindingSetStatementContext<U> ctx, JSON value) throws SQLException {
@@ -6625,6 +6657,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 bytes(ctx.configuration()).sqlInline0(ctx, bytesConverter(ctx.configuration()).to(value, ctx.converterContext()));
             }
             else {
+
+
+
+
+
+
                 super.sqlInline1(ctx, value.data());
 
                 if (ctx.family() == H2)
@@ -6634,6 +6672,14 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         void sqlBind0(BindingSQLContext<U> ctx, JSONB value) throws SQLException {
+
+
+
+
+
+
+
+
             super.sqlBind0(ctx, value);
 
             if (ctx.family() == H2 && value != null)

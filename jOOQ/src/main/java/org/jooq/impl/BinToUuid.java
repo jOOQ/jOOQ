@@ -111,6 +111,12 @@ implements
             case YUGABYTEDB:
                 return false;
 
+
+
+
+
+
+
             default:
                 return true;
         }
@@ -141,6 +147,13 @@ implements
             case YUGABYTEDB:
                 ctx.visit(DSL.cast(function(N_ENCODE, VARCHAR(32), bytes, inline("hex")), UUID));
                 break;
+
+
+
+
+
+
+
 
             default:
                 ctx.visit(function(N_BIN_TO_UUID, getDataType(), bytes));

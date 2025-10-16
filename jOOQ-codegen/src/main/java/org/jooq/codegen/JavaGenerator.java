@@ -693,12 +693,16 @@ public class JavaGenerator extends AbstractGenerator {
                 log.info("Existing version " + oldVersion + " is not up to date with " + newVersion + " for schema " + schema.getInputName() + ". Regenerating.");
             }
             else {
-                log.info("Existing version " + oldVersion + " is up to date with " + newVersion + " for schema " + schema.getInputName() + ". Ignoring schema.");
+                if (database.skipRegenerationOnUpToDateVersion()) {
+                    log.info("Existing version " + oldVersion + " is up to date with " + newVersion + " for schema " + schema.getInputName() + ". Ignoring schema.");
 
-                // [#5614] If a schema is not regenerated, we must flag it as "not for removal", because its contents
-                //         will not be listed in the files directory.
-                directoriesNotForRemoval.add(getFile(schema).getParentFile());
-                return;
+                    // [#5614] If a schema is not regenerated, we must flag it as "not for removal", because its contents
+                    //         will not be listed in the files directory.
+                    directoriesNotForRemoval.add(getFile(schema).getParentFile());
+                    return;
+                }
+                else
+                    log.info("Existing version " + oldVersion + " is up to date with " + newVersion + " for schema " + schema.getInputName() + ". Regenerating because of skipRegenerationOnUpToDateVersion flag.");
             }
         }
 

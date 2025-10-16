@@ -705,6 +705,7 @@ public class GenerationTool {
 
             database.setSchemaVersionProvider(svp);
             database.setCatalogVersionProvider(cvp);
+            database.setSkipRegenerationOnUpToDateVersion(d.isSkipRegenerationOnUpToDateVersion());
 
             if (!isBlank(d.getOrderProvider())) {
                 Class<?> orderProvider = ClassUtils.loadClass(d.getOrderProvider());

@@ -288,6 +288,7 @@ public abstract class AbstractDatabase implements Database {
     private List<SyntheticDaoType>                                               configuredSyntheticDaos                 = new ArrayList<>();
     private SchemaVersionProvider                                                schemaVersionProvider;
     private CatalogVersionProvider                                               catalogVersionProvider;
+    private boolean                                                              skipRegenerationOnUpToDateVersion;
     private Comparator<Definition>                                               orderProvider;
     private boolean                                                              includeRelations                        = true;
     private boolean                                                              tableValuedFunctions                    = true;
@@ -1945,6 +1946,16 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final void setCatalogVersionProvider(CatalogVersionProvider catalogVersionProvider) {
         this.catalogVersionProvider = catalogVersionProvider;
+    }
+
+    @Override
+    public final boolean skipRegenerationOnUpToDateVersion() {
+        return skipRegenerationOnUpToDateVersion;
+    }
+
+    @Override
+    public final void setSkipRegenerationOnUpToDateVersion(boolean skipRegenerationOnUpToDateVersion) {
+        this.skipRegenerationOnUpToDateVersion = skipRegenerationOnUpToDateVersion;
     }
 
     @Override

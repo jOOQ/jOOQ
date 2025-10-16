@@ -1417,6 +1417,12 @@ There are three operation modes for this element:
 Catalog versions will be generated into the {@link javax.annotation.processing.Generated} annotation on
 generated artefacts.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+      
+      <element name="skipRegenerationOnUpToDateVersion" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[By default, a <code>catalogVersionProvider</code> or <code>schemaVersionProvider</code> allows for skipping regeneration of schemas that are up to date.
+<p>
+This flag allows for enforcing re-regeneration, e.g. when other, non-schema specific things have changed that require a regeneration.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
       <element name="orderProvider" type="string" default="" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A custom {@link java.util.Comparator} that can compare two {@link org.jooq.meta.Definition} objects to determine their order.

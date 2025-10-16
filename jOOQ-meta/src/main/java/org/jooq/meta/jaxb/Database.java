@@ -153,6 +153,8 @@ public class Database implements Serializable, XMLAppendable
     @XmlElement(defaultValue = "")
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String catalogVersionProvider = "";
+    @XmlElement(defaultValue = "true")
+    protected Boolean skipRegenerationOnUpToDateVersion = true;
     @XmlElement(defaultValue = "")
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String orderProvider = "";
@@ -1732,6 +1734,34 @@ public class Database implements Serializable, XMLAppendable
     }
 
     /**
+     * By default, a <code>catalogVersionProvider</code> or <code>schemaVersionProvider</code> allows for skipping regeneration of schemas that are up to date.
+     * <p>
+     * This flag allows for enforcing re-regeneration, e.g. when other, non-schema specific things have changed that require a regeneration.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isSkipRegenerationOnUpToDateVersion() {
+        return skipRegenerationOnUpToDateVersion;
+    }
+
+    /**
+     * By default, a <code>catalogVersionProvider</code> or <code>schemaVersionProvider</code> allows for skipping regeneration of schemas that are up to date.
+     * <p>
+     * This flag allows for enforcing re-regeneration, e.g. when other, non-schema specific things have changed that require a regeneration.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setSkipRegenerationOnUpToDateVersion(Boolean value) {
+        this.skipRegenerationOnUpToDateVersion = value;
+    }
+
+    /**
      * A custom {@link java.util.Comparator} that can compare two {@link org.jooq.meta.Definition} objects to determine their order.
      * <p>
      * This comparator can be used to influence the order of any object that is produced by jOOQ meta, and thus, indirectly, the order of declared objects in generated code.
@@ -2912,6 +2942,17 @@ public class Database implements Serializable, XMLAppendable
     }
 
     /**
+     * By default, a <code>catalogVersionProvider</code> or <code>schemaVersionProvider</code> allows for skipping regeneration of schemas that are up to date.
+     * <p>
+     * This flag allows for enforcing re-regeneration, e.g. when other, non-schema specific things have changed that require a regeneration.
+     * 
+     */
+    public Database withSkipRegenerationOnUpToDateVersion(Boolean value) {
+        setSkipRegenerationOnUpToDateVersion(value);
+        return this;
+    }
+
+    /**
      * A custom {@link java.util.Comparator} that can compare two {@link org.jooq.meta.Definition} objects to determine their order.
      * <p>
      * This comparator can be used to influence the order of any object that is produced by jOOQ meta, and thus, indirectly, the order of declared objects in generated code.
@@ -3302,6 +3343,7 @@ public class Database implements Serializable, XMLAppendable
         builder.append("outputSchemaToDefault", outputSchemaToDefault);
         builder.append("schemaVersionProvider", schemaVersionProvider);
         builder.append("catalogVersionProvider", catalogVersionProvider);
+        builder.append("skipRegenerationOnUpToDateVersion", skipRegenerationOnUpToDateVersion);
         builder.append("orderProvider", orderProvider);
         builder.append("embeddablePrimaryKeys", embeddablePrimaryKeys);
         builder.append("embeddableUniqueKeys", embeddableUniqueKeys);
@@ -3842,6 +3884,15 @@ public class Database implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (skipRegenerationOnUpToDateVersion == null) {
+            if (other.skipRegenerationOnUpToDateVersion!= null) {
+                return false;
+            }
+        } else {
+            if (!skipRegenerationOnUpToDateVersion.equals(other.skipRegenerationOnUpToDateVersion)) {
+                return false;
+            }
+        }
         if (orderProvider == null) {
             if (other.orderProvider!= null) {
                 return false;
@@ -4120,6 +4171,7 @@ public class Database implements Serializable, XMLAppendable
         result = ((prime*result)+((outputSchemaToDefault == null)? 0 :outputSchemaToDefault.hashCode()));
         result = ((prime*result)+((schemaVersionProvider == null)? 0 :schemaVersionProvider.hashCode()));
         result = ((prime*result)+((catalogVersionProvider == null)? 0 :catalogVersionProvider.hashCode()));
+        result = ((prime*result)+((skipRegenerationOnUpToDateVersion == null)? 0 :skipRegenerationOnUpToDateVersion.hashCode()));
         result = ((prime*result)+((orderProvider == null)? 0 :orderProvider.hashCode()));
         result = ((prime*result)+((embeddablePrimaryKeys == null)? 0 :embeddablePrimaryKeys.hashCode()));
         result = ((prime*result)+((embeddableUniqueKeys == null)? 0 :embeddableUniqueKeys.hashCode()));

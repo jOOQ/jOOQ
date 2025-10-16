@@ -1304,6 +1304,18 @@ public interface Database extends AutoCloseable {
     void setCatalogVersionProvider(CatalogVersionProvider provider);
 
     /**
+     * Whether to skip re-generation if the {@link CatalogVersionProvider} or
+     * {@link SchemaVersionProvider} indicates that the schema is up to date.
+     */
+    boolean skipRegenerationOnUpToDateVersion();
+
+    /**
+     * Whether to skip re-generation if the {@link CatalogVersionProvider} or
+     * {@link SchemaVersionProvider} indicates that the schema is up to date.
+     */
+    void setSkipRegenerationOnUpToDateVersion(boolean skipRegenerationOnUpToDateVersion);
+
+    /**
      * The database's order provider.
      */
     Comparator<Definition> getOrderProvider();

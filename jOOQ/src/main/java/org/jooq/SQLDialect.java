@@ -123,7 +123,13 @@ public enum SQLDialect {
 
     /**
      * The Apache Derby dialect family.
+     *
+     * @deprecated - [#19224] - 3.21.0 - This dialect has been unsupported by
+     *             the vendor and will be removed in the near future. See
+     *             <a href=
+     *             "https://issues.apache.org/jira/browse/DERBY-7177">https://issues.apache.org/jira/browse/DERBY-7177</a>
      */
+    @Deprecated(forRemoval = true, since = "3.20")
     DERBY("Derby", false, true),
 
     /**

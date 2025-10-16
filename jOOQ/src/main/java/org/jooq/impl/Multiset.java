@@ -48,6 +48,7 @@ import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
+// ...
 import static org.jooq.SQLDialect.TRINO;
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.impl.DSL.arrayAgg;
@@ -71,6 +72,7 @@ import static org.jooq.impl.DSL.xmlattributes;
 import static org.jooq.impl.DSL.xmlelement;
 import static org.jooq.impl.DSL.xmlserializeContent;
 import static org.jooq.impl.DerivedTable.NO_SUPPORT_CORRELATED_DERIVED_TABLE;
+import static org.jooq.impl.DerivedTable.NO_SUPPORT_CORRELATED_DERIVED_TABLE_FOR_MULTISET;
 import static org.jooq.impl.JSONArrayAgg.patchOracleArrayAggBug;
 import static org.jooq.impl.Keywords.K_ARRAY;
 import static org.jooq.impl.Keywords.K_MULTISET;
@@ -231,6 +233,9 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
 
 
 
+
+
+
     @SuppressWarnings("unchecked")
     private final void accept0(Context<?> ctx, boolean multisetCondition) {
         switch (emulateMultiset(ctx.configuration())) {
@@ -260,7 +265,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
 
 
                     default: {
-                        if (NO_SUPPORT_CORRELATED_DERIVED_TABLE.contains(ctx.dialect()) && isSimple(select)) {
+                        if (NO_SUPPORT_CORRELATED_DERIVED_TABLE_FOR_MULTISET.contains(ctx.dialect()) && isSimple(select)) {
                             List<Field<?>> l = map(select.getSelect(), f -> Tools.unalias(f));
 
                             JSONArrayAggReturningStep<JSON> returning =
@@ -338,7 +343,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
 
 
                     default: {
-                        if (NO_SUPPORT_CORRELATED_DERIVED_TABLE.contains(ctx.dialect()) && isSimple(select)) {
+                        if (NO_SUPPORT_CORRELATED_DERIVED_TABLE_FOR_MULTISET.contains(ctx.dialect()) && isSimple(select)) {
                             List<Field<?>> l = map(select.getSelect(), f -> Tools.unalias(f));
 
                             JSONArrayAggReturningStep<JSONB> returning =
@@ -413,7 +418,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
 
 
                     default: {
-                        if (NO_SUPPORT_CORRELATED_DERIVED_TABLE.contains(ctx.dialect()) && isSimple(select) && !select.$distinct()) {
+                        if (NO_SUPPORT_CORRELATED_DERIVED_TABLE_FOR_MULTISET.contains(ctx.dialect()) && isSimple(select) && !select.$distinct()) {
                             List<Field<?>> l = map(select.getSelect(), f -> Tools.unalias(f));
 
                             acceptMultisetSubqueryForXMLEmulation(ctx, multisetCondition, (Select<Record1<XML>>)

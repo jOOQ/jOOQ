@@ -6287,6 +6287,7 @@ final class Tools {
         if (type.getFromType() == UUID.class && (
             NO_SUPPORT_CAST_TYPE_IN_DDL.contains(ctx.dialect())
             || typeName.startsWith("varchar")
+            || typeName.equals("string")
         )) {
             toSQLDDLTypeDeclaration(ctx, VARCHAR(36));
             return;
@@ -7430,6 +7431,7 @@ final class Tools {
                 case POSTGRES:
                 case YUGABYTEDB:
                     return NestedCollectionEmulation.JSONB;
+
 
 
                 case H2:

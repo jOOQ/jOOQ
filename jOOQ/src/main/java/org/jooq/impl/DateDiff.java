@@ -223,6 +223,7 @@ final class DateDiff<T> extends AbstractField<Integer> implements UNotYetImpleme
 
 
 
+
             case SQLITE:
                 ctx.sql('(').visit(N_STRFTIME).sql("('%s', ").visit(endDate).sql(") - ").visit(N_STRFTIME).sql("('%s', ").visit(startDate).sql(")) / 86400");
                 return;

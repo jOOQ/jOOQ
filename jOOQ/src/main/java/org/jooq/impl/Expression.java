@@ -77,6 +77,7 @@ import static org.jooq.impl.Names.N_ADD_MONTHS;
 import static org.jooq.impl.Names.N_ADD_SECONDS;
 import static org.jooq.impl.Names.N_DATEADD;
 import static org.jooq.impl.Names.N_DATE_ADD;
+import static org.jooq.impl.Names.N_DATE_SUB;
 import static org.jooq.impl.Names.N_SQL_TSI_FRAC_SECOND;
 import static org.jooq.impl.Names.N_SQL_TSI_MILLI_SECOND;
 import static org.jooq.impl.Names.N_SQL_TSI_MONTH;
@@ -667,6 +668,7 @@ implements
 
 
 
+
                 case TRINO: {
                     ctx.sql('(').visit(lhs).sql(' ').sql(operator.toSQL()).sql(' ').paramType(INLINED, c -> c.visit(rhs)).sql(')');
                     break;
@@ -684,6 +686,7 @@ implements
         @SuppressWarnings({ "unchecked", "rawtypes" })
         private final void acceptNumberExpression(Context<?> ctx) {
             switch (ctx.family()) {
+
 
 
 

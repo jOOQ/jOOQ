@@ -50,7 +50,6 @@ import static java.util.Arrays.asList;
 import static java.util.function.Function.identity;
 import static java.util.regex.Matcher.quoteReplacement;
 import static org.jooq.ContextConverter.scoped;
-import static org.jooq.Decfloat.decfloat;
 import static org.jooq.Decfloat.decfloatOrNull;
 import static org.jooq.Geography.geography;
 import static org.jooq.Geometry.geometry;
@@ -118,7 +117,6 @@ import static org.jooq.impl.DefaultBinding.DefaultEnumTypeBinding.pgEnumValue;
 import static org.jooq.impl.DefaultBinding.DefaultEnumTypeBinding.pgRenderEnumCast;
 import static org.jooq.impl.DefaultBinding.DefaultJSONBBinding.EMULATE_AS_BLOB;
 import static org.jooq.impl.DefaultBinding.DefaultJSONBinding.patchSnowflakeJSON;
-import static org.jooq.impl.DefaultBinding.DefaultJSONBinding.renderParseJSON;
 import static org.jooq.impl.DefaultBinding.DefaultResultBinding.readMultisetJSON;
 import static org.jooq.impl.DefaultBinding.DefaultResultBinding.readMultisetXML;
 import static org.jooq.impl.DefaultBinding.DefaultStringBinding.autoRtrim;
@@ -154,6 +152,7 @@ import static org.jooq.impl.Names.N_BYTEA;
 import static org.jooq.impl.Names.N_FROM_HEX;
 import static org.jooq.impl.Names.N_HEX;
 import static org.jooq.impl.Names.N_JSON_PARSE;
+import static org.jooq.impl.Names.N_NUMERIC;
 import static org.jooq.impl.Names.N_PARSE_JSON;
 import static org.jooq.impl.Names.N_ST_GEOMFROMTEXT;
 import static org.jooq.impl.Names.N_ST_GEOMFROMWKB;
@@ -215,7 +214,6 @@ import static org.jooq.util.postgres.PostgresUtils.toPGInterval;
 import static org.jooq.util.postgres.PostgresUtils.toYearToMonth;
 
 import java.io.Serializable;
-import java.io.StringReader;
 import java.lang.reflect.Modifier;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -342,8 +340,6 @@ import org.jooq.types.UShort;
 import org.jooq.types.YearToMonth;
 import org.jooq.types.YearToSecond;
 import org.jooq.util.postgres.PostgresUtils;
-
-import org.jetbrains.annotations.Nullable;
 
 // ...
 // ...
@@ -1605,6 +1601,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
+
+
                 case POSTGRES: {
 
                     // [#12485] Passing the array string as OTHER (OID = unspecified) may prevent poor
@@ -2087,6 +2085,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final void sqlInline0(BindingSQLContext<U> ctx, BigDecimal value) {
             switch (ctx.family()) {
+
+
+
+
+
+
 
 
 
@@ -3931,6 +3935,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             switch (family) {
 
                 // [#5895] HSQLDB derives the specific data type from the literal
+
 
 
                 case FIREBIRD:

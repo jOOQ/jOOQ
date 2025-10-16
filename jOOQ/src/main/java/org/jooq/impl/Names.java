@@ -114,6 +114,7 @@ final class Names {
     static final Name N_DAYOFYEAR                   = systemName("dayofyear");
     static final Name N_DAYS                        = systemName("days");
     static final Name N_DAYS_BETWEEN                = systemName("days_between");
+    static final Name N_DECIMAL                     = systemName("decimal");
     static final Name N_DECODE                      = systemName("decode");
     static final Name N_DECODE_ORACLE               = systemName("decode_oracle");
     static final Name N_DEFAULT                     = systemName("default");
@@ -225,6 +226,7 @@ final class Names {
     static final Name N_NTILE                       = systemName("ntile");
     static final Name N_NULL                        = systemName("null");
     static final Name N_NUMBERS                     = systemName("numbers");
+    static final Name N_NUMERIC                     = systemName("numeric");
     static final Name N_NVL2                        = systemName("nvl2");
     static final Name N_O                           = systemName("o");
     static final Name N_OBJECT_AGG                  = systemName("object_agg");
@@ -310,7 +312,6 @@ final class Names {
     static final Name N_TO_BINARY                   = systemName("to_binary");
     static final Name N_TO_CLOB                     = systemName("to_clob");
     static final Name N_TO_JSON                     = systemName("to_json");
-    static final Name N_TO_JSON_STRING              = systemName("to_json_string");
     static final Name N_TO_NUMBER                   = systemName("to_number");
     static final Name N_TO_VARIANT                  = systemName("to_variant");
     static final Name N_TRUNCATE                    = systemName("truncate");
@@ -466,6 +467,7 @@ final class Names {
     static final Name N_DATABASE                    = systemName("database");
     static final Name N_DATALENGTH                  = systemName("datalength");
     static final Name N_DATE_ADD                    = systemName("date_add");
+    static final Name N_DATE_SUB                    = systemName("date_sub");
     static final Name N_DBINFO                      = systemName("dbinfo");
     static final Name N_DB_NAME                     = systemName("db_name");
     static final Name N_DEGREES                     = systemName("degrees");
@@ -533,7 +535,6 @@ final class Names {
     static final Name N_JSON_SET                    = systemName("json_set");
     static final Name N_JSON_TRANSFORM              = systemName("json_transform");
     static final Name N_JSON_VALID                  = systemName("json_valid");
-    static final Name N_LAX_STRING                  = systemName("lax_string");
     static final Name N_LCASE                       = systemName("lcase");
     static final Name N_LEFT                        = systemName("left");
     static final Name N_LEN                         = systemName("len");
@@ -694,6 +695,7 @@ final class Names {
     static final Name N_TO_CODE_POINTS              = systemName("to_code_points");
     static final Name N_TO_DATE                     = systemName("to_date");
     static final Name N_TO_HEX                      = systemName("to_hex");
+    static final Name N_TO_JSON_STRING              = systemName("to_json_string");
     static final Name N_TO_TIMESTAMP                = systemName("to_timestamp");
     static final Name N_TRANSFORM                   = systemName("transform");
     static final Name N_TRANSLATE                   = systemName("translate");

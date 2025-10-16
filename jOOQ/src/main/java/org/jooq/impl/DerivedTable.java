@@ -47,6 +47,7 @@ import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
+// ...
 import static org.jooq.impl.Names.N_T;
 import static org.jooq.impl.SubqueryCharacteristics.DERIVED_TABLE;
 import static org.jooq.impl.Tools.visitSubquery;
@@ -68,7 +69,8 @@ import org.jooq.TableOptions;
  */
 class DerivedTable<R extends Record> extends AbstractTable<R> implements QOM.DerivedTable<R> {
 
-    static final Set<SQLDialect>  NO_SUPPORT_CORRELATED_DERIVED_TABLE = SQLDialect.supportedUntil(CLICKHOUSE, DERBY, H2, MARIADB);
+    static final Set<SQLDialect>  NO_SUPPORT_CORRELATED_DERIVED_TABLE              = SQLDialect.supportedUntil(CLICKHOUSE, DERBY, H2, MARIADB);
+    static final Set<SQLDialect>  NO_SUPPORT_CORRELATED_DERIVED_TABLE_FOR_MULTISET = SQLDialect.supportedUntil(CLICKHOUSE, DERBY, H2, MARIADB);
     private final Lazy<Select<R>> query;
 
     DerivedTable(Select<R> query) {

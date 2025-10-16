@@ -1474,7 +1474,18 @@ final class MetaImpl extends AbstractMeta {
         }
 
         private final ForeignKeyRule foreignKeyRule(Integer code) {
-            return code == null ? null : JDBCUtils.foreignKeyRule(code);
+            if (code == null)
+                return null;
+
+            ForeignKeyRule result = JDBCUtils.foreignKeyRule(code);
+
+
+
+
+
+
+
+            return result;
         }
 
         @SuppressWarnings("unchecked")

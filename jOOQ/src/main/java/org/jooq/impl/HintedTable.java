@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Keywords.K_FORCE_INDEX;
+
 import org.jooq.Context;
 import org.jooq.Keyword;
 import org.jooq.Name;
@@ -58,31 +60,44 @@ implements
     QOM.HintedTable<R>
 {
 
-    private final Keyword             keywords;
+    private final HintType            hintType;
     private final QueryPartList<Name> arguments;
 
-    HintedTable(AbstractTable<R> delegate, String keywords, String... arguments) {
-        this(delegate, keywords, new QueryPartList<>(Tools.names(arguments)));
+    HintedTable(AbstractTable<R> delegate, HintType hintType, String... arguments) {
+        this(delegate, hintType, new QueryPartList<>(Tools.names(arguments)));
     }
 
-    HintedTable(AbstractTable<R> delegate, String keywords, QueryPartList<Name> arguments) {
-        this(delegate, DSL.keyword(keywords), arguments);
-    }
-
-    HintedTable(AbstractTable<R> delegate, Keyword keywords, String... arguments) {
-        this(delegate, keywords, new QueryPartList<>(Tools.names(arguments)));
-    }
-
-    HintedTable(AbstractTable<R> delegate, Keyword keywords, QueryPartList<Name> arguments) {
+    HintedTable(AbstractTable<R> delegate, HintType hintType, QueryPartList<Name> arguments) {
         super(delegate);
 
-        this.keywords = keywords;
+        this.hintType = hintType;
         this.arguments = arguments;
+    }
+
+    enum HintType {
+        FORCE_INDEX("force index"),
+        FORCE_INDEX_FOR_GROUP_BY("force index for group by"),
+        FORCE_INDEX_FOR_JOIN("force index for join"),
+        FORCE_INDEX_FOR_ORDER_BY("force index for order by"),
+        IGNORE_INDEX("ignore index"),
+        IGNORE_INDEX_FOR_GROUP_BY("ignore index for group by"),
+        IGNORE_INDEX_FOR_JOIN("ignore index for join"),
+        IGNORE_INDEX_FOR_ORDER_BY("ignore index for order by"),
+        USE_INDEX("use index"),
+        USE_INDEX_FOR_GROUP_BY("use index for group by"),
+        USE_INDEX_FOR_JOIN("use index for join"),
+        USE_INDEX_FOR_ORDER_BY("use index for order by");
+
+        final Keyword keywords;
+
+        private HintType(String keywords) {
+            this.keywords = DSL.keyword(keywords);
+        }
     }
 
     @Override
     final <O extends Record> HintedTable<O> construct(AbstractTable<O> newDelegate) {
-        return new HintedTable<>(newDelegate, keywords, arguments);
+        return new HintedTable<>(newDelegate, hintType, arguments);
     }
 
     // ------------------------------------------------------------------------
@@ -91,8 +106,26 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
+        switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+
+            default:
+                acceptDefault(ctx);
+                break;
+        }
+    }
+
+    private final void acceptDefault(Context<?> ctx) {
         ctx.visit(delegate)
-            .sql(' ').visit(keywords)
+            .sql(' ').visit(hintType.keywords)
             .sql(" (").visit(arguments)
             .sql(')');
     }

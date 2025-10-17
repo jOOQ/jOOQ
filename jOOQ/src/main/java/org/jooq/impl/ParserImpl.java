@@ -65,6 +65,7 @@ import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
@@ -940,6 +941,8 @@ final class ParserImpl implements Parser {
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
 final class DefaultParseContext extends AbstractParseContext implements ParseContext {
+
+
 
 
 
@@ -8225,6 +8228,13 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                         result = t(result).ignoreIndexForGroupBy(parseParenthesisedIdentifiers());
                     else
                         result = t(result).ignoreIndex(parseParenthesisedIdentifiers());
+                }
+                else if (parseIf("@{")) {
+                    parseKeyword("FORCE_INDEX");
+                    parse('=');
+                    Name name = parseIndexName();
+                    parse('}');
+                    result = t(result).forceIndex(name.last());
                 }
                 else
                     break;
@@ -16557,6 +16567,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
     private LanguageContext             languageContext        = LanguageContext.QUERY;
     private EnumSet<FunctionKeyword>    forbidden              = EnumSet.noneOf(FunctionKeyword.class);
     private boolean                     supportArraySubscripts = true;
+    private boolean                     supportsAtInIdentifiers= true;
     private ParseScope                  scope                  = new ParseScope();
 
     private final IgnoreComment         icIgnore;
@@ -16595,6 +16606,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         //         Do not rely on this flag. It will change incompatibly in the future.
         this.bindParamListener = (Consumer<Param<?>>) dsl.configuration().data("org.jooq.parser.param-collector");
         this.delimiterRequired = TRUE.equals(dsl.configuration().data("org.jooq.parser.delimiter-required"));
+
 
 
 
@@ -16776,7 +16788,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
     private final boolean isIdentifierPart(char character) {
         return Character.isJavaIdentifierPart(character)
-           || ((character == '@'
+           || ((character == '@' && supportsAtInIdentifiers
            ||   character == '#')
            &&   character != delimiter.charAt(0));
     }
@@ -16791,7 +16803,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
     private final boolean isIdentifierStart(char character) {
         return Character.isJavaIdentifierStart(character)
-           || ((character == '@'
+           || ((character == '@' && supportsAtInIdentifiers
            ||   character == '#')
            &&   character != delimiter.charAt(0));
     }

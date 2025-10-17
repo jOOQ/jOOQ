@@ -50,6 +50,7 @@ import org.jooq.Path;
 import org.jooq.Record;
 import org.jooq.SQL;
 import org.jooq.Table;
+import org.jooq.impl.HintedTable.HintType;
 import org.jooq.impl.QOM.UEmptyTable;
 
 /**
@@ -109,7 +110,7 @@ implements
     }
 
     @Override
-    final Table<Record> hintedTable(String keywords, String... indexes) {
+    final Table<Record> hintedTable(HintType hintType, String... indexes) {
         return this;
     }
 

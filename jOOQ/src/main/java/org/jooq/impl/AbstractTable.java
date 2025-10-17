@@ -60,6 +60,18 @@ import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.DSL.sql;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.val;
+import static org.jooq.impl.HintedTable.HintType.FORCE_INDEX;
+import static org.jooq.impl.HintedTable.HintType.FORCE_INDEX_FOR_GROUP_BY;
+import static org.jooq.impl.HintedTable.HintType.FORCE_INDEX_FOR_JOIN;
+import static org.jooq.impl.HintedTable.HintType.FORCE_INDEX_FOR_ORDER_BY;
+import static org.jooq.impl.HintedTable.HintType.IGNORE_INDEX;
+import static org.jooq.impl.HintedTable.HintType.IGNORE_INDEX_FOR_GROUP_BY;
+import static org.jooq.impl.HintedTable.HintType.IGNORE_INDEX_FOR_JOIN;
+import static org.jooq.impl.HintedTable.HintType.IGNORE_INDEX_FOR_ORDER_BY;
+import static org.jooq.impl.HintedTable.HintType.USE_INDEX;
+import static org.jooq.impl.HintedTable.HintType.USE_INDEX_FOR_GROUP_BY;
+import static org.jooq.impl.HintedTable.HintType.USE_INDEX_FOR_JOIN;
+import static org.jooq.impl.HintedTable.HintType.USE_INDEX_FOR_ORDER_BY;
 import static org.jooq.impl.QOM.JoinHint.HASH;
 import static org.jooq.impl.QOM.JoinHint.LOOP;
 import static org.jooq.impl.QOM.JoinHint.MERGE;
@@ -132,6 +144,7 @@ import org.jooq.TableSampleRowsStep;
 import org.jooq.UniqueKey;
 // ...
 // ...
+import org.jooq.impl.HintedTable.HintType;
 import org.jooq.impl.QOM.Aliasable;
 import org.jooq.impl.QOM.GenerationLocation;
 import org.jooq.impl.QOM.JoinHint;
@@ -1137,68 +1150,68 @@ implements
     // XXX: Other API
     // ------------------------------------------------------------------------
 
-    /* non-final */ Table<R> hintedTable(String keywords, String... indexes) {
-        return new HintedTable<>(this, keywords, indexes);
+    /* non-final */ Table<R> hintedTable(HintType hintType, String... indexes) {
+        return new HintedTable<>(this, hintType, indexes);
     }
 
     @Override
     public final Table<R> useIndex(String... indexes) {
-        return hintedTable("use index", indexes);
+        return hintedTable(USE_INDEX, indexes);
     }
 
     @Override
     public final Table<R> useIndexForJoin(String... indexes) {
-        return hintedTable("use index for join", indexes);
+        return hintedTable(USE_INDEX_FOR_JOIN, indexes);
     }
 
     @Override
     public final Table<R> useIndexForOrderBy(String... indexes) {
-        return hintedTable("use index for order by", indexes);
+        return hintedTable(USE_INDEX_FOR_ORDER_BY, indexes);
     }
 
     @Override
     public final Table<R> useIndexForGroupBy(String... indexes) {
-        return hintedTable("use index for group by", indexes);
+        return hintedTable(USE_INDEX_FOR_GROUP_BY, indexes);
     }
 
     @Override
     public final Table<R> ignoreIndex(String... indexes) {
-        return hintedTable("ignore index", indexes);
+        return hintedTable(IGNORE_INDEX, indexes);
     }
 
     @Override
     public final Table<R> ignoreIndexForJoin(String... indexes) {
-        return hintedTable("ignore index for join", indexes);
+        return hintedTable(IGNORE_INDEX_FOR_JOIN, indexes);
     }
 
     @Override
     public final Table<R> ignoreIndexForOrderBy(String... indexes) {
-        return hintedTable("ignore index for order by", indexes);
+        return hintedTable(IGNORE_INDEX_FOR_ORDER_BY, indexes);
     }
 
     @Override
     public final Table<R> ignoreIndexForGroupBy(String... indexes) {
-        return hintedTable("ignore index for group by", indexes);
+        return hintedTable(IGNORE_INDEX_FOR_GROUP_BY, indexes);
     }
 
     @Override
     public final Table<R> forceIndex(String... indexes) {
-        return hintedTable("force index", indexes);
+        return hintedTable(FORCE_INDEX, indexes);
     }
 
     @Override
     public final Table<R> forceIndexForJoin(String... indexes) {
-        return hintedTable("force index for join", indexes);
+        return hintedTable(FORCE_INDEX_FOR_JOIN, indexes);
     }
 
     @Override
     public final Table<R> forceIndexForOrderBy(String... indexes) {
-        return hintedTable("force index for order by", indexes);
+        return hintedTable(FORCE_INDEX_FOR_ORDER_BY, indexes);
     }
 
     @Override
     public final Table<R> forceIndexForGroupBy(String... indexes) {
-        return hintedTable("force index for group by", indexes);
+        return hintedTable(FORCE_INDEX_FOR_GROUP_BY, indexes);
     }
 
     // ------------------------------------------------------------------------

@@ -107,6 +107,7 @@ final class Names {
     static final Name N_DATEADD                     = systemName("dateadd");
     static final Name N_DATEDIFF                    = systemName("datediff");
     static final Name N_DATEPART                    = systemName("datepart");
+    static final Name N_DATE_SUB                    = systemName("date_sub");
     static final Name N_DATETIME_TRUNC              = systemName("datetime_trunc");
     static final Name N_DATE_DIFF                   = systemName("date_diff");
     static final Name N_DATE_TRUNC                  = systemName("date_trunc");
@@ -467,7 +468,6 @@ final class Names {
     static final Name N_DATABASE                    = systemName("database");
     static final Name N_DATALENGTH                  = systemName("datalength");
     static final Name N_DATE_ADD                    = systemName("date_add");
-    static final Name N_DATE_SUB                    = systemName("date_sub");
     static final Name N_DBINFO                      = systemName("dbinfo");
     static final Name N_DB_NAME                     = systemName("db_name");
     static final Name N_DEGREES                     = systemName("degrees");

@@ -636,6 +636,7 @@ import org.jooq.DropDomainCascadeStep;
 import org.jooq.DropIndexCascadeStep;
 import org.jooq.DropIndexOnStep;
 import org.jooq.DropSchemaStep;
+// ...
 import org.jooq.DropTableStep;
 // ...
 import org.jooq.DropTypeStep;
@@ -4820,6 +4821,11 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
 
 
+
+
+
+
+
     private final DDLQuery parseCreateTable(TableScope tableScope) {
         boolean ifNotExists = parseKeywordIf("IF NOT EXISTS");
         Table<?> tableName = DSL.table(parseTableName().getQualifiedName());
@@ -5960,6 +5966,11 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                           || parseKeywordIf("KEY")) {
                         return dsl.dropIndex(parseIdentifier()).on(tableName);
                     }
+                    else if (!ignoreProEdition() && parseKeywordIf("SYNONYM") && requireProEdition()) {
+
+
+
+                    }
                     else {
                         parseKeywordIf("COLUMN");
                         boolean ifColumnExists = parseKeywordIf("IF EXISTS");
@@ -6091,6 +6102,11 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                  parseKeywordIf("COLUMN IF NOT EXISTS")
               || parseKeywordIf("IF NOT EXISTS"))) {
             return parseAlterTableAddFieldFirstBeforeLast(s1.addColumnIfNotExists(parseAlterTableAddField(null)));
+        }
+        else if (!ignoreProEdition() && parseKeywordIf("SYNONYM") && requireProEdition()) {
+
+
+
         }
         else {
             do

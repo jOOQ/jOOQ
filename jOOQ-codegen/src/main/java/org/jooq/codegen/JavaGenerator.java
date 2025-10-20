@@ -5089,9 +5089,10 @@ public class JavaGenerator extends AbstractGenerator {
         final String className = getStrategy().getJavaClassName(table, Mode.DAO);
         final List<String> interfaces = out.ref(getStrategy().getJavaClassImplements(table, Mode.DAO));
         final String tableRecord = out.ref(getStrategy().getFullJavaClassName(table, Mode.RECORD));
-        final String daoImpl = generateSpringDao()
+        final String daoExtends = getStrategy().getJavaClassExtends(table, Mode.DAO);
+        final String daoImpl = generateSpringDao() && DAOImpl.class.getName().equals(daoExtends)
             ? out.ref(getStrategy().getJavaPackageName(table.getCatalog(), Mode.DAO) + ".AbstractSpringDAOImpl")
-            : out.ref(DAOImpl.class);
+            : out.ref(daoExtends);
         final String tableIdentifier = out.ref(getStrategy().getFullJavaIdentifier(table), 2);
 
         String tType = (scala || kotlin ? "Unit" : "Void");

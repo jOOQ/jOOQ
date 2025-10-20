@@ -546,7 +546,9 @@ public final class XMLFormat {
         ABSENT_ELEMENT,
 
         /**
-         * A <code>null</code> value is represented by a <code>xsi:nil="true"</code> attribute.
+         * A <code>null</code> value is represented by a
+         * <code>xsi:nil="true"</code> attribute if {@link XMLFormat#xmlns()} is
+         * set, or <code>nil="true"</code>, if it is not set.
          */
         XSI_NIL
     }

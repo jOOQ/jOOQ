@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema xmlns="http://www.w3.org/2001/XMLSchema"
-  xmlns:tns="http://www.jooq.org/xsd/jooq-codegen-3.19.8.xsd"
+  xmlns:tns="http://www.jooq.org/xsd/jooq-codegen-3.19.28.xsd"
   xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
   xmlns:annox="http://annox.dev.java.net"
-  targetNamespace="http://www.jooq.org/xsd/jooq-codegen-3.19.8.xsd"
+  targetNamespace="http://www.jooq.org/xsd/jooq-codegen-3.19.28.xsd"
   elementFormDefault="qualified"
   jxb:extensionBindingPrefixes="annox"
   jxb:version="2.1">
@@ -98,6 +98,10 @@
 
       <element name="properties" type="tns:Properties" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Enlist custom JDBC driver properties that are provided to the java.sql.DriverManager when fetching a connection.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="securityProvider" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A {@link java.security.Provider} that should be loaded using {@link java.security.Security} prior to connecting to the JDBC driver.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
       <element name="initScript" type="string" minOccurs="0" maxOccurs="1">

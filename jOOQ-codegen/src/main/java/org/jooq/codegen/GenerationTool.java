@@ -56,6 +56,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Field;
+import java.security.Provider;
+import java.security.Security;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.SQLException;
@@ -348,10 +350,14 @@ public class GenerationTool {
                         set(j, propertyOverride, "jooq.codegen.jdbc.autoCommit", Jdbc::isAutoCommit, Jdbc::setAutoCommit, Boolean::valueOf);
                         set(j, propertyOverride, "jooq.codegen.jdbc.initScript", Jdbc::getInitScript, Jdbc::setInitScript);
                         set(j, propertyOverride, "jooq.codegen.jdbc.initSeparator", Jdbc::getInitSeparator, Jdbc::setInitSeparator);
+                        set(j, propertyOverride, "jooq.codegen.jdbc.securityProvider", Jdbc::getSecurityProvider, Jdbc::setSecurityProvider);
                     }
 
                     if (j != null && !StringUtils.isBlank(j.getUrl())) {
                         try {
+                            if (!StringUtils.isEmpty(j.getSecurityProvider()))
+                                Security.addProvider((Provider) loadClass(j.getSecurityProvider()).newInstance());
+
                             Class<? extends Driver> driver = (Class<? extends Driver>) loadClass(driverClass(j));
 
                             Properties properties = properties(j.getProperties());

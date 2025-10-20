@@ -29,7 +29,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="tables" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="fields" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="literals" type="{http://www.jooq.org/xsd/jooq-codegen-3.19.8.xsd}SyntheticEnumLiteralsType" minOccurs="0"/&gt;
+ *         &lt;element name="literals" type="{http://www.jooq.org/xsd/jooq-codegen-3.19.28.xsd}SyntheticEnumLiteralsType" minOccurs="0"/&gt;
  *         &lt;element name="literalSql" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="literalsFromColumnContent" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
  *         &lt;element name="literalsFromCheckConstraints" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
@@ -52,7 +52,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class SyntheticEnumType implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 31908L;
+    private final static long serialVersionUID = 31928L;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String name;
     @XmlJavaTypeAdapter(StringAdapter.class)

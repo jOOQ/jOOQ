@@ -28,7 +28,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class Strategy implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 31908L;
+    private final static long serialVersionUID = 31928L;
     @XmlElement(defaultValue = "org.jooq.codegen.DefaultGeneratorStrategy")
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String name = "org.jooq.codegen.DefaultGeneratorStrategy";

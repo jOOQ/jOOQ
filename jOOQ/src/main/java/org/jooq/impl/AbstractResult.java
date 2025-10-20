@@ -120,7 +120,8 @@ import org.xml.sax.helpers.DefaultHandler;
  */
 abstract class AbstractResult<R extends Record> extends AbstractFormattable implements FieldsTrait, Iterable<R> {
 
-    final AbstractRow<R> fields;
+    private static final String XSI_SCHEMA = "http://www.w3.org/2001/XMLSchema-instance";
+    final AbstractRow<R>        fields;
 
     AbstractResult(Configuration configuration, AbstractRow<R> row) {
         super(configuration);
@@ -781,7 +782,11 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
             if (format.xmlns()) {
                 format = format.xmlns(false);
                 writer.append(" xmlns=\"" + Constants.NS_EXPORT + "\"");
+
+                if (format.nullFormat() == XSI_NIL)
+                    writer.append(" xsi:xmlns=\"" + XSI_SCHEMA + "\"");
             }
+
             writer.append(">");
 
             if (format.header()) {
@@ -855,6 +860,9 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
         if (format.xmlns()) {
             format = format.xmlns(false);
             writer.append(" xmlns=\"" + Constants.NS_EXPORT + "\"");
+
+            if (format.nullFormat() == XSI_NIL)
+                writer.append(" xsi:xmlns=\"" + XSI_SCHEMA + "\"");
         }
 
         if (record == null) {
@@ -883,7 +891,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
 
                 if (value == null) {
                     if (format.nullFormat() == XSI_NIL)
-                        writer.append(" xsi:nil=\"true\"");
+                        writer.append(" ").append(nil(format)).append("=\"true\"");
 
                     writer.append("/>");
                 }
@@ -920,7 +928,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
 
                     if (o == null) {
                         if (format.nullFormat() == XSI_NIL)
-                            writer.append(" xsi:nil=\"true\"");
+                            writer.append(" ").append(nil(format)).append("=\"true\"");
 
                         writer.append("/>");
                     }
@@ -1210,11 +1218,12 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
 
             Element eResult = document.createElement("result");
 
-            if (format.xmlns())
+            if (format.xmlns()) {
                 eResult.setAttribute("xmlns", Constants.NS_EXPORT);
 
-            if (format.nullFormat() == XSI_NIL)
-                eResult.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
+                if (format.nullFormat() == XSI_NIL)
+                    eResult.setAttribute("xmlns:xsi", XSI_SCHEMA);
+            }
 
             document.appendChild(eResult);
 
@@ -1295,7 +1304,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
     ) {
         if (value == null) {
             if (format.nullFormat() == XSI_NIL)
-                eParent.setAttribute("xsi:nil", "true");
+                eParent.setAttribute(nil(format), "true");
         }
         else if (value instanceof Formattable f) {
             Document d = f.intoXML(format);
@@ -1315,7 +1324,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
 
                     if (o == null) {
                         if (format.nullFormat() == XSI_NIL)
-                            eElement.setAttribute("xsi:nil", "true");
+                            eElement.setAttribute(nil(format), "true");
                     }
                     else
                         intoXMLContent(format, builder, document, o, eElement);
@@ -1334,7 +1343,11 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
             eParent.setTextContent(format0(value, false, false));
     }
 
-    private final Node childElement(Node n) {
+    private static final String nil(XMLFormat format) {
+        return format.xmlns() ? "xsi:nil" : "nil";
+    }
+
+    private static final Node childElement(Node n) {
         NodeList l = n.getChildNodes();
 
         for (int i = 0; i < l.getLength(); i++) {
@@ -1408,8 +1421,12 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
 
         handler.startDocument();
 
-        if (format.xmlns())
+        if (format.xmlns()) {
             handler.startPrefixMapping("", Constants.NS_EXPORT);
+
+            if (format.nullFormat() == XSI_NIL)
+                handler.startPrefixMapping("xsi", XSI_SCHEMA);
+        }
 
         handler.startElement("", "", "result", empty);
         if (format.header()) {
@@ -1478,8 +1495,12 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
         if (format.header())
             handler.endElement("", "", "records");
 
-        if (format.xmlns())
+        if (format.xmlns()) {
+            if (format.nullFormat() == XSI_NIL)
+                handler.endPrefixMapping("xsi");
+
             handler.endPrefixMapping("");
+        }
 
         handler.endDocument();
         return handler;
@@ -1541,7 +1562,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
         return formatted;
     }
 
-    private static final String escapeXML(String string) {
+    static final String escapeXML(String string) {
         return StringUtils.replaceEach(string,
             new String[] { "\"", "'", "<", ">", "&" },
             new String[] { "&quot;", "&apos;", "&lt;", "&gt;", "&amp;"});

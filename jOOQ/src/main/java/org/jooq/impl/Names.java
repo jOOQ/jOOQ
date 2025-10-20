@@ -91,6 +91,7 @@ final class Names {
     static final Name N_COUNTIF                     = systemName("countif");
     static final Name N_COUNTSET                    = systemName("countset");
     static final Name N_COUNT_IF                    = systemName("count_if");
+    static final Name N_CREATEXML                   = systemName("createxml");
     static final Name N_CUBE                        = systemName("cube");
     static final Name N_CUME_DIST                   = systemName("cume_dist");
     static final Name N_CURRENTUSER                 = systemName("currentuser");

@@ -28,7 +28,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class SchemaMappingType implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 31800L;
+    private final static long serialVersionUID = 31835L;
     @XmlElement(required = true, defaultValue = "")
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String inputSchema = "";

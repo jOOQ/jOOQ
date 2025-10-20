@@ -44,7 +44,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class SyntheticDaoMethodType implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 31800L;
+    private final static long serialVersionUID = 31835L;
     @XmlElement(required = true)
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String name;

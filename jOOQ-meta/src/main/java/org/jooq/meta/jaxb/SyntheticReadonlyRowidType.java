@@ -41,7 +41,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class SyntheticReadonlyRowidType implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 31800L;
+    private final static long serialVersionUID = 31835L;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String name;
     @XmlJavaTypeAdapter(StringAdapter.class)

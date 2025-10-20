@@ -49,6 +49,8 @@ public class Jdbc implements Serializable, XMLAppendable
     protected String password;
     protected Boolean autoCommit;
     @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String securityProvider;
+    @XmlJavaTypeAdapter(StringAdapter.class)
     protected String initScript;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String initSeparator;
@@ -195,6 +197,22 @@ public class Jdbc implements Serializable, XMLAppendable
     }
 
     /**
+     * A {@link java.security.Provider} that should be loaded using {@link java.security.Security} prior to connecting to the JDBC driver.
+     * 
+     */
+    public String getSecurityProvider() {
+        return securityProvider;
+    }
+
+    /**
+     * A {@link java.security.Provider} that should be loaded using {@link java.security.Security} prior to connecting to the JDBC driver.
+     * 
+     */
+    public void setSecurityProvider(String value) {
+        this.securityProvider = value;
+    }
+
+    /**
      * A script to run after creating the JDBC connection, and before running the code generator.
      * 
      */
@@ -311,6 +329,15 @@ public class Jdbc implements Serializable, XMLAppendable
     }
 
     /**
+     * A {@link java.security.Provider} that should be loaded using {@link java.security.Security} prior to connecting to the JDBC driver.
+     * 
+     */
+    public Jdbc withSecurityProvider(String value) {
+        setSecurityProvider(value);
+        return this;
+    }
+
+    /**
      * A script to run after creating the JDBC connection, and before running the code generator.
      * 
      */
@@ -359,6 +386,7 @@ public class Jdbc implements Serializable, XMLAppendable
         builder.append("username", username);
         builder.append("password", password);
         builder.append("autoCommit", autoCommit);
+        builder.append("securityProvider", securityProvider);
         builder.append("initScript", initScript);
         builder.append("initSeparator", initSeparator);
         builder.append("properties", "property", properties);
@@ -455,6 +483,15 @@ public class Jdbc implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (securityProvider == null) {
+            if (other.securityProvider!= null) {
+                return false;
+            }
+        } else {
+            if (!securityProvider.equals(other.securityProvider)) {
+                return false;
+            }
+        }
         if (initScript == null) {
             if (other.initScript!= null) {
                 return false;
@@ -497,6 +534,7 @@ public class Jdbc implements Serializable, XMLAppendable
         result = ((prime*result)+((username == null)? 0 :username.hashCode()));
         result = ((prime*result)+((password == null)? 0 :password.hashCode()));
         result = ((prime*result)+((autoCommit == null)? 0 :autoCommit.hashCode()));
+        result = ((prime*result)+((securityProvider == null)? 0 :securityProvider.hashCode()));
         result = ((prime*result)+((initScript == null)? 0 :initScript.hashCode()));
         result = ((prime*result)+((initSeparator == null)? 0 :initSeparator.hashCode()));
         result = ((prime*result)+(((properties == null)||properties.isEmpty())? 0 :properties.hashCode()));

@@ -460,10 +460,7 @@ implements
 
     private final boolean isNil(Attributes attributes) {
         return "true".equals(attributes.getValue("xsi:nil"))
-
-
-
-        ;
+            || "true".equals(attributes.getValue("nil"));
     }
 
     @Override

@@ -24,11 +24,11 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;all&gt;
- *         &lt;element name="logging" type="{http://www.jooq.org/xsd/jooq-codegen-3.20.1.xsd}Logging" minOccurs="0"/&gt;
- *         &lt;element name="onError" type="{http://www.jooq.org/xsd/jooq-codegen-3.20.1.xsd}OnError" minOccurs="0"/&gt;
- *         &lt;element name="onUnused" type="{http://www.jooq.org/xsd/jooq-codegen-3.20.1.xsd}OnError" minOccurs="0"/&gt;
- *         &lt;element name="jdbc" type="{http://www.jooq.org/xsd/jooq-codegen-3.20.1.xsd}Jdbc" minOccurs="0"/&gt;
- *         &lt;element name="generator" type="{http://www.jooq.org/xsd/jooq-codegen-3.20.1.xsd}Generator"/&gt;
+ *         &lt;element name="logging" type="{http://www.jooq.org/xsd/jooq-codegen-3.20.9.xsd}Logging" minOccurs="0"/&gt;
+ *         &lt;element name="onError" type="{http://www.jooq.org/xsd/jooq-codegen-3.20.9.xsd}OnError" minOccurs="0"/&gt;
+ *         &lt;element name="onUnused" type="{http://www.jooq.org/xsd/jooq-codegen-3.20.9.xsd}OnError" minOccurs="0"/&gt;
+ *         &lt;element name="jdbc" type="{http://www.jooq.org/xsd/jooq-codegen-3.20.9.xsd}Jdbc" minOccurs="0"/&gt;
+ *         &lt;element name="generator" type="{http://www.jooq.org/xsd/jooq-codegen-3.20.9.xsd}Generator"/&gt;
  *         &lt;element name="basedir" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *       &lt;/all&gt;
  *     &lt;/restriction&gt;
@@ -49,7 +49,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class Configuration implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 32001L;
+    private final static long serialVersionUID = 32009L;
     @XmlSchemaType(name = "string")
     protected Logging logging;
     @XmlElement(defaultValue = "FAIL")

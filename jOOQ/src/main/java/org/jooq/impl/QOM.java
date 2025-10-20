@@ -731,9 +731,9 @@ public final class QOM {
     /**
      * A table with a MySQL style index access hint.
      */
-    public interface HintedTable<R extends Record>
+    public interface HintedTable<R extends org.jooq.Record>
         extends
-            Table<R>
+            org.jooq.Table<R>
     {
         @NotNull Table<R> $table();
         @CheckReturnValue

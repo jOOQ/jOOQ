@@ -98,6 +98,7 @@ final class Names {
     static final Name N_COUNT_IF                    = systemName("count_if");
     static final Name N_covarPop                    = systemName("covarPop");
     static final Name N_covarSamp                   = systemName("covarSamp");
+    static final Name N_CREATEXML                   = systemName("createxml");
     static final Name N_CUBE                        = systemName("cube");
     static final Name N_CURRENT_BIGDATETIME         = systemName("current_bigdatetime");
     static final Name N_CURRENT_DATE                = systemName("current_date");

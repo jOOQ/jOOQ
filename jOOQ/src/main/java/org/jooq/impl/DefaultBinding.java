@@ -110,6 +110,7 @@ import static org.jooq.impl.DSL.name;
 // ...
 // ...
 import static org.jooq.impl.DSL.using;
+import static org.jooq.impl.DSL.xmlserializeContent;
 import static org.jooq.impl.DefaultBinding.DefaultDoubleBinding.REQUIRES_LITERAL_CAST;
 import static org.jooq.impl.DefaultBinding.DefaultDoubleBinding.infinity;
 import static org.jooq.impl.DefaultBinding.DefaultDoubleBinding.nan;
@@ -149,6 +150,7 @@ import static org.jooq.impl.Keywords.K_TRUE;
 import static org.jooq.impl.Keywords.K_YEAR_TO_DAY;
 import static org.jooq.impl.Keywords.K_YEAR_TO_FRACTION;
 import static org.jooq.impl.Names.N_BYTEA;
+import static org.jooq.impl.Names.N_CREATEXML;
 import static org.jooq.impl.Names.N_FROM_HEX;
 import static org.jooq.impl.Names.N_HEX;
 import static org.jooq.impl.Names.N_JSON_PARSE;
@@ -157,6 +159,7 @@ import static org.jooq.impl.Names.N_PARSE_JSON;
 import static org.jooq.impl.Names.N_ST_GEOMFROMTEXT;
 import static org.jooq.impl.Names.N_ST_GEOMFROMWKB;
 import static org.jooq.impl.Names.N_TO_BINARY;
+import static org.jooq.impl.Names.N_XMLTYPE;
 import static org.jooq.impl.R2DBC.isR2dbc;
 import static org.jooq.impl.SQLDataType.BIGINT;
 import static org.jooq.impl.SQLDataType.BLOB;
@@ -340,6 +343,8 @@ import org.jooq.types.UShort;
 import org.jooq.types.YearToMonth;
 import org.jooq.types.YearToSecond;
 import org.jooq.util.postgres.PostgresUtils;
+
+import org.jetbrains.annotations.Nullable;
 
 // ...
 // ...
@@ -915,6 +920,15 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 }
             }
 
+
+
+
+
+
+
+
+
+
             if (dataType.isUUID()) {
                 switch (ctx.family()) {
 
@@ -1201,7 +1215,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         private final void sql(BindingSQLContext<U> ctx, T value) throws SQLException {
             if (ctx.render().paramType() == INLINED)
                 if (value == null)
-                    ctx.render().visit(K_NULL);
+                    sqlInlineNull0(ctx);
                 else
                     sqlInline0(ctx, value);
             else
@@ -1311,7 +1325,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             ctx.statement().registerOutParameter(ctx.index(), sqltype(ctx.statement(), ctx.configuration()));
         }
 
-        @SuppressWarnings("unused")
+        /* non-final */ void sqlInlineNull0(BindingSQLContext<U> ctx) {
+            ctx.render().visit(K_NULL);
+        }
+
         /* non-final */ void sqlInline0(BindingSQLContext<U> ctx, T value) throws SQLException {
             sqlInline1(ctx, value);
         }
@@ -6757,8 +6774,87 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
     static final class DefaultXMLBinding<U> extends InternalBinding<XML, U> {
 
+        private static final Formatter FORMATTER = new Formatter() {
+
+            @Override
+            public void formatJSON(FormatterContext ctx) {
+
+
+
+
+
+
+
+
+
+            }
+
+            @Override
+            public void formatJSONB(FormatterContext ctx) {
+                formatJSON(ctx);
+            }
+
+            @Override
+            public void formatXML(FormatterContext ctx) {
+            }
+
+        };
+
         DefaultXMLBinding(DataType<XML> dataType, Converter<XML, U> converter) {
             super(dataType, converter);
+        }
+
+        @Override
+        public final Formatter formatter() {
+            return FORMATTER;
+        }
+
+        @Override
+        final void sqlInlineNull0(BindingSQLContext<U> ctx) {
+            switch (ctx.family()) {
+
+
+
+
+
+                default:
+                    super.sqlInlineNull0(ctx);
+                    break;
+            }
+        }
+
+        @Override
+        final void sqlInline0(BindingSQLContext<U> ctx, XML value) throws SQLException {
+            switch (ctx.family()) {
+
+
+
+
+
+
+
+
+                default:
+                    super.sqlInline0(ctx, value);
+                    break;
+            }
+        }
+
+        @Override
+        final void sqlBind0(BindingSQLContext<U> ctx, XML value) throws SQLException {
+            switch (ctx.family()) {
+
+
+
+
+
+
+
+
+                default:
+                    super.sqlBind0(ctx, value);
+                    break;
+            }
         }
 
         @Override

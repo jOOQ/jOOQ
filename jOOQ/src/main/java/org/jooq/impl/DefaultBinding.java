@@ -99,6 +99,7 @@ import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.log;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.using;
+import static org.jooq.impl.DSL.xmlparseDocument;
 import static org.jooq.impl.DSL.xmlserializeContent;
 import static org.jooq.impl.DefaultBinding.DefaultDoubleBinding.REQUIRES_LITERAL_CAST;
 import static org.jooq.impl.DefaultBinding.DefaultDoubleBinding.infinity;
@@ -6075,6 +6076,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final void sqlInline0(BindingSQLContext<U> ctx, XML value) throws SQLException {
             switch (ctx.family()) {
+
+
+
+
 
 
 

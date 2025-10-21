@@ -249,6 +249,15 @@ implements
         @Override
         public void endEntity(String name) throws SAXException {
         }
+
+        // --------------------------------------------------------------------
+        // Object API
+        // --------------------------------------------------------------------
+
+        @Override
+        public String toString() {
+            return out.toString();
+        }
     }
 
     private static class State<R extends Record> {

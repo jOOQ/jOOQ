@@ -1437,7 +1437,6 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
         return null;
     }
 
-
     @Override
     public final <H extends ContentHandler> H intoXML(H handler, XMLFormat format) throws SAXException {
         Attributes empty = new AttributesImpl();
@@ -1499,17 +1498,25 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
 
                 AttributesImpl attrs = new AttributesImpl();
 
-                if (format.recordFormat() == VALUE_ELEMENTS_WITH_FIELD_ATTRIBUTE)
-                    attrs.addAttribute("", "", "field", "CDATA", field.getName());
+                if (value != null || format.nullFormat() != ABSENT_ELEMENT) {
+                    if (format.recordFormat() == VALUE_ELEMENTS_WITH_FIELD_ATTRIBUTE)
+                        attrs.addAttribute("", "", "field", "CDATA", field.getName());
 
-                handler.startElement("", "", tag, attrs);
+                    if (value == null && format.nullFormat() == XSI_NIL)
+                        if (format.xmlns())
+                            attrs.addAttribute("", "", "xsi:nil", "boolean", "true");
+                        else
+                            attrs.addAttribute("", "", "nil", "boolean", "true");
 
-                if (value != null) {
-                    char[] chars = format0(value, false, false).toCharArray();
-                    handler.characters(chars, 0, chars.length);
+                    handler.startElement("", "", tag, attrs);
+
+                    if (value != null) {
+                        char[] chars = format0(value, false, false).toCharArray();
+                        handler.characters(chars, 0, chars.length);
+                    }
+
+                    handler.endElement("", "", tag);
                 }
-
-                handler.endElement("", "", tag);
             }
 
             handler.endElement("", "", "record");
@@ -1525,6 +1532,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
             handler.endPrefixMapping("");
         }
 
+        handler.endElement("", "", "result");
         handler.endDocument();
         return handler;
     }

@@ -88,6 +88,7 @@ import static org.jooq.tools.StringUtils.defaultIfNull;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Set;
+import java.util.function.Consumer;
 
 import org.jooq.Context;
 import org.jooq.Field;
@@ -99,6 +100,7 @@ import org.jooq.QueryPart;
 import org.jooq.SQLDialect;
 import org.jooq.SortField;
 // ...
+import org.jooq.WindowSpecification;
 import org.jooq.WindowSpecificationExcludeStep;
 import org.jooq.WindowSpecificationFinalStep;
 import org.jooq.WindowSpecificationOrderByStep;
@@ -108,6 +110,8 @@ import org.jooq.conf.RenderImplicitWindowRange;
 import org.jooq.impl.QOM.FrameExclude;
 import org.jooq.impl.QOM.FrameUnits;
 import org.jooq.impl.QOM.UnmodifiableList;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
@@ -154,6 +158,10 @@ implements
     }
 
     WindowSpecificationImpl copy() {
+        return copy(c -> {});
+    }
+
+    WindowSpecificationImpl copy(Consumer<? super WindowSpecificationImpl> consumer) {
         WindowSpecificationImpl copy = new WindowSpecificationImpl(this.windowDefinition);
         copy.partitionBy.addAll(this.partitionBy);
         copy.orderBy.addAll(this.orderBy);
@@ -161,6 +169,7 @@ implements
         copy.frameEnd = this.frameEnd;
         copy.frameUnits = this.frameUnits;
         copy.exclude = this.exclude;
+        consumer.accept(copy);
         return copy;
     }
 
@@ -176,7 +185,7 @@ implements
         SortFieldList o = orderBy;
 
         // [#8414] [#8593] [#11021] [#11851] Some RDBMS require ORDER BY in some window functions
-        AbstractWindowFunction<?> w = (AbstractWindowFunction<?>) ctx.data(DATA_WINDOW_FUNCTION);
+        AbstractWindowFunction<?, ?> w = (AbstractWindowFunction<?, ?>) ctx.data(DATA_WINDOW_FUNCTION);
 
         if (o.isEmpty()) {
             boolean ordered =
@@ -692,8 +701,19 @@ implements
     }
 
     @Override
-    public final UnmodifiableList<? extends Field<?>> $partitionBy() {
-        return QOM.unmodifiable((QueryPartList) partitionBy);
+    public final UnmodifiableList<? extends GroupField> $partitionBy() {
+        return QOM.unmodifiable(partitionBy);
+    }
+
+    @Override
+    public final WindowSpecification $partitionBy(Collection<? extends GroupField> newPartitionBy) {
+        if (newPartitionBy == partitionBy)
+            return this;
+        else
+            return copy(c -> {
+                c.partitionBy.clear();
+                c.partitionBy.addAll(newPartitionBy);
+            });
     }
 
     @Override
@@ -702,8 +722,29 @@ implements
     }
 
     @Override
+    public final WindowSpecification $orderBy(Collection<? extends SortField<?>> newOrderBy) {
+        if (newOrderBy == orderBy)
+            return this;
+        else
+            return copy(c -> {
+                c.orderBy.clear();
+                c.orderBy.addAll(newOrderBy);
+            });
+    }
+
+    @Override
     public final FrameUnits $frameUnits() {
         return frameUnits;
+    }
+
+    @Override
+    public final WindowSpecification $frameUnits(FrameUnits newFrameUnits) {
+        if (newFrameUnits == frameUnits)
+            return this;
+        else
+            return copy(c -> {
+                c.frameUnits = newFrameUnits;
+            });
     }
 
     @Override
@@ -712,13 +753,43 @@ implements
     }
 
     @Override
+    public final WindowSpecification $frameStart(Integer newFrameStart) {
+        if (newFrameStart == frameStart)
+            return this;
+        else
+            return copy(c -> {
+                c.frameStart = newFrameStart;
+            });
+    }
+
+    @Override
     public final Integer $frameEnd() {
         return frameEnd;
     }
 
     @Override
+    public final WindowSpecification $frameEnd(Integer newFrameEnd) {
+        if (newFrameEnd == frameEnd)
+            return this;
+        else
+            return copy(c -> {
+                c.frameEnd = newFrameEnd;
+            });
+    }
+
+    @Override
     public final FrameExclude $exclude() {
         return exclude;
+    }
+
+    @Override
+    public final WindowSpecification $exclude(FrameExclude newExclude) {
+        if (newExclude == exclude)
+            return this;
+        else
+            return copy(c -> {
+                c.exclude = newExclude;
+            });
     }
 
 

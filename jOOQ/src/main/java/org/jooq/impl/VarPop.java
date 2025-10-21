@@ -64,6 +64,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import java.math.BigDecimal;
+import java.util.function.Function;
 
 
 /**
@@ -72,7 +73,7 @@ import java.math.BigDecimal;
 @SuppressWarnings({ "rawtypes", "unused" })
 final class VarPop
 extends
-    AbstractAggregateFunction<BigDecimal>
+    AbstractAggregateFunction<BigDecimal, VarPop>
 implements
     QOM.VarPop
 {
@@ -152,6 +153,11 @@ implements
 
     public final Function1<? super Field<? extends Number>, ? extends QOM.VarPop> $constructor() {
         return (a1) -> new VarPop(a1);
+    }
+
+    @Override
+    final VarPop copy2(Function<VarPop, VarPop> function) {
+        return function.apply((VarPop) $constructor().apply($field()));
     }
 
 

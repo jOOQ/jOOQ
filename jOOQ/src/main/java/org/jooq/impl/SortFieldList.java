@@ -42,6 +42,7 @@ import static org.jooq.SortOrder.DESC;
 import static org.jooq.impl.Tools.allMatch;
 import static org.jooq.impl.Tools.anyMatch;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.jooq.Field;
@@ -57,7 +58,7 @@ final class SortFieldList extends QueryPartList<SortField<?>> {
         this(emptyList());
     }
 
-    SortFieldList(List<SortField<?>> wrappedList) {
+    SortFieldList(Collection<? extends SortField<?>> wrappedList) {
         super(wrappedList);
     }
 

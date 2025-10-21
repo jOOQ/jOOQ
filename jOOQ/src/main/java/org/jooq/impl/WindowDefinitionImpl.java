@@ -66,6 +66,8 @@ import org.jooq.impl.QOM.FrameExclude;
 import org.jooq.impl.QOM.FrameUnits;
 import org.jooq.impl.QOM.UnmodifiableList;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * @author Lukas Eder
  */
@@ -340,8 +342,18 @@ final class WindowDefinitionImpl extends AbstractQueryPart implements WindowDefi
     }
 
     @Override
+    public final WindowSpecification $partitionBy(Collection<? extends GroupField> partitionBy) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public final UnmodifiableList<? extends SortField<?>> $orderBy() {
         return QOM.unmodifiable($windowSpecification() == null ? new QueryPartList<>() : $windowSpecification().$orderBy());
+    }
+
+    @Override
+    public final WindowSpecification $orderBy(Collection<? extends SortField<?>> orderBy) {
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -350,8 +362,18 @@ final class WindowDefinitionImpl extends AbstractQueryPart implements WindowDefi
     }
 
     @Override
+    public final WindowSpecification $frameUnits(FrameUnits frameUnits) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public final Integer $frameStart() {
         return apply($windowSpecification(), t -> t.$frameStart());
+    }
+
+    @Override
+    public final WindowSpecification $frameStart(Integer frameStart) {
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -360,8 +382,18 @@ final class WindowDefinitionImpl extends AbstractQueryPart implements WindowDefi
     }
 
     @Override
+    public final WindowSpecification $frameEnd(Integer frameEnd) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public final FrameExclude $exclude() {
         return apply($windowSpecification(), t -> t.$exclude());
+    }
+
+    @Override
+    public final WindowSpecification $exclude(FrameExclude exclude) {
+        throw new UnsupportedOperationException();
     }
 
 

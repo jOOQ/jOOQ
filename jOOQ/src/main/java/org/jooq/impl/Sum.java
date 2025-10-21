@@ -64,6 +64,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import java.math.BigDecimal;
+import java.util.function.Function;
 
 
 /**
@@ -72,7 +73,7 @@ import java.math.BigDecimal;
 @SuppressWarnings({ "rawtypes", "unused" })
 final class Sum
 extends
-    AbstractAggregateFunction<BigDecimal>
+    AbstractAggregateFunction<BigDecimal, Sum>
 implements
     QOM.Sum
 {
@@ -120,6 +121,11 @@ implements
 
     public final Function2<? super Field<? extends Number>, ? super Boolean, ? extends QOM.Sum> $constructor() {
         return (a1, a2) -> new Sum(a1, a2);
+    }
+
+    @Override
+    final Sum copy2(Function<Sum, Sum> function) {
+        return function.apply((Sum) $constructor().apply($field(), $distinct()));
     }
 
 

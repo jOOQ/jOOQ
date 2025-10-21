@@ -37,6 +37,8 @@
  */
 package org.jooq;
 
+import java.util.Collection;
+
 import org.jooq.impl.DSL;
 import org.jooq.impl.QOM;
 import org.jooq.impl.QOM.FrameExclude;
@@ -90,11 +92,27 @@ public interface WindowSpecification extends QueryPart {
     @NotNull UnmodifiableList<? extends GroupField> $partitionBy();
 
     /**
+     * Experimental query object model mutator method, see also {@link QOM}.
+     * Subject to change in future jOOQ versions, use at your own risk.
+     */
+    @Experimental
+    @CheckReturnValue
+    @NotNull WindowSpecification $partitionBy(Collection<? extends GroupField> partitionBy);
+
+    /**
      * Experimental query object model accessor method, see also {@link QOM}.
      * Subject to change in future jOOQ versions, use at your own risk.
      */
     @Experimental
     @NotNull UnmodifiableList<? extends SortField<?>> $orderBy();
+
+    /**
+     * Experimental query object model mutator method, see also {@link QOM}.
+     * Subject to change in future jOOQ versions, use at your own risk.
+     */
+    @Experimental
+    @CheckReturnValue
+    @NotNull WindowSpecification $orderBy(Collection<? extends SortField<?>> orderBy);
 
     /**
      * Experimental query object model accessor method, see also {@link QOM}.
@@ -104,11 +122,27 @@ public interface WindowSpecification extends QueryPart {
     @Nullable FrameUnits $frameUnits();
 
     /**
+     * Experimental query object model mutator method, see also {@link QOM}.
+     * Subject to change in future jOOQ versions, use at your own risk.
+     */
+    @Experimental
+    @CheckReturnValue
+    @NotNull WindowSpecification $frameUnits(FrameUnits frameUnits);
+
+    /**
      * Experimental query object model accessor method, see also {@link QOM}.
      * Subject to change in future jOOQ versions, use at your own risk.
      */
     @Experimental
     @Nullable Integer $frameStart();
+
+    /**
+     * Experimental query object model mutator method, see also {@link QOM}.
+     * Subject to change in future jOOQ versions, use at your own risk.
+     */
+    @Experimental
+    @CheckReturnValue
+    @NotNull WindowSpecification $frameStart(Integer frameStart);
 
     /**
      * Experimental query object model accessor method, see also {@link QOM}.
@@ -118,9 +152,25 @@ public interface WindowSpecification extends QueryPart {
     @Nullable Integer $frameEnd();
 
     /**
+     * Experimental query object model mutator method, see also {@link QOM}.
+     * Subject to change in future jOOQ versions, use at your own risk.
+     */
+    @Experimental
+    @CheckReturnValue
+    @NotNull WindowSpecification $frameEnd(Integer frameEnd);
+
+    /**
      * Experimental query object model accessor method, see also {@link QOM}.
      * Subject to change in future jOOQ versions, use at your own risk.
      */
     @Experimental
     @Nullable FrameExclude $exclude();
+
+    /**
+     * Experimental query object model mutator method, see also {@link QOM}.
+     * Subject to change in future jOOQ versions, use at your own risk.
+     */
+    @Experimental
+    @CheckReturnValue
+    @NotNull WindowSpecification $exclude(FrameExclude exclude);
 }

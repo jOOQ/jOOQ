@@ -64,6 +64,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import java.math.BigDecimal;
+import java.util.function.Function;
 
 
 /**
@@ -72,7 +73,7 @@ import java.math.BigDecimal;
 @SuppressWarnings({ "rawtypes", "unused" })
 final class Product
 extends
-    AbstractAggregateFunction<BigDecimal>
+    AbstractAggregateFunction<BigDecimal, Product>
 implements
     QOM.Product
 {
@@ -208,6 +209,11 @@ implements
 
     public final Function2<? super Field<? extends Number>, ? super Boolean, ? extends QOM.Product> $constructor() {
         return (a1, a2) -> new Product(a1, a2);
+    }
+
+    @Override
+    final Product copy2(Function<Product, Product> function) {
+        return function.apply((Product) $constructor().apply($field(), $distinct()));
     }
 
 

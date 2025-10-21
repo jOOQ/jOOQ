@@ -63,6 +63,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import java.util.function.Function;
 
 
 /**
@@ -71,7 +72,7 @@ import java.util.Set;
 @SuppressWarnings({ "unused" })
 final class BoolAnd
 extends
-    AbstractAggregateFunction<Boolean>
+    AbstractAggregateFunction<Boolean, BoolAnd>
 implements
     QOM.BoolAnd
 {
@@ -150,6 +151,11 @@ implements
 
     public final Function1<? super Condition, ? extends QOM.BoolAnd> $constructor() {
         return (a1) -> new BoolAnd(a1);
+    }
+
+    @Override
+    final BoolAnd copy2(Function<BoolAnd, BoolAnd> function) {
+        return function.apply((BoolAnd) $constructor().apply($condition()));
     }
 
 

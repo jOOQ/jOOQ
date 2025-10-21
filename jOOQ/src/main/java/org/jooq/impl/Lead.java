@@ -44,7 +44,7 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-final class Lead<T> extends AbstractLeadLag<T> implements QOM.Lead<T> {
+final class Lead<T> extends AbstractLeadLag<T, Lead<T>> implements QOM.Lead<T> {
 
     Lead(Field<T> field, Field<Integer> offset, Field<T> defaultValue) {
         super(N_LEAD, field, offset, defaultValue);

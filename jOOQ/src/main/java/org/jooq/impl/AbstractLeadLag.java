@@ -43,6 +43,8 @@ import static org.jooq.impl.Names.N_COALESCE;
 import static org.jooq.impl.Names.N_lagInFrame;
 import static org.jooq.impl.Names.N_leadInFrame;
 
+import java.util.function.Function;
+
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Name;
@@ -54,7 +56,8 @@ import org.jooq.QueryPart;
 /**
  * @author Lukas Eder
  */
-abstract class AbstractLeadLag<T> extends AbstractWindowFunction<T> {
+abstract class AbstractLeadLag<T, Q extends AbstractLeadLag<T, Q>>
+extends AbstractNullTreatmentWindowFunction<T, Q> {
 
     private final Field<T>       field;
     private final Field<Integer> offset;
@@ -180,12 +183,39 @@ abstract class AbstractLeadLag<T> extends AbstractWindowFunction<T> {
         return field;
     }
 
+    @SuppressWarnings("unchecked")
+    public final Q $field(Field<T> newField) {
+        if (newField == field)
+            return (Q) this;
+        else
+            return copy1().apply(constructor(newField, offset, defaultValue));
+    }
+
     public final Field<Integer> $offset() {
         return offset;
     }
 
+    public final Q $offset(Field<Integer> newOffset) {
+        if (newOffset == offset)
+            return (Q) this;
+        else
+            return copy1().apply(constructor(field, newOffset, defaultValue));
+    }
+
     public final Field<T> $defaultValue() {
         return defaultValue;
+    }
+
+    public final Q $defaultValue(Field<T> newDefaultValue) {
+        if (newDefaultValue == defaultValue)
+            return (Q) this;
+        else
+            return copy1().apply(constructor(field, offset, newDefaultValue));
+    }
+
+    @Override
+    final Q copy2(Function<Q, Q> function) {
+        return function.apply(constructor(field, offset, defaultValue));
     }
 
 

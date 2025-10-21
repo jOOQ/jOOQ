@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import java.util.function.Function;
+
 import org.jooq.Context;
 import org.jooq.QueryPart;
 // ...
@@ -47,7 +49,12 @@ import org.jooq.UniqueKey;
 /**
  * @author Lukas Eder
  */
-final class CountTable extends AbstractAggregateFunction<Integer> implements QOM.CountTable {
+final class CountTable
+extends
+    AbstractAggregateFunction<Integer, CountTable>
+implements
+    QOM.CountTable
+{
 
     private final Table<?> table;
 
@@ -116,6 +123,11 @@ final class CountTable extends AbstractAggregateFunction<Integer> implements QOM
     @Override
     public final Table<?> $table() {
         return table;
+    }
+
+    @Override
+    final CountTable copy2(Function<CountTable, CountTable> function) {
+        return function.apply(new CountTable(table, distinct));
     }
 
 

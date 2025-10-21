@@ -63,6 +63,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import java.util.function.Function;
 
 
 /**
@@ -71,7 +72,7 @@ import java.util.Set;
 @SuppressWarnings({ "rawtypes", "unchecked", "unused" })
 final class Max<T>
 extends
-    AbstractAggregateFunction<T>
+    AbstractAggregateFunction<T, Max<T>>
 implements
     QOM.Max<T>
 {
@@ -119,6 +120,11 @@ implements
 
     public final Function2<? super Field<T>, ? super Boolean, ? extends QOM.Max<T>> $constructor() {
         return (a1, a2) -> new Max<>(a1, a2);
+    }
+
+    @Override
+    final Max<T> copy2(Function<Max<T>, Max<T>> function) {
+        return function.apply((Max<T>) $constructor().apply($field(), $distinct()));
     }
 
 

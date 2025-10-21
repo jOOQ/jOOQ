@@ -63,6 +63,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import java.util.function.Function;
 
 
 /**
@@ -71,7 +72,7 @@ import java.util.Set;
 @SuppressWarnings({ "rawtypes", "unused" })
 final class RankAgg
 extends
-    AbstractAggregateFunction<Integer>
+    AbstractAggregateFunction<Integer, RankAgg>
 implements
     QOM.RankAgg
 {
@@ -116,6 +117,11 @@ implements
 
     public final Function1<? super Collection<? extends Field<?>>, ? extends QOM.RankAgg> $constructor() {
         return (a1) -> new RankAgg((Collection<? extends Field<?>>) a1);
+    }
+
+    @Override
+    final RankAgg copy2(Function<RankAgg, RankAgg> function) {
+        return function.apply((RankAgg) $constructor().apply($fields()));
     }
 
 

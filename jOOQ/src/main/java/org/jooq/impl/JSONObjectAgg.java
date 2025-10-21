@@ -95,10 +95,11 @@ import org.jooq.impl.QOM.JSONOnNull;
  */
 final class JSONObjectAgg<J>
 extends
-    AbstractAggregateFunction<J>
+    AbstractAggregateFunction<J, JSONObjectAgg<J>>
 implements
     JSONObjectAggNullStep<J>,
-    QOM.JSONObjectAgg<J> {
+    QOM.JSONObjectAgg<J>
+{
 
     private final JSONEntry<?> entry;
     private JSONOnNull         onNull;
@@ -444,5 +445,10 @@ implements
             r.returning = returning;
             return r;
         };
+    }
+
+    @Override
+    final JSONObjectAgg<J> copy2(Function<JSONObjectAgg<J>, JSONObjectAgg<J>> function) {
+        return function.apply((JSONObjectAgg<J>) $constructor().apply(entry));
     }
 }

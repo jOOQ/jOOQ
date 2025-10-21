@@ -64,6 +64,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import java.math.BigDecimal;
+import java.util.function.Function;
 
 
 /**
@@ -72,7 +73,7 @@ import java.math.BigDecimal;
 @SuppressWarnings({ "rawtypes", "unused" })
 final class RegrSyy
 extends
-    AbstractAggregateFunction<BigDecimal>
+    AbstractAggregateFunction<BigDecimal, RegrSyy>
 implements
     QOM.RegrSyy
 {
@@ -162,6 +163,11 @@ implements
 
     public final Function2<? super Field<? extends Number>, ? super Field<? extends Number>, ? extends QOM.RegrSyy> $constructor() {
         return (a1, a2) -> new RegrSyy(a1, a2);
+    }
+
+    @Override
+    final RegrSyy copy2(Function<RegrSyy, RegrSyy> function) {
+        return function.apply((RegrSyy) $constructor().apply($y(), $x()));
     }
 
 

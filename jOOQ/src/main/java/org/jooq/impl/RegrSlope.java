@@ -64,6 +64,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import java.math.BigDecimal;
+import java.util.function.Function;
 
 
 /**
@@ -72,7 +73,7 @@ import java.math.BigDecimal;
 @SuppressWarnings({ "rawtypes", "unused" })
 final class RegrSlope
 extends
-    AbstractAggregateFunction<BigDecimal>
+    AbstractAggregateFunction<BigDecimal, RegrSlope>
 implements
     QOM.RegrSlope
 {
@@ -152,6 +153,11 @@ implements
 
     public final Function2<? super Field<? extends Number>, ? super Field<? extends Number>, ? extends QOM.RegrSlope> $constructor() {
         return (a1, a2) -> new RegrSlope(a1, a2);
+    }
+
+    @Override
+    final RegrSlope copy2(Function<RegrSlope, RegrSlope> function) {
+        return function.apply((RegrSlope) $constructor().apply($y(), $x()));
     }
 
 

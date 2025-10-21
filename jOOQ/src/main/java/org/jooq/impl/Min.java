@@ -63,6 +63,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import java.util.function.Function;
 
 
 /**
@@ -71,7 +72,7 @@ import java.util.Set;
 @SuppressWarnings({ "rawtypes", "unchecked", "unused" })
 final class Min<T>
 extends
-    AbstractAggregateFunction<T>
+    AbstractAggregateFunction<T, Min<T>>
 implements
     QOM.Min<T>
 {
@@ -119,6 +120,11 @@ implements
 
     public final Function2<? super Field<T>, ? super Boolean, ? extends QOM.Min<T>> $constructor() {
         return (a1, a2) -> new Min<>(a1, a2);
+    }
+
+    @Override
+    final Min<T> copy2(Function<Min<T>, Min<T>> function) {
+        return function.apply((Min<T>) $constructor().apply($field(), $distinct()));
     }
 
 

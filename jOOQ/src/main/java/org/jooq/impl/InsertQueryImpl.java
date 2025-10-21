@@ -1399,7 +1399,7 @@ implements
 
     @Override
     public final UnmodifiableList<? extends Field<?>> $onConflict() {
-        return QOM.unmodifiable(onConflict == null ? new ArrayList<>() : onConflict);
+        return QOM.unmodifiable(onConflict == null ? QueryPartList.emptyList() : onConflict);
     }
 
     @Override

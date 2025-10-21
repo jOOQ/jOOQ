@@ -45,6 +45,7 @@ import static org.jooq.impl.Names.N_GROUP_CONCAT;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Set;
+import java.util.function.Function;
 
 import org.jooq.AggregateFunction;
 import org.jooq.Context;
@@ -59,10 +60,11 @@ import org.jooq.impl.QOM.UNotYetImplemented;
  */
 final class GroupConcat
 extends
-    AbstractAggregateFunction<String>
+    AbstractAggregateFunction<String, GroupConcat>
 implements
     GroupConcatOrderByStep,
-    UNotYetImplemented {
+    UNotYetImplemented
+{
 
     final Set<SQLDialect>       REQUIRE_WITHIN_GROUP = SQLDialect.supportedBy(TRINO);
 
@@ -120,5 +122,14 @@ implements
     public final GroupConcat orderBy(Collection<? extends OrderField<?>> fields) {
         orderBy.addAll(Tools.sortFields(fields));
         return this;
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    final GroupConcat copy2(Function<GroupConcat, GroupConcat> function) {
+        return function.apply((GroupConcat) new GroupConcat(field, distinct).separator(separator));
     }
 }

@@ -56,6 +56,8 @@ import static org.jooq.impl.Tools.emulateMultiset;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_MULTISET_CONDITION;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_MULTISET_CONTENT;
 
+import java.util.function.Function;
+
 import org.jooq.ArrayAggOrderByStep;
 import org.jooq.Context;
 import org.jooq.Field;
@@ -75,7 +77,12 @@ import org.jooq.XMLAggOrderByStep;
 /**
  * @author Lukas Eder
  */
-final class MultisetAgg<R extends Record> extends AbstractAggregateFunction<Result<R>> implements QOM.MultisetAgg<R> {
+final class MultisetAgg<R extends Record>
+extends
+    AbstractAggregateFunction<Result<R>, MultisetAgg<R>>
+implements
+    QOM.MultisetAgg<R>
+{
 
     private final AbstractRow<R> row;
 
@@ -115,8 +122,8 @@ final class MultisetAgg<R extends Record> extends AbstractAggregateFunction<Resu
                 JSONArrayAggOrderByStep<JSON> order = jsonArrayaggEmulation(ctx, row, true, distinct);
 
                 Field<?> f = multisetCondition
-                    ? fo((AbstractAggregateFunction<?>) returningClob(ctx, order.orderBy(row.fields())))
-                    : ofo((AbstractAggregateFunction<?>) returningClob(ctx, order));
+                    ? fo((AbstractAggregateFunction<?, ?>) returningClob(ctx, order.orderBy(row.fields())))
+                    : ofo((AbstractAggregateFunction<?, ?>) returningClob(ctx, order));
 
                 if (multisetCondition && NO_SUPPORT_JSON_COMPARE.contains(ctx.dialect()))
                     ctx.visit(f.cast(VARCHAR));
@@ -130,8 +137,8 @@ final class MultisetAgg<R extends Record> extends AbstractAggregateFunction<Resu
                 JSONArrayAggOrderByStep<JSONB> order = jsonbArrayaggEmulation(ctx, row, true, distinct);
 
                 Field<?> f = multisetCondition
-                    ? fo((AbstractAggregateFunction<?>) returningClob(ctx, order.orderBy(row.fields())))
-                    : ofo((AbstractAggregateFunction<?>) returningClob(ctx, order));
+                    ? fo((AbstractAggregateFunction<?, ?>) returningClob(ctx, order.orderBy(row.fields())))
+                    : ofo((AbstractAggregateFunction<?, ?>) returningClob(ctx, order));
 
 
                 if (multisetCondition && NO_SUPPORT_JSONB_COMPARE.contains(ctx.dialect()))
@@ -147,8 +154,8 @@ final class MultisetAgg<R extends Record> extends AbstractAggregateFunction<Resu
 
                 Field<XML> f = xmlelement(nResult(ctx),
                     multisetCondition
-                        ? fo((AbstractAggregateFunction<?>) order.orderBy(row.fields()))
-                        : ofo((AbstractAggregateFunction<?>) order)
+                        ? fo((AbstractAggregateFunction<?, ?>) order.orderBy(row.fields()))
+                        : ofo((AbstractAggregateFunction<?, ?>) order)
                 );
 
                 if (multisetCondition && NO_SUPPORT_XML_COMPARE.contains(ctx.dialect()))
@@ -164,7 +171,7 @@ final class MultisetAgg<R extends Record> extends AbstractAggregateFunction<Resu
 
                 ctx.visit(multisetCondition
                     ? fo(order.orderBy(row.fields()))
-                    : ofo((AbstractAggregateFunction<?>) order)
+                    : ofo((AbstractAggregateFunction<?, ?>) order)
                 );
 
                 break;
@@ -179,6 +186,11 @@ final class MultisetAgg<R extends Record> extends AbstractAggregateFunction<Resu
     @Override
     public final Row $row() {
         return row;
+    }
+
+    @Override
+    final MultisetAgg<R> copy2(Function<MultisetAgg<R>, MultisetAgg<R>> function) {
+        return function.apply(new MultisetAgg<>(distinct, row));
     }
 
 

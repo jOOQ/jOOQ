@@ -1329,7 +1329,7 @@ public final class QOM {
 
     public /*sealed*/ interface RatioToReport
         extends
-            org.jooq.AggregateFunction<BigDecimal>
+            AggregateFunction<BigDecimal>
         /*permits
             RatioToReport*/
     {
@@ -1338,7 +1338,7 @@ public final class QOM {
 
     public /*sealed*/ interface Mode<T>
         extends
-            org.jooq.AggregateFunction<T>,
+            AggregateFunction<T>,
             UOperator1<Field<T>, Mode<T>>
         /*permits
             Mode*/
@@ -1348,7 +1348,7 @@ public final class QOM {
 
     public /*sealed*/ interface MultisetAgg<R extends Record>
         extends
-            org.jooq.AggregateFunction<Result<R>>
+            AggregateFunction<Result<R>>
         /*permits
             MultisetAgg*/
     {
@@ -1357,7 +1357,7 @@ public final class QOM {
 
     public /*sealed*/ interface ArrayAgg<T>
         extends
-            org.jooq.AggregateFunction<T[]>,
+            AggregateFunction<T[]>,
             UOperator1<Field<T>, ArrayAgg<T>>
         /*permits
             ArrayAgg*/
@@ -1366,9 +1366,28 @@ public final class QOM {
         boolean $distinct();
     }
 
+    public /*sealed*/ interface ListAgg
+        extends
+            AggregateFunction<String>,
+            UOperator2<Field<?>, Field<String>, ListAgg>
+        /*permits
+            ArrayAgg*/
+    {
+        boolean $distinct();
+        @NotNull default Field<?> $field() { return $arg1(); }
+        @CheckReturnValue
+        @NotNull default ListAgg $field(Field<?> field) { return $arg1(field); }
+        @Nullable default Field<String> $separator() { return $arg2(); }
+        @CheckReturnValue
+        @NotNull default ListAgg $separator(Field<String> separator) { return $arg2(separator); }
+        @NotNull  UnmodifiableList<? extends SortField<?>> $withinGroupOrderBy();
+        @CheckReturnValue
+        @NotNull ListAgg $withinGroupOrderBy(Collection<? extends SortField<?>> orderBy);
+    }
+
     public /*sealed*/ interface XMLAgg
         extends
-            org.jooq.AggregateFunction<XML>,
+            AggregateFunction<XML>,
             UOperator1<Field<XML>, XMLAgg>
         /*permits
             XMLAgg*/
@@ -1378,7 +1397,7 @@ public final class QOM {
 
     public /*sealed*/ interface JSONArrayAgg<J>
         extends
-            org.jooq.AggregateFunction<J>,
+            AggregateFunction<J>,
             UOperator1<org.jooq.Field<?>, JSONArrayAgg<J>>
         /*permits
             JSONArrayAgg*/
@@ -1391,7 +1410,7 @@ public final class QOM {
 
     public /*sealed*/ interface JSONObjectAgg<J>
         extends
-            org.jooq.AggregateFunction<J>,
+            AggregateFunction<J>,
             UOperator1<JSONEntry<?>, JSONObjectAgg<J>>
         /*permits JSONObjectAgg*/
     {
@@ -1402,7 +1421,7 @@ public final class QOM {
 
     public /*sealed*/ interface CountTable
         extends
-            org.jooq.AggregateFunction<Integer>
+            AggregateFunction<Integer>
         /*permits
             CountTable*/
     {
@@ -1420,9 +1439,29 @@ public final class QOM {
 
 
 
-    public interface WindowFunction<T> extends org.jooq.Field<T> {
+
+
+
+
+    public interface AggregateFunction<T>
+        extends
+            org.jooq.AggregateFunction<T>
+    {
+        @Override
+        @Nullable Condition $filterWhere();
+        @NotNull  AggregateFunction<T> $filterWhere(Condition condition);
+    }
+
+    public interface WindowFunction<T>
+        extends
+            org.jooq.Field<T>
+    {
         @Nullable WindowSpecification $windowSpecification();
+        @NotNull  WindowFunction<T> $windowSpecification(WindowSpecification windowSpecification);
         @Nullable WindowDefinition $windowDefinition();
+        @NotNull  WindowFunction<T> $windowDefinition(WindowDefinition windowDefinition);
+        @Nullable Name $windowName();
+        @NotNull  WindowFunction<T> $windowName(Name name);
     }
 
     public /*sealed*/ interface RowNumber
@@ -1466,6 +1505,7 @@ public final class QOM {
         /*permits Ntile*/
     {
         @NotNull Field<Integer> $tiles();
+        @NotNull Ntile $tiles(Field<Integer> tiles);
     }
 
     public /*sealed*/ interface Lead<T>
@@ -1475,9 +1515,13 @@ public final class QOM {
             Lead*/
     {
         @NotNull Field<T> $field();
+        @NotNull Lead<T> $field(Field<T> field);
         @Nullable Field<Integer> $offset();
+        @NotNull Lead<T> $offset(Field<Integer> offset);
         @Nullable Field<T> $defaultValue();
+        @NotNull Lead<T> $defaultValue(Field<T> defaultValue);
         @Nullable NullTreatment $nullTreatment();
+        @NotNull Lead<T> $nullTreatment(NullTreatment nullTreatment);
     }
 
     public /*sealed*/ interface Lag<T>
@@ -1487,9 +1531,13 @@ public final class QOM {
             Lag*/
     {
         @NotNull Field<T> $field();
+        @NotNull Lag<T> $field(Field<T> field);
         @Nullable Field<Integer> $offset();
+        @NotNull Lag<T> $offset(Field<Integer> offset);
         @Nullable Field<T> $defaultValue();
+        @NotNull Lag<T> $defaultValue(Field<T> defaultValue);
         @Nullable NullTreatment $nullTreatment();
+        @NotNull Lag<T> $nullTreatment(NullTreatment nullTreatment);
     }
 
     public /*sealed*/ interface FirstValue<T>
@@ -1499,7 +1547,9 @@ public final class QOM {
             FirstValue*/
     {
         @NotNull Field<T> $field();
+        @NotNull FirstValue<T> $field(Field<T> field);
         @Nullable NullTreatment $nullTreatment();
+        @NotNull FirstValue<T> $nullTreatment(NullTreatment nullTreatment);
     }
 
     public /*sealed*/ interface LastValue<T>
@@ -1509,7 +1559,9 @@ public final class QOM {
             LastValue*/
     {
         @NotNull Field<T> $field();
+        @NotNull LastValue<T> $field(Field<T> field);
         @Nullable NullTreatment $nullTreatment();
+        @NotNull LastValue<T> $nullTreatment(NullTreatment nullTreatment);
     }
 
     public /*sealed*/ interface NthValue<T>
@@ -1519,8 +1571,13 @@ public final class QOM {
             NthValue*/
     {
         @NotNull Field<T> $field();
+        @NotNull NthValue<T> $field(Field<T> field);
+        @NotNull Field<Integer> $offset();
+        @NotNull NthValue<T> $offset(Field<Integer> offset);
         @Nullable FromFirstOrLast $fromFirstOrLast();
+        @NotNull NthValue<T> $fromFirstOrLast(FromFirstOrLast fromFirstOrLast);
         @Nullable NullTreatment $nullTreatment();
+        @NotNull NthValue<T> $nullTreatment(NullTreatment nullTreatment);
     }
 
     // -------------------------------------------------------------------------
@@ -8381,7 +8438,7 @@ public final class QOM {
      */
     public /*sealed*/ interface AnyValue<T>
         extends
-            org.jooq.AggregateFunction<T>
+            AggregateFunction<T>
         //permits
         //    AnyValue
     {
@@ -8395,7 +8452,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Avg
         extends
-            org.jooq.AggregateFunction<BigDecimal>
+            AggregateFunction<BigDecimal>
         //permits
         //    Avg
     {
@@ -8414,7 +8471,7 @@ public final class QOM {
      */
     public /*sealed*/ interface BitAndAgg<T extends Number>
         extends
-            org.jooq.AggregateFunction<T>
+            AggregateFunction<T>
         //permits
         //    BitAndAgg
     {
@@ -8430,7 +8487,7 @@ public final class QOM {
      */
     public /*sealed*/ interface BitOrAgg<T extends Number>
         extends
-            org.jooq.AggregateFunction<T>
+            AggregateFunction<T>
         //permits
         //    BitOrAgg
     {
@@ -8446,7 +8503,7 @@ public final class QOM {
      */
     public /*sealed*/ interface BitXorAgg<T extends Number>
         extends
-            org.jooq.AggregateFunction<T>
+            AggregateFunction<T>
         //permits
         //    BitXorAgg
     {
@@ -8462,7 +8519,7 @@ public final class QOM {
      */
     public /*sealed*/ interface BitNandAgg<T extends Number>
         extends
-            org.jooq.AggregateFunction<T>
+            AggregateFunction<T>
         //permits
         //    BitNandAgg
     {
@@ -8478,7 +8535,7 @@ public final class QOM {
      */
     public /*sealed*/ interface BitNorAgg<T extends Number>
         extends
-            org.jooq.AggregateFunction<T>
+            AggregateFunction<T>
         //permits
         //    BitNorAgg
     {
@@ -8494,7 +8551,7 @@ public final class QOM {
      */
     public /*sealed*/ interface BitXNorAgg<T extends Number>
         extends
-            org.jooq.AggregateFunction<T>
+            AggregateFunction<T>
         //permits
         //    BitXNorAgg
     {
@@ -8508,7 +8565,7 @@ public final class QOM {
      */
     public /*sealed*/ interface BoolAnd
         extends
-            org.jooq.AggregateFunction<Boolean>
+            AggregateFunction<Boolean>
         //permits
         //    BoolAnd
     {
@@ -8522,7 +8579,7 @@ public final class QOM {
      */
     public /*sealed*/ interface BoolOr
         extends
-            org.jooq.AggregateFunction<Boolean>
+            AggregateFunction<Boolean>
         //permits
         //    BoolOr
     {
@@ -8541,7 +8598,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Corr
         extends
-            org.jooq.AggregateFunction<BigDecimal>
+            AggregateFunction<BigDecimal>
         //permits
         //    Corr
     {
@@ -8558,7 +8615,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Count
         extends
-            org.jooq.AggregateFunction<Integer>
+            AggregateFunction<Integer>
         //permits
         //    Count
     {
@@ -8580,7 +8637,7 @@ public final class QOM {
      */
     public /*sealed*/ interface CovarSamp
         extends
-            org.jooq.AggregateFunction<BigDecimal>
+            AggregateFunction<BigDecimal>
         //permits
         //    CovarSamp
     {
@@ -8602,7 +8659,7 @@ public final class QOM {
      */
     public /*sealed*/ interface CovarPop
         extends
-            org.jooq.AggregateFunction<BigDecimal>
+            AggregateFunction<BigDecimal>
         //permits
         //    CovarPop
     {
@@ -8619,7 +8676,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Max<T>
         extends
-            org.jooq.AggregateFunction<T>
+            AggregateFunction<T>
         //permits
         //    Max
     {
@@ -8672,7 +8729,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Median
         extends
-            org.jooq.AggregateFunction<BigDecimal>
+            AggregateFunction<BigDecimal>
         //permits
         //    Median
     {
@@ -8686,7 +8743,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Min<T>
         extends
-            org.jooq.AggregateFunction<T>
+            AggregateFunction<T>
         //permits
         //    Min
     {
@@ -8751,7 +8808,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Product
         extends
-            org.jooq.AggregateFunction<BigDecimal>
+            AggregateFunction<BigDecimal>
         //permits
         //    Product
     {
@@ -8875,7 +8932,7 @@ public final class QOM {
      */
     public /*sealed*/ interface RegrAvgX
         extends
-            org.jooq.AggregateFunction<BigDecimal>
+            AggregateFunction<BigDecimal>
         //permits
         //    RegrAvgX
     {
@@ -8897,7 +8954,7 @@ public final class QOM {
      */
     public /*sealed*/ interface RegrAvgY
         extends
-            org.jooq.AggregateFunction<BigDecimal>
+            AggregateFunction<BigDecimal>
         //permits
         //    RegrAvgY
     {
@@ -8919,7 +8976,7 @@ public final class QOM {
      */
     public /*sealed*/ interface RegrCount
         extends
-            org.jooq.AggregateFunction<BigDecimal>
+            AggregateFunction<BigDecimal>
         //permits
         //    RegrCount
     {
@@ -8941,7 +8998,7 @@ public final class QOM {
      */
     public /*sealed*/ interface RegrIntercept
         extends
-            org.jooq.AggregateFunction<BigDecimal>
+            AggregateFunction<BigDecimal>
         //permits
         //    RegrIntercept
     {
@@ -8963,7 +9020,7 @@ public final class QOM {
      */
     public /*sealed*/ interface RegrR2
         extends
-            org.jooq.AggregateFunction<BigDecimal>
+            AggregateFunction<BigDecimal>
         //permits
         //    RegrR2
     {
@@ -8985,7 +9042,7 @@ public final class QOM {
      */
     public /*sealed*/ interface RegrSlope
         extends
-            org.jooq.AggregateFunction<BigDecimal>
+            AggregateFunction<BigDecimal>
         //permits
         //    RegrSlope
     {
@@ -9007,7 +9064,7 @@ public final class QOM {
      */
     public /*sealed*/ interface RegrSxx
         extends
-            org.jooq.AggregateFunction<BigDecimal>
+            AggregateFunction<BigDecimal>
         //permits
         //    RegrSxx
     {
@@ -9029,7 +9086,7 @@ public final class QOM {
      */
     public /*sealed*/ interface RegrSxy
         extends
-            org.jooq.AggregateFunction<BigDecimal>
+            AggregateFunction<BigDecimal>
         //permits
         //    RegrSxy
     {
@@ -9051,7 +9108,7 @@ public final class QOM {
      */
     public /*sealed*/ interface RegrSyy
         extends
-            org.jooq.AggregateFunction<BigDecimal>
+            AggregateFunction<BigDecimal>
         //permits
         //    RegrSyy
     {
@@ -9073,7 +9130,7 @@ public final class QOM {
      */
     public /*sealed*/ interface StddevPop
         extends
-            org.jooq.AggregateFunction<BigDecimal>
+            AggregateFunction<BigDecimal>
         //permits
         //    StddevPop
     {
@@ -9092,7 +9149,7 @@ public final class QOM {
      */
     public /*sealed*/ interface StddevSamp
         extends
-            org.jooq.AggregateFunction<BigDecimal>
+            AggregateFunction<BigDecimal>
         //permits
         //    StddevSamp
     {
@@ -9106,7 +9163,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Sum
         extends
-            org.jooq.AggregateFunction<BigDecimal>
+            AggregateFunction<BigDecimal>
         //permits
         //    Sum
     {
@@ -9128,7 +9185,7 @@ public final class QOM {
      */
     public /*sealed*/ interface VarPop
         extends
-            org.jooq.AggregateFunction<BigDecimal>
+            AggregateFunction<BigDecimal>
         //permits
         //    VarPop
     {
@@ -9147,7 +9204,7 @@ public final class QOM {
      */
     public /*sealed*/ interface VarSamp
         extends
-            org.jooq.AggregateFunction<BigDecimal>
+            AggregateFunction<BigDecimal>
         //permits
         //    VarSamp
     {

@@ -40,11 +40,9 @@ package org.jooq.impl;
 import static org.jooq.impl.Names.N_DENSE_RANK;
 import static org.jooq.impl.SQLDataType.INTEGER;
 
-import java.util.function.BiFunction;
-import java.util.function.Predicate;
+import java.util.function.Function;
 
 import org.jooq.Context;
-import org.jooq.Function1;
 import org.jooq.QueryPart;
 // ...
 // ...
@@ -52,7 +50,7 @@ import org.jooq.QueryPart;
 /**
  * @author Lukas Eder
  */
-final class DenseRank extends AbstractWindowFunction<Integer> implements QOM.DenseRank {
+final class DenseRank extends AbstractWindowFunction<Integer, DenseRank> implements QOM.DenseRank {
 
     DenseRank() {
         super(N_DENSE_RANK, INTEGER.notNull());
@@ -74,9 +72,14 @@ final class DenseRank extends AbstractWindowFunction<Integer> implements QOM.Den
         }
     }
 
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
 
-
-
+    @Override
+    final DenseRank copy1(Function<DenseRank, DenseRank> function) {
+        return function.apply(new DenseRank());
+    }
 
 
 

@@ -64,6 +64,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import java.math.BigDecimal;
+import java.util.function.Function;
 
 
 /**
@@ -72,7 +73,7 @@ import java.math.BigDecimal;
 @SuppressWarnings({ "rawtypes", "unused" })
 final class PercentRankAgg
 extends
-    AbstractAggregateFunction<BigDecimal>
+    AbstractAggregateFunction<BigDecimal, PercentRankAgg>
 implements
     QOM.PercentRankAgg
 {
@@ -117,6 +118,11 @@ implements
 
     public final Function1<? super Collection<? extends Field<?>>, ? extends QOM.PercentRankAgg> $constructor() {
         return (a1) -> new PercentRankAgg((Collection<? extends Field<?>>) a1);
+    }
+
+    @Override
+    final PercentRankAgg copy2(Function<PercentRankAgg, PercentRankAgg> function) {
+        return function.apply((PercentRankAgg) $constructor().apply($fields()));
     }
 
 

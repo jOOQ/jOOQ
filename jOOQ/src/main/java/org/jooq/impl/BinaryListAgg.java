@@ -55,6 +55,7 @@ import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.castIfNeeded;
 
 import java.util.Set;
+import java.util.function.Function;
 
 import org.jooq.Context;
 import org.jooq.Field;
@@ -66,7 +67,7 @@ import org.jooq.impl.QOM.UNotYetImplemented;
  */
 final class BinaryListAgg
 extends
-    AbstractAggregateFunction<byte[]>
+    AbstractAggregateFunction<byte[], BinaryListAgg>
 implements
     UNotYetImplemented
 {
@@ -88,7 +89,10 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (SUPPORT_STRING_AGG.contains(ctx.dialect())) {
+        if (emulateWindowAggregateOrderBy(ctx)) {
+            acceptWindowAggregateOrderByEmulation(ctx);
+        }
+        else if (SUPPORT_STRING_AGG.contains(ctx.dialect())) {
             acceptStringAgg(ctx);
             acceptFilterClause(ctx);
             acceptOverClause(ctx);
@@ -136,5 +140,14 @@ implements
 
         acceptOrderBy(ctx);
         ctx.sql(')');
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    final BinaryListAgg copy2(Function<BinaryListAgg, BinaryListAgg> function) {
+        return function.apply(new BinaryListAgg(distinct, getArgument(0), (Field) getArgument(1)));
     }
 }

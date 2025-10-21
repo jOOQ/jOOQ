@@ -64,6 +64,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import java.math.BigDecimal;
+import java.util.function.Function;
 
 
 /**
@@ -72,7 +73,7 @@ import java.math.BigDecimal;
 @SuppressWarnings({ "rawtypes", "unused" })
 final class PercentileCont
 extends
-    AbstractAggregateFunction<BigDecimal>
+    AbstractAggregateFunction<BigDecimal, PercentileCont>
 implements
     QOM.PercentileCont
 {
@@ -154,6 +155,11 @@ implements
 
     public final Function1<? super Field<? extends Number>, ? extends QOM.PercentileCont> $constructor() {
         return (a1) -> new PercentileCont(a1);
+    }
+
+    @Override
+    final PercentileCont copy2(Function<PercentileCont, PercentileCont> function) {
+        return function.apply((PercentileCont) $constructor().apply($percentile()));
     }
 
 

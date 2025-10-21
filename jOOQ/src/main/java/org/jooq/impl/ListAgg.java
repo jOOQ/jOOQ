@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.FALSE;
+import static java.util.Collections.emptyList;
 // ...
 // ...
 // ...
@@ -78,34 +79,44 @@ import static org.jooq.impl.Tools.castIfNeeded;
 import static org.jooq.impl.Tools.prependSQL;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_GROUP_CONCAT_MAX_LEN_SET;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Set;
+import java.util.function.Function;
 
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.Function2;
+// ...
+import org.jooq.QueryPart;
 // ...
 import org.jooq.SQLDialect;
+import org.jooq.SortField;
 import org.jooq.XML;
-import org.jooq.impl.QOM.UNotYetImplemented;
+import org.jooq.impl.QOM.FrameUnits;
+import org.jooq.impl.QOM.UnmodifiableList;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
  */
 final class ListAgg
 extends
-    AbstractAggregateFunction<String>
+    AbstractAggregateFunction<String, ListAgg>
 implements
-    UNotYetImplemented
+    QOM.ListAgg
 {
 
-    static final Set<SQLDialect> SET_GROUP_CONCAT_MAX_LEN     = SQLDialect.supportedBy(MARIADB, MYSQL);
-    static final Set<SQLDialect> SUPPORT_GROUP_CONCAT         = SQLDialect.supportedBy(CUBRID, H2, HSQLDB, MARIADB, MYSQL, SQLITE);
-    static final Set<SQLDialect> SUPPORT_STRING_AGG           = SQLDialect.supportedBy(DUCKDB, POSTGRES);
+    static final Set<SQLDialect> SET_GROUP_CONCAT_MAX_LEN          = SQLDialect.supportedBy(MARIADB, MYSQL);
+    static final Set<SQLDialect> SUPPORT_GROUP_CONCAT              = SQLDialect.supportedBy(CUBRID, H2, HSQLDB, MARIADB, MYSQL, SQLITE);
+    static final Set<SQLDialect> SUPPORT_STRING_AGG                = SQLDialect.supportedBy(DUCKDB, POSTGRES);
 
 
 
 
 
-    static final Field<String>   DEFAULT_SEPARATOR            = DSL.inline(",");
+    static final Field<String>   DEFAULT_SEPARATOR                 = DSL.inline(",");
 
     ListAgg(boolean distinct, Field<?> arg) {
         super(distinct, N_LISTAGG, VARCHAR, arg);
@@ -121,7 +132,12 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        if (SUPPORT_GROUP_CONCAT.contains(ctx.dialect())) {
+
+        // [#19255] Some dialects do not support aggregate ORDER BY in window functions
+        if (emulateWindowAggregateOrderBy(ctx)) {
+            acceptWindowAggregateOrderByEmulation(ctx);
+        }
+        else if (SUPPORT_GROUP_CONCAT.contains(ctx.dialect())) {
 
             // [#12092] Prevent silent truncation of GROUP_CONCAT max length
             if (SET_GROUP_CONCAT_MAX_LEN.contains(ctx.dialect())
@@ -291,4 +307,28 @@ implements
 
 
 
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Field<?> $arg1() {
+        return getArgument(0);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final Field<String> $arg2() {
+        return (Field<String>) getArgument(1);
+    }
+
+    @Override
+    public final Function2<? super Field<?>, ? super Field<String>, ? extends QOM.ListAgg> $constructor() {
+        return (a1, a2) -> new ListAgg(distinct, a1, a2);
+    }
+
+    @Override
+    final ListAgg copy2(Function<ListAgg, ListAgg> function) {
+        return function.apply(new ListAgg(distinct, getArgument(0), (Field) getArgument(1)));
+    }
 }

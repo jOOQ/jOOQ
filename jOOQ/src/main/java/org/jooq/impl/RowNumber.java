@@ -41,11 +41,10 @@ import static org.jooq.impl.Names.N_ROWNUM;
 import static org.jooq.impl.Names.N_ROW_NUMBER;
 import static org.jooq.impl.SQLDataType.INTEGER;
 
-import java.util.function.BiFunction;
-import java.util.function.Predicate;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 import org.jooq.Context;
-import org.jooq.Function1;
 import org.jooq.QueryPart;
 // ...
 // ...
@@ -53,7 +52,7 @@ import org.jooq.QueryPart;
 /**
  * @author Lukas Eder
  */
-final class RowNumber extends AbstractWindowFunction<Integer> implements QOM.RowNumber {
+final class RowNumber extends AbstractWindowFunction<Integer, RowNumber> implements QOM.RowNumber {
 
     RowNumber() {
         super(N_ROW_NUMBER, INTEGER.notNull());
@@ -81,9 +80,14 @@ final class RowNumber extends AbstractWindowFunction<Integer> implements QOM.Row
         }
     }
 
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
 
-
-
+    @Override
+    final RowNumber copy1(Function<RowNumber, RowNumber> function) {
+        return function.apply(new RowNumber());
+    }
 
 
 

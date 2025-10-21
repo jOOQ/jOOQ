@@ -39,12 +39,10 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Names.N_FIRST_VALUE;
 
-import java.util.function.BiFunction;
-import java.util.function.Predicate;
+import java.util.function.Function;
 
 import org.jooq.Context;
 import org.jooq.Field;
-import org.jooq.Function1;
 import org.jooq.QueryPart;
 // ...
 // ...
@@ -52,7 +50,12 @@ import org.jooq.QueryPart;
 /**
  * @author Lukas Eder
  */
-final class FirstValue<T> extends AbstractWindowFunction<T> implements QOM.FirstValue<T> {
+final class FirstValue<T>
+extends
+    AbstractNullTreatmentWindowFunction<T, FirstValue<T>>
+implements
+    QOM.FirstValue<T>
+{
 
     final Field<T> field;
 
@@ -95,6 +98,19 @@ final class FirstValue<T> extends AbstractWindowFunction<T> implements QOM.First
     @Override
     public final Field<T> $field() {
         return field;
+    }
+
+    @Override
+    public final FirstValue<T> $field(Field<T> newField) {
+        if (newField == field)
+            return this;
+        else
+            return copy1().apply(new FirstValue<>(newField));
+    }
+
+    @Override
+    final FirstValue<T> copy2(Function<FirstValue<T>, FirstValue<T>> function) {
+        return function.apply(new FirstValue<>(field));
     }
 
 

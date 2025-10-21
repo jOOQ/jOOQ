@@ -64,6 +64,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import java.math.BigDecimal;
+import java.util.function.Function;
 
 
 /**
@@ -72,7 +73,7 @@ import java.math.BigDecimal;
 @SuppressWarnings({ "rawtypes", "unused" })
 final class Corr
 extends
-    AbstractAggregateFunction<BigDecimal>
+    AbstractAggregateFunction<BigDecimal, Corr>
 implements
     QOM.Corr
 {
@@ -152,6 +153,11 @@ implements
 
     public final Function2<? super Field<? extends Number>, ? super Field<? extends Number>, ? extends QOM.Corr> $constructor() {
         return (a1, a2) -> new Corr(a1, a2);
+    }
+
+    @Override
+    final Corr copy2(Function<Corr, Corr> function) {
+        return function.apply((Corr) $constructor().apply($y(), $x()));
     }
 
 

@@ -37,21 +37,9 @@
  */
 package org.jooq.impl;
 
+import static java.util.Collections.emptyList;
 import static java.util.function.Function.identity;
-// ...
-// ...
-// ...
-// ...
 import static org.jooq.SQLDialect.*;
-import static org.jooq.SQLDialect.FIREBIRD;
-import static org.jooq.SQLDialect.H2;
-import static org.jooq.SQLDialect.HSQLDB;
-// ...
-import static org.jooq.SQLDialect.POSTGRES;
-// ...
-// ...
-import static org.jooq.SQLDialect.SQLITE;
-import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.zero;
@@ -93,30 +81,36 @@ import org.jooq.OrderedAggregateFunction;
 import org.jooq.QueryPart;
 import org.jooq.SQL;
 import org.jooq.SQLDialect;
+import org.jooq.SortField;
 // ...
 import org.jooq.WindowBeforeOverStep;
+import org.jooq.impl.QOM.FrameUnits;
+import org.jooq.impl.QOM.UnmodifiableList;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
  */
-abstract class AbstractAggregateFunction<T>
+abstract class AbstractAggregateFunction<T, Q extends AbstractAggregateFunction<T, Q>>
 extends
-    AbstractWindowFunction<T>
+    AbstractWindowFunction<T, Q>
 implements
-    AggregateFunction<T>,
     OrderedAggregateFunction<T>,
-    ArrayAggOrderByStep<T>
+    ArrayAggOrderByStep<T>,
+    QOM.AggregateFunction<T>
 {
 
 
 
 
 
-    static final Set<SQLDialect>      NO_SUPPORT_FILTER          = SQLDialect.supportedUntil(CUBRID, DERBY, IGNITE, MARIADB, MYSQL);
-    static final Set<SQLDialect>      NO_SUPPORT_WINDOW_FILTER   = SQLDialect.supportedBy(TRINO);
-    static final Set<SQLDialect>      REQUIRE_DISTINCT_RVE       = SQLDialect.supportedBy(DUCKDB, H2, POSTGRES);
+    static final Set<SQLDialect>      NO_SUPPORT_FILTER                 = SQLDialect.supportedUntil(CUBRID, DERBY, IGNITE, MARIADB, MYSQL);
+    static final Set<SQLDialect>      NO_SUPPORT_WINDOW_FILTER          = SQLDialect.supportedBy(TRINO);
+    static final Set<SQLDialect>      REQUIRE_DISTINCT_RVE              = SQLDialect.supportedBy(DUCKDB, H2, POSTGRES);
+    static final Set<SQLDialect>      EMULATE_WINDOW_AGGREGATE_ORDER_BY = SQLDialect.supportedBy(POSTGRES, SQLITE);
 
-    static final Lazy<Field<Integer>> ASTERISK                   = Lazy.of(() -> DSL.field(DSL.raw("*"), Integer.class));
+    static final Lazy<Field<Integer>> ASTERISK                          = Lazy.of(() -> DSL.field(DSL.raw("*"), Integer.class));
 
     // Other attributes
     final QueryPartList<Field<?>>     arguments;
@@ -323,6 +317,27 @@ implements
         return false;
     }
 
+    final boolean emulateWindowAggregateOrderBy(Context<?> ctx) {
+        return EMULATE_WINDOW_AGGREGATE_ORDER_BY.contains(ctx.dialect())
+            && isWindow()
+            && !isOrderedWindow(ctx)
+            && !withinGroupOrderBy.isEmpty();
+    }
+
+    final void acceptWindowAggregateOrderByEmulation(Context<?> ctx) {
+
+        // [#19255] TODO: Make sure this works also with WindowDefinition and Window name
+        ctx.visit(
+            ((ListAgg) $withinGroupOrderBy(emptyList())).$windowSpecification(
+                $windowSpecification()
+                    .$orderBy(withinGroupOrderBy)
+                    .$frameStart(Integer.MIN_VALUE)
+                    .$frameEnd(Integer.MAX_VALUE)
+                    .$frameUnits(FrameUnits.RANGE)
+            )
+        );
+    }
+
 
 
 
@@ -492,24 +507,26 @@ implements
 
 
 
+    @SuppressWarnings("unchecked")
     @Override
-    public /* non-final */ AbstractAggregateFunction<T> orderBy(OrderField<?>... fields) {
+    public /* non-final */ Q orderBy(OrderField<?>... fields) {
         if (windowSpecification != null)
             super.orderBy(fields);
         else
             withinGroupOrderBy(fields);
 
-        return this;
+        return (Q) this;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public /* non-final */ AbstractAggregateFunction<T> orderBy(Collection<? extends OrderField<?>> fields) {
+    public /* non-final */ Q orderBy(Collection<? extends OrderField<?>> fields) {
         if (windowSpecification != null)
             windowSpecification.orderBy(fields);
         else
             withinGroupOrderBy(fields);
 
-        return this;
+        return (Q) this;
     }
 
     final Condition f(Condition c) {
@@ -526,7 +543,7 @@ implements
      * <code>FILTER</code> and <code>OVER</code> clauses to an argument
      * aggregate function.
      */
-    final <U> Field<U> ofo(AbstractAggregateFunction<U> function) {
+    final <U> Field<U> ofo(AbstractAggregateFunction<U, ?> function) {
         return fo(isEmpty(withinGroupOrderBy) ? function : function.orderBy(withinGroupOrderBy));
     }
 
@@ -601,6 +618,29 @@ implements
     // XXX: Query Object Model
     // -------------------------------------------------------------------------
 
+    @Override
+    final Q copy1(Function<Q, Q> function) {
+        return function.apply(copy2(copy1()));
+    }
+
+    final Function<Q, Q> copy1() {
+        return c -> {
+            c.arguments.addAll(arguments);
+
+            if (filter.hasWhere())
+                c.filter.addConditions(filter.getWhere());
+            if (!isEmpty(withinGroupOrderBy))
+                c.withinGroupOrderBy = new SortFieldList(withinGroupOrderBy);
+            if (!isEmpty(keepDenseRankOrderBy))
+                c.keepDenseRankOrderBy = new SortFieldList(keepDenseRankOrderBy);
+            c.first = first;
+
+            return c;
+        };
+    }
+
+    abstract Q copy2(Function<Q, Q> function);
+
     public final boolean $distinct() {
         return distinct;
     }
@@ -608,6 +648,36 @@ implements
     @Override
     public final Condition $filterWhere() {
         return filter.getWhereOrNull();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public Q $filterWhere(Condition condition) {
+        if ($filterWhere() == condition)
+            return (Q) this;
+        else
+            return copy(c -> {
+                c.filter.setWhere(condition);
+            });
+    }
+
+    // [#19255] [#19260] TODO: Push down to new subclass, perhaps?
+
+    public final UnmodifiableList<? extends SortField<?>> $withinGroupOrderBy() {
+        return QOM.unmodifiable(withinGroupOrderBy == null ? QueryPartList.emptyList() : withinGroupOrderBy);
+    }
+
+    @SuppressWarnings("unchecked")
+    public final Q $withinGroupOrderBy(Collection<? extends SortField<?>> newOrderBy) {
+        if (withinGroupOrderBy == newOrderBy)
+            return (Q) this;
+        else
+            return copy(c -> {
+                c.withinGroupOrderBy = null;
+
+                if (newOrderBy != null)
+                    c.withinGroupOrderBy = new SortFieldList(newOrderBy);
+            });
     }
 
 

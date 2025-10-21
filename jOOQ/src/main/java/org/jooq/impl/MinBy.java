@@ -63,6 +63,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import java.util.function.Function;
 
 
 /**
@@ -71,7 +72,7 @@ import java.util.Set;
 @SuppressWarnings({ "rawtypes", "unchecked", "unused" })
 final class MinBy<T>
 extends
-    AbstractAggregateFunction<T>
+    AbstractAggregateFunction<T, MinBy<T>>
 implements
     QOM.MinBy<T>
 {
@@ -212,6 +213,11 @@ implements
 
     public final Function2<? super Field<T>, ? super Field<?>, ? extends QOM.MinBy<T>> $constructor() {
         return (a1, a2) -> new MinBy<>(a1, a2);
+    }
+
+    @Override
+    final MinBy<T> copy2(Function<MinBy<T>, MinBy<T>> function) {
+        return function.apply((MinBy<T>) $constructor().apply($value(), $by()));
     }
 
 

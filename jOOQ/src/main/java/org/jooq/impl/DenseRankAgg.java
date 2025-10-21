@@ -63,6 +63,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import java.util.function.Function;
 
 
 /**
@@ -71,7 +72,7 @@ import java.util.Set;
 @SuppressWarnings({ "rawtypes", "unused" })
 final class DenseRankAgg
 extends
-    AbstractAggregateFunction<Integer>
+    AbstractAggregateFunction<Integer, DenseRankAgg>
 implements
     QOM.DenseRankAgg
 {
@@ -116,6 +117,11 @@ implements
 
     public final Function1<? super Collection<? extends Field<?>>, ? extends QOM.DenseRankAgg> $constructor() {
         return (a1) -> new DenseRankAgg((Collection<? extends Field<?>>) a1);
+    }
+
+    @Override
+    final DenseRankAgg copy2(Function<DenseRankAgg, DenseRankAgg> function) {
+        return function.apply((DenseRankAgg) $constructor().apply($fields()));
     }
 
 

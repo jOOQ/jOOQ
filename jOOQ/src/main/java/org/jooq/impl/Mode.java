@@ -50,6 +50,7 @@ import static org.jooq.impl.Names.N_MODE;
 import static org.jooq.impl.Names.N_STATS_MODE;
 
 import java.util.Set;
+import java.util.function.Function;
 
 import org.jooq.Context;
 import org.jooq.Field;
@@ -60,7 +61,12 @@ import org.jooq.SQLDialect;
 /**
  * @author Lukas Eder
  */
-final class Mode<T> extends AbstractAggregateFunction<T> implements QOM.Mode<T> {
+final class Mode<T>
+extends
+    AbstractAggregateFunction<T, Mode<T>>
+implements
+    QOM.Mode<T>
+{
 
 
 
@@ -99,5 +105,10 @@ final class Mode<T> extends AbstractAggregateFunction<T> implements QOM.Mode<T> 
     @Override
     public final Function1<? super Field<T>, ? extends QOM.Mode<T>> $constructor() {
         return f -> new Mode<>(f);
+    }
+
+    @Override
+    final Mode<T> copy2(Function<Mode<T>, Mode<T>> function) {
+        return function.apply((Mode<T>) $constructor().apply($arg1()));
     }
 }

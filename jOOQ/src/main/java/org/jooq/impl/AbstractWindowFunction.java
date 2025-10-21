@@ -50,17 +50,14 @@ import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.TRINO;
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.impl.DSL.name;
-import static org.jooq.impl.Keywords.K_FIRST;
-import static org.jooq.impl.Keywords.K_FROM;
-import static org.jooq.impl.Keywords.K_IGNORE_NULLS;
-import static org.jooq.impl.Keywords.K_LAST;
 import static org.jooq.impl.Keywords.K_OVER;
-import static org.jooq.impl.Keywords.K_RESPECT_NULLS;
 import static org.jooq.impl.SelectQueryImpl.NO_SUPPORT_WINDOW_CLAUSE;
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_WINDOW_DEFINITIONS;
 
 import java.util.Collection;
 import java.util.Set;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 import org.jooq.Context;
 import org.jooq.DataType;
@@ -74,31 +71,28 @@ import org.jooq.SQLDialect;
 import org.jooq.WindowDefinition;
 import org.jooq.WindowExcludeStep;
 import org.jooq.WindowFinalStep;
-import org.jooq.WindowFromFirstLastStep;
-import org.jooq.WindowIgnoreNullsStep;
 import org.jooq.WindowOrderByStep;
 import org.jooq.WindowOverStep;
 import org.jooq.WindowPartitionByStep;
 import org.jooq.WindowRowsAndStep;
 import org.jooq.WindowRowsStep;
 import org.jooq.WindowSpecification;
-import org.jooq.impl.QOM.FromFirstOrLast;
-import org.jooq.impl.QOM.NullTreatment;
 import org.jooq.impl.QOM.WindowFunction;
 import org.jooq.impl.Tools.ExtendedDataKey;
 
 /**
  * @author Lukas Eder
  */
-abstract class AbstractWindowFunction<T>
-extends AbstractField<T>
+abstract class AbstractWindowFunction<T, Q extends AbstractWindowFunction<T, Q>>
+extends
+    AbstractField<T>
 implements
-    WindowFromFirstLastStep<T>,
+    WindowOverStep<T>,
     WindowPartitionByStep<T>,
     WindowRowsStep<T>,
     WindowRowsAndStep<T>,
     WindowExcludeStep<T>,
-    WindowFunction<T>,
+    QOM.WindowFunction<T>,
     ScopeMappable
 {
     private static final Set<SQLDialect> SUPPORT_NO_PARENS_WINDOW_REFERENCE = SQLDialect.supportedBy(CLICKHOUSE, DUCKDB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB);
@@ -107,9 +101,6 @@ implements
     WindowSpecificationImpl              windowSpecification;
     WindowDefinitionImpl                 windowDefinition;
     Name                                 windowName;
-
-    NullTreatment                        nullTreatment;
-    FromFirstOrLast                      fromFirstOrLast;
 
     AbstractWindowFunction(Name name, DataType<T> type) {
         super(name, type);
@@ -170,6 +161,24 @@ implements
         return windowSpecification != null || windowDefinition != null || windowName != null;
     }
 
+    final boolean isOrderedWindow(Context<?> ctx) {
+
+        if (windowSpecification != null)
+            return isOrderedWindowSpecification(windowSpecification);
+        else if (windowDefinition != null && windowDefinition.$windowSpecification() != null)
+            return isOrderedWindowSpecification(windowDefinition.$windowSpecification());
+
+        // TODO: Resolve window names
+        else
+            return false;
+    }
+
+    private static final boolean isOrderedWindowSpecification(WindowSpecification s) {
+        return !s.$orderBy().isEmpty()
+            || s.$frameUnits() != null
+            || s.$exclude() != null;
+    }
+
     final void acceptOverClause(Context<?> ctx) {
         QueryPart window = window(ctx);
 
@@ -200,127 +209,9 @@ implements
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    final void acceptNullTreatmentAsArgumentKeywords(Context<?> ctx) {
-        switch (ctx.family()) {
-
-
-
-            case DUCKDB:
-                if (nullTreatment == NullTreatment.IGNORE_NULLS)
-                    ctx.sql(' ').visit(K_IGNORE_NULLS);
-
-                break;
-        }
-    }
-
-    final void acceptNullTreatment(Context<?> ctx) {
-        switch (ctx.family()) {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            case DUCKDB:
-                break;
-
-            default:
-                acceptNullTreatmentStandard(ctx);
-                break;
-        }
-    }
-
-    final void acceptNullTreatmentStandard(Context<?> ctx) {
-        switch (ctx.family()) {
-
-
-            case DUCKDB:
-                break;
-
-            default:
-                if (nullTreatment == NullTreatment.IGNORE_NULLS)
-                    ctx.sql(' ').visit(K_IGNORE_NULLS);
-                else if (nullTreatment == NullTreatment.RESPECT_NULLS)
-                    ctx.sql(' ').visit(K_RESPECT_NULLS);
-
-                break;
-        }
-    }
-
-    final void acceptFromFirstOrLast(Context<?> ctx) {
-        switch (ctx.family()) {
-
-
-
-
-
-
-
-
-
-
-            default:
-                if (fromFirstOrLast == FromFirstOrLast.FROM_LAST)
-                    ctx.sql(' ').visit(K_FROM).sql(' ').visit(K_LAST);
-                else if (fromFirstOrLast == FromFirstOrLast.FROM_FIRST)
-                    ctx.sql(' ').visit(K_FROM).sql(' ').visit(K_FIRST);
-
-                break;
-        }
-    }
-
     // -------------------------------------------------------------------------
     // XXX Window function fluent API methods
     // -------------------------------------------------------------------------
-
-    @Override
-    public final WindowOverStep<T> ignoreNulls() {
-        nullTreatment = NullTreatment.IGNORE_NULLS;
-        return this;
-    }
-
-    @Override
-    public final WindowOverStep<T> respectNulls() {
-        nullTreatment = NullTreatment.RESPECT_NULLS;
-        return this;
-    }
-
-    @Override
-    public final WindowIgnoreNullsStep<T> fromFirst() {
-        fromFirstOrLast = FromFirstOrLast.FROM_FIRST;
-        return this;
-    }
-
-    @Override
-    public final WindowIgnoreNullsStep<T> fromLast() {
-        fromFirstOrLast = FromFirstOrLast.FROM_LAST;
-        return this;
-    }
 
     @Override
     public final WindowPartitionByStep<T> over() {
@@ -367,13 +258,13 @@ implements
     }
 
     @Override
-    public /* non-final */ AbstractWindowFunction<T> orderBy(OrderField<?>... fields) {
+    public /* non-final */ AbstractWindowFunction<T, Q> orderBy(OrderField<?>... fields) {
         windowSpecification.orderBy(fields);
         return this;
     }
 
     @Override
-    public /* non-final */ AbstractWindowFunction<T> orderBy(Collection<? extends OrderField<?>> fields) {
+    public /* non-final */ AbstractWindowFunction<T, Q> orderBy(Collection<? extends OrderField<?>> fields) {
         windowSpecification.orderBy(fields);
         return this;
     }
@@ -616,14 +507,41 @@ implements
     // XXX: Query Object Model
     // -------------------------------------------------------------------------
 
+    final Q copy(Consumer<? super Q> consumer) {
+        Q copy = copy1(copy0());
+        consumer.accept(copy);
+        return copy;
+    }
+
+    final Function<Q, Q> copy0() {
+        return c -> {
+
+            // [#19255] TODO: Copy also definitions and specifications
+            c.windowSpecification = windowSpecification;
+            c.windowDefinition = windowDefinition;
+            c.windowName = windowName;
+
+            return c;
+        };
+    }
+
+    abstract Q copy1(Function<Q, Q> function);
+
     @Override
     public final WindowSpecification $windowSpecification() {
         return windowSpecification;
     }
 
-    final AbstractWindowFunction<T> $windowSpecification(WindowSpecification s) {
-        windowSpecification = (WindowSpecificationImpl) s;
-        return this;
+    @Override
+    public final AbstractWindowFunction<T, Q> $windowSpecification(WindowSpecification s) {
+        if (s == windowSpecification)
+            return this;
+        else
+            return copy(c -> {
+                c.windowDefinition = null;
+                c.windowSpecification = (WindowSpecificationImpl) s;
+                c.windowName = null;
+            });
     }
 
     @Override
@@ -631,27 +549,33 @@ implements
         return windowDefinition;
     }
 
-    final AbstractWindowFunction<T> $windowDefinition(WindowDefinition d) {
-        windowDefinition = (WindowDefinitionImpl) d;
-        return this;
+    @Override
+    public final AbstractWindowFunction<T, Q> $windowDefinition(WindowDefinition d) {
+        if (d == windowDefinition)
+            return this;
+        else
+            return copy(c -> {
+                c.windowDefinition = (WindowDefinitionImpl) d;
+                c.windowSpecification = null;
+                c.windowName = null;
+            });
     }
 
-    public final NullTreatment $nullTreatment() {
-        return nullTreatment;
+    @Override
+    public final Name $windowName() {
+        return windowName;
     }
 
-    final AbstractWindowFunction<T> $nullTreatment(NullTreatment n) {
-        nullTreatment = n;
-        return this;
-    }
-
-    public final FromFirstOrLast $fromFirstOrLast() {
-        return fromFirstOrLast;
-    }
-
-    final AbstractWindowFunction<T> $fromFirstOrLast(FromFirstOrLast f) {
-        fromFirstOrLast = f;
-        return this;
+    @Override
+    public final AbstractWindowFunction<T, Q> $windowName(Name n) {
+        if (n == windowName)
+            return this;
+        else
+            return copy(c -> {
+                c.windowDefinition = null;
+                c.windowSpecification = null;
+                c.windowName = n;
+            });
     }
 
 

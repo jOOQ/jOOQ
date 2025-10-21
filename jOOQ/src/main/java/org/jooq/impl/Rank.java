@@ -40,11 +40,10 @@ package org.jooq.impl;
 import static org.jooq.impl.Names.N_RANK;
 import static org.jooq.impl.SQLDataType.INTEGER;
 
-import java.util.function.BiFunction;
-import java.util.function.Predicate;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 import org.jooq.Context;
-import org.jooq.Function1;
 import org.jooq.QueryPart;
 // ...
 // ...
@@ -52,7 +51,7 @@ import org.jooq.QueryPart;
 /**
  * @author Lukas Eder
  */
-final class Rank extends AbstractWindowFunction<Integer> implements QOM.Rank {
+final class Rank extends AbstractWindowFunction<Integer, Rank> implements QOM.Rank {
 
     Rank() {
         super(N_RANK, INTEGER.notNull());
@@ -74,9 +73,14 @@ final class Rank extends AbstractWindowFunction<Integer> implements QOM.Rank {
         }
     }
 
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
 
-
-
+    @Override
+    final Rank copy1(Function<Rank, Rank> function) {
+        return function.apply(new Rank());
+    }
 
 
 

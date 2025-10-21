@@ -64,6 +64,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import java.math.BigDecimal;
+import java.util.function.Function;
 
 
 /**
@@ -72,7 +73,7 @@ import java.math.BigDecimal;
 @SuppressWarnings({ "rawtypes", "unused" })
 final class RegrIntercept
 extends
-    AbstractAggregateFunction<BigDecimal>
+    AbstractAggregateFunction<BigDecimal, RegrIntercept>
 implements
     QOM.RegrIntercept
 {
@@ -152,6 +153,11 @@ implements
 
     public final Function2<? super Field<? extends Number>, ? super Field<? extends Number>, ? extends QOM.RegrIntercept> $constructor() {
         return (a1, a2) -> new RegrIntercept(a1, a2);
+    }
+
+    @Override
+    final RegrIntercept copy2(Function<RegrIntercept, RegrIntercept> function) {
+        return function.apply((RegrIntercept) $constructor().apply($y(), $x()));
     }
 
 

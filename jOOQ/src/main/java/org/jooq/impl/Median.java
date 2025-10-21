@@ -64,6 +64,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import java.math.BigDecimal;
+import java.util.function.Function;
 
 
 /**
@@ -72,7 +73,7 @@ import java.math.BigDecimal;
 @SuppressWarnings({ "rawtypes", "unused" })
 final class Median
 extends
-    AbstractAggregateFunction<BigDecimal>
+    AbstractAggregateFunction<BigDecimal, Median>
 implements
     QOM.Median
 {
@@ -123,6 +124,11 @@ implements
 
     public final Function1<? super Field<? extends Number>, ? extends QOM.Median> $constructor() {
         return (a1) -> new Median(a1);
+    }
+
+    @Override
+    final Median copy2(Function<Median, Median> function) {
+        return function.apply((Median) $constructor().apply($field()));
     }
 
 

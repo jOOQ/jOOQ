@@ -45,6 +45,7 @@ import static org.jooq.impl.Tools.castIfNeeded;
 
 import java.math.BigDecimal;
 import java.util.function.BiFunction;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 import org.jooq.Context;
@@ -62,7 +63,7 @@ import org.jetbrains.annotations.NotNull;
  */
 final class RatioToReport
 extends
-    AbstractAggregateFunction<BigDecimal>
+    AbstractAggregateFunction<BigDecimal, RatioToReport>
 implements
     QOM.RatioToReport
 {
@@ -145,6 +146,11 @@ implements
     @Override
     public final Field<? extends Number> $field() {
         return field;
+    }
+
+    @Override
+    final RatioToReport copy2(Function<RatioToReport, RatioToReport> function) {
+        return function.apply(new RatioToReport(field));
     }
 
 

@@ -64,6 +64,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import java.math.BigDecimal;
+import java.util.function.Function;
 
 
 /**
@@ -72,7 +73,7 @@ import java.math.BigDecimal;
 @SuppressWarnings({ "rawtypes", "unused" })
 final class Avg
 extends
-    AbstractAggregateFunction<BigDecimal>
+    AbstractAggregateFunction<BigDecimal, Avg>
 implements
     QOM.Avg
 {
@@ -120,6 +121,11 @@ implements
 
     public final Function2<? super Field<? extends Number>, ? super Boolean, ? extends QOM.Avg> $constructor() {
         return (a1, a2) -> new Avg(a1, a2);
+    }
+
+    @Override
+    final Avg copy2(Function<Avg, Avg> function) {
+        return function.apply((Avg) $constructor().apply($field(), $distinct()));
     }
 
 

@@ -108,7 +108,7 @@ import org.jooq.impl.QOM.JSONOnNull;
  */
 final class JSONArrayAgg<J>
 extends
-    AbstractAggregateFunction<J>
+    AbstractAggregateFunction<J, JSONArrayAgg<J>>
 implements
     JSONArrayAggOrderByStep<J>,
     QOM.JSONArrayAgg<J>
@@ -474,5 +474,10 @@ implements
             r.returning = returning;
             return r;
         };
+    }
+
+    @Override
+    final JSONArrayAgg<J> copy2(Function<JSONArrayAgg<J>, JSONArrayAgg<J>> function) {
+        return function.apply((JSONArrayAgg<J>) $constructor().apply(getArgument(0)));
     }
 }

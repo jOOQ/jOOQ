@@ -63,6 +63,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import java.util.function.Function;
 
 
 /**
@@ -71,7 +72,7 @@ import java.util.Set;
 @SuppressWarnings({ "rawtypes", "unchecked", "unused" })
 final class BitNandAgg<T extends Number>
 extends
-    AbstractAggregateFunction<T>
+    AbstractAggregateFunction<T, BitNandAgg<T>>
 implements
     QOM.BitNandAgg<T>
 {
@@ -122,6 +123,11 @@ implements
 
     public final Function1<? super Field<T>, ? extends QOM.BitNandAgg<T>> $constructor() {
         return (a1) -> new BitNandAgg<>(a1);
+    }
+
+    @Override
+    final BitNandAgg<T> copy2(Function<BitNandAgg<T>, BitNandAgg<T>> function) {
+        return function.apply((BitNandAgg<T>) $constructor().apply($value()));
     }
 
 

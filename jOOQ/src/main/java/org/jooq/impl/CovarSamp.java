@@ -64,6 +64,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import java.math.BigDecimal;
+import java.util.function.Function;
 
 
 /**
@@ -72,7 +73,7 @@ import java.math.BigDecimal;
 @SuppressWarnings({ "rawtypes", "unused" })
 final class CovarSamp
 extends
-    AbstractAggregateFunction<BigDecimal>
+    AbstractAggregateFunction<BigDecimal, CovarSamp>
 implements
     QOM.CovarSamp
 {
@@ -165,6 +166,11 @@ implements
 
     public final Function2<? super Field<? extends Number>, ? super Field<? extends Number>, ? extends QOM.CovarSamp> $constructor() {
         return (a1, a2) -> new CovarSamp(a1, a2);
+    }
+
+    @Override
+    final CovarSamp copy2(Function<CovarSamp, CovarSamp> function) {
+        return function.apply((CovarSamp) $constructor().apply($y(), $x()));
     }
 
 

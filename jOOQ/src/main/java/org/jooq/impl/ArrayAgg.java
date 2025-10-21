@@ -40,7 +40,8 @@ package org.jooq.impl;
 import static org.jooq.impl.Names.N_ARRAY_AGG;
 import static org.jooq.impl.Names.N_groupArray;
 
-import org.jooq.AggregateFunction;
+import java.util.function.Function;
+
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Function1;
@@ -48,7 +49,12 @@ import org.jooq.Function1;
 /**
  * @author Lukas Eder
  */
-final class ArrayAgg<T> extends AbstractAggregateFunction<T[]> implements QOM.ArrayAgg<T> {
+final class ArrayAgg<T>
+extends
+    AbstractAggregateFunction<T[], ArrayAgg<T>>
+implements
+    QOM.ArrayAgg<T>
+{
 
     ArrayAgg(boolean distinct, Field<T> arg) {
         super(distinct, N_ARRAY_AGG, arg.getDataType().getArrayDataType(), arg);
@@ -98,5 +104,10 @@ final class ArrayAgg<T> extends AbstractAggregateFunction<T[]> implements QOM.Ar
     @Override
     public final Function1<? super Field<T>, ? extends QOM.ArrayAgg<T>> $constructor() {
         return f -> new ArrayAgg<>(distinct, f);
+    }
+
+    @Override
+    final ArrayAgg<T> copy2(Function<ArrayAgg<T>, ArrayAgg<T>> function) {
+        return function.apply((ArrayAgg<T>) $constructor().apply((Field<T>) getArgument(0)));
     }
 }

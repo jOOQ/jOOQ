@@ -64,6 +64,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import java.math.BigDecimal;
+import java.util.function.Function;
 
 
 /**
@@ -72,7 +73,7 @@ import java.math.BigDecimal;
 @SuppressWarnings({ "rawtypes", "unused" })
 final class RegrCount
 extends
-    AbstractAggregateFunction<BigDecimal>
+    AbstractAggregateFunction<BigDecimal, RegrCount>
 implements
     QOM.RegrCount
 {
@@ -148,6 +149,11 @@ implements
 
     public final Function2<? super Field<? extends Number>, ? super Field<? extends Number>, ? extends QOM.RegrCount> $constructor() {
         return (a1, a2) -> new RegrCount(a1, a2);
+    }
+
+    @Override
+    final RegrCount copy2(Function<RegrCount, RegrCount> function) {
+        return function.apply((RegrCount) $constructor().apply($y(), $x()));
     }
 
 

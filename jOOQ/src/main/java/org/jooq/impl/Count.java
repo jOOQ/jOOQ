@@ -63,6 +63,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import java.util.function.Function;
 
 
 /**
@@ -71,7 +72,7 @@ import java.util.Set;
 @SuppressWarnings({ "rawtypes", "unused" })
 final class Count
 extends
-    AbstractAggregateFunction<Integer>
+    AbstractAggregateFunction<Integer, Count>
 implements
     QOM.Count
 {
@@ -128,6 +129,11 @@ implements
 
     public final Function2<? super Field<?>, ? super Boolean, ? extends QOM.Count> $constructor() {
         return (a1, a2) -> new Count(a1, a2);
+    }
+
+    @Override
+    final Count copy2(Function<Count, Count> function) {
+        return function.apply((Count) $constructor().apply($field(), $distinct()));
     }
 
 

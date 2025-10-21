@@ -63,6 +63,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import java.util.function.Function;
 
 
 /**
@@ -71,7 +72,7 @@ import java.util.Set;
 @SuppressWarnings({ "rawtypes", "unchecked", "unused" })
 final class MaxBy<T>
 extends
-    AbstractAggregateFunction<T>
+    AbstractAggregateFunction<T, MaxBy<T>>
 implements
     QOM.MaxBy<T>
 {
@@ -212,6 +213,11 @@ implements
 
     public final Function2<? super Field<T>, ? super Field<?>, ? extends QOM.MaxBy<T>> $constructor() {
         return (a1, a2) -> new MaxBy<>(a1, a2);
+    }
+
+    @Override
+    final MaxBy<T> copy2(Function<MaxBy<T>, MaxBy<T>> function) {
+        return function.apply((MaxBy<T>) $constructor().apply($value(), $by()));
     }
 
 

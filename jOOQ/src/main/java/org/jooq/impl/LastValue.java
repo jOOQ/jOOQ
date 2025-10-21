@@ -40,6 +40,7 @@ package org.jooq.impl;
 import static org.jooq.impl.Names.N_LAST_VALUE;
 
 import java.util.function.BiFunction;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 import org.jooq.Context;
@@ -52,7 +53,12 @@ import org.jooq.QueryPart;
 /**
  * @author Lukas Eder
  */
-final class LastValue<T> extends AbstractWindowFunction<T> implements QOM.LastValue<T> {
+final class LastValue<T>
+extends
+    AbstractNullTreatmentWindowFunction<T, LastValue<T>>
+implements
+    QOM.LastValue<T>
+{
 
     final Field<T> field;
 
@@ -95,6 +101,19 @@ final class LastValue<T> extends AbstractWindowFunction<T> implements QOM.LastVa
     @Override
     public final Field<T> $field() {
         return field;
+    }
+
+    @Override
+    public final LastValue<T> $field(Field<T> newField) {
+        if (newField == field)
+            return this;
+        else
+            return copy1().apply(new LastValue<>(newField));
+    }
+
+    @Override
+    final LastValue<T> copy2(Function<LastValue<T>, LastValue<T>> function) {
+        return function.apply(new LastValue<>(field));
     }
 
 

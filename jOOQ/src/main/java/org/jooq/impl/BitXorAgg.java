@@ -63,6 +63,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import java.util.function.Function;
 
 
 /**
@@ -71,7 +72,7 @@ import java.util.Set;
 @SuppressWarnings({ "rawtypes", "unchecked", "unused" })
 final class BitXorAgg<T extends Number>
 extends
-    AbstractAggregateFunction<T>
+    AbstractAggregateFunction<T, BitXorAgg<T>>
 implements
     QOM.BitXorAgg<T>
 {
@@ -335,6 +336,11 @@ implements
 
     public final Function1<? super Field<T>, ? extends QOM.BitXorAgg<T>> $constructor() {
         return (a1) -> new BitXorAgg<>(a1);
+    }
+
+    @Override
+    final BitXorAgg<T> copy2(Function<BitXorAgg<T>, BitXorAgg<T>> function) {
+        return function.apply((BitXorAgg<T>) $constructor().apply($value()));
     }
 
 

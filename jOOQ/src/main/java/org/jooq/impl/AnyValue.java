@@ -63,6 +63,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import java.util.function.Function;
 
 
 /**
@@ -71,7 +72,7 @@ import java.util.Set;
 @SuppressWarnings({ "rawtypes", "unchecked", "unused" })
 final class AnyValue<T>
 extends
-    AbstractAggregateFunction<T>
+    AbstractAggregateFunction<T, AnyValue<T>>
 implements
     QOM.AnyValue<T>
 {
@@ -188,6 +189,11 @@ implements
 
     public final Function1<? super Field<T>, ? extends QOM.AnyValue<T>> $constructor() {
         return (a1) -> new AnyValue<>(a1);
+    }
+
+    @Override
+    final AnyValue<T> copy2(Function<AnyValue<T>, AnyValue<T>> function) {
+        return function.apply((AnyValue<T>) $constructor().apply($field()));
     }
 
 

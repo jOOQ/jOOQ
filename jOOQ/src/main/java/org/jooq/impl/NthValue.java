@@ -38,24 +38,35 @@
 package org.jooq.impl;
 
 // ...
+import static org.jooq.impl.Keywords.K_FIRST;
+import static org.jooq.impl.Keywords.K_FROM;
+import static org.jooq.impl.Keywords.K_LAST;
 import static org.jooq.impl.Names.N_NTH_VALUE;
 
-import java.util.function.Predicate;
+import java.util.function.Function;
 
 import org.jooq.Context;
 import org.jooq.Field;
-import org.jooq.Function1;
 import org.jooq.QueryPart;
 // ...
 // ...
+import org.jooq.WindowFromFirstLastStep;
+import org.jooq.WindowIgnoreNullsStep;
+import org.jooq.impl.QOM.FromFirstOrLast;
 
 /**
  * @author Lukas Eder
  */
-final class NthValue<T> extends AbstractWindowFunction<T> implements QOM.NthValue<T> {
+final class NthValue<T>
+extends
+    AbstractNullTreatmentWindowFunction<T, NthValue<T>>
+implements
+    WindowFromFirstLastStep<T>,
+    QOM.NthValue<T> {
 
     final Field<T>       field;
     final Field<Integer> offset;
+    FromFirstOrLast      fromFirstOrLast;
 
     NthValue(Field<T> field, Field<Integer> offset) {
         super(N_NTH_VALUE, field.getDataType().null_());
@@ -63,6 +74,10 @@ final class NthValue<T> extends AbstractWindowFunction<T> implements QOM.NthValu
         this.field = field;
         this.offset = offset;
     }
+
+    // -------------------------------------------------------------------------
+    // XXX QueryPart API
+    // -------------------------------------------------------------------------
 
     @Override
     public final void accept(Context<?> ctx) {
@@ -101,6 +116,40 @@ final class NthValue<T> extends AbstractWindowFunction<T> implements QOM.NthValu
         acceptOverClause(ctx);
     }
 
+    final void acceptFromFirstOrLast(Context<?> ctx) {
+        switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+
+            default:
+                if (fromFirstOrLast == FromFirstOrLast.FROM_LAST)
+                    ctx.sql(' ').visit(K_FROM).sql(' ').visit(K_LAST);
+                else if (fromFirstOrLast == FromFirstOrLast.FROM_FIRST)
+                    ctx.sql(' ').visit(K_FROM).sql(' ').visit(K_FIRST);
+
+                break;
+        }
+    }
+
+    @Override
+    public final WindowIgnoreNullsStep<T> fromFirst() {
+        fromFirstOrLast = FromFirstOrLast.FROM_FIRST;
+        return this;
+    }
+
+    @Override
+    public final WindowIgnoreNullsStep<T> fromLast() {
+        fromFirstOrLast = FromFirstOrLast.FROM_LAST;
+        return this;
+    }
+
     // -------------------------------------------------------------------------
     // XXX: Query Object Model
     // -------------------------------------------------------------------------
@@ -108,6 +157,47 @@ final class NthValue<T> extends AbstractWindowFunction<T> implements QOM.NthValu
     @Override
     public final Field<T> $field() {
         return field;
+    }
+
+    @Override
+    public final NthValue<T> $field(Field<T> newField) {
+        if (newField == field)
+            return this;
+        else
+            return copy0().apply(new NthValue<>(newField, offset));
+    }
+
+    @Override
+    public final Field<Integer> $offset() {
+        return offset;
+    }
+
+    @Override
+    public final NthValue<T> $offset(Field<Integer> newOffset) {
+        if (newOffset == offset)
+            return this;
+        else
+            return copy0().apply(new NthValue<>(field, newOffset));
+    }
+
+    @Override
+    public final FromFirstOrLast $fromFirstOrLast() {
+        return fromFirstOrLast;
+    }
+
+    @Override
+    public final NthValue<T> $fromFirstOrLast(FromFirstOrLast f) {
+        if (f == fromFirstOrLast)
+            return this;
+        else
+            return copy(c -> {
+                c.fromFirstOrLast = f;
+            });
+    }
+
+    @Override
+    final NthValue<T> copy2(Function<NthValue<T>, NthValue<T>> function) {
+        return function.apply(new NthValue<>(field, offset));
     }
 
 

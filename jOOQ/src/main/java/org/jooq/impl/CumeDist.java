@@ -46,11 +46,9 @@ import static org.jooq.impl.SQLDataType.NUMERIC;
 
 import java.math.BigDecimal;
 import java.util.Set;
-import java.util.function.BiFunction;
-import java.util.function.Predicate;
+import java.util.function.Function;
 
 import org.jooq.Context;
-import org.jooq.Function1;
 // ...
 import org.jooq.QueryPart;
 // ...
@@ -61,7 +59,7 @@ import org.jooq.WindowSpecification;
 /**
  * @author Lukas Eder
  */
-final class CumeDist extends AbstractWindowFunction<BigDecimal> implements QOM.CumeDist {
+final class CumeDist extends AbstractWindowFunction<BigDecimal, CumeDist> implements QOM.CumeDist {
 
 
 
@@ -93,9 +91,14 @@ final class CumeDist extends AbstractWindowFunction<BigDecimal> implements QOM.C
         }
     }
 
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
 
-
-
+    @Override
+    final CumeDist copy1(Function<CumeDist, CumeDist> function) {
+        return function.apply(new CumeDist());
+    }
 
 
 

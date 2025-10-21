@@ -49,11 +49,10 @@ import static org.jooq.impl.SQLDataType.NUMERIC;
 
 import java.math.BigDecimal;
 import java.util.Set;
-import java.util.function.BiFunction;
-import java.util.function.Predicate;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 import org.jooq.Context;
-import org.jooq.Function1;
 // ...
 import org.jooq.QueryPart;
 // ...
@@ -64,7 +63,7 @@ import org.jooq.WindowSpecification;
 /**
  * @author Lukas Eder
  */
-final class PercentRank extends AbstractWindowFunction<BigDecimal> implements QOM.PercentRank {
+final class PercentRank extends AbstractWindowFunction<BigDecimal, PercentRank> implements QOM.PercentRank {
 
 
 
@@ -102,9 +101,14 @@ final class PercentRank extends AbstractWindowFunction<BigDecimal> implements QO
         }
     }
 
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
 
-
-
+    @Override
+    final PercentRank copy1(Function<PercentRank, PercentRank> function) {
+        return function.apply(new PercentRank());
+    }
 
 
 

@@ -64,6 +64,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import java.math.BigDecimal;
+import java.util.function.Function;
 
 
 /**
@@ -72,7 +73,7 @@ import java.math.BigDecimal;
 @SuppressWarnings({ "rawtypes", "unused" })
 final class CumeDistAgg
 extends
-    AbstractAggregateFunction<BigDecimal>
+    AbstractAggregateFunction<BigDecimal, CumeDistAgg>
 implements
     QOM.CumeDistAgg
 {
@@ -117,6 +118,11 @@ implements
 
     public final Function1<? super Collection<? extends Field<?>>, ? extends QOM.CumeDistAgg> $constructor() {
         return (a1) -> new CumeDistAgg((Collection<? extends Field<?>>) a1);
+    }
+
+    @Override
+    final CumeDistAgg copy2(Function<CumeDistAgg, CumeDistAgg> function) {
+        return function.apply((CumeDistAgg) $constructor().apply($fields()));
     }
 
 

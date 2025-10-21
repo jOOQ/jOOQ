@@ -40,11 +40,10 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 
-import java.util.function.Predicate;
+import java.util.function.Function;
 
 import org.jooq.DataType;
 import org.jooq.Field;
-import org.jooq.Function1;
 import org.jooq.Name;
 import org.jooq.QueryPart;
 // ...
@@ -55,7 +54,10 @@ import org.jooq.QueryPart;
  *
  * @author Lukas Eder
  */
-final class DefaultAggregateFunction<T> extends AbstractAggregateFunction<T> {
+final class DefaultAggregateFunction<T>
+extends
+    AbstractAggregateFunction<T, DefaultAggregateFunction<T>>
+{
 
     // -------------------------------------------------------------------------
     // XXX Constructors
@@ -77,9 +79,14 @@ final class DefaultAggregateFunction<T> extends AbstractAggregateFunction<T> {
         super(distinct, name, type, arguments);
     }
 
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
 
-
-
+    @Override
+    final DefaultAggregateFunction<T> copy2(Function<DefaultAggregateFunction<T>, DefaultAggregateFunction<T>> function) {
+        return function.apply(new DefaultAggregateFunction<>(distinct, getQualifiedName(), getDataType(), getArguments().toArray(EMPTY_FIELD)));
+    }
 
 
 

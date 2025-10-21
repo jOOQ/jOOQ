@@ -662,9 +662,13 @@ public interface Formattable {
      * @param handler The custom content handler.
      * @return The argument content handler is returned for convenience.
      * @see #formatXML()
-     * @see <a
-     *      href="http://www.jooq.org/xsd/jooq-export-3.10.0.xsd">http://www.jooq.org/xsd/jooq-export-3.10.0.xsd</a>
+     * @see <a href=
+     *      "http://www.jooq.org/xsd/jooq-export-3.10.0.xsd">http://www.jooq.org/xsd/jooq-export-3.10.0.xsd</a>
+     * @deprecated - 3.21.0 - [#19250] - This method will be removed in the
+     *             future. Please use one of the alternative XML formatting
+     *             methods, instead.
      */
+    @Deprecated(forRemoval = true, since = "3.21")
     <H extends ContentHandler> H intoXML(H handler) throws SAXException;
 
     /**
@@ -675,7 +679,11 @@ public interface Formattable {
      * @see #formatXML()
      * @see <a
      *      href="http://www.jooq.org/xsd/jooq-export-3.10.0.xsd">http://www.jooq.org/xsd/jooq-export-3.10.0.xsd</a>
+     * @deprecated - 3.21.0 - [#19250] - This method will be removed in the
+     *             future. Please use one of the alternative XML formatting
+     *             methods, instead.
      */
+    @Deprecated(forRemoval = true, since = "3.21")
     <H extends ContentHandler> H intoXML(H handler, XMLFormat format) throws SAXException;
 
 }

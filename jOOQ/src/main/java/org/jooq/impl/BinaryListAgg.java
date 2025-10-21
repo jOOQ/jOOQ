@@ -102,7 +102,7 @@ implements
     }
 
     @Override
-    void acceptFunctionName(Context<?> ctx) {
+    final void acceptFunctionName(Context<?> ctx) {
 
 
 

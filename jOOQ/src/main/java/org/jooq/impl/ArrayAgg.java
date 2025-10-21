@@ -62,33 +62,40 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        switch (ctx.family()) {
 
-
-
-
-
-
-
-
-
-
-            case CLICKHOUSE:
-                ctx.visit(N_groupArray).sql('(');
-                acceptArguments1(ctx, new QueryPartListView<>(arguments.get(0)));
-                ctx.sql(')');
-                break;
-
-            default:
-                ctx.visit(N_ARRAY_AGG).sql('(');
-                acceptArguments1(ctx, new QueryPartListView<>(arguments.get(0)));
-                acceptOrderBy(ctx);
-                ctx.sql(')');
-                break;
+        // [#19255] Some dialects do not support aggregate ORDER BY in window functions
+        if (emulateWindowAggregateOrderBy(ctx)) {
+            acceptWindowAggregateOrderByEmulation(ctx);
         }
+        else {
+            switch (ctx.family()) {
 
-        acceptFilterClause(ctx);
-        acceptOverClause(ctx);
+
+
+
+
+
+
+
+
+
+                case CLICKHOUSE:
+                    ctx.visit(N_groupArray).sql('(');
+                    acceptArguments1(ctx, new QueryPartListView<>(arguments.get(0)));
+                    ctx.sql(')');
+                    break;
+
+                default:
+                    ctx.visit(N_ARRAY_AGG).sql('(');
+                    acceptArguments1(ctx, new QueryPartListView<>(arguments.get(0)));
+                    acceptOrderBy(ctx);
+                    ctx.sql(')');
+                    break;
+            }
+
+            acceptFilterClause(ctx);
+            acceptOverClause(ctx);
+        }
     }
 
     // -------------------------------------------------------------------------

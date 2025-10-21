@@ -203,7 +203,7 @@ implements
     }
 
     @Override
-    boolean supportsFilter(Context<?> ctx) {
+    final boolean supportsFilter(Context<?> ctx) {
         switch (ctx.family()) {
             case TRINO:
                 return false;

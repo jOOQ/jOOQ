@@ -108,7 +108,7 @@ implements
     static final Set<SQLDialect>      NO_SUPPORT_FILTER                 = SQLDialect.supportedUntil(CUBRID, DERBY, IGNITE, MARIADB, MYSQL);
     static final Set<SQLDialect>      NO_SUPPORT_WINDOW_FILTER          = SQLDialect.supportedBy(TRINO);
     static final Set<SQLDialect>      REQUIRE_DISTINCT_RVE              = SQLDialect.supportedBy(DUCKDB, H2, POSTGRES);
-    static final Set<SQLDialect>      EMULATE_WINDOW_AGGREGATE_ORDER_BY = SQLDialect.supportedBy(POSTGRES, SQLITE);
+    static final Set<SQLDialect>      EMULATE_WINDOW_AGGREGATE_ORDER_BY = SQLDialect.supportedBy(POSTGRES, SQLITE, YUGABYTEDB);
 
     static final Lazy<Field<Integer>> ASTERISK                          = Lazy.of(() -> DSL.field(DSL.raw("*"), Integer.class));
 
@@ -328,7 +328,7 @@ implements
 
         // [#19255] TODO: Make sure this works also with WindowDefinition and Window name
         ctx.visit(
-            ((ListAgg) $withinGroupOrderBy(emptyList())).$windowSpecification(
+            $withinGroupOrderBy(emptyList()).$windowSpecification(
                 $windowSpecification()
                     .$orderBy(withinGroupOrderBy)
                     .$frameStart(Integer.MIN_VALUE)

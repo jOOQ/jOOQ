@@ -329,6 +329,6 @@ implements
 
     @Override
     final ListAgg copy2(Function<ListAgg, ListAgg> function) {
-        return function.apply(new ListAgg(distinct, getArgument(0), (Field) getArgument(1)));
+        return function.apply((ListAgg) $constructor().apply($arg1(), $arg2()));
     }
 }

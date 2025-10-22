@@ -59,6 +59,7 @@ import java.util.function.Function;
 
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.Function2;
 import org.jooq.SQLDialect;
 import org.jooq.impl.QOM.UNotYetImplemented;
 
@@ -69,7 +70,7 @@ final class BinaryListAgg
 extends
     AbstractAggregateFunction<byte[], BinaryListAgg>
 implements
-    UNotYetImplemented
+    QOM.BinaryListAgg
 {
 
     static final Set<SQLDialect> SUPPORT_STRING_AGG           = SQLDialect.supportedBy(DUCKDB, POSTGRES);
@@ -147,7 +148,23 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
+    public final Field<?> $arg1() {
+        return getArgument(0);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final Field<byte[]> $arg2() {
+        return (Field<byte[]>) getArgument(1);
+    }
+
+    @Override
+    public final Function2<? super Field<?>, ? super Field<byte[]>, ? extends QOM.BinaryListAgg> $constructor() {
+        return (a1, a2) -> new BinaryListAgg(distinct, a1, a2);
+    }
+
+    @Override
     final BinaryListAgg copy2(Function<BinaryListAgg, BinaryListAgg> function) {
-        return function.apply(new BinaryListAgg(distinct, getArgument(0), (Field) getArgument(1)));
+        return function.apply((BinaryListAgg) $constructor().apply($arg1(), $arg2()));
     }
 }

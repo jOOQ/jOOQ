@@ -107,7 +107,9 @@ import org.jooq.Lambda1;
 // ...
 import org.jooq.Name;
 import org.jooq.Operator;
+import org.jooq.OptionallyOrderedAggregateFunction;
 import org.jooq.OrderField;
+import org.jooq.OrderedAggregateFunction;
 import org.jooq.Param;
 import org.jooq.Parameter;
 import org.jooq.Privilege;
@@ -1371,7 +1373,7 @@ public final class QOM {
             AggregateFunction<String>,
             UOperator2<Field<?>, Field<String>, ListAgg>
         /*permits
-            ArrayAgg*/
+            ListAgg*/
     {
         boolean $distinct();
         @NotNull default Field<?> $field() { return $arg1(); }
@@ -1383,6 +1385,25 @@ public final class QOM {
         @NotNull  UnmodifiableList<? extends SortField<?>> $withinGroupOrderBy();
         @CheckReturnValue
         @NotNull ListAgg $withinGroupOrderBy(Collection<? extends SortField<?>> orderBy);
+    }
+
+    public /*sealed*/ interface BinaryListAgg
+        extends
+            AggregateFunction<byte[]>,
+            UOperator2<Field<?>, Field<byte[]>, BinaryListAgg>
+        /*permits
+            BinaryListAgg*/
+    {
+        boolean $distinct();
+        @NotNull default Field<?> $field() { return $arg1(); }
+        @CheckReturnValue
+        @NotNull default BinaryListAgg $field(Field<?> field) { return $arg1(field); }
+        @Nullable default Field<byte[]> $separator() { return $arg2(); }
+        @CheckReturnValue
+        @NotNull default BinaryListAgg $separator(Field<byte[]> separator) { return $arg2(separator); }
+        @NotNull  UnmodifiableList<? extends SortField<?>> $withinGroupOrderBy();
+        @CheckReturnValue
+        @NotNull BinaryListAgg $withinGroupOrderBy(Collection<? extends SortField<?>> orderBy);
     }
 
     public /*sealed*/ interface XMLAgg
@@ -8696,7 +8717,7 @@ public final class QOM {
     public /*sealed*/ interface MaxBy<T>
         extends
             QueryPart,
-            org.jooq.OptionallyOrderedAggregateFunction<T>
+            OptionallyOrderedAggregateFunction<T>
         //permits
         //    MaxBy
     {
@@ -8763,7 +8784,7 @@ public final class QOM {
     public /*sealed*/ interface MinBy<T>
         extends
             QueryPart,
-            org.jooq.OptionallyOrderedAggregateFunction<T>
+            OptionallyOrderedAggregateFunction<T>
         //permits
         //    MinBy
     {
@@ -8828,7 +8849,7 @@ public final class QOM {
     public /*sealed*/ interface RankAgg
         extends
             QueryPart,
-            org.jooq.OrderedAggregateFunction<Integer>
+            OrderedAggregateFunction<Integer>
         //permits
         //    RankAgg
     {
@@ -8845,7 +8866,7 @@ public final class QOM {
     public /*sealed*/ interface DenseRankAgg
         extends
             QueryPart,
-            org.jooq.OrderedAggregateFunction<Integer>
+            OrderedAggregateFunction<Integer>
         //permits
         //    DenseRankAgg
     {
@@ -8862,7 +8883,7 @@ public final class QOM {
     public /*sealed*/ interface PercentRankAgg
         extends
             QueryPart,
-            org.jooq.OrderedAggregateFunction<BigDecimal>
+            OrderedAggregateFunction<BigDecimal>
         //permits
         //    PercentRankAgg
     {
@@ -8879,7 +8900,7 @@ public final class QOM {
     public /*sealed*/ interface CumeDistAgg
         extends
             QueryPart,
-            org.jooq.OrderedAggregateFunction<BigDecimal>
+            OrderedAggregateFunction<BigDecimal>
         //permits
         //    CumeDistAgg
     {
@@ -8896,7 +8917,7 @@ public final class QOM {
     public /*sealed*/ interface PercentileCont
         extends
             QueryPart,
-            org.jooq.OrderedAggregateFunction<BigDecimal>
+            OrderedAggregateFunction<BigDecimal>
         //permits
         //    PercentileCont
     {
@@ -8913,7 +8934,7 @@ public final class QOM {
     public /*sealed*/ interface PercentileDisc
         extends
             QueryPart,
-            org.jooq.OrderedAggregateFunction<BigDecimal>
+            OrderedAggregateFunction<BigDecimal>
         //permits
         //    PercentileDisc
     {

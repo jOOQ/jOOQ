@@ -68,36 +68,29 @@ implements
 
     final Set<SQLDialect>       REQUIRE_WITHIN_GROUP = SQLDialect.supportedBy(TRINO);
 
-    private final Field<?>      field;
-    private final SortFieldList orderBy;
-    private Field<String>       separator;
-
     GroupConcat(Field<?> field) {
         this(field, false);
     }
 
     GroupConcat(Field<?> field, boolean distinct) {
         super(distinct, N_GROUP_CONCAT, SQLDataType.VARCHAR, field);
-
-        this.field = field;
-        this.orderBy = new SortFieldList();
     }
 
     @Override
     public final void accept(Context<?> ctx) {
         ListAgg result;
 
-        if (separator == null)
-            result = new ListAgg(distinct, field, ListAgg.DEFAULT_SEPARATOR);
+        if (getArgument(1) == null)
+            result = new ListAgg(distinct, getArgument(0), ListAgg.DEFAULT_SEPARATOR);
         else
-            result = new ListAgg(distinct, field, separator);
+            result = new ListAgg(distinct, getArgument(0), (Field) getArgument(1));
 
-        if (!orderBy.isEmpty())
-            result.withinGroupOrderBy(orderBy);
+        if (!$withinGroupOrderBy().isEmpty())
+            result.withinGroupOrderBy($withinGroupOrderBy());
 
         // [#3045] [#11485] Dialects with mandatory WITHIN GROUP clause
         else if (REQUIRE_WITHIN_GROUP.contains(ctx.dialect()))
-            result.withinGroupOrderBy(orderBy);
+            result.withinGroupOrderBy($withinGroupOrderBy());
 
         ctx.visit(fo(result));
     }
@@ -109,7 +102,11 @@ implements
 
     @Override
     public final AggregateFunction<String> separator(Field<String> s) {
-        this.separator = s;
+        if (arguments.size() < 2)
+            arguments.add(s);
+        else
+            arguments.set(1, s);
+
         return this;
     }
 
@@ -120,7 +117,7 @@ implements
 
     @Override
     public final GroupConcat orderBy(Collection<? extends OrderField<?>> fields) {
-        orderBy.addAll(Tools.sortFields(fields));
+        withinGroupOrderBy(fields);
         return this;
     }
 
@@ -130,6 +127,6 @@ implements
 
     @Override
     final GroupConcat copy2(Function<GroupConcat, GroupConcat> function) {
-        return function.apply((GroupConcat) new GroupConcat(field, distinct).separator(separator));
+        return function.apply((GroupConcat) new GroupConcat(getArgument(0), distinct).separator((Field) getArgument(1)));
     }
 }

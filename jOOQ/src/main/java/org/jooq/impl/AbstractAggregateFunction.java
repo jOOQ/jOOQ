@@ -38,8 +38,44 @@
 package org.jooq.impl;
 
 import static java.util.Collections.emptyList;
-import static java.util.function.Function.identity;
-import static org.jooq.SQLDialect.*;
+// ...
+// ...
+// ...
+// ...
+// ...
+import static org.jooq.SQLDialect.CLICKHOUSE;
+// ...
+import static org.jooq.SQLDialect.CUBRID;
+// ...
+// ...
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.DUCKDB;
+// ...
+import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.H2;
+// ...
+import static org.jooq.SQLDialect.IGNITE;
+// ...
+// ...
+// ...
+import static org.jooq.SQLDialect.MARIADB;
+// ...
+import static org.jooq.SQLDialect.MYSQL;
+// ...
+import static org.jooq.SQLDialect.POSTGRES;
+// ...
+// ...
+// ...
+// ...
+// ...
+import static org.jooq.SQLDialect.SQLITE;
+// ...
+// ...
+// ...
+// ...
+import static org.jooq.SQLDialect.TRINO;
+// ...
+import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.zero;
@@ -59,11 +95,14 @@ import static org.jooq.impl.Names.N_COUNT_IF;
 import static org.jooq.impl.QueryPartCollectionView.wrap;
 import static org.jooq.impl.SQLDataType.DOUBLE;
 import static org.jooq.impl.SQLDataType.NUMERIC;
+import static org.jooq.impl.Tools.EMPTY_QUERYPART;
 import static org.jooq.impl.Tools.camelCase;
 import static org.jooq.impl.Tools.isEmpty;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
 
@@ -86,8 +125,6 @@ import org.jooq.SortField;
 import org.jooq.WindowBeforeOverStep;
 import org.jooq.impl.QOM.FrameUnits;
 import org.jooq.impl.QOM.UnmodifiableList;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
@@ -679,6 +716,17 @@ implements
                     c.withinGroupOrderBy = new SortFieldList(newOrderBy);
             });
     }
+
+
+
+
+
+
+
+
+
+
+
 
 
 

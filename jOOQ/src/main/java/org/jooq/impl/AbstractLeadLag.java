@@ -218,7 +218,7 @@ extends AbstractNullTreatmentWindowFunction<T, Q> {
         return function.apply(constructor(field, offset, defaultValue));
     }
 
-
+    abstract Q constructor(Field<T> f, Field<Integer> o, Field<T> def);
 
 
 

@@ -131,6 +131,15 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
+
+        // [#19255] Some dialects do not support aggregate ORDER BY in window functions
+        if (emulateWindowAggregateOrderBy(ctx))
+            acceptWindowAggregateOrderByEmulation(ctx);
+        else
+            accept0(ctx);
+    }
+
+    private final void accept0(Context<?> ctx) {
         switch (ctx.family()) {
             case MARIADB:
             case MYSQL: {

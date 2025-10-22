@@ -50,12 +50,8 @@ final class Lag<T> extends AbstractLeadLag<T, Lag<T>> implements QOM.Lag<T> {
         super(N_LAG, field, offset, defaultValue);
     }
 
-
-
-
-
-
-
-
-
+    @Override
+    final Lag<T> constructor(Field<T> f, Field<Integer> o, Field<T> def) {
+        return new Lag<>(f, o, def);
+    }
 }

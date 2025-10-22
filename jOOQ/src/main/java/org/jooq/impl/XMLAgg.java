@@ -65,7 +65,16 @@ implements
     }
 
     @Override
-    public void accept(Context<?> ctx) {
+    public final void accept(Context<?> ctx) {
+
+        // [#19255] Some dialects do not support aggregate ORDER BY in window functions
+        if (emulateWindowAggregateOrderBy(ctx))
+            acceptWindowAggregateOrderByEmulation(ctx);
+        else
+            accept0(ctx);
+    }
+
+    private final void accept0(Context<?> ctx) {
 
 
 
@@ -93,7 +102,7 @@ implements
     @SuppressWarnings("unchecked")
     @Override
     public final Field<XML> $arg1() {
-        return (Field<XML>) getArguments().get(0);
+        return (Field<XML>) getArgument(0);
     }
 
     @Override

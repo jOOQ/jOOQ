@@ -197,7 +197,9 @@ implements
 
     @Override
     final NthValue<T> copy2(Function<NthValue<T>, NthValue<T>> function) {
-        return function.apply(new NthValue<>(field, offset));
+        NthValue<T> result = new NthValue<>(field, offset);
+        result.fromFirstOrLast = fromFirstOrLast;
+        return function.apply(result);
     }
 
 

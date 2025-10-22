@@ -50,12 +50,8 @@ final class Lead<T> extends AbstractLeadLag<T, Lead<T>> implements QOM.Lead<T> {
         super(N_LEAD, field, offset, defaultValue);
     }
 
-
-
-
-
-
-
-
-
+    @Override
+    final Lead<T> constructor(Field<T> f, Field<Integer> o, Field<T> def) {
+        return new Lead<>(f, o, def);
+    }
 }

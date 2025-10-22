@@ -321,7 +321,7 @@ implements
         return EMULATE_WINDOW_AGGREGATE_ORDER_BY.contains(ctx.dialect())
             && isWindow()
             && !isOrderedWindow(ctx)
-            && !withinGroupOrderBy.isEmpty();
+            && !isEmpty(withinGroupOrderBy);
     }
 
     final void acceptWindowAggregateOrderByEmulation(Context<?> ctx) {
@@ -625,8 +625,8 @@ implements
 
     final Function<Q, Q> copy1() {
         return c -> {
-            c.arguments.addAll(arguments);
 
+            // [#19255] Arguments can be expected to have already been copied by the copy2() utility, in subclasses.
             if (filter.hasWhere())
                 c.filter.addConditions(filter.getWhere());
             if (!isEmpty(withinGroupOrderBy))

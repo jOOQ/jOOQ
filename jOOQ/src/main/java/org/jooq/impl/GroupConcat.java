@@ -44,6 +44,7 @@ import static org.jooq.impl.Names.N_GROUP_CONCAT;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Set;
 
 import org.jooq.AggregateFunction;
@@ -66,43 +67,44 @@ implements
 
     final Set<SQLDialect>       REQUIRE_WITHIN_GROUP = SQLDialect.supportedBy(TRINO);
 
-    private final Field<?>      field;
-    private final SortFieldList orderBy;
-    private String              separator;
-
     GroupConcat(Field<?> field) {
         this(field, false);
     }
 
     GroupConcat(Field<?> field, boolean distinct) {
         super(distinct, N_GROUP_CONCAT, SQLDataType.VARCHAR, field);
-
-        this.field = field;
-        this.orderBy = new SortFieldList();
     }
 
     @Override
     public final void accept(Context<?> ctx) {
         ListAgg result;
 
-        if (separator == null)
-            result = new ListAgg(distinct, field, inline(","));
+        if (getArgument(1) == null)
+            result = new ListAgg(distinct, getArgument(0), inline(","));
         else
-            result = new ListAgg(distinct, field, inline(separator));
+            result = new ListAgg(distinct, getArgument(0), (Field) getArgument(1));
 
-        if (!orderBy.isEmpty())
-            result.withinGroupOrderBy(orderBy);
+        if (!Tools.isEmpty(withinGroupOrderBy))
+            result.withinGroupOrderBy(withinGroupOrderBy);
 
         // [#3045] [#11485] Dialects with mandatory WITHIN GROUP clause
         else if (REQUIRE_WITHIN_GROUP.contains(ctx.dialect()))
-            result.withinGroupOrderBy(orderBy);
+            result.withinGroupOrderBy(withinGroupOrderBy != null ? withinGroupOrderBy : Collections.emptyList());
 
         ctx.visit(fo(result));
     }
 
     @Override
     public final AggregateFunction<String> separator(String s) {
-        this.separator = s;
+        return separator(inline(s));
+    }
+
+    final AggregateFunction<String> separator(Field<String> s) {
+        if (arguments.size() < 2)
+            arguments.add(s);
+        else
+            arguments.set(1, s);
+
         return this;
     }
 
@@ -113,7 +115,7 @@ implements
 
     @Override
     public final GroupConcat orderBy(Collection<? extends OrderField<?>> fields) {
-        orderBy.addAll(Tools.sortFields(fields));
+        withinGroupOrderBy(fields);
         return this;
     }
 }

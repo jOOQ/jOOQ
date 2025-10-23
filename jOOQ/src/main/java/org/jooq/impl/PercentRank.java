@@ -63,7 +63,12 @@ import org.jooq.WindowSpecification;
 /**
  * @author Lukas Eder
  */
-final class PercentRank extends AbstractWindowFunction<BigDecimal, PercentRank> implements QOM.PercentRank {
+final class PercentRank
+extends
+    AbstractWindowFunction<BigDecimal, QOM.PercentRank>
+implements
+    QOM.PercentRank
+{
 
 
 
@@ -106,7 +111,7 @@ final class PercentRank extends AbstractWindowFunction<BigDecimal, PercentRank> 
     // -------------------------------------------------------------------------
 
     @Override
-    final PercentRank copyWindowFunction(Function<? super PercentRank, ? extends PercentRank> function) {
+    final QOM.PercentRank copyWindowFunction(Function<? super QOM.PercentRank, ? extends QOM.PercentRank> function) {
         return function.apply(new PercentRank());
     }
 

@@ -51,13 +51,17 @@ import org.jooq.Name;
 import org.jooq.QueryPart;
 // ...
 // ...
+import org.jooq.impl.QOM.NullTreatmentWindowFunction;
+import org.jooq.impl.QOM.WindowFunction;
 
 
 /**
  * @author Lukas Eder
  */
-abstract class AbstractLeadLag<T, Q extends AbstractLeadLag<T, Q>>
-extends AbstractNullTreatmentWindowFunction<T, Q> {
+abstract class AbstractLeadLag<T, Q extends NullTreatmentWindowFunction<T, Q>>
+extends
+    AbstractNullTreatmentWindowFunction<T, Q>
+{
 
     private final Field<T>       field;
     private final Field<Integer> offset;

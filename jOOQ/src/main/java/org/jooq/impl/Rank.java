@@ -51,7 +51,12 @@ import org.jooq.QueryPart;
 /**
  * @author Lukas Eder
  */
-final class Rank extends AbstractWindowFunction<Integer, Rank> implements QOM.Rank {
+final class Rank
+extends
+    AbstractWindowFunction<Integer, QOM.Rank>
+implements
+    QOM.Rank
+{
 
     Rank() {
         super(N_RANK, INTEGER.notNull());
@@ -78,7 +83,7 @@ final class Rank extends AbstractWindowFunction<Integer, Rank> implements QOM.Ra
     // -------------------------------------------------------------------------
 
     @Override
-    final Rank copyWindowFunction(Function<? super Rank, ? extends Rank> function) {
+    final QOM.Rank copyWindowFunction(Function<? super QOM.Rank, ? extends QOM.Rank> function) {
         return function.apply(new Rank());
     }
 

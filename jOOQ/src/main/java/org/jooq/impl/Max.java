@@ -72,7 +72,7 @@ import java.util.function.Function;
 @SuppressWarnings({ "rawtypes", "unchecked", "unused" })
 final class Max<T>
 extends
-    AbstractAggregateFunction<T, Max<T>>
+    AbstractAggregateFunction<T, QOM.Max<T>>
 implements
     QOM.Max<T>
 {
@@ -110,12 +110,12 @@ implements
 
     @Override
     public final QOM.Max<T> $field(Field<T> newValue) {
-        return copyAggregateSpecification().apply((Max<T>) $constructor().apply(newValue, $distinct()));
+        return copyAggregateSpecification().apply($constructor().apply(newValue, $distinct()));
     }
 
     @Override
     public final QOM.Max<T> $distinct(boolean newValue) {
-        return copyAggregateSpecification().apply((Max<T>) $constructor().apply($field(), newValue));
+        return copyAggregateSpecification().apply($constructor().apply($field(), newValue));
     }
 
     public final Function2<? super Field<T>, ? super Boolean, ? extends QOM.Max<T>> $constructor() {
@@ -123,11 +123,9 @@ implements
     }
 
     @Override
-    final Max<T> copyAggregateFunction(Function<? super Max<T>, ? extends Max<T>> function) {
-        return function.apply((Max<T>) $constructor().apply($field(), $distinct()));
+    final QOM.Max<T> copyAggregateFunction(Function<? super QOM.Max<T>, ? extends QOM.Max<T>> function) {
+        return function.apply($constructor().apply($field(), $distinct()));
     }
-
-
 
 
 

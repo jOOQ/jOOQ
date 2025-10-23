@@ -73,7 +73,7 @@ import java.util.function.Function;
 @SuppressWarnings({ "rawtypes", "unused" })
 final class PercentRankAgg
 extends
-    AbstractAggregateFunction<BigDecimal, PercentRankAgg>
+    AbstractAggregateFunction<BigDecimal, QOM.PercentRankAgg>
 implements
     QOM.PercentRankAgg
 {
@@ -113,7 +113,7 @@ implements
 
     @Override
     public final QOM.PercentRankAgg $fields(Collection<? extends Field<?>> newValue) {
-        return copyAggregateSpecification().apply((PercentRankAgg) $constructor().apply(newValue));
+        return copyAggregateSpecification().apply($constructor().apply(newValue));
     }
 
     public final Function1<? super Collection<? extends Field<?>>, ? extends QOM.PercentRankAgg> $constructor() {
@@ -121,8 +121,8 @@ implements
     }
 
     @Override
-    final PercentRankAgg copyAggregateFunction(Function<? super PercentRankAgg, ? extends PercentRankAgg> function) {
-        return function.apply((PercentRankAgg) $constructor().apply($fields()));
+    final QOM.PercentRankAgg copyAggregateFunction(Function<? super QOM.PercentRankAgg, ? extends QOM.PercentRankAgg> function) {
+        return function.apply($constructor().apply($fields()));
     }
 
 

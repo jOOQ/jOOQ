@@ -73,7 +73,7 @@ import java.util.function.Function;
 @SuppressWarnings({ "rawtypes", "unused" })
 final class RegrSxy
 extends
-    AbstractAggregateFunction<BigDecimal, RegrSxy>
+    AbstractAggregateFunction<BigDecimal, QOM.RegrSxy>
 implements
     QOM.RegrSxy
 {
@@ -157,12 +157,12 @@ implements
 
     @Override
     public final QOM.RegrSxy $y(Field<? extends Number> newValue) {
-        return copyAggregateSpecification().apply((RegrSxy) $constructor().apply(newValue, $x()));
+        return copyAggregateSpecification().apply($constructor().apply(newValue, $x()));
     }
 
     @Override
     public final QOM.RegrSxy $x(Field<? extends Number> newValue) {
-        return copyAggregateSpecification().apply((RegrSxy) $constructor().apply($y(), newValue));
+        return copyAggregateSpecification().apply($constructor().apply($y(), newValue));
     }
 
     public final Function2<? super Field<? extends Number>, ? super Field<? extends Number>, ? extends QOM.RegrSxy> $constructor() {
@@ -170,11 +170,9 @@ implements
     }
 
     @Override
-    final RegrSxy copyAggregateFunction(Function<? super RegrSxy, ? extends RegrSxy> function) {
-        return function.apply((RegrSxy) $constructor().apply($y(), $x()));
+    final QOM.RegrSxy copyAggregateFunction(Function<? super QOM.RegrSxy, ? extends QOM.RegrSxy> function) {
+        return function.apply($constructor().apply($y(), $x()));
     }
-
-
 
 
 

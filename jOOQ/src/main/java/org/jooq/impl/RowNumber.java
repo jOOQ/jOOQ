@@ -52,7 +52,12 @@ import org.jooq.QueryPart;
 /**
  * @author Lukas Eder
  */
-final class RowNumber extends AbstractWindowFunction<Integer, RowNumber> implements QOM.RowNumber {
+final class RowNumber
+extends
+    AbstractWindowFunction<Integer, QOM.RowNumber>
+implements
+    QOM.RowNumber
+{
 
     RowNumber() {
         super(N_ROW_NUMBER, INTEGER.notNull());
@@ -85,7 +90,7 @@ final class RowNumber extends AbstractWindowFunction<Integer, RowNumber> impleme
     // -------------------------------------------------------------------------
 
     @Override
-    final RowNumber copyWindowFunction(Function<? super RowNumber, ? extends RowNumber> function) {
+    final QOM.RowNumber copyWindowFunction(Function<? super QOM.RowNumber, ? extends QOM.RowNumber> function) {
         return function.apply(new RowNumber());
     }
 

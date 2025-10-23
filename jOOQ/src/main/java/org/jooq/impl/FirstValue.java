@@ -52,7 +52,7 @@ import org.jooq.QueryPart;
  */
 final class FirstValue<T>
 extends
-    AbstractNullTreatmentWindowFunction<T, FirstValue<T>>
+    AbstractNullTreatmentWindowFunction<T, QOM.FirstValue<T>>
 implements
     QOM.FirstValue<T>
 {
@@ -101,7 +101,7 @@ implements
     }
 
     @Override
-    public final FirstValue<T> $field(Field<T> newField) {
+    public final QOM.FirstValue<T> $field(Field<T> newField) {
         if (newField == field)
             return this;
         else
@@ -109,7 +109,7 @@ implements
     }
 
     @Override
-    final FirstValue<T> copyAggregateFunction(Function<? super FirstValue<T>, ? extends FirstValue<T>> function) {
+    final QOM.FirstValue<T> copyAggregateFunction(Function<? super QOM.FirstValue<T>, ? extends QOM.FirstValue<T>> function) {
         return function.apply(new FirstValue<>(field));
     }
 

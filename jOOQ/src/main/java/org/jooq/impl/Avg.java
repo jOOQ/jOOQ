@@ -73,7 +73,7 @@ import java.util.function.Function;
 @SuppressWarnings({ "rawtypes", "unused" })
 final class Avg
 extends
-    AbstractAggregateFunction<BigDecimal, Avg>
+    AbstractAggregateFunction<BigDecimal, QOM.Avg>
 implements
     QOM.Avg
 {
@@ -111,12 +111,12 @@ implements
 
     @Override
     public final QOM.Avg $field(Field<? extends Number> newValue) {
-        return copyAggregateSpecification().apply((Avg) $constructor().apply(newValue, $distinct()));
+        return copyAggregateSpecification().apply($constructor().apply(newValue, $distinct()));
     }
 
     @Override
     public final QOM.Avg $distinct(boolean newValue) {
-        return copyAggregateSpecification().apply((Avg) $constructor().apply($field(), newValue));
+        return copyAggregateSpecification().apply($constructor().apply($field(), newValue));
     }
 
     public final Function2<? super Field<? extends Number>, ? super Boolean, ? extends QOM.Avg> $constructor() {
@@ -124,11 +124,9 @@ implements
     }
 
     @Override
-    final Avg copyAggregateFunction(Function<? super Avg, ? extends Avg> function) {
-        return function.apply((Avg) $constructor().apply($field(), $distinct()));
+    final QOM.Avg copyAggregateFunction(Function<? super QOM.Avg, ? extends QOM.Avg> function) {
+        return function.apply($constructor().apply($field(), $distinct()));
     }
-
-
 
 
 

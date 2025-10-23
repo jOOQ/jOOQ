@@ -48,7 +48,6 @@ import static org.jooq.impl.JSONEntryImpl.jsonCast;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_IS_NOT_NULL;
 import static org.jooq.impl.Keywords.K_NESTED;
-import static org.jooq.impl.Keywords.K_ORDER_BY;
 import static org.jooq.impl.Keywords.K_PATH;
 import static org.jooq.impl.Keywords.K_REPLACE;
 import static org.jooq.impl.Keywords.K_ROW;
@@ -97,7 +96,7 @@ import org.jooq.impl.QOM.JSONOnNull;
  */
 final class JSONObjectAgg<J>
 extends
-    AbstractAggregateFunction<J, JSONObjectAgg<J>>
+    AbstractAggregateFunction<J, QOM.JSONObjectAgg<J>>
 implements
     JSONObjectAggNullStep<J>,
     QOM.JSONObjectAgg<J>
@@ -430,13 +429,36 @@ implements
     }
 
     @Override
+    public final QOM.JSONObjectAgg<J> $arg1(JSONEntry<?> newArg1) {
+        return copyAggregateSpecification().apply($constructor().apply(newArg1));
+    }
+
+    @Override
     public final JSONOnNull $onNull() {
         return onNull;
     }
 
     @Override
+    public final QOM.JSONObjectAgg<J> $onNull(JSONOnNull newOnNull) {
+        return copy(c -> {
+            JSONObjectAgg<J> q = (JSONObjectAgg<J>) c;
+
+            q.onNull = newOnNull;
+        });
+    }
+
+    @Override
     public final DataType<?> $returning() {
         return returning;
+    }
+
+    @Override
+    public final QOM.JSONObjectAgg<J> $returning(DataType<?> newReturning) {
+        return copy(c -> {
+            JSONObjectAgg<J> q = (JSONObjectAgg<J>) c;
+
+            q.returning = newReturning;
+        });
     }
 
     @Override
@@ -450,11 +472,9 @@ implements
     }
 
     @Override
-    final JSONObjectAgg<J> copyAggregateFunction(Function<? super JSONObjectAgg<J>, ? extends JSONObjectAgg<J>> function) {
-        return function.apply((JSONObjectAgg<J>) $constructor().apply(entry));
+    final QOM.JSONObjectAgg<J> copyAggregateFunction(Function<? super QOM.JSONObjectAgg<J>, ? extends QOM.JSONObjectAgg<J>> function) {
+        return function.apply($constructor().apply(entry));
     }
-
-
 
 
 

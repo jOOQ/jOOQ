@@ -48,12 +48,14 @@ import org.jooq.Function1;
 import org.jooq.QueryPart;
 // ...
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * @author Lukas Eder
  */
 final class ArrayAgg<T>
 extends
-    AbstractAggregateFunction<T[], ArrayAgg<T>>
+    AbstractAggregateFunction<T[], QOM.ArrayAgg<T>>
 implements
     QOM.ArrayAgg<T>
 {
@@ -113,13 +115,18 @@ implements
     }
 
     @Override
+    public final QOM.ArrayAgg<T> $arg1(Field<T> newValue) {
+        return copyAggregateSpecification().apply($constructor().apply(newValue));
+    }
+
+    @Override
     public final Function1<? super Field<T>, ? extends QOM.ArrayAgg<T>> $constructor() {
         return f -> new ArrayAgg<>(distinct, f);
     }
 
     @Override
-    final ArrayAgg<T> copyAggregateFunction(Function<? super ArrayAgg<T>, ? extends ArrayAgg<T>> function) {
-        return function.apply((ArrayAgg<T>) $constructor().apply($arg1()));
+    final QOM.ArrayAgg<T> copyAggregateFunction(Function<? super QOM.ArrayAgg<T>, ? extends QOM.ArrayAgg<T>> function) {
+        return function.apply($constructor().apply($arg1()));
     }
 
 

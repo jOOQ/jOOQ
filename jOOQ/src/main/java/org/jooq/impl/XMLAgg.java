@@ -50,13 +50,15 @@ import org.jooq.QueryPart;
 import org.jooq.XML;
 import org.jooq.XMLAggOrderByStep;
 
+import org.jetbrains.annotations.NotNull;
+
 
 /**
  * @author Lukas Eder
  */
 final class XMLAgg
 extends
-    AbstractAggregateFunction<XML, XMLAgg>
+    AbstractAggregateFunction<XML, QOM.XMLAgg>
 implements
     XMLAggOrderByStep<XML>,
     QOM.XMLAgg
@@ -108,13 +110,18 @@ implements
     }
 
     @Override
+    public final QOM.XMLAgg $arg1(Field<XML> newArg1) {
+        return copyAggregateSpecification().apply($constructor().apply(newArg1));
+    }
+
+    @Override
     public final Function1<? super Field<XML>, ? extends QOM.XMLAgg> $constructor() {
         return f -> new XMLAgg(f);
     }
 
     @Override
-    final XMLAgg copyAggregateFunction(Function<? super XMLAgg, ? extends XMLAgg> function) {
-        return function.apply((XMLAgg) $constructor().apply($arg1()));
+    final QOM.XMLAgg copyAggregateFunction(Function<? super QOM.XMLAgg, ? extends QOM.XMLAgg> function) {
+        return function.apply($constructor().apply($arg1()));
     }
 
 

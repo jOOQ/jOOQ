@@ -77,13 +77,15 @@ import org.jooq.WindowPartitionByStep;
 import org.jooq.WindowRowsAndStep;
 import org.jooq.WindowRowsStep;
 import org.jooq.WindowSpecification;
-import org.jooq.impl.QOM.WindowFunction;
 import org.jooq.impl.Tools.ExtendedDataKey;
+
+import org.jetbrains.annotations.NotNull;
+
 
 /**
  * @author Lukas Eder
  */
-abstract class AbstractWindowFunction<T, Q extends AbstractWindowFunction<T, Q>>
+abstract class AbstractWindowFunction<T, Q extends QOM.WindowFunction<T, Q>>
 extends
     AbstractField<T>
 implements
@@ -92,7 +94,7 @@ implements
     WindowRowsStep<T>,
     WindowRowsAndStep<T>,
     WindowExcludeStep<T>,
-    QOM.WindowFunction<T>,
+    QOM.WindowFunction<T, Q>,
     ScopeMappable
 {
     private static final Set<SQLDialect> SUPPORT_NO_PARENS_WINDOW_REFERENCE = SQLDialect.supportedBy(CLICKHOUSE, DUCKDB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB);
@@ -515,11 +517,12 @@ implements
 
     final Function<? super Q, ? extends Q> copyWindowSpecification() {
         return c -> {
+            AbstractWindowFunction<?, ?> q = (AbstractWindowFunction<?, ?>) c;
 
             // [#19255] TODO: Copy also definitions and specifications
-            c.windowSpecification = windowSpecification;
-            c.windowDefinition = windowDefinition;
-            c.windowName = windowName;
+            q.windowSpecification = windowSpecification;
+            q.windowDefinition = windowDefinition;
+            q.windowName = windowName;
 
             return c;
         };
@@ -532,15 +535,18 @@ implements
         return windowSpecification;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public final AbstractWindowFunction<T, Q> $windowSpecification(WindowSpecification s) {
+    public final Q $windowSpecification(WindowSpecification s) {
         if (s == windowSpecification)
-            return this;
+            return (Q) this;
         else
             return copy(c -> {
-                c.windowDefinition = null;
-                c.windowSpecification = (WindowSpecificationImpl) s;
-                c.windowName = null;
+                AbstractWindowFunction<?, ?> q = (AbstractWindowFunction<?, ?>) c;
+
+                q.windowDefinition = null;
+                q.windowSpecification = (WindowSpecificationImpl) s;
+                q.windowName = null;
             });
     }
 
@@ -549,15 +555,18 @@ implements
         return windowDefinition;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public final AbstractWindowFunction<T, Q> $windowDefinition(WindowDefinition d) {
+    public final Q $windowDefinition(WindowDefinition d) {
         if (d == windowDefinition)
-            return this;
+            return (Q) this;
         else
             return copy(c -> {
-                c.windowDefinition = (WindowDefinitionImpl) d;
-                c.windowSpecification = null;
-                c.windowName = null;
+                AbstractWindowFunction<?, ?> q = (AbstractWindowFunction<?, ?>) c;
+
+                q.windowDefinition = (WindowDefinitionImpl) d;
+                q.windowSpecification = null;
+                q.windowName = null;
             });
     }
 
@@ -566,15 +575,18 @@ implements
         return windowName;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public final AbstractWindowFunction<T, Q> $windowName(Name n) {
+    public final Q $windowName(Name n) {
         if (n == windowName)
-            return this;
+            return (Q) this;
         else
             return copy(c -> {
-                c.windowDefinition = null;
-                c.windowSpecification = null;
-                c.windowName = n;
+                AbstractWindowFunction<?, ?> q = (AbstractWindowFunction<?, ?>) c;
+
+                q.windowDefinition = null;
+                q.windowSpecification = null;
+                q.windowName = n;
             });
     }
 

@@ -134,7 +134,13 @@ public interface AggregateFunction<T> extends AggregateFilterStep<T> {
     /**
      * Experimental query object model accessor method, see also {@link QOM}.
      * Subject to change in future jOOQ versions, use at your own risk.
+     *
+     * @deprecated - 3.21.0 - [#17911] - Use
+     *             {@link org.jooq.impl.QOM.AggregateFunction#$filterWhere()}
+     *             instead, as {@link QOM} accessor and mutator methods on DSL
+     *             types will be removed in the future.
      */
+    @Deprecated(forRemoval = true, since = "3.21")
     @Experimental
     @Nullable Condition $filterWhere();
 }

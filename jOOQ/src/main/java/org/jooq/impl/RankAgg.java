@@ -72,7 +72,7 @@ import java.util.function.Function;
 @SuppressWarnings({ "rawtypes", "unused" })
 final class RankAgg
 extends
-    AbstractAggregateFunction<Integer, RankAgg>
+    AbstractAggregateFunction<Integer, QOM.RankAgg>
 implements
     QOM.RankAgg
 {
@@ -112,7 +112,7 @@ implements
 
     @Override
     public final QOM.RankAgg $fields(Collection<? extends Field<?>> newValue) {
-        return copyAggregateSpecification().apply((RankAgg) $constructor().apply(newValue));
+        return copyAggregateSpecification().apply($constructor().apply(newValue));
     }
 
     public final Function1<? super Collection<? extends Field<?>>, ? extends QOM.RankAgg> $constructor() {
@@ -120,8 +120,8 @@ implements
     }
 
     @Override
-    final RankAgg copyAggregateFunction(Function<? super RankAgg, ? extends RankAgg> function) {
-        return function.apply((RankAgg) $constructor().apply($fields()));
+    final QOM.RankAgg copyAggregateFunction(Function<? super QOM.RankAgg, ? extends QOM.RankAgg> function) {
+        return function.apply($constructor().apply($fields()));
     }
 
 

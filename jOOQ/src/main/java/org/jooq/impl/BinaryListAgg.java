@@ -68,7 +68,7 @@ import org.jooq.SQLDialect;
  */
 final class BinaryListAgg
 extends
-    AbstractAggregateFunction<byte[], BinaryListAgg>
+    AbstractAggregateFunction<byte[], QOM.BinaryListAgg>
 implements
     QOM.BinaryListAgg
 {
@@ -153,8 +153,8 @@ implements
     }
 
     @Override
-    public final BinaryListAgg $arg1(Field<?> newArg1) {
-        return copyAggregateSpecification().apply((BinaryListAgg) $constructor().apply(newArg1, $arg2()));
+    public final QOM.BinaryListAgg $arg1(Field<?> newArg1) {
+        return copyAggregateSpecification().apply($constructor().apply(newArg1, $arg2()));
     }
 
     @SuppressWarnings("unchecked")
@@ -164,8 +164,8 @@ implements
     }
 
     @Override
-    public final BinaryListAgg $arg2(Field<byte[]> newArg2) {
-        return copyAggregateSpecification().apply((BinaryListAgg) $constructor().apply($arg1(), newArg2));
+    public final QOM.BinaryListAgg $arg2(Field<byte[]> newArg2) {
+        return copyAggregateSpecification().apply($constructor().apply($arg1(), newArg2));
     }
 
     @Override
@@ -174,8 +174,8 @@ implements
     }
 
     @Override
-    final BinaryListAgg copyAggregateFunction(Function<? super BinaryListAgg, ? extends BinaryListAgg> function) {
-        return function.apply((BinaryListAgg) $constructor().apply($arg1(), $arg2()));
+    final QOM.BinaryListAgg copyAggregateFunction(Function<? super QOM.BinaryListAgg, ? extends QOM.BinaryListAgg> function) {
+        return function.apply($constructor().apply($arg1(), $arg2()));
     }
 
 

@@ -42,7 +42,6 @@ import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
-// ...
 import static org.jooq.impl.DSL.arrayAgg;
 import static org.jooq.impl.DSL.arrayAggDistinct;
 import static org.jooq.impl.DSL.function;
@@ -110,7 +109,7 @@ import org.jooq.impl.QOM.JSONOnNull;
  */
 final class JSONArrayAgg<J>
 extends
-    AbstractAggregateFunction<J, JSONArrayAgg<J>>
+    AbstractAggregateFunction<J, QOM.JSONArrayAgg<J>>
 implements
     JSONArrayAggOrderByStep<J>,
     QOM.JSONArrayAgg<J>
@@ -468,13 +467,36 @@ implements
     }
 
     @Override
+    public final QOM.JSONArrayAgg<J> $arg1(Field<?> newArg1) {
+        return copyAggregateSpecification().apply($constructor().apply(newArg1));
+    }
+
+    @Override
     public final JSONOnNull $onNull() {
         return onNull;
     }
 
     @Override
+    public final QOM.JSONArrayAgg<J> $onNull(JSONOnNull newOnNull) {
+        return copy(c -> {
+            JSONArrayAgg<J> q = (JSONArrayAgg<J>) c;
+
+            q.onNull = newOnNull;
+        });
+    }
+
+    @Override
     public final DataType<?> $returning() {
         return returning;
+    }
+
+    @Override
+    public final QOM.JSONArrayAgg<J> $returning(DataType<?> newReturning) {
+        return copy(c -> {
+            JSONArrayAgg<J> q = (JSONArrayAgg<J>) c;
+
+            q.returning = newReturning;
+        });
     }
 
     @Override
@@ -488,8 +510,8 @@ implements
     }
 
     @Override
-    final JSONArrayAgg<J> copyAggregateFunction(Function<? super JSONArrayAgg<J>, ? extends JSONArrayAgg<J>> function) {
-        return function.apply((JSONArrayAgg<J>) $constructor().apply(getArgument(0)));
+    final QOM.JSONArrayAgg<J> copyAggregateFunction(Function<? super QOM.JSONArrayAgg<J>, ? extends QOM.JSONArrayAgg<J>> function) {
+        return function.apply($constructor().apply(getArgument(0)));
     }
 
 

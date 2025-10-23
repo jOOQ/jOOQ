@@ -79,7 +79,7 @@ import org.jooq.XMLAggOrderByStep;
  */
 final class MultisetAgg<R extends Record>
 extends
-    AbstractAggregateFunction<Result<R>, MultisetAgg<R>>
+    AbstractAggregateFunction<Result<R>, QOM.MultisetAgg<R>>
 implements
     QOM.MultisetAgg<R>
 {
@@ -189,7 +189,7 @@ implements
     }
 
     @Override
-    final MultisetAgg<R> copyAggregateFunction(Function<? super MultisetAgg<R>, ? extends MultisetAgg<R>> function) {
+    final QOM.MultisetAgg<R> copyAggregateFunction(Function<? super QOM.MultisetAgg<R>, ? extends QOM.MultisetAgg<R>> function) {
         return function.apply(new MultisetAgg<>(distinct, row));
     }
 

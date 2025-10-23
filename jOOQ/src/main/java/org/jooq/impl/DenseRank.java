@@ -50,7 +50,12 @@ import org.jooq.QueryPart;
 /**
  * @author Lukas Eder
  */
-final class DenseRank extends AbstractWindowFunction<Integer, DenseRank> implements QOM.DenseRank {
+final class DenseRank
+extends
+    AbstractWindowFunction<Integer, QOM.DenseRank>
+implements
+    QOM.DenseRank
+{
 
     DenseRank() {
         super(N_DENSE_RANK, INTEGER.notNull());
@@ -77,7 +82,7 @@ final class DenseRank extends AbstractWindowFunction<Integer, DenseRank> impleme
     // -------------------------------------------------------------------------
 
     @Override
-    final DenseRank copyWindowFunction(Function<? super DenseRank, ? extends DenseRank> function) {
+    final QOM.DenseRank copyWindowFunction(Function<? super QOM.DenseRank, ? extends QOM.DenseRank> function) {
         return function.apply(new DenseRank());
     }
 

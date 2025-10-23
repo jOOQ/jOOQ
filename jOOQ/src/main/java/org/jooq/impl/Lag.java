@@ -44,7 +44,12 @@ import org.jooq.Field;
 /**
  * @author Lukas Eder
  */
-final class Lag<T> extends AbstractLeadLag<T, Lag<T>> implements QOM.Lag<T> {
+final class Lag<T>
+extends
+    AbstractLeadLag<T, QOM.Lag<T>>
+implements
+    QOM.Lag<T>
+{
 
     Lag(Field<T> field, Field<Integer> offset, Field<T> defaultValue) {
         super(N_LAG, field, offset, defaultValue);

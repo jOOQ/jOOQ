@@ -73,7 +73,7 @@ import java.util.function.Function;
 @SuppressWarnings({ "rawtypes", "unused" })
 final class CovarPop
 extends
-    AbstractAggregateFunction<BigDecimal, CovarPop>
+    AbstractAggregateFunction<BigDecimal, QOM.CovarPop>
 implements
     QOM.CovarPop
 {
@@ -156,12 +156,12 @@ implements
 
     @Override
     public final QOM.CovarPop $y(Field<? extends Number> newValue) {
-        return copyAggregateSpecification().apply((CovarPop) $constructor().apply(newValue, $x()));
+        return copyAggregateSpecification().apply($constructor().apply(newValue, $x()));
     }
 
     @Override
     public final QOM.CovarPop $x(Field<? extends Number> newValue) {
-        return copyAggregateSpecification().apply((CovarPop) $constructor().apply($y(), newValue));
+        return copyAggregateSpecification().apply($constructor().apply($y(), newValue));
     }
 
     public final Function2<? super Field<? extends Number>, ? super Field<? extends Number>, ? extends QOM.CovarPop> $constructor() {
@@ -169,11 +169,9 @@ implements
     }
 
     @Override
-    final CovarPop copyAggregateFunction(Function<? super CovarPop, ? extends CovarPop> function) {
-        return function.apply((CovarPop) $constructor().apply($y(), $x()));
+    final QOM.CovarPop copyAggregateFunction(Function<? super QOM.CovarPop, ? extends QOM.CovarPop> function) {
+        return function.apply($constructor().apply($y(), $x()));
     }
-
-
 
 
 

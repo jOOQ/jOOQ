@@ -73,7 +73,7 @@ import java.util.function.Function;
 @SuppressWarnings({ "rawtypes", "unused" })
 final class Sum
 extends
-    AbstractAggregateFunction<BigDecimal, Sum>
+    AbstractAggregateFunction<BigDecimal, QOM.Sum>
 implements
     QOM.Sum
 {
@@ -111,12 +111,12 @@ implements
 
     @Override
     public final QOM.Sum $field(Field<? extends Number> newValue) {
-        return copyAggregateSpecification().apply((Sum) $constructor().apply(newValue, $distinct()));
+        return copyAggregateSpecification().apply($constructor().apply(newValue, $distinct()));
     }
 
     @Override
     public final QOM.Sum $distinct(boolean newValue) {
-        return copyAggregateSpecification().apply((Sum) $constructor().apply($field(), newValue));
+        return copyAggregateSpecification().apply($constructor().apply($field(), newValue));
     }
 
     public final Function2<? super Field<? extends Number>, ? super Boolean, ? extends QOM.Sum> $constructor() {
@@ -124,11 +124,9 @@ implements
     }
 
     @Override
-    final Sum copyAggregateFunction(Function<? super Sum, ? extends Sum> function) {
-        return function.apply((Sum) $constructor().apply($field(), $distinct()));
+    final QOM.Sum copyAggregateFunction(Function<? super QOM.Sum, ? extends QOM.Sum> function) {
+        return function.apply($constructor().apply($field(), $distinct()));
     }
-
-
 
 
 

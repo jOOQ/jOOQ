@@ -51,7 +51,7 @@ import org.jooq.UniqueKey;
  */
 final class CountTable
 extends
-    AbstractAggregateFunction<Integer, CountTable>
+    AbstractAggregateFunction<Integer, QOM.CountTable>
 implements
     QOM.CountTable
 {
@@ -126,7 +126,7 @@ implements
     }
 
     @Override
-    final CountTable copyAggregateFunction(Function<? super CountTable, ? extends CountTable> function) {
+    final QOM.CountTable copyAggregateFunction(Function<? super QOM.CountTable, ? extends QOM.CountTable> function) {
         return function.apply(new CountTable(table, distinct));
     }
 

@@ -72,7 +72,7 @@ import java.util.function.Function;
 @SuppressWarnings({ "rawtypes", "unused" })
 final class Count
 extends
-    AbstractAggregateFunction<Integer, Count>
+    AbstractAggregateFunction<Integer, QOM.Count>
 implements
     QOM.Count
 {
@@ -119,12 +119,12 @@ implements
 
     @Override
     public final QOM.Count $field(Field<?> newValue) {
-        return copyAggregateSpecification().apply((Count) $constructor().apply(newValue, $distinct()));
+        return copyAggregateSpecification().apply($constructor().apply(newValue, $distinct()));
     }
 
     @Override
     public final QOM.Count $distinct(boolean newValue) {
-        return copyAggregateSpecification().apply((Count) $constructor().apply($field(), newValue));
+        return copyAggregateSpecification().apply($constructor().apply($field(), newValue));
     }
 
     public final Function2<? super Field<?>, ? super Boolean, ? extends QOM.Count> $constructor() {
@@ -132,11 +132,9 @@ implements
     }
 
     @Override
-    final Count copyAggregateFunction(Function<? super Count, ? extends Count> function) {
-        return function.apply((Count) $constructor().apply($field(), $distinct()));
+    final QOM.Count copyAggregateFunction(Function<? super QOM.Count, ? extends QOM.Count> function) {
+        return function.apply($constructor().apply($field(), $distinct()));
     }
-
-
 
 
 

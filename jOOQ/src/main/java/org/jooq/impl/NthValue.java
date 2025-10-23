@@ -59,7 +59,7 @@ import org.jooq.impl.QOM.FromFirstOrLast;
  */
 final class NthValue<T>
 extends
-    AbstractNullTreatmentWindowFunction<T, NthValue<T>>
+    AbstractNullTreatmentWindowFunction<T, QOM.NthValue<T>>
 implements
     WindowFromFirstLastStep<T>,
     QOM.NthValue<T> {
@@ -160,7 +160,7 @@ implements
     }
 
     @Override
-    public final NthValue<T> $field(Field<T> newField) {
+    public final QOM.NthValue<T> $field(Field<T> newField) {
         if (newField == field)
             return this;
         else
@@ -173,7 +173,7 @@ implements
     }
 
     @Override
-    public final NthValue<T> $offset(Field<Integer> newOffset) {
+    public final QOM.NthValue<T> $offset(Field<Integer> newOffset) {
         if (newOffset == offset)
             return this;
         else
@@ -186,17 +186,19 @@ implements
     }
 
     @Override
-    public final NthValue<T> $fromFirstOrLast(FromFirstOrLast f) {
+    public final QOM.NthValue<T> $fromFirstOrLast(FromFirstOrLast f) {
         if (f == fromFirstOrLast)
             return this;
         else
             return copy(c -> {
-                c.fromFirstOrLast = f;
+                NthValue<?> q = (NthValue<?>) c;
+
+                q.fromFirstOrLast = f;
             });
     }
 
     @Override
-    final NthValue<T> copyAggregateFunction(Function<? super NthValue<T>, ? extends NthValue<T>> function) {
+    final QOM.NthValue<T> copyAggregateFunction(Function<? super QOM.NthValue<T>, ? extends QOM.NthValue<T>> function) {
         NthValue<T> result = new NthValue<>(field, offset);
         result.fromFirstOrLast = fromFirstOrLast;
         return function.apply(result);

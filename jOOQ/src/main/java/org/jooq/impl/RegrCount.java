@@ -73,7 +73,7 @@ import java.util.function.Function;
 @SuppressWarnings({ "rawtypes", "unused" })
 final class RegrCount
 extends
-    AbstractAggregateFunction<BigDecimal, RegrCount>
+    AbstractAggregateFunction<BigDecimal, QOM.RegrCount>
 implements
     QOM.RegrCount
 {
@@ -139,12 +139,12 @@ implements
 
     @Override
     public final QOM.RegrCount $y(Field<? extends Number> newValue) {
-        return copyAggregateSpecification().apply((RegrCount) $constructor().apply(newValue, $x()));
+        return copyAggregateSpecification().apply($constructor().apply(newValue, $x()));
     }
 
     @Override
     public final QOM.RegrCount $x(Field<? extends Number> newValue) {
-        return copyAggregateSpecification().apply((RegrCount) $constructor().apply($y(), newValue));
+        return copyAggregateSpecification().apply($constructor().apply($y(), newValue));
     }
 
     public final Function2<? super Field<? extends Number>, ? super Field<? extends Number>, ? extends QOM.RegrCount> $constructor() {
@@ -152,11 +152,9 @@ implements
     }
 
     @Override
-    final RegrCount copyAggregateFunction(Function<? super RegrCount, ? extends RegrCount> function) {
-        return function.apply((RegrCount) $constructor().apply($y(), $x()));
+    final QOM.RegrCount copyAggregateFunction(Function<? super QOM.RegrCount, ? extends QOM.RegrCount> function) {
+        return function.apply($constructor().apply($y(), $x()));
     }
-
-
 
 
 

@@ -114,6 +114,7 @@ import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Name;
+import org.jooq.OptionallyOrderedAggregateFunction;
 import org.jooq.OrderField;
 import org.jooq.OrderedAggregateFunction;
 // ...
@@ -129,13 +130,13 @@ import org.jooq.impl.QOM.UnmodifiableList;
 /**
  * @author Lukas Eder
  */
-abstract class AbstractAggregateFunction<T, Q extends AbstractAggregateFunction<T, Q>>
+abstract class AbstractAggregateFunction<T, Q extends QOM.AggregateFunction<T, Q>>
 extends
     AbstractWindowFunction<T, Q>
 implements
-    OrderedAggregateFunction<T>,
+    OptionallyOrderedAggregateFunction<T>,
     ArrayAggOrderByStep<T>,
-    QOM.AggregateFunction<T>
+    QOM.AggregateFunction<T, Q>
 {
 
 
@@ -546,24 +547,24 @@ implements
 
     @SuppressWarnings("unchecked")
     @Override
-    public /* non-final */ Q orderBy(OrderField<?>... fields) {
+    public /* non-final */ AbstractAggregateFunction<T, Q> orderBy(OrderField<?>... fields) {
         if (windowSpecification != null)
             super.orderBy(fields);
         else
             withinGroupOrderBy(fields);
 
-        return (Q) this;
+        return this;
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public /* non-final */ Q orderBy(Collection<? extends OrderField<?>> fields) {
+    public /* non-final */ AbstractAggregateFunction<T, Q> orderBy(Collection<? extends OrderField<?>> fields) {
         if (windowSpecification != null)
             windowSpecification.orderBy(fields);
         else
             withinGroupOrderBy(fields);
 
-        return (Q) this;
+        return this;
     }
 
     final Condition f(Condition c) {
@@ -662,15 +663,16 @@ implements
 
     final Function<? super Q, ? extends Q> copyAggregateSpecification() {
         return copyWindowSpecification().andThen(c -> {
+            AbstractAggregateFunction<?, ?> q = (AbstractAggregateFunction<?, ?>) c;
 
             // [#19255] Arguments can be expected to have already been copied by the copyAggregateFunction() utility, in subclasses.
             if (filter.hasWhere())
-                c.filter.addConditions(filter.getWhere());
+                q.filter.addConditions(filter.getWhere());
             if (!isEmpty(withinGroupOrderBy))
-                c.withinGroupOrderBy = new SortFieldList(withinGroupOrderBy);
+                q.withinGroupOrderBy = new SortFieldList(withinGroupOrderBy);
             if (!isEmpty(keepDenseRankOrderBy))
-                c.keepDenseRankOrderBy = new SortFieldList(keepDenseRankOrderBy);
-            c.first = first;
+                q.keepDenseRankOrderBy = new SortFieldList(keepDenseRankOrderBy);
+            q.first = first;
 
             return c;
         });
@@ -694,7 +696,9 @@ implements
             return (Q) this;
         else
             return copy(c -> {
-                c.filter.setWhere(condition);
+                AbstractAggregateFunction<?, ?> q = (AbstractAggregateFunction<?, ?>) c;
+
+                q.filter.setWhere(condition);
             });
     }
 
@@ -710,10 +714,12 @@ implements
             return (Q) this;
         else
             return copy(c -> {
-                c.withinGroupOrderBy = null;
+                AbstractAggregateFunction<?, ?> q = (AbstractAggregateFunction<?, ?>) c;
+
+                q.withinGroupOrderBy = null;
 
                 if (!isEmpty(newOrderBy))
-                    c.withinGroupOrderBy = new SortFieldList(newOrderBy);
+                    q.withinGroupOrderBy = new SortFieldList(newOrderBy);
             });
     }
 

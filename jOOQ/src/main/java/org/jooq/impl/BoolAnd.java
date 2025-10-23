@@ -72,7 +72,7 @@ import java.util.function.Function;
 @SuppressWarnings({ "unused" })
 final class BoolAnd
 extends
-    AbstractAggregateFunction<Boolean, BoolAnd>
+    AbstractAggregateFunction<Boolean, QOM.BoolAnd>
 implements
     QOM.BoolAnd
 {
@@ -146,7 +146,7 @@ implements
 
     @Override
     public final QOM.BoolAnd $condition(Condition newValue) {
-        return copyAggregateSpecification().apply((BoolAnd) $constructor().apply(newValue));
+        return copyAggregateSpecification().apply($constructor().apply(newValue));
     }
 
     public final Function1<? super Condition, ? extends QOM.BoolAnd> $constructor() {
@@ -154,11 +154,9 @@ implements
     }
 
     @Override
-    final BoolAnd copyAggregateFunction(Function<? super BoolAnd, ? extends BoolAnd> function) {
-        return function.apply((BoolAnd) $constructor().apply($condition()));
+    final QOM.BoolAnd copyAggregateFunction(Function<? super QOM.BoolAnd, ? extends QOM.BoolAnd> function) {
+        return function.apply($constructor().apply($condition()));
     }
-
-
 
 
 

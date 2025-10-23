@@ -149,6 +149,7 @@ import org.jooq.WindowSpecification;
 import org.jooq.XML;
 import org.jooq.XMLAttributes;
 import org.jooq.conf.Settings;
+import org.jooq.impl.QOM.UnmodifiableList;
 import org.jooq.types.DayToSecond;
 // ...
 
@@ -1331,7 +1332,7 @@ public final class QOM {
 
     public /*sealed*/ interface RatioToReport
         extends
-            AggregateFunction<BigDecimal>
+            AggregateFunction<BigDecimal, RatioToReport>
         /*permits
             RatioToReport*/
     {
@@ -1340,17 +1341,19 @@ public final class QOM {
 
     public /*sealed*/ interface Mode<T>
         extends
-            AggregateFunction<T>,
+            OrderedAggregateFunction<T, Mode<T>>,
             UOperator1<Field<T>, Mode<T>>
         /*permits
             Mode*/
     {
         @NotNull default Field<T> $field() { return $arg1(); }
+        @CheckReturnValue
+        @NotNull default Mode<T> $field(Field<T> field) { return $arg1(field); }
     }
 
     public /*sealed*/ interface MultisetAgg<R extends Record>
         extends
-            AggregateFunction<Result<R>>
+            OrderedAggregateFunction<Result<R>, MultisetAgg<R>>
         /*permits
             MultisetAgg*/
     {
@@ -1359,18 +1362,20 @@ public final class QOM {
 
     public /*sealed*/ interface ArrayAgg<T>
         extends
-            AggregateFunction<T[]>,
+            OrderedAggregateFunction<T[], ArrayAgg<T>>,
             UOperator1<Field<T>, ArrayAgg<T>>
         /*permits
             ArrayAgg*/
     {
-        @NotNull default Field<T> $field() { return $arg1(); }
         boolean $distinct();
+        @NotNull default Field<T> $field() { return $arg1(); }
+        @CheckReturnValue
+        @NotNull default ArrayAgg<T> $field(Field<T> field) { return $arg1(field); }
     }
 
     public /*sealed*/ interface ListAgg
         extends
-            AggregateFunction<String>,
+            OrderedAggregateFunction<String, ListAgg>,
             UOperator2<Field<?>, Field<String>, ListAgg>
         /*permits
             ListAgg*/
@@ -1382,14 +1387,11 @@ public final class QOM {
         @Nullable default Field<String> $separator() { return $arg2(); }
         @CheckReturnValue
         @NotNull default ListAgg $separator(Field<String> separator) { return $arg2(separator); }
-        @NotNull  UnmodifiableList<? extends SortField<?>> $withinGroupOrderBy();
-        @CheckReturnValue
-        @NotNull ListAgg $withinGroupOrderBy(Collection<? extends SortField<?>> orderBy);
     }
 
     public /*sealed*/ interface BinaryListAgg
         extends
-            AggregateFunction<byte[]>,
+            OrderedAggregateFunction<byte[], BinaryListAgg>,
             UOperator2<Field<?>, Field<byte[]>, BinaryListAgg>
         /*permits
             BinaryListAgg*/
@@ -1401,48 +1403,60 @@ public final class QOM {
         @Nullable default Field<byte[]> $separator() { return $arg2(); }
         @CheckReturnValue
         @NotNull default BinaryListAgg $separator(Field<byte[]> separator) { return $arg2(separator); }
-        @NotNull  UnmodifiableList<? extends SortField<?>> $withinGroupOrderBy();
-        @CheckReturnValue
-        @NotNull BinaryListAgg $withinGroupOrderBy(Collection<? extends SortField<?>> orderBy);
     }
 
     public /*sealed*/ interface XMLAgg
         extends
-            AggregateFunction<XML>,
+            OrderedAggregateFunction<XML, XMLAgg>,
             UOperator1<Field<XML>, XMLAgg>
         /*permits
             XMLAgg*/
     {
         @NotNull default Field<XML> $field() { return $arg1(); }
+        @CheckReturnValue
+        @NotNull default XMLAgg $field(Field<XML> field) { return $arg1(field); }
     }
 
     public /*sealed*/ interface JSONArrayAgg<J>
         extends
-            AggregateFunction<J>,
+            OrderedAggregateFunction<J, JSONArrayAgg<J>>,
             UOperator1<org.jooq.Field<?>, JSONArrayAgg<J>>
         /*permits
             JSONArrayAgg*/
     {
-        @NotNull default Field<?> $field() { return $arg1(); }
         boolean $distinct();
+        @NotNull default Field<?> $field() { return $arg1(); }
+        @CheckReturnValue
+        @NotNull default JSONArrayAgg<J> $field(Field<?> field) { return $arg1(field); }
         @Nullable JSONOnNull $onNull();
+        @CheckReturnValue
+        @NotNull JSONArrayAgg<J> $onNull(JSONOnNull onNull);
         @Nullable DataType<?> $returning();
+        @CheckReturnValue
+        @NotNull JSONArrayAgg<J> $returning(DataType<?> returning);
     }
 
     public /*sealed*/ interface JSONObjectAgg<J>
         extends
-            AggregateFunction<J>,
+            AggregateFunction<J, JSONObjectAgg<J>>,
             UOperator1<JSONEntry<?>, JSONObjectAgg<J>>
-        /*permits JSONObjectAgg*/
+        /*permits
+            JSONObjectAgg*/
     {
         @NotNull default JSONEntry<?> $entry() { return $arg1(); }
+        @CheckReturnValue
+        @NotNull default JSONObjectAgg<J> $entry(JSONEntry<?> entry) { return $arg1(entry); }
         @Nullable JSONOnNull $onNull();
+        @CheckReturnValue
+        @NotNull JSONObjectAgg<J> $onNull(JSONOnNull onNull);
         @Nullable DataType<?> $returning();
+        @CheckReturnValue
+        @NotNull JSONObjectAgg<J> $returning(DataType<?> returning);
     }
 
     public /*sealed*/ interface CountTable
         extends
-            AggregateFunction<Integer>
+            AggregateFunction<Integer, CountTable>
         /*permits
             CountTable*/
     {
@@ -1464,141 +1478,169 @@ public final class QOM {
 
 
 
-    public interface AggregateFunction<T>
+    /**
+     * An aggregate function with an aggregate <code>ORDER BY</code> clause.
+     */
+    public interface OrderedAggregateFunction<T, Q extends OrderedAggregateFunction<T, Q>>
         extends
-            org.jooq.AggregateFunction<T>
+            AggregateFunction<T, Q>
+    {
+        @NotNull UnmodifiableList<? extends SortField<?>> $withinGroupOrderBy();
+        @CheckReturnValue
+        @NotNull Q $withinGroupOrderBy(Collection<? extends SortField<?>> orderBy);
+    }
+
+    public interface AggregateFunction<T, Q extends AggregateFunction<T, Q>>
+        extends
+            org.jooq.AggregateFunction<T>,
+            WindowFunction<T, Q>
     {
         @Override
         @Nullable Condition $filterWhere();
-        @NotNull  AggregateFunction<T> $filterWhere(Condition condition);
+        @CheckReturnValue
+        @NotNull  Q $filterWhere(Condition condition);
     }
 
-    public interface WindowFunction<T>
+    public interface NullTreatmentWindowFunction<T, Q extends NullTreatmentWindowFunction<T, Q>>
+        extends
+            WindowFunction<T, Q>
+    {
+        @Nullable NullTreatment $nullTreatment();
+        @CheckReturnValue
+        @NotNull  Q $nullTreatment(NullTreatment nullTreatment);
+    }
+
+    public interface WindowFunction<T, Q extends WindowFunction<T, Q>>
         extends
             org.jooq.Field<T>
     {
         @Nullable WindowSpecification $windowSpecification();
-        @NotNull  WindowFunction<T> $windowSpecification(WindowSpecification windowSpecification);
+        @CheckReturnValue
+        @NotNull  Q $windowSpecification(WindowSpecification windowSpecification);
         @Nullable WindowDefinition $windowDefinition();
-        @NotNull  WindowFunction<T> $windowDefinition(WindowDefinition windowDefinition);
+        @CheckReturnValue
+        @NotNull  Q $windowDefinition(WindowDefinition windowDefinition);
         @Nullable Name $windowName();
-        @NotNull  WindowFunction<T> $windowName(Name name);
+        @CheckReturnValue
+        @NotNull  Q $windowName(Name name);
     }
 
     public /*sealed*/ interface RowNumber
         extends
-            WindowFunction<Integer>
+            WindowFunction<Integer, RowNumber>
         /*permits
             RowNumber*/
     {}
 
     public /*sealed*/ interface Rank
         extends
-            WindowFunction<Integer>
+            WindowFunction<Integer, Rank>
         /*permits
             Rank*/
     {}
 
     public /*sealed*/ interface DenseRank
         extends
-            WindowFunction<Integer>
+            WindowFunction<Integer, DenseRank>
         /*permits
             DenseRank*/
     {}
 
     public /*sealed*/ interface PercentRank
         extends
-            WindowFunction<BigDecimal>
+            WindowFunction<BigDecimal, PercentRank>
         /*permits
             PercentRank*/
     {}
 
     public /*sealed*/ interface CumeDist
         extends
-            WindowFunction<BigDecimal>
+            WindowFunction<BigDecimal, CumeDist>
         /*permits
             CumeDist*/
     {}
 
     public /*sealed*/ interface Ntile
         extends
-            WindowFunction<Integer>
+            WindowFunction<Integer, Ntile>
         /*permits Ntile*/
     {
         @NotNull Field<Integer> $tiles();
+        @CheckReturnValue
         @NotNull Ntile $tiles(Field<Integer> tiles);
     }
 
     public /*sealed*/ interface Lead<T>
         extends
-            WindowFunction<T>
+            NullTreatmentWindowFunction<T, Lead<T>>
         /*permits
             Lead*/
     {
-        @NotNull Field<T> $field();
-        @NotNull Lead<T> $field(Field<T> field);
+        @NotNull  Field<T> $field();
+        @CheckReturnValue
+        @NotNull  Lead<T> $field(Field<T> field);
         @Nullable Field<Integer> $offset();
-        @NotNull Lead<T> $offset(Field<Integer> offset);
+        @CheckReturnValue
+        @NotNull  Lead<T> $offset(Field<Integer> offset);
         @Nullable Field<T> $defaultValue();
-        @NotNull Lead<T> $defaultValue(Field<T> defaultValue);
-        @Nullable NullTreatment $nullTreatment();
-        @NotNull Lead<T> $nullTreatment(NullTreatment nullTreatment);
+        @CheckReturnValue
+        @NotNull  Lead<T> $defaultValue(Field<T> defaultValue);
     }
 
     public /*sealed*/ interface Lag<T>
         extends
-            WindowFunction<T>
+            NullTreatmentWindowFunction<T, Lag<T>>
         /*permits
             Lag*/
     {
-        @NotNull Field<T> $field();
-        @NotNull Lag<T> $field(Field<T> field);
+        @NotNull  Field<T> $field();
+        @CheckReturnValue
+        @NotNull  Lag<T> $field(Field<T> field);
         @Nullable Field<Integer> $offset();
-        @NotNull Lag<T> $offset(Field<Integer> offset);
+        @CheckReturnValue
+        @NotNull  Lag<T> $offset(Field<Integer> offset);
         @Nullable Field<T> $defaultValue();
-        @NotNull Lag<T> $defaultValue(Field<T> defaultValue);
-        @Nullable NullTreatment $nullTreatment();
-        @NotNull Lag<T> $nullTreatment(NullTreatment nullTreatment);
+        @CheckReturnValue
+        @NotNull  Lag<T> $defaultValue(Field<T> defaultValue);
     }
 
     public /*sealed*/ interface FirstValue<T>
         extends
-            WindowFunction<T>
+            NullTreatmentWindowFunction<T, FirstValue<T>>
         /*permits
             FirstValue*/
     {
-        @NotNull Field<T> $field();
-        @NotNull FirstValue<T> $field(Field<T> field);
-        @Nullable NullTreatment $nullTreatment();
-        @NotNull FirstValue<T> $nullTreatment(NullTreatment nullTreatment);
+        @NotNull  Field<T> $field();
+        @CheckReturnValue
+        @NotNull  FirstValue<T> $field(Field<T> field);
     }
 
     public /*sealed*/ interface LastValue<T>
         extends
-            WindowFunction<T>
+            NullTreatmentWindowFunction<T, LastValue<T>>
         /*permits
             LastValue*/
     {
-        @NotNull Field<T> $field();
-        @NotNull LastValue<T> $field(Field<T> field);
-        @Nullable NullTreatment $nullTreatment();
-        @NotNull LastValue<T> $nullTreatment(NullTreatment nullTreatment);
+        @NotNull  Field<T> $field();
+        @CheckReturnValue
+        @NotNull  LastValue<T> $field(Field<T> field);
     }
 
     public /*sealed*/ interface NthValue<T>
         extends
-            WindowFunction<T>
+            NullTreatmentWindowFunction<T, NthValue<T>>
         /*permits
             NthValue*/
     {
-        @NotNull Field<T> $field();
-        @NotNull NthValue<T> $field(Field<T> field);
-        @NotNull Field<Integer> $offset();
-        @NotNull NthValue<T> $offset(Field<Integer> offset);
+        @NotNull  Field<T> $field();
+        @CheckReturnValue
+        @NotNull  NthValue<T> $field(Field<T> field);
+        @NotNull  Field<Integer> $offset();
+        @CheckReturnValue
+        @NotNull  NthValue<T> $offset(Field<Integer> offset);
         @Nullable FromFirstOrLast $fromFirstOrLast();
-        @NotNull NthValue<T> $fromFirstOrLast(FromFirstOrLast fromFirstOrLast);
-        @Nullable NullTreatment $nullTreatment();
-        @NotNull NthValue<T> $nullTreatment(NullTreatment nullTreatment);
+        @CheckReturnValue
+        @NotNull  NthValue<T> $fromFirstOrLast(FromFirstOrLast fromFirstOrLast);
     }
 
     // -------------------------------------------------------------------------
@@ -8459,7 +8501,7 @@ public final class QOM {
      */
     public /*sealed*/ interface AnyValue<T>
         extends
-            AggregateFunction<T>
+            AggregateFunction<T, AnyValue<T>>
         //permits
         //    AnyValue
     {
@@ -8473,7 +8515,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Avg
         extends
-            AggregateFunction<BigDecimal>
+            AggregateFunction<BigDecimal, Avg>
         //permits
         //    Avg
     {
@@ -8492,7 +8534,7 @@ public final class QOM {
      */
     public /*sealed*/ interface BitAndAgg<T extends Number>
         extends
-            AggregateFunction<T>
+            AggregateFunction<T, BitAndAgg<T>>
         //permits
         //    BitAndAgg
     {
@@ -8508,7 +8550,7 @@ public final class QOM {
      */
     public /*sealed*/ interface BitOrAgg<T extends Number>
         extends
-            AggregateFunction<T>
+            AggregateFunction<T, BitOrAgg<T>>
         //permits
         //    BitOrAgg
     {
@@ -8524,7 +8566,7 @@ public final class QOM {
      */
     public /*sealed*/ interface BitXorAgg<T extends Number>
         extends
-            AggregateFunction<T>
+            AggregateFunction<T, BitXorAgg<T>>
         //permits
         //    BitXorAgg
     {
@@ -8540,7 +8582,7 @@ public final class QOM {
      */
     public /*sealed*/ interface BitNandAgg<T extends Number>
         extends
-            AggregateFunction<T>
+            AggregateFunction<T, BitNandAgg<T>>
         //permits
         //    BitNandAgg
     {
@@ -8556,7 +8598,7 @@ public final class QOM {
      */
     public /*sealed*/ interface BitNorAgg<T extends Number>
         extends
-            AggregateFunction<T>
+            AggregateFunction<T, BitNorAgg<T>>
         //permits
         //    BitNorAgg
     {
@@ -8572,7 +8614,7 @@ public final class QOM {
      */
     public /*sealed*/ interface BitXNorAgg<T extends Number>
         extends
-            AggregateFunction<T>
+            AggregateFunction<T, BitXNorAgg<T>>
         //permits
         //    BitXNorAgg
     {
@@ -8586,7 +8628,7 @@ public final class QOM {
      */
     public /*sealed*/ interface BoolAnd
         extends
-            AggregateFunction<Boolean>
+            AggregateFunction<Boolean, BoolAnd>
         //permits
         //    BoolAnd
     {
@@ -8600,7 +8642,7 @@ public final class QOM {
      */
     public /*sealed*/ interface BoolOr
         extends
-            AggregateFunction<Boolean>
+            AggregateFunction<Boolean, BoolOr>
         //permits
         //    BoolOr
     {
@@ -8619,7 +8661,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Corr
         extends
-            AggregateFunction<BigDecimal>
+            AggregateFunction<BigDecimal, Corr>
         //permits
         //    Corr
     {
@@ -8636,7 +8678,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Count
         extends
-            AggregateFunction<Integer>
+            AggregateFunction<Integer, Count>
         //permits
         //    Count
     {
@@ -8658,7 +8700,7 @@ public final class QOM {
      */
     public /*sealed*/ interface CovarSamp
         extends
-            AggregateFunction<BigDecimal>
+            AggregateFunction<BigDecimal, CovarSamp>
         //permits
         //    CovarSamp
     {
@@ -8680,7 +8722,7 @@ public final class QOM {
      */
     public /*sealed*/ interface CovarPop
         extends
-            AggregateFunction<BigDecimal>
+            AggregateFunction<BigDecimal, CovarPop>
         //permits
         //    CovarPop
     {
@@ -8697,7 +8739,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Max<T>
         extends
-            AggregateFunction<T>
+            AggregateFunction<T, Max<T>>
         //permits
         //    Max
     {
@@ -8716,8 +8758,7 @@ public final class QOM {
      */
     public /*sealed*/ interface MaxBy<T>
         extends
-            QueryPart,
-            OptionallyOrderedAggregateFunction<T>
+            OrderedAggregateFunction<T, MaxBy<T>>
         //permits
         //    MaxBy
     {
@@ -8750,7 +8791,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Median
         extends
-            AggregateFunction<BigDecimal>
+            AggregateFunction<BigDecimal, Median>
         //permits
         //    Median
     {
@@ -8764,7 +8805,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Min<T>
         extends
-            AggregateFunction<T>
+            AggregateFunction<T, Min<T>>
         //permits
         //    Min
     {
@@ -8783,8 +8824,7 @@ public final class QOM {
      */
     public /*sealed*/ interface MinBy<T>
         extends
-            QueryPart,
-            OptionallyOrderedAggregateFunction<T>
+            OrderedAggregateFunction<T, MinBy<T>>
         //permits
         //    MinBy
     {
@@ -8829,7 +8869,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Product
         extends
-            AggregateFunction<BigDecimal>
+            AggregateFunction<BigDecimal, Product>
         //permits
         //    Product
     {
@@ -8848,8 +8888,7 @@ public final class QOM {
      */
     public /*sealed*/ interface RankAgg
         extends
-            QueryPart,
-            OrderedAggregateFunction<Integer>
+            OrderedAggregateFunction<Integer, RankAgg>
         //permits
         //    RankAgg
     {
@@ -8865,8 +8904,7 @@ public final class QOM {
      */
     public /*sealed*/ interface DenseRankAgg
         extends
-            QueryPart,
-            OrderedAggregateFunction<Integer>
+            OrderedAggregateFunction<Integer, DenseRankAgg>
         //permits
         //    DenseRankAgg
     {
@@ -8882,8 +8920,7 @@ public final class QOM {
      */
     public /*sealed*/ interface PercentRankAgg
         extends
-            QueryPart,
-            OrderedAggregateFunction<BigDecimal>
+            OrderedAggregateFunction<BigDecimal, PercentRankAgg>
         //permits
         //    PercentRankAgg
     {
@@ -8899,8 +8936,7 @@ public final class QOM {
      */
     public /*sealed*/ interface CumeDistAgg
         extends
-            QueryPart,
-            OrderedAggregateFunction<BigDecimal>
+            OrderedAggregateFunction<BigDecimal, CumeDistAgg>
         //permits
         //    CumeDistAgg
     {
@@ -8916,8 +8952,7 @@ public final class QOM {
      */
     public /*sealed*/ interface PercentileCont
         extends
-            QueryPart,
-            OrderedAggregateFunction<BigDecimal>
+            OrderedAggregateFunction<BigDecimal, PercentileCont>
         //permits
         //    PercentileCont
     {
@@ -8933,8 +8968,7 @@ public final class QOM {
      */
     public /*sealed*/ interface PercentileDisc
         extends
-            QueryPart,
-            OrderedAggregateFunction<BigDecimal>
+            OrderedAggregateFunction<BigDecimal, PercentileDisc>
         //permits
         //    PercentileDisc
     {
@@ -8953,7 +8987,7 @@ public final class QOM {
      */
     public /*sealed*/ interface RegrAvgX
         extends
-            AggregateFunction<BigDecimal>
+            AggregateFunction<BigDecimal, RegrAvgX>
         //permits
         //    RegrAvgX
     {
@@ -8975,7 +9009,7 @@ public final class QOM {
      */
     public /*sealed*/ interface RegrAvgY
         extends
-            AggregateFunction<BigDecimal>
+            AggregateFunction<BigDecimal, RegrAvgY>
         //permits
         //    RegrAvgY
     {
@@ -8997,7 +9031,7 @@ public final class QOM {
      */
     public /*sealed*/ interface RegrCount
         extends
-            AggregateFunction<BigDecimal>
+            AggregateFunction<BigDecimal, RegrCount>
         //permits
         //    RegrCount
     {
@@ -9019,7 +9053,7 @@ public final class QOM {
      */
     public /*sealed*/ interface RegrIntercept
         extends
-            AggregateFunction<BigDecimal>
+            AggregateFunction<BigDecimal, RegrIntercept>
         //permits
         //    RegrIntercept
     {
@@ -9041,7 +9075,7 @@ public final class QOM {
      */
     public /*sealed*/ interface RegrR2
         extends
-            AggregateFunction<BigDecimal>
+            AggregateFunction<BigDecimal, RegrR2>
         //permits
         //    RegrR2
     {
@@ -9063,7 +9097,7 @@ public final class QOM {
      */
     public /*sealed*/ interface RegrSlope
         extends
-            AggregateFunction<BigDecimal>
+            AggregateFunction<BigDecimal, RegrSlope>
         //permits
         //    RegrSlope
     {
@@ -9085,7 +9119,7 @@ public final class QOM {
      */
     public /*sealed*/ interface RegrSxx
         extends
-            AggregateFunction<BigDecimal>
+            AggregateFunction<BigDecimal, RegrSxx>
         //permits
         //    RegrSxx
     {
@@ -9107,7 +9141,7 @@ public final class QOM {
      */
     public /*sealed*/ interface RegrSxy
         extends
-            AggregateFunction<BigDecimal>
+            AggregateFunction<BigDecimal, RegrSxy>
         //permits
         //    RegrSxy
     {
@@ -9129,7 +9163,7 @@ public final class QOM {
      */
     public /*sealed*/ interface RegrSyy
         extends
-            AggregateFunction<BigDecimal>
+            AggregateFunction<BigDecimal, RegrSyy>
         //permits
         //    RegrSyy
     {
@@ -9151,7 +9185,7 @@ public final class QOM {
      */
     public /*sealed*/ interface StddevPop
         extends
-            AggregateFunction<BigDecimal>
+            AggregateFunction<BigDecimal, StddevPop>
         //permits
         //    StddevPop
     {
@@ -9170,7 +9204,7 @@ public final class QOM {
      */
     public /*sealed*/ interface StddevSamp
         extends
-            AggregateFunction<BigDecimal>
+            AggregateFunction<BigDecimal, StddevSamp>
         //permits
         //    StddevSamp
     {
@@ -9184,7 +9218,7 @@ public final class QOM {
      */
     public /*sealed*/ interface Sum
         extends
-            AggregateFunction<BigDecimal>
+            AggregateFunction<BigDecimal, Sum>
         //permits
         //    Sum
     {
@@ -9206,7 +9240,7 @@ public final class QOM {
      */
     public /*sealed*/ interface VarPop
         extends
-            AggregateFunction<BigDecimal>
+            AggregateFunction<BigDecimal, VarPop>
         //permits
         //    VarPop
     {
@@ -9225,7 +9259,7 @@ public final class QOM {
      */
     public /*sealed*/ interface VarSamp
         extends
-            AggregateFunction<BigDecimal>
+            AggregateFunction<BigDecimal, VarSamp>
         //permits
         //    VarSamp
     {

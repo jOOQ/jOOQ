@@ -73,7 +73,7 @@ import java.util.function.Function;
 @SuppressWarnings({ "rawtypes", "unused" })
 final class RegrAvgY
 extends
-    AbstractAggregateFunction<BigDecimal, RegrAvgY>
+    AbstractAggregateFunction<BigDecimal, QOM.RegrAvgY>
 implements
     QOM.RegrAvgY
 {
@@ -153,12 +153,12 @@ implements
 
     @Override
     public final QOM.RegrAvgY $y(Field<? extends Number> newValue) {
-        return copyAggregateSpecification().apply((RegrAvgY) $constructor().apply(newValue, $x()));
+        return copyAggregateSpecification().apply($constructor().apply(newValue, $x()));
     }
 
     @Override
     public final QOM.RegrAvgY $x(Field<? extends Number> newValue) {
-        return copyAggregateSpecification().apply((RegrAvgY) $constructor().apply($y(), newValue));
+        return copyAggregateSpecification().apply($constructor().apply($y(), newValue));
     }
 
     public final Function2<? super Field<? extends Number>, ? super Field<? extends Number>, ? extends QOM.RegrAvgY> $constructor() {
@@ -166,11 +166,9 @@ implements
     }
 
     @Override
-    final RegrAvgY copyAggregateFunction(Function<? super RegrAvgY, ? extends RegrAvgY> function) {
-        return function.apply((RegrAvgY) $constructor().apply($y(), $x()));
+    final QOM.RegrAvgY copyAggregateFunction(Function<? super QOM.RegrAvgY, ? extends QOM.RegrAvgY> function) {
+        return function.apply($constructor().apply($y(), $x()));
     }
-
-
 
 
 

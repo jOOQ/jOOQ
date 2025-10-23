@@ -72,7 +72,7 @@ import java.util.function.Function;
 @SuppressWarnings({ "rawtypes", "unchecked", "unused" })
 final class Min<T>
 extends
-    AbstractAggregateFunction<T, Min<T>>
+    AbstractAggregateFunction<T, QOM.Min<T>>
 implements
     QOM.Min<T>
 {
@@ -110,12 +110,12 @@ implements
 
     @Override
     public final QOM.Min<T> $field(Field<T> newValue) {
-        return copyAggregateSpecification().apply((Min<T>) $constructor().apply(newValue, $distinct()));
+        return copyAggregateSpecification().apply($constructor().apply(newValue, $distinct()));
     }
 
     @Override
     public final QOM.Min<T> $distinct(boolean newValue) {
-        return copyAggregateSpecification().apply((Min<T>) $constructor().apply($field(), newValue));
+        return copyAggregateSpecification().apply($constructor().apply($field(), newValue));
     }
 
     public final Function2<? super Field<T>, ? super Boolean, ? extends QOM.Min<T>> $constructor() {
@@ -123,11 +123,9 @@ implements
     }
 
     @Override
-    final Min<T> copyAggregateFunction(Function<? super Min<T>, ? extends Min<T>> function) {
-        return function.apply((Min<T>) $constructor().apply($field(), $distinct()));
+    final QOM.Min<T> copyAggregateFunction(Function<? super QOM.Min<T>, ? extends QOM.Min<T>> function) {
+        return function.apply($constructor().apply($field(), $distinct()));
     }
-
-
 
 
 

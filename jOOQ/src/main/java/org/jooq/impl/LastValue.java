@@ -39,13 +39,10 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Names.N_LAST_VALUE;
 
-import java.util.function.BiFunction;
 import java.util.function.Function;
-import java.util.function.Predicate;
 
 import org.jooq.Context;
 import org.jooq.Field;
-import org.jooq.Function1;
 import org.jooq.QueryPart;
 // ...
 // ...
@@ -55,7 +52,7 @@ import org.jooq.QueryPart;
  */
 final class LastValue<T>
 extends
-    AbstractNullTreatmentWindowFunction<T, LastValue<T>>
+    AbstractNullTreatmentWindowFunction<T, QOM.LastValue<T>>
 implements
     QOM.LastValue<T>
 {
@@ -104,7 +101,7 @@ implements
     }
 
     @Override
-    public final LastValue<T> $field(Field<T> newField) {
+    public final QOM.LastValue<T> $field(Field<T> newField) {
         if (newField == field)
             return this;
         else
@@ -112,7 +109,7 @@ implements
     }
 
     @Override
-    final LastValue<T> copyAggregateFunction(Function<? super LastValue<T>, ? extends LastValue<T>> function) {
+    final QOM.LastValue<T> copyAggregateFunction(Function<? super QOM.LastValue<T>, ? extends QOM.LastValue<T>> function) {
         return function.apply(new LastValue<>(field));
     }
 

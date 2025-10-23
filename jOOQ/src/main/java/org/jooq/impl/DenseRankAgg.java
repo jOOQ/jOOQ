@@ -72,7 +72,7 @@ import java.util.function.Function;
 @SuppressWarnings({ "rawtypes", "unused" })
 final class DenseRankAgg
 extends
-    AbstractAggregateFunction<Integer, DenseRankAgg>
+    AbstractAggregateFunction<Integer, QOM.DenseRankAgg>
 implements
     QOM.DenseRankAgg
 {
@@ -112,7 +112,7 @@ implements
 
     @Override
     public final QOM.DenseRankAgg $fields(Collection<? extends Field<?>> newValue) {
-        return copyAggregateSpecification().apply((DenseRankAgg) $constructor().apply(newValue));
+        return copyAggregateSpecification().apply($constructor().apply(newValue));
     }
 
     public final Function1<? super Collection<? extends Field<?>>, ? extends QOM.DenseRankAgg> $constructor() {
@@ -120,8 +120,8 @@ implements
     }
 
     @Override
-    final DenseRankAgg copyAggregateFunction(Function<? super DenseRankAgg, ? extends DenseRankAgg> function) {
-        return function.apply((DenseRankAgg) $constructor().apply($fields()));
+    final QOM.DenseRankAgg copyAggregateFunction(Function<? super QOM.DenseRankAgg, ? extends QOM.DenseRankAgg> function) {
+        return function.apply($constructor().apply($fields()));
     }
 
 

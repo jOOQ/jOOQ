@@ -72,7 +72,7 @@ import java.util.function.Function;
 @SuppressWarnings({ "rawtypes", "unchecked", "unused" })
 final class MinBy<T>
 extends
-    AbstractAggregateFunction<T, MinBy<T>>
+    AbstractAggregateFunction<T, QOM.MinBy<T>>
 implements
     QOM.MinBy<T>
 {
@@ -203,12 +203,12 @@ implements
 
     @Override
     public final QOM.MinBy<T> $value(Field<T> newValue) {
-        return copyAggregateSpecification().apply((MinBy<T>) $constructor().apply(newValue, $by()));
+        return copyAggregateSpecification().apply($constructor().apply(newValue, $by()));
     }
 
     @Override
     public final QOM.MinBy<T> $by(Field<?> newValue) {
-        return copyAggregateSpecification().apply((MinBy<T>) $constructor().apply($value(), newValue));
+        return copyAggregateSpecification().apply($constructor().apply($value(), newValue));
     }
 
     public final Function2<? super Field<T>, ? super Field<?>, ? extends QOM.MinBy<T>> $constructor() {
@@ -216,8 +216,8 @@ implements
     }
 
     @Override
-    final MinBy<T> copyAggregateFunction(Function<? super MinBy<T>, ? extends MinBy<T>> function) {
-        return function.apply((MinBy<T>) $constructor().apply($value(), $by()));
+    final QOM.MinBy<T> copyAggregateFunction(Function<? super QOM.MinBy<T>, ? extends QOM.MinBy<T>> function) {
+        return function.apply($constructor().apply($value(), $by()));
     }
 
 

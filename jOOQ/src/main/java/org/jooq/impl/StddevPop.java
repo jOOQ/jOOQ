@@ -73,7 +73,7 @@ import java.util.function.Function;
 @SuppressWarnings({ "rawtypes", "unused" })
 final class StddevPop
 extends
-    AbstractAggregateFunction<BigDecimal, StddevPop>
+    AbstractAggregateFunction<BigDecimal, QOM.StddevPop>
 implements
     QOM.StddevPop
 {
@@ -137,7 +137,7 @@ implements
 
     @Override
     public final QOM.StddevPop $field(Field<? extends Number> newValue) {
-        return copyAggregateSpecification().apply((StddevPop) $constructor().apply(newValue));
+        return copyAggregateSpecification().apply($constructor().apply(newValue));
     }
 
     public final Function1<? super Field<? extends Number>, ? extends QOM.StddevPop> $constructor() {
@@ -145,11 +145,9 @@ implements
     }
 
     @Override
-    final StddevPop copyAggregateFunction(Function<? super StddevPop, ? extends StddevPop> function) {
-        return function.apply((StddevPop) $constructor().apply($field()));
+    final QOM.StddevPop copyAggregateFunction(Function<? super QOM.StddevPop, ? extends QOM.StddevPop> function) {
+        return function.apply($constructor().apply($field()));
     }
-
-
 
 
 

@@ -59,7 +59,12 @@ import org.jooq.WindowSpecification;
 /**
  * @author Lukas Eder
  */
-final class CumeDist extends AbstractWindowFunction<BigDecimal, CumeDist> implements QOM.CumeDist {
+final class CumeDist
+extends
+    AbstractWindowFunction<BigDecimal, QOM.CumeDist>
+implements
+    QOM.CumeDist
+{
 
 
 
@@ -96,7 +101,7 @@ final class CumeDist extends AbstractWindowFunction<BigDecimal, CumeDist> implem
     // -------------------------------------------------------------------------
 
     @Override
-    final CumeDist copyWindowFunction(Function<? super CumeDist, ? extends CumeDist> function) {
+    final QOM.CumeDist copyWindowFunction(Function<? super QOM.CumeDist, ? extends QOM.CumeDist> function) {
         return function.apply(new CumeDist());
     }
 

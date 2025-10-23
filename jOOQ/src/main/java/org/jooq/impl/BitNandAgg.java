@@ -72,7 +72,7 @@ import java.util.function.Function;
 @SuppressWarnings({ "rawtypes", "unchecked", "unused" })
 final class BitNandAgg<T extends Number>
 extends
-    AbstractAggregateFunction<T, BitNandAgg<T>>
+    AbstractAggregateFunction<T, QOM.BitNandAgg<T>>
 implements
     QOM.BitNandAgg<T>
 {
@@ -118,7 +118,7 @@ implements
 
     @Override
     public final QOM.BitNandAgg<T> $value(Field<T> newValue) {
-        return copyAggregateSpecification().apply((BitNandAgg<T>) $constructor().apply(newValue));
+        return copyAggregateSpecification().apply($constructor().apply(newValue));
     }
 
     public final Function1<? super Field<T>, ? extends QOM.BitNandAgg<T>> $constructor() {
@@ -126,11 +126,9 @@ implements
     }
 
     @Override
-    final BitNandAgg<T> copyAggregateFunction(Function<? super BitNandAgg<T>, ? extends BitNandAgg<T>> function) {
-        return function.apply((BitNandAgg<T>) $constructor().apply($value()));
+    final QOM.BitNandAgg<T> copyAggregateFunction(Function<? super QOM.BitNandAgg<T>, ? extends QOM.BitNandAgg<T>> function) {
+        return function.apply($constructor().apply($value()));
     }
-
-
 
 
 

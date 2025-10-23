@@ -60,12 +60,14 @@ import org.jooq.QueryPart;
 // ...
 import org.jooq.SQLDialect;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * @author Lukas Eder
  */
 final class Mode<T>
 extends
-    AbstractAggregateFunction<T, Mode<T>>
+    AbstractAggregateFunction<T, QOM.Mode<T>>
 implements
     QOM.Mode<T>
 {
@@ -105,13 +107,18 @@ implements
     }
 
     @Override
+    public final QOM.Mode<T> $arg1(Field<T> newArg1) {
+        return copyAggregateSpecification().apply($constructor().apply(newArg1));
+    }
+
+    @Override
     public final Function1<? super Field<T>, ? extends QOM.Mode<T>> $constructor() {
         return f -> new Mode<>(f);
     }
 
     @Override
-    final Mode<T> copyAggregateFunction(Function<? super Mode<T>, ? extends Mode<T>> function) {
-        return function.apply((Mode<T>) $constructor().apply($arg1()));
+    final QOM.Mode<T> copyAggregateFunction(Function<? super QOM.Mode<T>, ? extends QOM.Mode<T>> function) {
+        return function.apply($constructor().apply($arg1()));
     }
 
 

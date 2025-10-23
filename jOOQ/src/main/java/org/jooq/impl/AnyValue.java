@@ -72,7 +72,7 @@ import java.util.function.Function;
 @SuppressWarnings({ "rawtypes", "unchecked", "unused" })
 final class AnyValue<T>
 extends
-    AbstractAggregateFunction<T, AnyValue<T>>
+    AbstractAggregateFunction<T, QOM.AnyValue<T>>
 implements
     QOM.AnyValue<T>
 {
@@ -184,7 +184,7 @@ implements
 
     @Override
     public final QOM.AnyValue<T> $field(Field<T> newValue) {
-        return copyAggregateSpecification().apply((AnyValue<T>) $constructor().apply(newValue));
+        return copyAggregateSpecification().apply($constructor().apply(newValue));
     }
 
     public final Function1<? super Field<T>, ? extends QOM.AnyValue<T>> $constructor() {
@@ -192,11 +192,9 @@ implements
     }
 
     @Override
-    final AnyValue<T> copyAggregateFunction(Function<? super AnyValue<T>, ? extends AnyValue<T>> function) {
-        return function.apply((AnyValue<T>) $constructor().apply($field()));
+    final QOM.AnyValue<T> copyAggregateFunction(Function<? super QOM.AnyValue<T>, ? extends QOM.AnyValue<T>> function) {
+        return function.apply($constructor().apply($field()));
     }
-
-
 
 
 

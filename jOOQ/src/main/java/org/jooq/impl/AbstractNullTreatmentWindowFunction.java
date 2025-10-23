@@ -53,7 +53,7 @@ import org.jooq.impl.QOM.NullTreatment;
 /**
  * @author Lukas Eder
  */
-abstract class AbstractNullTreatmentWindowFunction<T, Q extends AbstractNullTreatmentWindowFunction<T, Q>>
+abstract class AbstractNullTreatmentWindowFunction<T, Q extends QOM.NullTreatmentWindowFunction<T, Q>>
 extends
     AbstractWindowFunction<T, Q>
 implements
@@ -168,7 +168,9 @@ implements
             return (Q) this;
         else
             return copy(c -> {
-                c.nullTreatment = n;
+                AbstractNullTreatmentWindowFunction<?, ?> q = (AbstractNullTreatmentWindowFunction<?, ?>) c;
+
+                q.nullTreatment = n;
             });
     }
 
@@ -179,7 +181,8 @@ implements
 
     final Function<Q, Q> copyAggregateSpecification() {
         return c -> {
-            c.nullTreatment = nullTreatment;
+            AbstractNullTreatmentWindowFunction<?, ?> q = (AbstractNullTreatmentWindowFunction<?, ?>) c;
+            q.nullTreatment = nullTreatment;
             return c;
         };
     }

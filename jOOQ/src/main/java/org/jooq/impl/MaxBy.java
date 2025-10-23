@@ -72,7 +72,7 @@ import java.util.function.Function;
 @SuppressWarnings({ "rawtypes", "unchecked", "unused" })
 final class MaxBy<T>
 extends
-    AbstractAggregateFunction<T, MaxBy<T>>
+    AbstractAggregateFunction<T, QOM.MaxBy<T>>
 implements
     QOM.MaxBy<T>
 {
@@ -203,12 +203,12 @@ implements
 
     @Override
     public final QOM.MaxBy<T> $value(Field<T> newValue) {
-        return copyAggregateSpecification().apply((MaxBy<T>) $constructor().apply(newValue, $by()));
+        return copyAggregateSpecification().apply($constructor().apply(newValue, $by()));
     }
 
     @Override
     public final QOM.MaxBy<T> $by(Field<?> newValue) {
-        return copyAggregateSpecification().apply((MaxBy<T>) $constructor().apply($value(), newValue));
+        return copyAggregateSpecification().apply($constructor().apply($value(), newValue));
     }
 
     public final Function2<? super Field<T>, ? super Field<?>, ? extends QOM.MaxBy<T>> $constructor() {
@@ -216,8 +216,8 @@ implements
     }
 
     @Override
-    final MaxBy<T> copyAggregateFunction(Function<? super MaxBy<T>, ? extends MaxBy<T>> function) {
-        return function.apply((MaxBy<T>) $constructor().apply($value(), $by()));
+    final QOM.MaxBy<T> copyAggregateFunction(Function<? super QOM.MaxBy<T>, ? extends QOM.MaxBy<T>> function) {
+        return function.apply($constructor().apply($value(), $by()));
     }
 
 

@@ -73,7 +73,7 @@ import java.util.function.Function;
 @SuppressWarnings({ "rawtypes", "unused" })
 final class RegrIntercept
 extends
-    AbstractAggregateFunction<BigDecimal, RegrIntercept>
+    AbstractAggregateFunction<BigDecimal, QOM.RegrIntercept>
 implements
     QOM.RegrIntercept
 {
@@ -143,12 +143,12 @@ implements
 
     @Override
     public final QOM.RegrIntercept $y(Field<? extends Number> newValue) {
-        return copyAggregateSpecification().apply((RegrIntercept) $constructor().apply(newValue, $x()));
+        return copyAggregateSpecification().apply($constructor().apply(newValue, $x()));
     }
 
     @Override
     public final QOM.RegrIntercept $x(Field<? extends Number> newValue) {
-        return copyAggregateSpecification().apply((RegrIntercept) $constructor().apply($y(), newValue));
+        return copyAggregateSpecification().apply($constructor().apply($y(), newValue));
     }
 
     public final Function2<? super Field<? extends Number>, ? super Field<? extends Number>, ? extends QOM.RegrIntercept> $constructor() {
@@ -156,11 +156,9 @@ implements
     }
 
     @Override
-    final RegrIntercept copyAggregateFunction(Function<? super RegrIntercept, ? extends RegrIntercept> function) {
-        return function.apply((RegrIntercept) $constructor().apply($y(), $x()));
+    final QOM.RegrIntercept copyAggregateFunction(Function<? super QOM.RegrIntercept, ? extends QOM.RegrIntercept> function) {
+        return function.apply($constructor().apply($y(), $x()));
     }
-
-
 
 
 

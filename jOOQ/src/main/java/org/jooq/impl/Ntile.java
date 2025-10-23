@@ -51,7 +51,12 @@ import org.jooq.QueryPart;
 /**
  * @author Lukas Eder
  */
-final class Ntile extends AbstractWindowFunction<Integer, Ntile> implements QOM.Ntile {
+final class Ntile
+extends
+    AbstractWindowFunction<Integer, QOM.Ntile>
+implements
+    QOM.Ntile
+{
 
     private final Field<Integer> tiles;
 
@@ -87,12 +92,12 @@ final class Ntile extends AbstractWindowFunction<Integer, Ntile> implements QOM.
     }
 
     @Override
-    public final Ntile $tiles(Field<Integer> newTiles) {
+    public final QOM.Ntile $tiles(Field<Integer> newTiles) {
         return copyWindowSpecification().apply(new Ntile(newTiles));
     }
 
     @Override
-    final Ntile copyWindowFunction(Function<? super Ntile, ? extends Ntile> function) {
+    final QOM.Ntile copyWindowFunction(Function<? super QOM.Ntile, ? extends QOM.Ntile> function) {
         return function.apply(new Ntile(tiles));
     }
 

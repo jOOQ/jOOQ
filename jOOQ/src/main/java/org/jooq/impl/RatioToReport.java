@@ -63,7 +63,7 @@ import org.jetbrains.annotations.NotNull;
  */
 final class RatioToReport
 extends
-    AbstractAggregateFunction<BigDecimal, RatioToReport>
+    AbstractAggregateFunction<BigDecimal, QOM.RatioToReport>
 implements
     QOM.RatioToReport
 {
@@ -149,7 +149,7 @@ implements
     }
 
     @Override
-    final RatioToReport copyAggregateFunction(Function<? super RatioToReport, ? extends RatioToReport> function) {
+    final QOM.RatioToReport copyAggregateFunction(Function<? super QOM.RatioToReport, ? extends QOM.RatioToReport> function) {
         return function.apply(new RatioToReport(field));
     }
 

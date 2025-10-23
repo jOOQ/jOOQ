@@ -95,7 +95,7 @@ import org.jooq.XML;
  */
 final class ListAgg
 extends
-    AbstractAggregateFunction<String, ListAgg>
+    AbstractAggregateFunction<String, QOM.ListAgg>
 implements
     QOM.ListAgg
 {
@@ -309,8 +309,8 @@ implements
     }
 
     @Override
-    public final ListAgg $arg1(Field<?> newArg1) {
-        return copyAggregateSpecification().apply((ListAgg) $constructor().apply(newArg1, $arg2()));
+    public final QOM.ListAgg $arg1(Field<?> newArg1) {
+        return copyAggregateSpecification().apply($constructor().apply(newArg1, $arg2()));
     }
 
     @SuppressWarnings("unchecked")
@@ -320,8 +320,8 @@ implements
     }
 
     @Override
-    public final ListAgg $arg2(Field<String> newArg2) {
-        return copyAggregateSpecification().apply((ListAgg) $constructor().apply($arg1(), newArg2));
+    public final QOM.ListAgg $arg2(Field<String> newArg2) {
+        return copyAggregateSpecification().apply($constructor().apply($arg1(), newArg2));
     }
 
     @Override
@@ -330,8 +330,8 @@ implements
     }
 
     @Override
-    final ListAgg copyAggregateFunction(Function<? super ListAgg, ? extends ListAgg> function) {
-        return function.apply((ListAgg) $constructor().apply($arg1(), $arg2()));
+    final QOM.ListAgg copyAggregateFunction(Function<? super QOM.ListAgg, ? extends QOM.ListAgg> function) {
+        return function.apply($constructor().apply($arg1(), $arg2()));
     }
 
 

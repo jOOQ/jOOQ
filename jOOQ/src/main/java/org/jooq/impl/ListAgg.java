@@ -53,6 +53,7 @@ import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.MARIADB;
 // ...
 import static org.jooq.SQLDialect.MYSQL;
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 import static org.jooq.SQLDialect.SQLITE;
@@ -60,6 +61,7 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.TRINO;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.query;
 import static org.jooq.impl.DSL.xmlserializeContent;
@@ -78,12 +80,16 @@ import static org.jooq.impl.Tools.castIfNeeded;
 import static org.jooq.impl.Tools.prependSQL;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_GROUP_CONCAT_MAX_LEN_SET;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Set;
 import java.util.function.Function;
 
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Function2;
+import org.jooq.GroupConcatOrderByStep;
+import org.jooq.OrderField;
 // ...
 import org.jooq.QueryPart;
 // ...
@@ -97,6 +103,7 @@ final class ListAgg
 extends
     AbstractAggregateFunction<String, QOM.ListAgg>
 implements
+    GroupConcatOrderByStep,
     QOM.ListAgg
 {
 
@@ -298,6 +305,36 @@ implements
 
 
 
+
+    // -------------------------------------------------------------------------
+    // XXX: GroupConcat API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final ListAgg separator(String s) {
+        return separator(inline(s));
+    }
+
+    @Override
+    public final ListAgg separator(Field<String> s) {
+        if (arguments.size() < 2)
+            arguments.add(s);
+        else
+            arguments.set(1, s);
+
+        return this;
+    }
+
+    @Override
+    public final ListAgg orderBy(OrderField<?>... fields) {
+        return orderBy(Arrays.asList(fields));
+    }
+
+    @Override
+    public final ListAgg orderBy(Collection<? extends OrderField<?>> fields) {
+        withinGroupOrderBy(fields);
+        return this;
+    }
 
     // -------------------------------------------------------------------------
     // XXX: Query Object Model

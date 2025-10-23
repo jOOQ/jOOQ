@@ -34246,7 +34246,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO })
     public static GroupConcatOrderByStep groupConcat(Field<?> field) {
-        return new GroupConcat(Tools.nullSafe(field));
+        return new ListAgg(false, Tools.nullSafe(field));
     }
 
     /**
@@ -34278,7 +34278,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO })
     public static AggregateFunction<String> groupConcat(Field<?> field, String separator) {
-        return new GroupConcat(Tools.nullSafe(field)).separator(separator);
+        return new ListAgg(false, Tools.nullSafe(field)).separator(separator);
     }
 
     /**
@@ -34303,7 +34303,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static GroupConcatOrderByStep groupConcatDistinct(Field<?> field) {
-        return new GroupConcat(Tools.nullSafe(field), true);
+        return new ListAgg(true, Tools.nullSafe(field));
     }
 
     // -------------------------------------------------------------------------

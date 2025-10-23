@@ -137,7 +137,7 @@ implements
 
     @Override
     public final QOM.StddevSamp $field(Field<? extends Number> newValue) {
-        return $constructor().apply(newValue);
+        return copyAggregateSpecification().apply((StddevSamp) $constructor().apply(newValue));
     }
 
     public final Function1<? super Field<? extends Number>, ? extends QOM.StddevSamp> $constructor() {
@@ -145,9 +145,18 @@ implements
     }
 
     @Override
-    final StddevSamp copy2(Function<StddevSamp, StddevSamp> function) {
+    final StddevSamp copyAggregateFunction(Function<? super StddevSamp, ? extends StddevSamp> function) {
         return function.apply((StddevSamp) $constructor().apply($field()));
     }
+
+
+
+
+
+
+
+
+
 
 
 

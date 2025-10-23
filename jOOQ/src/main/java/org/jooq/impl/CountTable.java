@@ -126,7 +126,7 @@ implements
     }
 
     @Override
-    final CountTable copy2(Function<CountTable, CountTable> function) {
+    final CountTable copyAggregateFunction(Function<? super CountTable, ? extends CountTable> function) {
         return function.apply(new CountTable(table, distinct));
     }
 

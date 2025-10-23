@@ -656,14 +656,14 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    final Q copy1(Function<Q, Q> function) {
-        return function.apply(copy2(copy1()));
+    final Q copyWindowFunction(Function<? super Q, ? extends Q> function) {
+        return function.apply(copyAggregateFunction(copyAggregateSpecification()));
     }
 
-    final Function<Q, Q> copy1() {
-        return c -> {
+    final Function<? super Q, ? extends Q> copyAggregateSpecification() {
+        return copyWindowSpecification().andThen(c -> {
 
-            // [#19255] Arguments can be expected to have already been copied by the copy2() utility, in subclasses.
+            // [#19255] Arguments can be expected to have already been copied by the copyAggregateFunction() utility, in subclasses.
             if (filter.hasWhere())
                 c.filter.addConditions(filter.getWhere());
             if (!isEmpty(withinGroupOrderBy))
@@ -673,10 +673,10 @@ implements
             c.first = first;
 
             return c;
-        };
+        });
     }
 
-    abstract Q copy2(Function<Q, Q> function);
+    abstract Q copyAggregateFunction(Function<? super Q, ? extends Q> function);
 
     public final boolean $distinct() {
         return distinct;
@@ -712,7 +712,7 @@ implements
             return copy(c -> {
                 c.withinGroupOrderBy = null;
 
-                if (newOrderBy != null)
+                if (!isEmpty(newOrderBy))
                     c.withinGroupOrderBy = new SortFieldList(newOrderBy);
             });
     }

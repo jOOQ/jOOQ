@@ -112,7 +112,7 @@ implements
 
     @Override
     public final QOM.RankAgg $fields(Collection<? extends Field<?>> newValue) {
-        return $constructor().apply(newValue);
+        return copyAggregateSpecification().apply((RankAgg) $constructor().apply(newValue));
     }
 
     public final Function1<? super Collection<? extends Field<?>>, ? extends QOM.RankAgg> $constructor() {
@@ -120,9 +120,18 @@ implements
     }
 
     @Override
-    final RankAgg copy2(Function<RankAgg, RankAgg> function) {
+    final RankAgg copyAggregateFunction(Function<? super RankAgg, ? extends RankAgg> function) {
         return function.apply((RankAgg) $constructor().apply($fields()));
     }
+
+
+
+
+
+
+
+
+
 
 
 

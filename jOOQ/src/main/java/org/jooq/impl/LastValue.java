@@ -108,11 +108,11 @@ implements
         if (newField == field)
             return this;
         else
-            return copy1().apply(new LastValue<>(newField));
+            return copyAggregateSpecification().apply(new LastValue<>(newField));
     }
 
     @Override
-    final LastValue<T> copy2(Function<LastValue<T>, LastValue<T>> function) {
+    final LastValue<T> copyAggregateFunction(Function<? super LastValue<T>, ? extends LastValue<T>> function) {
         return function.apply(new LastValue<>(field));
     }
 

@@ -149,7 +149,7 @@ implements
     }
 
     @Override
-    final RatioToReport copy2(Function<RatioToReport, RatioToReport> function) {
+    final RatioToReport copyAggregateFunction(Function<? super RatioToReport, ? extends RatioToReport> function) {
         return function.apply(new RatioToReport(field));
     }
 

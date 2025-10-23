@@ -96,7 +96,7 @@ final class CumeDist extends AbstractWindowFunction<BigDecimal, CumeDist> implem
     // -------------------------------------------------------------------------
 
     @Override
-    final CumeDist copy1(Function<CumeDist, CumeDist> function) {
+    final CumeDist copyWindowFunction(Function<? super CumeDist, ? extends CumeDist> function) {
         return function.apply(new CumeDist());
     }
 

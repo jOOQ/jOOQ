@@ -113,7 +113,7 @@ implements
 
     @Override
     public final QOM.CumeDistAgg $fields(Collection<? extends Field<?>> newValue) {
-        return $constructor().apply(newValue);
+        return copyAggregateSpecification().apply((CumeDistAgg) $constructor().apply(newValue));
     }
 
     public final Function1<? super Collection<? extends Field<?>>, ? extends QOM.CumeDistAgg> $constructor() {
@@ -121,9 +121,18 @@ implements
     }
 
     @Override
-    final CumeDistAgg copy2(Function<CumeDistAgg, CumeDistAgg> function) {
+    final CumeDistAgg copyAggregateFunction(Function<? super CumeDistAgg, ? extends CumeDistAgg> function) {
         return function.apply((CumeDistAgg) $constructor().apply($fields()));
     }
+
+
+
+
+
+
+
+
+
 
 
 

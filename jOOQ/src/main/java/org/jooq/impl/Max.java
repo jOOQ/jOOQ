@@ -110,12 +110,12 @@ implements
 
     @Override
     public final QOM.Max<T> $field(Field<T> newValue) {
-        return $constructor().apply(newValue, $distinct());
+        return copyAggregateSpecification().apply((Max<T>) $constructor().apply(newValue, $distinct()));
     }
 
     @Override
     public final QOM.Max<T> $distinct(boolean newValue) {
-        return $constructor().apply($field(), newValue);
+        return copyAggregateSpecification().apply((Max<T>) $constructor().apply($field(), newValue));
     }
 
     public final Function2<? super Field<T>, ? super Boolean, ? extends QOM.Max<T>> $constructor() {
@@ -123,9 +123,18 @@ implements
     }
 
     @Override
-    final Max<T> copy2(Function<Max<T>, Max<T>> function) {
+    final Max<T> copyAggregateFunction(Function<? super Max<T>, ? extends Max<T>> function) {
         return function.apply((Max<T>) $constructor().apply($field(), $distinct()));
     }
+
+
+
+
+
+
+
+
+
 
 
 

@@ -146,7 +146,7 @@ implements
 
     @Override
     public final QOM.BoolAnd $condition(Condition newValue) {
-        return $constructor().apply(newValue);
+        return copyAggregateSpecification().apply((BoolAnd) $constructor().apply(newValue));
     }
 
     public final Function1<? super Condition, ? extends QOM.BoolAnd> $constructor() {
@@ -154,9 +154,18 @@ implements
     }
 
     @Override
-    final BoolAnd copy2(Function<BoolAnd, BoolAnd> function) {
+    final BoolAnd copyAggregateFunction(Function<? super BoolAnd, ? extends BoolAnd> function) {
         return function.apply((BoolAnd) $constructor().apply($condition()));
     }
+
+
+
+
+
+
+
+
+
 
 
 

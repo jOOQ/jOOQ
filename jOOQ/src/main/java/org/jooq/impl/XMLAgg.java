@@ -45,6 +45,8 @@ import java.util.function.Function;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Function1;
+import org.jooq.QueryPart;
+// ...
 import org.jooq.XML;
 import org.jooq.XMLAggOrderByStep;
 
@@ -111,7 +113,31 @@ implements
     }
 
     @Override
-    final XMLAgg copy2(Function<XMLAgg, XMLAgg> function) {
+    final XMLAgg copyAggregateFunction(Function<? super XMLAgg, ? extends XMLAgg> function) {
         return function.apply((XMLAgg) $constructor().apply($arg1()));
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

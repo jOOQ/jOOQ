@@ -188,7 +188,7 @@ extends AbstractNullTreatmentWindowFunction<T, Q> {
         if (newField == field)
             return (Q) this;
         else
-            return copy1().apply(constructor(newField, offset, defaultValue));
+            return copyAggregateSpecification().apply(constructor(newField, offset, defaultValue));
     }
 
     public final Field<Integer> $offset() {
@@ -199,7 +199,7 @@ extends AbstractNullTreatmentWindowFunction<T, Q> {
         if (newOffset == offset)
             return (Q) this;
         else
-            return copy1().apply(constructor(field, newOffset, defaultValue));
+            return copyAggregateSpecification().apply(constructor(field, newOffset, defaultValue));
     }
 
     public final Field<T> $defaultValue() {
@@ -210,11 +210,11 @@ extends AbstractNullTreatmentWindowFunction<T, Q> {
         if (newDefaultValue == defaultValue)
             return (Q) this;
         else
-            return copy1().apply(constructor(field, offset, newDefaultValue));
+            return copyAggregateSpecification().apply(constructor(field, offset, newDefaultValue));
     }
 
     @Override
-    final Q copy2(Function<Q, Q> function) {
+    final Q copyAggregateFunction(Function<? super Q, ? extends Q> function) {
         return function.apply(constructor(field, offset, defaultValue));
     }
 

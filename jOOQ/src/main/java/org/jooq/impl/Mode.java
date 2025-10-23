@@ -56,6 +56,8 @@ import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Function1;
 // ...
+import org.jooq.QueryPart;
+// ...
 import org.jooq.SQLDialect;
 
 /**
@@ -108,7 +110,31 @@ implements
     }
 
     @Override
-    final Mode<T> copy2(Function<Mode<T>, Mode<T>> function) {
+    final Mode<T> copyAggregateFunction(Function<? super Mode<T>, ? extends Mode<T>> function) {
         return function.apply((Mode<T>) $constructor().apply($arg1()));
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

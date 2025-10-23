@@ -50,8 +50,11 @@ import java.util.function.Function;
 import org.jooq.AggregateFunction;
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.Function2;
 import org.jooq.GroupConcatOrderByStep;
 import org.jooq.OrderField;
+import org.jooq.QueryPart;
+// ...
 import org.jooq.SQLDialect;
 import org.jooq.impl.QOM.UNotYetImplemented;
 
@@ -125,8 +128,37 @@ implements
     // XXX: Query Object Model
     // -------------------------------------------------------------------------
 
-    @Override
-    final GroupConcat copy2(Function<GroupConcat, GroupConcat> function) {
-        return function.apply((GroupConcat) new GroupConcat(getArgument(0), distinct).separator((Field) getArgument(1)));
+    public final Function2<? super Field<?>, ? super Field<String>, ? extends GroupConcat> $constructor() {
+        return (a1, a2) -> (GroupConcat) new GroupConcat(a1, distinct).separator(a2);
     }
+
+    @Override
+    final GroupConcat copyAggregateFunction(Function<? super GroupConcat, ? extends GroupConcat> function) {
+        return function.apply((GroupConcat) $constructor().apply(getArgument(0), (Field) getArgument(1)));
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

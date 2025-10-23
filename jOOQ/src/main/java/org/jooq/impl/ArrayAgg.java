@@ -45,6 +45,8 @@ import java.util.function.Function;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Function1;
+import org.jooq.QueryPart;
+// ...
 
 /**
  * @author Lukas Eder
@@ -116,7 +118,31 @@ implements
     }
 
     @Override
-    final ArrayAgg<T> copy2(Function<ArrayAgg<T>, ArrayAgg<T>> function) {
-        return function.apply((ArrayAgg<T>) $constructor().apply((Field<T>) getArgument(0)));
+    final ArrayAgg<T> copyAggregateFunction(Function<? super ArrayAgg<T>, ? extends ArrayAgg<T>> function) {
+        return function.apply((ArrayAgg<T>) $constructor().apply($arg1()));
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

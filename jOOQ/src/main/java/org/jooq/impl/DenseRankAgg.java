@@ -112,7 +112,7 @@ implements
 
     @Override
     public final QOM.DenseRankAgg $fields(Collection<? extends Field<?>> newValue) {
-        return $constructor().apply(newValue);
+        return copyAggregateSpecification().apply((DenseRankAgg) $constructor().apply(newValue));
     }
 
     public final Function1<? super Collection<? extends Field<?>>, ? extends QOM.DenseRankAgg> $constructor() {
@@ -120,9 +120,18 @@ implements
     }
 
     @Override
-    final DenseRankAgg copy2(Function<DenseRankAgg, DenseRankAgg> function) {
+    final DenseRankAgg copyAggregateFunction(Function<? super DenseRankAgg, ? extends DenseRankAgg> function) {
         return function.apply((DenseRankAgg) $constructor().apply($fields()));
     }
+
+
+
+
+
+
+
+
+
 
 
 

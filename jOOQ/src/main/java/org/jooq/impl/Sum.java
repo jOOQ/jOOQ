@@ -111,12 +111,12 @@ implements
 
     @Override
     public final QOM.Sum $field(Field<? extends Number> newValue) {
-        return $constructor().apply(newValue, $distinct());
+        return copyAggregateSpecification().apply((Sum) $constructor().apply(newValue, $distinct()));
     }
 
     @Override
     public final QOM.Sum $distinct(boolean newValue) {
-        return $constructor().apply($field(), newValue);
+        return copyAggregateSpecification().apply((Sum) $constructor().apply($field(), newValue));
     }
 
     public final Function2<? super Field<? extends Number>, ? super Boolean, ? extends QOM.Sum> $constructor() {
@@ -124,9 +124,18 @@ implements
     }
 
     @Override
-    final Sum copy2(Function<Sum, Sum> function) {
+    final Sum copyAggregateFunction(Function<? super Sum, ? extends Sum> function) {
         return function.apply((Sum) $constructor().apply($field(), $distinct()));
     }
+
+
+
+
+
+
+
+
+
 
 
 

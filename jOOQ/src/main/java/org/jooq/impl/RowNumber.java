@@ -85,7 +85,7 @@ final class RowNumber extends AbstractWindowFunction<Integer, RowNumber> impleme
     // -------------------------------------------------------------------------
 
     @Override
-    final RowNumber copy1(Function<RowNumber, RowNumber> function) {
+    final RowNumber copyWindowFunction(Function<? super RowNumber, ? extends RowNumber> function) {
         return function.apply(new RowNumber());
     }
 

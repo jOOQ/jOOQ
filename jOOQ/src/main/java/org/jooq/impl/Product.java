@@ -199,12 +199,12 @@ implements
 
     @Override
     public final QOM.Product $field(Field<? extends Number> newValue) {
-        return $constructor().apply(newValue, $distinct());
+        return copyAggregateSpecification().apply((Product) $constructor().apply(newValue, $distinct()));
     }
 
     @Override
     public final QOM.Product $distinct(boolean newValue) {
-        return $constructor().apply($field(), newValue);
+        return copyAggregateSpecification().apply((Product) $constructor().apply($field(), newValue));
     }
 
     public final Function2<? super Field<? extends Number>, ? super Boolean, ? extends QOM.Product> $constructor() {
@@ -212,9 +212,18 @@ implements
     }
 
     @Override
-    final Product copy2(Function<Product, Product> function) {
+    final Product copyAggregateFunction(Function<? super Product, ? extends Product> function) {
         return function.apply((Product) $constructor().apply($field(), $distinct()));
     }
+
+
+
+
+
+
+
+
+
 
 
 

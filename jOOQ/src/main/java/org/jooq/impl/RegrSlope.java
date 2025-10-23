@@ -143,12 +143,12 @@ implements
 
     @Override
     public final QOM.RegrSlope $y(Field<? extends Number> newValue) {
-        return $constructor().apply(newValue, $x());
+        return copyAggregateSpecification().apply((RegrSlope) $constructor().apply(newValue, $x()));
     }
 
     @Override
     public final QOM.RegrSlope $x(Field<? extends Number> newValue) {
-        return $constructor().apply($y(), newValue);
+        return copyAggregateSpecification().apply((RegrSlope) $constructor().apply($y(), newValue));
     }
 
     public final Function2<? super Field<? extends Number>, ? super Field<? extends Number>, ? extends QOM.RegrSlope> $constructor() {
@@ -156,9 +156,18 @@ implements
     }
 
     @Override
-    final RegrSlope copy2(Function<RegrSlope, RegrSlope> function) {
+    final RegrSlope copyAggregateFunction(Function<? super RegrSlope, ? extends RegrSlope> function) {
         return function.apply((RegrSlope) $constructor().apply($y(), $x()));
     }
+
+
+
+
+
+
+
+
+
 
 
 

@@ -106,7 +106,7 @@ final class PercentRank extends AbstractWindowFunction<BigDecimal, PercentRank> 
     // -------------------------------------------------------------------------
 
     @Override
-    final PercentRank copy1(Function<PercentRank, PercentRank> function) {
+    final PercentRank copyWindowFunction(Function<? super PercentRank, ? extends PercentRank> function) {
         return function.apply(new PercentRank());
     }
 

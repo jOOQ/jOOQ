@@ -111,12 +111,12 @@ implements
 
     @Override
     public final QOM.Avg $field(Field<? extends Number> newValue) {
-        return $constructor().apply(newValue, $distinct());
+        return copyAggregateSpecification().apply((Avg) $constructor().apply(newValue, $distinct()));
     }
 
     @Override
     public final QOM.Avg $distinct(boolean newValue) {
-        return $constructor().apply($field(), newValue);
+        return copyAggregateSpecification().apply((Avg) $constructor().apply($field(), newValue));
     }
 
     public final Function2<? super Field<? extends Number>, ? super Boolean, ? extends QOM.Avg> $constructor() {
@@ -124,9 +124,18 @@ implements
     }
 
     @Override
-    final Avg copy2(Function<Avg, Avg> function) {
+    final Avg copyAggregateFunction(Function<? super Avg, ? extends Avg> function) {
         return function.apply((Avg) $constructor().apply($field(), $distinct()));
     }
+
+
+
+
+
+
+
+
+
 
 
 

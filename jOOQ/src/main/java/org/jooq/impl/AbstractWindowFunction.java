@@ -508,12 +508,12 @@ implements
     // -------------------------------------------------------------------------
 
     final Q copy(Consumer<? super Q> consumer) {
-        Q copy = copy1(copy0());
+        Q copy = copyWindowFunction(copyWindowSpecification());
         consumer.accept(copy);
         return copy;
     }
 
-    final Function<Q, Q> copy0() {
+    final Function<? super Q, ? extends Q> copyWindowSpecification() {
         return c -> {
 
             // [#19255] TODO: Copy also definitions and specifications
@@ -525,7 +525,7 @@ implements
         };
     }
 
-    abstract Q copy1(Function<Q, Q> function);
+    abstract Q copyWindowFunction(Function<? super Q, ? extends Q> function);
 
     @Override
     public final WindowSpecification $windowSpecification() {

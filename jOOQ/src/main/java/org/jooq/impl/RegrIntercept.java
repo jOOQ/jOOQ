@@ -143,12 +143,12 @@ implements
 
     @Override
     public final QOM.RegrIntercept $y(Field<? extends Number> newValue) {
-        return $constructor().apply(newValue, $x());
+        return copyAggregateSpecification().apply((RegrIntercept) $constructor().apply(newValue, $x()));
     }
 
     @Override
     public final QOM.RegrIntercept $x(Field<? extends Number> newValue) {
-        return $constructor().apply($y(), newValue);
+        return copyAggregateSpecification().apply((RegrIntercept) $constructor().apply($y(), newValue));
     }
 
     public final Function2<? super Field<? extends Number>, ? super Field<? extends Number>, ? extends QOM.RegrIntercept> $constructor() {
@@ -156,9 +156,18 @@ implements
     }
 
     @Override
-    final RegrIntercept copy2(Function<RegrIntercept, RegrIntercept> function) {
+    final RegrIntercept copyAggregateFunction(Function<? super RegrIntercept, ? extends RegrIntercept> function) {
         return function.apply((RegrIntercept) $constructor().apply($y(), $x()));
     }
+
+
+
+
+
+
+
+
+
 
 
 

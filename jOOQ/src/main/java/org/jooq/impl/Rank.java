@@ -78,7 +78,7 @@ final class Rank extends AbstractWindowFunction<Integer, Rank> implements QOM.Ra
     // -------------------------------------------------------------------------
 
     @Override
-    final Rank copy1(Function<Rank, Rank> function) {
+    final Rank copyWindowFunction(Function<? super Rank, ? extends Rank> function) {
         return function.apply(new Rank());
     }
 

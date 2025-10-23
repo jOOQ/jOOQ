@@ -203,12 +203,12 @@ implements
 
     @Override
     public final QOM.MaxBy<T> $value(Field<T> newValue) {
-        return $constructor().apply(newValue, $by());
+        return copyAggregateSpecification().apply((MaxBy<T>) $constructor().apply(newValue, $by()));
     }
 
     @Override
     public final QOM.MaxBy<T> $by(Field<?> newValue) {
-        return $constructor().apply($value(), newValue);
+        return copyAggregateSpecification().apply((MaxBy<T>) $constructor().apply($value(), newValue));
     }
 
     public final Function2<? super Field<T>, ? super Field<?>, ? extends QOM.MaxBy<T>> $constructor() {
@@ -216,9 +216,18 @@ implements
     }
 
     @Override
-    final MaxBy<T> copy2(Function<MaxBy<T>, MaxBy<T>> function) {
+    final MaxBy<T> copyAggregateFunction(Function<? super MaxBy<T>, ? extends MaxBy<T>> function) {
         return function.apply((MaxBy<T>) $constructor().apply($value(), $by()));
     }
+
+
+
+
+
+
+
+
+
 
 
 

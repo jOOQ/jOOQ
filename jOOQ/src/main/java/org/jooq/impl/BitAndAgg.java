@@ -330,7 +330,7 @@ implements
 
     @Override
     public final QOM.BitAndAgg<T> $value(Field<T> newValue) {
-        return $constructor().apply(newValue);
+        return copyAggregateSpecification().apply((BitAndAgg<T>) $constructor().apply(newValue));
     }
 
     public final Function1<? super Field<T>, ? extends QOM.BitAndAgg<T>> $constructor() {
@@ -338,9 +338,18 @@ implements
     }
 
     @Override
-    final BitAndAgg<T> copy2(Function<BitAndAgg<T>, BitAndAgg<T>> function) {
+    final BitAndAgg<T> copyAggregateFunction(Function<? super BitAndAgg<T>, ? extends BitAndAgg<T>> function) {
         return function.apply((BitAndAgg<T>) $constructor().apply($value()));
     }
+
+
+
+
+
+
+
+
+
 
 
 

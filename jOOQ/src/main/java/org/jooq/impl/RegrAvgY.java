@@ -153,12 +153,12 @@ implements
 
     @Override
     public final QOM.RegrAvgY $y(Field<? extends Number> newValue) {
-        return $constructor().apply(newValue, $x());
+        return copyAggregateSpecification().apply((RegrAvgY) $constructor().apply(newValue, $x()));
     }
 
     @Override
     public final QOM.RegrAvgY $x(Field<? extends Number> newValue) {
-        return $constructor().apply($y(), newValue);
+        return copyAggregateSpecification().apply((RegrAvgY) $constructor().apply($y(), newValue));
     }
 
     public final Function2<? super Field<? extends Number>, ? super Field<? extends Number>, ? extends QOM.RegrAvgY> $constructor() {
@@ -166,9 +166,18 @@ implements
     }
 
     @Override
-    final RegrAvgY copy2(Function<RegrAvgY, RegrAvgY> function) {
+    final RegrAvgY copyAggregateFunction(Function<? super RegrAvgY, ? extends RegrAvgY> function) {
         return function.apply((RegrAvgY) $constructor().apply($y(), $x()));
     }
+
+
+
+
+
+
+
+
+
 
 
 

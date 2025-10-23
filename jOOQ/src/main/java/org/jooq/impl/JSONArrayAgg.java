@@ -93,7 +93,9 @@ import org.jooq.Function1;
 import org.jooq.JSONArrayAggOrderByStep;
 import org.jooq.OrderField;
 // ...
+import org.jooq.QueryPart;
 import org.jooq.Record;
+// ...
 import org.jooq.SQLDialect;
 import org.jooq.Scope;
 import org.jooq.Select;
@@ -486,7 +488,31 @@ implements
     }
 
     @Override
-    final JSONArrayAgg<J> copy2(Function<JSONArrayAgg<J>, JSONArrayAgg<J>> function) {
+    final JSONArrayAgg<J> copyAggregateFunction(Function<? super JSONArrayAgg<J>, ? extends JSONArrayAgg<J>> function) {
         return function.apply((JSONArrayAgg<J>) $constructor().apply(getArgument(0)));
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

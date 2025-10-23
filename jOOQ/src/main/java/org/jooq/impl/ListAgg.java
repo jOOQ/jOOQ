@@ -38,7 +38,6 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.FALSE;
-import static java.util.Collections.emptyList;
 // ...
 // ...
 // ...
@@ -79,8 +78,6 @@ import static org.jooq.impl.Tools.castIfNeeded;
 import static org.jooq.impl.Tools.prependSQL;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_GROUP_CONCAT_MAX_LEN_SET;
 
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Set;
 import java.util.function.Function;
 
@@ -91,12 +88,7 @@ import org.jooq.Function2;
 import org.jooq.QueryPart;
 // ...
 import org.jooq.SQLDialect;
-import org.jooq.SortField;
 import org.jooq.XML;
-import org.jooq.impl.QOM.FrameUnits;
-import org.jooq.impl.QOM.UnmodifiableList;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
@@ -316,10 +308,20 @@ implements
         return getArgument(0);
     }
 
+    @Override
+    public final ListAgg $arg1(Field<?> newArg1) {
+        return copyAggregateSpecification().apply((ListAgg) $constructor().apply(newArg1, $arg2()));
+    }
+
     @SuppressWarnings("unchecked")
     @Override
     public final Field<String> $arg2() {
         return (Field<String>) getArgument(1);
+    }
+
+    @Override
+    public final ListAgg $arg2(Field<String> newArg2) {
+        return copyAggregateSpecification().apply((ListAgg) $constructor().apply($arg1(), newArg2));
     }
 
     @Override
@@ -328,7 +330,32 @@ implements
     }
 
     @Override
-    final ListAgg copy2(Function<ListAgg, ListAgg> function) {
+    final ListAgg copyAggregateFunction(Function<? super ListAgg, ? extends ListAgg> function) {
         return function.apply((ListAgg) $constructor().apply($arg1(), $arg2()));
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

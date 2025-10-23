@@ -119,12 +119,12 @@ implements
 
     @Override
     public final QOM.Count $field(Field<?> newValue) {
-        return $constructor().apply(newValue, $distinct());
+        return copyAggregateSpecification().apply((Count) $constructor().apply(newValue, $distinct()));
     }
 
     @Override
     public final QOM.Count $distinct(boolean newValue) {
-        return $constructor().apply($field(), newValue);
+        return copyAggregateSpecification().apply((Count) $constructor().apply($field(), newValue));
     }
 
     public final Function2<? super Field<?>, ? super Boolean, ? extends QOM.Count> $constructor() {
@@ -132,9 +132,18 @@ implements
     }
 
     @Override
-    final Count copy2(Function<Count, Count> function) {
+    final Count copyAggregateFunction(Function<? super Count, ? extends Count> function) {
         return function.apply((Count) $constructor().apply($field(), $distinct()));
     }
+
+
+
+
+
+
+
+
+
 
 
 

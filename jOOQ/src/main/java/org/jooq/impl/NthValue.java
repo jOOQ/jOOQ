@@ -164,7 +164,7 @@ implements
         if (newField == field)
             return this;
         else
-            return copy0().apply(new NthValue<>(newField, offset));
+            return copyWindowSpecification().apply(new NthValue<>(newField, offset));
     }
 
     @Override
@@ -177,7 +177,7 @@ implements
         if (newOffset == offset)
             return this;
         else
-            return copy0().apply(new NthValue<>(field, newOffset));
+            return copyWindowSpecification().apply(new NthValue<>(field, newOffset));
     }
 
     @Override
@@ -196,7 +196,7 @@ implements
     }
 
     @Override
-    final NthValue<T> copy2(Function<NthValue<T>, NthValue<T>> function) {
+    final NthValue<T> copyAggregateFunction(Function<? super NthValue<T>, ? extends NthValue<T>> function) {
         NthValue<T> result = new NthValue<>(field, offset);
         result.fromFirstOrLast = fromFirstOrLast;
         return function.apply(result);

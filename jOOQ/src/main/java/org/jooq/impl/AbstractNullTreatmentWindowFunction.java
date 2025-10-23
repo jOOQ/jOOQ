@@ -173,16 +173,16 @@ implements
     }
 
     @Override
-    final Q copy1(Function<Q, Q> function) {
-        return function.apply(copy2(copy1()));
+    final Q copyWindowFunction(Function<? super Q, ? extends Q> function) {
+        return function.apply(copyAggregateFunction(copyAggregateSpecification()));
     }
 
-    final Function<Q, Q> copy1() {
+    final Function<Q, Q> copyAggregateSpecification() {
         return c -> {
             c.nullTreatment = nullTreatment;
             return c;
         };
     }
 
-    abstract Q copy2(Function<Q, Q> function);
+    abstract Q copyAggregateFunction(Function<? super Q, ? extends Q> function);
 }

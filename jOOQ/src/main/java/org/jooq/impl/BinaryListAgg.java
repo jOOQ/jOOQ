@@ -52,7 +52,6 @@ import static org.jooq.impl.Names.N_STRING_AGG;
 import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.SQLDataType.VARBINARY;
 import static org.jooq.impl.SQLDataType.VARCHAR;
-import static org.jooq.impl.Tools.castIfNeeded;
 
 import java.util.Set;
 import java.util.function.Function;
@@ -60,8 +59,9 @@ import java.util.function.Function;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Function2;
+import org.jooq.QueryPart;
+// ...
 import org.jooq.SQLDialect;
-import org.jooq.impl.QOM.UNotYetImplemented;
 
 /**
  * @author Lukas Eder
@@ -152,10 +152,20 @@ implements
         return getArgument(0);
     }
 
+    @Override
+    public final BinaryListAgg $arg1(Field<?> newArg1) {
+        return copyAggregateSpecification().apply((BinaryListAgg) $constructor().apply(newArg1, $arg2()));
+    }
+
     @SuppressWarnings("unchecked")
     @Override
     public final Field<byte[]> $arg2() {
         return (Field<byte[]>) getArgument(1);
+    }
+
+    @Override
+    public final BinaryListAgg $arg2(Field<byte[]> newArg2) {
+        return copyAggregateSpecification().apply((BinaryListAgg) $constructor().apply($arg1(), newArg2));
     }
 
     @Override
@@ -164,7 +174,32 @@ implements
     }
 
     @Override
-    final BinaryListAgg copy2(Function<BinaryListAgg, BinaryListAgg> function) {
+    final BinaryListAgg copyAggregateFunction(Function<? super BinaryListAgg, ? extends BinaryListAgg> function) {
         return function.apply((BinaryListAgg) $constructor().apply($arg1(), $arg2()));
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

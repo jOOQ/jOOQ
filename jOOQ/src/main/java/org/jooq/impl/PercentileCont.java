@@ -150,7 +150,7 @@ implements
 
     @Override
     public final QOM.PercentileCont $percentile(Field<? extends Number> newValue) {
-        return $constructor().apply(newValue);
+        return copyAggregateSpecification().apply((PercentileCont) $constructor().apply(newValue));
     }
 
     public final Function1<? super Field<? extends Number>, ? extends QOM.PercentileCont> $constructor() {
@@ -158,9 +158,18 @@ implements
     }
 
     @Override
-    final PercentileCont copy2(Function<PercentileCont, PercentileCont> function) {
+    final PercentileCont copyAggregateFunction(Function<? super PercentileCont, ? extends PercentileCont> function) {
         return function.apply((PercentileCont) $constructor().apply($percentile()));
     }
+
+
+
+
+
+
+
+
+
 
 
 

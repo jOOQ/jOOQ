@@ -143,12 +143,12 @@ implements
 
     @Override
     public final QOM.Corr $y(Field<? extends Number> newValue) {
-        return $constructor().apply(newValue, $x());
+        return copyAggregateSpecification().apply((Corr) $constructor().apply(newValue, $x()));
     }
 
     @Override
     public final QOM.Corr $x(Field<? extends Number> newValue) {
-        return $constructor().apply($y(), newValue);
+        return copyAggregateSpecification().apply((Corr) $constructor().apply($y(), newValue));
     }
 
     public final Function2<? super Field<? extends Number>, ? super Field<? extends Number>, ? extends QOM.Corr> $constructor() {
@@ -156,9 +156,18 @@ implements
     }
 
     @Override
-    final Corr copy2(Function<Corr, Corr> function) {
+    final Corr copyAggregateFunction(Function<? super Corr, ? extends Corr> function) {
         return function.apply((Corr) $constructor().apply($y(), $x()));
     }
+
+
+
+
+
+
+
+
+
 
 
 

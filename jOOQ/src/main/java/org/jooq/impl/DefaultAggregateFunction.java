@@ -40,6 +40,8 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Function;
 
 import org.jooq.DataType;
@@ -84,9 +86,24 @@ extends
     // -------------------------------------------------------------------------
 
     @Override
-    final DefaultAggregateFunction<T> copy2(Function<DefaultAggregateFunction<T>, DefaultAggregateFunction<T>> function) {
+    final DefaultAggregateFunction<T> copyAggregateFunction(Function<? super DefaultAggregateFunction<T>, ? extends DefaultAggregateFunction<T>> function) {
         return function.apply(new DefaultAggregateFunction<>(distinct, getQualifiedName(), getDataType(), getArguments().toArray(EMPTY_FIELD)));
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

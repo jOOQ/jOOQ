@@ -184,7 +184,7 @@ implements
 
     @Override
     public final QOM.AnyValue<T> $field(Field<T> newValue) {
-        return $constructor().apply(newValue);
+        return copyAggregateSpecification().apply((AnyValue<T>) $constructor().apply(newValue));
     }
 
     public final Function1<? super Field<T>, ? extends QOM.AnyValue<T>> $constructor() {
@@ -192,9 +192,18 @@ implements
     }
 
     @Override
-    final AnyValue<T> copy2(Function<AnyValue<T>, AnyValue<T>> function) {
+    final AnyValue<T> copyAggregateFunction(Function<? super AnyValue<T>, ? extends AnyValue<T>> function) {
         return function.apply((AnyValue<T>) $constructor().apply($field()));
     }
+
+
+
+
+
+
+
+
+
 
 
 

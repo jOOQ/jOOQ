@@ -85,6 +85,8 @@ import org.jooq.JSON;
 import org.jooq.JSONEntry;
 import org.jooq.JSONObjectAggNullStep;
 // ...
+import org.jooq.QueryPart;
+// ...
 import org.jooq.impl.QOM.JSONOnNull;
 
 
@@ -448,7 +450,31 @@ implements
     }
 
     @Override
-    final JSONObjectAgg<J> copy2(Function<JSONObjectAgg<J>, JSONObjectAgg<J>> function) {
+    final JSONObjectAgg<J> copyAggregateFunction(Function<? super JSONObjectAgg<J>, ? extends JSONObjectAgg<J>> function) {
         return function.apply((JSONObjectAgg<J>) $constructor().apply(entry));
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

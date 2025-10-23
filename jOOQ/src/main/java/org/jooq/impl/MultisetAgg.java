@@ -189,7 +189,7 @@ implements
     }
 
     @Override
-    final MultisetAgg<R> copy2(Function<MultisetAgg<R>, MultisetAgg<R>> function) {
+    final MultisetAgg<R> copyAggregateFunction(Function<? super MultisetAgg<R>, ? extends MultisetAgg<R>> function) {
         return function.apply(new MultisetAgg<>(distinct, row));
     }
 

@@ -147,12 +147,12 @@ implements
 
     @Override
     public final QOM.RegrR2 $y(Field<? extends Number> newValue) {
-        return $constructor().apply(newValue, $x());
+        return copyAggregateSpecification().apply((RegrR2) $constructor().apply(newValue, $x()));
     }
 
     @Override
     public final QOM.RegrR2 $x(Field<? extends Number> newValue) {
-        return $constructor().apply($y(), newValue);
+        return copyAggregateSpecification().apply((RegrR2) $constructor().apply($y(), newValue));
     }
 
     public final Function2<? super Field<? extends Number>, ? super Field<? extends Number>, ? extends QOM.RegrR2> $constructor() {
@@ -160,9 +160,18 @@ implements
     }
 
     @Override
-    final RegrR2 copy2(Function<RegrR2, RegrR2> function) {
+    final RegrR2 copyAggregateFunction(Function<? super RegrR2, ? extends RegrR2> function) {
         return function.apply((RegrR2) $constructor().apply($y(), $x()));
     }
+
+
+
+
+
+
+
+
+
 
 
 

@@ -77,7 +77,7 @@ final class DenseRank extends AbstractWindowFunction<Integer, DenseRank> impleme
     // -------------------------------------------------------------------------
 
     @Override
-    final DenseRank copy1(Function<DenseRank, DenseRank> function) {
+    final DenseRank copyWindowFunction(Function<? super DenseRank, ? extends DenseRank> function) {
         return function.apply(new DenseRank());
     }
 

@@ -88,11 +88,11 @@ final class Ntile extends AbstractWindowFunction<Integer, Ntile> implements QOM.
 
     @Override
     public final Ntile $tiles(Field<Integer> newTiles) {
-        return copy0().apply(new Ntile(newTiles));
+        return copyWindowSpecification().apply(new Ntile(newTiles));
     }
 
     @Override
-    final Ntile copy1(Function<Ntile, Ntile> function) {
+    final Ntile copyWindowFunction(Function<? super Ntile, ? extends Ntile> function) {
         return function.apply(new Ntile(tiles));
     }
 

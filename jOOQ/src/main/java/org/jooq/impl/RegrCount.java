@@ -139,12 +139,12 @@ implements
 
     @Override
     public final QOM.RegrCount $y(Field<? extends Number> newValue) {
-        return $constructor().apply(newValue, $x());
+        return copyAggregateSpecification().apply((RegrCount) $constructor().apply(newValue, $x()));
     }
 
     @Override
     public final QOM.RegrCount $x(Field<? extends Number> newValue) {
-        return $constructor().apply($y(), newValue);
+        return copyAggregateSpecification().apply((RegrCount) $constructor().apply($y(), newValue));
     }
 
     public final Function2<? super Field<? extends Number>, ? super Field<? extends Number>, ? extends QOM.RegrCount> $constructor() {
@@ -152,9 +152,18 @@ implements
     }
 
     @Override
-    final RegrCount copy2(Function<RegrCount, RegrCount> function) {
+    final RegrCount copyAggregateFunction(Function<? super RegrCount, ? extends RegrCount> function) {
         return function.apply((RegrCount) $constructor().apply($y(), $x()));
     }
+
+
+
+
+
+
+
+
+
 
 
 

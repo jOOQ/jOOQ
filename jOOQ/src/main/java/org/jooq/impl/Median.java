@@ -119,7 +119,7 @@ implements
 
     @Override
     public final QOM.Median $field(Field<? extends Number> newValue) {
-        return $constructor().apply(newValue);
+        return copyAggregateSpecification().apply((Median) $constructor().apply(newValue));
     }
 
     public final Function1<? super Field<? extends Number>, ? extends QOM.Median> $constructor() {
@@ -127,9 +127,18 @@ implements
     }
 
     @Override
-    final Median copy2(Function<Median, Median> function) {
+    final Median copyAggregateFunction(Function<? super Median, ? extends Median> function) {
         return function.apply((Median) $constructor().apply($field()));
     }
+
+
+
+
+
+
+
+
+
 
 
 

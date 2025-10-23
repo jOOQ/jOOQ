@@ -148,7 +148,7 @@ implements
 
     @Override
     public final QOM.VarPop $field(Field<? extends Number> newValue) {
-        return $constructor().apply(newValue);
+        return copyAggregateSpecification().apply((VarPop) $constructor().apply(newValue));
     }
 
     public final Function1<? super Field<? extends Number>, ? extends QOM.VarPop> $constructor() {
@@ -156,9 +156,18 @@ implements
     }
 
     @Override
-    final VarPop copy2(Function<VarPop, VarPop> function) {
+    final VarPop copyAggregateFunction(Function<? super VarPop, ? extends VarPop> function) {
         return function.apply((VarPop) $constructor().apply($field()));
     }
+
+
+
+
+
+
+
+
+
 
 
 

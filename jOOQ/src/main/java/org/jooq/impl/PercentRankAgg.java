@@ -113,7 +113,7 @@ implements
 
     @Override
     public final QOM.PercentRankAgg $fields(Collection<? extends Field<?>> newValue) {
-        return $constructor().apply(newValue);
+        return copyAggregateSpecification().apply((PercentRankAgg) $constructor().apply(newValue));
     }
 
     public final Function1<? super Collection<? extends Field<?>>, ? extends QOM.PercentRankAgg> $constructor() {
@@ -121,9 +121,18 @@ implements
     }
 
     @Override
-    final PercentRankAgg copy2(Function<PercentRankAgg, PercentRankAgg> function) {
+    final PercentRankAgg copyAggregateFunction(Function<? super PercentRankAgg, ? extends PercentRankAgg> function) {
         return function.apply((PercentRankAgg) $constructor().apply($fields()));
     }
+
+
+
+
+
+
+
+
+
 
 
 

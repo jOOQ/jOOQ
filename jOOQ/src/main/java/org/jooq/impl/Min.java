@@ -110,12 +110,12 @@ implements
 
     @Override
     public final QOM.Min<T> $field(Field<T> newValue) {
-        return $constructor().apply(newValue, $distinct());
+        return copyAggregateSpecification().apply((Min<T>) $constructor().apply(newValue, $distinct()));
     }
 
     @Override
     public final QOM.Min<T> $distinct(boolean newValue) {
-        return $constructor().apply($field(), newValue);
+        return copyAggregateSpecification().apply((Min<T>) $constructor().apply($field(), newValue));
     }
 
     public final Function2<? super Field<T>, ? super Boolean, ? extends QOM.Min<T>> $constructor() {
@@ -123,9 +123,18 @@ implements
     }
 
     @Override
-    final Min<T> copy2(Function<Min<T>, Min<T>> function) {
+    final Min<T> copyAggregateFunction(Function<? super Min<T>, ? extends Min<T>> function) {
         return function.apply((Min<T>) $constructor().apply($field(), $distinct()));
     }
+
+
+
+
+
+
+
+
+
 
 
 

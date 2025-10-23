@@ -203,12 +203,12 @@ implements
 
     @Override
     public final QOM.MinBy<T> $value(Field<T> newValue) {
-        return $constructor().apply(newValue, $by());
+        return copyAggregateSpecification().apply((MinBy<T>) $constructor().apply(newValue, $by()));
     }
 
     @Override
     public final QOM.MinBy<T> $by(Field<?> newValue) {
-        return $constructor().apply($value(), newValue);
+        return copyAggregateSpecification().apply((MinBy<T>) $constructor().apply($value(), newValue));
     }
 
     public final Function2<? super Field<T>, ? super Field<?>, ? extends QOM.MinBy<T>> $constructor() {
@@ -216,9 +216,18 @@ implements
     }
 
     @Override
-    final MinBy<T> copy2(Function<MinBy<T>, MinBy<T>> function) {
+    final MinBy<T> copyAggregateFunction(Function<? super MinBy<T>, ? extends MinBy<T>> function) {
         return function.apply((MinBy<T>) $constructor().apply($value(), $by()));
     }
+
+
+
+
+
+
+
+
+
 
 
 

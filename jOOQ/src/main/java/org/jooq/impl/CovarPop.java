@@ -156,12 +156,12 @@ implements
 
     @Override
     public final QOM.CovarPop $y(Field<? extends Number> newValue) {
-        return $constructor().apply(newValue, $x());
+        return copyAggregateSpecification().apply((CovarPop) $constructor().apply(newValue, $x()));
     }
 
     @Override
     public final QOM.CovarPop $x(Field<? extends Number> newValue) {
-        return $constructor().apply($y(), newValue);
+        return copyAggregateSpecification().apply((CovarPop) $constructor().apply($y(), newValue));
     }
 
     public final Function2<? super Field<? extends Number>, ? super Field<? extends Number>, ? extends QOM.CovarPop> $constructor() {
@@ -169,9 +169,18 @@ implements
     }
 
     @Override
-    final CovarPop copy2(Function<CovarPop, CovarPop> function) {
+    final CovarPop copyAggregateFunction(Function<? super CovarPop, ? extends CovarPop> function) {
         return function.apply((CovarPop) $constructor().apply($y(), $x()));
     }
+
+
+
+
+
+
+
+
+
 
 
 

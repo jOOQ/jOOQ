@@ -134,7 +134,7 @@ implements
 
     @Override
     final GroupConcat copyAggregateFunction(Function<? super GroupConcat, ? extends GroupConcat> function) {
-        return function.apply((GroupConcat) $constructor().apply((Field) getArgument(0), (Field) getArgument(1)));
+        return function.apply($constructor().apply(getArgument(0), (Field<String>) getArgument(1)));
     }
 
 

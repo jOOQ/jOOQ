@@ -34246,7 +34246,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO })
     public static GroupConcatOrderByStep groupConcat(Field<?> field) {
-        return new ListAgg(false, Tools.nullSafe(field));
+        return new ListAgg(false, Tools.nullSafe(field), ListAgg.DEFAULT_SEPARATOR);
     }
 
     /**
@@ -34303,7 +34303,7 @@ public class DSL {
     @NotNull
     @Support({ CUBRID, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static GroupConcatOrderByStep groupConcatDistinct(Field<?> field) {
-        return new ListAgg(true, Tools.nullSafe(field));
+        return new ListAgg(true, Tools.nullSafe(field), ListAgg.DEFAULT_SEPARATOR);
     }
 
     // -------------------------------------------------------------------------

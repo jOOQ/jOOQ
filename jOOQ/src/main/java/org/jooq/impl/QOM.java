@@ -1341,7 +1341,7 @@ public final class QOM {
 
     public /*sealed*/ interface Mode<T>
         extends
-            OrderedAggregateFunction<T, Mode<T>>,
+            AggregateFunction<T, Mode<T>>,
             UOperator1<Field<T>, Mode<T>>
         /*permits
             Mode*/
@@ -1350,6 +1350,14 @@ public final class QOM {
         @CheckReturnValue
         @NotNull default Mode<T> $field(Field<T> field) { return $arg1(field); }
     }
+
+    public /*sealed*/ interface ModeOrdered<T>
+        extends
+            OrderedAggregateFunction<T, ModeOrdered<T>>,
+            UOperator0<ModeOrdered<T>>
+        /*permits
+            ModeOrdered*/
+    {}
 
     public /*sealed*/ interface MultisetAgg<R extends Record>
         extends

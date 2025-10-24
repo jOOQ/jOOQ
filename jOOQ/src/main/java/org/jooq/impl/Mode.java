@@ -60,8 +60,6 @@ import org.jooq.QueryPart;
 // ...
 import org.jooq.SQLDialect;
 
-import org.jetbrains.annotations.NotNull;
-
 /**
  * @author Lukas Eder
  */
@@ -120,8 +118,6 @@ implements
     final QOM.Mode<T> copyAggregateFunction(Function<? super QOM.Mode<T>, ? extends QOM.Mode<T>> function) {
         return function.apply($constructor().apply($arg1()));
     }
-
-
 
 
 

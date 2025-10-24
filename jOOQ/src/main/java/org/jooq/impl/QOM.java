@@ -1353,11 +1353,19 @@ public final class QOM {
 
     public /*sealed*/ interface MultisetAgg<R extends Record>
         extends
-            OrderedAggregateFunction<Result<R>, MultisetAgg<R>>
+            OrderedAggregateFunction<Result<R>, MultisetAgg<R>>,
+            UOperator1<QOM.UnmodifiableList<? extends Field<?>>, MultisetAgg<R>>
         /*permits
             MultisetAgg*/
     {
+        /**
+         * @deprecated - 3.21.0 - [#19277] - Use {@link #$fields()} instead.
+         */
+        @Deprecated(forRemoval = true, since = "3.21")
         @NotNull Row $row();
+        @NotNull default QOM.UnmodifiableList<? extends Field<?>> $fields() { return $arg1(); }
+        @CheckReturnValue
+        @NotNull default MultisetAgg<R> $fields(QOM.UnmodifiableList<? extends Field<?>> newFields) { return $arg1(newFields); }
     }
 
     public /*sealed*/ interface ArrayAgg<T>

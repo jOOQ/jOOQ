@@ -61,6 +61,7 @@ import java.util.function.Function;
 import org.jooq.ArrayAggOrderByStep;
 import org.jooq.Context;
 import org.jooq.Field;
+import org.jooq.Function1;
 import org.jooq.JSON;
 import org.jooq.JSONArrayAggOrderByStep;
 import org.jooq.JSONB;
@@ -73,6 +74,9 @@ import org.jooq.SelectField;
 // ...
 import org.jooq.XML;
 import org.jooq.XMLAggOrderByStep;
+import org.jooq.impl.QOM.UnmodifiableList;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
@@ -189,9 +193,25 @@ implements
     }
 
     @Override
+    public final UnmodifiableList<? extends Field<?>> $arg1() {
+        return QOM.unmodifiable(row.fields());
+    }
+
+    @Override
+    public final QOM.MultisetAgg<R> $arg1(UnmodifiableList<? extends Field<?>> newArg1) {
+        return copyAggregateSpecification().apply($constructor().apply(newArg1));
+    }
+
+    @Override
+    public final Function1<? super UnmodifiableList<? extends Field<?>>, ? extends QOM.MultisetAgg<R>> $constructor() {
+        return f -> (QOM.MultisetAgg<R>) new MultisetAgg<>(distinct, Tools.row0(f));
+    }
+
+    @Override
     final QOM.MultisetAgg<R> copyAggregateFunction(Function<? super QOM.MultisetAgg<R>, ? extends QOM.MultisetAgg<R>> function) {
         return function.apply(new MultisetAgg<>(distinct, row));
     }
+
 
 
 

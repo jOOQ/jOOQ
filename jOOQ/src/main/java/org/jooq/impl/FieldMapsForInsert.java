@@ -95,6 +95,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 import org.jooq.Configuration;
 import org.jooq.Context;
@@ -264,7 +265,12 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
     }
 
     final FieldMapsForInsert.OrSelect emulateUDTPaths(Context<?> ctx, Select<?> s) {
-        if (EMULATE_UDT_PATHS.contains(ctx.dialect()) && anyMatch(values.keySet(), f -> f instanceof UDTPathField && table.indexOf(f) == -1)) {
+        ThrowingPredicate<? super Field<?>, RuntimeException> isPath = f ->
+            f instanceof UDTPathField
+            && !(((UDTPathField<?, ?, ?>) f).getQualifier() instanceof Table)
+            && table.indexOf(f) == -1;
+
+        if (EMULATE_UDT_PATHS.contains(ctx.dialect()) && anyMatch(values.keySet(), isPath)) {
             FieldMapsForInsert result = new FieldMapsForInsert(table);
             result.nextRow = nextRow;
             result.rows = rows;
@@ -277,7 +283,7 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
                 Field<?> key = e.getKey();
                 List<Field<?>> value = e.getValue();
 
-                if (key instanceof UDTPathField && table.indexOf(key) == -1) {
+                if (isPath.test(key)) {
                     UDTPathField<?, ?, ?> u = (UDTPathField<?, ?, ?>) key;
                     UDTPathTableField<?, ?, ?> f = u.getTableField();
 

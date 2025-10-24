@@ -168,6 +168,14 @@ final class Val<T> extends AbstractParam<T> implements UEmpty {
         //          Cannot use convertTo0() here as long as Param.setValue() is possible (mutable Params)
         else if (OTHER.equals(getDataType()))
             return new ConvertedVal<>(this, type);
+
+        // [#19281] A similar thing could happen with Object[] typed arrays, especially when passed to varargs methods,
+        //          like DSL.any(T...). This is different from the above parser case.
+        else if (getDataType().isArray()
+            && type.isArray()
+            && OTHER.equals(getDataType().getArrayComponentDataType())
+            && !OTHER.equals(type.getArrayComponentDataType()))
+            return convertTo0(type);
         else
             return (Val) this;
     }

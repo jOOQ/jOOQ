@@ -38,11 +38,8 @@
 package org.jooq;
 
 import java.util.concurrent.Flow;
-import java.util.function.Consumer;
 
 import org.reactivestreams.FlowAdapters;
-import org.reactivestreams.Subscriber;
-import org.reactivestreams.Subscription;
 
 
 /**

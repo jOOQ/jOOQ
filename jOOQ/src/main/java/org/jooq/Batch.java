@@ -38,6 +38,7 @@
 package org.jooq;
 
 import java.io.Serializable;
+import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.Executor;
@@ -80,6 +81,19 @@ public interface Batch extends Serializable, Publisher<Integer> {
     int @NotNull [] execute() throws DataAccessException;
 
     /**
+     * Execute the batch operation.
+     * <p>
+     * This is equivalent to {@link #execute()}, except that it can fetch a
+     * larger update count if the underlying JDBC driver implements
+     * {@link PreparedStatement#executeLargeBatch()}.
+     *
+     * @see Statement#executeLargeBatch()
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Blocking
+    long @NotNull [] executeLarge() throws DataAccessException;
+
+    /**
      * Execute the batch operation in a new {@link CompletionStage}.
      * <p>
      * The result is asynchronously completed by a task running in an
@@ -97,6 +111,38 @@ public interface Batch extends Serializable, Publisher<Integer> {
      */
     @NotNull
     CompletionStage<int[]> executeAsync(Executor executor);
+
+    /**
+     * Execute the batch operation in a new {@link CompletionStage}.
+     * <p>
+     * This is equivalent to {@link #executeAsync()}, except that it can fetch a
+     * larger update count if the underlying JDBC driver implements
+     * {@link PreparedStatement#executeLargeBatch()}.
+     * <p>
+     * The result is asynchronously completed by a task running in an
+     * {@link Executor} provided by the underlying
+     * {@link Configuration#executorProvider()}.
+     *
+     * @see Statement#executeBatch()
+     */
+    @NotNull
+    CompletionStage<long[]> executeLargeAsync();
+
+    /**
+     * Execute the query in a new {@link CompletionStage} that is asynchronously
+     * completed by a task running in the given executor.
+     * <p>
+     * This is equivalent to {@link #executeAsync(Executor)}, except that it can
+     * fetch a larger update count if the underlying JDBC driver implements
+     * {@link PreparedStatement#executeLargeBatch()}.
+     */
+    @NotNull
+    CompletionStage<long[]> executeLargeAsync(Executor executor);
+
+    /**
+     * Turn this publisher into a {@link Long} returning publisher to support large update counts.
+     */
+    Publisher<Long> largePublisher();
 
     /**
      * Get the number of executed queries in this batch operation

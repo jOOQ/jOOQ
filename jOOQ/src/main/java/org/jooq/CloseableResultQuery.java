@@ -86,6 +86,10 @@ public interface CloseableResultQuery<R extends Record> extends ResultQuery<R>, 
 
     @Override
     @NotNull
+    CloseableResultQuery<R> largeMaxRows(long rows);
+
+    @Override
+    @NotNull
     CloseableResultQuery<R> fetchSize(int rows);
 
     @Override

@@ -5385,6 +5385,19 @@ public interface ResultQuery<R extends Record> extends Fields, Query, Iterable<R
     ResultQuery<R> maxRows(int rows);
 
     /**
+     * Specify the maximum number of rows returned by the underlying
+     * {@link Statement}.
+     * <p>
+     * This is not the same as setting a <code>LIMIT … OFFSET</code> clause
+     * onto the statement, where the result set is restricted within the
+     * database.
+     *
+     * @see Statement#setLargeMaxRows(long)
+     */
+    @NotNull
+    ResultQuery<R> largeMaxRows(long largeRows);
+
+    /**
      * Specify the fetch size of the underlying {@link Statement}.
      * <p>
      * Regardless of this setting, {@link #fetchLazy()} is the only way in jOOQ

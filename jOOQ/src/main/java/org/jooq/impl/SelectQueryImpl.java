@@ -4519,17 +4519,23 @@ implements
             if (e == null)
                 for (TableLike<?> table : getFrom())
                     for (Field<?> field : table.asTable().fields())
-                        result.add(field);
+
+                        // ecj ambiguity since 2025-09
+                        ((QueryPartList<Field<?>>) result).add(field);
             else
                 for (TableLike<?> table : getFrom())
                     for (Field<?> field : table.asTable().fields())
                         if (e.field(field) == null)
-                            result.add(field);
+
+                            // ecj ambiguity since 2025-09
+                            ((QueryPartList<Field<?>>) result).add(field);
 
         // The default is SELECT 1, when projections and table sources are
         // both empty
         if (getFrom().isEmpty())
-            result.add(one());
+
+            // ecj ambiguity since 2025-09
+            ((QueryPartList<Field<?>>) result).add(one());
 
         return result;
     }

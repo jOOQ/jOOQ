@@ -37,6 +37,7 @@
  */
 package org.jooq;
 
+import java.sql.PreparedStatement;
 import java.sql.Statement;
 
 import org.jooq.conf.Settings;
@@ -65,6 +66,18 @@ public interface ResultOrRows {
      * @see Statement#getUpdateCount()
      */
     int rows();
+
+    /**
+     * The update count if applicable, or the number of rows in
+     * {@link #result()}.
+     * <p>
+     * This is equivalent to {@link #rows()}, except that it can fetch a
+     * larger update count if the underlying JDBC driver implements
+     * {@link PreparedStatement#executeLargeUpdate()}.
+     *
+     * @see Statement#getLargeUpdateCount()
+     */
+    long rowsLarge();
 
     /**
      * The exception if applicable or <code>null</code> if there was no

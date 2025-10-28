@@ -45,4 +45,9 @@ package org.jooq;
  */
 public interface RowCountQuery extends Query, Publisher<Integer> {
 
+    /**
+     * Turn this publisher into a {@link Long} returning publisher to support large update counts.
+     */
+    Publisher<Long> largePublisher();
+
 }

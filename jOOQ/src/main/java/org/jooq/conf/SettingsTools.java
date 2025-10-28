@@ -427,6 +427,18 @@ public final class SettingsTools {
     }
 
     /**
+     * Return <code>largeMaxRows</code> if it is not <code>0</code>, or the
+     * specified {@link Settings#getLargeMaxRows()}.
+     */
+    public static final long getLargeMaxRows(long maxRows, Settings settings) {
+        return maxRows != 0L
+             ? maxRows
+             : settings.getLargeMaxRows() != null
+             ? settings.getLargeMaxRows()
+             : 0L;
+    }
+
+    /**
      * Return <code>FetchIntermediateResult</code>.
      */
     public static final boolean fetchIntermediateResult(Configuration configuration) {

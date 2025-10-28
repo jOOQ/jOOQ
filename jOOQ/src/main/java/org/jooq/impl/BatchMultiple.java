@@ -42,6 +42,7 @@ import static org.jooq.impl.AbstractQuery.connection;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.stream.IntStream;
+import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
 import org.jooq.Configuration;
@@ -77,7 +78,7 @@ final class BatchMultiple extends AbstractBatch {
     }
 
     @Override
-    public final void subscribe(Subscriber<? super Integer> subscriber) {
+    final void subscribe0(Subscriber<? super R2DBC.RowCount> subscriber) {
         ConnectionFactory cf = configuration.connectionFactory();
 
         if (!(cf instanceof NoConnectionFactory))
@@ -90,19 +91,33 @@ final class BatchMultiple extends AbstractBatch {
 
     @Override
     public final int[] execute() {
-        return
-        Tools.chunks(Arrays.asList(queries), SettingsTools.getBatchSize(Tools.settings(configuration)))
-             .stream()
-             .map(chunk -> execute(Tools.configuration(configuration), chunk.toArray(Tools.EMPTY_QUERY)))
-             .flatMapToInt(IntStream::of)
-             .toArray();
+        return (int[]) execute(false);
     }
 
-    static int[] execute(Configuration configuration, Query[] queries) {
+    @Override
+    public final long[] executeLarge() {
+        return (long[]) execute(true);
+    }
+
+    private final Object execute(boolean large) {
+        Stream<Object> stream =
+        Tools.chunks(Arrays.asList(queries), SettingsTools.getBatchSize(Tools.settings(configuration)))
+             .stream()
+             .map(chunk -> execute(Tools.configuration(configuration), chunk.toArray(Tools.EMPTY_QUERY), large));
+
+        if (large)
+            return stream.flatMapToLong(o -> LongStream.of((long[]) o)).toArray();
+        else
+            return stream.flatMapToInt(o -> IntStream.of((int[]) o)).toArray();
+    }
+
+    static Object execute(Configuration configuration, Query[] queries, boolean large) {
 
         // [#14784] TODO: Make this configurable also for other dialects
         if (NO_SUPPORT_BATCH.contains(configuration.dialect()))
-            return Stream.of(queries).mapToInt(configuration.dsl()::execute).toArray();
+            return large
+                ? Stream.of(queries).mapToLong(configuration.dsl()::executeLarge).toArray()
+                : Stream.of(queries).mapToInt(configuration.dsl()::execute).toArray();
 
         DefaultExecuteContext ctx = new DefaultExecuteContext(configuration, BatchMode.MULTIPLE, queries);
         ExecuteListener listener = ExecuteListeners.get(ctx, true);
@@ -141,10 +156,21 @@ final class BatchMultiple extends AbstractBatch {
 
             listener.executeStart(ctx);
 
-            int[] result = ctx.statement().executeBatch();
-            int[] batchRows = ctx.batchRows();
-            for (int i = 0; i < batchRows.length && i < result.length; i++)
-                batchRows[i] = result[i];
+            long[] batchRows = ctx.batchRowsLarge();
+            Object result;
+
+            if (large) {
+                long[] r = ctx.statement().executeLargeBatch();
+                result = r;
+                for (int i = 0; i < batchRows.length && i < r.length; i++)
+                    batchRows[i] = r[i];
+            }
+            else {
+                int[] r = ctx.statement().executeBatch();
+                result = r;
+                for (int i = 0; i < batchRows.length && i < r.length; i++)
+                    batchRows[i] = r[i];
+            }
 
             listener.executeEnd(ctx);
             return result;

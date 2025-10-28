@@ -42,6 +42,7 @@ package org.jooq.impl;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.Internal.truncateUpdateCount;
 import static org.jooq.impl.Tools.consumeResultSets;
 import static org.jooq.impl.Tools.executeStatementAndGetFirstResultSet;
 
@@ -85,7 +86,7 @@ implements
 
     private static final Set<SQLDialect>   REPORT_FETCH_SIZE_WITH_AUTOCOMMIT = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
 
-    private int                            maxRows;
+    private long                           maxRows;
     private int                            fetchSize;
     private int                            resultSetConcurrency;
     private int                            resultSetType;
@@ -135,6 +136,12 @@ implements
 
     @Override
     public final CloseableResultQuery<R> maxRows(int rows) {
+        this.maxRows = rows;
+        return this;
+    }
+
+    @Override
+    public final CloseableResultQuery<R> largeMaxRows(long rows) {
         this.maxRows = rows;
         return this;
     }
@@ -191,14 +198,29 @@ implements
 
         Tools.setFetchSize(ctx, fetchSize);
 
-        // [#1854] [#4753] Set the max number of rows for this result query
-        int m = SettingsTools.getMaxRows(maxRows, ctx.settings());
-        if (m != 0)
-            ctx.statement().setMaxRows(m);
+        // [#1854] [#4753] [#19261] Set the max number of rows for this result query
+        long m = maxRows(ctx);
+        if (m > 0L) {
+            if (m > Integer.MAX_VALUE)
+                ctx.statement().setLargeMaxRows(maxRows);
+            else
+                ctx.statement().setMaxRows(truncateUpdateCount(maxRows));
+        }
+    }
+
+    final long maxRows(ExecuteContext ctx) {
+        if (maxRows > 0L)
+            return maxRows;
+        else if (ctx.settings().getLargeMaxRows() != null && ctx.settings().getLargeMaxRows() != 0)
+            return ctx.settings().getLargeMaxRows();
+        else if (ctx.settings().getMaxRows() != null && ctx.settings().getMaxRows() != 0)
+            return ctx.settings().getMaxRows();
+        else
+            return 0L;
     }
 
     @Override
-    protected final int execute(ExecuteContext ctx, ExecuteListener listener) throws SQLException {
+    final long execute(ExecuteContext ctx, ExecuteListener listener, boolean large) throws SQLException {
         listener.executeStart(ctx);
 
         // [#4511] [#4753] PostgreSQL doesn't like fetchSize with autoCommit == true
@@ -232,7 +254,7 @@ implements
             }
 
             Field<?>[] fields = getFields(() -> ctx.resultSet().getMetaData());
-            cursor = new CursorImpl<>(ctx, listener, fields, keepStatement(), keepResultSet(), getTable(), getRecordType(), SettingsTools.getMaxRows(maxRows, ctx.settings()), autoclosing);
+            cursor = new CursorImpl<>(ctx, listener, fields, keepStatement(), keepResultSet(), getTable(), getRecordType(), maxRows(ctx), autoclosing);
 
             if (!lazy) {
                 result = cursor.fetch();
@@ -243,7 +265,7 @@ implements
         // Fetch several result sets
         else {
             results = new ResultsImpl(ctx.configuration());
-            consumeResultSets(ctx, listener, results, e);
+            consumeResultSets(ctx, listener, results, e, large);
         }
 
         return result != null ? result.size() : 0;

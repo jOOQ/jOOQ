@@ -1138,28 +1138,30 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
-    protected final int execute(ExecuteContext ctx, ExecuteListener listener) throws SQLException {
+    final long execute(ExecuteContext ctx, ExecuteListener listener, boolean large) throws SQLException {
         returned = null;
         returnedResult = null;
 
         if (returning.isEmpty()) {
-            return super.execute(ctx, listener);
+            return super.execute(ctx, listener, large);
         }
         // Column stores don't seem support fetching generated keys
         else if (NO_SUPPORT_FETCHING_KEYS.contains(ctx.dialect())) {
             log.debug("RETURNING was set on query, but dialect doesn't support fetching generated keys: " + ctx.dialect());
-            return super.execute(ctx, listener);
+            return super.execute(ctx, listener, large);
         }
         else {
-            int result = 0;
+            long result = 0;
             switch (ctx.family()) {
 
                 // SQLite can select _rowid_ after the insert
                 case SQLITE: {
                     if (!nativeSupportReturning(ctx)) {
                         listener.executeStart(ctx);
-                        result = executeImmediate(ctx.statement()).executeUpdate();
-                        ctx.rows(result);
+                        result = large
+                            ? executeImmediate(ctx.statement()).executeLargeUpdate()
+                            : executeImmediate(ctx.statement()).executeUpdate();
+                        ctx.rowsLarge(result);
                         listener.executeEnd(ctx);
 
                         DSLContext create = ctx.dsl();
@@ -1191,8 +1193,10 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
                 case CUBRID: {
                     listener.executeStart(ctx);
-                    result = executeImmediate(ctx.statement()).executeUpdate();
-                    ctx.rows(result);
+                    result = large
+                        ? executeImmediate(ctx.statement()).executeLargeUpdate()
+                        : executeImmediate(ctx.statement()).executeUpdate();
+                    ctx.rowsLarge(result);
                     listener.executeEnd(ctx);
 
                     selectReturning(
@@ -1230,12 +1234,12 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
                 case DERBY:
                 case MYSQL: {
-                    return executeReturningGeneratedKeysFetchAdditionalRows(ctx, listener);
+                    return executeReturningGeneratedKeysFetchAdditionalRows(ctx, listener, large);
                 }
 
                 case MARIADB: {
                     if (!nativeSupportReturning(ctx))
-                        return executeReturningGeneratedKeysFetchAdditionalRows(ctx, listener);
+                        return executeReturningGeneratedKeysFetchAdditionalRows(ctx, listener, large);
 
                     executeReturningQuery(ctx, listener);
                     break;
@@ -1355,9 +1359,11 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
 
 
+
+
                 case HSQLDB:
                 default: {
-                    result = executeReturningGeneratedKeys(ctx, listener);
+                    result = executeReturningGeneratedKeys(ctx, listener, large);
                     break;
                 }
             }
@@ -1373,8 +1379,8 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
                 //          but the returned results might be empty, so keep the
                 //          higher value of the two
                 // [#14571] The DML rowcount may have already been set to ctx.rows()
-                result = Math.max(Math.max(result, ctx.rows()), returnedResult.size());
-                ctx.rows(result);
+                result = Math.max(Math.max(result, ctx.rowsLarge()), returnedResult.size());
+                ctx.rowsLarge(result);
             }
 
             return result;
@@ -1392,22 +1398,31 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
      */
     abstract int estimatedRowCount(Scope ctx);
 
-    private final int executeReturningGeneratedKeys(ExecuteContext ctx, ExecuteListener listener) throws SQLException {
+    private final long executeReturningGeneratedKeys(ExecuteContext ctx, ExecuteListener listener, boolean large) throws SQLException {
         listener.executeStart(ctx);
-        int result = executeImmediate(ctx.statement()).executeUpdate();
-        ctx.rows(result);
+        long result = large
+            ? executeImmediate(ctx.statement()).executeLargeUpdate()
+            : executeImmediate(ctx.statement()).executeUpdate();
+        ctx.rowsLarge(result);
         ctx.resultSet(ctx.statement().getGeneratedKeys());
         listener.executeEnd(ctx);
 
         return result;
     }
 
-    private final int executeReturningGeneratedKeysFetchAdditionalRows(ExecuteContext ctx, ExecuteListener listener) throws SQLException {
+    private final long executeReturningGeneratedKeysFetchAdditionalRows(
+        ExecuteContext ctx,
+        ExecuteListener listener,
+        boolean large
+    ) throws SQLException {
         ResultSet rs;
 
         listener.executeStart(ctx);
-        int result = executeImmediate(ctx.statement()).executeUpdate();
-        ctx.rows(result);
+        long result = large
+            ? executeImmediate(ctx.statement()).executeLargeUpdate()
+            : executeImmediate(ctx.statement()).executeUpdate();
+
+        ctx.rowsLarge(result);
         listener.executeEnd(ctx);
 
         try {

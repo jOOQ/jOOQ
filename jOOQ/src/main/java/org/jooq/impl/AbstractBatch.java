@@ -38,17 +38,23 @@
 package org.jooq.impl;
 
 import static org.jooq.SQLDialect.TRINO;
+import static org.jooq.impl.R2DBC.mapping;
 import static org.jooq.impl.Tools.blocking;
 
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.Executor;
+import java.util.function.Function;
 
 import org.jooq.Batch;
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
+import org.jooq.Publisher;
 import org.jooq.SQLDialect;
+import org.jooq.impl.R2DBC.RowCount;
+
+import org.reactivestreams.Subscriber;
 
 /**
  * @author Lukas Eder
@@ -73,4 +79,36 @@ abstract class AbstractBatch implements Batch {
     public final CompletionStage<int[]> executeAsync(Executor executor) {
         return ExecutorProviderCompletionStage.of(CompletableFuture.supplyAsync(blocking(this::execute), executor), () -> executor);
     }
+
+    @Override
+    public final CompletionStage<long[]> executeLargeAsync() {
+        return executeLargeAsync(configuration.executorProvider().provide());
+    }
+
+    @Override
+    public final CompletionStage<long[]> executeLargeAsync(Executor executor) {
+        return ExecutorProviderCompletionStage.of(CompletableFuture.supplyAsync(blocking(this::executeLarge), executor), () -> executor);
+    }
+
+    @Override
+    public final void subscribe(Subscriber<? super Integer> subscriber) {
+        subscribe0(subscriber, RowCount::rows, false);
+    }
+
+    @Override
+    public Publisher<Long> largePublisher() {
+        return s -> subscribe0(s, RowCount::largeRows, true);
+    }
+
+    final <R> void subscribe0(
+        Subscriber<? super R> subscriber,
+        Function<? super RowCount, ? extends R> extract,
+        boolean large
+    ) {
+        subscribe0(mapping(subscriber, extract, dsl.configuration().subscriberProvider()));
+    }
+
+    abstract void subscribe0(
+        Subscriber<? super RowCount> subscriber
+    );
 }

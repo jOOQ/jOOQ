@@ -1188,6 +1188,26 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     @Override
+    public long executeLarge(SQL sql) {
+        return query(sql).executeLarge();
+    }
+
+    @Override
+    public long executeLarge(String sql) {
+        return query(sql).executeLarge();
+    }
+
+    @Override
+    public long executeLarge(String sql, Object... bindings) {
+        return query(sql, bindings).executeLarge();
+    }
+
+    @Override
+    public long executeLarge(String sql, QueryPart... parts) {
+        return query(sql, (Object[]) parts).executeLarge();
+    }
+
+    @Override
     public ResultQuery<Record> resultQuery(SQL sql) {
         return new SQLResultQuery(configuration(), sql);
     }
@@ -5528,6 +5548,11 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public int execute(Query query) {
         return Tools.attach(query, configuration(), query::execute);
+    }
+
+    @Override
+    public long executeLarge(Query query) {
+        return Tools.attach(query, configuration(), query::executeLarge);
     }
 
     // -------------------------------------------------------------------------

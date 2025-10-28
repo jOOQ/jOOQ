@@ -57,6 +57,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Supplier;
+import java.util.stream.LongStream;
 
 import org.jooq.Binding;
 import org.jooq.Check;
@@ -1395,5 +1396,13 @@ public final class Internal {
                 throw new MappingException("Error while looking up Scala enum", e);
             }
         }
+    }
+
+    public static final int truncateUpdateCount(long rows) {
+        return (int) Math.min(Integer.MAX_VALUE, rows);
+    }
+
+    public static final int[] truncateUpdateCount(long[] rows) {
+        return LongStream.of(rows).mapToInt(i -> truncateUpdateCount(i)).toArray();
     }
 }

@@ -40,7 +40,6 @@ package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
 import static org.jooq.Constants.FULL_VERSION;
-import static org.jooq.ExecuteType.DDL;
 // ...
 // ...
 // ...
@@ -58,11 +57,10 @@ import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.SettingsTools.executePreparedStatements;
 import static org.jooq.conf.SettingsTools.getParamType;
 import static org.jooq.conf.ThrowExceptions.THROW_NONE;
-import static org.jooq.impl.DSL.using;
+import static org.jooq.impl.Internal.truncateUpdateCount;
 import static org.jooq.impl.Tools.EMPTY_PARAM;
 import static org.jooq.impl.Tools.blocking;
 import static org.jooq.impl.Tools.consumeExceptions;
-import static org.jooq.impl.Tools.BooleanDataKey.DATA_COUNT_BIND_VALUES;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_FORCE_STATIC_STATEMENT;
 
 import java.sql.Connection;
@@ -266,6 +264,15 @@ abstract class AbstractQuery<R extends Record> extends AbstractAttachableQueryPa
 
     @Override
     public final int execute() {
+        return truncateUpdateCount(execute(false));
+    }
+
+    @Override
+    public final long executeLarge() {
+        return execute(true);
+    }
+
+    public final long execute(boolean large) {
         if (isExecutable()) {
 
             // Get the attached configuration of this query
@@ -278,7 +285,7 @@ abstract class AbstractQuery<R extends Record> extends AbstractAttachableQueryPa
             DefaultExecuteContext ctx = new DefaultExecuteContext(c, this);
             ExecuteListener listener = ExecuteListeners.get(ctx, true);
 
-            int result = 0;
+            long result = 0;
             try {
 
                 // [#8968] Keep start() event inside of lifecycle management
@@ -346,7 +353,7 @@ abstract class AbstractQuery<R extends Record> extends AbstractAttachableQueryPa
                     listener.bindEnd(ctx);
                 }
 
-                result = execute(ctx, listener);
+                result = execute(ctx, listener, large);
                 return result;
             }
 
@@ -415,6 +422,16 @@ abstract class AbstractQuery<R extends Record> extends AbstractAttachableQueryPa
         return ExecutorProviderCompletionStage.of(CompletableFuture.supplyAsync(blocking(this::execute), executor), () -> executor);
     }
 
+    @Override
+    public final CompletionStage<Long> executeLargeAsync() {
+        return executeLargeAsync(Tools.configuration(this).executorProvider().provide());
+    }
+
+    @Override
+    public final CompletionStage<Long> executeLargeAsync(Executor executor) {
+        return ExecutorProviderCompletionStage.of(CompletableFuture.supplyAsync(blocking(this::executeLarge), executor), () -> executor);
+    }
+
     /**
      * Default implementation to indicate whether this query should close the
      * {@link ResultSet} after execution. Subclasses may override this method.
@@ -447,8 +464,8 @@ abstract class AbstractQuery<R extends Record> extends AbstractAttachableQueryPa
      * Default implementation for query execution using a prepared statement.
      * Subclasses may override this method.
      */
-    protected int execute(ExecuteContext ctx, ExecuteListener listener) throws SQLException {
-        int result = 0;
+    long execute(ExecuteContext ctx, ExecuteListener listener, boolean large) throws SQLException {
+        long result = 0;
         PreparedStatement stmt = ctx.statement();
 
         try {
@@ -457,8 +474,10 @@ abstract class AbstractQuery<R extends Record> extends AbstractAttachableQueryPa
             // [#1829] Statement.execute() is preferred over Statement.executeUpdate(), as
             // we might be executing plain SQL and returning results.
             if (!stmt.execute()) {
-                result = stmt.getUpdateCount();
-                ctx.rows(result);
+                result = large
+                    ? stmt.getLargeUpdateCount()
+                    : stmt.getUpdateCount();
+                ctx.rowsLarge(result);
             }
 
 
@@ -482,7 +501,9 @@ abstract class AbstractQuery<R extends Record> extends AbstractAttachableQueryPa
             if (ctx.settings().getThrowExceptions() != THROW_NONE)
                 throw e;
             else
-                return stmt.getUpdateCount();
+                return large
+                    ? stmt.getLargeUpdateCount()
+                    : stmt.getUpdateCount();
         }
     }
 

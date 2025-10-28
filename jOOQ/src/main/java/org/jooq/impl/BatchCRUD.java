@@ -47,6 +47,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.IntStream;
 
 import org.jooq.BatchBindStep;
 import org.jooq.Configuration;
@@ -57,7 +58,6 @@ import org.jooq.Query;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.exception.ControlFlowSignal;
-import org.jooq.exception.DataAccessException;
 import org.jooq.tools.JooqLogger;
 
 import org.reactivestreams.Subscriber;
@@ -84,14 +84,14 @@ final class BatchCRUD extends AbstractBatch {
     }
 
     @Override
-    public void subscribe(Subscriber<? super Integer> s) {
+    public void subscribe0(Subscriber<? super R2DBC.RowCount> s) {
 
         // [#11700] TODO: Implement this
         throw new UnsupportedOperationException("BatchCRUD operations are not yet supported in a reactive way. Use ordinary batch operations, instead, or avoid batching. See https://github.com/jOOQ/jOOQ/issues/14874");
     }
 
     @Override
-    public final int[] execute() throws DataAccessException {
+    public final int[] execute() {
 
         // [#1180] Run batch queries with BatchMultiple, if no bind variables
         // should be used...
@@ -99,6 +99,11 @@ final class BatchCRUD extends AbstractBatch {
             return executeStatic();
         else
             return executePrepared();
+    }
+
+    @Override
+    public final long[] executeLarge() {
+        return IntStream.of(execute()).mapToLong(i -> (long) i).toArray();
     }
 
     private final Configuration deriveConfiguration(QueryCollector collector) {

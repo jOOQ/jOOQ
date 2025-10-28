@@ -37,13 +37,18 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.R2DBC.mapping;
 import static org.jooq.impl.R2DBC.rowCountSubscriber;
 
+import java.util.function.Function;
+
 import org.jooq.Configuration;
+import org.jooq.Publisher;
 import org.jooq.Record;
 import org.jooq.RowCountQuery;
 import org.jooq.impl.R2DBC.BlockingRowCountSubscription;
 import org.jooq.impl.R2DBC.QuerySubscription;
+import org.jooq.impl.R2DBC.RowCount;
 
 import org.reactivestreams.Subscriber;
 
@@ -60,11 +65,26 @@ abstract class AbstractRowCountQuery extends AbstractQuery<Record> implements Ro
 
     @Override
     public final void subscribe(Subscriber<? super Integer> subscriber) {
-        ConnectionFactory cf = configuration().connectionFactory();
+        subscribe0(subscriber, RowCount::rows, false);
+    }
+
+    @Override
+    public Publisher<Long> largePublisher() {
+        return s -> subscribe0(s, RowCount::largeRows, true);
+    }
+
+    final <R> void subscribe0(
+        Subscriber<? super R> subscriber,
+        Function<? super RowCount, ? extends R> extract,
+        boolean large
+    ) {
+        Configuration c = configuration();
+        ConnectionFactory cf = c.connectionFactory();
+        Subscriber<? super RowCount> rowCountSubscriber = mapping(subscriber, extract, c.subscriberProvider());
 
         if (!(cf instanceof NoConnectionFactory))
-            subscriber.onSubscribe(new QuerySubscription<>(this, subscriber, (t, u, s) -> rowCountSubscriber(u, s)));
+            subscriber.onSubscribe(new QuerySubscription<>(this, rowCountSubscriber, (t, u, s) -> rowCountSubscriber(u, s)));
         else
-            subscriber.onSubscribe(new BlockingRowCountSubscription(this, subscriber));
+            subscriber.onSubscribe(new BlockingRowCountSubscription(this, rowCountSubscriber, large));
     }
 }

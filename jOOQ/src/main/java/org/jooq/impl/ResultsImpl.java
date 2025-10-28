@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Internal.truncateUpdateCount;
+
 import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
@@ -185,17 +187,25 @@ final class ResultsImpl extends AbstractList<Result<Record>> implements Results 
         return translated;
     }
 
-    static final record ResultOrRowsImpl(Result<Record> result, int rows, DataAccessException exception) implements ResultOrRows {
+    static final record ResultOrRowsImpl(
+        Result<Record> result,
+        int rows,
+        long rowsLarge,
+        DataAccessException exception
+    )
+    implements
+        ResultOrRows
+    {
         ResultOrRowsImpl(Result<Record> result) {
-            this(result, result != null ? result.size() : 0, null);
+            this(result, result != null ? result.size() : 0, result != null ? result.size() : 0, null);
         }
 
-        ResultOrRowsImpl(int rows) {
-            this(null, rows, null);
+        ResultOrRowsImpl(long rowsLarge) {
+            this(null, truncateUpdateCount(rowsLarge), rowsLarge, null);
         }
 
         ResultOrRowsImpl(DataAccessException exception) {
-            this(null, 0, exception);
+            this(null, 0, 0L, exception);
         }
 
         @Override

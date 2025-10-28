@@ -420,12 +420,42 @@ public interface ExecuteContext extends Scope {
     int rows();
 
     /**
+     * The number of rows that were affected by the last statement.
+     * <p>
+     * This is equivalent to {@link #rows()}, except that it can fetch a larger
+     * update count if the underlying JDBC driver implements
+     * {@link PreparedStatement#executeLargeUpdate()}.
+     * <p>
+     * This returns <code>-1</code>:
+     * <ul>
+     * <li>if the number of affected rows is not yet available (e.g. prior to
+     * the {@link ExecuteListener#executeEnd(ExecuteContext)} event).</li>
+     * <li>if affected rows are not applicable for the given statement
+     * (statements that do not produce a JDBC
+     * {@link Statement#getUpdateCount()}.</li>
+     * </ul>
+     */
+    long rowsLarge();
+
+    /**
      * Set the number of rows that were affected by the last statement.
      * <p>
      * Users shouldn't call this method, it is used by jOOQ internally.
      */
     @Internal
     void rows(int rows);
+
+    /**
+     * Set the number of rows that were affected by the last statement.
+     * <p>
+     * This is equivalent to {@link #rows(int)}, except that it can fetch a larger
+     * update count if the underlying JDBC driver implements
+     * {@link PreparedStatement#executeLargeUpdate()}.
+     * <p>
+     * Users shouldn't call this method, it is used by jOOQ internally.
+     */
+    @Internal
+    void rowsLarge(long rows);
 
     /**
      * The number of rows that were affected by the last statement executed in
@@ -442,6 +472,26 @@ public interface ExecuteContext extends Scope {
      * @return The affected rows. This is never <code>null</code>
      */
     int @NotNull [] batchRows();
+
+    /**
+     * The number of rows that were affected by the last statement executed in
+     * batch mode.
+     * <p>
+     * This is equivalent to {@link #batchRows()}, except that it can fetch a
+     * larger set of update counts if the underlying JDBC driver implements
+     * {@link PreparedStatement#executeLargeBatch()}.
+     * <p>
+     * If a single <code>Query</code> is executed in non-batch mode, this will
+     * return an array of length <code>1</code>, containing {@link #rows()}
+     * <p>
+     * This returns <code>-1</code> values if the number of affected rows is not
+     * yet available, or if affected rows are not applicable for a given
+     * statement.
+     *
+     * @see #rows()
+     * @return The affected rows. This is never <code>null</code>
+     */
+    long @NotNull [] batchRowsLarge();
 
     /**
      * The 0-based result nesting level for {@link #result()}, relevant when nested

@@ -41,7 +41,9 @@ import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 // ...
 import static org.jooq.conf.SettingsTools.renderLocale;
+import static org.jooq.impl.Internal.truncateUpdateCount;
 import static org.jooq.impl.Tools.EMPTY_INT;
+import static org.jooq.impl.Tools.EMPTY_LONG;
 import static org.jooq.impl.Tools.EMPTY_PARAM;
 import static org.jooq.impl.Tools.EMPTY_QUERY;
 import static org.jooq.impl.Tools.EMPTY_STRING;
@@ -131,7 +133,7 @@ class DefaultExecuteContext implements ExecuteContext {
     private final BatchMode                               batchMode;
     private Query[]                                       batchQueries;
     private String[]                                      batchSQL;
-    private int[]                                         batchRows;
+    private long[]                                        batchRows;
 
     ConnectionProvider                                    connectionProvider;
     private Connection                                    connection;
@@ -143,7 +145,7 @@ class DefaultExecuteContext implements ExecuteContext {
     private Result<?>                                     result;
     int                                                   recordLevel;
     int                                                   resultLevel;
-    private int                                           rows      = -1;
+    private long                                          rows      = -1;
     private RuntimeException                              exception;
     private SQLException                                  sqlException;
     private SQLWarning                                    sqlWarning;
@@ -574,7 +576,7 @@ class DefaultExecuteContext implements ExecuteContext {
         if (newQueries != null) {
             this.batchQueries = newQueries.clone();
             this.batchSQL = new String[newQueries.length];
-            this.batchRows = new int[newQueries.length];
+            this.batchRows = new long[newQueries.length];
 
             Arrays.fill(this.batchRows, -1);
         }
@@ -809,11 +811,21 @@ class DefaultExecuteContext implements ExecuteContext {
 
     @Override
     public final int rows() {
+        return truncateUpdateCount(rows);
+    }
+
+    @Override
+    public final long rowsLarge() {
         return rows;
     }
 
     @Override
     public final void rows(int r) {
+        rowsLarge(r);
+    }
+
+    @Override
+    public final void rowsLarge(long r) {
         this.rows = r;
 
         // If this isn't a BatchMultiple query
@@ -824,10 +836,19 @@ class DefaultExecuteContext implements ExecuteContext {
     @Override
     public final int[] batchRows() {
         return batchMode != BatchMode.NONE
+             ? truncateUpdateCount(batchRows)
+             : routine != null || query() != null
+             ? new int[] { rows() }
+             : EMPTY_INT;
+    }
+
+    @Override
+    public final long[] batchRowsLarge() {
+        return batchMode != BatchMode.NONE
              ? batchRows
              : routine != null || query() != null
-             ? new int[] { rows }
-             : EMPTY_INT;
+             ? new long[] { rows }
+             : EMPTY_LONG;
     }
 
     @Override

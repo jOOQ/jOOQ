@@ -37,9 +37,10 @@
  */
 package org.jooq.tools.jdbc;
 
-import static org.jooq.SQLDialect.DEFAULT;
 import static org.jooq.ContextConverter.scoped;
+import static org.jooq.SQLDialect.DEFAULT;
 import static org.jooq.impl.Internal.converterContext;
+import static org.jooq.impl.Internal.truncateUpdateCount;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -73,10 +74,8 @@ import org.jooq.Converters;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Result;
-import org.jooq.ContextConverter;
 import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultConfiguration;
-import org.jooq.impl.Internal;
 import org.jooq.tools.StringUtils;
 
 /**
@@ -87,7 +86,7 @@ import org.jooq.tools.StringUtils;
  */
 public class MockResultSet extends JDBC41ResultSet implements ResultSet, Serializable {
 
-    private final int               maxRows;
+    private final long              maxRows;
     Result<?>                       result;
     private final int               size;
     private transient int           index;
@@ -97,10 +96,14 @@ public class MockResultSet extends JDBC41ResultSet implements ResultSet, Seriali
     private final Converter2[]      converters2;
 
     public MockResultSet(Result<?> result) {
-        this(result, 0);
+        this(result, 0L);
     }
 
     public MockResultSet(Result<?> result, int maxRows) {
+        this(result, (long) maxRows);
+    }
+
+    public MockResultSet(Result<?> result, long maxRows) {
         this.result = result;
         this.maxRows = maxRows;
 
@@ -148,7 +151,7 @@ public class MockResultSet extends JDBC41ResultSet implements ResultSet, Seriali
         if (maxRows == 0)
             return size;
         else
-            return Math.min(maxRows, size);
+            return Math.min(truncateUpdateCount(maxRows), size);
     }
 
     void checkNotClosed() throws SQLException {

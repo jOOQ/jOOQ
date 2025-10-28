@@ -1448,6 +1448,11 @@ jOOQ queries, for which no specific queryTimeout was specified.]]></jxb:javadoc>
 jOOQ queries, for which no specific maxRows value was specified.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="largeMaxRows" type="long" minOccurs="0" maxOccurs="1" default="0">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The default JDBC largeMaxRows property that should be applied to all
+jOOQ queries, for which no specific largeMaxRows value was specified.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="fetchSize" type="int" minOccurs="0" maxOccurs="1" default="0">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The default JDBC fetchSize property that should be applied to all
 jOOQ queries, for which no specific fetchSize value was specified.]]></jxb:javadoc></jxb:property></appinfo></annotation>

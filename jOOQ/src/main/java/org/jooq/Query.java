@@ -66,17 +66,39 @@ public interface Query extends Statement, AttachableQueryPart {
      * @return A result value, depending on the concrete implementation of
      *         {@link Query}:
      *         <ul>
-     *         <li> {@link Delete} : the number of deleted records</li>
-     *         <li> {@link Insert} : the number of inserted records</li>
-     *         <li> {@link Merge} : the result may have no meaning</li>
-     *         <li> {@link Select} : the number of resulting records</li>
-     *         <li> {@link Truncate} : the result may have no meaning</li>
-     *         <li> {@link Update} : the number of updated records</li>
+     *         <li>{@link Delete} : the number of deleted records</li>
+     *         <li>{@link Insert} : the number of inserted records</li>
+     *         <li>{@link Merge} : the result may have no meaning</li>
+     *         <li>{@link Select} : the number of resulting records</li>
+     *         <li>{@link Truncate} : the result may have no meaning</li>
+     *         <li>{@link Update} : the number of updated records</li>
      *         </ul>
      * @throws DataAccessException If anything goes wrong in the database
      */
     @Blocking
     int execute() throws DataAccessException;
+
+    /**
+     * Execute the query, if it has been created with a proper configuration.
+     * <p>
+     * This is equivalent to {@link #execute()}, except that it can fetch a
+     * larger update count if the underlying JDBC driver implements
+     * {@link PreparedStatement#executeLargeUpdate()}.
+     *
+     * @return A result value, depending on the concrete implementation of
+     *         {@link Query}:
+     *         <ul>
+     *         <li>{@link Delete} : the number of deleted records</li>
+     *         <li>{@link Insert} : the number of inserted records</li>
+     *         <li>{@link Merge} : the result may have no meaning</li>
+     *         <li>{@link Select} : the number of resulting records</li>
+     *         <li>{@link Truncate} : the result may have no meaning</li>
+     *         <li>{@link Update} : the number of updated records</li>
+     *         </ul>
+     * @throws DataAccessException If anything goes wrong in the database
+     */
+    @Blocking
+    long executeLarge() throws DataAccessException;
 
     /**
      * Execute the query in a new {@link CompletionStage}.
@@ -106,16 +128,63 @@ public interface Query extends Statement, AttachableQueryPart {
      * @return A result value, depending on the concrete implementation of
      *         {@link Query}:
      *         <ul>
-     *         <li> {@link Delete} : the number of deleted records</li>
-     *         <li> {@link Insert} : the number of inserted records</li>
-     *         <li> {@link Merge} : the result may have no meaning</li>
-     *         <li> {@link Select} : the number of resulting records</li>
-     *         <li> {@link Truncate} : the result may have no meaning</li>
-     *         <li> {@link Update} : the number of updated records</li>
+     *         <li>{@link Delete} : the number of deleted records</li>
+     *         <li>{@link Insert} : the number of inserted records</li>
+     *         <li>{@link Merge} : the result may have no meaning</li>
+     *         <li>{@link Select} : the number of resulting records</li>
+     *         <li>{@link Truncate} : the result may have no meaning</li>
+     *         <li>{@link Update} : the number of updated records</li>
      *         </ul>
      */
     @NotNull
     CompletionStage<Integer> executeAsync(Executor executor);
+
+    /**
+     * Execute the query in a new {@link CompletionStage}.
+     * <p>
+     * This is equivalent to {@link #executeAsync()}, except that it can fetch a
+     * larger update count if the underlying JDBC driver implements
+     * {@link PreparedStatement#executeLargeUpdate()}.
+     * <p>
+     * The result is asynchronously completed by a task running in an
+     * {@link Executor} provided by the underlying
+     * {@link Configuration#executorProvider()}.
+     *
+     * @return A result value, depending on the concrete implementation of
+     *         {@link Query}:
+     *         <ul>
+     *         <li>{@link Delete} : the number of deleted records</li>
+     *         <li>{@link Insert} : the number of inserted records</li>
+     *         <li>{@link Merge} : the result may have no meaning</li>
+     *         <li>{@link Select} : the number of resulting records</li>
+     *         <li>{@link Truncate} : the result may have no meaning</li>
+     *         <li>{@link Update} : the number of updated records</li>
+     *         </ul>
+     */
+    @NotNull
+    CompletionStage<Long> executeLargeAsync();
+
+    /**
+     * Execute the query in a new {@link CompletionStage} that is asynchronously
+     * completed by a task running in the given executor.
+     * <p>
+     * This is equivalent to {@link #executeAsync(Executor)}, except that it can
+     * fetch a larger update count if the underlying JDBC driver implements
+     * {@link PreparedStatement#executeLargeUpdate()}.
+     *
+     * @return A result value, depending on the concrete implementation of
+     *         {@link Query}:
+     *         <ul>
+     *         <li>{@link Delete} : the number of deleted records</li>
+     *         <li>{@link Insert} : the number of inserted records</li>
+     *         <li>{@link Merge} : the result may have no meaning</li>
+     *         <li>{@link Select} : the number of resulting records</li>
+     *         <li>{@link Truncate} : the result may have no meaning</li>
+     *         <li>{@link Update} : the number of updated records</li>
+     *         </ul>
+     */
+    @NotNull
+    CompletionStage<Long> executeLargeAsync(Executor executor);
 
     /**
      * Whether this query is executable in its current state.

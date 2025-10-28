@@ -101,7 +101,6 @@ import org.jooq.SelectLimitAfterOffsetStep;
 import org.jooq.SelectLimitPercentAfterOffsetStep;
 import org.jooq.SelectLimitPercentStep;
 import org.jooq.SelectOnConditionStep;
-import org.jooq.SelectOnStep;
 import org.jooq.SelectOptionalOnStep;
 import org.jooq.SelectQualifyConditionStep;
 import org.jooq.SelectQuery;
@@ -139,9 +138,6 @@ import org.jooq.WindowDefinition;
 import org.jooq.impl.QOM.JoinHint;
 import org.jooq.impl.QOM.UnmodifiableList;
 import org.jooq.impl.QOM.With;
-
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * A wrapper for a {@link SelectQuery}
@@ -3176,6 +3172,11 @@ implements
     @Override
     public final CloseableResultQuery<R> maxRows(int rows) {
         return getDelegate().maxRows(rows);
+    }
+
+    @Override
+    public final CloseableResultQuery<R> largeMaxRows(long rows) {
+        return getDelegate().largeMaxRows(rows);
     }
 
     @Override

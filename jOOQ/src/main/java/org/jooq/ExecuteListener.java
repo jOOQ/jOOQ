@@ -499,9 +499,10 @@ public interface ExecuteListener extends EventListener, Serializable {
      * markers for {@link StatementType#STATIC_STATEMENT}.
      * <p>
      * Flags such as {@link Query#queryTimeout(int)},
-     * {@link Query#poolable(boolean)}, {@link ResultQuery#maxRows(int)}, which
-     * correspond to mutable flags on a {@link PreparedStatement}, are set by
-     * jOOQ even if a listener provides the statement.
+     * {@link Query#poolable(boolean)}, {@link ResultQuery#maxRows(int)} or
+     * {@link ResultQuery#largeMaxRows(long)}, which correspond to mutable flags
+     * on a {@link PreparedStatement}, are set by jOOQ even if a listener
+     * provides the statement.
      * <p>
      * Flags such as {@link ResultQuery#resultSetConcurrency(int)},
      * {@link ResultQuery#resultSetHoldability(int)},

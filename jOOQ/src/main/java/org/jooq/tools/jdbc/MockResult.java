@@ -43,6 +43,7 @@ import java.sql.Statement;
 import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.Result;
+import org.jooq.impl.Internal;
 
 /**
  * A mock result.
@@ -74,6 +75,21 @@ public class MockResult {
      * </ul>
      */
     public final int          rows;
+
+    /**
+     * The number of affected rows for this execution result.
+     * <p>
+     * This number corresponds to the value of
+     * {@link Statement#getLargeUpdateCount()} where supported. The following
+     * values are possible:
+     * <ul>
+     * <li>Positive numbers: the number of affected rows by a given query
+     * execution</li>
+     * <li>0: no rows were affected by a given query execution</li>
+     * <li>-1: the row count is not applicable</li>
+     * </ul>
+     */
+    public final long         largeRows;
 
     /**
      * The result data associated with this execution result.
@@ -125,6 +141,18 @@ public class MockResult {
     /**
      * Create a new <code>MockResult</code>.
      * <p>
+     * This is a convenience constructor calling
+     * <code>MockResult(rows, null)</code>.
+     *
+     * @see MockDataProvider <code>MockDataProvider</code> for details
+     */
+    public MockResult(long largeRows) {
+        this(largeRows, null);
+    }
+
+    /**
+     * Create a new <code>MockResult</code>.
+     * <p>
      * This is a convenience constructor creating a <code>MockResult</code> with
      * exactly one record.
      *
@@ -151,12 +179,31 @@ public class MockResult {
      */
     public MockResult(int rows, Result<?> data) {
         this.rows = rows;
+        this.largeRows = rows;
+        this.data = data;
+        this.exception = null;
+    }
+
+    /**
+     * Create a new <code>MockResult</code>.
+     *
+     * @param largeRows The number of affected rows
+     * @param data The result data. Result instances can be obtained from
+     *            queries, or created using
+     *            {@link DSLContext#newResult(org.jooq.Field...)} and other
+     *            overloads.
+     * @see MockDataProvider <code>MockDataProvider</code> for details
+     */
+    public MockResult(long largeRows, Result<?> data) {
+        this.rows = Internal.truncateUpdateCount(largeRows);
+        this.largeRows = largeRows;
         this.data = data;
         this.exception = null;
     }
 
     public MockResult(SQLException exception) {
         this.rows = -1;
+        this.largeRows = -1;
         this.data = null;
         this.exception = exception;
     }
@@ -167,6 +214,6 @@ public class MockResult {
              ? "Exception : " + exception.getMessage()
              : (data != null)
              ? data.toString()
-             : ("" + rows);
+             : ("" + largeRows);
     }
 }

@@ -436,6 +436,8 @@ public class Settings
     @XmlElement(defaultValue = "0")
     protected Integer maxRows = 0;
     @XmlElement(defaultValue = "0")
+    protected Long largeMaxRows = 0L;
+    @XmlElement(defaultValue = "0")
     protected Integer fetchSize = 0;
     @XmlElement(defaultValue = "2147483647")
     protected Integer batchSize = 2147483647;
@@ -5815,6 +5817,24 @@ public class Settings
     }
 
     /**
+     * The default JDBC largeMaxRows property that should be applied to all
+     * jOOQ queries, for which no specific largeMaxRows value was specified.
+     * 
+     */
+    public Long getLargeMaxRows() {
+        return largeMaxRows;
+    }
+
+    /**
+     * The default JDBC largeMaxRows property that should be applied to all
+     * jOOQ queries, for which no specific largeMaxRows value was specified.
+     * 
+     */
+    public void setLargeMaxRows(Long value) {
+        this.largeMaxRows = value;
+    }
+
+    /**
      * The default JDBC fetchSize property that should be applied to all
      * jOOQ queries, for which no specific fetchSize value was specified.
      * 
@@ -9625,6 +9645,16 @@ public class Settings
     }
 
     /**
+     * The default JDBC largeMaxRows property that should be applied to all
+     * jOOQ queries, for which no specific largeMaxRows value was specified.
+     * 
+     */
+    public Settings withLargeMaxRows(Long value) {
+        setLargeMaxRows(value);
+        return this;
+    }
+
+    /**
      * The default JDBC fetchSize property that should be applied to all
      * jOOQ queries, for which no specific fetchSize value was specified.
      * 
@@ -10544,6 +10574,7 @@ public class Settings
         builder.append("queryPoolable", queryPoolable);
         builder.append("queryTimeout", queryTimeout);
         builder.append("maxRows", maxRows);
+        builder.append("largeMaxRows", largeMaxRows);
         builder.append("fetchSize", fetchSize);
         builder.append("batchSize", batchSize);
         builder.append("debugInfoOnStackTrace", debugInfoOnStackTrace);
@@ -12242,6 +12273,15 @@ public class Settings
                 return false;
             }
         }
+        if (largeMaxRows == null) {
+            if (other.largeMaxRows!= null) {
+                return false;
+            }
+        } else {
+            if (!largeMaxRows.equals(other.largeMaxRows)) {
+                return false;
+            }
+        }
         if (fetchSize == null) {
             if (other.fetchSize!= null) {
                 return false;
@@ -13102,6 +13142,7 @@ public class Settings
         result = ((prime*result)+((queryPoolable == null)? 0 :queryPoolable.hashCode()));
         result = ((prime*result)+((queryTimeout == null)? 0 :queryTimeout.hashCode()));
         result = ((prime*result)+((maxRows == null)? 0 :maxRows.hashCode()));
+        result = ((prime*result)+((largeMaxRows == null)? 0 :largeMaxRows.hashCode()));
         result = ((prime*result)+((fetchSize == null)? 0 :fetchSize.hashCode()));
         result = ((prime*result)+((batchSize == null)? 0 :batchSize.hashCode()));
         result = ((prime*result)+((debugInfoOnStackTrace == null)? 0 :debugInfoOnStackTrace.hashCode()));

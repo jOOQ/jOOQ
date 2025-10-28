@@ -242,7 +242,22 @@ final class SimpleExecuteContext extends AbstractScope implements ExecuteContext
     }
 
     @Override
+    public final long rowsLarge() {
+        throw new UnsupportedOperationException("Not implemented");
+    }
+
+    @Override
+    public final void rowsLarge(long rows) {
+        throw new UnsupportedOperationException("Not implemented");
+    }
+
+    @Override
     public final int[] batchRows() {
+        throw new UnsupportedOperationException("Not implemented");
+    }
+
+    @Override
+    public final long[] batchRowsLarge() {
         throw new UnsupportedOperationException("Not implemented");
     }
 

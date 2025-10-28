@@ -41,13 +41,12 @@ import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.SettingsTools.executeStaticStatements;
 import static org.jooq.conf.SettingsTools.getBatchSize;
 import static org.jooq.impl.AbstractQuery.connection;
-import static org.jooq.impl.Tools.EMPTY_PARAM;
+import static org.jooq.impl.Internal.truncateUpdateCount;
 import static org.jooq.impl.Tools.checkedFunction;
 import static org.jooq.impl.Tools.chunks;
 import static org.jooq.impl.Tools.fields;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.visitAll;
-import static org.jooq.impl.Tools.BooleanDataKey.DATA_COUNT_BIND_VALUES;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -57,6 +56,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.IntStream;
+import java.util.stream.LongStream;
+import java.util.stream.Stream;
 
 import org.jooq.Batch;
 import org.jooq.BatchBindStep;
@@ -155,7 +156,7 @@ final class BatchSingle extends AbstractBatch implements BatchBindStep {
     }
 
     @Override
-    public final void subscribe(Subscriber<? super Integer> subscriber) {
+    public final void subscribe0(Subscriber<? super R2DBC.RowCount> subscriber) {
         ConnectionFactory cf = configuration.connectionFactory();
 
         if (!(cf instanceof NoConnectionFactory))
@@ -168,13 +169,22 @@ final class BatchSingle extends AbstractBatch implements BatchBindStep {
 
     @Override
     public final int[] execute() {
+        return (int[]) execute(false);
+    }
+
+    @Override
+    public final long[] executeLarge() {
+        return (long[]) execute(true);
+    }
+
+    private final Object execute(boolean large) {
 
         // [#4554] If no variables are bound this should be treated like a
         // BatchMultiple as the intention was most likely to call the varargs
         // version of DSLContext#batch(Query... queries) with a single parameter.
         if (allBindValues.isEmpty()) {
             log.info("Single batch", "No bind variables have been provided with a single statement batch execution. This may be due to accidental API misuse");
-            return BatchMultiple.execute(configuration, new Query[] { query });
+            return BatchMultiple.execute(configuration, new Query[] { query }, large);
         }
 
         checkBindValues();
@@ -182,9 +192,9 @@ final class BatchSingle extends AbstractBatch implements BatchBindStep {
         // [#1180] Run batch queries with BatchMultiple, if no bind variables
         // should be used...
         if (executeStaticStatements(configuration.settings()))
-            return executeStatic();
+            return executeStatic(large);
         else
-            return executePrepared();
+            return executePrepared(large);
     }
 
     final void checkBindValues() {
@@ -197,7 +207,7 @@ final class BatchSingle extends AbstractBatch implements BatchBindStep {
                     log.info("Bind value count", "Batch bind value set " + i + " has " + allBindValues.get(i).length + " values when " + expectedBindValues + " values were expected");
     }
 
-    private final int[] executePrepared() {
+    private final Object executePrepared(boolean large) {
         DefaultExecuteContext ctx = new DefaultExecuteContext(configuration, BatchMode.SINGLE, new Query[] { query });
         ExecuteListener listener = ExecuteListeners.get(ctx, true);
 
@@ -223,23 +233,25 @@ final class BatchSingle extends AbstractBatch implements BatchBindStep {
             // [#14784] TODO: Make this configurable also for other dialects
             if (NO_SUPPORT_BATCH.contains(ctx.dialect())) {
                 int size = allBindValues.size();
-                int[] result = new int[size];
+                long[] result = new long[size];
 
                 for (int i = 0; i < size; i++) {
                     Object[] bindValues = allBindValues.get(i);
 
                     setBindValues(ctx, listener, ctx.params(), bindValues);
                     listener.executeStart(ctx);
-                    result[i] = ctx.statement().executeUpdate();
+                    result[i] = large
+                        ? ctx.statement().executeLargeUpdate()
+                        : ctx.statement().executeUpdate();
                     listener.executeEnd(ctx);
                 }
 
                 setBatchRows(ctx, result);
-                return result;
+                return large ? result : truncateUpdateCount(result);
             }
             else {
                 AtomicBoolean reset = new AtomicBoolean();
-                return chunks(allBindValues, getBatchSize(ctx.settings()))
+                Stream<Object> stream = chunks(allBindValues, getBatchSize(ctx.settings()))
                     .stream()
                     .map(checkedFunction(chunk -> {
                         if (reset.get())
@@ -251,14 +263,28 @@ final class BatchSingle extends AbstractBatch implements BatchBindStep {
                         }
 
                         listener.executeStart(ctx);
-                        int[] result = ctx.statement().executeBatch();
-                        setBatchRows(ctx, result);
+                        Object result;
+
+                        if (large) {
+                            long[] r = ctx.statement().executeLargeBatch();
+                            result = r;
+                            setBatchRows(ctx, r);
+                        }
+                        else {
+                            int[] r = ctx.statement().executeBatch();
+                            result = r;
+                            setBatchRows(ctx, r);
+                        }
+
                         listener.executeEnd(ctx);
                         reset.set(true);
                         return result;
-                    }))
-                    .flatMapToInt(IntStream::of)
-                    .toArray();
+                    }));
+
+                if (large)
+                    return stream.flatMapToLong(o -> LongStream.of((long[]) o)).toArray();
+                else
+                    return stream.flatMapToInt(o -> IntStream.of((int[]) o)).toArray();
             }
         }
 
@@ -303,7 +329,14 @@ final class BatchSingle extends AbstractBatch implements BatchBindStep {
     }
 
     private final void setBatchRows(DefaultExecuteContext ctx, int[] result) {
-        int[] batchRows = ctx.batchRows();
+        long[] batchRows = ctx.batchRowsLarge();
+
+        for (int i = 0; i < batchRows.length && i < result.length; i++)
+            batchRows[i] = result[i];
+    }
+
+    private final void setBatchRows(DefaultExecuteContext ctx, long[] result) {
+        long[] batchRows = ctx.batchRowsLarge();
 
         for (int i = 0; i < batchRows.length && i < result.length; i++)
             batchRows[i] = result[i];
@@ -318,8 +351,10 @@ final class BatchSingle extends AbstractBatch implements BatchBindStep {
         return map(collector.resultList, e -> e.getValue(), Param[]::new);
     }
 
-    private final int[] executeStatic() {
-        return batchMultiple().execute();
+    private final Object executeStatic(boolean large) {
+        return large
+            ? batchMultiple().executeLarge()
+            : batchMultiple().execute();
     }
 
     private final Batch batchMultiple() {

@@ -52,22 +52,17 @@ import org.jooq.CloseableResultQuery;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Delete;
-import org.jooq.DeleteResultStep;
 import org.jooq.Field;
 import org.jooq.Insert;
-import org.jooq.InsertResultStep;
-import org.jooq.Name;
 import org.jooq.Param;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
 import org.jooq.Table;
 import org.jooq.Update;
-import org.jooq.UpdateResultStep;
 import org.jooq.conf.ParamType;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataTypeException;
-import org.jooq.impl.QOM.UNotYetImplemented;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -154,6 +149,21 @@ implements
     @Override
     public final CompletionStage<Integer> executeAsync(Executor executor) {
         return delegate.executeAsync(executor);
+    }
+
+    @Override
+    public final long executeLarge() throws DataAccessException {
+        return delegate.executeLarge();
+    }
+
+    @Override
+    public final CompletionStage<Long> executeLargeAsync() {
+        return delegate.executeLargeAsync();
+    }
+
+    @Override
+    public final CompletionStage<Long> executeLargeAsync(Executor executor) {
+        return delegate.executeLargeAsync(executor);
     }
 
     @Override
@@ -253,6 +263,11 @@ implements
 
     @Override
     public final CloseableResultQuery<R> maxRows(int rows) {
+        return this;
+    }
+
+    @Override
+    public final CloseableResultQuery<R> largeMaxRows(long rows) {
         return this;
     }
 

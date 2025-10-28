@@ -214,9 +214,9 @@ public class LoggerListener implements ExecuteListener {
 
     @Override
     public void executeEnd(ExecuteContext ctx) {
-        if (ctx.rows() >= 0)
+        if (ctx.rowsLarge() >= 0L)
             if (log.isDebugEnabled())
-                log.debug("Affected row(s)", ctx.rows());
+                log.debug("Affected row(s)", ctx.rowsLarge());
     }
 
     @Override

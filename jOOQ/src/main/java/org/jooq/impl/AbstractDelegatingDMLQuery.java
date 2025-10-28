@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 import java.util.concurrent.Flow;
 
+import org.jooq.Publisher;
 import org.jooq.Record;
 import org.jooq.RowCountQuery;
 
@@ -46,8 +47,11 @@ import org.jooq.RowCountQuery;
  * @author Lukas Eder
  */
 abstract class AbstractDelegatingDMLQuery<R extends Record, Q extends AbstractDMLQuery<R>>
-    extends AbstractDelegatingQuery<R, Q>
-    implements RowCountQuery {
+extends
+    AbstractDelegatingQuery<R, Q>
+implements
+    RowCountQuery
+{
 
     AbstractDelegatingDMLQuery(Q delegate) {
         super(delegate);
@@ -65,5 +69,10 @@ abstract class AbstractDelegatingDMLQuery<R extends Record, Q extends AbstractDM
     @Override
     public final void subscribe(org.reactivestreams.Subscriber<? super Integer> subscriber) {
         getDelegate().subscribe(subscriber);
+    }
+
+    @Override
+    public final Publisher<Long> largePublisher() {
+        return getDelegate().largePublisher();
     }
 }

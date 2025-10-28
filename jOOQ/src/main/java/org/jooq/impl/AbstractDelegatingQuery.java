@@ -126,6 +126,21 @@ implements
     }
 
     @Override
+    public final long executeLarge() {
+        return delegate.executeLarge();
+    }
+
+    @Override
+    public final CompletionStage<Long> executeLargeAsync() {
+        return delegate.executeLargeAsync();
+    }
+
+    @Override
+    public final CompletionStage<Long> executeLargeAsync(Executor executor) {
+        return delegate.executeLargeAsync(executor);
+    }
+
+    @Override
     public final boolean isExecutable() {
         return delegate.isExecutable();
     }

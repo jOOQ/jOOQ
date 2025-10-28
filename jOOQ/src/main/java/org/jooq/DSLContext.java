@@ -2981,6 +2981,119 @@ public interface DSLContext extends Scope {
     int execute(String sql, QueryPart... parts) throws DataAccessException;
 
     /**
+     * Execute a query holding plain SQL.
+     * <p>
+     * This is equivalent to {@link #execute(SQL)}, except that it can fetch a
+     * larger update count if the underlying JDBC driver implements
+     * {@link PreparedStatement#executeLargeUpdate()}.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL
+     * @return The results from the executed query
+     * @throws DataAccessException if something went wrong executing the query
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
+    @Blocking
+    long executeLarge(SQL sql) throws DataAccessException;
+
+    /**
+     * Execute a query holding plain SQL.
+     * <p>
+     * This is equivalent to {@link #execute(String)}, except that it can fetch a
+     * larger update count if the underlying JDBC driver implements
+     * {@link PreparedStatement#executeLargeUpdate()}.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL
+     * @return The results from the executed query
+     * @throws DataAccessException if something went wrong executing the query
+     * @see SQL
+     */
+    @Support
+    @PlainSQL
+    @Blocking
+    long executeLarge(String sql) throws DataAccessException;
+
+    /**
+     * Execute a new query holding plain SQL.
+     * <p>
+     * There must be as many bind variables contained in the SQL, as passed in
+     * the bindings parameter
+     * <p>
+     * This is equivalent to {@link #execute(String, Object...)}, except that it
+     * can fetch a larger update count if the underlying JDBC driver implements
+     * {@link PreparedStatement#executeLargeUpdate()}.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     *
+     * @param sql The SQL
+     * @param bindings The bindings
+     * @return The results from the executed query
+     * @throws DataAccessException if something went wrong executing the query
+     * @see SQL
+     * @see DSL#sql(String, Object...)
+     */
+    @Support
+    @PlainSQL
+    @Blocking
+    long executeLarge(String sql, Object... bindings) throws DataAccessException;
+
+    /**
+     * Execute a new query holding plain SQL.
+     * <p>
+     * Unlike {@link #execute(String, Object...)}, the SQL passed to this method
+     * should not contain any bind variables. Instead, you can pass
+     * {@link QueryPart} objects to the method which will be rendered at indexed
+     * locations of your SQL string as such:
+     *
+     * <pre>
+     * <code>
+     * // The following query
+     * execute("select {0}, {1} from {2}", val(1), inline("test"), name("DUAL"));
+     *
+     * // Will execute this SQL by default, using SQLDialect.ORACLE:
+     * select ?, 'test' from "DUAL"
+     * </code>
+     * </pre>
+     * <p>
+     * This is equivalent to {@link #execute(String, QueryPart...)}, except that
+     * it can fetch a larger update count if the underlying JDBC driver
+     * implements {@link PreparedStatement#executeLargeUpdate()}.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses! One way to escape
+     * literals is to use {@link DSL#name(String...)} and similar methods
+     *
+     * @param sql The SQL clause, containing {numbered placeholders} where query
+     *            parts can be injected
+     * @param parts The {@link QueryPart} objects that are rendered at the
+     *            {numbered placeholder} locations
+     * @return The results from the executed query
+     * @throws DataAccessException if something went wrong executing the query
+     * @see SQL
+     * @see DSL#sql(String, QueryPart...)
+     */
+    @Support
+    @PlainSQL
+    @Blocking
+    long executeLarge(String sql, QueryPart... parts) throws DataAccessException;
+
+    /**
      * Create a new query holding plain SQL.
      * <p>
      * There must not be any bind variables contained in the SQL
@@ -14561,6 +14674,22 @@ public interface DSLContext extends Scope {
     @Support
     @Blocking
     int execute(Query query) throws DataAccessException;
+
+    /**
+     * Execute a {@link Query} in the context of this <code>DSLContext</code>.
+     * <p>
+     * This is equivalent to {@link #execute(Query)}, except that it can fetch a
+     * larger update count if the underlying JDBC driver implements
+     * {@link PreparedStatement#executeLargeUpdate()}.
+     *
+     * @param query The query to execute
+     * @return The number of affected rows
+     * @throws DataAccessException if something went wrong executing the query
+     * @see Query#execute()
+     */
+    @Support
+    @Blocking
+    long executeLarge(Query query) throws DataAccessException;
 
     // -------------------------------------------------------------------------
     // XXX Fast querying

@@ -44,6 +44,7 @@ import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.conf.ParamType.NAMED;
+import static org.jooq.impl.Internal.truncateUpdateCount;
 import static org.jooq.impl.Tools.CONFIG;
 import static org.jooq.impl.Tools.EMPTY_PARAM;
 import static org.jooq.impl.Tools.abstractDMLQuery;
@@ -359,7 +360,7 @@ final class R2DBC {
     }
 
     static final Subscriber<Result> rowCountSubscriber(
-        AbstractNonBlockingSubscription<? super Integer> downstream,
+        AbstractNonBlockingSubscription<? super RowCount> downstream,
         R2DBCPreparedStatement statement
     ) {
         return subscriber(
@@ -369,9 +370,9 @@ final class R2DBC {
         );
     }
 
-    private static final class RowCountSubscriber extends AbstractResultSubscriber<Integer> {
+    private static final class RowCountSubscriber extends AbstractResultSubscriber<RowCount> {
         RowCountSubscriber(
-            AbstractNonBlockingSubscription<? super Integer> downstream,
+            AbstractNonBlockingSubscription<? super RowCount> downstream,
             R2DBCPreparedStatement statement
         ) {
             super(downstream, statement);
@@ -390,7 +391,9 @@ final class R2DBC {
                 s::onSubscribe,
                 t -> {
                     if (t instanceof Long l)
-                        s.onNext(l.intValue());
+                        s.onNext(new RowCount(l));
+                    else if (t instanceof Integer i)
+                        s.onNext(new RowCount(i));
                     else
                         s.onNext(t);
                 },
@@ -589,6 +592,12 @@ final class R2DBC {
         }
     }
 
+    static final record RowCount(int rows, long largeRows) {
+        RowCount(long largeRows) {
+            this(truncateUpdateCount(largeRows), largeRows);
+        }
+    }
+
     static final record NoOpSubscription(Subscriber<?> subscriber) implements Subscription {
         @Override
         public void request(long n) {
@@ -601,7 +610,7 @@ final class R2DBC {
         }
     }
 
-    static final class BatchMultipleSubscriber extends ConnectionSubscriber<Integer> {
+    static final class BatchMultipleSubscriber extends ConnectionSubscriber<RowCount> {
 
         final BatchMultiple batch;
 
@@ -633,7 +642,7 @@ final class R2DBC {
         }
     }
 
-    static final class BatchSingleSubscriber extends ConnectionSubscriber<Integer> {
+    static final class BatchSingleSubscriber extends ConnectionSubscriber<RowCount> {
 
         final BatchSingle batch;
 
@@ -836,15 +845,15 @@ final class R2DBC {
         }
     }
 
-    static final class BatchSubscription<B extends AbstractBatch> extends AbstractNonBlockingSubscription<Integer> {
+    static final class BatchSubscription<B extends AbstractBatch> extends AbstractNonBlockingSubscription<RowCount> {
 
-        final ConnectionSubscriber<Integer> batchSubscriber;
-        final B                             batch;
+        final ConnectionSubscriber<RowCount> batchSubscriber;
+        final B                              batch;
 
         BatchSubscription(
             B batch,
-            Subscriber<? super Integer> subscriber,
-            Function<BatchSubscription<B>, ConnectionSubscriber<Integer>> batchSubscriber
+            Subscriber<? super RowCount> subscriber,
+            Function<BatchSubscription<B>, ConnectionSubscriber<RowCount>> batchSubscriber
         ) {
             super(batch.configuration, subscriber);
 
@@ -853,7 +862,7 @@ final class R2DBC {
         }
 
         @Override
-        final ConnectionSubscriber<Integer> delegate() {
+        final ConnectionSubscriber<RowCount> delegate() {
             return batchSubscriber;
         }
 
@@ -1801,20 +1810,26 @@ final class R2DBC {
         }
     }
 
-    static final class BlockingRowCountSubscription extends AbstractSubscription<Integer> {
+    static final class BlockingRowCountSubscription extends AbstractSubscription<RowCount> {
         final AbstractRowCountQuery query;
+        final boolean large;
 
-        BlockingRowCountSubscription(AbstractRowCountQuery query, Subscriber<? super Integer> subscriber) {
+        BlockingRowCountSubscription(
+            AbstractRowCountQuery query,
+            Subscriber<? super RowCount> subscriber,
+            boolean large
+        ) {
             super(query.configuration(), subscriber);
 
             this.query = query;
+            this.large = large;
         }
 
         @Override
         final void request0() {
             try {
                 if (query.isExecutable())
-                    subscriber.onNext(query.execute());
+                    subscriber.onNext(new RowCount(large ? query.executeLarge() : query.execute()));
                 else if (log.isDebugEnabled())
                     log.debug("Query is not executable", query);
 
@@ -1919,6 +1934,24 @@ final class R2DBC {
             previous != null
                 ? provider.context(downstream(previous))
                 : provider.context()
+        );
+    }
+
+    /**
+     * Create a mapping subscriber.
+     */
+    static final <T, R> Subscriber<T> mapping(
+        Subscriber<R> subscriber,
+        Function<? super T, ? extends R> mapper,
+        SubscriberProvider<?> provider
+    ) {
+        return subscriber(
+            subscriber::onSubscribe,
+            t -> subscriber.onNext(mapper.apply(t)),
+            subscriber::onError,
+            subscriber::onComplete,
+            provider,
+            subscriber
         );
     }
 }

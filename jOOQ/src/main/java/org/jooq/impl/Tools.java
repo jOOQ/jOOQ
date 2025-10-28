@@ -444,6 +444,7 @@ final class Tools {
     static final FieldOrRow[]               EMPTY_FIELD_OR_ROW            = {};
     static final int[]                      EMPTY_INT                     = {};
     static final JSONEntry<?>[]             EMPTY_JSONENTRY               = {};
+    static final long[]                     EMPTY_LONG                    = {};
     static final Name[]                     EMPTY_NAME                    = {};
     static final Object[]                   EMPTY_OBJECT                  = {};
     static final Param<?>[]                 EMPTY_PARAM                   = {};
@@ -4961,10 +4962,16 @@ final class Tools {
     /**
      * [#3681] Consume all {@link ResultSet}s from a JDBC {@link Statement}.
      */
-    static final void consumeResultSets(ExecuteContext ctx, ExecuteListener listener, Results results, SQLException prev) throws SQLException {
+    static final void consumeResultSets(
+        ExecuteContext ctx,
+        ExecuteListener listener,
+        Results results,
+        SQLException prev,
+        boolean large
+    ) throws SQLException {
         boolean anyResults = false;
         int i;
-        int rows = (ctx.resultSet() == null) ? ctx.rows() : 0;
+        long rows = (ctx.resultSet() == null) ? ctx.rowsLarge() : 0;
 
         for (i = 0; i < maxConsumedResults; i++) {
             try {
@@ -4986,10 +4993,12 @@ final class Tools {
                     ctx.resultSet(ctx.statement().getResultSet());
                 }
                 else {
-                    rows = ctx.statement().getUpdateCount();
-                    ctx.rows(rows);
+                    rows = large
+                        ? ctx.statement().getLargeUpdateCount()
+                        : ctx.statement().getUpdateCount();
+                    ctx.rowsLarge(rows);
 
-                    if (rows != -1)
+                    if (rows != -1L)
                         ctx.resultSet(null);
                     else
                         break;

@@ -102,7 +102,7 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> {
     private final boolean                      keepResultSet;
     private final boolean                      keepStatement;
     private final boolean                      autoclosing;
-    private final int                          maxRows;
+    private final long                         maxRows;
     private final Supplier<? extends R>        factory;
 
     private volatile transient CursorResultSet rs;
@@ -111,14 +111,14 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> {
     // [#18893] A cursor may be accessed concurrently by blocking subscriptions.
     // The subscriptions must ensure mutex access
     private volatile boolean                   isClosed;
-    private volatile int                       rows;
+    private volatile long                      rows;
 
     @SuppressWarnings("unchecked")
     CursorImpl(ExecuteContext ctx, ExecuteListener listener, Field<?>[] fields, boolean keepStatement, boolean keepResultSet) {
-        this(ctx, listener, fields, keepStatement, keepResultSet, null, (Class<? extends R>) RecordImplN.class, 0, true);
+        this(ctx, listener, fields, keepStatement, keepResultSet, null, (Class<? extends R>) RecordImplN.class, 0L, true);
     }
 
-    CursorImpl(ExecuteContext ctx, ExecuteListener listener, Field<?>[] fields, boolean keepStatement, boolean keepResultSet, Table<? extends R> table, Class<? extends R> type, int maxRows, boolean autoclosing) {
+    CursorImpl(ExecuteContext ctx, ExecuteListener listener, Field<?>[] fields, boolean keepStatement, boolean keepResultSet, Table<? extends R> table, Class<? extends R> type, long maxRows, boolean autoclosing) {
         super(ctx.configuration(), (AbstractRow<R>) Tools.row0(fields));
 
         this.ctx = ctx;
@@ -359,7 +359,7 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> {
 
         @Override
         public final void close() throws SQLException {
-            ctx.rows(rows);
+            ctx.rowsLarge(rows);
 
             // [#12568] Make sure exceptions thrown in fetchEnd() don't produce
             //          connection leaks

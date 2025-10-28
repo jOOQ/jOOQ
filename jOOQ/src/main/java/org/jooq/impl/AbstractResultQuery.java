@@ -202,9 +202,9 @@ implements
         long m = maxRows(ctx);
         if (m > 0L) {
             if (m > Integer.MAX_VALUE)
-                ctx.statement().setLargeMaxRows(maxRows);
+                ctx.statement().setLargeMaxRows(m);
             else
-                ctx.statement().setMaxRows(truncateUpdateCount(maxRows));
+                ctx.statement().setMaxRows(truncateUpdateCount(m));
         }
     }
 

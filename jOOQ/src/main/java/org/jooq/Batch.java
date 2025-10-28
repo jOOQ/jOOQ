@@ -142,6 +142,7 @@ public interface Batch extends Serializable, Publisher<Integer> {
     /**
      * Turn this publisher into a {@link Long} returning publisher to support large update counts.
      */
+    @NotNull
     Publisher<Long> largePublisher();
 
     /**

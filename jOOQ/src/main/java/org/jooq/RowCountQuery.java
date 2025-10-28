@@ -37,6 +37,8 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Any query that is not a {@link ResultQuery}, and thus possibly produces a row
  * count as a result, instead of a {@link Result}.
@@ -48,6 +50,7 @@ public interface RowCountQuery extends Query, Publisher<Integer> {
     /**
      * Turn this publisher into a {@link Long} returning publisher to support large update counts.
      */
+    @NotNull
     Publisher<Long> largePublisher();
 
 }

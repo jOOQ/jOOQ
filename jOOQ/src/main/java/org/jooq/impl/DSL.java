@@ -26406,7 +26406,7 @@ public class DSL {
      * @param percentile is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ DUCKDB, H2, MARIADB, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, POSTGRES, YUGABYTEDB })
     public static OrderedAggregateFunction<BigDecimal> percentileCont(Number percentile) {
         return new PercentileCont(Tools.field(percentile));
     }
@@ -26417,7 +26417,7 @@ public class DSL {
      * Calculate the <code>PERCENTILE_CONT</code> inverse distribution aggregate function.
      */
     @NotNull
-    @Support({ DUCKDB, H2, MARIADB, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, POSTGRES, YUGABYTEDB })
     public static OrderedAggregateFunction<BigDecimal> percentileCont(Field<? extends Number> percentile) {
         return new PercentileCont(percentile);
     }
@@ -26430,7 +26430,7 @@ public class DSL {
      * @param percentile is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ DUCKDB, H2, MARIADB, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, POSTGRES, YUGABYTEDB })
     public static OrderedAggregateFunction<BigDecimal> percentileDisc(Number percentile) {
         return new PercentileDisc(Tools.field(percentile));
     }
@@ -26441,7 +26441,7 @@ public class DSL {
      * Calculate the <code>PERCENTILE_DISC</code> inverse distribution aggregate function.
      */
     @NotNull
-    @Support({ DUCKDB, H2, MARIADB, POSTGRES, YUGABYTEDB })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, POSTGRES, YUGABYTEDB })
     public static OrderedAggregateFunction<BigDecimal> percentileDisc(Field<? extends Number> percentile) {
         return new PercentileDisc(percentile);
     }

@@ -47,6 +47,7 @@ import static org.jooq.impl.Tools.BooleanDataKey.*;
 import static org.jooq.impl.Tools.ExtendedDataKey.*;
 import static org.jooq.impl.Tools.SimpleDataKey.*;
 import static org.jooq.SQLDialect.*;
+import static org.jooq.SortOrder.DESC;
 
 import org.jooq.*;
 import org.jooq.Function1;
@@ -119,6 +120,23 @@ implements
 
 
 
+
+
+            case CLICKHOUSE: {
+                SortField<?> sort = withinGroupOrderBy.$first();
+                Field<?> p = getArgument(0);
+
+                if (sort != null) {
+                    ctx.visit(N_quantile).sql('(').visit(sort.$sortOrder() == DESC ? inline(1).minus(p) : p).sql(')')
+                       .sql('(').visit(sort.$field()).sql(')');
+                }
+                else
+                    ctx.visit(N_quantile).sql('(').visit(p).sql(')');
+
+                acceptFilterClause(ctx);
+                acceptOverClause(ctx);
+                break;
+            }
 
             default:
                 super.accept(ctx);

@@ -43,7 +43,6 @@ import org.jooq.Context;
 import org.jooq.QueryPart;
 // ...
 import org.jooq.Table;
-// ...
 import org.jooq.UniqueKey;
 
 /**
@@ -102,7 +101,7 @@ implements
                 UniqueKey<?> pk = table.getPrimaryKey();
 
                 if (pk != null)
-                    ctx.visit(new DefaultAggregateFunction<>(distinct, "count", SQLDataType.INTEGER, table.fields(pk.getFieldsArray())));
+                    ctx.visit(fo(new DefaultAggregateFunction<>(distinct, "count", SQLDataType.INTEGER, table.fields(pk.getFieldsArray()))));
                 else
                     super.accept(ctx);
 

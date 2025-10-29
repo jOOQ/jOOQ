@@ -45,7 +45,6 @@ import org.jooq.Function1;
 import org.jooq.QueryPart;
 // ...
 import org.jooq.Table;
-// ...
 import org.jooq.UniqueKey;
 
 /**
@@ -79,7 +78,7 @@ final class CountTable extends AbstractAggregateFunction<Integer> implements QOM
                 UniqueKey<?> pk = table.getPrimaryKey();
 
                 if (pk != null)
-                    ctx.visit(new DefaultAggregateFunction<>(distinct, "count", SQLDataType.INTEGER, table.fields(pk.getFieldsArray())));
+                    ctx.visit(fo(new DefaultAggregateFunction<>(distinct, "count", SQLDataType.INTEGER, table.fields(pk.getFieldsArray()))));
                 else
                     super.accept(ctx);
 
@@ -96,15 +95,6 @@ final class CountTable extends AbstractAggregateFunction<Integer> implements QOM
     public final Table<?> $table() {
         return table;
     }
-
-
-
-
-
-
-
-
-
 
 
 

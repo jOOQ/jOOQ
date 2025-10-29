@@ -294,6 +294,10 @@ implements
         AbstractFunction.acceptFunctionName(ctx, true, getQualifiedName());
     }
 
+    /* non-final */ boolean requiresDistinct(Context<?> ctx) {
+        return false;
+    }
+
     final void acceptArguments0(Context<?> ctx) {
 
 
@@ -305,7 +309,7 @@ implements
 
     final void acceptArguments1(Context<?> ctx, QueryPartCollectionView<Field<?>> args) {
         boolean parens = false;
-        if (distinct) {
+        if (distinct || requiresDistinct(ctx)) {
             ctx.visit(K_DISTINCT).sql(' ');
 
             // [#2883][#9109] PostgreSQL and H2 can use the DISTINCT keyword with formal row value expressions.

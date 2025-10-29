@@ -63,6 +63,7 @@ final class Keywords {
     static final Keyword K_ALWAYS                   = keyword("always");
     static final Keyword K_AND                      = keyword("and");
     static final Keyword K_ANTI_JOIN                = keyword("anti join");
+    static final Keyword K_APPROXIMATE              = keyword("approximate");
     static final Keyword K_ARRAY                    = keyword("array");
     static final Keyword K_AS                       = keyword("as");
     static final Keyword K_AS_OF                    = keyword("as of");

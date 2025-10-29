@@ -69,6 +69,8 @@ final class Names {
     static final Name N_ADD_SECONDS                 = systemName("add_seconds");
     static final Name N_ADD_YEARS                   = systemName("add_years");
     static final Name N_ANY                         = systemName("any");
+    static final Name N_APPROXIMATE_COUNT_DISTINCT  = systemName("approximate_count_distinct");
+    static final Name N_APPROX_DISTINCT             = systemName("approx_distinct");
     static final Name N_ARBITRARY                   = systemName("arbitrary");
     static final Name N_argMax                      = systemName("argMax");
     static final Name N_argMin                      = systemName("argMin");
@@ -320,6 +322,7 @@ final class Names {
     static final Name N_TRUNCNUM                    = systemName("truncnum");
     static final Name N_TUPLE                       = systemName("tuple");
     static final Name N_U                           = systemName("u");
+    static final Name N_uniq                        = systemName("uniq");
     static final Name N_UNNEST                      = systemName("unnest");
     static final Name N_UUID_TO_CHAR                = systemName("uuid_to_char");
     static final Name N_VALUE                       = systemName("value");
@@ -353,6 +356,8 @@ final class Names {
     static final Name N_ALL_MATCH                   = systemName("all_match");
     static final Name N_ANY_MATCH                   = systemName("any_match");
     static final Name N_ANY_VALUE                   = systemName("any_value");
+    static final Name N_APPROX_COUNT_DISTINCT       = systemName("approx_count_distinct");
+    static final Name N_APPROX_COUNT_LARGE_DISTINCT = systemName("approx_count_large_distinct");
     static final Name N_ARRAYS_OVERLAP              = systemName("arrays_overlap");
     static final Name N_ARRAY_ALL_MATCH             = systemName("array_all_match");
     static final Name N_ARRAY_ANY_MATCH             = systemName("array_any_match");

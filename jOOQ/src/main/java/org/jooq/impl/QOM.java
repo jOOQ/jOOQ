@@ -8544,6 +8544,40 @@ public final class QOM {
     }
 
     /**
+     * The <code>APPROX COUNT DISTINCT</code> function.
+     * <p>
+     * Calculate the approximate value for {@link #countDistinct(Field)} if such a function
+     * is available in the dialect, or fall back to the exact value, otherwise.
+     */
+    public /*sealed*/ interface ApproxCountDistinct
+        extends
+            AggregateFunction<Integer, ApproxCountDistinct>
+        //permits
+        //    ApproxCountDistinct
+    {
+        @NotNull Field<?> $field();
+        @CheckReturnValue
+        @NotNull ApproxCountDistinct $field(Field<?> field);
+    }
+
+    /**
+     * The <code>APPROX COUNT LARGE DISTINCT</code> function.
+     * <p>
+     * Calculate the approximate value for {@link #countDistinct(Field)} if such a function
+     * is available in the dialect, or fall back to the exact value, otherwise.
+     */
+    public /*sealed*/ interface ApproxCountLargeDistinct
+        extends
+            AggregateFunction<Long, ApproxCountLargeDistinct>
+        //permits
+        //    ApproxCountLargeDistinct
+    {
+        @NotNull Field<?> $field();
+        @CheckReturnValue
+        @NotNull ApproxCountLargeDistinct $field(Field<?> field);
+    }
+
+    /**
      * The <code>BIT AND AGG</code> function.
      * <p>
      * Calculate the bitwise <code>AND</code> aggregate value.

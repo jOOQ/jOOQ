@@ -83,6 +83,7 @@ import static org.jooq.impl.DSL.all;
 import static org.jooq.impl.DSL.and;
 import static org.jooq.impl.DSL.any;
 import static org.jooq.impl.DSL.anyValue;
+import static org.jooq.impl.DSL.approxCountDistinct;
 import static org.jooq.impl.DSL.arrayAgg;
 import static org.jooq.impl.DSL.arrayAggDistinct;
 import static org.jooq.impl.DSL.arrayAppend;
@@ -10851,7 +10852,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
             (agg = parseKeywordIf("BIN_AND_AGG")) ||
             (agg = parseFunctionNameIf("groupBitAnd"))) {
             parse('(');
-            if (parseKeywordIf("DISTINCT", "ALL"))
+            if (parseKeywordIf("DISTINCT", "UNIQUE", "ALL"))
                 agg = true;
             Field<?> x = toField(parseOp());
 
@@ -10872,7 +10873,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
             (agg = parseKeywordIf("BIN_NAND_AGG")) ||
             (agg = parseFunctionNameIf("groupBitNand"))) {
             parse('(');
-            if (parseKeywordIf("DISTINCT", "ALL"))
+            if (parseKeywordIf("DISTINCT", "UNIQUE", "ALL"))
                 agg = true;
             Field<?> x = toField(parseOp());
 
@@ -10895,7 +10896,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
             (agg = parseKeywordIf("BIN_OR_AGG")) ||
             (agg = parseKeywordIf("groupBitOr"))) {
             parse('(');
-            if (parseKeywordIf("DISTINCT", "ALL"))
+            if (parseKeywordIf("DISTINCT", "UNIQUE", "ALL"))
                 agg = true;
             Field<?> x = toField(parseOp());
 
@@ -10916,7 +10917,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
             (agg = parseKeywordIf("BIN_NOR_AGG")) ||
             (agg = parseKeywordIf("groupBitNor"))) {
             parse('(');
-            if (parseKeywordIf("DISTINCT", "ALL"))
+            if (parseKeywordIf("DISTINCT", "UNIQUE", "ALL"))
                 agg = true;
             Field<?> x = toField(parseOp());
 
@@ -13238,7 +13239,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
             GroupConcatSeparatorStep s2;
             AggregateFunction<String> s3;
 
-            if (parseKeywordIf("DISTINCT"))
+            if (parseKeywordIf("DISTINCT", "UNIQUE"))
                 s1 = DSL.groupConcatDistinct(parseField());
             else if (parseKeywordIf("ALL") || true)
                 s1 = DSL.groupConcat(parseField());
@@ -13791,6 +13792,20 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
             case PRODUCT:
                 distinct = parseSetQuantifier();
                 break;
+
+            case APPROX_COUNT:
+
+                // [#19290] APPROX_COUNT is not yet supported
+                parseKeyword("DISTINCT");
+                operation = ComputationalOperation.APPROX_COUNT_DISTINCT;
+                distinct = true;
+                break;
+
+            case APPROX_COUNT_DISTINCT:
+                parseKeywordIf("DISTINCT");
+                distinct = true;
+                break;
+
             default:
                 parseKeywordIf("ALL");
                 distinct = false;
@@ -13841,6 +13856,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         switch (operation) {
             case ANY_VALUE:
                 return anyValue(arg);
+            case APPROX_COUNT_DISTINCT:
+                return approxCountDistinct(arg);
             case AVG:
                 return distinct ? avgDistinct(arg) : avg(arg);
             case MAX:
@@ -13925,7 +13942,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
     }
 
     private final boolean parseSetQuantifier() {
-        boolean distinct = parseKeywordIf("DISTINCT");
+        boolean distinct = parseKeywordIf("DISTINCT", "UNIQUE");
         if (!distinct)
             parseKeywordIf("ALL");
         return distinct;
@@ -15639,6 +15656,10 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                     return ComputationalOperation.ANY_VALUE;
                 else if (parseFunctionNameIf("AVG"))
                     return ComputationalOperation.AVG;
+                else if (parseFunctionNameIf("APPROX_COUNT_DISTINCT", "APPROXIMATE_COUNT_DISTINCT", "APPROX_DISTINCT"))
+                    return ComputationalOperation.APPROX_COUNT_DISTINCT;
+                else if (parseKeywordIf("APPROXIMATE") && parseFunctionNameIf("COUNT"))
+                    return ComputationalOperation.APPROX_COUNT;
 
                 break;
 
@@ -15696,6 +15717,12 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
                 else if (parseFunctionNameIf("STDDEV_SAMP", "STDEV", "STDEV_SAMP", "stddevSamp"))
                     return ComputationalOperation.STDDEV_SAMP;
+
+                break;
+
+            case 'U':
+                if (parseFunctionNameIf("uniq"))
+                    return ComputationalOperation.APPROX_COUNT_DISTINCT;
 
                 break;
 
@@ -16317,6 +16344,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
     private enum ComputationalOperation {
         ANY_VALUE,
+        APPROX_COUNT,
+        APPROX_COUNT_DISTINCT,
         AVG,
         MAX,
         MIN,

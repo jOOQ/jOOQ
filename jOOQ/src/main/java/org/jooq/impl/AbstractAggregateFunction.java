@@ -329,7 +329,7 @@ implements
     }
 
     final void acceptArguments3(Context<?> ctx, QueryPartCollectionView<Field<?>> args, Function<? super Field<?>, ? extends Field<?>> fun) {
-        if (args.isEmpty() && this instanceof Count)
+        if (args.isEmpty() && (this instanceof Count || this instanceof CountLarge))
 
             // [#7539] Work around https://github.com/ClickHouse/ClickHouse/issues/61004
             if (ctx.family() == CLICKHOUSE && filter.hasWhere())

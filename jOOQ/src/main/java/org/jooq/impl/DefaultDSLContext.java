@@ -48,6 +48,7 @@ import static org.jooq.conf.ParamType.NAMED;
 import static org.jooq.conf.ParamType.NAMED_OR_INLINED;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.count;
+import static org.jooq.impl.DSL.countLarge;
 import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;
@@ -57,6 +58,8 @@ import static org.jooq.impl.DSL.sequence;
 import static org.jooq.impl.DSL.sql;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.zero;
+import static org.jooq.impl.SQLDataType.BIGINT;
+import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_NAME;
 import static org.jooq.impl.Tools.EMPTY_QUERY;
@@ -2430,6 +2433,11 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public SelectSelectStep<Record1<Integer>> selectCount() {
         return new SelectImpl(configuration(), null).select(count());
+    }
+
+    @Override
+    public SelectSelectStep<Record1<Long>> selectCountLarge() {
+        return new SelectImpl(configuration(), null).select(countLarge());
     }
 
     @Override
@@ -5497,7 +5505,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public int fetchCount(Select<?> query) {
-        return new FetchCount(configuration(), query).fetchOne().value1();
+        return new FetchCount<>(configuration(), query, INTEGER).fetchOne().value1();
     }
 
     @Override
@@ -5518,6 +5526,31 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public int fetchCount(Table<?> table, Collection<? extends Condition> conditions) {
         return fetchCount(table, DSL.and(conditions));
+    }
+
+    @Override
+    public long fetchCountLarge(Select<?> query) {
+        return new FetchCount<>(configuration(), query, BIGINT).fetchOne().value1();
+    }
+
+    @Override
+    public long fetchCountLarge(Table<?> table) {
+        return fetchCountLarge(table, noCondition());
+    }
+
+    @Override
+    public long fetchCountLarge(Table<?> table, Condition condition) {
+        return selectCountLarge().from(table).where(condition).fetchOne(0, long.class);
+    }
+
+    @Override
+    public long fetchCountLarge(Table<?> table, Condition... conditions) {
+        return fetchCountLarge(table, DSL.and(conditions));
+    }
+
+    @Override
+    public long fetchCountLarge(Table<?> table, Collection<? extends Condition> conditions) {
+        return fetchCountLarge(table, DSL.and(conditions));
     }
 
     @Override

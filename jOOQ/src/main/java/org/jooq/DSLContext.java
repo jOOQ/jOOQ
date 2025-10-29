@@ -8094,6 +8094,31 @@ public interface DSLContext extends Scope {
     SelectSelectStep<Record1<Integer>> selectCount();
 
     /**
+     * Create a new DSL select statement for <code>COUNT(*)</code>.
+     * <p>
+     * This creates an attached, renderable and executable <code>SELECT</code>
+     * statement from this {@link DSLContext}. If you don't need to render or
+     * execute this <code>SELECT</code> statement (e.g. because you want to
+     * create a subselect), consider using the static
+     * {@link DSL#selectCountLarge()} instead.
+     * <p>
+     * Example: <pre><code>
+     * DSLContext create = DSL.using(configuration);
+     *
+     * create.selectCount()
+     *       .from(table1)
+     *       .join(table2).on(field1.equal(field2))
+     *       .where(field1.greaterThan(100))
+     *       .orderBy(field2);
+     * </code></pre>
+     *
+     * @see DSL#selectCountLarge()
+     */
+    @NotNull @CheckReturnValue
+    @Support
+    SelectSelectStep<Record1<Long>> selectCountLarge();
+
+    /**
      * Create a new {@link SelectQuery}
      */
     @NotNull @CheckReturnValue
@@ -14581,6 +14606,95 @@ public interface DSLContext extends Scope {
     @Support
     @Blocking
     int fetchCount(Table<?> table, Collection<? extends Condition> conditions) throws DataAccessException;
+
+    /**
+     * Execute a {@link Select} query in the context of this <code>DSLContext</code> and return
+     * a <code>COUNT(*)</code> value.
+     * <p>
+     * This wraps a pre-existing <code>SELECT</code> query in another one to
+     * calculate the <code>COUNT(*)</code> value, without modifying the original
+     * <code>SELECT</code>. An example: <pre><code>
+     * -- Original query:
+     * SELECT id, title FROM book WHERE title LIKE '%a%'
+     *
+     * -- Wrapped query:
+     * SELECT count(*) FROM (
+     *   SELECT id, title FROM book WHERE title LIKE '%a%'
+     * )
+     * </code></pre> This is particularly useful for those databases that do not
+     * support the <code>COUNT(*) OVER()</code> window function to calculate
+     * total results in paged queries.
+     *
+     * @param query The wrapped query
+     * @return The <code>COUNT(*)</code> result
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    @Blocking
+    long fetchCountLarge(Select<?> query) throws DataAccessException;
+
+    /**
+     * Count the number of records in a table.
+     * <p>
+     * This executes <pre><code>SELECT COUNT(*) FROM table</code></pre>
+     *
+     * @param table The table whose records to count
+     * @return The number of records in the table
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    @Blocking
+    long fetchCountLarge(Table<?> table) throws DataAccessException;
+
+    /**
+     * Count the number of records in a table that satisfy a condition.
+     * <p>
+     * This executes <pre><code>SELECT COUNT(*) FROM table WHERE condition</code></pre>
+     *
+     * @param table The table whose records to count
+     * @param condition The condition to apply
+     * @return The number of records in the table that satisfy a condition
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    @Blocking
+    long fetchCountLarge(Table<?> table, Condition condition) throws DataAccessException;
+
+    /**
+     * Count the number of records in a table that satisfy a condition.
+     * <p>
+     * This executes
+     * <pre><code>SELECT COUNT(*) FROM table WHERE condition</code></pre>
+     * <p>
+     * Convenience API for calling {@link #fetchCount(Table, Condition)} with
+     * {@link DSL#and(Condition...)}.
+     *
+     * @param table The table whose records to count
+     * @param conditions The conditions to apply
+     * @return The number of records in the table that satisfy a condition
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    @Blocking
+    long fetchCountLarge(Table<?> table, Condition... conditions) throws DataAccessException;
+
+    /**
+     * Count the number of records in a table that satisfy a condition.
+     * <p>
+     * This executes
+     * <pre><code>SELECT COUNT(*) FROM table WHERE condition</code></pre>
+     * <p>
+     * Convenience API for calling {@link #fetchCount(Table, Condition)} with
+     * {@link DSL#and(Collection)}.
+     *
+     * @param table The table whose records to count
+     * @param conditions The conditions to apply
+     * @return The number of records in the table that satisfy a condition
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    @Blocking
+    long fetchCountLarge(Table<?> table, Collection<? extends Condition> conditions) throws DataAccessException;
 
     /**
      * Check if a {@link Select} would return any records, if it were executed.

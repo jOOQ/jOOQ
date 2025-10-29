@@ -39,30 +39,38 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.count;
+import static org.jooq.impl.DSL.countLarge;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.Tools.anyMatch;
 
 import org.jooq.Configuration;
 import org.jooq.Context;
+import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.impl.QOM.UEmpty;
-import org.jooq.impl.QOM.UTransient;
 
 /**
  * @author Lukas Eder
  */
-final class FetchCount extends AbstractResultQuery<Record1<Integer>> implements UEmpty {
+final class FetchCount<T> extends AbstractResultQuery<Record1<T>> implements UEmpty {
 
-    private final Field<?>[] count = { count().as("c") };
-    private final Select<?>  query;
+    private final Field<?>[]  count;
+    private final Select<?>   query;
+    private final DataType<T> type;
 
-    FetchCount(Configuration configuration, Select<?> query) {
+    FetchCount(Configuration configuration, Select<?> query, DataType<T> type) {
         super(configuration);
 
+        this.count = new Field<?>[] {
+            type.getFromType() == Long.class
+            ? countLarge().as("c")
+            : count().as("c")
+        };
         this.query = query;
+        this.type = type;
     }
 
     @Override
@@ -81,13 +89,13 @@ final class FetchCount extends AbstractResultQuery<Record1<Integer>> implements 
     }
 
     @Override
-    final Table<? extends Record1<Integer>> getTable0() {
+    final Table<? extends Record1<T>> getTable0() {
         return null;
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
-    public final Class<? extends Record1<Integer>> getRecordType0() {
+    public final Class<? extends Record1<T>> getRecordType0() {
         return (Class) RecordImpl1.class;
     }
 

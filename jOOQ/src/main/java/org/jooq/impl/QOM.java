@@ -1480,6 +1480,16 @@ public final class QOM {
         boolean $distinct();
     }
 
+    public /*sealed*/ interface CountLargeTable
+        extends
+            AggregateFunction<Long, CountLargeTable>
+        /*permits
+            CountTable*/
+    {
+        @NotNull Table<?> $table();
+        boolean $distinct();
+    }
+
 
 
 
@@ -8546,7 +8556,7 @@ public final class QOM {
     /**
      * The <code>APPROX COUNT DISTINCT</code> function.
      * <p>
-     * Calculate the approximate value for {@link #countDistinct(Field)} if such a function
+     * Calculate the approximate value for {@link DSL#countDistinct(Field)} if such a function
      * is available in the dialect, or fall back to the exact value, otherwise.
      */
     public /*sealed*/ interface ApproxCountDistinct
@@ -8563,7 +8573,7 @@ public final class QOM {
     /**
      * The <code>APPROX COUNT DISTINCT</code> function.
      * <p>
-     * Calculate the approximate value for {@link #countDistinct(Field)} if such a function
+     * Calculate the approximate value for {@link DSL#countDistinct(Field)} if such a function
      * is available in the dialect, or fall back to the exact value, otherwise.
      */
     public /*sealed*/ interface ApproxCountLargeDistinct
@@ -8738,6 +8748,23 @@ public final class QOM {
         @NotNull Count $field(Field<?> field);
         @CheckReturnValue
         @NotNull Count $distinct(boolean distinct);
+    }
+
+    /**
+     * The <code>COUNT</code> function.
+     */
+    public /*sealed*/ interface CountLarge
+        extends
+            AggregateFunction<Long, CountLarge>
+        //permits
+        //    CountLarge
+    {
+        @Nullable Field<?> $field();
+        boolean $distinct();
+        @CheckReturnValue
+        @NotNull CountLarge $field(Field<?> field);
+        @CheckReturnValue
+        @NotNull CountLarge $distinct(boolean distinct);
     }
 
     /**

@@ -49,17 +49,17 @@ import org.jooq.UniqueKey;
 /**
  * @author Lukas Eder
  */
-final class CountTable
+final class CountLargeTable
 extends
-    AbstractAggregateFunction<Integer, QOM.CountTable>
+    AbstractAggregateFunction<Long, QOM.CountLargeTable>
 implements
-    QOM.CountTable
+    QOM.CountLargeTable
 {
 
     private final Table<?> table;
 
-    CountTable(Table<?> table, boolean distinct) {
-        super(distinct, "count", SQLDataType.INTEGER, DSL.field(DSL.name(table.getName())));
+    CountLargeTable(Table<?> table, boolean distinct) {
+        super(distinct, "count", SQLDataType.BIGINT, DSL.field(DSL.name(table.getName())));
 
         this.table = table;
     }
@@ -126,8 +126,8 @@ implements
     }
 
     @Override
-    final QOM.CountTable copyAggregateFunction(Function<? super QOM.CountTable, ? extends QOM.CountTable> function) {
-        return function.apply(new CountTable(table, distinct));
+    final QOM.CountLargeTable copyAggregateFunction(Function<? super QOM.CountLargeTable, ? extends QOM.CountLargeTable> function) {
+        return function.apply(new CountLargeTable(table, distinct));
     }
 
 

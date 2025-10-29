@@ -5183,6 +5183,39 @@ public class DSL {
     }
 
     /**
+     * Create a new DSL subselect statement for <code>COUNT(*)</code>.
+     * <p>
+     * Unlike {@link Select} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>SELECT</code> statement. You can use this statement in two ways:
+     * <ul>
+     * <li>As a subselect within another select</li>
+     * <li>As a statement, after attaching it using
+     * {@link Select#attach(org.jooq.Configuration)}</li>
+     * </ul>
+     * <p>
+     * Example: <pre><code>
+     * import static org.jooq.impl.DSL.*;
+     *
+     * // [...]
+     *
+     * selectCount()
+     *  .from(table1)
+     *  .join(table2).on(field1.equal(field2))
+     *  .where(field1.greaterThan(100))
+     *  .orderBy(field2);
+     * </code></pre>
+     *
+     * @see DSL#countLarge()
+     * @see DSLContext#selectCountLarge()
+     */
+    @NotNull
+    @Support
+    public static SelectSelectStep<Record1<Long>> selectCountLarge() {
+        return dsl().selectCountLarge();
+    }
+
+    /**
      * Create a new DSL insert statement.
      * <p>
      * Unlike {@link Insert} factory methods in the {@link DSLContext} API, this
@@ -25943,7 +25976,7 @@ public class DSL {
     /**
      * The <code>APPROX_COUNT_DISTINCT</code> function.
      * <p>
-     * Calculate the approximate value for {@link #countDistinct(Field)} if such a function
+     * Calculate the approximate value for {@link DSL#countDistinct(Field)} if such a function
      * is available in the dialect, or fall back to the exact value, otherwise.
      */
     @NotNull
@@ -25955,7 +25988,7 @@ public class DSL {
     /**
      * The <code>APPROX_COUNT_DISTINCT</code> function.
      * <p>
-     * Calculate the approximate value for {@link #countDistinct(Field)} if such a function
+     * Calculate the approximate value for {@link DSL#countDistinct(Field)} if such a function
      * is available in the dialect, or fall back to the exact value, otherwise.
      */
     @NotNull
@@ -26096,6 +26129,24 @@ public class DSL {
     @Support
     public static AggregateFunction<Integer> countDistinct(Field<?> field) {
         return new Count(field, true);
+    }
+
+    /**
+     * The <code>COUNT</code> function.
+     */
+    @NotNull
+    @Support
+    public static AggregateFunction<Long> countLarge(Field<?> field) {
+        return new CountLarge(field, false);
+    }
+
+    /**
+     * The <code>COUNT_DISTINCT</code> function.
+     */
+    @NotNull
+    @Support
+    public static AggregateFunction<Long> countLargeDistinct(Field<?> field) {
+        return new CountLarge(field, true);
     }
 
     /**
@@ -32048,12 +32099,30 @@ public class DSL {
     }
 
     /**
+     * Get the count(*) function.
+     */
+    @NotNull
+    @Support
+    public static AggregateFunction<Long> countLarge() {
+        return new CountLarge(false);
+    }
+
+    /**
      * Get the count(field) function.
      */
     @NotNull
     @Support
     public static AggregateFunction<Integer> count(SelectFieldOrAsterisk field) {
         return count(field instanceof Field<?> f ? f : field("{0}", field));
+    }
+
+    /**
+     * Get the count(field) function.
+     */
+    @NotNull
+    @Support
+    public static AggregateFunction<Long> countLarge(SelectFieldOrAsterisk field) {
+        return countLarge(field instanceof Field<?> f ? f : field("{0}", field));
     }
 
     /**
@@ -32070,12 +32139,34 @@ public class DSL {
     }
 
     /**
+     * Get the count(table) function.
+     * <p>
+     * If this is not supported by a given database (i.e. non
+     * {@link SQLDialect#POSTGRES}, then the primary key is used with
+     * {@link #count(Field)}, instead.
+     */
+    @NotNull
+    @Support
+    public static AggregateFunction<Long> countLarge(Table<?> table) {
+        return new CountLargeTable(table, false);
+    }
+
+    /**
      * Get the count(distinct field) function.
      */
     @NotNull
     @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static AggregateFunction<Integer> countDistinct(SelectFieldOrAsterisk field) {
         return countDistinct(field instanceof Field<?> f ? f : field("{0}", field));
+    }
+
+    /**
+     * Get the count(distinct field) function.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static AggregateFunction<Long> countLargeDistinct(SelectFieldOrAsterisk field) {
+        return countLargeDistinct(field instanceof Field<?> f ? f : field("{0}", field));
     }
 
     /**
@@ -32092,6 +32183,19 @@ public class DSL {
     }
 
     /**
+     * Get the count(distinct table) function.
+     * <p>
+     * If this is not supported by a given database (i.e. non
+     * {@link SQLDialect#POSTGRES}, then the primary key is used with
+     * {@link #count(Field)}, instead.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static AggregateFunction<Long> countLargeDistinct(Table<?> table) {
+        return new CountLargeTable(table, true);
+    }
+
+    /**
      * Get the count(distinct field1, field2) function.
      * <p>
      * Some dialects support several expressions in the
@@ -32105,6 +32209,22 @@ public class DSL {
     public static AggregateFunction<Integer> countDistinct(Field<?>... fields) {
         fields = Tools.nullSafe(fields);
         return fields.length == 0 ? countDistinct(asterisk()) : new DefaultAggregateFunction<>(true, N_COUNT, SQLDataType.INTEGER, fields);
+    }
+
+    /**
+     * Get the count(distinct field1, field2) function.
+     * <p>
+     * Some dialects support several expressions in the
+     * <code>COUNT(DISTINCT expr1, expr2)</code> aggregate function.
+     * <p>
+     * {@link SQLDialect#POSTGRES} supports this as
+     * <code>COUNT(DISTINCT(expr1, expr2))</code>.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static AggregateFunction<Long> countLargeDistinct(Field<?>... fields) {
+        fields = Tools.nullSafe(fields);
+        return fields.length == 0 ? countLargeDistinct(asterisk()) : new DefaultAggregateFunction<>(true, N_COUNT, SQLDataType.BIGINT, fields);
     }
 
     /**

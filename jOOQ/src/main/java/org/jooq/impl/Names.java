@@ -357,7 +357,6 @@ final class Names {
     static final Name N_ANY_MATCH                   = systemName("any_match");
     static final Name N_ANY_VALUE                   = systemName("any_value");
     static final Name N_APPROX_COUNT_DISTINCT       = systemName("approx_count_distinct");
-    static final Name N_APPROX_COUNT_LARGE_DISTINCT = systemName("approx_count_large_distinct");
     static final Name N_ARRAYS_OVERLAP              = systemName("arrays_overlap");
     static final Name N_ARRAY_ALL_MATCH             = systemName("array_all_match");
     static final Name N_ARRAY_ANY_MATCH             = systemName("array_any_match");

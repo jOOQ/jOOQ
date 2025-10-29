@@ -67,7 +67,7 @@ import java.util.function.Function;
 
 
 /**
- * The <code>APPROX COUNT LARGE DISTINCT</code> statement.
+ * The <code>APPROX COUNT DISTINCT</code> statement.
  */
 @SuppressWarnings({ "rawtypes", "unused" })
 final class ApproxCountLargeDistinct
@@ -82,7 +82,7 @@ implements
     ) {
         super(
             false,
-            N_APPROX_COUNT_LARGE_DISTINCT,
+            N_APPROX_COUNT_DISTINCT,
             BIGINT,
             nullSafeNotNull(field, OTHER)
         );

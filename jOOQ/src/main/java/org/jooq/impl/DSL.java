@@ -25953,7 +25953,7 @@ public class DSL {
     }
 
     /**
-     * The <code>APPROX_COUNT_LARGE_DISTINCT</code> function.
+     * The <code>APPROX_COUNT_DISTINCT</code> function.
      * <p>
      * Calculate the approximate value for {@link #countDistinct(Field)} if such a function
      * is available in the dialect, or fall back to the exact value, otherwise.

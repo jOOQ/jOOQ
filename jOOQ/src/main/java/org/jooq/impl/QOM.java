@@ -8561,7 +8561,7 @@ public final class QOM {
     }
 
     /**
-     * The <code>APPROX COUNT LARGE DISTINCT</code> function.
+     * The <code>APPROX COUNT DISTINCT</code> function.
      * <p>
      * Calculate the approximate value for {@link #countDistinct(Field)} if such a function
      * is available in the dialect, or fall back to the exact value, otherwise.

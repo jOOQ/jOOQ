@@ -127,11 +127,11 @@ implements
                 Field<?> p = getArgument(0);
 
                 if (sort != null) {
-                    ctx.visit(N_quantileExact).sql('(').visit(sort.$sortOrder() == DESC ? inline(1).minus(p) : p).sql(')')
+                    ctx.visit(N_quantileExactLow).sql('(').visit(sort.$sortOrder() == DESC ? inline(1).minus(p) : p).sql(')')
                        .sql('(').visit(sort.$field()).sql(')');
                 }
                 else
-                    ctx.visit(N_quantileExact).sql('(').visit(p).sql(')');
+                    ctx.visit(N_quantileExactLow).sql('(').visit(p).sql(')');
 
                 acceptFilterClause(ctx);
                 acceptOverClause(ctx);

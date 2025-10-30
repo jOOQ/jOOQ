@@ -249,6 +249,7 @@ final class Names {
     static final Name N_POWER                       = systemName("power");
     static final Name N_quantile                    = systemName("quantile");
     static final Name N_quantileExact               = systemName("quantileExact");
+    static final Name N_quantileExactLow            = systemName("quantileExactLow");
     static final Name N_RANDOMBLOB                  = systemName("randomblob");
     static final Name N_RATIO_TO_REPORT             = systemName("ratio_to_report");
     static final Name N_RAWTOHEX                    = systemName("rawtohex");

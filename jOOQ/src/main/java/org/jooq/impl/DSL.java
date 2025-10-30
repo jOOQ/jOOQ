@@ -25998,6 +25998,62 @@ public class DSL {
     }
 
     /**
+     * The <code>APPROX_PERCENTILE_CONT</code> function.
+     * <p>
+     * Calculate the approximate value for the <code>PERCENTILE_CONT</code> inverse distribution
+     * aggregate function if such a function is available in the dialect, or fall back to
+     * the exact value, otherwise..
+     *
+     * @param percentile is wrapped as {@link DSL#val(Object)}.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, POSTGRES, TRINO, YUGABYTEDB })
+    public static OrderedAggregateFunction<BigDecimal> approxPercentileCont(Number percentile) {
+        return new ApproxPercentileCont(Tools.field(percentile));
+    }
+
+    /**
+     * The <code>APPROX_PERCENTILE_CONT</code> function.
+     * <p>
+     * Calculate the approximate value for the <code>PERCENTILE_CONT</code> inverse distribution
+     * aggregate function if such a function is available in the dialect, or fall back to
+     * the exact value, otherwise..
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, POSTGRES, TRINO, YUGABYTEDB })
+    public static OrderedAggregateFunction<BigDecimal> approxPercentileCont(Field<? extends Number> percentile) {
+        return new ApproxPercentileCont(percentile);
+    }
+
+    /**
+     * The <code>APPROX_PERCENTILE_DISC</code> function.
+     * <p>
+     * Calculate the approximate value for the <code>PERCENTILE_DISC</code> inverse distribution
+     * aggregate function if such a function is available in the dialect, or fall back to
+     * the exact value, otherwise..
+     *
+     * @param percentile is wrapped as {@link DSL#val(Object)}.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, POSTGRES, TRINO, YUGABYTEDB })
+    public static OrderedAggregateFunction<BigDecimal> approxPercentileDisc(Number percentile) {
+        return new ApproxPercentileDisc(Tools.field(percentile));
+    }
+
+    /**
+     * The <code>APPROX_PERCENTILE_DISC</code> function.
+     * <p>
+     * Calculate the approximate value for the <code>PERCENTILE_DISC</code> inverse distribution
+     * aggregate function if such a function is available in the dialect, or fall back to
+     * the exact value, otherwise..
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, POSTGRES, TRINO, YUGABYTEDB })
+    public static OrderedAggregateFunction<BigDecimal> approxPercentileDisc(Field<? extends Number> percentile) {
+        return new ApproxPercentileDisc(percentile);
+    }
+
+    /**
      * The <code>BIT_AND_AGG</code> function.
      * <p>
      * Calculate the bitwise <code>AND</code> aggregate value.

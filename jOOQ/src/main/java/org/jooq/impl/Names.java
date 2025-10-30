@@ -71,6 +71,9 @@ final class Names {
     static final Name N_ANY                         = systemName("any");
     static final Name N_APPROXIMATE_COUNT_DISTINCT  = systemName("approximate_count_distinct");
     static final Name N_APPROX_DISTINCT             = systemName("approx_distinct");
+    static final Name N_APPROX_PERCENTILE           = systemName("approx_percentile");
+    static final Name N_APPROX_QUANTILES            = systemName("approx_quantiles");
+    static final Name N_APPROX_QUANTILE             = systemName("approx_quantile");
     static final Name N_ARBITRARY                   = systemName("arbitrary");
     static final Name N_argMax                      = systemName("argMax");
     static final Name N_argMin                      = systemName("argMin");
@@ -250,6 +253,7 @@ final class Names {
     static final Name N_quantile                    = systemName("quantile");
     static final Name N_quantileExact               = systemName("quantileExact");
     static final Name N_quantileExactLow            = systemName("quantileExactLow");
+    static final Name N_quantileTDigest             = systemName("quantileTDigest");
     static final Name N_RANDOMBLOB                  = systemName("randomblob");
     static final Name N_RATIO_TO_REPORT             = systemName("ratio_to_report");
     static final Name N_RAWTOHEX                    = systemName("rawtohex");
@@ -360,6 +364,8 @@ final class Names {
     static final Name N_ANY_MATCH                   = systemName("any_match");
     static final Name N_ANY_VALUE                   = systemName("any_value");
     static final Name N_APPROX_COUNT_DISTINCT       = systemName("approx_count_distinct");
+    static final Name N_APPROX_PERCENTILE_CONT      = systemName("approx_percentile_cont");
+    static final Name N_APPROX_PERCENTILE_DISC      = systemName("approx_percentile_disc");
     static final Name N_ARRAYS_OVERLAP              = systemName("arrays_overlap");
     static final Name N_ARRAY_ALL_MATCH             = systemName("array_all_match");
     static final Name N_ARRAY_ANY_MATCH             = systemName("array_any_match");

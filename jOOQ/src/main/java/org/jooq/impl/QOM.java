@@ -8588,6 +8588,42 @@ public final class QOM {
     }
 
     /**
+     * The <code>APPROX PERCENTILE CONT</code> function.
+     * <p>
+     * Calculate the approximate value for the <code>PERCENTILE_CONT</code> inverse distribution
+     * aggregate function if such a function is available in the dialect, or fall back to
+     * the exact value, otherwise..
+     */
+    public /*sealed*/ interface ApproxPercentileCont
+        extends
+            OrderedAggregateFunction<BigDecimal, ApproxPercentileCont>
+        //permits
+        //    ApproxPercentileCont
+    {
+        @NotNull Field<? extends Number> $percentile();
+        @CheckReturnValue
+        @NotNull ApproxPercentileCont $percentile(Field<? extends Number> percentile);
+    }
+
+    /**
+     * The <code>APPROX PERCENTILE DISC</code> function.
+     * <p>
+     * Calculate the approximate value for the <code>PERCENTILE_DISC</code> inverse distribution
+     * aggregate function if such a function is available in the dialect, or fall back to
+     * the exact value, otherwise..
+     */
+    public /*sealed*/ interface ApproxPercentileDisc
+        extends
+            OrderedAggregateFunction<BigDecimal, ApproxPercentileDisc>
+        //permits
+        //    ApproxPercentileDisc
+    {
+        @NotNull Field<? extends Number> $percentile();
+        @CheckReturnValue
+        @NotNull ApproxPercentileDisc $percentile(Field<? extends Number> percentile);
+    }
+
+    /**
      * The <code>BIT AND AGG</code> function.
      * <p>
      * Calculate the bitwise <code>AND</code> aggregate value.

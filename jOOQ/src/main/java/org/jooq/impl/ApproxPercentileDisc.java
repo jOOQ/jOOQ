@@ -68,22 +68,22 @@ import java.util.function.Function;
 
 
 /**
- * The <code>PERCENTILE DISC</code> statement.
+ * The <code>APPROX PERCENTILE DISC</code> statement.
  */
 @SuppressWarnings({ "rawtypes", "unused" })
-final class PercentileDisc
+final class ApproxPercentileDisc
 extends
-    AbstractAggregateFunction<BigDecimal, QOM.PercentileDisc>
+    AbstractAggregateFunction<BigDecimal, QOM.ApproxPercentileDisc>
 implements
-    QOM.PercentileDisc
+    QOM.ApproxPercentileDisc
 {
 
-    PercentileDisc(
+    ApproxPercentileDisc(
         Field<? extends Number> percentile
     ) {
         super(
             false,
-            N_PERCENTILE_DISC,
+            N_APPROX_PERCENTILE_DISC,
             NUMERIC,
             nullSafeNotNull(percentile, INTEGER)
         );
@@ -121,16 +121,24 @@ implements
 
 
 
-            case CLICKHOUSE: {
+
+
+
+            case CLICKHOUSE:
+            case DUCKDB:
+            case TRINO: {
                 SortField<?> sort = withinGroupOrderBy.$first();
                 Field<?> p = getArgument(0);
 
-                if (sort != null) {
-                    ctx.visit(N_quantileExactLow).sql('(').visit(sort.$sortOrder() == SortOrder.DESC ? inline(1).minus(p) : p).sql(')')
-                       .sql('(').visit(sort.$field()).sql(')');
-                }
+                acceptFunctionName(ctx);
+                ctx.sql('(').visit(sort.$sortOrder() == SortOrder.DESC ? inline(1).minus(p) : p);
+
+                if (ctx.family() == CLICKHOUSE)
+                    ctx.sql(")(");
                 else
-                    ctx.visit(N_quantileExactLow).sql('(').visit(p).sql(')');
+                    ctx.sql(", ");
+
+                ctx.visit(sort.$field()).sql(')');
 
                 acceptFilterClause(ctx);
                 acceptOverClause(ctx);
@@ -139,6 +147,48 @@ implements
 
             default:
                 super.accept(ctx);
+                break;
+        }
+    }
+
+    @Override
+    final void acceptFunctionName(Context<?> ctx) {
+        switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+            case TRINO:
+                ctx.visit(N_APPROX_PERCENTILE);
+                break;
+
+            case DUCKDB:
+                ctx.visit(N_APPROX_QUANTILE);
+                break;
+
+            case CLICKHOUSE:
+                ctx.visit(N_quantileTDigest);
+                break;
+
+
+
+
+
+
+            case H2:
+            case MARIADB:
+            case POSTGRES:
+            case YUGABYTEDB:
+                ctx.visit(N_PERCENTILE_DISC);
+                break;
+
+            default:
+                super.acceptFunctionName(ctx);
                 break;
         }
     }
@@ -166,16 +216,16 @@ implements
     }
 
     @Override
-    public final QOM.PercentileDisc $percentile(Field<? extends Number> newValue) {
+    public final QOM.ApproxPercentileDisc $percentile(Field<? extends Number> newValue) {
         return copyAggregateSpecification().apply($constructor().apply(newValue));
     }
 
-    public final Function1<? super Field<? extends Number>, ? extends QOM.PercentileDisc> $constructor() {
-        return (a1) -> new PercentileDisc(a1);
+    public final Function1<? super Field<? extends Number>, ? extends QOM.ApproxPercentileDisc> $constructor() {
+        return (a1) -> new ApproxPercentileDisc(a1);
     }
 
     @Override
-    final QOM.PercentileDisc copyAggregateFunction(Function<? super QOM.PercentileDisc, ? extends QOM.PercentileDisc> function) {
+    final QOM.ApproxPercentileDisc copyAggregateFunction(Function<? super QOM.ApproxPercentileDisc, ? extends QOM.ApproxPercentileDisc> function) {
         return function.apply($constructor().apply($percentile()));
     }
 
@@ -208,7 +258,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.PercentileDisc o) {
+        if (that instanceof QOM.ApproxPercentileDisc o) {
             return
                 Objects.equals($percentile(), o.$percentile())
             ;

@@ -13698,6 +13698,10 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
             return parseInverseDistributionFunctionIf0(DSL::percentileCont);
         else if (parseFunctionNameIf("PERCENTILE_DISC"))
             return parseInverseDistributionFunctionIf0(DSL::percentileDisc);
+        else if (parseFunctionNameIf("APPROX_PERCENTILE_CONT"))
+            return parseInverseDistributionFunctionIf0(DSL::approxPercentileCont);
+        else if (parseFunctionNameIf("APPROX_PERCENTILE_DISC", "APPROX_PERCENTILE", "APPROX_QUANTILE", "APPROXIMATE PERCENTILE_DISC"))
+            return parseInverseDistributionFunctionIf0(DSL::approxPercentileDisc);
         else
             return null;
     }
@@ -15658,7 +15662,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                     return ComputationalOperation.AVG;
                 else if (parseFunctionNameIf("APPROX_COUNT_DISTINCT", "APPROXIMATE_COUNT_DISTINCT", "APPROX_DISTINCT"))
                     return ComputationalOperation.APPROX_COUNT_DISTINCT;
-                else if (parseKeywordIf("APPROXIMATE") && parseFunctionNameIf("COUNT"))
+                else if (parseFunctionNameIf("APPROXIMATE COUNT"))
                     return ComputationalOperation.APPROX_COUNT;
 
                 break;

@@ -47,7 +47,6 @@ import static org.jooq.impl.Tools.BooleanDataKey.*;
 import static org.jooq.impl.Tools.ExtendedDataKey.*;
 import static org.jooq.impl.Tools.SimpleDataKey.*;
 import static org.jooq.SQLDialect.*;
-import static org.jooq.SortOrder.DESC;
 
 import org.jooq.*;
 import org.jooq.Function1;
@@ -127,7 +126,7 @@ implements
                 Field<?> p = getArgument(0);
 
                 if (sort != null) {
-                    ctx.visit(N_quantile).sql('(').visit(sort.$sortOrder() == DESC ? inline(1).minus(p) : p).sql(')')
+                    ctx.visit(N_quantile).sql('(').visit(sort.$sortOrder() == SortOrder.DESC ? inline(1).minus(p) : p).sql(')')
                        .sql('(').visit(sort.$field()).sql(')');
                 }
                 else

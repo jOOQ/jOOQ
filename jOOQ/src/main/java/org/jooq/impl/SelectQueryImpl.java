@@ -2215,7 +2215,10 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
      * when the WITH TIES clause is specified.
      */
     private final void toSQLReferenceLimitWithWindowFunctions(Context<?> ctx, AliasOverride aliasOverride) {
-        if (Transformations.EMULATE_QUALIFY.contains(ctx.dialect()) || getQualify().hasWhere())
+
+        // [#19316] With UNIONs, it would still be interesting to use QUALIFY if there's native support, but we don't
+        //          have this emulation ready yet.
+        if (Transformations.EMULATE_QUALIFY.contains(ctx.dialect()) || getQualify().hasWhere() || hasUnions())
             toSQLReferenceLimitWithWindowFunctions0(ctx);
         else
             toSQLReferenceQualifyInsteadOfLimit(ctx, aliasOverride);

@@ -2336,7 +2336,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         boolean wrapQueryExpressionInDerivedTable;
         boolean wrapQueryExpressionBodyInDerivedTable;
         boolean applySeekOnDerivedTable = applySeekOnDerivedTable();
-
+        boolean hasAlternativeFields = aliasOverride != null && aliasOverride.originalFields().size() < aliasOverride.aliasedFields().size();
 
         wrapQueryExpressionInDerivedTable = false
 
@@ -2369,7 +2369,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
 
 
-            || wrapQueryExpressionBodyInDerivedTable(context, aliasOverride != null)
+            || wrapQueryExpressionBodyInDerivedTable(context, hasAlternativeFields)
 
         // [#7459] In the presence of UNIONs and other set operations, the SEEK
         //         predicate must be applied on a derived table, not on the individual subqueries
@@ -2386,7 +2386,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
                    .formatNewLine()
                    .sql("t.*");
 
-            if (aliasOverride != null && aliasOverride.originalFields().size() < aliasOverride.aliasedFields().size())
+            if (hasAlternativeFields)
                 context.sql(", ")
                        .formatSeparator()
                        .declareFields(true, c -> c.visit(aliasOverride.aliasedFields().get(aliasOverride.aliasedFields().size() - 1)));
@@ -2482,7 +2482,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // [#2335] When emulating LIMIT .. OFFSET, the SELECT clause needs to generate
         // non-ambiguous column names as ambiguous column names are not allowed in subqueries
         if (aliasOverride != null)
-            if (wrapQueryExpressionBodyInDerivedTable && aliasOverride.originalFields().size() < aliasOverride.aliasedFields().size())
+            if (wrapQueryExpressionBodyInDerivedTable && hasAlternativeFields)
                 context.visit(new SelectFieldList<>(aliasOverride.aliasedFields().subList(0, aliasOverride.originalFields().size())));
             else
                 context.visit(new SelectFieldList<>(aliasOverride.aliasedFields()));

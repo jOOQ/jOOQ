@@ -138,31 +138,48 @@ implements
 
 
 
+
+
+
+
+
+
+
+
+
             case H2:
             case HSQLDB:
             case POSTGRES:
             case YUGABYTEDB: {
-                List<SortField<?>> o = new ArrayList<>();
-                o.add(arguments.get(1).desc());
-
-                if (!isEmpty(withinGroupOrderBy))
-                    o.addAll(withinGroupOrderBy);
-
-                ctx.visit(arrayGet(fo(DSL.arrayAgg(arguments.get(0)).orderBy(o)), inline(1)));
+                acceptArrayAggEmulation(ctx);
                 break;
             }
 
             default:
-                acceptFunctionName(ctx);
-                ctx.sql('(');
-                acceptArguments0(ctx);
-                acceptOrderBy(ctx);
-                ctx.sql(')');
-
-                acceptFilterClause(ctx);
-                acceptOverClause(ctx);
+                acceptDefault(ctx);
                 break;
         }
+    }
+
+    private final void acceptArrayAggEmulation(Context<?> ctx) {
+        List<SortField<?>> o = new ArrayList<>();
+        o.add(arguments.get(1).desc());
+
+        if (!isEmpty(withinGroupOrderBy))
+            o.addAll(withinGroupOrderBy);
+
+        ctx.visit(arrayGet(fo(DSL.arrayAgg(arguments.get(0)).orderBy(o)), inline(1)));
+    }
+
+    private final void acceptDefault(Context<?> ctx) {
+        acceptFunctionName(ctx);
+        ctx.sql('(');
+        acceptArguments0(ctx);
+        acceptOrderBy(ctx);
+        ctx.sql(')');
+
+        acceptFilterClause(ctx);
+        acceptOverClause(ctx);
     }
 
     @Override

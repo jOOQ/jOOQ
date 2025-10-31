@@ -40,13 +40,10 @@ package org.jooq;
 
 import static java.util.Collections.unmodifiableSet;
 
-import java.util.Collection;
-import java.util.Collections;
 import java.util.EnumSet;
 import java.util.Set;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * A category for {@link SQLDialect}.
@@ -85,6 +82,12 @@ public enum SQLDialectCategory {
     // -------------------------------------------------------------------------
     // SQL dialects for commercial usage
     // -------------------------------------------------------------------------
+
+
+
+
+
+
 
 
 

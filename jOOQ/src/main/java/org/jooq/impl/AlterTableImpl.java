@@ -2003,6 +2003,7 @@ implements
 
 
             case CLICKHOUSE:
+
             case TRINO:
                 return K_ADD_COLUMN;
 

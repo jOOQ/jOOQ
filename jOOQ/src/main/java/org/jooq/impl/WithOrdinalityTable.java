@@ -90,6 +90,7 @@ import org.jooq.QueryPart;
 import org.jooq.Record;
 // ...
 import org.jooq.SQLDialect;
+import org.jooq.SQLDialectCategory;
 import org.jooq.Select;
 import org.jooq.Table;
 // ...
@@ -188,6 +189,12 @@ implements
     public final void accept(Context<?> ctx) {
         Select<?> s;
 
+
+
+
+
+
+
         if (delegate instanceof ArrayTable || delegate instanceof ArrayOfValues) {
             if (NO_SUPPORT_STANDARD.contains(ctx.dialect()))
                 acceptEmulation(ctx);
@@ -206,10 +213,9 @@ implements
             else
                 acceptStandard(ctx);
         }
-        else if (NO_SUPPORT_TABLE_EXPRESSIONS.contains(ctx.dialect()))
+        else if (NO_SUPPORT_TABLE_EXPRESSIONS.contains(ctx.dialect())) {
             acceptEmulation(ctx);
-
-
+        }
 
 
 

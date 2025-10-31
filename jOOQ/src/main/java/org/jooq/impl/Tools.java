@@ -1886,8 +1886,17 @@ final class Tools {
         return map(names, n -> n instanceof Name name ? name : DSL.name(String.valueOf(n)));
     }
 
+
+
+
+
+
     static final String sanitiseName(Configuration configuration, String name) {
         switch (configuration.family()) {
+
+
+
+
 
 
 
@@ -7325,6 +7334,7 @@ final class Tools {
                 case POSTGRES:
                 case YUGABYTEDB:
                     return NestedCollectionEmulation.JSONB;
+
 
 
                 case H2:

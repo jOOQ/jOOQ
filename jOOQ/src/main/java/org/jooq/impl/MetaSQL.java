@@ -385,6 +385,7 @@ final class MetaSQL {
 
 
 
+
         M_GENERATORS.put(MARIADB, "select null as table_catalog, information_schema.COLUMNS.TABLE_SCHEMA, information_schema.COLUMNS.TABLE_NAME, information_schema.COLUMNS.COLUMN_NAME, information_schema.COLUMNS.GENERATION_EXPRESSION, case when information_schema.COLUMNS.EXTRA in ('VIRTUAL', 'VIRTUAL GENERATED') then 'VIRTUAL' when information_schema.COLUMNS.EXTRA in ('PERSISTENT', 'STORED GENERATED') then 'STORED' end as generationOption from information_schema.COLUMNS where (information_schema.COLUMNS.TABLE_SCHEMA in (?) and information_schema.COLUMNS.EXTRA in ('VIRTUAL', 'VIRTUAL GENERATED', 'PERSISTENT', 'STORED GENERATED')) order by information_schema.COLUMNS.ORDINAL_POSITION");
         M_GENERATORS.put(MYSQL, "select null as table_catalog, information_schema.COLUMNS.TABLE_SCHEMA, information_schema.COLUMNS.TABLE_NAME, information_schema.COLUMNS.COLUMN_NAME, information_schema.COLUMNS.GENERATION_EXPRESSION, case when information_schema.COLUMNS.EXTRA in ('VIRTUAL', 'VIRTUAL GENERATED') then 'VIRTUAL' when information_schema.COLUMNS.EXTRA in ('PERSISTENT', 'STORED GENERATED') then 'STORED' end as generationOption from information_schema.COLUMNS where (information_schema.COLUMNS.TABLE_SCHEMA in (?) and information_schema.COLUMNS.EXTRA in ('VIRTUAL', 'VIRTUAL GENERATED', 'PERSISTENT', 'STORED GENERATED')) order by information_schema.COLUMNS.ORDINAL_POSITION");
 

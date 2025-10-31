@@ -1942,7 +1942,7 @@ implements
                      .sql(' ')
                      .visit(dropConstraint);
                 }
-                else if (dropConstraintType == PRIMARY_KEY && NO_SUPPORT_DROP_CONSTRAINT.contains(c.dialect()) || AbstractConstraint.NO_SUPPORT_NAMED_PK.contains(c.dialect())) {
+                else if (dropConstraintType == PRIMARY_KEY && (NO_SUPPORT_DROP_CONSTRAINT.contains(c.dialect()) || AbstractConstraint.NO_SUPPORT_NAMED_PK.contains(c.dialect()))) {
                     c.visit(K_DROP).sql(' ').visit(K_PRIMARY_KEY);
                 }
                 else {

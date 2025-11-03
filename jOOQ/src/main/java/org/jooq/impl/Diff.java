@@ -53,6 +53,10 @@ import static org.jooq.impl.Comparators.FOREIGN_KEY_COMP;
 import static org.jooq.impl.Comparators.INDEX_COMP;
 import static org.jooq.impl.Comparators.KEY_COMP;
 import static org.jooq.impl.Comparators.NAMED_COMP;
+import static org.jooq.impl.Comparators.UNNAMED_CHECK_COMP;
+import static org.jooq.impl.Comparators.UNNAMED_FOREIGN_KEY_COMP;
+import static org.jooq.impl.Comparators.UNNAMED_INDEX_COMP;
+import static org.jooq.impl.Comparators.UNNAMED_KEY_COMP;
 import static org.jooq.impl.Comparators.UNQUALIFIED_COMP;
 import static org.jooq.impl.ConstraintType.CHECK;
 import static org.jooq.impl.ConstraintType.FOREIGN_KEY;
@@ -221,7 +225,7 @@ final class Diff extends AbstractScope {
     }
 
     private final DiffResult appendCatalogs(DiffResult result, List<Catalog> l1, List<Catalog> l2) {
-        return append(result, l1, l2, null,
+        return append(result, l1, l2, null, null,
 
             // TODO Implement this for SQL Server support.
             null,
@@ -234,7 +238,7 @@ final class Diff extends AbstractScope {
     }
 
     private final DiffResult appendSchemas(DiffResult result, List<Schema> l1, List<Schema> l2) {
-        return append(result, l1, l2, null,
+        return append(result, l1, l2, null, null,
             (r, s) -> r.queries.addAll(Arrays.asList(ctx.ddl(s).queries())),
             (r, s) -> {
                 if (s.getTables().isEmpty() && s.getSequences().isEmpty()) {
@@ -300,7 +304,7 @@ final class Diff extends AbstractScope {
     }
 
     private final DiffResult appendSequences(DiffResult result, List<? extends Sequence<?>> l1, List<? extends Sequence<?>> l2) {
-        return append(result, l1, l2, null,
+        return append(result, l1, l2, null, null,
             (r, s) -> r.queries.add(ddl.createSequence(s)),
             dropSequence(),
             (r, s1, s2) -> {
@@ -408,7 +412,7 @@ final class Diff extends AbstractScope {
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     private final DiffResult appendDomains(DiffResult result, List<? extends Domain<?>> l1, List<? extends Domain<?>> l2) {
-        return append(result, l1, l2, null,
+        return append(result, l1, l2, null, null,
             (r, d) -> r.queries.add(ddl.createDomain(d)),
             (r, d) -> r.queries.add(ctx.dropDomain(d)),
             (r, d1, d2) -> {
@@ -569,7 +573,7 @@ final class Diff extends AbstractScope {
     };
 
     private final DiffResult appendTables(DiffResult result, List<? extends Table<?>> l1, List<? extends Table<?>> l2) {
-        return append(result, l1, l2, null, createTable(), dropTable(), MERGE_TABLE);
+        return append(result, l1, l2, null, null, createTable(), dropTable(), MERGE_TABLE);
     }
 
     private final List<UniqueKey<?>> removePrimary(List<? extends UniqueKey<?>> list) {
@@ -622,7 +626,7 @@ final class Diff extends AbstractScope {
         final List<Field<?>> add = new ArrayList<>();
         final List<Field<?>> drop = new ArrayList<>();
 
-        result = append(result, l1, l2, UNQUALIFIED_COMP,
+        result = append(result, l1, l2, UNQUALIFIED_COMP, UNQUALIFIED_COMP,
             (r, f) -> {
 
                 // Ignore synthetic columns
@@ -799,7 +803,7 @@ final class Diff extends AbstractScope {
                 r.queries.add(ctx.alterTable(t1).dropPrimaryKey(pk.constraint()));
         };
 
-        return append(result, pk1, pk2, KEY_COMP,
+        return append(result, pk1, pk2, KEY_COMP, UNNAMED_KEY_COMP,
             create,
             drop,
             keyMerge(t1, create, drop, PRIMARY_KEY),
@@ -811,7 +815,7 @@ final class Diff extends AbstractScope {
         final Create<UniqueKey<?>> create = (r, u) -> r.queries.add(ctx.alterTable(t1).add(u.constraint()));
         final Drop<UniqueKey<?>> drop = (r, u) -> r.queries.add(ctx.alterTable(t1).dropUnique(u.constraint()));
 
-        return append(result, uk1, uk2, KEY_COMP,
+        return append(result, uk1, uk2, KEY_COMP, UNNAMED_KEY_COMP,
             create,
             drop,
             keyMerge(t1, create, drop, UNIQUE),
@@ -922,7 +926,7 @@ final class Diff extends AbstractScope {
                 r.queries.add(ctx.alterTable(t1).dropForeignKey(fk.constraint()));
         };
 
-        return append(result, fk1, fk2, FOREIGN_KEY_COMP,
+        return append(result, fk1, fk2, FOREIGN_KEY_COMP, UNNAMED_FOREIGN_KEY_COMP,
             create,
             drop,
             keyMerge(t1, create, drop, FOREIGN_KEY),
@@ -934,7 +938,7 @@ final class Diff extends AbstractScope {
         final Create<Check<?>> create = (r, c) -> r.queries.add(ctx.alterTable(t1).add(c.constraint()));
         final Drop<Check<?>> drop = (r, c) -> r.queries.add(ctx.alterTable(t1).drop(c.constraint()));
 
-        return append(result, c1, c2, CHECK_COMP,
+        return append(result, c1, c2, CHECK_COMP, UNNAMED_CHECK_COMP,
             create,
             drop,
             keyMerge(t1, create, drop, CHECK),
@@ -946,7 +950,7 @@ final class Diff extends AbstractScope {
         final Create<Check<?>> create = (r, c) -> r.queries.add(ctx.alterDomain(d1).add(c.constraint()));
         final Drop<Check<?>> drop = (r, c) -> r.queries.add(ctx.alterDomain(d1).dropConstraint(c.constraint()));
 
-        return append(result, c1, c2, CHECK_COMP,
+        return append(result, c1, c2, CHECK_COMP, UNNAMED_CHECK_COMP,
             create,
             drop,
             keyMerge(d1, create, drop),
@@ -958,11 +962,11 @@ final class Diff extends AbstractScope {
         final Create<Index> create = (r, i) -> r.queries.add((i.getUnique() ? ctx.createUniqueIndex(i) : ctx.createIndex(i)).on(t1, i.getFields()));
         final Drop<Index> drop = (r, i) -> r.queries.add(ctx.dropIndex(i).on(t1));
 
-        return append(result, l1, l2, INDEX_COMP,
+        return append(result, l1, l2, INDEX_COMP, UNNAMED_INDEX_COMP,
             create,
             drop,
             (r, ix1, ix2) -> {
-                if (INDEX_COMP.compare(ix1, ix2) != 0) {
+                if (UNNAMED_INDEX_COMP.compare(ix1, ix2) != 0) {
                     drop.drop(r, ix1);
                     create.create(r, ix2);
                 }
@@ -986,32 +990,36 @@ final class Diff extends AbstractScope {
         DiffResult result,
         List<? extends N> l1,
         List<? extends N> l2,
-        Comparator<? super N> comp,
+        Comparator<? super N> compForSort,
+        Comparator<? super N> compForCompare,
         Create<N> create,
         Drop<N> drop,
         Merge<N> merge
     ) {
-        return append(result, l1, l2, comp, create, drop, merge, false);
+        return append(result, l1, l2, compForSort, compForCompare, create, drop, merge, false);
     }
 
     private final <N extends Named> DiffResult append(
         DiffResult result,
         List<? extends N> l1,
         List<? extends N> l2,
-        Comparator<? super N> comp,
+        Comparator<? super N> compForSort,
+        Comparator<? super N> compForCompare,
         Create<N> create,
         Drop<N> drop,
         Merge<N> merge,
         boolean dropMergeCreate
     ) {
-        if (comp == null)
-            comp = NAMED_COMP;
+        if (compForSort == null)
+            compForSort = NAMED_COMP;
+        if (compForCompare == null)
+            compForCompare = compForSort;
 
         N s1 = null;
         N s2 = null;
 
-        Iterator<? extends N> i1 = sorted(l1, comp);
-        Iterator<? extends N> i2 = sorted(l2, comp);
+        Iterator<? extends N> i1 = sorted(l1, compForSort);
+        Iterator<? extends N> i2 = sorted(l2, compForSort);
 
         DiffResult dropped = dropMergeCreate ? new DiffResult(new ArrayList<>(), new ArrayList<>(), result.addedFks, result.droppedFks) : result;
         DiffResult merged = dropMergeCreate ? new DiffResult(new ArrayList<>(), new ArrayList<>(), result.addedFks, result.droppedFks) : result;
@@ -1031,7 +1039,7 @@ final class Diff extends AbstractScope {
                   ? 1
                   : s2 == null
                   ? -1
-                  : comp.compare(s1, s2);
+                  : compForCompare.compare(s1, s2);
 
             if (c < 0) {
                 if (drop != null)

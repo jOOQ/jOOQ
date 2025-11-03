@@ -63,13 +63,17 @@ import org.jooq.Table;
  */
 final class Comparators {
 
-    static final Comparator<Named>            NAMED_COMP       = comparing(Named::getQualifiedName);
-    static final Comparator<Named>            UNQUALIFIED_COMP = comparing(Named::getUnqualifiedName);
-    static final Comparator<Table<?>>         TABLE_VIEW_COMP  = comparing(t -> t.getTableType() == TABLE ? 0 : 1);
-    static final Comparator<Key<?>>           KEY_COMP         = new KeyComparator();
-    static final Comparator<ForeignKey<?, ?>> FOREIGN_KEY_COMP = new ForeignKeyComparator();
-    static final Comparator<Check<?>>         CHECK_COMP       = comparing(c -> c.condition().toString());
-    static final Comparator<Index>            INDEX_COMP       = new IndexComparator();
+    static final Comparator<Named>            NAMED_COMP               = comparing(Named::getQualifiedName);
+    static final Comparator<Named>            UNQUALIFIED_COMP         = comparing(Named::getUnqualifiedName);
+    static final Comparator<Table<?>>         TABLE_VIEW_COMP          = comparing(t -> t.getTableType() == TABLE ? 0 : 1);
+    static final Comparator<Key<?>>           UNNAMED_KEY_COMP         = new KeyComparator();
+    static final Comparator<Key<?>>           KEY_COMP                 = UNNAMED_KEY_COMP.thenComparing(NAMED_COMP);
+    static final Comparator<ForeignKey<?, ?>> UNNAMED_FOREIGN_KEY_COMP = new ForeignKeyComparator();
+    static final Comparator<ForeignKey<?, ?>> FOREIGN_KEY_COMP         = UNNAMED_FOREIGN_KEY_COMP.thenComparing(NAMED_COMP);
+    static final Comparator<Check<?>>         UNNAMED_CHECK_COMP       = comparing(c -> c.condition().toString());
+    static final Comparator<Check<?>>         CHECK_COMP               = UNNAMED_CHECK_COMP.thenComparing(NAMED_COMP);
+    static final Comparator<Index>            UNNAMED_INDEX_COMP       = new IndexComparator();
+    static final Comparator<Index>            INDEX_COMP               = UNNAMED_INDEX_COMP.thenComparing(NAMED_COMP);
 
     private static final class KeyComparator implements Comparator<Key<?>> {
         @Override
@@ -95,12 +99,12 @@ final class Comparators {
     private static final class ForeignKeyComparator implements Comparator<ForeignKey<?, ?>> {
         @Override
         public int compare(ForeignKey<?, ?> o1, ForeignKey<?, ?> o2) {
-            int c = KEY_COMP.compare(o1, o2);
+            int c = UNNAMED_KEY_COMP.compare(o1, o2);
 
             if (c != 0)
                 return c;
             else
-                return KEY_COMP.compare(o1.getKey(), o2.getKey());
+                return UNNAMED_KEY_COMP.compare(o1.getKey(), o2.getKey());
         }
     }
 

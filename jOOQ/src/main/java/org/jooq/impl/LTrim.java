@@ -137,6 +137,8 @@ implements
 
 
 
+
+
                 case SQLITE:
                     ctx.visit(function(N_LTRIM, getDataType(), string, characters));
                     break;

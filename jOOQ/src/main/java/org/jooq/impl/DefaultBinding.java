@@ -3592,7 +3592,17 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final Float get0(BindingGetResultSetContext<U> ctx) throws SQLException {
             return wasNull(ctx.resultSet(), fixInfinity(ctx,
-                () -> ctx.resultSet().getFloat(ctx.index()),
+                () -> {
+                    switch (ctx.family()) {
+
+
+
+
+
+                        default:
+                            return ctx.resultSet().getFloat(ctx.index());
+                    }
+                },
                 () -> ctx.resultSet().getString(ctx.index())
             ));
         }

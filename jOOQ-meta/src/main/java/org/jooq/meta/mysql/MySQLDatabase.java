@@ -755,7 +755,12 @@ public class MySQLDatabase extends AbstractDatabase implements ResultQueryDataba
                 inline("VIRTUAL GENERATED"),
                 inline("PERSISTENT"),
                 inline("STORED GENERATED")))
+            .and(excludeGenerationExpressions(COLUMNS))
             .orderBy(COLUMNS.ORDINAL_POSITION);
+    }
+
+    protected Condition excludeGenerationExpressions(Columns columns) {
+        return DSL.noCondition();
     }
 
     @Override

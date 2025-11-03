@@ -38,7 +38,8 @@
 
 package org.jooq.meta.mariadb;
 
-import static org.jooq.impl.DSL.exists;
+import static java.util.Arrays.asList;
+import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
@@ -47,11 +48,14 @@ import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.SQLDataType.BIGINT;
 import static org.jooq.impl.SQLDataType.BOOLEAN;
 import static org.jooq.impl.SQLDataType.VARCHAR;
-import static org.jooq.meta.mysql.information_schema.Tables.*;
+import static org.jooq.meta.mariadb.information_schema.tables.Columns.COLUMNS;
+import static org.jooq.meta.mysql.information_schema.Tables.CHECK_CONSTRAINTS;
+import static org.jooq.meta.mysql.information_schema.Tables.TABLES;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.jooq.Condition;
@@ -62,14 +66,13 @@ import org.jooq.Record12;
 import org.jooq.ResultQuery;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
-import org.jooq.impl.SQLDataType;
 import org.jooq.meta.DefaultDataTypeDefinition;
 import org.jooq.meta.DefaultSequenceDefinition;
 import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.SequenceDefinition;
 import org.jooq.meta.mysql.MySQLDatabase;
 import org.jooq.meta.mysql.information_schema.tables.CheckConstraints;
-import org.jooq.meta.mysql.information_schema.tables.TableConstraints;
+import org.jooq.meta.mysql.information_schema.tables.Columns;
 
 /**
  * @author Lukas Eder
@@ -150,5 +153,14 @@ public class MariaDBDatabase extends MySQLDatabase {
             .and(field("{0}.TABLE_NAME", VARCHAR, cc).eq(tableName))
             .and(cc.CHECK_CLAUSE.eq(inline("json_valid(`").concat(fieldName).concat(inline("`)"))))
         );
+    }
+
+    @Override
+    protected Condition excludeGenerationExpressions(Columns columns) {
+        if (configuredDialectIsNotFamilyAndSupports(asList(MARIADB), () -> exists(COLUMNS.IS_SYSTEM_TIME_PERIOD_START)))
+            return COLUMNS.IS_SYSTEM_TIME_PERIOD_START.eq(inline("NO"))
+                .and(COLUMNS.IS_SYSTEM_TIME_PERIOD_END.eq(inline("NO")));
+        else
+            return DSL.noCondition();
     }
 }

@@ -1088,7 +1088,7 @@ final class R2DBC {
         return blockWrappingExceptions(ConnectionFactories.get(builder.build()).create());
     }
 
-    private static <T> Builder setOption(Builder builder, Option<T> option, Object v) {
+    private static final <T> Builder setOption(Builder builder, Option<T> option, Object v) {
         return builder.option(option, option.cast(v));
     }
 
@@ -1152,6 +1152,7 @@ final class R2DBC {
 
 
 
+
                     default:
                         s.bind(parameterIndex - 1, x);
                         break;
@@ -1162,6 +1163,7 @@ final class R2DBC {
         private final <T> void bindNull(int parameterIndex, Class<T> type) {
             wrapExceptions(() -> {
                 switch (c.family()) {
+
 
 
 
@@ -1740,6 +1742,7 @@ final class R2DBC {
             case MYSQL:
             case MARIADB:
                 return settings;
+
 
 
 

@@ -358,6 +358,7 @@ final class Names {
     static final Name N_ABS                         = systemName("abs");
     static final Name N_ACOS                        = systemName("acos");
     static final Name N_ACOSH                       = systemName("acosh");
+    static final Name N_ACOT                        = systemName("acot");
     static final Name N_ACOTH                       = systemName("acoth");
     static final Name N_AGGREGATE                   = systemName("aggregate");
     static final Name N_ALL_MATCH                   = systemName("all_match");

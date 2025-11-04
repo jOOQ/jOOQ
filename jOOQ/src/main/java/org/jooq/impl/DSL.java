@@ -19124,6 +19124,26 @@ public class DSL {
     }
 
     /**
+     * The <code>ACOT</code> function.
+     *
+     * @param value is wrapped as {@link DSL#val(Object)}.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static Field<BigDecimal> acot(Number value) {
+        return new Acot(Tools.field(value));
+    }
+
+    /**
+     * The <code>ACOT</code> function.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static Field<BigDecimal> acot(Field<? extends Number> value) {
+        return new Acot(value);
+    }
+
+    /**
      * The <code>ACOTH</code> function.
      *
      * @param value is wrapped as {@link DSL#val(Object)}.

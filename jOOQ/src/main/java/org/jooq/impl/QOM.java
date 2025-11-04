@@ -4193,6 +4193,22 @@ public final class QOM {
     }
 
     /**
+     * The <code>ACOT</code> function.
+     */
+    public /*sealed*/ interface Acot
+        extends
+            UReturnsNullOnNullInput,
+            UOperator1<Field<? extends Number>, Acot>,
+            org.jooq.Field<BigDecimal>
+        //permits
+        //    Acot
+    {
+        @NotNull default Field<? extends Number> $value() { return $arg1(); }
+        @CheckReturnValue
+        @NotNull default Acot $value(Field<? extends Number> newValue) { return $arg1(newValue); }
+    }
+
+    /**
      * The <code>ACOTH</code> function.
      */
     public /*sealed*/ interface Acoth

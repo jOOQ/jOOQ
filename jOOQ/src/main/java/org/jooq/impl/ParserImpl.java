@@ -78,6 +78,7 @@ import static org.jooq.impl.Convert.convert;
 import static org.jooq.impl.DSL.abs;
 import static org.jooq.impl.DSL.acos;
 import static org.jooq.impl.DSL.acosh;
+import static org.jooq.impl.DSL.acot;
 import static org.jooq.impl.DSL.acoth;
 import static org.jooq.impl.DSL.all;
 import static org.jooq.impl.DSL.and;
@@ -9471,6 +9472,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                     return acos((Field) parseFieldNumericOpParenthesised());
                 else if (parseFunctionNameIf("ACOSH"))
                     return acosh((Field) parseFieldNumericOpParenthesised());
+                else if (parseFunctionNameIf("ACOT"))
+                    return acot((Field) parseFieldNumericOpParenthesised());
                 else if (parseFunctionNameIf("ACOTH"))
                     return acoth((Field) parseFieldNumericOpParenthesised());
                 else if (parseFunctionNameIf("ASIN"))

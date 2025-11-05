@@ -81,6 +81,7 @@ final class Names {
     static final Name N_ARRAY_AGG                   = systemName("array_agg");
     static final Name N_ARRAY_CONSTRUCT             = systemName("array_construct");
     static final Name N_ARRAY_CONSTRUCT_COMPACT     = systemName("array_construct_compact");
+    static final Name N_ARRAY_SLICE                 = systemName("array_slice");
     static final Name N_arrayUniq                   = systemName("arrayUniq");
     static final Name N_BITCOUNT                    = systemName("bitcount");
     static final Name N_bitCount                    = systemName("bitCount");

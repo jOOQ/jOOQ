@@ -51,6 +51,7 @@ import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
+// ...
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
@@ -61,8 +62,8 @@ import static org.jooq.SQLDialect.YUGABYTEDB;
 import org.jooq.impl.QOM;
 import org.jooq.impl.QOM.UnmodifiableList;
 
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.ApiStatus.Experimental;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A derived column list.

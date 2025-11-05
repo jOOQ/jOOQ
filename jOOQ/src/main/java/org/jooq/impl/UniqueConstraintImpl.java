@@ -40,6 +40,7 @@ package org.jooq.impl;
 // ...
 import static org.jooq.SQLDialect.CLICKHOUSE;
 import static org.jooq.SQLDialect.IGNITE;
+// ...
 import static org.jooq.SQLDialect.TRINO;
 import static org.jooq.impl.Keywords.K_UNIQUE;
 import static org.jooq.impl.QueryPartListView.wrap;

@@ -8042,4 +8042,18 @@ final class Tools {
         else
             return string;
     }
+
+    static final int maxParameterCount(Scope ctx) {
+
+        // [#19335] Some dialects allow a maximum number of arguments to be passed to a function
+        switch (ctx.family()) {
+
+            case POSTGRES:
+            case YUGABYTEDB:
+                return 100;
+
+            default:
+                return Integer.MAX_VALUE;
+        }
+    }
 }

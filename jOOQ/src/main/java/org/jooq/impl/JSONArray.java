@@ -147,7 +147,26 @@ implements
 
 
     @Override
-    public void accept(Context<?> ctx) {
+    public final void accept(Context<?> ctx) {
+        int max = Tools.maxParameterCount(ctx);
+
+        // [#19335] Work around PostgreSQL's 100 function arguments limit
+        if (fields.size() > max) {
+            List<QOM.JSONArray<T>> r = new ArrayList<>();
+
+            for (List<? extends Field<?>> chunk : chunks(fields, max))
+                r.add($arg2(QOM.unmodifiable(chunk)));
+
+            if (getDataType().getFromType() == JSON.class)
+                ctx.visit(new JSONConcat<>(r, getDataType()).cast(JSON));
+            else
+                ctx.visit(new JSONConcat<>(r, getDataType()));
+        }
+        else
+            accept0(ctx);
+    }
+
+    final void accept0(Context<?> ctx) {
         QueryPartCollectionView<Field<?>> mapped = QueryPartCollectionView.wrap((Collection<Field<?>>) fields).map(JSONEntryImpl.jsonCastMapper(ctx));
 
         switch (ctx.family()) {

@@ -1070,7 +1070,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
 
 
-                // SQLite will select last_insert_rowid() after the INSER
+                // SQLite will select last_insert_rowid() after the INSERT
                 case SQLITE:
                 case CUBRID:
                     super.prepare(ctx);

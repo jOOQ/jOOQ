@@ -61,7 +61,7 @@
 
         <!-- Examples and/or extension modules use these dependencies -->
         <hibernate.version>5.6.15.Final</hibernate.version>
-        <liquibase.version>4.25.1</liquibase.version>
+        <liquibase.version>4.33.0</liquibase.version>
         <checkerframework.version>3.44.0</checkerframework.version>
         <spring.version>6.2.11</spring.version>
         <errorprone.version>2.36.0</errorprone.version>

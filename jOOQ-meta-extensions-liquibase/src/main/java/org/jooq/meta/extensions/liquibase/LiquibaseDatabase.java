@@ -110,6 +110,8 @@ public class LiquibaseDatabase extends AbstractInterpretingDatabase {
         String scripts = getProperties().getProperty("scripts");
         includeLiquibaseTables = Boolean.parseBoolean(getProperties().getProperty("includeLiquibaseTables", "false"));
 
+        log.warn("DEPRECATION", "Due to the Liquibase 5.x license change, the LiquibaseDatabase has been deprecated. If you wish to generate jOOQ code from a Liquibase migration, please integrate the migration directly using testcontainers or similar, see https://blog.jooq.org/using-testcontainers-to-generate-jooq-code/. See also: https://github.com/jOOQ/jOOQ/issues/19353");
+
         if (isBlank(scripts)) {
             scripts = "";
             log.warn("No scripts defined", "It is recommended that you provide an explicit script directory to scan");

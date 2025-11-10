@@ -69,6 +69,10 @@
                         </goals>
                     </execution>
                 </executions>
+                
+                <configuration>
+                    <goalPrefix>jooq-migrations</goalPrefix>
+                </configuration>
             </plugin>
             
             <plugin>

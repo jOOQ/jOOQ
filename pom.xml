@@ -593,17 +593,17 @@
             <dependency>
                 <groupId>org.apache.maven</groupId>
                 <artifactId>maven-plugin-api</artifactId>
-                <version>3.9.2</version>
+                <version>3.9.11</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.maven</groupId>
                 <artifactId>maven-core</artifactId>
-                <version>3.9.2</version>
+                <version>3.9.11</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.maven.plugin-tools</groupId>
                 <artifactId>maven-plugin-annotations</artifactId>
-                <version>3.8.2</version>
+                <version>3.15.2</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -708,7 +708,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-plugin-plugin</artifactId>
-                    <version>3.8.2</version>
+                    <version>3.15.2</version>
 
                     <!-- Required for Java 19 -->
                     <dependencies>

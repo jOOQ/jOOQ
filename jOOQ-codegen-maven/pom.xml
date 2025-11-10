@@ -69,6 +69,10 @@
                         </goals>
                     </execution>
                 </executions>
+                
+                <configuration>
+                    <goalPrefix>jooq-codegen</goalPrefix>
+                </configuration>
             </plugin>
             
             <plugin>

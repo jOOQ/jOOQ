@@ -51,6 +51,7 @@ import org.jooq.Configuration;
 import org.jooq.Param;
 import org.jooq.exception.DetachedException;
 import org.jooq.impl.DefaultRenderContext.Rendered;
+import org.jooq.impl.R2DBC.R2DBCPreparedStatement;
 
 import org.reactivestreams.Publisher;
 import org.reactivestreams.Subscriber;
@@ -316,9 +317,9 @@ final class ParsingConnectionFactory implements ConnectionFactory {
                 int j = 0;
                 for (Param<?> o : rendered.bindValues)
                     if (o.getValue() == null)
-                        statement.bindNull(j++, o.getType());
+                        R2DBCPreparedStatement.bindNull(configuration, statement, ++j, o.getType());
                     else
-                        statement.bind(j++, o.getValue());
+                        R2DBCPreparedStatement.bindNonNull(configuration, statement, ++j, o.getValue());
             }
 
             return statement.execute();

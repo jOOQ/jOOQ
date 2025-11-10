@@ -1143,26 +1143,11 @@ final class R2DBC {
         }
 
         private final void bindNonNull(int parameterIndex, Object x) {
-            wrapExceptions(() -> {
-                switch (c.family()) {
-
-
-
-
-
-
-
-
-                    default:
-                        s.bind(parameterIndex - 1, x);
-                        break;
-                }
-            });
+            wrapExceptions(() -> bindNonNull(c, s, parameterIndex, x));
         }
 
-        private final <T> void bindNull(int parameterIndex, Class<T> type) {
-            wrapExceptions(() -> {
-                switch (c.family()) {
+        static final void bindNonNull(Configuration c, Statement s, int parameterIndex, Object x) {
+            switch (c.family()) {
 
 
 
@@ -1171,11 +1156,30 @@ final class R2DBC {
 
 
 
-                    default:
-                        s.bindNull(parameterIndex - 1, type);
-                        break;
-                }
-            });
+                default:
+                    s.bind(parameterIndex - 1, x);
+                    break;
+            }
+        }
+
+        private final void bindNull(int parameterIndex, Class<?> type) {
+            wrapExceptions(() -> bindNull(c, s, parameterIndex, type));
+        }
+
+        static final void bindNull(Configuration c, Statement s, int parameterIndex, Class<?> type) {
+            switch (c.family()) {
+
+
+
+
+
+
+
+
+                default:
+                    s.bindNull(parameterIndex - 1, type);
+                    break;
+            }
         }
 
         private final <T> void bindNullable(int parameterIndex, T x, Class<T> type) {

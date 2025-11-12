@@ -190,6 +190,7 @@ final class Names {
     static final Name N_JSON_OBJECTAGG              = systemName("json_objectagg");
     static final Name N_JSON_OBJECT_AGG             = systemName("json_object_agg");
     static final Name N_JSON_PARSE                  = systemName("json_parse");
+    static final Name N_JSON_PATH_EXISTS            = systemName("json_path_exists");
     static final Name N_JSON_QUERY                  = systemName("json_query");
     static final Name N_JSON_QUOTE                  = systemName("json_quote");
     static final Name N_JSON_STRIP_NULLS            = systemName("json_strip_nulls");

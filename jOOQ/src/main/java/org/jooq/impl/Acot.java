@@ -129,7 +129,7 @@ implements
             case MARIADB:
             case MYSQL:
             case POSTGRES:
-
+            case SQLITE:
             case YUGABYTEDB:
                 return false;
 
@@ -179,7 +179,7 @@ implements
             case MARIADB:
             case MYSQL:
             case POSTGRES:
-
+            case SQLITE:
             case YUGABYTEDB:
                 ctx.visit(isub(idiv(pi(), two()), DSL.atan(value)));
                 break;

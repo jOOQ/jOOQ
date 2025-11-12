@@ -78,7 +78,10 @@ import liquibase.resource.ResourceAccessor;
  * available from {@link #getProperties()}.
  *
  * @author Lukas Eder
+ * @deprecated - [#19353] - 3.21.0 - Use testcontainers instead: <a href=
+ *             "https://blog.jooq.org/using-testcontainers-to-generate-jooq-code/">https://blog.jooq.org/using-testcontainers-to-generate-jooq-code/</a>
  */
+@Deprecated
 public class LiquibaseDatabase extends AbstractInterpretingDatabase {
 
     private static final JooqLogger          log = JooqLogger.getLogger(LiquibaseDatabase.class);

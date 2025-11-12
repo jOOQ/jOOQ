@@ -40,6 +40,7 @@ package org.jooq.meta.mariadb;
 
 import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.MARIADB;
+// ...
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;

@@ -162,6 +162,6 @@ public class MariaDBDatabase extends MySQLDatabase {
             return COLUMNS.IS_SYSTEM_TIME_PERIOD_START.eq(inline("NO"))
                 .and(COLUMNS.IS_SYSTEM_TIME_PERIOD_END.eq(inline("NO")));
         else
-            return DSL.noCondition();
+            return COLUMNS.GENERATION_EXPRESSION.notIn(inline("ROW START"), inline("ROW END"));
     }
 }

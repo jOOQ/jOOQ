@@ -11329,6 +11329,7 @@ public final class QOM {
     interface UEmptyTable<R extends Record> extends Table<R>, UEmpty {}
     interface UEmptyStatement extends Statement, UEmpty {}
     interface UEmptyQuery extends Query, UEmpty {}
+    interface UNoQueryPart extends QueryPart {}
 
 
 

@@ -44,8 +44,8 @@ import static org.jooq.SQLDialect.IGNITE;
 import static org.jooq.SQLDialect.TRINO;
 import static org.jooq.impl.Keywords.K_UNIQUE;
 import static org.jooq.impl.QueryPartListView.wrap;
-import static org.jooq.impl.Tools.EMPTY_FIELD;
 
+import java.util.Collection;
 import java.util.Set;
 
 import org.jooq.Context;
@@ -56,7 +56,6 @@ import org.jooq.QueryPart;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
 // ...
-import org.jooq.impl.QOM.PrimaryKey;
 import org.jooq.impl.QOM.UniqueKey;
 import org.jooq.impl.QOM.UnmodifiableList;
 
@@ -70,17 +69,16 @@ implements
     QOM.UniqueKey
 {
     static final Set<SQLDialect> NO_SUPPORT_UK = SQLDialect.supportedBy(CLICKHOUSE, IGNITE, TRINO);
+    final QueryPartList<Field<?>> fields;
 
-    private Field<?>[]           fields;
-
-    UniqueConstraintImpl(Name name, Field<?>[] fields) {
+    UniqueConstraintImpl(Name name, Collection<? extends Field<?>> fields) {
         this(name, fields, true);
     }
 
-    private UniqueConstraintImpl(Name name, Field<?>[] fields, boolean enforced) {
+    private UniqueConstraintImpl(Name name, Collection<? extends Field<?>> fields, boolean enforced) {
         super(name, enforced);
 
-        this.fields = fields;
+        this.fields = new QueryPartList<>(fields);
     }
 
     // ------------------------------------------------------------------------
@@ -109,7 +107,7 @@ implements
 
     @Override
     public final UniqueKey $fields(UnmodifiableList<? extends Field<?>> newFields) {
-        return new UniqueConstraintImpl($name(), newFields.toArray(EMPTY_FIELD));
+        return new UniqueConstraintImpl($name(), newFields);
     }
 
     @Override

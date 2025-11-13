@@ -38,77 +38,84 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.inline;
-import static org.jooq.impl.Names.N_NULL;
 import static org.jooq.impl.SQLDataType.OTHER;
+import static org.jooq.impl.SQLDataType.VARCHAR;
 
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
-import org.jooq.SortField;
-import org.jooq.SortOrder;
-import org.jooq.impl.QOM.NullOrdering;
-import org.jooq.impl.QOM.UEmptyField;
+import org.jooq.JSONEntry;
+import org.jooq.JSONEntryValueStep;
+import org.jooq.Record1;
+import org.jooq.Select;
+import org.jooq.impl.QOM.UEmpty;
 import org.jooq.impl.QOM.UNoQueryPart;
 
+
+
 /**
+ * The JSON object entry.
+ *
  * @author Lukas Eder
  */
-final class NoField<T>
+final class NoJSONEntry<T>
 extends
-    AbstractField<T>
+    AbstractQueryPart
 implements
-    SortField<T>,
-    UEmptyField<T>,
+    JSONEntry<T>,
+    JSONEntryValueStep,
+    UEmpty,
     UNoQueryPart
 {
 
-    static final NoField<?> INSTANCE = new NoField<>(OTHER);
+    static final NoJSONEntry<?> INSTANCE = new NoJSONEntry<>(OTHER);
+    final DataType<T>           type;
 
-    NoField(DataType<T> type) {
-        super(N_NULL, type);
+    NoJSONEntry(DataType<T> type) {
+        this.type = type;
+    }
+
+    @Override
+    public final Field<String> key() {
+        return inline(null, VARCHAR);
+    }
+
+    @Override
+    public final Field<T> value() {
+        return inline(null, type);
+    }
+
+    @Override
+    public final <X> JSONEntry<X> value(X newValue) {
+        return value(Tools.field(newValue));
+    }
+
+    @Override
+    public final <X> JSONEntry<X> value(Field<X> newValue) {
+        return DSL.noJsonEntry(newValue);
+    }
+
+    @Override
+    public final <X> JSONEntry<X> value(Select<? extends Record1<X>> newValue) {
+        return value(DSL.field(newValue));
     }
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(inline(null, getDataType()));
+        ctx.visit(DSL.key(key()).value(value()));
     }
 
     // -------------------------------------------------------------------------
-    // XXX: SortField API
+    // XXX: Query Object Model
     // -------------------------------------------------------------------------
 
     @Override
-    public final SortOrder getOrder() {
-        return SortOrder.DEFAULT;
+    public final Field<String> $key() {
+        return key();
     }
 
     @Override
-    public final Field<T> $field() {
-        return this;
-    }
-
-    @Override
-    public final <U> SortField<U> $field(Field<U> newField) {
-        return newField.sortDefault();
-    }
-
-    @Override
-    public final SortOrder $sortOrder() {
-        return SortOrder.DEFAULT;
-    }
-
-    @Override
-    public final SortField<T> $sortOrder(SortOrder newOrder) {
-        return this;
-    }
-
-    @Override
-    public final NullOrdering $nullOrdering() {
-        return null;
-    }
-
-    @Override
-    public final SortField<T> $nullOrdering(NullOrdering newOrdering) {
-        return this;
+    public final Field<?> $value() {
+        return value();
     }
 }

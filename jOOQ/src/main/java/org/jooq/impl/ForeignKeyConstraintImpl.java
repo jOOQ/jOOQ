@@ -37,49 +37,34 @@
  */
 package org.jooq.impl;
 
-import static java.lang.Boolean.TRUE;
-import static org.jooq.Clause.CONSTRAINT;
+import static java.util.Arrays.asList;
 // ...
 import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
 import static org.jooq.SQLDialect.IGNITE;
 // ...
 // ...
-// ...
 import static org.jooq.SQLDialect.TRINO;
+import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.table;
+import static org.jooq.impl.Keywords.K_FOREIGN_KEY;
+import static org.jooq.impl.Keywords.K_ON_DELETE;
+import static org.jooq.impl.Keywords.K_ON_UPDATE;
+import static org.jooq.impl.Keywords.K_REFERENCES;
 import static org.jooq.impl.QOM.ForeignKeyRule.CASCADE;
 import static org.jooq.impl.QOM.ForeignKeyRule.NO_ACTION;
 import static org.jooq.impl.QOM.ForeignKeyRule.RESTRICT;
 import static org.jooq.impl.QOM.ForeignKeyRule.SET_DEFAULT;
 import static org.jooq.impl.QOM.ForeignKeyRule.SET_NULL;
-import static org.jooq.impl.DSL.name;
-import static org.jooq.impl.DSL.table;
-import static org.jooq.impl.Keywords.K_CHECK;
-import static org.jooq.impl.Keywords.K_CONSTRAINT;
-import static org.jooq.impl.Keywords.K_DISABLE;
-import static org.jooq.impl.Keywords.K_ENABLE;
-import static org.jooq.impl.Keywords.K_ENFORCED;
-import static org.jooq.impl.Keywords.K_FOREIGN_KEY;
-import static org.jooq.impl.Keywords.K_NONCLUSTERED;
-import static org.jooq.impl.Keywords.K_NOT;
-import static org.jooq.impl.Keywords.K_NOT_ENFORCED;
-import static org.jooq.impl.Keywords.K_ON_DELETE;
-import static org.jooq.impl.Keywords.K_ON_UPDATE;
-import static org.jooq.impl.Keywords.K_PRIMARY_KEY;
-import static org.jooq.impl.Keywords.K_REFERENCES;
-import static org.jooq.impl.Keywords.K_UNIQUE;
 import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_NAME;
 import static org.jooq.impl.Tools.EMPTY_STRING;
 import static org.jooq.impl.Tools.fieldsByName;
-import static org.jooq.impl.Tools.BooleanDataKey.DATA_CONSTRAINT_REFERENCE;
 
 import java.util.Collection;
 import java.util.Set;
 
-import org.jooq.Clause;
-import org.jooq.Condition;
 import org.jooq.ConstraintForeignKeyOnStep;
 import org.jooq.ConstraintForeignKeyReferencesStep1;
 import org.jooq.ConstraintForeignKeyReferencesStep10;
@@ -104,10 +89,8 @@ import org.jooq.ConstraintForeignKeyReferencesStep7;
 import org.jooq.ConstraintForeignKeyReferencesStep8;
 import org.jooq.ConstraintForeignKeyReferencesStep9;
 import org.jooq.ConstraintForeignKeyReferencesStepN;
-import org.jooq.ConstraintTypeStep;
 import org.jooq.Context;
 import org.jooq.Field;
-import org.jooq.Keyword;
 import org.jooq.Name;
 // ...
 import org.jooq.QueryPart;
@@ -117,12 +100,7 @@ import org.jooq.Table;
 // ...
 import org.jooq.impl.QOM.ForeignKey;
 import org.jooq.impl.QOM.ForeignKeyRule;
-import org.jooq.impl.QOM.PrimaryKey;
-import org.jooq.impl.QOM.UNotYetImplemented;
 import org.jooq.impl.QOM.UnmodifiableList;
-
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * @author Lukas Eder
@@ -171,13 +149,13 @@ implements
 
 
 
-    private Field<?>[]            fields;
-    private Table<?>              referencesTable;
-    private Field<?>[]            referencesFields;
-    private ForeignKeyRule        deleteRule;
-    private ForeignKeyRule        updateRule;
+    final QueryPartList<Field<?>> fields;
+    Table<?>                      referencesTable;
+    QueryPartList<Field<?>>       referencesFields;
+    ForeignKeyRule                deleteRule;
+    ForeignKeyRule                updateRule;
 
-    ForeignKeyConstraintImpl(Name name, Field<?>[] fields) {
+    ForeignKeyConstraintImpl(Name name, Collection<? extends Field<?>> fields) {
         this(
             name,
             fields,
@@ -191,18 +169,18 @@ implements
 
     private ForeignKeyConstraintImpl(
         Name name,
-        Field<?>[] fields,
+        Collection<? extends Field<?>> fields,
         Table<?> referencesTable,
-        Field<?>[] referencesFields,
+        Collection<? extends Field<?>> referencesFields,
         ForeignKeyRule deleteRule,
         ForeignKeyRule updateRule,
         boolean enforced
     ) {
         super(name, enforced);
 
-        this.fields = fields;
+        this.fields = new QueryPartList<>(fields);
         this.referencesTable = referencesTable;
-        this.referencesFields = referencesFields;
+        this.referencesFields = new QueryPartList<>(referencesFields);
         this.deleteRule = deleteRule;
         this.updateRule = updateRule;
     }
@@ -217,7 +195,7 @@ implements
            .sql(" (").visit(wrap(fields).qualify(false)).sql(") ")
            .visit(K_REFERENCES).sql(' ').visit(referencesTable);
 
-        if (referencesFields.length > 0)
+        if (!referencesFields.isEmpty())
             ctx.sql(" (").visit(wrap(referencesFields).qualify(false)).sql(')');
 
         if (deleteRule != null)
@@ -290,14 +268,14 @@ implements
 
     @Override
     public final ForeignKeyConstraintImpl references(Table<?> table, Field<?>... f) {
-        referencesTable = table;
-        referencesFields = f;
-        return this;
+        return references(table, asList(f));
     }
 
     @Override
     public final ForeignKeyConstraintImpl references(Table<?> table, Collection<? extends Field<?>> f) {
-        return references(table, f.toArray(EMPTY_FIELD));
+        referencesTable = table;
+        referencesFields = new QueryPartList<>(f);
+        return this;
     }
 
     @Override
@@ -733,7 +711,7 @@ implements
     @Override
     public final ForeignKey $fields(UnmodifiableList<? extends Field<?>> newFields) {
         return new ForeignKeyConstraintImpl($name(),
-            newFields.toArray(EMPTY_FIELD),
+            newFields,
             referencesTable,
             referencesFields,
             deleteRule,
@@ -769,7 +747,7 @@ implements
         return new ForeignKeyConstraintImpl($name(),
             fields,
             referencesTable,
-            newReferencesFields.toArray(EMPTY_FIELD),
+            newReferencesFields,
             deleteRule,
             updateRule,
             enforced

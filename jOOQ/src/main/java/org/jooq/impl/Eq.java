@@ -201,9 +201,9 @@ implements
 
 
 
-        else if (arg1 instanceof Array && ((Array<?>) arg1).fields.fields.length == 0)
+        else if (arg1 instanceof Array && ((Array<?>) arg1).fields.isEmpty())
             ctx.data(ExtendedDataKey.DATA_EMPTY_ARRAY_BASE_TYPE, t2.getArrayComponentDataType(), c -> acceptDefault.apply(c, arg1, arg2));
-        else if (arg2 instanceof Array && ((Array<?>) arg2).fields.fields.length == 0)
+        else if (arg2 instanceof Array && ((Array<?>) arg2).fields.isEmpty())
             ctx.data(ExtendedDataKey.DATA_EMPTY_ARRAY_BASE_TYPE, t1.getArrayComponentDataType(), c -> acceptDefault.apply(c, arg1, arg2));
         else
             acceptDefault.apply(ctx, arg1, arg2);

@@ -184,7 +184,7 @@ implements
             // [#9224] Special case when a SQL dialect actually supports quantified
             //         arrays, such as x = any(?::int[]) in PostgreSQL
             if ((quantifiedArrayParam || quantifiedArray) && SUPPORTS_QUANTIFIED_ARRAYS.contains(ctx.dialect()) && !emulateOperator) {
-                if (quantifiedArray && ((Array) ((QOM.QuantifiedArray<?>) arg2).$arg2()).fields.fields.length == 0)
+                if (quantifiedArray && ((Array) ((QOM.QuantifiedArray<?>) arg2).$arg2()).fields.isEmpty())
                     ctx.data(DATA_EMPTY_ARRAY_BASE_TYPE, arg1.getDataType(), c -> accept1(c, arg1, op, arg2));
                 else
                     accept1(ctx, arg1, op, arg2);

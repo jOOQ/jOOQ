@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static java.util.Arrays.asList;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.fieldsByName;
 
@@ -90,12 +91,12 @@ implements
 
     @Override
     public final UniqueConstraintImpl unique(Field<?>... fields) {
-        return new UniqueConstraintImpl($name(), fields);
+        return unique(asList(fields));
     }
 
     @Override
     public final UniqueConstraintImpl unique(Collection<? extends Field<?>> fields) {
-        return unique(fields.toArray(EMPTY_FIELD));
+        return new UniqueConstraintImpl($name(), fields);
     }
 
     @Override
@@ -115,12 +116,12 @@ implements
 
     @Override
     public final PrimaryKeyConstraintImpl primaryKey(Field<?>... fields) {
-        return new PrimaryKeyConstraintImpl($name(), fields);
+        return primaryKey(asList(fields));
     }
 
     @Override
     public final PrimaryKeyConstraintImpl primaryKey(Collection<? extends Field<?>> fields) {
-        return primaryKey(fields.toArray(EMPTY_FIELD));
+        return new PrimaryKeyConstraintImpl($name(), fields);
     }
 
     @Override
@@ -135,12 +136,12 @@ implements
 
     @Override
     public final ForeignKeyConstraintImpl foreignKey(Field<?>... fields) {
-        return new ForeignKeyConstraintImpl($name(), fields);
+        return foreignKey(asList(fields));
     }
 
     @Override
     public final ForeignKeyConstraintImpl foreignKey(Collection<? extends Field<?>> fields) {
-        return foreignKey(fields.toArray(EMPTY_FIELD));
+        return new ForeignKeyConstraintImpl($name(), fields);
     }
 
 

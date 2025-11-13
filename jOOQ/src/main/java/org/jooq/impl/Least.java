@@ -68,7 +68,7 @@ final class Least<T> extends AbstractField<T> implements QOM.Least<T> {
     Least(Field<?>[] args, DataType<T> type) {
         super(N_LEAST, type);
 
-        this.args = (QueryPartListView) QueryPartListView.wrap(args);
+        this.args = (QueryPartList) new QueryPartList<>(args);
     }
 
     @Override

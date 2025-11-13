@@ -52,6 +52,7 @@ import org.jooq.SQL;
 import org.jooq.Table;
 import org.jooq.impl.HintedTable.HintType;
 import org.jooq.impl.QOM.UEmptyTable;
+import org.jooq.impl.QOM.UNoQueryPart;
 
 /**
  * @author Lukas Eder
@@ -61,7 +62,8 @@ extends
     AbstractTable<Record>
 implements
     UEmptyTable<Record>,
-    Path<Record>
+    Path<Record>,
+    UNoQueryPart
 {
 
     static final NoTable INSTANCE = new NoTable();

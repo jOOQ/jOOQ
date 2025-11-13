@@ -53,6 +53,7 @@ import static org.jooq.impl.Names.N_COLUMN_VALUE;
 import static org.jooq.impl.Names.N_T;
 import static org.jooq.impl.Names.N_U;
 import static org.jooq.impl.SubqueryCharacteristics.DERIVED_TABLE;
+import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.getRecordQualifier;
 import static org.jooq.impl.Tools.isEmpty;
 import static org.jooq.impl.Tools.map;
@@ -351,6 +352,6 @@ implements
 
     @SuppressWarnings("unchecked")
     private final QueryPart emulateArray() {
-        return new ArrayTableEmulation(((Array<Object>) array).fields.fields, fieldAliases);
+        return new ArrayTableEmulation(((Array<Object>) array).fields.toArray(EMPTY_FIELD), fieldAliases);
     }
 }

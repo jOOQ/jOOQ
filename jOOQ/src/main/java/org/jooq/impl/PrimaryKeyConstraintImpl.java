@@ -40,11 +40,10 @@ package org.jooq.impl;
 // ...
 import static org.jooq.SQLDialect.TRINO;
 import static org.jooq.impl.Keywords.K_NONCLUSTERED;
-import static org.jooq.impl.Keywords.K_NOT_ENFORCED;
 import static org.jooq.impl.Keywords.K_PRIMARY_KEY;
 import static org.jooq.impl.QueryPartListView.wrap;
-import static org.jooq.impl.Tools.EMPTY_FIELD;
 
+import java.util.Collection;
 import java.util.Set;
 
 import org.jooq.Context;
@@ -67,17 +66,17 @@ extends
 implements
     QOM.PrimaryKey
 {
-    static final Set<SQLDialect> NO_SUPPORT_PK = SQLDialect.supportedBy(TRINO);
-    private Field<?>[]           fields;
+    static final Set<SQLDialect>  NO_SUPPORT_PK = SQLDialect.supportedBy(TRINO);
+    final QueryPartList<Field<?>> fields;
 
-    PrimaryKeyConstraintImpl(Name name, Field<?>[] fields) {
+    PrimaryKeyConstraintImpl(Name name, Collection<? extends Field<?>> fields) {
         this(name, fields, true);
     }
 
-    private PrimaryKeyConstraintImpl(Name name, Field<?>[] fields, boolean enforced) {
+    private PrimaryKeyConstraintImpl(Name name, Collection<? extends Field<?>> fields, boolean enforced) {
         super(name, enforced);
 
-        this.fields = fields;
+        this.fields = new QueryPartList<>(fields);
     }
 
     // ------------------------------------------------------------------------
@@ -102,7 +101,7 @@ implements
     }
 
     final boolean matchingPrimaryKey(Field<?> identity) {
-        return identity != null && fields != null && fields.length == 1 && fields[0].getName().equals(identity.getName());
+        return identity != null && fields.size() == 1 && fields.get(0).getName().equals(identity.getName());
     }
 
     // -------------------------------------------------------------------------
@@ -116,7 +115,7 @@ implements
 
     @Override
     public final PrimaryKey $fields(UnmodifiableList<? extends Field<?>> newFields) {
-        return new PrimaryKeyConstraintImpl($name(), newFields.toArray(EMPTY_FIELD));
+        return new PrimaryKeyConstraintImpl($name(), newFields);
     }
 
     @Override

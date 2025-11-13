@@ -245,7 +245,7 @@ implements
 
     @Override
     public final CreateTableImpl primaryKey(Collection<? extends Field<?>> fields) {
-        return tableElements(DSL.primaryKey(new QueryPartList<>(fields)));
+        return tableElements(DSL.primaryKey(fields));
     }
 
     @Override
@@ -265,7 +265,7 @@ implements
 
     @Override
     public final CreateTableImpl unique(Collection<? extends Field<?>> fields) {
-        return tableElements(DSL.unique(new QueryPartList<>(fields)));
+        return tableElements(DSL.unique(fields));
     }
 
     @Override

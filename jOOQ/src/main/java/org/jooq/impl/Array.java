@@ -37,7 +37,6 @@
  */
 package org.jooq.impl;
 
-import static java.util.Arrays.asList;
 // ...
 import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
@@ -58,7 +57,6 @@ import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.QueryPart;
-import org.jooq.Record;
 import org.jooq.RenderContext.CastMode;
 // ...
 import org.jooq.SQLDialect;
@@ -75,15 +73,15 @@ implements
     QOM.Array<T>
 {
 
-    static final Set<SQLDialect> REQUIRES_CAST              = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
-    static final Set<SQLDialect> NO_SUPPORT_SQUARE_BRACKETS = SQLDialect.supportedBy(CLICKHOUSE);
+    static final Set<SQLDialect>  REQUIRES_CAST              = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
+    static final Set<SQLDialect>  NO_SUPPORT_SQUARE_BRACKETS = SQLDialect.supportedBy(CLICKHOUSE);
 
-    final FieldsImpl<Record>     fields;
+    final QueryPartList<Field<T>> fields;
 
     Array(Collection<? extends Field<T>> fields) {
         super(N_ARRAY, type(fields));
 
-        this.fields = new FieldsImpl<>(fields);
+        this.fields = new QueryPartList<>(fields);
     }
 
     // -------------------------------------------------------------------------
@@ -133,7 +131,7 @@ implements
                         else
                             c.visit(K_INT).sql("[]");
                     },
-                    () -> fields.fields.length == 0 && REQUIRES_CAST.contains(ctx.dialect()) && ctx.castMode() != CastMode.NEVER
+                    () -> fields.isEmpty() && REQUIRES_CAST.contains(ctx.dialect()) && ctx.castMode() != CastMode.NEVER
                 );
 
                 break;
@@ -146,7 +144,7 @@ implements
 
     @Override
     public final UnmodifiableList<? extends Field<T>> $elements() {
-        return (UnmodifiableList) QOM.unmodifiable(fields.fields);
+        return QOM.unmodifiable(fields);
     }
 
 

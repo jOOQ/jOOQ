@@ -57,7 +57,7 @@ import org.jooq.impl.QOM.UnmodifiableList;
  */
 final class Greatest<T> extends AbstractField<T> implements QOM.Greatest<T> {
 
-    private final QueryPartListView<Field<T>> args;
+    private final QueryPartList<Field<T>> args;
 
     @SuppressWarnings({ "unchecked" })
     Greatest(Field<?>... args) {
@@ -68,7 +68,7 @@ final class Greatest<T> extends AbstractField<T> implements QOM.Greatest<T> {
     Greatest(Field<?>[] args, DataType<T> type) {
         super(N_GREATEST, type);
 
-        this.args = (QueryPartListView) QueryPartListView.wrap(args);
+        this.args = (QueryPartList) new QueryPartList<>(args);
     }
 
     @Override

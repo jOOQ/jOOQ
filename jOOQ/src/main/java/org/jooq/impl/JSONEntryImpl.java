@@ -50,11 +50,8 @@ import static org.jooq.impl.DSL.coalesce;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
-import static org.jooq.impl.DSL.inlined;
-import static org.jooq.impl.DSL.not;
 import static org.jooq.impl.DSL.nvl;
 import static org.jooq.impl.DSL.toChar;
-import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.Keywords.K_FORMAT;
 import static org.jooq.impl.Keywords.K_JSON;
 import static org.jooq.impl.Keywords.K_KEY;
@@ -100,6 +97,7 @@ import org.jooq.Scope;
 import org.jooq.Select;
 // ...
 import org.jooq.conf.NestedCollectionEmulation;
+import org.jooq.impl.QOM.UNoQueryPart;
 
 
 
@@ -122,13 +120,27 @@ implements
     private final Field<String>  key;
     private final Field<T>       value;
 
-    JSONEntryImpl(Field<String> key) {
+    private JSONEntryImpl(Field<String> key) {
         this(key, null);
     }
 
-    JSONEntryImpl(Field<String> key, Field<T> value) {
+    private JSONEntryImpl(Field<String> key, Field<T> value) {
         this.key = key;
         this.value = value;
+    }
+
+    static final JSONEntryValueStep create(Field<String> key) {
+        return (JSONEntryValueStep) create(key, null);
+    }
+
+    @SuppressWarnings("unchecked")
+    static final <T> JSONEntry<T> create(Field<String> key, Field<T> value) {
+        if (value instanceof UNoQueryPart)
+            return DSL.noJsonEntry(value);
+        else if (key instanceof UNoQueryPart)
+            return (JSONEntry<T>) NoJSONEntry.INSTANCE;
+        else
+            return new JSONEntryImpl<>(key, value);
     }
 
     @Override
@@ -153,7 +165,7 @@ implements
 
     @Override
     public final <X> JSONEntry<X> value(Field<X> newValue) {
-        return new JSONEntryImpl<>(key, newValue);
+        return newValue instanceof UNoQueryPart ? DSL.noJsonEntry(newValue) : new JSONEntryImpl<>(key, newValue);
     }
 
     @Override

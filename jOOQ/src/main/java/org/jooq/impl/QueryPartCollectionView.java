@@ -60,6 +60,7 @@ import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 // ...
 // ...
+import org.jooq.impl.QOM.UNoQueryPart;
 import org.jooq.impl.QOM.UnmodifiableCollection;
 
 /**
@@ -311,8 +312,8 @@ implements
         return wrapped.toArray(a);
     }
 
-    /* non-final */ boolean canAdd(T e) {
-        return e != null;
+    final boolean canAdd(T e) {
+        return e != null && !(e instanceof UNoQueryPart);
     }
 
     @Override

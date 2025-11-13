@@ -313,7 +313,11 @@ implements
     }
 
     final boolean canAdd(T e) {
-        return e != null && !(e instanceof UNoQueryPart);
+        return e != null && (!(e instanceof UNoQueryPart) || allowNoQueryParts());
+    }
+
+    /* non-final */ boolean allowNoQueryParts() {
+        return false;
     }
 
     @Override

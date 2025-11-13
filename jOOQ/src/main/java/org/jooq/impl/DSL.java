@@ -128,6 +128,7 @@ import static org.jooq.impl.SQLDataType.DATE;
 import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.JSON;
 import static org.jooq.impl.SQLDataType.JSONB;
+import static org.jooq.impl.SQLDataType.OTHER;
 import static org.jooq.impl.SQLDataType.TIME;
 import static org.jooq.impl.SQLDataType.TIMESTAMP;
 import static org.jooq.impl.Tools.CTX;
@@ -456,6 +457,7 @@ import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.QOM.DocumentOrContent;
 import org.jooq.impl.QOM.Quantifier;
 import org.jooq.impl.QOM.ResultOption;
+import org.jooq.impl.QOM.UNoQueryPart;
 import org.jooq.tools.ClassUtils;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.jdbc.JDBCUtils;
@@ -14495,6 +14497,99 @@ public class DSL {
     @Support
     public static <T> Field<T> noField(Field<T> field) {
         return noField(field.getDataType());
+    }
+
+    /**
+     * Return a {@link JSONEntry} that behaves like no JSON entry being present.
+     * <p>
+     * When creating dynamic SQL queries using expressions, it is often useful
+     * to be able to decide dynamically whether a clause is being added to a
+     * query or not. In case that clause accepts JSON entries, the
+     * {@link #noJsonEntry()} can be used to avoid creating a clause, which is
+     * useful for the {@link #jsonObject(JSONEntry...)} function calls.
+     * <p>
+     * <b>NOTE [#16918]</b> that this {@link JSONEntry} is meant to be used with
+     * the {@link DSL} API only, not with the {@link QOM} API, which cannot
+     * offer any no-op operations. The behaviour when used with the {@link QOM}
+     * API is undefined.
+     */
+    @NotNull
+    @Support
+    public static JSONEntry<?> noJsonEntry() {
+        return NoJSONEntry.INSTANCE;
+    }
+
+    /**
+     * Return a {@link JSONEntry} that behaves like no JSON entry being present.
+     * <p>
+     * When creating dynamic SQL queries using expressions, it is often useful
+     * to be able to decide dynamically whether a clause is being added to a
+     * query or not. In case that clause accepts JSON entries, the
+     * {@link #noJsonEntry()} can be used to avoid creating a clause, which is
+     * useful for the {@link #jsonObject(JSONEntry...)} function calls.
+     * <p>
+     * <b>NOTE [#16918]</b> that this {@link JSONEntry} is meant to be used with
+     * the {@link DSL} API only, not with the {@link QOM} API, which cannot
+     * offer any no-op operations. The behaviour when used with the {@link QOM}
+     * API is undefined.
+     *
+     * @param type A field to derive the {@link JSONEntry#value()}'s
+     *            {@link DataType} from.
+     */
+    @NotNull
+    @Support
+    public static <T> JSONEntry<T> noJsonEntry(Field<T> field) {
+        return noJsonEntry(field.getDataType());
+    }
+
+    /**
+     * Return a {@link JSONEntry} that behaves like no JSON entry being present.
+     * <p>
+     * When creating dynamic SQL queries using expressions, it is often useful
+     * to be able to decide dynamically whether a clause is being added to a
+     * query or not. In case that clause accepts JSON entries, the
+     * {@link #noJsonEntry()} can be used to avoid creating a clause, which is
+     * useful for the {@link #jsonObject(JSONEntry...)} function calls.
+     * <p>
+     * <b>NOTE [#15286]</b>: It is strongly recommended to pass only
+     * {@link Class} references of types supported by jOOQ internally, i.e.
+     * types from {@link SQLDataType}. If you're using any custom data types by
+     * means of a {@link Converter} or {@link Binding}, it's better to pass that
+     * converted {@link DataType} reference explicitly to
+     * {@link #noField(DataType)}.
+     * <p>
+     * <b>NOTE [#16918]</b> that this {@link JSONEntry} is meant to be used with
+     * the {@link DSL} API only, not with the {@link QOM} API, which cannot
+     * offer any no-op operations. The behaviour when used with the {@link QOM}
+     * API is undefined.
+     *
+     * @param type A class to derive the {@link JSONEntry#value()}'s
+     *            {@link DataType} from.
+     */
+    @NotNull
+    @Support
+    public static <T> JSONEntry<T> noJsonEntry(Class<T> type) {
+        return noJsonEntry(getDataType(type));
+    }
+
+    /**
+     * Return a {@link JSONEntry} that behaves like no JSON entry being present.
+     * <p>
+     * When creating dynamic SQL queries using expressions, it is often useful
+     * to be able to decide dynamically whether a clause is being added to a
+     * query or not. In case that clause accepts JSON entries, the
+     * {@link #noJsonEntry()} can be used to avoid creating a clause, which is
+     * useful for the {@link #jsonObject(JSONEntry...)} function calls.
+     * <p>
+     * <b>NOTE [#16918]</b> that this {@link JSONEntry} is meant to be used with
+     * the {@link DSL} API only, not with the {@link QOM} API, which cannot
+     * offer any no-op operations. The behaviour when used with the {@link QOM}
+     * API is undefined.
+     */
+    @NotNull
+    @Support
+    public static <T> JSONEntry<T> noJsonEntry(DataType<T> type) {
+        return new NoJSONEntry<>(type);
     }
 
     /**
@@ -31796,7 +31891,7 @@ public class DSL {
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONEntryValueStep key(Field<String> key) {
-        return new JSONEntryImpl<>(key);
+        return JSONEntryImpl.create(key);
     }
 
     /**
@@ -31859,7 +31954,7 @@ public class DSL {
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static <T> JSONEntry<T> jsonEntry(Field<String> key, Field<T> value) {
-        return new JSONEntryImpl<>(key, value);
+        return JSONEntryImpl.create(key, value);
     }
 
     /**

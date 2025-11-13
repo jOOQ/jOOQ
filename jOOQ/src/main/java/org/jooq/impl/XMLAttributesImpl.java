@@ -67,7 +67,7 @@ final class XMLAttributesImpl extends AbstractQueryPart implements XMLAttributes
     final SelectFieldList<Field<?>> attributes;
 
     XMLAttributesImpl(Collection<? extends Field<?>> attributes) {
-        this.attributes = new SelectFieldList<>(attributes);
+        this.attributes = new SelectFieldList<>(attributes, false);
     }
 
     @Override

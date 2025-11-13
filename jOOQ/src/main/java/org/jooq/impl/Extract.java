@@ -73,13 +73,11 @@ import static org.jooq.impl.Tools.castIfNeeded;
 
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.util.function.BiFunction;
-import java.util.function.Predicate;
 
 import org.jooq.Context;
+import org.jooq.DataType;
 import org.jooq.DatePart;
 import org.jooq.Field;
-import org.jooq.Function1;
 import org.jooq.Keyword;
 import org.jooq.QueryPart;
 // ...
@@ -88,13 +86,13 @@ import org.jooq.QueryPart;
 /**
  * @author Lukas Eder
  */
-final class Extract extends AbstractField<Integer> implements QOM.Extract {
+final class Extract<T> extends AbstractField<T> implements QOM.Extract<T> {
 
     private final Field<?> field;
     private final DatePart datePart;
 
-    Extract(Field<?> field, DatePart datePart) {
-        super(N_EXTRACT, INTEGER);
+    Extract(Field<?> field, DatePart datePart, DataType<T> type) {
+        super(N_EXTRACT, type);
 
         this.field = field;
         this.datePart = datePart;

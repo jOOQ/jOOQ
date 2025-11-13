@@ -122,6 +122,7 @@ import static org.jooq.impl.Names.N_PERCENT_RANK;
 import static org.jooq.impl.Names.N_RANK;
 import static org.jooq.impl.Names.N_SYSTEM_TIME;
 import static org.jooq.impl.Names.N_VALUE;
+import static org.jooq.impl.SQLDataType.BIGINT;
 import static org.jooq.impl.SQLDataType.BOOLEAN;
 import static org.jooq.impl.SQLDataType.DATE;
 import static org.jooq.impl.SQLDataType.INTEGER;
@@ -29982,7 +29983,7 @@ public class DSL {
     @NotNull
     @Support
     public static Field<Integer> extract(java.util.Date value, DatePart datePart) {
-        return extract(Tools.field(Convert.convert(value, Timestamp.class)), datePart);
+        return extract(value, datePart, INTEGER);
     }
 
     /**
@@ -29993,7 +29994,7 @@ public class DSL {
     @NotNull
     @Support
     public static Field<Integer> extract(Temporal value, DatePart datePart) {
-        return extract(Tools.field(value), datePart);
+        return extract(value, datePart, INTEGER);
     }
 
     /**
@@ -30004,7 +30005,73 @@ public class DSL {
     @NotNull
     @Support
     public static Field<Integer> extract(Field<?> field, DatePart datePart) {
-        return new Extract(Tools.nullSafe(field), datePart);
+        return extract(field, datePart, INTEGER);
+    }
+
+    /**
+     * Get the extract(field, datePart) function.
+     * <p>
+     * This translates into any dialect
+     */
+    @NotNull
+    @Support
+    public static <T extends Number> Field<T> extract(java.util.Date value, DatePart datePart, DataType<T> type) {
+        return extract(Tools.field(Convert.convert(value, Timestamp.class)), datePart, type);
+    }
+
+    /**
+     * Get the extract(field, datePart) function.
+     * <p>
+     * This translates into any dialect
+     */
+    @NotNull
+    @Support
+    public static <T extends Number> Field<T> extract(Temporal value, DatePart datePart, DataType<T> type) {
+        return extract(Tools.field(value), datePart, type);
+    }
+
+    /**
+     * Get the extract(field, datePart) function.
+     * <p>
+     * This translates into any dialect
+     */
+    @NotNull
+    @Support
+    public static <T extends Number> Field<T> extract(Field<?> field, DatePart datePart, DataType<T> type) {
+        return new Extract<>(Tools.nullSafe(field), datePart, type);
+    }
+
+    /**
+     * Get the extract(field, datePart) function.
+     * <p>
+     * This translates into any dialect
+     */
+    @NotNull
+    @Support
+    public static Field<Long> extractLarge(java.util.Date value, DatePart datePart) {
+        return extract(value, datePart, BIGINT);
+    }
+
+    /**
+     * Get the extract(field, datePart) function.
+     * <p>
+     * This translates into any dialect
+     */
+    @NotNull
+    @Support
+    public static Field<Long> extractLarge(Temporal value, DatePart datePart) {
+        return extract(value, datePart, BIGINT);
+    }
+
+    /**
+     * Get the extract(field, datePart) function.
+     * <p>
+     * This translates into any dialect
+     */
+    @NotNull
+    @Support
+    public static Field<Long> extractLarge(Field<?> field, DatePart datePart) {
+        return extract(field, datePart, BIGINT);
     }
 
     /**
@@ -30012,7 +30079,11 @@ public class DSL {
      * <p>
      * This is the same as calling {@link #extract(Field, DatePart)}
      * with {@link DatePart#EPOCH}
+     *
+     * @deprecated - [#19366] - 3.21.0 - Use {@link #epochLarge(Date)},
+     *             instead.
      */
+    @Deprecated
     @NotNull
     @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Integer> epoch(java.util.Date value) {
@@ -30024,7 +30095,11 @@ public class DSL {
      * <p>
      * This is the same as calling {@link #extract(Field, DatePart)}
      * with {@link DatePart#EPOCH}
+     *
+     * @deprecated - [#19366] - 3.21.0 - Use {@link #epochLarge(Temporal)},
+     *             instead.
      */
+    @Deprecated
     @NotNull
     @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Integer> epoch(Temporal value) {
@@ -30034,13 +30109,53 @@ public class DSL {
     /**
      * Get the epoch of a date.
      * <p>
-     * This is the same as calling {@link #extract(Field, DatePart)}
-     * with {@link DatePart#EPOCH}
+     * This is the same as calling {@link #extract(Field, DatePart)} with
+     * {@link DatePart#EPOCH}
+     *
+     * @deprecated - [#19366] - 3.21.0 - Use {@link #epochLarge(Field)},
+     *             instead.
      */
+    @Deprecated
     @NotNull
     @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<Integer> epoch(Field<?> field) {
         return extract(field, DatePart.EPOCH);
+    }
+
+    /**
+     * Get the epoch of a date.
+     * <p>
+     * This is the same as calling {@link #epochLarge(Field, DatePart)}
+     * with {@link DatePart#EPOCH}
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<Long> epochLarge(java.util.Date value) {
+        return extractLarge(value, DatePart.EPOCH);
+    }
+
+    /**
+     * Get the epoch of a date.
+     * <p>
+     * This is the same as calling {@link #epochLarge(Field, DatePart)}
+     * with {@link DatePart#EPOCH}
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<Long> epochLarge(Temporal value) {
+        return extractLarge(value, DatePart.EPOCH);
+    }
+
+    /**
+     * Get the epoch of a date.
+     * <p>
+     * This is the same as calling {@link #epochLarge(Field, DatePart)}
+     * with {@link DatePart#EPOCH}
+     */
+    @NotNull
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
+    public static Field<Long> epochLarge(Field<?> field) {
+        return extractLarge(field, DatePart.EPOCH);
     }
 
     /**

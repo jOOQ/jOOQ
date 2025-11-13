@@ -1066,9 +1066,9 @@ public final class QOM {
         @NotNull Field<String> $pattern();
     }
 
-    public /*sealed*/ interface Extract
+    public /*sealed*/ interface Extract<T>
         extends
-            Field<Integer>
+            Field<T>
         /*permits
             Extract*/
     {

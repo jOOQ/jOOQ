@@ -30077,11 +30077,12 @@ public class DSL {
     /**
      * Get the epoch of a date.
      * <p>
-     * This is the same as calling {@link #extract(Field, DatePart)}
-     * with {@link DatePart#EPOCH}
+     * This is the same as calling {@link #extract(Field, DatePart)} with
+     * {@link DatePart#EPOCH}
      *
-     * @deprecated - [#19366] - 3.21.0 - Use {@link #epochLarge(Date)},
-     *             instead.
+     * @deprecated - [#19366] - 3.21.0 - Use {@link #epochLarge(Date)}, instead,
+     *             as an {@link Integer} epoch will be unusable after 2038, see
+     *             the Y2K38 problem.
      */
     @Deprecated
     @NotNull
@@ -30093,11 +30094,12 @@ public class DSL {
     /**
      * Get the epoch of a date.
      * <p>
-     * This is the same as calling {@link #extract(Field, DatePart)}
-     * with {@link DatePart#EPOCH}
+     * This is the same as calling {@link #extract(Field, DatePart)} with
+     * {@link DatePart#EPOCH}
      *
      * @deprecated - [#19366] - 3.21.0 - Use {@link #epochLarge(Temporal)},
-     *             instead.
+     *             instead, as an {@link Integer} epoch will be unusable after
+     *             2038, see the Y2K38 problem.
      */
     @Deprecated
     @NotNull
@@ -30113,7 +30115,8 @@ public class DSL {
      * {@link DatePart#EPOCH}
      *
      * @deprecated - [#19366] - 3.21.0 - Use {@link #epochLarge(Field)},
-     *             instead.
+     *             instead, as an {@link Integer} epoch will be unusable after
+     *             2038, see the Y2K38 problem.
      */
     @Deprecated
     @NotNull

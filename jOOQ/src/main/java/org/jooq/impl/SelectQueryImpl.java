@@ -499,12 +499,12 @@ implements
         this.having = new ConditionProviderImpl();
         this.qualify = new ConditionProviderImpl();
         this.orderBy = new SortFieldList();
-        this.seek = new QueryPartList<>();
+        this.seek = new QueryPartList<>(true);
         this.limit = new Limit();
         this.unionOp = new ArrayList<>();
         this.union = new ArrayList<>();
         this.unionOrderBy = new SortFieldList();
-        this.unionSeek = new QueryPartList<>();
+        this.unionSeek = new QueryPartList<>(true);
         this.unionLimit = new Limit();
 
         if (from != null)

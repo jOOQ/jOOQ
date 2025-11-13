@@ -54,6 +54,8 @@ extends
     QueryPartListView<T>
 {
 
+    final boolean allowNoQueryParts;
+
     QueryPartList() {
         this((Collection<T>) null);
     }
@@ -66,6 +68,23 @@ extends
     QueryPartList(Iterable<? extends T> wrappedList) {
         super(new ArrayList<>());
 
+        this.allowNoQueryParts = false;
+        addAll0(wrappedList);
+    }
+
+    QueryPartList(boolean allowNoQueryParts) {
+        this(allowNoQueryParts, (Collection<T>) null);
+    }
+
+    @SafeVarargs
+    QueryPartList(boolean allowNoQueryParts, T... wrappedList) {
+        this(allowNoQueryParts, asList(wrappedList));
+    }
+
+    QueryPartList(boolean allowNoQueryParts, Iterable<? extends T> wrappedList) {
+        super(new ArrayList<>());
+
+        this.allowNoQueryParts = allowNoQueryParts;
         addAll0(wrappedList);
     }
 
@@ -95,5 +114,10 @@ extends
     @SuppressWarnings("unchecked")
     static final <Q extends QueryPart> QueryPartList<Q> emptyList() {
         return EMPTY_LIST.get();
+    }
+
+    @Override
+    final boolean allowNoQueryParts() {
+        return allowNoQueryParts;
     }
 }

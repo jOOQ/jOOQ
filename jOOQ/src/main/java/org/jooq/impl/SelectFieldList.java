@@ -53,36 +53,28 @@ import org.jooq.SelectFieldOrAsterisk;
  */
 final class SelectFieldList<F extends SelectFieldOrAsterisk> extends QueryPartList<F> {
 
-    final boolean allowNoQueryParts;
-
     SelectFieldList() {
         this(true);
     }
 
     SelectFieldList(Iterable<? extends F> wrappedList) {
-        this(wrappedList, true);
+        this(true, wrappedList);
     }
 
     SelectFieldList(F[] wrappedList) {
-        this(wrappedList, true);
+        this(true, wrappedList);
     }
 
     SelectFieldList(boolean allowNoQueryParts) {
-        super();
-
-        this.allowNoQueryParts = allowNoQueryParts;
+        super(allowNoQueryParts);
     }
 
-    SelectFieldList(Iterable<? extends F> wrappedList, boolean allowNoQueryParts) {
-        super(wrappedList);
-
-        this.allowNoQueryParts = allowNoQueryParts;
+    SelectFieldList(boolean allowNoQueryParts, Iterable<? extends F> wrappedList) {
+        super(allowNoQueryParts, wrappedList);
     }
 
-    SelectFieldList(F[] wrappedList, boolean allowNoQueryParts) {
-        super(wrappedList);
-
-        this.allowNoQueryParts = allowNoQueryParts;
+    SelectFieldList(boolean allowNoQueryParts, F[] wrappedList) {
+        super(allowNoQueryParts, wrappedList);
     }
 
     @Override
@@ -112,11 +104,6 @@ final class SelectFieldList<F extends SelectFieldOrAsterisk> extends QueryPartLi
             acceptElement0(ctx, (F) r.rf());
         else
             acceptElement0(ctx, part);
-    }
-
-    @Override
-    final boolean allowNoQueryParts() {
-        return allowNoQueryParts;
     }
 
     @SuppressWarnings("unchecked")

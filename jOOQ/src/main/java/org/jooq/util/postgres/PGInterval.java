@@ -2,9 +2,11 @@
  * Copyright (c) 2004, PostgreSQL Global Development Group
  * See the LICENSE file in the project root for more information.
  */
+
 package org.jooq.util.postgres;
 
-
+import java.io.Serializable;
+import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Calendar;
@@ -41,7 +43,7 @@ public class PGInterval extends PGobject {
   /**
    * Initialize a interval with a given interval string representation.
    *
-   * @param value String representated interval (e.g. '3 years 2 mons')
+   * @param value String represented interval (e.g. '3 years 2 mons')
    * @see PGobject#setValue(String)
    */
   public PGInterval(String value) {
@@ -49,13 +51,13 @@ public class PGInterval extends PGobject {
     setValue(value);
   }
 
-  private int lookAhead(String value, int position, String find) {
+  private static int lookAhead(String value, int position, String find) {
     char [] tokens = find.toCharArray();
     int found = -1;
 
-    for ( int i = 0; i < tokens.length; i++ ) {
+    for (int i = 0; i < tokens.length; i++) {
       found = value.indexOf(tokens[i], position);
-      if ( found > 0 ) {
+      if (found > 0) {
         return found;
       }
     }
@@ -70,14 +72,14 @@ public class PGInterval extends PGobject {
     int hasTime = value.indexOf('T');
     if ( hasTime > 0 ) {
       /* skip over the P */
-      dateValue = value.substring(1,hasTime);
+      dateValue = value.substring(1, hasTime);
       timeValue = value.substring(hasTime + 1);
     } else {
       /* skip over the P */
       dateValue = value.substring(1);
     }
 
-    for ( int i = 0; i < dateValue.length(); i++ ) {
+    for (int i = 0; i < dateValue.length(); i++) {
       int lookAhead = lookAhead(dateValue, i, "YMD");
       if (lookAhead > 0) {
         number = Integer.parseInt(dateValue.substring(i, lookAhead));
@@ -128,7 +130,7 @@ public class PGInterval extends PGobject {
    * Sets a interval string represented value to this instance. This method only recognize the
    * format, that Postgres returns - not all input formats are supported (e.g. '1 yr 2 m 3 s').
    *
-   * @param value String representated interval (e.g. '3 years 2 mons')
+   * @param value String represented interval (e.g. '3 years 2 mons')
    */
   @Override
   public void setValue(String value) {
@@ -138,13 +140,13 @@ public class PGInterval extends PGobject {
       isNull = true;
       return;
     }
-    final boolean PostgresFormat = !value.startsWith("@");
+    final boolean postgresFormat = !value.startsWith("@");
     if (value.startsWith("P")) {
       parseISO8601Format(value);
       return;
     }
     // Just a simple '0'
-    if (!PostgresFormat && value.length() == 3 && value.charAt(2) == '0') {
+    if (!postgresFormat && value.length() == 3 && value.charAt(2) == '0') {
       setValue(0, 0, 0, 0, 0, 0.0);
       return;
     }
@@ -159,6 +161,7 @@ public class PGInterval extends PGobject {
     String valueToken = null;
 
     value = value.replace('+', ' ').replace('@', ' ');
+    value = value.toLowerCase(Locale.ROOT);
     final StringTokenizer st = new StringTokenizer(value);
     for (int i = 1; st.hasMoreTokens(); i++) {
       String token = st.nextToken();
@@ -172,7 +175,7 @@ public class PGInterval extends PGobject {
 
         // This handles hours, minutes, seconds and microseconds for
         // ISO intervals
-        int offset = (token.charAt(0) == '-') ? 1 : 0;
+        int offset = token.charAt(0) == '-' ? 1 : 0;
 
         hours = nullSafeIntGet(token.substring(offset + 0, endHours));
         minutes = nullSafeIntGet(token.substring(endHours + 1, endHours + 3));
@@ -212,7 +215,7 @@ public class PGInterval extends PGobject {
       }
     }
 
-    if (!PostgresFormat && value.endsWith("ago")) {
+    if (!postgresFormat && value.endsWith("ago")) {
       // Inverse the leading sign
       setValue(-years, -months, -days, -hours, -minutes, -seconds);
     } else {
@@ -249,19 +252,36 @@ public class PGInterval extends PGobject {
     if (isNull) {
       return null;
     }
-    DecimalFormat df = (DecimalFormat) NumberFormat.getInstance(Locale.US);
-    df.applyPattern("0.0#####");
 
-    return String.format(
-      Locale.ROOT,
-      "%d years %d mons %d days %d hours %d mins %s secs",
-      years,
-      months,
-      days,
-      hours,
-      minutes,
-      df.format(getSeconds())
-    );
+    // [jOOQ/jOOQ#19369] Alternative implementation to avoid https://github.com/pgjdbc/pgjdbc/issues/3865
+    StringBuilder sb = new StringBuilder();
+    sb.append(years).append(" years ")
+      .append(months).append(" mons ")
+      .append(days).append(" days ")
+      .append(hours).append(" hours ")
+      .append(minutes).append(" mins ");
+
+    if (wholeSeconds < 0 || microSeconds < 0)
+      sb.append('-');
+
+    sb.append(Math.abs(wholeSeconds)).append('.');
+
+    if (microSeconds != 0) {
+      String s = "" + Math.abs(microSeconds);
+
+      for (int i = s.length(); i < 6; i++)
+        sb.append('0');
+
+      sb.append(s);
+
+      while (sb.charAt(sb.length() - 1) == '0')
+        sb.deleteCharAt(sb.length() - 1);
+    }
+    else
+      sb.append('0');
+
+    sb.append(" secs");
+    return sb.toString();
   }
 
   /**
@@ -397,7 +417,7 @@ public class PGInterval extends PGobject {
       return;
     }
 
-    final int milliseconds = (microSeconds + ((microSeconds < 0) ? -500 : 500)) / 1000 + wholeSeconds * 1000;
+    final int milliseconds = (microSeconds + (microSeconds < 0 ? -500 : 500)) / 1000 + wholeSeconds * 1000;
 
     cal.add(Calendar.MILLISECOND, milliseconds);
     cal.add(Calendar.MINUTE, getMinutes());
@@ -468,7 +488,7 @@ public class PGInterval extends PGobject {
    * @throws NumberFormatException if the string contains invalid chars
    */
   private static int nullSafeIntGet(String value) throws NumberFormatException {
-    return (value == null) ? 0 : Integer.parseInt(value);
+    return value == null ? 0 : Integer.parseInt(value);
   }
 
   /**
@@ -479,7 +499,7 @@ public class PGInterval extends PGobject {
    * @throws NumberFormatException if the string contains invalid chars
    */
   private static double nullSafeDoubleGet(String value) throws NumberFormatException {
-    return (value == null) ? 0 : Double.parseDouble(value);
+    return value == null ? 0 : Double.parseDouble(value);
   }
 
   /**

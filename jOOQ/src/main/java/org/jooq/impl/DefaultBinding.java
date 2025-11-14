@@ -6703,26 +6703,22 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final YearToSecond get0(BindingGetResultSetContext<U> ctx) throws SQLException {
-            if (REQUIRE_PG_INTERVAL.contains(ctx.dialect())) {
-                Object object = ctx.resultSet().getObject(ctx.index());
-                return object == null ? null : PostgresUtils.toYearToSecond(object);
-            }
-            else {
-                String string = ctx.resultSet().getString(ctx.index());
+            String string = ctx.resultSet().getString(ctx.index());
+
+            if (REQUIRE_PG_INTERVAL.contains(ctx.dialect()))
+                return string == null ? null : PostgresUtils.toYearToSecond(string);
+            else
                 return string == null ? null : YearToSecond.valueOf(string);
-            }
         }
 
         @Override
         final YearToSecond get0(BindingGetStatementContext<U> ctx) throws SQLException {
-            if (REQUIRE_PG_INTERVAL.contains(ctx.dialect())) {
-                Object object = ctx.statement().getObject(ctx.index());
-                return object == null ? null : PostgresUtils.toYearToSecond(object);
-            }
-            else {
-                String string = ctx.statement().getString(ctx.index());
+            String string = ctx.statement().getString(ctx.index());
+
+            if (REQUIRE_PG_INTERVAL.contains(ctx.dialect()))
+                return string == null ? null : PostgresUtils.toYearToSecond(string);
+            else
                 return string == null ? null : YearToSecond.valueOf(string);
-            }
         }
 
         @Override

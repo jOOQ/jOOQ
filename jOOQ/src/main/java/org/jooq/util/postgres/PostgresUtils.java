@@ -261,10 +261,14 @@ public class PostgresUtils {
      * Convert a Postgres interval to a jOOQ <code>DAY TO SECOND</code> interval
      */
     public static DayToSecond toDayToSecond(PGInterval pgInterval) {
-        boolean negative = pgInterval.toString().contains("-");
+        boolean negative =
+            pgInterval.getDays() < 0
+         || pgInterval.getHours() < 0
+         || pgInterval.getMinutes() < 0
+         || pgInterval.getSeconds() < 0;
 
         if (negative)
-            pgInterval.scale(-1);
+            pgInterval = negative(pgInterval);
 
         Double seconds = pgInterval.getSeconds();
         DayToSecond result = new DayToSecond(
@@ -279,6 +283,17 @@ public class PostgresUtils {
             result = result.neg();
 
         return result;
+    }
+
+    private static PGInterval negative(PGInterval pgInterval) {
+        return new PGInterval(
+            -1 * pgInterval.getYears(),
+            -1 * pgInterval.getMonths(),
+            -1 * pgInterval.getDays(),
+            -1 * pgInterval.getHours(),
+            -1 * pgInterval.getMinutes(),
+            -1 * pgInterval.getSeconds()
+        );
     }
 
     /**
@@ -297,10 +312,12 @@ public class PostgresUtils {
      * Convert a Postgres interval to a jOOQ <code>YEAR TO MONTH</code> interval
      */
     public static YearToMonth toYearToMonth(PGInterval pgInterval) {
-        boolean negative = pgInterval.toString().contains("-");
+        boolean negative =
+               pgInterval.getYears() < 0
+            || pgInterval.getMonths() < 0;
 
         if (negative)
-            pgInterval.scale(-1);
+            pgInterval = negative(pgInterval);
 
         YearToMonth result = new YearToMonth(pgInterval.getYears(), pgInterval.getMonths());
 
@@ -314,7 +331,16 @@ public class PostgresUtils {
      * Convert a Postgres interval to a jOOQ <code>YEAR TO SECOND</code> interval
      */
     public static YearToSecond toYearToSecond(Object pgInterval) {
-        return new YearToSecond(toYearToMonth(pgInterval), toDayToSecond(pgInterval));
+        PGInterval i;
+
+        if (pgInterval == null)
+            return null;
+        else if (pgInterval instanceof PGInterval)
+            return new YearToSecond(toYearToMonth(pgInterval), toDayToSecond(pgInterval));
+
+        // [#19369] Avoid calling possibly toString() twice, unnecessarily
+        else
+            return new YearToSecond(toYearToMonth(i = new PGInterval(pgInterval.toString())), toDayToSecond(i));
     }
 
     /**

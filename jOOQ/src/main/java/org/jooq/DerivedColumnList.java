@@ -106,7 +106,7 @@ public interface DerivedColumnList extends QueryPart {
      * </ul>
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support
     <R extends Record> CommonTableExpression<R> as(ResultQuery<R> query);
 
     /**
@@ -128,7 +128,7 @@ public interface DerivedColumnList extends QueryPart {
      * </ul>
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support
     <R extends Record> CommonTableExpression<R> asMaterialized(ResultQuery<R> query);
 
     /**
@@ -150,7 +150,7 @@ public interface DerivedColumnList extends QueryPart {
      * </ul>
      */
     @NotNull
-    @Support({ FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support
     <R extends Record> CommonTableExpression<R> asNotMaterialized(ResultQuery<R> query);
 
     // -------------------------------------------------------------------------

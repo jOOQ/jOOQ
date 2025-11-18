@@ -264,6 +264,7 @@ implements
         else
             ctx.sql(", ").visit(inline(""));
 
+        acceptHaving(ctx);
 
 
 

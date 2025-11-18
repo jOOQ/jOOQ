@@ -95,6 +95,7 @@ implements
             default:
                 ctx.visit(N_ARRAY_AGG).sql('(');
                 acceptArguments1(ctx, new QueryPartListView<>(arguments.get(0)));
+                acceptHaving(ctx);
                 acceptOrderBy(ctx);
                 ctx.sql(')');
                 break;

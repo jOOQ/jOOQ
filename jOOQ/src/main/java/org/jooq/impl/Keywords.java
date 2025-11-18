@@ -269,11 +269,13 @@ final class Keywords {
     static final Keyword K_MATCHED                  = keyword("matched");
     static final Keyword K_MATERIALIZE              = keyword("materialize");
     static final Keyword K_MATERIALIZED             = keyword("materialized");
+    static final Keyword K_MAX                      = keyword("max");
     static final Keyword K_MAXVALUE                 = keyword("maxvalue");
     static final Keyword K_MERGE_INTO               = keyword("merge into");
     static final Keyword K_MESSAGE                  = keyword("message");
     static final Keyword K_MESSAGE_TEXT             = keyword("message_text");
     static final Keyword K_MILLISECOND              = keyword("millisecond");
+    static final Keyword K_MIN                      = keyword("min");
     static final Keyword K_MINUS                    = keyword("minus");
     static final Keyword K_MINUTE                   = keyword("minute");
     static final Keyword K_MINVALUE                 = keyword("minvalue");

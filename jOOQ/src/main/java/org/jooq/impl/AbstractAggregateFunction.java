@@ -77,14 +77,17 @@ import static org.jooq.SQLDialect.TRINO;
 // ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.impl.DSL.condition;
+import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.zero;
 import static org.jooq.impl.Keywords.K_DENSE_RANK;
 import static org.jooq.impl.Keywords.K_DISTINCT;
 import static org.jooq.impl.Keywords.K_FILTER;
 import static org.jooq.impl.Keywords.K_FIRST;
+import static org.jooq.impl.Keywords.K_HAVING;
 import static org.jooq.impl.Keywords.K_KEEP;
 import static org.jooq.impl.Keywords.K_LAST;
+import static org.jooq.impl.Keywords.K_MAX;
 import static org.jooq.impl.Keywords.K_NULL;
 import static org.jooq.impl.Keywords.K_ORDER_BY;
 import static org.jooq.impl.Keywords.K_WHERE;
@@ -95,7 +98,6 @@ import static org.jooq.impl.Names.N_COUNT_IF;
 import static org.jooq.impl.QueryPartCollectionView.wrap;
 import static org.jooq.impl.SQLDataType.DOUBLE;
 import static org.jooq.impl.SQLDataType.NUMERIC;
-import static org.jooq.impl.Tools.EMPTY_QUERYPART;
 import static org.jooq.impl.Tools.camelCase;
 import static org.jooq.impl.Tools.isEmpty;
 
@@ -116,11 +118,11 @@ import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.OptionallyOrderedAggregateFunction;
 import org.jooq.OrderField;
-import org.jooq.OrderedAggregateFunction;
 // ...
 import org.jooq.QueryPart;
 import org.jooq.SQL;
 import org.jooq.SQLDialect;
+import org.jooq.SQLDialectCategory;
 import org.jooq.SortField;
 // ...
 import org.jooq.WindowBeforeOverStep;
@@ -268,6 +270,7 @@ implements
         acceptFunctionName(ctx);
         ctx.sql('(');
         acceptArguments0(ctx);
+        acceptHaving(ctx);
         ctx.sql(')');
     }
 
@@ -337,12 +340,13 @@ implements
             else
                 args = QueryPartListView.wrap(ASTERISK.get());
 
-        if (!filter.hasWhere() || supportsFilter(ctx))
+
+
+
+
+
+        if (!filter.hasWhere() || supportsFilter(ctx) || supportsHaving(ctx))
             ctx.visit(wrap(args).map(fun));
-
-
-
-
         else
             ctx.visit(wrap(args).map((arg, i) -> applyFilterToArgument(ctx, arg, i) ? DSL.when(filter, arg == ASTERISK.get() ? one() : arg) : arg).map(fun));
     }
@@ -423,6 +427,27 @@ implements
              NO_SUPPORT_FILTER.contains(ctx.dialect())
           || NO_SUPPORT_WINDOW_FILTER.contains(ctx.dialect()) && isWindow()
         );
+    }
+
+    /* non-final */ boolean supportsHaving(Context<?> ctx) {
+        return false
+
+
+
+        ;
+    }
+
+    final void acceptHaving(Context<?> ctx) {
+
+
+
+
+
+
+
+
+
+
     }
 
     final void acceptOrderBy(Context<?> ctx) {

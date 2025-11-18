@@ -175,6 +175,7 @@ implements
         acceptFunctionName(ctx);
         ctx.sql('(');
         acceptArguments0(ctx);
+        acceptHaving(ctx);
         acceptOrderBy(ctx);
         ctx.sql(')');
 

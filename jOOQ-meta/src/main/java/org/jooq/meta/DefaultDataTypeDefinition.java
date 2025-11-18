@@ -361,6 +361,15 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
     }
 
     @Override
+    public final boolean isTable() {
+        if (userType == null)
+            return false;
+
+        // [#19247] In PostgreSQL, tables expose types that can be used as UDTs as well in SQL
+        return getDatabase().getTable(schema, userType) != null;
+    }
+
+    @Override
     public final boolean isArray() {
         if (userType == null)
             return false;
@@ -371,6 +380,11 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
     @Override
     public final boolean isUDTArray() {
         return isArray() && getDatabase().getArray(schema, userType).getElementType(new DefaultJavaTypeResolver()).isUDT();
+    }
+
+    @Override
+    public final boolean isTableArray() {
+        return isArray() && getDatabase().getArray(schema, userType).getElementType(new DefaultJavaTypeResolver()).isTable();
     }
 
     @Override

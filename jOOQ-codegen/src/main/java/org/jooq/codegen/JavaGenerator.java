@@ -2281,18 +2281,18 @@ public class JavaGenerator extends AbstractGenerator {
                     final TypedElementDefinition<?> t = (TypedElementDefinition<?>) column;
                     final JavaTypeResolver r = resolver(out, Mode.RECORD);
 
-                    final boolean isUDT = t.getType(r).isUDT();
+                    final boolean isUDTOrTable = t.getType(r).isUDT() || t.getType(r).isTable();
                     final boolean isArray = t.getType(r).isArray();
-                    final boolean isUDTArray = t.getType(r).isUDTArray();
+                    final boolean isUDTOrTableArray = t.getType(r).isUDTArray() || t.getType(r).isTableArray();
                     final ArrayDefinition array = database.getArray(t.getType(r).getSchema(), t.getType(r).getQualifiedUserType());
                     final String indexTypeFull = array == null || array.getIndexType() == null ? null : getJavaType(array.getIndexType(resolver(out)), out);
                     final boolean isArrayOfUDTs = isArrayOfUDTs(t, r);
                     final boolean isConverted = t.getType(r).getConverter() != null || t.getType(r).getBinding() != null;
 
-                    final String udtType = (isUDT || isArray)
+                    final String udtType = (isUDTOrTable || isArray)
                         ? out.ref(getJavaType(t.getType(r), out, Mode.RECORD))
                         : "";
-                    final String udtArrayElementType = isUDTArray
+                    final String udtArrayElementType = isUDTOrTableArray
                         ? out.ref(database.getArray(t.getType(r).getSchema(), t.getType(r).getQualifiedUserType()).getElementType(r).getJavaType(r))
                         : isArrayOfUDTs
                         ? out.ref(getArrayBaseType(t.getType(r).getJavaType(r)))
@@ -2300,7 +2300,7 @@ public class JavaGenerator extends AbstractGenerator {
 
                     if (kotlin) {
                         if (pojoArgument)
-                            if (isUDTArray)
+                            if (isUDTOrTableArray)
                                 out.println("this.%s = value.%s?.let { %s(it.map { it?.let { %s(it) } }) }",
                                     getStrategy().getJavaMemberName(column, Mode.POJO),
                                     getStrategy().getJavaMemberName(column, Mode.POJO),
@@ -2311,7 +2311,7 @@ public class JavaGenerator extends AbstractGenerator {
                                     getStrategy().getJavaMemberName(column, Mode.POJO),
                                     getStrategy().getJavaMemberName(column, Mode.POJO),
                                     udtArrayElementType);
-                            else if (isUDT && !isConverted || isArray)
+                            else if (isUDTOrTable && !isConverted || isArray)
                                 out.println("this.%s = value.%s?.let { %s(it) }",
                                     getStrategy().getJavaMemberName(column, Mode.POJO),
                                     getStrategy().getJavaMemberName(column, Mode.POJO),
@@ -2333,7 +2333,7 @@ public class JavaGenerator extends AbstractGenerator {
                     // In Scala, the setter call can be ambiguous, e.g. when using KeepNamesGeneratorStrategy
                     else if (scala) {
                         if (pojoArgument)
-                            if (isUDTArray)
+                            if (isUDTOrTableArray)
                                 out.println("this.%s(if (value.%s == null) null else new %s(value.%s.stream().map { it => new %s(it) }.collect(%s.toList())))",
                                     getStrategy().getJavaSetterName(column, Mode.POJO),
                                     getStrategy().getJavaGetterName(column, Mode.POJO),
@@ -2347,7 +2347,7 @@ public class JavaGenerator extends AbstractGenerator {
                                     getStrategy().getJavaGetterName(column, Mode.POJO),
                                     getStrategy().getJavaGetterName(column, Mode.POJO),
                                     udtArrayElementType);
-                            else if (isUDT && !isConverted || isArray)
+                            else if (isUDTOrTable && !isConverted || isArray)
                                 out.println("this.%s(if (value.%s == null) null else new %s(value.%s))",
                                     getStrategy().getJavaSetterName(column, Mode.RECORD),
                                     getStrategy().getJavaGetterName(column, Mode.POJO),
@@ -2370,7 +2370,7 @@ public class JavaGenerator extends AbstractGenerator {
                                 ? getStrategy().getJavaMemberName(column, Mode.POJO)
                                 : getStrategy().getJavaGetterName(column, Mode.POJO);
 
-                            if (isUDTArray) {
+                            if (isUDTOrTableArray) {
                                 if (indexTypeFull == null) {
                                     out.println("%s(value.%s() == null ? null : new %s(value.%s().stream().map(%s::new).collect(%s.toList())));",
                                         getStrategy().getJavaSetterName(column, Mode.RECORD),
@@ -2409,7 +2409,7 @@ public class JavaGenerator extends AbstractGenerator {
                                     brackets
                                 );
                             }
-                            else if (isUDT && !isConverted || isArray) {
+                            else if (isUDTOrTable && !isConverted || isArray) {
                                 out.println("%s(value.%s() == null ? null : new %s(value.%s()));",
                                     getStrategy().getJavaSetterName(column, Mode.RECORD),
                                     getterName,
@@ -2506,10 +2506,10 @@ public class JavaGenerator extends AbstractGenerator {
         final String typeFull = getJavaType(column.getType(resolver(out)), out);
         final String type = out.ref(typeFull);
         final String name = column.getQualifiedOutputName();
-        final boolean isUDT = column.getType(resolver(out)).isUDT();
+        final boolean isUDTOrTable = column.getType(resolver(out)).isUDT() || column.getType(resolver(out)).isTable();
         final boolean isArray = column.getType(resolver(out)).isArray();
-        final boolean isUDTArray = column.getType(resolver(out)).isUDTArray();
-        final boolean override = generateInterfaces() && !generateImmutableInterfaces() && !isUDT;
+        final boolean isUDTOrTableArray = column.getType(resolver(out)).isUDTArray() || column.getType(resolver(out)).isTableArray();
+        final boolean override = generateInterfaces() && !generateImmutableInterfaces() && !isUDTOrTable;
 
         // We cannot have covariant setters for arrays because of type erasure
         if (!(generateInterfaces() && isArray)) {
@@ -2552,7 +2552,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         // [#3117] Avoid covariant setters for UDTs when generating interfaces
-        if (generateInterfaces() && !generateImmutableInterfaces() && (isUDT || isArray)) {
+        if (generateInterfaces() && !generateImmutableInterfaces() && (isUDTOrTable || isArray)) {
             final String columnTypeFull = getJavaType(column.getType(resolver(out, Mode.RECORD)), out, Mode.RECORD);
             final String columnType = out.ref(columnTypeFull);
             final String columnTypeInterface = out.ref(getJavaType(column.getType(resolver(out, Mode.INTERFACE)), out, Mode.INTERFACE));
@@ -2586,7 +2586,7 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("if (value == null)");
                 out.println("set(%s, null);", index);
 
-                if (isUDT) {
+                if (isUDTOrTable) {
                     out.println("else");
                     out.println("set(%s, value.into(new %s()));", index, type);
                 }
@@ -2600,7 +2600,7 @@ public class JavaGenerator extends AbstractGenerator {
                     out.println();
                     out.println("for (%s i : value)", componentTypeInterface);
 
-                    if (isUDTArray)
+                    if (isUDTOrTableArray)
                         out.println("a.add(i.into(new %s()));", componentType);
                     else
                         out.println("a.add(i);", componentType);
@@ -5700,14 +5700,13 @@ public class JavaGenerator extends AbstractGenerator {
         final String columnSetterReturnType = generateFluentSetters() ? className : tokenVoid;
         final String columnSetter = getStrategy().getJavaSetterName(column, Mode.POJO);
         final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
-        final boolean isUDT = column.getType(resolver(out)).isUDT();
-        final boolean isUDTArray = column.getType(resolver(out)).isUDTArray();
+        final boolean isUDTOrTable = column.getType(resolver(out)).isUDT() || column.getType(resolver(out)).isTable();
         final boolean isArray = column.getType(resolver(out)).isArray();
         final String name = column.getQualifiedOutputName();
-        final boolean override = generateInterfaces() && !generateImmutableInterfaces() && !isUDT;
+        final boolean override = generateInterfaces() && !generateImmutableInterfaces() && !isUDTOrTable;
 
         // We cannot have covariant setters for arrays because of type erasure
-        if (!(generateInterfaces() && (isArray || isUDT))) {
+        if (!(generateInterfaces() && (isArray || isUDTOrTable))) {
             if (!printDeprecationIfUnknownType(out, columnTypeFull))
                 out.javadoc("Setter for <code>%s</code>.[[before= ][%s]]", name, list(escapeEntities(comment(column))));
 
@@ -5735,7 +5734,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         // [#3117] To avoid covariant setters on POJOs, we need to generate two setter overloads
-        if (generateInterfaces() && (isUDT || isArray)) {
+        if (generateInterfaces() && (isUDTOrTable || isArray)) {
             final String columnTypeInterface = out.ref(getJavaType(column.getType(resolver(out, Mode.INTERFACE)), out, Mode.INTERFACE));
 
             out.println();
@@ -9163,12 +9162,14 @@ public class JavaGenerator extends AbstractGenerator {
             final String getter = parameter == procedure.getReturnValue()
                 ? "getReturnValue"
                 : getStrategy().getJavaGetterName(parameter, Mode.DEFAULT);
-            final boolean isUDT = parameter.getType(resolver(out)).isUDT();
+            final boolean isUDTOrTable =
+                parameter.getType(resolver(out)).isUDT()
+                || parameter.getType(resolver(out)).isTable();
 
             if (instance) {
 
                 // [#3117] Avoid funny call-site ambiguity if this is a UDT that is implemented by an interface
-                if (generateInterfaces() && isUDT) {
+                if (generateInterfaces() && isUDTOrTable) {
                     final String columnTypeInterface = out.ref(getJavaType(parameter.getType(resolver(out, Mode.INTERFACE)), out, Mode.INTERFACE));
 
                     if (scala)
@@ -9838,9 +9839,11 @@ public class JavaGenerator extends AbstractGenerator {
 
         // Check for Oracle-style VARRAY types
         else if (db.getArray(schema, u) != null) {
-            boolean udtArray = db.getArray(schema, u).getElementType(resolver(out)).isUDT();
+            boolean udtOrTableArray =
+                db.getArray(schema, u).getElementType(resolver(out)).isUDT()
+                || db.getArray(schema, u).getElementType(resolver(out)).isTable();
 
-            if (udtMode == Mode.POJO || (udtMode == Mode.INTERFACE && !udtArray)) {
+            if (udtMode == Mode.POJO || (udtMode == Mode.INTERFACE && !udtOrTableArray)) {
                 if (scala)
                     type = "java.util.List[" + getJavaType(db.getArray(schema, u).getElementType(resolver(out, udtMode)), out, udtMode) + "]";
                 else

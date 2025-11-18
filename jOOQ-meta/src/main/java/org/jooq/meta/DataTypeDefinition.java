@@ -185,6 +185,11 @@ public interface DataTypeDefinition {
     boolean isUDT();
 
     /**
+     * Whether this data type represents a table type.
+     */
+    boolean isTable();
+
+    /**
      * Whether this data type represents an array producing an
      * {@link ArrayRecord}.
      */
@@ -195,6 +200,12 @@ public interface DataTypeDefinition {
      * {@link ArrayRecord} of udt types.
      */
     boolean isUDTArray();
+
+    /**
+     * Whether this data type represents an array producing an
+     * {@link ArrayRecord} of table types.
+     */
+    boolean isTableArray();
 
     /**
      * Whether this data type is a NUMBER type without precision and scale.

@@ -627,7 +627,7 @@ public class XMLGenerator extends AbstractGenerator {
         BiConsumer<T, String> udtSchema,
         BiConsumer<T, String> udtName
     ) {
-        if (type.isUDT()) {
+        if (type.isUDT() || type.isTable()) {
             Name name = type.getQualifiedUserType();
 
             if (name != null) {

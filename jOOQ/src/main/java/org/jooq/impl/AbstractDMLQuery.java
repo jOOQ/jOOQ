@@ -94,6 +94,9 @@ import static org.jooq.impl.Keywords.K_SQL;
 import static org.jooq.impl.Keywords.K_TABLE;
 import static org.jooq.impl.Names.N_DELETED;
 import static org.jooq.impl.Names.N_INSERTED;
+import static org.jooq.impl.Names.N_JSON;
+import static org.jooq.impl.Names.N_TO_BLOB;
+import static org.jooq.impl.SQLDataType.JSON;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_STRING;
 import static org.jooq.impl.Tools.anyMatch;
@@ -392,6 +395,8 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
                 ));
             });
         }
+
+
 
 
 

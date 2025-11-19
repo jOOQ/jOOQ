@@ -5996,6 +5996,7 @@ public class JavaGenerator extends AbstractGenerator {
         final String columnSetter = getStrategy().getJavaSetterName(column, Mode.POJO);
         final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
         final boolean isUDTOrTable = column.getType(resolver(out)).isUDT() || column.getType(resolver(out)).isTable();
+        final boolean isUDTOrTableArray = column.getType(resolver(out)).isUDTArray() || column.getType(resolver(out)).isTableArray();
         final boolean isArray = column.getType(resolver(out)).isArray();
         final String name = column.getQualifiedOutputName();
         final boolean override = generateInterfaces() && !generateImmutableInterfaces() && !isUDTOrTable;
@@ -6054,11 +6055,11 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("if (%s == null)", columnMember);
                 out.println("this.%s = null;", columnMember);
 
-                if (isUDT) {
+                if (isUDTOrTable) {
                     out.println("else");
                     out.println("this.%s = %s.into(new %s());", columnMember, columnMember, columnType);
                 }
-                else if (isUDTArray) {
+                else if (isUDTOrTableArray) {
                     final ArrayDefinition array = database.getArray(column.getType(resolver(out)).getSchema(), column.getType(resolver(out)).getQualifiedUserType());
                     final String componentType = out.ref(getJavaType(array.getElementType(resolver(out, Mode.POJO)), out, Mode.POJO));
                     final String componentTypeInterface = out.ref(getJavaType(array.getElementType(resolver(out, Mode.INTERFACE)), out, Mode.INTERFACE));

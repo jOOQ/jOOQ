@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema
   xmlns="http://www.w3.org/2001/XMLSchema"
-  xmlns:jooq-runtime="http://www.jooq.org/xsd/jooq-runtime-3.19.27.xsd"
+  xmlns:jooq-runtime="http://www.jooq.org/xsd/jooq-runtime-3.19.29.xsd"
   xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
   xmlns:annox="http://annox.dev.java.net"
-  targetNamespace="http://www.jooq.org/xsd/jooq-runtime-3.19.27.xsd"
+  targetNamespace="http://www.jooq.org/xsd/jooq-runtime-3.19.29.xsd"
   elementFormDefault="qualified"
   jxb:extensionBindingPrefixes="annox"
   jxb:version="2.1">
@@ -1481,6 +1481,10 @@ deployed on an RDBMS that does not.]]></jxb:javadoc></jxb:property></appinfo></a
       <element name="interpreterDelayForeignKeyDeclarations" type="boolean" minOccurs="0" maxOccurs="1" default="false">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Using this flag, the interpreter will be able to delay the addition of foreign key declarations until the end of the interpretation run.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+                  
+      <element name="interpreterWithMetaLookups" type="jooq-runtime:InterpreterWithMetaLookups" minOccurs="0" maxOccurs="1" default="THROW_ON_FAILURE">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[[#18500] Whether the interpreter should perform meta lookups in the already interpreted meta data.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
       
       <element name="metaIncludeSystemIndexes" type="boolean" minOccurs="0" maxOccurs="1" default="false">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The {@link org.jooq.Meta} implementation that is backed by {@link java.sql.DatabaseMetaData} does not produce system generated indexes on constraints, by default.]]></jxb:javadoc></jxb:property></appinfo></annotation>
@@ -2312,6 +2316,18 @@ Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided]]></jxb:javad
 
       <!-- Meta lookups are active in parser and throw exceptions on failure -->
       <enumeration value="THROW_ON_FAILURE"/>
+    </restriction>
+  </simpleType>
+
+  <simpleType name="InterpreterWithMetaLookups">
+    <restriction base="string">
+      <enumeration value="IGNORE_ON_FAILURE">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Meta lookups are active in interpreter, but don't throw exceptions on failure]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
+
+      <enumeration value="THROW_ON_FAILURE">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Meta lookups are active in interpreter and throw exceptions on failure]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
     </restriction>
   </simpleType>
 

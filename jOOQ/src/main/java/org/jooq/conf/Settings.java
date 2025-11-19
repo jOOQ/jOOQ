@@ -36,7 +36,7 @@ public class Settings
     implements Serializable, Cloneable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 32008L;
+    private final static long serialVersionUID = 32010L;
     @XmlElement(defaultValue = "true")
     protected Boolean forceIntegerTypesOnZeroScaleDecimals = true;
     @XmlElement(defaultValue = "true")
@@ -477,6 +477,9 @@ public class Settings
     protected Locale interpreterLocale;
     @XmlElement(defaultValue = "false")
     protected Boolean interpreterDelayForeignKeyDeclarations = false;
+    @XmlElement(defaultValue = "THROW_ON_FAILURE")
+    @XmlSchemaType(name = "string")
+    protected InterpreterWithMetaLookups interpreterWithMetaLookups = InterpreterWithMetaLookups.THROW_ON_FAILURE;
     @XmlElement(defaultValue = "false")
     protected Boolean metaIncludeSystemIndexes = false;
     @XmlElement(defaultValue = "false")
@@ -6146,6 +6149,22 @@ public class Settings
     }
 
     /**
+     * [#18500] Whether the interpreter should perform meta lookups in the already interpreted meta data.
+     * 
+     */
+    public InterpreterWithMetaLookups getInterpreterWithMetaLookups() {
+        return interpreterWithMetaLookups;
+    }
+
+    /**
+     * [#18500] Whether the interpreter should perform meta lookups in the already interpreted meta data.
+     * 
+     */
+    public void setInterpreterWithMetaLookups(InterpreterWithMetaLookups value) {
+        this.interpreterWithMetaLookups = value;
+    }
+
+    /**
      * The {@link org.jooq.Meta} implementation that is backed by {@link java.sql.DatabaseMetaData} does not produce system generated indexes on constraints, by default.
      * 
      * @return
@@ -9475,6 +9494,15 @@ public class Settings
     }
 
     /**
+     * [#18500] Whether the interpreter should perform meta lookups in the already interpreted meta data.
+     * 
+     */
+    public Settings withInterpreterWithMetaLookups(InterpreterWithMetaLookups value) {
+        setInterpreterWithMetaLookups(value);
+        return this;
+    }
+
+    /**
      * The {@link org.jooq.Meta} implementation that is backed by {@link java.sql.DatabaseMetaData} does not produce system generated indexes on constraints, by default.
      * 
      */
@@ -10116,6 +10144,7 @@ public class Settings
         builder.append("interpreterNameLookupCaseSensitivity", interpreterNameLookupCaseSensitivity);
         builder.append("interpreterLocale", interpreterLocale);
         builder.append("interpreterDelayForeignKeyDeclarations", interpreterDelayForeignKeyDeclarations);
+        builder.append("interpreterWithMetaLookups", interpreterWithMetaLookups);
         builder.append("metaIncludeSystemIndexes", metaIncludeSystemIndexes);
         builder.append("metaIncludeSystemSequences", metaIncludeSystemSequences);
         builder.append("migrationHistorySchema", migrationHistorySchema);
@@ -11944,6 +11973,15 @@ public class Settings
                 return false;
             }
         }
+        if (interpreterWithMetaLookups == null) {
+            if (other.interpreterWithMetaLookups!= null) {
+                return false;
+            }
+        } else {
+            if (!interpreterWithMetaLookups.equals(other.interpreterWithMetaLookups)) {
+                return false;
+            }
+        }
         if (metaIncludeSystemIndexes == null) {
             if (other.metaIncludeSystemIndexes!= null) {
                 return false;
@@ -12534,6 +12572,7 @@ public class Settings
         result = ((prime*result)+((interpreterNameLookupCaseSensitivity == null)? 0 :interpreterNameLookupCaseSensitivity.hashCode()));
         result = ((prime*result)+((interpreterLocale == null)? 0 :interpreterLocale.hashCode()));
         result = ((prime*result)+((interpreterDelayForeignKeyDeclarations == null)? 0 :interpreterDelayForeignKeyDeclarations.hashCode()));
+        result = ((prime*result)+((interpreterWithMetaLookups == null)? 0 :interpreterWithMetaLookups.hashCode()));
         result = ((prime*result)+((metaIncludeSystemIndexes == null)? 0 :metaIncludeSystemIndexes.hashCode()));
         result = ((prime*result)+((metaIncludeSystemSequences == null)? 0 :metaIncludeSystemSequences.hashCode()));
         result = ((prime*result)+((migrationHistorySchema == null)? 0 :migrationHistorySchema.hashCode()));

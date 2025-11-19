@@ -30,7 +30,7 @@ public class MappedTable
     implements Serializable, Cloneable, MappedSchemaObject, XMLAppendable
 {
 
-    private final static long serialVersionUID = 32008L;
+    private final static long serialVersionUID = 32010L;
     protected String input;
     @XmlElement(type = String.class)
     @XmlJavaTypeAdapter(RegexAdapter.class)

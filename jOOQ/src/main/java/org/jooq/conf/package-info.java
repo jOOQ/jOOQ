@@ -1,2 +1,2 @@
-@jakarta.xml.bind.annotation.XmlSchema(namespace = "http://www.jooq.org/xsd/jooq-runtime-3.20.8.xsd", elementFormDefault = jakarta.xml.bind.annotation.XmlNsForm.QUALIFIED)
+@jakarta.xml.bind.annotation.XmlSchema(namespace = "http://www.jooq.org/xsd/jooq-runtime-3.20.10.xsd", elementFormDefault = jakarta.xml.bind.annotation.XmlNsForm.QUALIFIED)
 package org.jooq.conf;

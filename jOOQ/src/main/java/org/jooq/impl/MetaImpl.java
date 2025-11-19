@@ -129,6 +129,7 @@ import org.jooq.TableField;
 import org.jooq.TableOptions;
 import org.jooq.TableOptions.TableType;
 import org.jooq.UniqueKey;
+import org.jooq.conf.InterpreterWithMetaLookups;
 import org.jooq.conf.ParseUnknownFunctions;
 import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
@@ -723,7 +724,9 @@ final class MetaImpl extends AbstractMeta {
             try {
                 m = dsl()
                     .configuration()
-                    .deriveSettings(s -> s.withInterpreterDelayForeignKeyDeclarations(true))
+                    .deriveSettings(s -> s
+                        .withInterpreterDelayForeignKeyDeclarations(true)
+                        .withInterpreterWithMetaLookups(InterpreterWithMetaLookups.IGNORE_ON_FAILURE))
                     .dsl()
                     .meta(sb.toString());
             }

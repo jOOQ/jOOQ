@@ -52,11 +52,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.Configuration;
+import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableOptions.TableType;
+import org.jooq.conf.InterpreterWithMetaLookups;
 import org.jooq.exception.DataDefinitionException;
 import org.jooq.impl.DSL;
 import org.jooq.impl.ParserException;
@@ -89,11 +91,14 @@ public class SQLiteTableDefinition extends AbstractTableDefinition {
     Table<?> interpretedTable() {
         if (interpretedTable == null) {
             try {
-                Configuration c = create().configuration().derive();
-                c.settings().withParseWithMetaLookups(THROW_ON_FAILURE);
-                Query query = create().parser().parseQuery(getSource());
 
-                for (Table<?> t : create().meta(query).getTables(getInputName()))
+                // [#14687] [#18500] The commercial editions now validate view sources, so we need to ignore those
+                //                   meta lookup failures.
+                DSLContext ctx = create();
+                ctx.settings().setInterpreterWithMetaLookups(InterpreterWithMetaLookups.IGNORE_ON_FAILURE);
+                Query query = ctx.parser().parseQuery(getSource());
+
+                for (Table<?> t : ctx.meta(query).getTables(getInputName()))
                     return interpretedTable = t;
             }
             catch (ParserException e) {

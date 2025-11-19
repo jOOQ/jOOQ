@@ -28,7 +28,7 @@ public class ParseSearchSchema
     implements Serializable, Cloneable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 31834L;
+    private final static long serialVersionUID = 31836L;
     protected String catalog;
     @XmlElement(required = true)
     protected String schema;

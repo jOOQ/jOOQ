@@ -302,8 +302,13 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
         if (userType == null)
             return false;
 
-        // [#19247] In PostgreSQL, tables expose types that can be used as UDTs as well in SQL
-        return getDatabase().getTable(schema, userType) != null;
+        // [#19247] In PostgreSQL, tables expose types that can be used as UDTs as well in SQL.
+        //          Some RDBMS have multiple namespaces per object type, e.g. a domain S.D may conflict with a table S.D
+        return getDatabase().getDomain(schema, userType) == null
+            && getDatabase().getEnum(schema, userType) == null
+            && getDatabase().getUDT(schema, userType) == null
+            && getDatabase().getArray(schema, userType) == null
+            && getDatabase().getTable(schema, userType) != null;
     }
 
     @Override

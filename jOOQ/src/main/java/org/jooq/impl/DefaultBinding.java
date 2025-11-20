@@ -999,7 +999,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 // [#11511] Specifically when in a parser context, we must not
                 // blindly cast bind variables
                 else
-                    ctx.render().sql(ctx.variable());
+                    sql(ctx, converted);
 
             // [#1029] Postgres generally doesn't need the casting. Only in the
             // above case where the type is OTHER

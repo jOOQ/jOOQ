@@ -137,6 +137,9 @@ import static org.jooq.impl.QOM.Cascade.CASCADE;
 import static org.jooq.impl.QOM.Cascade.RESTRICT;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.NO_SUPPORT_DEFAULT_DATETIME_LITERAL_PREFIX;
+import static org.jooq.impl.Tools.NO_SUPPORT_NOT_NULL;
+import static org.jooq.impl.Tools.NO_SUPPORT_NULL;
+import static org.jooq.impl.Tools.NO_SUPPORT_NULL_ALTER_TABLE;
 import static org.jooq.impl.Tools.begin;
 import static org.jooq.impl.Tools.beginExecuteImmediate;
 import static org.jooq.impl.Tools.endExecuteImmediate;
@@ -1767,10 +1770,20 @@ implements
 
                 ctx.sql(' ');
 
+
+
+
+
+
                 if (NO_SUPPORT_DEFAULT_DATETIME_LITERAL_PREFIX.contains(ctx.dialect()) && alterColumnDefault.getDataType().isDateTime())
                     ctx.data(DATA_OMIT_DATETIME_LITERAL_PREFIX, true, c -> c.visit(alterColumnDefault));
                 else
                     ctx.visit(alterColumnDefault);
+
+
+
+
+
 
                 ctx.end(ALTER_TABLE_ALTER_DEFAULT);
             }
@@ -1977,11 +1990,15 @@ implements
         if (!NO_SUPPORT_ALTER_TYPE_AND_NULL.contains(ctx.dialect())) {
             switch (type.nullability()) {
                 case NULL:
-                    ctx.sql(' ').visit(K_NULL);
+                    if (!NO_SUPPORT_NULL_ALTER_TABLE.contains(ctx.dialect()))
+                        ctx.sql(' ').visit(K_NULL);
+
                     break;
+
                 case NOT_NULL:
                     ctx.sql(' ').visit(K_NOT_NULL);
                     break;
+
                 case DEFAULT:
                     break;
             }

@@ -46,6 +46,7 @@ import static org.jooq.SQLDialect.IGNITE;
 import static org.jooq.SQLDialect.MARIADB;
 // ...
 import static org.jooq.SQLDialect.MYSQL;
+// ...
 import static org.jooq.TableOptions.TableType.MATERIALIZED_VIEW;
 import static org.jooq.TableOptions.TableType.VIEW;
 import static org.jooq.impl.Comparators.CHECK_COMP;
@@ -63,6 +64,7 @@ import static org.jooq.impl.ConstraintType.FOREIGN_KEY;
 import static org.jooq.impl.ConstraintType.PRIMARY_KEY;
 import static org.jooq.impl.ConstraintType.UNIQUE;
 import static org.jooq.impl.CreateTableImpl.SUPPORT_NULLABLE_PRIMARY_KEY;
+import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.impl.HistoryImpl.initCtx;
 import static org.jooq.impl.Tools.NO_SUPPORT_TIMESTAMPTZ_PRECISION;
@@ -835,6 +837,10 @@ final class Diff extends AbstractScope {
             Name n2 = k2.getUnqualifiedName();
             boolean ignoreRenames = false;
             boolean allowRenames = allowRenames(Settings::isMigrationAllowRenameConstraints);
+
+            // [#11454] Ignore reported primary key names (e.g. PRIMARY_KEY in Spanner9 if primary keys cannot be named
+            if (type == PRIMARY_KEY && NO_SUPPORT_PK_NAMES.contains(ctx.dialect()))
+                n1 = n2 = name("");
 
             if (n1.empty() ^ n2.empty()) {
                 if (!TRUE.equals(ctx.settings().isMigrationIgnoreUnnamedConstraintDiffs())) {

@@ -906,13 +906,27 @@ implements
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
                 case DERBY:
                 case MARIADB:
-                case MYSQL:
+                case MYSQL: {
                     acceptDefaultValuesEmulation(ctx, table().fields().length);
                     break;
+                }
 
-                default:
+                default: {
 
 
 
@@ -929,6 +943,7 @@ implements
                        .visit(K_DEFAULT_VALUES);
 
                     break;
+                }
             }
         }
 

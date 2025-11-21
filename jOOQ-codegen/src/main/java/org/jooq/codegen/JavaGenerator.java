@@ -8708,16 +8708,34 @@ public class JavaGenerator extends AbstractGenerator {
             out.javadoc("Set the <code>%s</code> parameter IN value to the routine", parameter.getOutputName());
 
             if (scala) {
-                out.println("%sdef %s(%s: %s) : Unit = set%s(%s.%s, %s)",
-                    visibility(), setter, scalaWhitespaceSuffix(paramName), refNumberType(out, parameter.getType(resolver(out))), numberValue, className, paramId, paramName);
+                out.println("%sdef %s(%s: %s) : %s = {",
+                    visibility(), setter, scalaWhitespaceSuffix(paramName), refNumberType(out, parameter.getType(resolver(out))), setterReturnType);
+
+                out.println("set%s(%s.%s, %s)", numberValue, className, paramId, paramName);
+
+                if (generateFluentSetters())
+                    out.println("this");
+
+                out.println("}");
             }
             else if (kotlin) {
-                out.println("%sfun %s(%s: %s?): Unit = set%s(%s.%s, %s)",
-                    visibility(), setter, paramName, refNumberType(out, parameter.getType(resolver(out))), numberValue, className, paramId, paramName);
+                out.println("%sfun %s(%s: %s?): %s {",
+                    visibility(), setter, paramName, refNumberType(out, parameter.getType(resolver(out))), setterReturnType);
+
+                out.println("set%s(%s.%s, %s)", numberValue, className, paramId, paramName);
+
+                if (generateFluentSetters())
+                    out.println("return this");
+
+                out.println("}");
             }
             else {
-                out.println("%svoid %s(%s %s) {", visibility(), setter, varargsIfArray(refNumberType(out, parameter.getType(resolver(out)))), paramName);
+                out.println("%s%s %s(%s %s) {", visibility(), setterReturnType, setter, varargsIfArray(refNumberType(out, parameter.getType(resolver(out)))), paramName);
                 out.println("set%s(%s, %s);", numberValue, paramId, paramName);
+
+                if (generateFluentSetters())
+                    out.println("return this;");
+
                 out.println("}");
             }
 

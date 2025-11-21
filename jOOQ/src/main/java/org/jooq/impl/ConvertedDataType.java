@@ -187,6 +187,16 @@ final class ConvertedDataType<T, U> extends AbstractDataTypeX<U> {
     }
 
     @Override
+    public final String getDDLTypeName() {
+        return delegate.getDDLTypeName();
+    }
+
+    @Override
+    public final String getDDLTypeName(Configuration configuration) {
+        return delegate.getDDLTypeName(configuration);
+    }
+
+    @Override
     public final String getTypeName() {
         return delegate.getTypeName();
     }
@@ -284,6 +294,11 @@ final class ConvertedDataType<T, U> extends AbstractDataTypeX<U> {
     @Override
     final String castTypeName0() {
         return delegate.castTypeName0();
+    }
+
+    @Override
+    final String ddlTypeName0() {
+        return delegate.ddlTypeName0();
     }
 
     @Override

@@ -82,6 +82,7 @@ import static org.jooq.impl.SQLDataType.NVARCHAR;
 import static org.jooq.impl.Tools.CONFIG;
 import static org.jooq.impl.Tools.CONFIG_UNQUOTED;
 import static org.jooq.impl.Tools.NO_SUPPORT_BINARY_TYPE_LENGTH;
+import static org.jooq.impl.Tools.NO_SUPPORT_BINARY_TYPE_LENGTH_IN_CASTS;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.settings;
 import static org.jooq.impl.Tools.visitMappedSchema;
@@ -709,7 +710,7 @@ implements
             if (isLob())
                 return castTypeName0();
 
-            else if (isBinary() && NO_SUPPORT_BINARY_TYPE_LENGTH.contains(dialect))
+            else if (isBinary() && NO_SUPPORT_BINARY_TYPE_LENGTH_IN_CASTS.contains(dialect))
                 return castTypeName0();
 
 
@@ -747,6 +748,93 @@ implements
     @Override
     public /* non-final */ String getCastTypeName(Configuration configuration) {
         return ((AbstractDataType<T>) getDataType(configuration)).getCastTypeName0(configuration);
+    }
+
+    @Override
+    public /* final */ String getDDLTypeName() {
+        return getDDLTypeName0(CONFIG_UNQUOTED.get());
+    }
+
+    private final String getDDLTypeName0(Configuration configuration) {
+        switch (configuration.family()) {
+            case CLICKHOUSE:
+                if (nullable() && !isJSON() && !isArray())
+                    return "Nullable(" + getDDLTypeName1(configuration) + ")";
+                else
+                    return getDDLTypeName1(configuration);
+
+            default:
+                return getDDLTypeName1(configuration);
+        }
+    }
+
+    private final String getDDLTypeName1(Configuration configuration) {
+        SQLDialect dialect = configuration.dialect();
+
+        if (isMultiset()) {
+            switch (Tools.emulateMultiset(configuration)) {
+                case JSON:
+                    return SQLDataType.JSON.getDDLTypeName(configuration);
+                case JSONB:
+                    return SQLDataType.JSONB.getDDLTypeName(configuration);
+                case XML:
+                    return SQLDataType.XML.getDDLTypeName(configuration);
+                default:
+                    return ddlTypeName0();
+            }
+        }
+
+        // [#10277] Various qualified, user defined types
+        else if (isEnum() || isUDT()) {
+            return renderedTypeName0(configuration);
+        }
+
+        // [#9958] We should be able to avoid checking for x > 0, but there may
+        //         be a lot of data types constructed with a 0 value instead of
+        //         a null value, historically, so removing this check would
+        //         introduce a lot of regressions!
+        else if (lengthDefined() && length() > 0) {
+            if (isLob())
+                return ddlTypeName0();
+
+            else if (isBinary() && NO_SUPPORT_BINARY_TYPE_LENGTH.contains(dialect))
+                return ddlTypeName0();
+
+
+
+
+
+
+            else
+                return castTypePrefix0() + "(" + length() + ")" + castTypeSuffix0();
+        }
+        else if (precisionDefined() && (isDateTime() && hasPrecision() || precision() > 0)) {
+
+            // [#8029] Not all dialects support precision on timestamp
+            // syntax, possibly despite there being explicit or implicit
+            // precision support in DDL.
+            if (isTimestamp() && NO_SUPPORT_TIMESTAMP_PRECISION.contains(dialect))
+                return castTypePrefix0() + castTypeSuffix0();
+
+
+
+
+
+
+
+
+            else if (scaleDefined() && scale() > 0)
+                return castTypePrefix0() + "(" + precision() + ", " + scale() + ")" + castTypeSuffix0();
+            else
+                return castTypePrefix0() + "(" + precision() + ")" + castTypeSuffix0();
+        }
+        else
+            return ddlTypeName0();
+    }
+
+    @Override
+    public /* non-final */ String getDDLTypeName(Configuration configuration) {
+        return ((AbstractDataType<T>) getDataType(configuration)).getDDLTypeName0(configuration);
     }
 
     private final String renderedTypeName0(Configuration configuration) {
@@ -823,6 +911,7 @@ implements
             enumDataType,
             null,
             lazyName(e),
+            e.getName(),
             e.getName(),
             e.getName(),
             precision0(),
@@ -1157,6 +1246,7 @@ implements
     abstract String castTypePrefix0();
     abstract String castTypeSuffix0();
     abstract String castTypeName0();
+    abstract String ddlTypeName0();
     abstract Class<?> tType0();
     abstract Class<T> uType0();
     abstract Integer precision0();

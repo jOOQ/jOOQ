@@ -230,6 +230,10 @@ implements
 
 
 
+
+
+
+
             case DUCKDB:
                 if (method == SampleMethod.BERNOULLI)
                     ctx.visit(method.keyword).sql(' ');
@@ -263,6 +267,7 @@ implements
             case TRINO:
                 ctx.sql('(').visit(size).sql(')');
                 break;
+
 
 
 

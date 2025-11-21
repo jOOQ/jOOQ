@@ -1258,6 +1258,7 @@ final class Tools {
     static final Set<SQLDialect>         NO_SUPPORT_NULL_ALTER_TABLE                = SQLDialect.supportedBy(CLICKHOUSE, DERBY, FIREBIRD, HSQLDB, TRINO);
     static final Set<SQLDialect>         NO_SUPPORT_NOT_NULL                        = SQLDialect.supportedBy(CLICKHOUSE, TRINO);
     static final Set<SQLDialect>         NO_SUPPORT_BINARY_TYPE_LENGTH              = SQLDialect.supportedBy(POSTGRES, TRINO, YUGABYTEDB);
+    static final Set<SQLDialect>         NO_SUPPORT_BINARY_TYPE_LENGTH_IN_CASTS     = SQLDialect.supportedBy(POSTGRES, TRINO, YUGABYTEDB);
     static final Set<SQLDialect>         NO_SUPPORT_CAST_TYPE_IN_DDL                = SQLDialect.supportedBy(MARIADB, MYSQL);
     static final Set<SQLDialect>         SUPPORT_NON_BIND_VARIABLE_SUFFIXES         = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
     static final Set<SQLDialect>         SUPPORT_POSTGRES_LITERALS                  = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
@@ -1270,6 +1271,8 @@ final class Tools {
     static final Set<SQLDialect>         REQUIRES_PARENTHESISED_DEFAULT_FOR_LOBS    = SQLDialect.supportedBy(MYSQL);
     static final Set<SQLDialect>         NO_SUPPORT_DEFAULT_DATETIME_LITERAL_PREFIX = SQLDialect.supportedBy(MARIADB, MYSQL);
     static final Set<SQLDialect>         NO_SUPPORT_DEFAULT_CAST                    = SQLDialect.supportedBy(FIREBIRD);
+
+
 
 
 
@@ -6301,7 +6304,7 @@ final class Tools {
 
         String typeName = type.getTypeName(ctx.configuration());
 
-        // [#5807] These databases cannot use the DataType.getCastTypeName() (which is simply char in this case)
+        // [#5807] These databases cannot use the DataType.getDDLTypeName() (which is simply char in this case)
         // [#18965] Or, they require a length, but UUID.hasLength() is false
         if (type.getFromType() == UUID.class && (
             NO_SUPPORT_CAST_TYPE_IN_DDL.contains(ctx.dialect())
@@ -6313,7 +6316,7 @@ final class Tools {
         }
 
         if (ctx.family() == CLICKHOUSE) {
-            ctx.sql(type.getCastTypeName(ctx.configuration()));
+            ctx.sql(type.getDDLTypeName(ctx.configuration()));
             return;
         }
 
@@ -6333,7 +6336,7 @@ final class Tools {
                 if (ctx.family().category() == SQLDialectCategory.MYSQL)
                     ctx.sql(mysqlLobTypeName(type));
                 else
-                    ctx.sql(type.getCastTypeName(ctx.configuration()));
+                    ctx.sql(type.getDDLTypeName(ctx.configuration()));
             }
 
             // [#6289] [#7191] Some databases don't support lengths on binary types
@@ -6346,7 +6349,7 @@ final class Tools {
             else if (type.length() > 0)
                 ctx.sql(typeName).sql('(').sql(type.length()).sql(')');
 
-            // [#6745] [#9473] The DataType.getCastTypeName() cannot be used in some dialects, for DDL
+            // [#6745] [#9473] The DataType.getDDLTypeName() cannot be used in some dialects, for DDL
             else if (NO_SUPPORT_CAST_TYPE_IN_DDL.contains(ctx.dialect()))
                 if (type.isBinary())
                     ctx.sql(BLOB.getTypeName(ctx.configuration()));
@@ -6355,14 +6358,14 @@ final class Tools {
 
             // Some databases don't allow for length-less VARCHAR, VARBINARY types
             else
-                ctx.sql(type.getCastTypeName(ctx.configuration()));
+                ctx.sql(type.getDDLTypeName(ctx.configuration()));
         }
         else if (type.hasPrecision()
             && type.precisionDefined()
             && !unsupportedDatetimePrecision(ctx, type)
         ) {
 
-            // [#6745] [#9473] The DataType.getCastTypeName() cannot be used in some dialects, for DDL
+            // [#6745] [#9473] The DataType.getDDLTypeName() cannot be used in some dialects, for DDL
             if (NO_SUPPORT_CAST_TYPE_IN_DDL.contains(ctx.dialect()))
                 if (type.hasScale())
                     ctx.sql(typeName).sql('(').sql(type.precision()).sql(", ").sql(type.scale()).sql(')');
@@ -6373,7 +6376,7 @@ final class Tools {
 
 
             else
-                ctx.sql(type.getCastTypeName(ctx.configuration()));
+                ctx.sql(type.getDDLTypeName(ctx.configuration()));
         }
 
         // [#6841] SQLite usually recognises int/integer as both meaning the same thing, but not in the

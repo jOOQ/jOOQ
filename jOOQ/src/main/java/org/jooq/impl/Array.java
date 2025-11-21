@@ -127,7 +127,7 @@ implements
                         DataType<?> type = (DataType<?>) c.data(DATA_EMPTY_ARRAY_BASE_TYPE);
 
                         if (type != null && !type.isOther())
-                            c.sql(type.getCastTypeName(ctx.configuration())).sql("[]");
+                            c.sql(type.getDDLTypeName(ctx.configuration())).sql("[]");
                         else
                             c.visit(K_INT).sql("[]");
                     },

@@ -78,6 +78,13 @@ public class BuiltInDataType<T> extends DefaultDataType<T> {
         super(dialect, sqlDataType, typeName, castTypeName);
     }
 
+    /**
+     * Constructor for dialect specific data types.
+     */
+    public BuiltInDataType(SQLDialect dialect, DataType<T> sqlDataType, String typeName, String castTypeName, String ddlTypeName) {
+        super(dialect, sqlDataType, typeName, castTypeName, ddlTypeName);
+    }
+
     // [#11083] Nullability caches of built-in data types
 
     final DataType<T> cachedNull;

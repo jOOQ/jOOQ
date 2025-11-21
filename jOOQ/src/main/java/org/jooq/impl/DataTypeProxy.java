@@ -479,6 +479,11 @@ final class DataTypeProxy<T> extends AbstractDataType<T> {
     }
 
     @Override
+    final String ddlTypeName0() {
+        return type.ddlTypeName0();
+    }
+
+    @Override
     final Class<?> tType0() {
         return type.tType0();
     }

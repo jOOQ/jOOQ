@@ -37,12 +37,11 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Internal.converterContext;
-
 import org.jooq.Binding;
 import org.jooq.CharacterSet;
 import org.jooq.Collation;
 import org.jooq.Configuration;
+import org.jooq.ContextConverter;
 import org.jooq.Converter;
 import org.jooq.ConverterContext;
 import org.jooq.DataType;
@@ -51,7 +50,6 @@ import org.jooq.Generator;
 import org.jooq.Nullability;
 import org.jooq.impl.QOM.GenerationLocation;
 import org.jooq.impl.QOM.GenerationOption;
-import org.jooq.ContextConverter;
 
 /**
  * @author Lukas Eder
@@ -73,6 +71,7 @@ final class LegacyConvertedDataType<T, U> extends DefaultDataType<U> {
             delegate.getQualifiedName(),
             delegate.getTypeName(),
             delegate.getCastTypeName(),
+            delegate.getDDLTypeName(),
             delegate.precisionDefined() ? delegate.precision() : null,
             delegate.scaleDefined() ? delegate.scale() : null,
             delegate.lengthDefined() ? delegate.length() : null,
@@ -135,6 +134,11 @@ final class LegacyConvertedDataType<T, U> extends DefaultDataType<U> {
     @Override
     public String getCastTypeName(Configuration configuration) {
         return delegate.getCastTypeName(configuration);
+    }
+
+    @Override
+    public String getDDLTypeName(Configuration configuration) {
+        return delegate.getDDLTypeName(configuration);
     }
 
     @SuppressWarnings("unchecked")

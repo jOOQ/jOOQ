@@ -37,11 +37,13 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.JSON.json;
 // ...
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
+import static org.jooq.impl.DSL.array;
 import static org.jooq.impl.DSL.arrayAgg;
 import static org.jooq.impl.DSL.arrayAggDistinct;
 import static org.jooq.impl.DSL.function;
@@ -60,6 +62,7 @@ import static org.jooq.impl.Keywords.K_PATH;
 import static org.jooq.impl.Keywords.K_REPLACE;
 import static org.jooq.impl.Names.N_ARRAY_AGG;
 import static org.jooq.impl.Names.N_CAST;
+import static org.jooq.impl.Names.N_COALESCE;
 import static org.jooq.impl.Names.N_FILTER;
 import static org.jooq.impl.Names.N_GROUP_CONCAT;
 import static org.jooq.impl.Names.N_JSONB_AGG;
@@ -149,6 +152,10 @@ implements
                 ctx.visit(jsonMerge(ctx, "[]", groupConcatEmulation(ctx)));
                 break;
             }
+
+
+
+
 
 
 

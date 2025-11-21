@@ -1234,12 +1234,32 @@ final class R2DBC {
             else if (Interval.class.isAssignableFrom(type))
                 return String.class;
 
+            switch (c.family()) {
 
 
 
 
-            else
-                return type;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                default:
+                    return type;
+            }
         }
 
         @Override
@@ -1254,6 +1274,23 @@ final class R2DBC {
 
         public final void setNull(int parameterIndex, DataType<?> dataType) {
             bindNull(parameterIndex, nullType(dataType.getType()));
+        }
+
+        @Override
+        public void setArray(int parameterIndex, Array x) throws SQLException {
+            switch (c.family()) {
+
+
+
+
+
+
+
+                default: {
+                    super.setArray(parameterIndex, x);
+                    break;
+                }
+            }
         }
 
         @Override
@@ -1273,12 +1310,34 @@ final class R2DBC {
 
         @Override
         public final void setByte(int parameterIndex, byte x) throws SQLException {
-            bindNonNull(parameterIndex, x);
+            switch (c.family()) {
+
+
+
+
+
+
+
+                default:
+                    bindNonNull(parameterIndex, x);
+                    break;
+            }
         }
 
         @Override
         public final void setShort(int parameterIndex, short x) throws SQLException {
-            bindNonNull(parameterIndex, x);
+            switch (c.family()) {
+
+
+
+
+
+
+
+                default:
+                    bindNonNull(parameterIndex, x);
+                    break;
+            }
         }
 
         @Override
@@ -1293,7 +1352,17 @@ final class R2DBC {
 
         @Override
         public final void setFloat(int parameterIndex, float x) throws SQLException {
-            bindNonNull(parameterIndex, x);
+            switch (c.family()) {
+
+
+
+
+
+
+                default:
+                    bindNonNull(parameterIndex, x);
+                    break;
+            }
         }
 
         @Override
@@ -1520,7 +1589,16 @@ final class R2DBC {
 
         @Override
         public final Array getArray(int columnIndex) throws SQLException {
-            return new MockArray<>(c.dialect(), (Object[]) nullable(columnIndex, Object.class), Object[].class);
+            switch (c.family()) {
+
+
+
+
+
+
+                default:
+                    return new MockArray<>(c.dialect(), (Object[]) nullable(columnIndex, Object.class), Object[].class);
+            }
         }
 
         private static final record DefaultRow(Configuration c, Row r) implements Row {
@@ -1538,6 +1616,7 @@ final class R2DBC {
             public final <T> T get(int index, Class<T> uType) {
                 return wrapExceptions(() -> {
                     switch (c.family()) {
+
 
                         case H2:
                         case MYSQL:

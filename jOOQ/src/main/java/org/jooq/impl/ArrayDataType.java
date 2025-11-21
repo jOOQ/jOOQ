@@ -71,7 +71,8 @@ final class ArrayDataType<T> extends DefaultDataType<T[]> {
             elementType.getArrayType(),
             elementType.getBinding().arrayBinding(),
             elementType.getTypeName() + " array",
-            elementType.getCastTypeName() + " array"
+            elementType.getCastTypeName() + " array",
+            elementType.getDDLTypeName() + " array"
         );
 
         this.elementType = elementType;
@@ -175,8 +176,7 @@ final class ArrayDataType<T> extends DefaultDataType<T[]> {
 
     @Override
     public final String getTypeName(Configuration configuration) {
-        String typeName = elementType.getTypeName(configuration);
-        return getArrayType(configuration, typeName);
+        return getArrayType(configuration, elementType.getTypeName(configuration));
     }
 
     @Override
@@ -186,8 +186,17 @@ final class ArrayDataType<T> extends DefaultDataType<T[]> {
 
     @Override
     public final String getCastTypeName(Configuration configuration) {
-        String castTypeName = elementType.getCastTypeName(configuration);
-        return getArrayType(configuration, castTypeName);
+        return getArrayType(configuration, elementType.getCastTypeName(configuration));
+    }
+
+    @Override
+    public final String getDDLTypeName() {
+        return getDDLTypeName(CONFIG.get());
+    }
+
+    @Override
+    public final String getDDLTypeName(Configuration configuration) {
+        return getArrayType(configuration, elementType.getDDLTypeName(configuration));
     }
 
     @Override

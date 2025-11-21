@@ -68,6 +68,7 @@ final class DomainDataType<T> extends DefaultDataType<T> {
             baseType.getQualifiedName(),
             baseType.getTypeName(),
             baseType.getCastTypeName(),
+            baseType.getDDLTypeName(),
             baseType.precisionDefined() ? baseType.precision() : null,
             baseType.scaleDefined() ? baseType.scale() : null,
             baseType.lengthDefined() ? baseType.length() : null,

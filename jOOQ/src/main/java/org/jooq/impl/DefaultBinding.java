@@ -1631,6 +1631,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
+
+
                 case POSTGRES: {
 
                     // [#12485] Passing the array string as OTHER (OID = unspecified) may prevent poor
@@ -5117,8 +5119,22 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                         );
                     }
                     else {
+                        String json;
+
+                        switch (ctx.family()) {
+
+
+
+
+
+
+                            default:
+                                json = ctx.resultSet().getString(ctx.index());
+                                break;
+                        }
+
                         return apply(
-                            jsonStringPatch.apply(ctx.resultSet().getString(ctx.index())),
+                            jsonStringPatch.apply(json),
                             s -> readMultisetJSON(ctx, row, recordType, s)
                         );
                     }
@@ -6626,8 +6642,20 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final JSON get0(BindingGetResultSetContext<U> ctx) throws SQLException {
-            String string = patchSnowflakeJSON(ctx, ctx.resultSet().getString(ctx.index()));
-            return string == null ? null : JSON.valueOf(string);
+            switch (ctx.family()) {
+
+
+
+
+
+
+
+
+                default: {
+                    String string = patchSnowflakeJSON(ctx, ctx.resultSet().getString(ctx.index()));
+                    return string == null ? null : JSON.valueOf(string);
+                }
+            }
         }
 
         @Override
@@ -6747,11 +6775,23 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final JSONB get0(BindingGetResultSetContext<U> ctx) throws SQLException {
-            if (EMULATE_AS_BLOB.contains(ctx.dialect()))
-                return bytesConverter(ctx.configuration()).from(bytes(ctx.configuration()).get0(ctx), ctx.converterContext());
+            switch (ctx.family()) {
 
-            String string = patchSnowflakeJSON(ctx, ctx.resultSet().getString(ctx.index()));
-            return string == null ? null : JSONB.valueOf(string);
+
+
+
+
+
+
+
+                default: {
+                    if (EMULATE_AS_BLOB.contains(ctx.dialect()))
+                        return bytesConverter(ctx.configuration()).from(bytes(ctx.configuration()).get0(ctx), ctx.converterContext());
+
+                    String string = patchSnowflakeJSON(ctx, ctx.resultSet().getString(ctx.index()));
+                    return string == null ? null : JSONB.valueOf(string);
+                }
+            }
         }
 
         @Override

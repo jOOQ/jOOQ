@@ -371,10 +371,6 @@ final class Cast<T> extends AbstractField<T> implements QOM.Cast<T> {
 
 
 
-
-
-
-
                     else
                         c.sql(type.getCastTypeName(c.configuration()));
                 },

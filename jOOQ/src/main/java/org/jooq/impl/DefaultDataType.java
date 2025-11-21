@@ -286,6 +286,11 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
     private final String                                        castTypeSuffix;
 
     /**
+     * The type name used for declaring this type.
+     */
+    private final String                                        ddlTypeName;
+
+    /**
      * The type name.
      */
     private final String                                        typeName;
@@ -326,10 +331,14 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
     }
 
     public DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, String typeName) {
-        this(dialect, sqlDataType, typeName, null);
+        this(dialect, sqlDataType, typeName, null, null);
     }
 
     public DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, String typeName, String castTypeName) {
+        this(dialect, sqlDataType, typeName, castTypeName, null);
+    }
+
+    public DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, String typeName, String castTypeName, String ddlTypeName) {
         this(
             dialect,
             sqlDataType,
@@ -337,6 +346,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
             sqlDataType.getQualifiedName(),
             typeName,
             castTypeName,
+            ddlTypeName,
             sqlDataType.precisionDefined() ? sqlDataType.precision() : null,
             sqlDataType.scaleDefined() ? sqlDataType.scale() : null,
             sqlDataType.lengthDefined() ? sqlDataType.length() : null,
@@ -346,42 +356,46 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
     }
 
     public DefaultDataType(SQLDialect dialect, Class<T> type, String typeName) {
-        this(dialect, null, type, systemName(typeName), typeName, null, null, null, null, Nullability.DEFAULT, null);
+        this(dialect, null, type, systemName(typeName), typeName, null, null, null, null, null, Nullability.DEFAULT, null);
     }
 
     public DefaultDataType(SQLDialect dialect, Class<T> type, String typeName, String castTypeName) {
-        this(dialect, null, type, systemName(typeName), typeName, castTypeName, null, null, null, Nullability.DEFAULT, null);
+        this(dialect, null, type, systemName(typeName), typeName, castTypeName, null, null, null, null, Nullability.DEFAULT, null);
     }
 
     DefaultDataType(SQLDialect dialect, Class<T> type, Binding<?, T> binding, String typeName, String castTypeName) {
-        this(dialect, null, type, binding, systemName(typeName), typeName, castTypeName, null, null, null, Nullability.DEFAULT, null);
+        this(dialect, null, type, binding, systemName(typeName), typeName, castTypeName, null, null, null, null, Nullability.DEFAULT, null);
+    }
+
+    DefaultDataType(SQLDialect dialect, Class<T> type, Binding<?, T> binding, String typeName, String castTypeName, String ddlTypeName) {
+        this(dialect, null, type, binding, systemName(typeName), typeName, castTypeName, ddlTypeName, null, null, null, Nullability.DEFAULT, null);
     }
 
     DefaultDataType(SQLDialect dialect, Class<T> type, String typeName, Nullability nullability) {
-        this(dialect, null, type, systemName(typeName), typeName, typeName, null, null, null, nullability, null);
+        this(dialect, null, type, systemName(typeName), typeName, typeName, typeName, null, null, null, nullability, null);
     }
 
     DefaultDataType(SQLDialect dialect, Class<T> type, Name qualifiedTypeName) {
-        this(dialect, null, type, qualifiedTypeName, null, null, null, null, null, Nullability.DEFAULT, null);
+        this(dialect, null, type, qualifiedTypeName, null, null, null, null, null, null, Nullability.DEFAULT, null);
     }
 
     DefaultDataType(SQLDialect dialect, DataType<T> type, Name qualifiedTypeName) {
-        this(dialect, type, type.getType(), qualifiedTypeName, null, null, null, null, null, Nullability.DEFAULT, null);
+        this(dialect, type, type.getType(), qualifiedTypeName, null, null, null, null, null, null, Nullability.DEFAULT, null);
     }
 
-    DefaultDataType(SQLDialect dialect, Class<T> type, Binding<?, T> binding, Name qualifiedTypeName, String typeName, String castTypeName, Integer precision, Integer scale, Integer length, Nullability nullability, Field<T> defaultValue) {
-        this(dialect, null, type, binding, qualifiedTypeName, typeName, castTypeName, precision, scale, length, nullability, defaultValue);
+    DefaultDataType(SQLDialect dialect, Class<T> type, Binding<?, T> binding, Name qualifiedTypeName, String typeName, String castTypeName, String ddlTypeName, Integer precision, Integer scale, Integer length, Nullability nullability, Field<T> defaultValue) {
+        this(dialect, null, type, binding, qualifiedTypeName, typeName, castTypeName, ddlTypeName, precision, scale, length, nullability, defaultValue);
     }
 
-    DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, Class<T> type, Name qualifiedTypeName, String typeName, String castTypeName, Integer precision, Integer scale, Integer length, Nullability nullability, Field<T> defaultValue) {
-        this(dialect, sqlDataType, type, null, qualifiedTypeName, typeName, castTypeName, precision, scale, length, nullability, defaultValue);
+    DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, Class<T> type, Name qualifiedTypeName, String typeName, String castTypeName, String ddlTypeName, Integer precision, Integer scale, Integer length, Nullability nullability, Field<T> defaultValue) {
+        this(dialect, sqlDataType, type, null, qualifiedTypeName, typeName, castTypeName, ddlTypeName, precision, scale, length, nullability, defaultValue);
     }
 
-    DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, Class<T> type, Binding<?, T> binding, Name qualifiedTypeName, String typeName, String castTypeName, Integer precision, Integer scale, Integer length, Nullability nullability, Field<T> defaultValue) {
-        this(dialect, sqlDataType, type, binding, qualifiedTypeName, typeName, castTypeName, precision, scale, length, nullability, false, false, false, null, GenerationOption.DEFAULT, GenerationLocation.SERVER, null, null, false, defaultValue);
+    DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, Class<T> type, Binding<?, T> binding, Name qualifiedTypeName, String typeName, String castTypeName, String ddlTypeName, Integer precision, Integer scale, Integer length, Nullability nullability, Field<T> defaultValue) {
+        this(dialect, sqlDataType, type, binding, qualifiedTypeName, typeName, castTypeName, ddlTypeName, precision, scale, length, nullability, false, false, false, null, GenerationOption.DEFAULT, GenerationLocation.SERVER, null, null, false, defaultValue);
     }
 
-    DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, Class<T> type, Binding<?, T> binding, Name qualifiedTypeName, String typeName, String castTypeName, Integer precision, Integer scale, Integer length, Nullability nullability, boolean hidden, boolean redacted, boolean readonly, Generator<?, ?, T> generatedAlwaysAs, GenerationOption generationOption, GenerationLocation generationLocation, Collation collation, CharacterSet characterSet, boolean identity, Field<T> defaultValue) {
+    DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, Class<T> type, Binding<?, T> binding, Name qualifiedTypeName, String typeName, String castTypeName, String ddlTypeName, Integer precision, Integer scale, Integer length, Nullability nullability, boolean hidden, boolean redacted, boolean readonly, Generator<?, ?, T> generatedAlwaysAs, GenerationOption generationOption, GenerationLocation generationLocation, Collation collation, CharacterSet characterSet, boolean identity, Field<T> defaultValue) {
         super(qualifiedTypeName, NO_COMMENT);
 
         // [#13934] Patch parameters
@@ -398,6 +412,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
         this.uType = type;
         this.typeName = P_TYPE_NAME.matcher(typeName).replaceAll("").trim();
         this.castTypeName = castTypeName == null ? this.typeName : castTypeName;
+        this.ddlTypeName = ddlTypeName == null ? this.castTypeName : ddlTypeName;
 
         String[] split = P_TYPE_NAME.split(castTypeName == null ? typeName : castTypeName);
         this.castTypePrefix = split.length > 0 ? split[0] : "";
@@ -525,6 +540,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
         this.castTypeName = t.castTypeName0();
         this.castTypePrefix = t.castTypePrefix0();
         this.castTypeSuffix = t.castTypeSuffix0();
+        this.ddlTypeName = t.ddlTypeName0();
 
         this.nullability = nullabilityDefault(nullability);
         this.hidden = hidden;
@@ -706,6 +722,11 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
     @Override
     final String castTypeName0() {
         return castTypeName;
+    }
+
+    @Override
+    final String ddlTypeName0() {
+        return ddlTypeName;
     }
 
     @Override

@@ -404,7 +404,7 @@ public interface DataType<T> extends Named {
      * <p>
      * This is useful for some dialects that have specialised type names for
      * cast expressions. Other dialects require type-length binding when
-     * casting, (e.g. VARCHAR(32767))
+     * casting, (e.g. VARCHAR(32767)).
      */
     @NotNull
     String getCastTypeName();
@@ -415,10 +415,32 @@ public interface DataType<T> extends Named {
      * <p>
      * This is useful for some dialects that have specialised type names for
      * cast expressions. Other dialects require type-length binding when
-     * casting, (e.g. VARCHAR(32767))
+     * casting, (e.g. VARCHAR(32767)).
      */
     @NotNull
     String getCastTypeName(Configuration configuration);
+
+    /**
+     * Retrieve the dialect-specific type name associated with this data type
+     * used for DDL declarations.
+     * <p>
+     * This is useful for some dialects that have specialised type names for DDL
+     * expressions. Other dialects require type-length binding when declaring,
+     * (e.g. VARCHAR(32767)).
+     */
+    @NotNull
+    String getDDLTypeName();
+
+    /**
+     * Retrieve the dialect-specific type name associated with this data type
+     * used for DDL declarations.
+     * <p>
+     * This is useful for some dialects that have specialised type names for DDL
+     * expressions. Other dialects require type-length binding when declaring,
+     * (e.g. VARCHAR(32767)).
+     */
+    @NotNull
+    String getDDLTypeName(Configuration configuration);
 
     /**
      * Retrieve the underlying {@link SQLDialect}.

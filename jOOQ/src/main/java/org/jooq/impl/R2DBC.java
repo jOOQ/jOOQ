@@ -645,7 +645,7 @@ final class R2DBC {
                 batch.checkBindValues();
                 Rendered rendered = rendered(batch.configuration, batch.query);
                 Statement stmt = c.createStatement(rendered.sql);
-                R2DBCPreparedStatement s = new R2DBCPreparedStatement(batch.query.configuration(), stmt);
+                R2DBCPreparedStatement s = new R2DBCPreparedStatement(batch.configuration, stmt);
                 Param<?>[] params = rendered.bindValues.toArray(EMPTY_PARAM);
                 boolean first = true;
 
@@ -657,7 +657,7 @@ final class R2DBC {
                     if (first)
                         first = false;
                     else
-                        s = new R2DBCPreparedStatement(batch.query.configuration(), stmt = stmt.add());
+                        s = new R2DBCPreparedStatement(batch.configuration, stmt = stmt.add());
 
                     // [#1371] [#2139] Don't bind variables directly onto statement, bind them through the collected params
                     //                 list to preserve type information

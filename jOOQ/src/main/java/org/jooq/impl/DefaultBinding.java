@@ -1188,13 +1188,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             ctx.render().visit(K_CAST).sql('(');
             sql(ctx, converted);
             ctx.render().sql(' ').visit(K_AS).sql(' ');
-
-
-
-
-
-
-
             ctx.render().sql(DefaultDataType.set(t, length, precision, scale).getCastTypeName(ctx.configuration()));
             ctx.render().sql(')');
         }

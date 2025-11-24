@@ -120,7 +120,7 @@ implements
 
 
             default:
-                ctx.visit(function(N_JSON_SET, JSONB, field, path, JSONEntryImpl.jsonCast(ctx, value, true)));
+                ctx.visit(function(N_JSONB_SET, JSONB, field, path, JSONEntryImpl.jsonCast(ctx, value, true)));
                 break;
         }
     }

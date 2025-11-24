@@ -278,7 +278,7 @@ implements
         // [#19416] With VALUES, we can generate hard-wired ordinals, instead
         return v.$arg1(unmodifiable(map(
             v.$arg1(),
-            (r, i) -> DSL.row(r.$fields().$concat(asList(inline(i + 1))))
+            (r, i) -> DSL.row(r.$fields().$concat((List) asList(inline(i + 1))))
         )));
     }
 

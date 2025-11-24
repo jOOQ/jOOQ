@@ -392,6 +392,16 @@ final class Extract<T> extends AbstractField<T> implements QOM.Extract<T> {
 
 
 
+
+
+
+
+
+
+
+
+
+
             case POSTGRES:
             case YUGABYTEDB:
                 switch (datePart) {

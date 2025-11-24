@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static java.util.Arrays.asList;
 // ...
 // ...
 // ...
@@ -57,12 +58,14 @@ import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
 // ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
+import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.rowNumber;
 // ...
@@ -72,12 +75,17 @@ import static org.jooq.impl.Keywords.K_ORDINALITY;
 import static org.jooq.impl.Keywords.K_WITH;
 import static org.jooq.impl.Names.N_OFFSET;
 import static org.jooq.impl.Names.N_ORDINAL;
+import static org.jooq.impl.QOM.unmodifiable;
 import static org.jooq.impl.SQLDataType.BIGINT;
 import static org.jooq.impl.SubqueryCharacteristics.DERIVED_TABLE;
+import static org.jooq.impl.Tools.alias;
 import static org.jooq.impl.Tools.extractSelectFromDerivedTable;
+import static org.jooq.impl.Tools.map;
+import static org.jooq.impl.Tools.unalias;
 import static org.jooq.impl.Tools.visitSubquery;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_FORCE_LIMIT_WITH_ORDER_BY;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -95,6 +103,7 @@ import org.jooq.Select;
 import org.jooq.Table;
 // ...
 import org.jooq.impl.QOM.Aliasable;
+import org.jooq.impl.QOM.Values;
 
 /**
  * @author Lukas Eder
@@ -189,15 +198,13 @@ implements
     public final void accept(Context<?> ctx) {
         Select<?> s;
 
-
-
-
-
-
-
         if (delegate instanceof ArrayTable || delegate instanceof ArrayOfValues) {
             if (NO_SUPPORT_STANDARD.contains(ctx.dialect()))
                 acceptEmulation(ctx);
+
+
+
+
             else
                 acceptStandard(ctx);
         }
@@ -231,6 +238,13 @@ implements
     }
 
     private final void acceptEmulation(Context<?> ctx) {
+        if (unalias(delegate) instanceof QOM.Values<?> v) {
+
+            // [#19416] TODO: Integration tests suggest aliases do not need to be re-established, but is this correct?
+            ctx.visit(emulateValues(v));
+            return;
+        }
+
         Select<?> s;
 
         switch (ctx.family()) {
@@ -257,6 +271,15 @@ implements
                 visitSubquery(ctx, s, DERIVED_TABLE, true);
                 break;
         }
+    }
+
+    private static final QOM.Values<?> emulateValues(QOM.Values<?> v) {
+
+        // [#19416] With VALUES, we can generate hard-wired ordinals, instead
+        return v.$arg1(unmodifiable(map(
+            v.$arg1(),
+            (r, i) -> DSL.row(r.$fields().$concat(asList(inline(i + 1))))
+        )));
     }
 
 

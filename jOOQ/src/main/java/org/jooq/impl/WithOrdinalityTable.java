@@ -238,13 +238,6 @@ implements
     }
 
     private final void acceptEmulation(Context<?> ctx) {
-        if (unalias(delegate) instanceof QOM.Values<?> v) {
-
-            // [#19416] TODO: Integration tests suggest aliases do not need to be re-established, but is this correct?
-            ctx.visit(emulateValues(v));
-            return;
-        }
-
         Select<?> s;
 
         switch (ctx.family()) {

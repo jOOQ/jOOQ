@@ -351,7 +351,26 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
                     s = result.getScale();
                     String t = result.getType();
                     Name u = result.getQualifiedUserType();
-                    result = new DefaultDataTypeDefinition(db, definedType.getSchema(), t, l, p, s, n, r, g, d, i, u, generator, converter, binding, uType);
+                    result = new DefaultDataTypeDefinition(
+                        db,
+                        definedType.getSchema(),
+                        t,
+                        l,
+                        p,
+                        s,
+                        n,
+                        r,
+                        g,
+                        d,
+                        i,
+                        u,
+                        generator,
+                        converter,
+                        binding,
+                        uType
+                    )
+                        .generatedAlwaysAs(result.getGeneratedAlwaysAs())
+                        .generationOption(result.getGenerationOption());
                 }
 
                 // [#4597] If we don't have a type-rewrite (forcedDataType) or a

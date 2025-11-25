@@ -649,6 +649,7 @@ import org.jooq.FieldOrRow;
 import org.jooq.FieldOrRowOrSelect;
 // ...
 // ...
+import org.jooq.Function0;
 import org.jooq.Function1;
 import org.jooq.Function2;
 import org.jooq.Function3;
@@ -8905,6 +8906,13 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         return r;
     }
 
+    private final <Q extends QueryPart> Q parseFunctionArgs0(Function0<? extends Q> finisher) {
+        parse('(');
+        parse(')');
+
+        return finisher.apply();
+    }
+
     private final <Q extends QueryPart> Q parseFunctionArgs1(Function1<? super Field, ? extends Q> finisher) {
         parse('(');
         Field<?> f1 = parseField();
@@ -9678,7 +9686,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                 else if (parseFunctionNameIf("DIGITS"))
                     return digits((Field) parseFieldParenthesised());
 
-                else if ((field = parseFieldDateLiteralIf()) != null)
+                else if ((field = parseFieldDateLiteralOrFunctionIf()) != null)
                     return field;
                 else if ((field = parseFieldDateTruncIf()) != null)
                     return field;
@@ -9690,7 +9698,6 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                     return field;
                 else if (parseFunctionNameIf("DATE_PART_YEAR"))
                     return year(parseFieldParenthesised());
-
                 else if ((field = parseFieldDenseRankIf()) != null)
                     return field;
                 else if (parseFunctionNameIf("DECADE"))
@@ -12180,11 +12187,14 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
             throw exception(message);
     }
 
-    private final Field<?> parseFieldDateLiteralIf() {
+    private final Field<?> parseFieldDateLiteralOrFunctionIf() {
         int p = position();
 
         if (parseKeywordIf("DATE")) {
             if (parseIf('(')) {
+                if (parseIf(')'))
+                    return currentDate();
+
                 Field<?> f = parseField();
                 parse(')');
                 return date((Field) f);

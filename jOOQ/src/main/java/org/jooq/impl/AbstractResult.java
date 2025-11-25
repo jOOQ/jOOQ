@@ -75,8 +75,6 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.jooq.CSVFormat;
 import org.jooq.ChartFormat;
 import org.jooq.ChartFormat.Display;
-import org.jooq.JSONFormat.BinaryFormat;
-import org.jooq.JSONFormat.NullFormat;
 import org.jooq.Configuration;
 import org.jooq.Constants;
 import org.jooq.Cursor;
@@ -89,6 +87,7 @@ import org.jooq.FormattingProvider;
 import org.jooq.JSON;
 import org.jooq.JSONB;
 import org.jooq.JSONFormat;
+import org.jooq.JSONFormat.BinaryFormat;
 import org.jooq.Param;
 import org.jooq.Record;
 import org.jooq.Result;
@@ -182,7 +181,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
 
                     // Collect all decimal places for the column values
                     for (R record : buffer)
-                        decimalPlacesList.add(decimalPlaces(format0(record.get(index), dirty.test(record, index), true)));
+                        decimalPlacesList.add(decimalPlaces(format0(record.get(index), dirty.test(record, index), true, true)));
 
                     // Find max
                     decimalPlaces[index] = Collections.max(decimalPlacesList);
@@ -206,7 +205,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
 
                 // Add column values width
                 for (R record : buffer) {
-                    String value = format0(record.get(index), dirty.test(record, index), true);
+                    String value = format0(record.get(index), dirty.test(record, index), true, true);
 
                     // Align number values before width is calculated
                     if (isNumCol)
@@ -292,7 +291,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
                         StringUtils.replace(
                             StringUtils.replace(
                                 StringUtils.replace(
-                                    format0(record.get(index), dirty.test(record, index), true), "\n", "{lf}"
+                                    format0(record.get(index), dirty.test(record, index), true, true), "\n", "{lf}"
                                 ), "\r", "{cr}"
                             ), "\t", "{tab}"
                         );
@@ -444,7 +443,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
         // [#7802] Nested records should generate nested CSV data structures
         String result = value instanceof Formattable f
             ? f.formatCSV(format)
-            : format0(value, false, false);
+            : format0(value, false, false, true);
 
         switch (format.quote()) {
             case NEVER:
@@ -969,7 +968,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
         else if (value instanceof XML && !format.quoteNested())
             writer.append(((XML) value).data());
         else
-            writer.append(escapeXML(format0(value, false, false)));
+            writer.append(escapeXML(format0(value, false, false, format.binaryFormat() == XMLFormat.BinaryFormat.BASE64)));
     }
 
     @SuppressWarnings("unchecked")
@@ -1215,7 +1214,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
                 int size = fields.size();
                 for (int index = 0; index < size; index++) {
                     writer.append("<td>");
-                    writer.append(escapeXML(format0(record.getValue(index), false, true)));
+                    writer.append(escapeXML(format0(record.getValue(index), false, true, true)));
                     writer.append("</td>");
                 }
 
@@ -1363,7 +1362,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
                 eParent.setTextContent(((XML) value).data());
         }
         else
-            eParent.setTextContent(format0(value, false, false));
+            eParent.setTextContent(format0(value, false, false, format.binaryFormat() == XMLFormat.BinaryFormat.BASE64));
     }
 
     private static final String nil(XMLFormat format) {
@@ -1511,7 +1510,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
                     handler.startElement("", "", tag, attrs);
 
                     if (value != null) {
-                        char[] chars = format0(value, false, false).toCharArray();
+                        char[] chars = format0(value, false, false, format.binaryFormat() == XMLFormat.BinaryFormat.BASE64).toCharArray();
                         handler.characters(chars, 0, chars.length);
                     }
 
@@ -1542,7 +1541,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
      * @param visual Whether the formatted output is to be consumed visually
      *            (HTML, TEXT) or by a machine (CSV, JSON, XML)
      */
-    static final String format0(Object value, boolean touched, boolean visual) {
+    static final String format0(Object value, boolean touched, boolean visual, boolean binaryAsBase64) {
 
         // [#2741] TODO: This logic will be externalised in new SPI
         String formatted = touched && visual ? "*" : "";
@@ -1551,11 +1550,14 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
             formatted += visual ? "{null}" : null;
         }
         else if (value instanceof byte[] a) {
-            formatted += Base64.getEncoder().encodeToString(a);
+            if (binaryAsBase64)
+                formatted += Base64.getEncoder().encodeToString(a);
+            else
+                formatted += Tools.convertBytesToHex(a);
         }
         else if (value instanceof Object[] a) {
             // [#6545] Nested arrays are handled recursively
-            formatted += Arrays.stream(a).map(f -> format0(f, false, visual)).collect(joining(", ", "[", "]"));
+            formatted += Arrays.stream(a).map(f -> format0(f, false, visual, binaryAsBase64)).collect(joining(", ", "[", "]"));
         }
         else if (value instanceof Data d) {
             formatted += d.data();
@@ -1564,17 +1566,17 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
             formatted += e.getLiteral();
         }
         else if (value instanceof List<?> l) {
-            formatted += l.stream().map(f -> format0(f, false, visual)).collect(joining(", ", "[", "]"));
+            formatted += l.stream().map(f -> format0(f, false, visual, binaryAsBase64)).collect(joining(", ", "[", "]"));
         }
         else if (value instanceof Record r) {
             formatted += Arrays
                 .stream(r.intoArray())
-                .map(f -> format0(f, false, visual))
+                .map(f -> format0(f, false, visual, binaryAsBase64))
                 .collect(joining(", ", "(", ")"));
         }
         // [#6080] Support formatting of nested ROWs
         else if (value instanceof Param<?> p) {
-            formatted += format0(p.getValue(), false, visual);
+            formatted += format0(p.getValue(), false, visual, binaryAsBase64);
         }
 
         // [#5238] Oracle DATE is really a TIMESTAMP(0)...

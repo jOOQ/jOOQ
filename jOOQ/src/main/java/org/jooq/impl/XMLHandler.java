@@ -38,6 +38,14 @@
 package org.jooq.impl;
 
 // ...
+// ...
+import static org.jooq.SQLDialect.H2;
+// ...
+import static org.jooq.SQLDialect.POSTGRES;
+// ...
+import static org.jooq.SQLDialect.SQLITE;
+import static org.jooq.SQLDialect.TRINO;
+import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.XML.xml;
 import static org.jooq.impl.AbstractResult.escapeXML;
 import static org.jooq.impl.DSL.field;
@@ -61,6 +69,7 @@ import java.util.Deque;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.Map.Entry;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -72,8 +81,10 @@ import org.jooq.ConverterContext;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.Field;
+// ...
 import org.jooq.Record;
 import org.jooq.Result;
+import org.jooq.SQLDialect;
 import org.jooq.exception.DataAccessException;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
@@ -94,8 +105,12 @@ extends
 implements
     LexicalHandler
 {
-    private static final JooqLogger log   = JooqLogger.getLogger(XMLHandler.class);
-    private static final boolean    debug = false;
+    private static final JooqLogger log                  = JooqLogger.getLogger(XMLHandler.class);
+    private static final boolean    debug                = false;
+
+
+
+
     private final DSLContext        ctx;
     private final Deque<State<R>>   states;
     private State<R>                s;

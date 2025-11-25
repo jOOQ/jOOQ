@@ -1759,7 +1759,15 @@ final class R2DBC {
         public final String getColumnTypeName(int column) throws SQLException {
             if (is_0_9) {
                 try {
-                    return meta(column).getType().getName();
+                    switch (c.family()) {
+
+
+
+
+
+                        default:
+                            return meta(column).getType().getName();
+                    }
                 }
 
                 // ColumnMetadata::getType was added in 0.9

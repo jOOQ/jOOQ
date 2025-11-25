@@ -152,7 +152,6 @@ import static org.jooq.impl.Keywords.K_YEAR_TO_DAY;
 import static org.jooq.impl.Keywords.K_YEAR_TO_FRACTION;
 import static org.jooq.impl.Names.N_BYTEA;
 import static org.jooq.impl.Names.N_CREATEXML;
-import static org.jooq.impl.Names.N_FROM_HEX;
 import static org.jooq.impl.Names.N_HEX;
 import static org.jooq.impl.Names.N_JSON_PARSE;
 import static org.jooq.impl.Names.N_NUMERIC;
@@ -294,7 +293,6 @@ import org.jooq.Geometry;
 import org.jooq.JSON;
 import org.jooq.JSONB;
 import org.jooq.JSONFormat;
-import org.jooq.JSONFormat.BinaryFormat;
 import org.jooq.Package;
 import org.jooq.Param;
 // ...
@@ -344,8 +342,6 @@ import org.jooq.types.UShort;
 import org.jooq.types.YearToMonth;
 import org.jooq.types.YearToSecond;
 import org.jooq.util.postgres.PostgresUtils;
-
-import org.jetbrains.annotations.Nullable;
 
 // ...
 // ...
@@ -769,6 +765,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
+
+
         final DataType<T>            dataType;
         final ContextConverter<T, U> converter;
         final boolean                attachable;
@@ -877,6 +875,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                         // [#1029] Postgres and [#632] Sybase need explicit casting
                         // in very rare cases. BigQuery doesn't support NULL BOOLEAN or INT64 bind values
+
 
 
 
@@ -1234,6 +1233,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             if (needsBackslashEscaping(ctx.configuration()))
                 result = StringUtils.replace(result, "\\", "\\\\");
+
+
+
+
 
 
 
@@ -4958,8 +4961,9 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     static final class DefaultResultBinding<U> extends InternalBinding<org.jooq.Result<?>, U> {
 
         static final JSONFormat          JSON_FORMAT_BASE64 = JSONFormat.DEFAULT_FOR_RECORDS.recordFormat(JSONFormat.RecordFormat.ARRAY).nanAsString(true).infinityAsString(true);
-        static final JSONFormat          JSON_FORMAT_HEX    = JSON_FORMAT_BASE64.binaryFormat(BinaryFormat.HEX);
-        static final XMLFormat           XML_FORMAT         = XMLFormat.DEFAULT_FOR_RECORDS.recordFormat(XMLFormat.RecordFormat.COLUMN_NAME_ELEMENTS).nullFormat(NullFormat.XSI_NIL).arrayFormat(ArrayFormat.ELEMENTS);
+        static final JSONFormat          JSON_FORMAT_HEX    = JSON_FORMAT_BASE64.binaryFormat(JSONFormat.BinaryFormat.HEX);
+        static final XMLFormat           XML_FORMAT_BASE64  = XMLFormat.DEFAULT_FOR_RECORDS.recordFormat(XMLFormat.RecordFormat.COLUMN_NAME_ELEMENTS).nullFormat(NullFormat.XSI_NIL).arrayFormat(ArrayFormat.ELEMENTS);
+        static final XMLFormat           XML_FORMAT_HEX     = XML_FORMAT_BASE64.binaryFormat(XMLFormat.BinaryFormat.HEX);
 
         final DefaultXMLBinding<XML>     xmlBinding;
         final DefaultJSONBinding<JSON>   jsonBinding;
@@ -4977,6 +4981,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             return ENCODE_BINARY_AS_HEX.contains(ctx.dialect()) ? JSON_FORMAT_HEX : JSON_FORMAT_BASE64;
         }
 
+        final XMLFormat xmlFormat(Scope ctx) {
+            return XMLHandler.ENCODE_BINARY_AS_HEX.contains(ctx.dialect()) ? XML_FORMAT_HEX : XML_FORMAT_BASE64;
+        }
+
         @Override
         final void sqlInline0(BindingSQLContext<U> ctx, Result<?> value) throws SQLException {
             switch (emulateMultiset(ctx.configuration())) {
@@ -4989,7 +4997,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     break;
 
                 case XML:
-                    xmlBinding.sqlInline0((BindingSQLContext) ctx, xml(value.formatXML(XML_FORMAT)));
+                    xmlBinding.sqlInline0((BindingSQLContext) ctx, xml(value.formatXML(xmlFormat(ctx))));
                     break;
 
                 case NATIVE:
@@ -5013,7 +5021,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     break;
 
                 case XML:
-                    xmlBinding.sqlBind0((BindingSQLContext) ctx, xml(value.formatXML(XML_FORMAT)));
+                    xmlBinding.sqlBind0((BindingSQLContext) ctx, xml(value.formatXML(xmlFormat(ctx))));
                     break;
 
                 default:
@@ -5033,7 +5041,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     break;
 
                 case XML:
-                    xmlBinding.set0((BindingSetStatementContext) ctx, xml(value.formatXML(XML_FORMAT)));
+                    xmlBinding.set0((BindingSetStatementContext) ctx, xml(value.formatXML(xmlFormat(ctx))));
                     break;
 
                 default:

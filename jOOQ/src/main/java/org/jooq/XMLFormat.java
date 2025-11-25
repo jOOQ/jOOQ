@@ -40,6 +40,8 @@ package org.jooq;
 import static org.jooq.tools.StringUtils.rightPad;
 
 import java.util.Arrays;
+import java.util.Base64;
+import java.util.HexFormat;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -71,6 +73,7 @@ public final class XMLFormat {
     boolean                       quoteNested;
     NullFormat                    nullFormat;
     ArrayFormat                   arrayFormat;
+    BinaryFormat                  binaryFormat;
 
     public XMLFormat() {
         this(
@@ -88,7 +91,8 @@ public final class XMLFormat {
             RecordFormat.VALUE_ELEMENTS_WITH_FIELD_ATTRIBUTE,
             false,
             NullFormat.EMPTY_ELEMENT,
-            ArrayFormat.STRING
+            ArrayFormat.STRING,
+            BinaryFormat.BASE64
         );
     }
 
@@ -107,7 +111,8 @@ public final class XMLFormat {
         RecordFormat recordFormat,
         boolean quoteNested,
         NullFormat nullFormat,
-        ArrayFormat arrayFormat
+        ArrayFormat arrayFormat,
+        BinaryFormat binaryFormat
     ) {
         this.mutable = mutable;
 
@@ -129,6 +134,7 @@ public final class XMLFormat {
         this.quoteNested = quoteNested;
         this.nullFormat = nullFormat;
         this.arrayFormat = arrayFormat;
+        this.binaryFormat = binaryFormat;
     }
 
     /**
@@ -159,11 +165,13 @@ public final class XMLFormat {
                 recordFormat,
                 quoteNested,
                 nullFormat,
-                arrayFormat
+                arrayFormat,
+                binaryFormat
             );
         else
             return this;
     }
+
 
 
 
@@ -230,7 +238,8 @@ public final class XMLFormat {
                 recordFormat,
                 quoteNested,
                 nullFormat,
-                arrayFormat
+                arrayFormat,
+                binaryFormat
             );
     }
 
@@ -266,7 +275,8 @@ public final class XMLFormat {
                 recordFormat,
                 quoteNested,
                 nullFormat,
-                arrayFormat
+                arrayFormat,
+                binaryFormat
             );
     }
 
@@ -302,7 +312,8 @@ public final class XMLFormat {
                 recordFormat,
                 quoteNested,
                 nullFormat,
-                arrayFormat
+                arrayFormat,
+                binaryFormat
             );
     }
 
@@ -339,7 +350,8 @@ public final class XMLFormat {
                 recordFormat,
                 quoteNested,
                 nullFormat,
-                arrayFormat
+                arrayFormat,
+                binaryFormat
             );
     }
 
@@ -375,7 +387,8 @@ public final class XMLFormat {
                 recordFormat,
                 quoteNested,
                 nullFormat,
-                arrayFormat
+                arrayFormat,
+                binaryFormat
             );
     }
 
@@ -432,7 +445,8 @@ public final class XMLFormat {
                 recordFormat,
                 quoteNested,
                 nullFormat,
-                arrayFormat
+                arrayFormat,
+                binaryFormat
             );
     }
 
@@ -469,7 +483,8 @@ public final class XMLFormat {
                 newRecordFormat,
                 quoteNested,
                 nullFormat,
-                arrayFormat
+                arrayFormat,
+                binaryFormat
             );
     }
 
@@ -508,7 +523,8 @@ public final class XMLFormat {
                 recordFormat,
                 newQuoteNested,
                 nullFormat,
-                arrayFormat
+                arrayFormat,
+                binaryFormat
             );
     }
 
@@ -546,7 +562,8 @@ public final class XMLFormat {
                 recordFormat,
                 quoteNested,
                 newNullFormat,
-                arrayFormat
+                arrayFormat,
+                binaryFormat
             );
     }
 
@@ -583,7 +600,8 @@ public final class XMLFormat {
                 recordFormat,
                 quoteNested,
                 nullFormat,
-                newArrayFormat
+                newArrayFormat,
+                binaryFormat
             );
     }
 
@@ -592,6 +610,43 @@ public final class XMLFormat {
      */
     public final ArrayFormat arrayFormat() {
         return arrayFormat;
+    }
+
+    /**
+     * The {@link BinaryFormat} to use when formatting binary data.
+     */
+    @NotNull
+    public final XMLFormat binaryFormat(BinaryFormat newBinaryFormat) {
+        if (mutable) {
+            binaryFormat = newBinaryFormat;
+            return this;
+        }
+        else
+            return new XMLFormat(
+                mutable,
+
+
+
+                xmlns,
+                format,
+                newline,
+                globalIndent,
+                indent,
+                indented,
+                header,
+                recordFormat,
+                quoteNested,
+                nullFormat,
+                arrayFormat,
+                newBinaryFormat
+            );
+    }
+
+    /**
+     * The {@link BinaryFormat} to use when formatting binary data.
+     */
+    public final BinaryFormat binaryFormat() {
+        return binaryFormat;
     }
 
     /**
@@ -655,5 +710,21 @@ public final class XMLFormat {
          * <code>&lt;element/&gt;</code> elements.
          */
         ELEMENTS
+    }
+
+    /**
+     * The format of binary values in XML documents.
+     */
+    public enum BinaryFormat {
+
+        /**
+         * Binary values are formatted as {@link Base64} encoded strings.
+         */
+        BASE64,
+
+        /**
+         * Binary values are formatted as {@link HexFormat} encoded strings.
+         */
+        HEX
     }
 }

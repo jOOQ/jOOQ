@@ -267,7 +267,9 @@ implements
                             converter,
                             binding,
                             null
-                        );
+                        )
+                            .generatedAlwaysAs(result.getGeneratedAlwaysAs())
+                            .generationOption(result.getGenerationOption());
 
                 }
                 catch (SQLDialectNotSupportedException e) {
@@ -384,7 +386,27 @@ implements
                     scale = result.getScale();
                     String t = result.getType();
                     Name u = result.getQualifiedUserType();
-                    result = new DefaultDataTypeDefinition(db, definedType.getSchema(), t, length, precision, scale, nullable, hidden, readonly, generatedAlwaysAs, defaultValue, identity, u, generator, converter, binding, uType);
+                    result = new DefaultDataTypeDefinition(
+                        db,
+                        definedType.getSchema(),
+                        t,
+                        length,
+                        precision,
+                        scale,
+                        nullable,
+                        hidden,
+                        readonly,
+                        generatedAlwaysAs,
+                        defaultValue,
+                        identity,
+                        u,
+                        generator,
+                        converter,
+                        binding,
+                        uType
+                    )
+                        .generatedAlwaysAs(result.getGeneratedAlwaysAs())
+                        .generationOption(result.getGenerationOption());
                 }
             }
 

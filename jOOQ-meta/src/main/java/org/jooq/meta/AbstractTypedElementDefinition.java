@@ -282,7 +282,26 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
 
                     // [#677] SQLDataType matches are actual type-rewrites
                     if (forcedDataType != null)
-                        result = new DefaultDataTypeDefinition(db, child.getSchema(), name, l, p, s, n, r, g, d, i, (Name) null, generator, converter, binding, null);
+                        result = new DefaultDataTypeDefinition(
+                            db,
+                            child.getSchema(),
+                            name,
+                            l,
+                            p,
+                            s,
+                            n,
+                            r,
+                            g,
+                            d,
+                            i,
+                            (Name) null,
+                            generator,
+                            converter,
+                            binding,
+                            null
+                        )
+                            .generatedAlwaysAs(result.getGeneratedAlwaysAs())
+                            .generationOption(result.getGenerationOption());
 
                 }
                 catch (SQLDialectNotSupportedException e) {
@@ -396,7 +415,26 @@ public abstract class AbstractTypedElementDefinition<T extends Definition>
                     s = result.getScale();
                     String t = result.getType();
                     Name u = result.getQualifiedUserType();
-                    result = new DefaultDataTypeDefinition(db, definedType.getSchema(), t, l, p, s, n, r, g, d, i, u, generator, converter, binding, uType);
+                    result = new DefaultDataTypeDefinition(
+                        db,
+                        definedType.getSchema(),
+                        t,
+                        l,
+                        p,
+                        s,
+                        n,
+                        r,
+                        g,
+                        d,
+                        i,
+                        u,
+                        generator,
+                        converter,
+                        binding,
+                        uType
+                    )
+                        .generatedAlwaysAs(result.getGeneratedAlwaysAs())
+                        .generationOption(result.getGenerationOption());
                 }
             }
 

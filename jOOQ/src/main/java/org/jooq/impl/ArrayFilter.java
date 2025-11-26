@@ -102,12 +102,12 @@ implements
 
 
 
+
             case H2:
             case HSQLDB:
             case POSTGRES:
             case YUGABYTEDB:
                 return false;
-
 
             case DUCKDB:
                 return true;
@@ -136,13 +136,13 @@ implements
 
 
 
+
             case H2:
             case HSQLDB:
             case POSTGRES:
             case YUGABYTEDB:
-                ctx.visit(arrayTransform(array, predicate.$arg1(), predicate.$arg1(), predicate.$result()).asField());
+                ctx.visit(arrayTransform(ctx, array, predicate.$arg1(), predicate.$arg1(), predicate.$result()).asField());
                 break;
-
 
             case DUCKDB:
                 ctx.visit(function(N_ARRAY_FILTER, getDataType(), array, DSL.field("{0}", OTHER, predicate)));

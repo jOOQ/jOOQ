@@ -198,6 +198,7 @@ import static org.jooq.impl.Keywords.K_NOT_IN;
 import static org.jooq.impl.Keywords.K_NOT_NULL;
 import static org.jooq.impl.Keywords.K_NULL;
 import static org.jooq.impl.Keywords.K_NVARCHAR;
+import static org.jooq.impl.Keywords.K_OFFSET;
 import static org.jooq.impl.Keywords.K_PERSISTED;
 import static org.jooq.impl.Keywords.K_PRIMARY_KEY;
 import static org.jooq.impl.Keywords.K_RAISE;
@@ -213,6 +214,7 @@ import static org.jooq.impl.Keywords.K_THROW;
 import static org.jooq.impl.Keywords.K_VIRTUAL;
 import static org.jooq.impl.Keywords.K_VISIBLE;
 import static org.jooq.impl.Keywords.K_WHEN;
+import static org.jooq.impl.Keywords.K_WITH;
 import static org.jooq.impl.Names.N_A;
 import static org.jooq.impl.Names.N_E;
 import static org.jooq.impl.Names.N_O;
@@ -8177,6 +8179,7 @@ final class Tools {
      * {@link DSL#arrayMap(Field, Function1)}.
      */
     static final <T, U> Select<? extends Record1<?>> arrayTransform(
+        Context<?> ctx,
         Field<T[]> array,
         Field<T> element,
         Field<U> mapper,
@@ -8204,6 +8207,16 @@ final class Tools {
                 )
                 .where(predicate);
         }
+
+
+
+
+
+
+
+
+
+
         else {
             return
                 select((Field<?>) (mapper == null

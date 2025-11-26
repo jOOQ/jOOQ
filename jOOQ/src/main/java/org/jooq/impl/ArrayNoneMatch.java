@@ -98,6 +98,7 @@ implements
 
 
 
+
             case CLICKHOUSE:
             case DUCKDB:
             case H2:
@@ -131,13 +132,14 @@ implements
 
 
 
+
             case CLICKHOUSE:
             case DUCKDB:
             case H2:
             case HSQLDB:
             case POSTGRES:
             case YUGABYTEDB:
-                ctx.visit(ifNotNull(array, notExists(arrayTransform(array, predicate.$arg1(), null, predicate.$result()))));
+                ctx.visit(ifNotNull(array, notExists(arrayTransform(ctx, array, predicate.$arg1(), null, predicate.$result()))));
                 break;
 
 

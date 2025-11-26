@@ -71,6 +71,8 @@ import static org.jooq.impl.DSL.rowNumber;
 // ...
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.table;
+import static org.jooq.impl.Keywords.K_AS;
+import static org.jooq.impl.Keywords.K_OFFSET;
 import static org.jooq.impl.Keywords.K_ORDINALITY;
 import static org.jooq.impl.Keywords.K_WITH;
 import static org.jooq.impl.Names.N_OFFSET;
@@ -274,6 +276,7 @@ implements
             (r, i) -> DSL.row(r.$fields().$concat((List) asList(inline(i + 1))))
         )));
     }
+
 
 
 

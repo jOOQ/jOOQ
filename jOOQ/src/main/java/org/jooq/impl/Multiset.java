@@ -84,6 +84,7 @@ import static org.jooq.impl.Names.N_O;
 import static org.jooq.impl.Names.N_RECORD;
 import static org.jooq.impl.Names.N_RESULT;
 import static org.jooq.impl.Names.N_T;
+import static org.jooq.impl.Names.N_TO_JSON_STRING;
 import static org.jooq.impl.Names.N_U;
 import static org.jooq.impl.SQLDataType.BLOB;
 import static org.jooq.impl.SQLDataType.CLOB;
@@ -138,6 +139,7 @@ import org.jooq.Record1;
 // ...
 import org.jooq.Result;
 import org.jooq.SQLDialect;
+import org.jooq.SQLDialectCategory;
 import org.jooq.Scope;
 import org.jooq.Select;
 import org.jooq.SelectOrderByStep;
@@ -283,6 +285,11 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
                                 .$distinct(false)
                                 .$orderBy(Arrays.asList());
 
+
+
+
+
+
                             visitSubquery(ctx, s);
                         }
                         else {
@@ -303,8 +310,14 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
                                 )).from(t)
                             );
 
-                            if (multisetCondition && NO_SUPPORT_JSON_COMPARE.contains(ctx.dialect()))
+                            if (multisetCondition && NO_SUPPORT_JSON_COMPARE.contains(ctx.dialect())) {
+
+
+
+
+
                                 ctx.visit(DSL.field(s).cast(VARCHAR));
+                            }
                             else
                                 visitSubquery(ctx, s);
                         }
@@ -361,6 +374,11 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
                                 .$distinct(false)
                                 .$orderBy(Arrays.asList());
 
+
+
+
+
+
                             visitSubquery(ctx, s);
                         }
                         else {
@@ -381,8 +399,14 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
                                 )).from(t)
                             );
 
-                            if (multisetCondition && NO_SUPPORT_JSONB_COMPARE.contains(ctx.dialect()))
+                            if (multisetCondition && NO_SUPPORT_JSONB_COMPARE.contains(ctx.dialect())) {
+
+
+
+
+
                                 ctx.visit(DSL.field(s).cast(VARCHAR));
+                            }
                             else
                                 visitSubquery(ctx, s);
                         }

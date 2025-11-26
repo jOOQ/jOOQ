@@ -201,6 +201,8 @@ implements
 
 
 
+
+
         else if (arg1 instanceof Array && ((Array<?>) arg1).fields.isEmpty())
             ctx.data(ExtendedDataKey.DATA_EMPTY_ARRAY_BASE_TYPE, t2.getArrayComponentDataType(), c -> acceptDefault.apply(c, arg1, arg2));
         else if (arg2 instanceof Array && ((Array<?>) arg2).fields.isEmpty())

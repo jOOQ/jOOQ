@@ -152,7 +152,6 @@ implements
 
 
 
-
             default:
                 if (nullString != null)
                     ctx.visit(function(N_STRING_TO_ARRAY, getDataType(), string, delimiter, nullString));

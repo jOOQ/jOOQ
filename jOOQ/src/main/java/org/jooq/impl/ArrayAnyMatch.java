@@ -140,7 +140,7 @@ implements
             case HSQLDB:
             case POSTGRES:
             case YUGABYTEDB:
-                ctx.visit(ifNotNull(array, exists(arrayTransform(array, predicate.$arg1(), null, predicate.$result()))));
+                ctx.visit(ifNotNull(array, exists(arrayTransform(ctx, array, predicate.$arg1(), null, predicate.$result()))));
                 break;
 
 

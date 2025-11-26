@@ -107,10 +107,7 @@ implements
 {
     private static final JooqLogger log                  = JooqLogger.getLogger(XMLHandler.class);
     private static final boolean    debug                = false;
-
-
-
-
+    static final Set<SQLDialect>    ENCODE_BINARY_AS_HEX = SQLDialect.supportedBy();
     private final DSLContext        ctx;
     private final Deque<State<R>>   states;
     private State<R>                s;

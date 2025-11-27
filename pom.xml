@@ -68,8 +68,8 @@
         <spring.version>6.2.11</spring.version>
         <errorprone.version>2.36.0</errorprone.version>
         <testcontainers.version>1.20.6</testcontainers.version>
-        <jackson.version>2.18.3</jackson.version>
-        <jackson.version.databind>2.18.3</jackson.version.databind>
+        <jackson.version>2.20.1</jackson.version>
+        <jackson.version.databind>2.20.1</jackson.version.databind>
         <jetbrains.annotations.version>26.0.2</jetbrains.annotations.version>
         
         <!-- Build plugin versions -->

@@ -55,6 +55,8 @@ public class CustomType implements Serializable, XMLAppendable
     protected Boolean enumConverter;
     protected Boolean xmlConverter;
     protected Boolean jsonConverter;
+    @XmlSchemaType(name = "string")
+    protected JSONConverterImplementation jsonConverterImplementation;
     protected LambdaConverter lambdaConverter;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String binding;
@@ -441,6 +443,24 @@ public class CustomType implements Serializable, XMLAppendable
      * 
      */
     @Deprecated
+    public JSONConverterImplementation getJsonConverterImplementation() {
+        return jsonConverterImplementation;
+    }
+
+    /**
+     * @deprecated Use ForcedType only
+     * 
+     */
+    @Deprecated
+    public void setJsonConverterImplementation(JSONConverterImplementation value) {
+        this.jsonConverterImplementation = value;
+    }
+
+    /**
+     * @deprecated Use ForcedType only
+     * 
+     */
+    @Deprecated
     public LambdaConverter getLambdaConverter() {
         return lambdaConverter;
     }
@@ -652,6 +672,16 @@ public class CustomType implements Serializable, XMLAppendable
      * 
      */
     @Deprecated
+    public CustomType withJsonConverterImplementation(JSONConverterImplementation value) {
+        setJsonConverterImplementation(value);
+        return this;
+    }
+
+    /**
+     * @deprecated Use ForcedType only
+     * 
+     */
+    @Deprecated
     public CustomType withLambdaConverter(LambdaConverter value) {
         setLambdaConverter(value);
         return this;
@@ -694,6 +724,7 @@ public class CustomType implements Serializable, XMLAppendable
         builder.append("enumConverter", enumConverter);
         builder.append("xmlConverter", xmlConverter);
         builder.append("jsonConverter", jsonConverter);
+        builder.append("jsonConverterImplementation", jsonConverterImplementation);
         builder.append("lambdaConverter", lambdaConverter);
         builder.append("binding", binding);
         builder.append("genericBinding", genericBinding);
@@ -862,6 +893,15 @@ public class CustomType implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (jsonConverterImplementation == null) {
+            if (other.jsonConverterImplementation!= null) {
+                return false;
+            }
+        } else {
+            if (!jsonConverterImplementation.equals(other.jsonConverterImplementation)) {
+                return false;
+            }
+        }
         if (lambdaConverter == null) {
             if (other.lambdaConverter!= null) {
                 return false;
@@ -912,6 +952,7 @@ public class CustomType implements Serializable, XMLAppendable
         result = ((prime*result)+((enumConverter == null)? 0 :enumConverter.hashCode()));
         result = ((prime*result)+((xmlConverter == null)? 0 :xmlConverter.hashCode()));
         result = ((prime*result)+((jsonConverter == null)? 0 :jsonConverter.hashCode()));
+        result = ((prime*result)+((jsonConverterImplementation == null)? 0 :jsonConverterImplementation.hashCode()));
         result = ((prime*result)+((lambdaConverter == null)? 0 :lambdaConverter.hashCode()));
         result = ((prime*result)+((binding == null)? 0 :binding.hashCode()));
         result = ((prime*result)+((genericBinding == null)? 0 :genericBinding.hashCode()));

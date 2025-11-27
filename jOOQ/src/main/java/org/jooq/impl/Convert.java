@@ -46,7 +46,6 @@ import static org.jooq.impl.Internal.arrayType;
 import static org.jooq.impl.Internal.converterContext;
 import static org.jooq.impl.Tools.configuration;
 import static org.jooq.impl.Tools.emulateMultiset;
-import static org.jooq.impl.Tools.enums;
 import static org.jooq.tools.StringUtils.leftPad;
 import static org.jooq.tools.reflect.Reflect.accessible;
 import static org.jooq.tools.reflect.Reflect.wrapper;
@@ -102,8 +101,8 @@ import java.util.regex.Pattern;
 import org.jooq.Converter;
 import org.jooq.ConverterContext;
 import org.jooq.ConverterProvider;
-import org.jooq.Data;
 import org.jooq.Converters.UnknownType;
+import org.jooq.Data;
 import org.jooq.Decfloat;
 import org.jooq.EnumType;
 import org.jooq.Field;
@@ -138,8 +137,6 @@ import org.jooq.types.YearToMonth;
 import org.jooq.types.YearToSecond;
 import org.jooq.util.postgres.PostgresUtils;
 import org.jooq.util.xml.jaxb.InformationSchema;
-
-import org.jetbrains.annotations.NotNull;
 
 import jakarta.xml.bind.JAXB;
 
@@ -266,21 +263,42 @@ final class Convert {
 
                 jsonReadMethod = klass.getMethod("readValue", String.class, Class.class);
                 jsonWriteMethod = klass.getMethod("writeValueAsString", Object.class);
-                log.debug("Jackson is available");
+                log.debug("Jackson 2.x is available");
             }
             catch (Exception e1) {
-                log.debug("Jackson not available", e1.getMessage());
+                log.debug("Jackson 2.x not available", e1.getMessage());
 
                 try {
-                    Class<?> klass = Class.forName("com.google.gson.Gson");
+                    Class<?> klass = Class.forName("tools.jackson.databind.ObjectMapper");
 
-                    jsonMapper = klass.getDeclaredConstructor().newInstance();
-                    jsonReadMethod = klass.getMethod("fromJson", String.class, Class.class);
-                    jsonWriteMethod = klass.getMethod("toJson", Object.class);
-                    log.debug("Gson is available");
+                    try {
+                        Class<?> kotlin = Class.forName("tools.jackson.module.kotlin.ExtensionsKt");
+                        jsonMapper = kotlin.getMethod("jacksonObjectMapper").invoke(kotlin);
+                        log.debug("Jackson kotlin module is available");
+                    }
+                    catch (Exception e) {
+                        jsonMapper = klass.getDeclaredConstructor().newInstance();
+                        log.debug("Jackson kotlin module is not available");
+                    }
+
+                    jsonReadMethod = klass.getMethod("readValue", String.class, Class.class);
+                    jsonWriteMethod = klass.getMethod("writeValueAsString", Object.class);
+                    log.debug("Jackson 3.x is available");
                 }
                 catch (Exception e2) {
-                    log.debug("Gson not available", e2.getMessage());
+                    log.debug("Jackson 3.x not available", e1.getMessage());
+
+                    try {
+                        Class<?> klass = Class.forName("com.google.gson.Gson");
+
+                        jsonMapper = klass.getDeclaredConstructor().newInstance();
+                        jsonReadMethod = klass.getMethod("fromJson", String.class, Class.class);
+                        jsonWriteMethod = klass.getMethod("toJson", Object.class);
+                        log.debug("Gson is available");
+                    }
+                    catch (Exception e3) {
+                        log.debug("Gson not available", e2.getMessage());
+                    }
                 }
             }
 

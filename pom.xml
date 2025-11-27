@@ -70,6 +70,8 @@
         <testcontainers.version>1.20.6</testcontainers.version>
         <jackson.version>2.20.1</jackson.version>
         <jackson.version.databind>2.20.1</jackson.version.databind>
+        <jackson3.version>3.0.2</jackson3.version>
+        <jackson3.version.databind>3.0.2</jackson3.version.databind>
         <jetbrains.annotations.version>26.0.2</jetbrains.annotations.version>
         
         <!-- Build plugin versions -->
@@ -145,6 +147,11 @@
             <dependency>
                 <groupId>org.jooq</groupId>
                 <artifactId>jooq-jackson-extensions</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jooq</groupId>
+                <artifactId>jooq-jackson3-extensions</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -246,6 +253,22 @@
                 <groupId>com.fasterxml.jackson.module</groupId>
                 <artifactId>jackson-module-kotlin</artifactId>
                 <version>${jackson.version}</version>
+            </dependency>
+            
+            <dependency>
+                <groupId>tools.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson3.version.databind}</version>
+            </dependency>
+            <dependency>
+                <groupId>tools.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>${jackson3.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>tools.jackson.module</groupId>
+                <artifactId>jackson-module-kotlin</artifactId>
+                <version>${jackson3.version}</version>
             </dependency>
 
             <!-- At the point of release 3.16, it seems not all drivers have been upgraded to 0.9.0.RELEASE yet -->
@@ -880,6 +903,7 @@
         <module>jOOQ-checker</module>
         <module>jOOQ-beans-extensions</module>
         <module>jOOQ-jackson-extensions</module>
+        <module>jOOQ-jackson3-extensions</module>
         <module>jOOQ-jpa-extensions</module>
         <module>jOOQ-postgres-extensions</module>
         <module>jOOQ-reactor-extensions</module>
@@ -907,6 +931,9 @@
 
 
         <module>jOOQ-xtend</module>
+
+
+
 
 
 

@@ -2334,6 +2334,18 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
           </appinfo>
         </annotation>
       </element>
+
+      <element name="jsonConverterImplementation" type="tns:JSONConverterImplementation" minOccurs="0" maxOccurs="1" fixed="true">
+        <annotation>
+          <appinfo>
+            <jxb:property>
+              <jxb:javadoc><![CDATA[@deprecated Use ForcedType only]]></jxb:javadoc>
+            </jxb:property>
+            <annox:annotate target="getter">@java.lang.Deprecated</annox:annotate>
+            <annox:annotate target="setter">@java.lang.Deprecated</annox:annotate>
+          </appinfo>
+        </annotation>
+      </element>
       
       <element name="lambdaConverter" type="tns:LambdaConverter" minOccurs="0" maxOccurs="1">
         <annotation>
@@ -2547,7 +2559,11 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
       </element>
 
       <element name="jsonConverter" type="boolean" minOccurs="0" maxOccurs="1">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether the converter is an {@link org.jooq.jackson.extensions.converters.JSONtoJacksonConverter} or a {@link org.jooq.jackson.extensions.converters.JSONtoJacksonConverter}.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether the converter is any of {@link org.jooq.jackson.extensions.converters.JSONtoJacksonConverter}, {@link org.jooq.jackson.extensions.converters.JSONVtoJacksonConverter}, {@link org.jooq.jackson3.extensions.converters.JSONtoJacksonConverter}, {@link org.jooq.jackson3.extensions.converters.JSONVtoJacksonConverter}. Specify {@link #jsonConverterImplementation} to explicitly choose the implementation.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="jsonConverterImplementation" type="tns:JSONConverterImplementation" minOccurs="0" maxOccurs="1" default="DEFAuLT">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The explicit JSON converter implementation to choose, defaulting to 1) whatever can be found on the classpath, or 2) Jackson 3 converter support.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
       <element name="lambdaConverter" type="tns:LambdaConverter" minOccurs="0" maxOccurs="1">
@@ -2631,6 +2647,20 @@ type. If provided, both "includeExpression" and "includeTypes" must match.]]></j
       </element>
     </all>
   </complexType>
+  
+  <simpleType name="JSONConverterImplementation">
+    <restriction base="string">
+      <enumeration value="DEFAULT">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whatever is found on the classpath will be preferred, with a preference to Jackson 3 support over Jackson 2 support.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
+      <enumeration value="JACKSON_2">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Jackson 2 support.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
+      <enumeration value="JACKSON_3">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Jackson 3 support.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </enumeration>
+    </restriction>
+  </simpleType>
   
   <simpleType name="ForcedTypeObjectType">
     <restriction base="string">

@@ -921,6 +921,10 @@ public class MetaExtensions {
             return isOutputSchemaToDefault();
         }
 
+        public Boolean getSkipRegenerationOnUpToDateVersion() {
+            return isSkipRegenerationOnUpToDateVersion();
+        }
+
         public Boolean getReadonlyIdentities() {
             return isReadonlyIdentities();
         }

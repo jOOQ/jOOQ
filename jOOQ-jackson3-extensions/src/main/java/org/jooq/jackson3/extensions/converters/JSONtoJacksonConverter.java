@@ -35,43 +35,29 @@
  *
  *
  */
-package org.jooq.tools;
+package org.jooq.jackson3.extensions.converters;
 
-import org.jetbrains.annotations.ApiStatus.Internal;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jooq.JSON;
+
 
 /**
- * Utilities related to {@link Class} and {@link ClassLoader} actions.
+ * A base class for {@link JSON} to Jackson POJO conversion.
  *
  * @author Lukas Eder
  */
-@Internal
-public class ClassUtils {
+public class JSONtoJacksonConverter<U> extends AbstractToJacksonConverter<JSON, U> {
 
-    /**
-     * Try loading a class using various standard means.
-     */
-    @NotNull
-    public static Class<?> loadClass(String className) throws ClassNotFoundException {
-        try {
-            return Class.forName(className);
-        }
-        catch (ClassNotFoundException e) {
-            return Thread.currentThread().getContextClassLoader().loadClass(className);
-        }
+    public JSONtoJacksonConverter(Class<U> toType) {
+        super(JSON.class, toType);
     }
 
-    /**
-     * Try loading a class using various standard means.
-     */
-    @Nullable
-    public static Class<?> tryLoadClass(String className) {
-        try {
-            return loadClass(className);
-        }
-        catch (ClassNotFoundException e) {
-            return null;
-        }
+    @Override
+    final String data(JSON json) {
+        return json.data();
+    }
+
+    @Override
+    final JSON json(String string) {
+        return JSON.json(string);
     }
 }

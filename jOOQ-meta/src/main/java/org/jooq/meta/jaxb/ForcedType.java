@@ -55,6 +55,9 @@ public class ForcedType implements Serializable, XMLAppendable
     protected Boolean enumConverter;
     protected Boolean xmlConverter;
     protected Boolean jsonConverter;
+    @XmlElement(defaultValue = "DEFAuLT")
+    @XmlSchemaType(name = "string")
+    protected JSONConverterImplementation jsonConverterImplementation;
     protected LambdaConverter lambdaConverter;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String binding;
@@ -491,7 +494,7 @@ public class ForcedType implements Serializable, XMLAppendable
     }
 
     /**
-     * Whether the converter is an {@link org.jooq.jackson.extensions.converters.JSONtoJacksonConverter} or a {@link org.jooq.jackson.extensions.converters.JSONtoJacksonConverter}.
+     * Whether the converter is any of {@link org.jooq.jackson.extensions.converters.JSONtoJacksonConverter}, {@link org.jooq.jackson.extensions.converters.JSONVtoJacksonConverter}, {@link org.jooq.jackson3.extensions.converters.JSONtoJacksonConverter}, {@link org.jooq.jackson3.extensions.converters.JSONVtoJacksonConverter}. Specify {@link #jsonConverterImplementation} to explicitly choose the implementation.
      * 
      * @return
      *     possible object is
@@ -503,7 +506,7 @@ public class ForcedType implements Serializable, XMLAppendable
     }
 
     /**
-     * Whether the converter is an {@link org.jooq.jackson.extensions.converters.JSONtoJacksonConverter} or a {@link org.jooq.jackson.extensions.converters.JSONtoJacksonConverter}.
+     * Whether the converter is any of {@link org.jooq.jackson.extensions.converters.JSONtoJacksonConverter}, {@link org.jooq.jackson.extensions.converters.JSONVtoJacksonConverter}, {@link org.jooq.jackson3.extensions.converters.JSONtoJacksonConverter}, {@link org.jooq.jackson3.extensions.converters.JSONVtoJacksonConverter}. Specify {@link #jsonConverterImplementation} to explicitly choose the implementation.
      * 
      * @param value
      *     allowed object is
@@ -512,6 +515,22 @@ public class ForcedType implements Serializable, XMLAppendable
      */
     public void setJsonConverter(Boolean value) {
         this.jsonConverter = value;
+    }
+
+    /**
+     * The explicit JSON converter implementation to choose, defaulting to 1) whatever can be found on the classpath, or 2) Jackson 3 converter support.
+     * 
+     */
+    public JSONConverterImplementation getJsonConverterImplementation() {
+        return jsonConverterImplementation;
+    }
+
+    /**
+     * The explicit JSON converter implementation to choose, defaulting to 1) whatever can be found on the classpath, or 2) Jackson 3 converter support.
+     * 
+     */
+    public void setJsonConverterImplementation(JSONConverterImplementation value) {
+        this.jsonConverterImplementation = value;
     }
 
     /**
@@ -948,11 +967,20 @@ public class ForcedType implements Serializable, XMLAppendable
     }
 
     /**
-     * Whether the converter is an {@link org.jooq.jackson.extensions.converters.JSONtoJacksonConverter} or a {@link org.jooq.jackson.extensions.converters.JSONtoJacksonConverter}.
+     * Whether the converter is any of {@link org.jooq.jackson.extensions.converters.JSONtoJacksonConverter}, {@link org.jooq.jackson.extensions.converters.JSONVtoJacksonConverter}, {@link org.jooq.jackson3.extensions.converters.JSONtoJacksonConverter}, {@link org.jooq.jackson3.extensions.converters.JSONVtoJacksonConverter}. Specify {@link #jsonConverterImplementation} to explicitly choose the implementation.
      * 
      */
     public ForcedType withJsonConverter(Boolean value) {
         setJsonConverter(value);
+        return this;
+    }
+
+    /**
+     * The explicit JSON converter implementation to choose, defaulting to 1) whatever can be found on the classpath, or 2) Jackson 3 converter support.
+     * 
+     */
+    public ForcedType withJsonConverterImplementation(JSONConverterImplementation value) {
+        setJsonConverterImplementation(value);
         return this;
     }
 
@@ -1108,6 +1136,7 @@ public class ForcedType implements Serializable, XMLAppendable
         builder.append("enumConverter", enumConverter);
         builder.append("xmlConverter", xmlConverter);
         builder.append("jsonConverter", jsonConverter);
+        builder.append("jsonConverterImplementation", jsonConverterImplementation);
         builder.append("lambdaConverter", lambdaConverter);
         builder.append("binding", binding);
         builder.append("genericBinding", genericBinding);
@@ -1296,6 +1325,15 @@ public class ForcedType implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (jsonConverterImplementation == null) {
+            if (other.jsonConverterImplementation!= null) {
+                return false;
+            }
+        } else {
+            if (!jsonConverterImplementation.equals(other.jsonConverterImplementation)) {
+                return false;
+            }
+        }
         if (lambdaConverter == null) {
             if (other.lambdaConverter!= null) {
                 return false;
@@ -1446,6 +1484,7 @@ public class ForcedType implements Serializable, XMLAppendable
         result = ((prime*result)+((enumConverter == null)? 0 :enumConverter.hashCode()));
         result = ((prime*result)+((xmlConverter == null)? 0 :xmlConverter.hashCode()));
         result = ((prime*result)+((jsonConverter == null)? 0 :jsonConverter.hashCode()));
+        result = ((prime*result)+((jsonConverterImplementation == null)? 0 :jsonConverterImplementation.hashCode()));
         result = ((prime*result)+((lambdaConverter == null)? 0 :lambdaConverter.hashCode()));
         result = ((prime*result)+((binding == null)? 0 :binding.hashCode()));
         result = ((prime*result)+((genericBinding == null)? 0 :genericBinding.hashCode()));

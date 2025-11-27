@@ -67,7 +67,9 @@ import org.jooq.impl.SQLDataType;
 import org.jooq.impl.XMLtoJAXBConverter;
 import org.jooq.meta.jaxb.CustomType;
 import org.jooq.meta.jaxb.ForcedType;
+import org.jooq.meta.jaxb.JSONConverterImplementation;
 import org.jooq.meta.jaxb.LambdaConverter;
+import org.jooq.tools.ClassUtils;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 
@@ -327,16 +329,45 @@ implements
                     converter = resolver.constructorCall(XMLtoJAXBConverter.class.getName() + "<" + resolver.ref(uType) + ">") + "(" + resolver.classLiteral(uType) + ")";
                 }
                 else if (TRUE.equals(customType.isJsonConverter())) {
+                    JSONConverterImplementation i = customType.getJsonConverterImplementation();
+
+                    if (i == null || i == JSONConverterImplementation.DEFAULT) {
+                        if (ClassUtils.tryLoadClass("tools.jackson.databind.ObjectMapper") != null)
+                            i = JSONConverterImplementation.JACKSON_3;
+                        else if (ClassUtils.tryLoadClass("org.jooq.jackson3.extensions.converters.JSONtoJacksonConverter") != null)
+                            i = JSONConverterImplementation.JACKSON_3;
+                        else if (ClassUtils.tryLoadClass("com.fasterxml.jackson.databind.ObjectMapper") != null)
+                            i = JSONConverterImplementation.JACKSON_2;
+                        else if (ClassUtils.tryLoadClass("org.jooq.jackson.extensions.converters.JSONtoJacksonConverter") != null)
+                            i = JSONConverterImplementation.JACKSON_2;
+                        else
+                            i = JSONConverterImplementation.JACKSON_3;
+
+                        log.info("Jackson version detected from classpath: " + i);
+                    }
+
                     if (tType(db, resolver, result).endsWith("JSONB"))
-                        converter = resolver.constructorCall("org.jooq.jackson.extensions.converters.JSONBtoJacksonConverter<" + resolver.ref(uType) + ">") + "(" + resolver.classLiteral(uType) + ")";
+                        if (i == JSONConverterImplementation.JACKSON_2)
+                            converter = resolver.constructorCall("org.jooq.jackson.extensions.converters.JSONBtoJacksonConverter<" + resolver.ref(uType) + ">") + "(" + resolver.classLiteral(uType) + ")";
+                        else
+                            converter = resolver.constructorCall("org.jooq.jackson3.extensions.converters.JSONBtoJacksonConverter<" + resolver.ref(uType) + ">") + "(" + resolver.classLiteral(uType) + ")";
                     else
-                        converter = resolver.constructorCall("org.jooq.jackson.extensions.converters.JSONtoJacksonConverter<" + resolver.ref(uType) + ">") + "(" + resolver.classLiteral(uType) + ")";
+                        if (i == JSONConverterImplementation.JACKSON_2)
+                            converter = resolver.constructorCall("org.jooq.jackson.extensions.converters.JSONtoJacksonConverter<" + resolver.ref(uType) + ">") + "(" + resolver.classLiteral(uType) + ")";
+                        else
+                            converter = resolver.constructorCall("org.jooq.jackson3.extensions.converters.JSONtoJacksonConverter<" + resolver.ref(uType) + ">") + "(" + resolver.classLiteral(uType) + ")";
                 }
                 else if ("org.jooq.jackson.extensions.converters.JSONtoJacksonConverter".equals(customType.getConverter())) {
                     converter = resolver.constructorCall("org.jooq.jackson.extensions.converters.JSONtoJacksonConverter<" + resolver.ref(uType) + ">") + "(" + resolver.classLiteral(uType) + ")";
                 }
                 else if ("org.jooq.jackson.extensions.converters.JSONBtoJacksonConverter".equals(customType.getConverter())) {
                     converter = resolver.constructorCall("org.jooq.jackson.extensions.converters.JSONBtoJacksonConverter<" + resolver.ref(uType) + ">") + "(" + resolver.classLiteral(uType) + ")";
+                }
+                else if ("org.jooq.jackson3.extensions.converters.JSONtoJacksonConverter".equals(customType.getConverter())) {
+                    converter = resolver.constructorCall("org.jooq.jackson3.extensions.converters.JSONtoJacksonConverter<" + resolver.ref(uType) + ">") + "(" + resolver.classLiteral(uType) + ")";
+                }
+                else if ("org.jooq.jackson3.extensions.converters.JSONBtoJacksonConverter".equals(customType.getConverter())) {
+                    converter = resolver.constructorCall("org.jooq.jackson3.extensions.converters.JSONBtoJacksonConverter<" + resolver.ref(uType) + ">") + "(" + resolver.classLiteral(uType) + ")";
                 }
 
                 else if (customType.getLambdaConverter() != null) {
@@ -476,6 +507,7 @@ implements
                 .withEnumConverter(forcedType.isEnumConverter())
                 .withXmlConverter(forcedType.isXmlConverter())
                 .withJsonConverter(forcedType.isJsonConverter())
+                .withJsonConverterImplementation(forcedType.getJsonConverterImplementation())
                 .withLambdaConverter(forcedType.getLambdaConverter())
                 .withVisibilityModifier(forcedType.getVisibilityModifier())
                 .withHidden(forcedType.isHidden())

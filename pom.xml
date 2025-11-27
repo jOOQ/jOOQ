@@ -903,7 +903,9 @@
         <module>jOOQ-checker</module>
         <module>jOOQ-beans-extensions</module>
         <module>jOOQ-jackson-extensions</module>
+
         <module>jOOQ-jackson3-extensions</module>
+
         <module>jOOQ-jpa-extensions</module>
         <module>jOOQ-postgres-extensions</module>
         <module>jOOQ-reactor-extensions</module>

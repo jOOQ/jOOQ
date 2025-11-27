@@ -145,6 +145,13 @@ implements
                 ctx.visit(function(N_JSON_EXTRACT, JSON, field, inline("$[").concat(index).concat(inline("]"))));
                 break;
 
+            case TRINO:
+                ctx.visit(DSL.coalesce(
+                    function(N_JSON_EXTRACT_SCALAR, VARCHAR, field, inline("$[").concat(index).concat(inline("]"))),
+                    function(N_JSON_FORMAT, VARCHAR, DSL.nullif(function(N_JSON_EXTRACT, JSON, field, inline("$[").concat(index).concat(inline("]"))), inline(org.jooq.JSON.json("null"))))
+                ));
+                break;
+
             case CLICKHOUSE:
                 ctx.visit(function(N_JSONExtractString, JSON, field, iadd(index, one())));
                 break;

@@ -183,6 +183,7 @@ final class Names {
     static final Name N_JSON_BUILD_OBJECT           = systemName("json_build_object");
     static final Name N_JSON_CONTAINS_PATH          = systemName("json_contains_path");
     static final Name N_JSON_EXTRACT_STRING         = systemName("json_extract_string");
+    static final Name N_JSON_FORMAT                 = systemName("json_format");
     static final Name N_JSON_GROUP_ARRAY            = systemName("json_group_array");
     static final Name N_JSON_GROUP_OBJECT           = systemName("json_group_object");
     static final Name N_JSON_MERGE                  = systemName("json_merge");
@@ -536,6 +537,7 @@ final class Names {
     static final Name N_JSON_ARRAY_INSERT           = systemName("json_array_insert");
     static final Name N_JSON_ARRAY_LENGTH           = systemName("json_array_length");
     static final Name N_JSON_EXTRACT                = systemName("json_extract");
+    static final Name N_JSON_EXTRACT_SCALAR         = systemName("json_extract_scalar");
     static final Name N_JSON_GET_ATTRIBUTE          = systemName("json_get_attribute");
     static final Name N_JSON_GET_ATTRIBUTE_AS_TEXT  = systemName("json_get_attribute_as_text");
     static final Name N_JSON_GET_ELEMENT            = systemName("json_get_element");

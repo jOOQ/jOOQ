@@ -124,6 +124,9 @@ implements
             case SQLITE:
                 return false;
 
+            case TRINO:
+                return false;
+
             case CLICKHOUSE:
                 return true;
 
@@ -181,6 +184,13 @@ implements
 
             case SQLITE:
                 ctx.visit(function(N_JSON_EXTRACT, JSONB, field, inline("$.").concat(attribute)));
+                break;
+
+            case TRINO:
+                ctx.visit(DSL.coalesce(
+                    function(N_JSON_EXTRACT_SCALAR, VARCHAR, field, inline("$.").concat(attribute)),
+                    function(N_JSON_FORMAT, VARCHAR, DSL.nullif(function(N_JSON_EXTRACT, JSONB, field, inline("$.").concat(attribute)), inline(org.jooq.JSON.json("null")))) 
+                ));
                 break;
 
             case CLICKHOUSE:

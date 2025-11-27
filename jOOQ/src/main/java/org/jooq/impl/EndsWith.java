@@ -93,61 +93,6 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    final boolean parenthesised(Context<?> ctx) {
-        switch (ctx.family()) {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            case CUBRID:
-            case FIREBIRD:
-            case H2:
-            case HSQLDB:
-            case IGNITE:
-            case MARIADB:
-            case MYSQL:
-            case POSTGRES:
-            case SQLITE:
-            case TRINO:
-            case YUGABYTEDB:
-                return false;
-
-
-
-            case DERBY:
-                return false;
-
-
-
-
-
-
-            case DUCKDB:
-                return true;
-
-            case CLICKHOUSE:
-                return true;
-
-            default:
-                return true;
-        }
-    }
-
-    @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
 
@@ -202,16 +147,19 @@ implements
 
 
 
-            case DUCKDB:
-                ctx.visit(function(N_SUFFIX, BOOLEAN, string, suffix));
-                break;
 
-            case CLICKHOUSE:
-                ctx.visit(function(N_endsWith, BOOLEAN, string, suffix));
+            case DUCKDB: {
+                acceptEndsWith(ctx, N_SUFFIX);
                 break;
+            }
+
+            case CLICKHOUSE: {
+                acceptEndsWith(ctx, N_endsWith);
+                break;
+            }
 
             default:
-                ctx.visit(function(N_ENDS_WITH, BOOLEAN, string, suffix));
+                acceptEndsWith(ctx, N_ENDS_WITH);
                 break;
         }
     }
@@ -231,6 +179,10 @@ implements
 
     private final void acceptPosition(Context<?> ctx) {
         ctx.visit(DSL.position(Like.requiresStringCast(string), Like.requiresStringCast(suffix)).eq(iadd(isub(Like.requiresStringCast(string).length(), Like.requiresStringCast(suffix).length()), inline(1))));
+    }
+
+    private final void acceptEndsWith(Context<?> ctx, Name name) {
+        ctx.visit(function(name, BOOLEAN, castIfNeeded(string, String.class), castIfNeeded(suffix, String.class)));
     }
 
     // -------------------------------------------------------------------------

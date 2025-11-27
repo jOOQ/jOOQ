@@ -136,7 +136,7 @@ implements
 
 
             case CLICKHOUSE:
-                return true;
+                return false;
 
             default:
                 return true;
@@ -197,12 +197,14 @@ implements
 
 
 
-            case CLICKHOUSE:
-                ctx.visit(function(N_startsWith, BOOLEAN, string, prefix));
+
+            case CLICKHOUSE: {
+                acceptStartsWith(ctx, N_startsWith);
                 break;
+            }
 
             default:
-                ctx.visit(function(N_STARTS_WITH, BOOLEAN, string, prefix));
+                acceptStartsWith(ctx, N_STARTS_WITH);
                 break;
         }
     }
@@ -222,6 +224,10 @@ implements
 
     private final void acceptPosition(Context<?> ctx) {
         ctx.visit(DSL.position(Like.requiresStringCast(string), Like.requiresStringCast(prefix)).eq(inline(1)));
+    }
+
+    private final void acceptStartsWith(Context<?> ctx, Name name) {
+        ctx.visit(function(name, BOOLEAN, castIfNeeded(string, String.class), castIfNeeded(prefix, String.class)));
     }
 
     // -------------------------------------------------------------------------

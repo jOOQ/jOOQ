@@ -221,6 +221,10 @@ implements
         ctx.visit(DSL.position(Like.requiresStringCast(value), Like.requiresStringCast(content)).gt(inline(0)));
     }
 
+    private final void acceptContains(Context<?> ctx, Name name) {
+        ctx.visit(function(name, BOOLEAN, castIfNeeded(value, String.class), castIfNeeded(content, String.class)));
+    }
+
     // -------------------------------------------------------------------------
     // XXX: Query Object Model
     // -------------------------------------------------------------------------

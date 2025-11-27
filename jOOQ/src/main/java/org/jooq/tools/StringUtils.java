@@ -930,7 +930,7 @@ public final class StringUtils {
             return text;
         }
 
-        // if recursing, this shouldnt be less than 0
+        // if recursing, this shouldn't be less than 0
         if (timeToLive < 0) {
             throw new IllegalStateException("TimeToLive of " + timeToLive + " is less than 0: " + text);
         }

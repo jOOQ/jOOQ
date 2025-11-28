@@ -62,6 +62,7 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.regex.Pattern;
 
 import org.jooq.BindContext;
@@ -69,7 +70,6 @@ import org.jooq.Configuration;
 import org.jooq.Constants;
 import org.jooq.Context;
 import org.jooq.ExecuteContext;
-import org.jooq.ExecuteContext.BatchMode;
 import org.jooq.Field;
 import org.jooq.Param;
 import org.jooq.Query;
@@ -1011,6 +1011,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         static Rendered rendered(
             Configuration c,
             DefaultExecuteContext ctx,
+            Consumer<? super DefaultRenderContext> renderContextConsumer,
             Query query,
             boolean countBindValues,
             boolean forceStaticStatement
@@ -1021,22 +1022,26 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
             if (ctx.type() == DDL) {
                 ctx.data(DATA_FORCE_STATIC_STATEMENT, true);
                 DefaultRenderContext render = new DefaultRenderContext(c, ctx);
+                renderContextConsumer.accept(render);
                 return new Rendered(render.paramType(INLINED).visit(query).render(), null, render.skipUpdateCounts());
             }
             else if (executePreparedStatements(c.settings()) && !forceStaticStatement) {
                 try {
                     DefaultRenderContext render = new DefaultRenderContext(c, ctx);
+                    renderContextConsumer.accept(render);
                     render.data(DATA_COUNT_BIND_VALUES, countBindValues);
                     return new Rendered(render.visit(query).render(), render.bindValues(), render.skipUpdateCounts());
                 }
                 catch (DefaultRenderContext.ForceInlineSignal e) {
                     ctx.data(DATA_FORCE_STATIC_STATEMENT, true);
                     DefaultRenderContext render = new DefaultRenderContext(c, ctx);
+                    renderContextConsumer.accept(render);
                     return new Rendered(render.paramType(INLINED).visit(query).render(), null, render.skipUpdateCounts());
                 }
             }
             else {
                 DefaultRenderContext render = new DefaultRenderContext(c, ctx);
+                renderContextConsumer.accept(render);
                 return new Rendered(render.paramType(INLINED).visit(query).render(), null, render.skipUpdateCounts());
             }
         }

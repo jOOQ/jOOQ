@@ -988,17 +988,17 @@ final class R2DBC {
     // -------------------------------------------------------------------------
 
     static final Rendered rendered(Configuration configuration, Query query) {
-        DefaultRenderContext render = new DefaultRenderContext(configuration.deriveSettings(s ->
-            setParamType(configuration.dialect(), s)
-        ), null);
+        Configuration c = configuration.deriveSettings(s -> setParamType(configuration.dialect(), s));
 
-        // [#17088] Some rendering decisions may be made based on whether we're using R2DBC
-        render.data(DATA_RENDER_FOR_R2DBC, true);
+        return Rendered.rendered(
+            c,
+            new DefaultExecuteContext(c, query),
 
-        return new Rendered(
-            render.paramType(render.settings().getParamType()).visit(query).render(),
-            render.bindValues(),
-            render.skipUpdateCounts()
+            // [#17088] Some rendering decisions may be made based on whether we're using R2DBC
+            r -> r.paramType(c.settings().getParamType()).data(DATA_RENDER_FOR_R2DBC, true),
+            query,
+            true,
+            false
         );
     }
 

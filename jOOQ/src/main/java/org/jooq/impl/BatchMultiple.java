@@ -108,7 +108,7 @@ final class BatchMultiple extends AbstractBatch {
                 ctx.sql(null);
                 listener.renderStart(ctx);
 
-                Rendered r = Rendered.rendered(configuration, ctx, ctx.batchQueries()[i], false, true);
+                Rendered r = Rendered.rendered(configuration, ctx, x -> {}, ctx.batchQueries()[i], false, true);
                 r.setSQLAndParams(ctx);
                 ctx.sql(batchSQL[i] = r.sql);
                 listener.renderEnd(ctx);

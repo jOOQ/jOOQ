@@ -353,6 +353,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
         }
     }
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     private final void acceptDefaultJSONEmulation(
         Context<?> ctx,
         boolean multisetCondition,
@@ -398,7 +399,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
             );
 
             if (multisetCondition && (jsonb ? NO_SUPPORT_JSONB_COMPARE : NO_SUPPORT_JSON_COMPARE).contains(ctx.dialect()))
-                ctx.visit(DSL.field(s).cast(VARCHAR));
+                ctx.visit(DSL.field((Select) s).cast(VARCHAR));
             else
                 visitSubquery(ctx, s);
         }

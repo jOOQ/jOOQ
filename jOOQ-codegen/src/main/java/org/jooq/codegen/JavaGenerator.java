@@ -11711,21 +11711,29 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     protected boolean isObjectArrayType(String javaType) {
-        if (scala)
+
+        // [#19445] ForcedTypes may use Java array type notation, despite using KotlinGenerator
+        if (javaType.endsWith("[]") && !javaType.equals("byte[]"))
+            return true;
+        else if (scala)
             return javaType.startsWith("scala.Array");
         else if (kotlin)
             return javaType.startsWith("kotlin.Array");
         else
-            return javaType.endsWith("[]") && !javaType.equals("byte[]");
+            return false;
     }
 
     protected boolean isArrayType(String javaType) {
-        if (scala)
+
+        // [#19445] ForcedTypes may use Java array type notation, despite using KotlinGenerator
+        if (javaType.endsWith("[]"))
+            return true;
+        else if (scala)
             return javaType.startsWith("scala.Array");
         else if (kotlin)
             return javaType.startsWith("kotlin.Array") || javaType.equals("kotlin.ByteArray");
         else
-            return javaType.endsWith("[]");
+            return false;
     }
 
     protected String getArrayBaseType(String javaType) {

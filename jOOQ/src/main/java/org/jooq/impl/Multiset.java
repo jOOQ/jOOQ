@@ -128,6 +128,8 @@ import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.Scope;
 import org.jooq.Select;
+// ...
+import org.jooq.SelectForStep;
 import org.jooq.SelectOrderByStep;
 import org.jooq.SortField;
 import org.jooq.Spatial;
@@ -219,6 +221,9 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
 
 
 
+
+
+
     @SuppressWarnings("unchecked")
     private final void accept0(Context<?> ctx, boolean multisetCondition) {
         switch (emulateMultiset(ctx.configuration())) {
@@ -235,63 +240,8 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
                     default: {
-                        if (NO_SUPPORT_CORRELATED_DERIVED_TABLE.contains(ctx.dialect()) && isSimple(select)) {
-                            List<Field<?>> l = map(select.getSelect(), f -> Tools.unalias(f));
-
-                            JSONArrayAggReturningStep<JSON> returning =
-                                jsonArrayaggEmulation(ctx, row(l), true, select.$distinct())
-                                    .orderBy(multisetCondition
-                                        ? map(filter(l, f -> sortable(f)), f -> f.sortDefault())
-                                        : select.$orderBy()
-                                    );
-
-                            Select<?> s = select
-                                .$select(Arrays.asList(DSL.coalesce(
-                                    returningClob(ctx, returning),
-                                    returningClob(ctx, jsonArray())
-                                )))
-                                .$distinct(false)
-                                .$orderBy(Arrays.asList());
-
-                            visitSubquery(ctx, s);
-                        }
-                        else {
-                            JSONArrayAggOrderByStep<JSON> order;
-                            JSONArrayAggReturningStep<JSON> returning;
-
-                            returning = order = jsonArrayaggEmulation(ctx, t, true, false);
-
-                            // TODO: Re-apply derived table's ORDER BY clause as aggregate ORDER BY
-                            if (multisetCondition)
-                                returning = order.orderBy(t.fields());
-
-                            Select<Record1<JSON>> s = patchOracleArrayAggBug(
-                                ctx,
-                                select(DSL.coalesce(
-                                    returningClob(ctx, returning),
-                                    returningClob(ctx, jsonArray())
-                                )).from(t)
-                            );
-
-                            if (multisetCondition && NO_SUPPORT_JSON_COMPARE.contains(ctx.dialect()))
-                                ctx.visit(DSL.field(s).cast(VARCHAR));
-                            else
-                                visitSubquery(ctx, s);
-                        }
-
+                        acceptDefaultJSONEmulation(ctx, multisetCondition, t, false);
                         break;
                     }
                 }
@@ -312,64 +262,8 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
                     default: {
-                        if (NO_SUPPORT_CORRELATED_DERIVED_TABLE.contains(ctx.dialect()) && isSimple(select)) {
-                            List<Field<?>> l = map(select.getSelect(), f -> Tools.unalias(f));
-
-                            JSONArrayAggReturningStep<JSONB> returning =
-                                jsonbArrayaggEmulation(ctx, row(l), true, select.$distinct())
-                                    .orderBy(multisetCondition
-                                        ? map(filter(l, f -> sortable(f)), f -> f.sortDefault())
-                                        : select.$orderBy()
-                                    );
-
-                            Select<?> s = select
-                                .$select(Arrays.asList(DSL.coalesce(
-                                    returningClob(ctx, returning),
-                                    returningClob(ctx, jsonbArray())
-                                )))
-                                .$distinct(false)
-                                .$orderBy(Arrays.asList());
-
-                            visitSubquery(ctx, s);
-                        }
-                        else {
-                            JSONArrayAggOrderByStep<JSONB> order;
-                            JSONArrayAggReturningStep<JSONB> returning;
-
-                            returning = order = jsonbArrayaggEmulation(ctx, t, false, false);
-
-                            // TODO: Re-apply derived table's ORDER BY clause as aggregate ORDER BY
-                            if (multisetCondition)
-                                returning = order.orderBy(t.fields());
-
-                            Select<Record1<JSONB>> s = patchOracleArrayAggBug(
-                                ctx,
-                                select(DSL.coalesce(
-                                    returningClob(ctx, returning),
-                                    returningClob(ctx, jsonbArray())
-                                )).from(t)
-                            );
-
-                            if (multisetCondition && NO_SUPPORT_JSONB_COMPARE.contains(ctx.dialect()))
-                                ctx.visit(DSL.field(s).cast(VARCHAR));
-                            else
-                                visitSubquery(ctx, s);
-                        }
-
+                        acceptDefaultJSONEmulation(ctx, multisetCondition, t, true);
                         break;
                     }
                 }
@@ -458,6 +352,85 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
                 break;
         }
     }
+
+    private final void acceptDefaultJSONEmulation(
+        Context<?> ctx,
+        boolean multisetCondition,
+        Table<?> t,
+        boolean jsonb
+    ) {
+        if (NO_SUPPORT_CORRELATED_DERIVED_TABLE.contains(ctx.dialect()) && isSimple(select)) {
+            List<Field<?>> l = map(select.getSelect(), f -> Tools.unalias(f));
+
+            JSONArrayAggReturningStep<?> returning =
+                (jsonb ? jsonbArrayaggEmulation(ctx, row(l), true, select.$distinct()) : jsonArrayaggEmulation(ctx, row(l), true, select.$distinct()))
+                    .orderBy(multisetCondition
+                        ? map(filter(l, f -> sortable(f)), f -> f.sortDefault())
+                        : select.$orderBy()
+                    );
+
+            Select<?> s = select
+                .$select(Arrays.asList(DSL.coalesce(
+                    returningClob(ctx, returning),
+                    returningClob(ctx, (JSONArrayReturningStep<?>) (jsonb ? jsonbArray() : jsonArray()))
+                )))
+                .$distinct(false)
+                .$orderBy(Arrays.asList());
+
+            visitSubquery(ctx, s);
+        }
+        else {
+            JSONArrayAggOrderByStep<?> order;
+            JSONArrayAggReturningStep<?> returning;
+
+            returning = order = jsonb ? jsonbArrayaggEmulation(ctx, t, true, false) : jsonArrayaggEmulation(ctx, t, true, false);
+
+            // TODO: Re-apply derived table's ORDER BY clause as aggregate ORDER BY
+            if (multisetCondition)
+                returning = order.orderBy(t.fields());
+
+            Select<? extends Record1<?>> s = patchOracleArrayAggBug(
+                ctx,
+                select(DSL.coalesce(
+                    returningClob(ctx, returning),
+                    returningClob(ctx, (JSONArrayReturningStep<?>) (jsonb ? jsonbArray() : jsonArray()))
+                )).from(t)
+            );
+
+            if (multisetCondition && (jsonb ? NO_SUPPORT_JSONB_COMPARE : NO_SUPPORT_JSON_COMPARE).contains(ctx.dialect()))
+                ctx.visit(DSL.field(s).cast(VARCHAR));
+            else
+                visitSubquery(ctx, s);
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private static final void acceptMultisetSubqueryForXMLEmulation(Context<?> ctx, boolean multisetCondition, Select<Record1<XML>> s) {
         if (multisetCondition && NO_SUPPORT_XML_COMPARE.contains(ctx.dialect()))

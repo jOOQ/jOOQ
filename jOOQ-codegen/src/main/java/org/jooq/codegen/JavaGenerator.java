@@ -1518,14 +1518,14 @@ public class JavaGenerator extends AbstractGenerator {
     protected void generateRecord(TableDefinition table) {
         JavaWriter out = newJavaWriter(getFile(table, Mode.RECORD));
         log.info("Generating record", out.file().getName());
-        generateRecord0(table, out);
+        generateRecord(table, out);
         closeJavaWriter(out);
     }
 
     protected void generateUDTRecord(UDTDefinition udt) {
         JavaWriter out = newJavaWriter(getFile(udt, Mode.RECORD));
         log.info("Generating record", out.file().getName());
-        generateRecord0(udt, out);
+        generateUDTRecord(udt, out);
         closeJavaWriter(out);
     }
 

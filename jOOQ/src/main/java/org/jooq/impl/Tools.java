@@ -485,7 +485,7 @@ final class Tools {
          * <li>{@link SQLDialect#ASE} : 2000</li>
          * <li>{@link SQLDialect#INGRES} : 1024</li>
          * <li>{@link SQLDialect#ORACLE} : 32767</li>
-         * <li>{@link SQLDialect#POSTGRES} : 32767</li>
+         * <li>{@link SQLDialect#POSTGRES} : 65535</li>
          * <li>{@link SQLDialect#SQLITE} : 999</li>
          * <li>{@link SQLDialect#SQLSERVER} : 2100</li>
          * <li>{@link org.jooq.SQLDialect#TERADATA} : 2536</li>

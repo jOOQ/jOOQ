@@ -9065,7 +9065,7 @@ public interface DSLContext extends Scope {
      * @see java.sql.Statement#executeBatch()
      */
     @NotNull @CheckReturnValue
-    @Support
+    @Support({ AURORA_MYSQL, AURORA_POSTGRES, COCKROACHDB, CUBRID, DATABRICKS, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, MARIADB, MEMSQL, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE, TERADATA, YUGABYTEDB })
     Batch batchMerge(UpdatableRecord<?>... records);
 
     /**
@@ -9077,7 +9077,7 @@ public interface DSLContext extends Scope {
      * @see java.sql.Statement#executeBatch()
      */
     @NotNull @CheckReturnValue
-    @Support
+    @Support({ AURORA_MYSQL, AURORA_POSTGRES, COCKROACHDB, CUBRID, DATABRICKS, DB2, DERBY, FIREBIRD, H2, HANA, HSQLDB, INFORMIX, MARIADB, MEMSQL, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE, TERADATA, YUGABYTEDB })
     Batch batchMerge(Collection<? extends UpdatableRecord<?>> records);
 
     /**

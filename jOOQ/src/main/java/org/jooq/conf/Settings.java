@@ -4821,7 +4821,7 @@ public class Settings
      * <li>{@link org.jooq.SQLDialect#DATABRICKS} : 256</li>
      * <li>{@link org.jooq.SQLDialect#INGRES} : 1024</li>
      * <li>{@link org.jooq.SQLDialect#ORACLE} : 32767</li>
-     * <li>{@link org.jooq.SQLDialect#POSTGRES} : 32767</li>
+     * <li>{@link org.jooq.SQLDialect#POSTGRES} : 65535</li>
      * <li>{@link org.jooq.SQLDialect#SPANNER} : 950</li>
      * <li>{@link org.jooq.SQLDialect#SQLITE} : 999</li>
      * <li>{@link org.jooq.SQLDialect#SQLSERVER} : 2100</li>
@@ -4840,7 +4840,7 @@ public class Settings
      * <li>{@link org.jooq.SQLDialect#DATABRICKS} : 256</li>
      * <li>{@link org.jooq.SQLDialect#INGRES} : 1024</li>
      * <li>{@link org.jooq.SQLDialect#ORACLE} : 32767</li>
-     * <li>{@link org.jooq.SQLDialect#POSTGRES} : 32767</li>
+     * <li>{@link org.jooq.SQLDialect#POSTGRES} : 65535</li>
      * <li>{@link org.jooq.SQLDialect#SPANNER} : 950</li>
      * <li>{@link org.jooq.SQLDialect#SQLITE} : 999</li>
      * <li>{@link org.jooq.SQLDialect#SQLSERVER} : 2100</li>
@@ -9203,7 +9203,7 @@ public class Settings
      * <li>{@link org.jooq.SQLDialect#DATABRICKS} : 256</li>
      * <li>{@link org.jooq.SQLDialect#INGRES} : 1024</li>
      * <li>{@link org.jooq.SQLDialect#ORACLE} : 32767</li>
-     * <li>{@link org.jooq.SQLDialect#POSTGRES} : 32767</li>
+     * <li>{@link org.jooq.SQLDialect#POSTGRES} : 65535</li>
      * <li>{@link org.jooq.SQLDialect#SPANNER} : 950</li>
      * <li>{@link org.jooq.SQLDialect#SQLITE} : 999</li>
      * <li>{@link org.jooq.SQLDialect#SQLSERVER} : 2100</li>

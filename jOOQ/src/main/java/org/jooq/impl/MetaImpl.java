@@ -188,6 +188,7 @@ final class MetaImpl extends AbstractMeta {
 
 
 
+
     private static final Pattern         P_DUCKDB_IDENTITY_DEFAULT        = Pattern.compile("^(?i:nextval\\s*\\(.*\\)).*$");
     private static final Pattern         P_SYSINDEX_DERBY                 = Pattern.compile("^(?i:SQL\\d{10,}).*$");
     private static final Pattern         P_SYSINDEX_H2                    = Pattern.compile("^(?i:PRIMARY_KEY_|UK_INDEX_|FK_INDEX_|CONSTRAINT(_\\w+)?_INDEX_).*$");
@@ -1411,6 +1412,9 @@ final class MetaImpl extends AbstractMeta {
                     it.remove();
 
                 else switch (family()) {
+
+
+
 
 
 

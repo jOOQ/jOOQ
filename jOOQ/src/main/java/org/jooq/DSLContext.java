@@ -9396,7 +9396,7 @@ public interface DSLContext extends Scope {
      * @see java.sql.Statement#executeBatch()
      */
     @NotNull @CheckReturnValue
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     Batch batchMerge(UpdatableRecord<?>... records);
 
     /**
@@ -9408,7 +9408,7 @@ public interface DSLContext extends Scope {
      * @see java.sql.Statement#executeBatch()
      */
     @NotNull @CheckReturnValue
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     Batch batchMerge(Collection<? extends UpdatableRecord<?>> records);
 
     /**

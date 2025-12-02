@@ -1174,6 +1174,11 @@ final class Convert {
 
                 // [#1501] Strings can be converted to java.sql.Date
                 else if (fromClass == String.class && toClass == java.sql.Timestamp.class) {
+
+                    // [#11454] Some RDBMS produce ISO 8601 formats instead of SQL formats.
+                    if (((String) from).endsWith("Z"))
+                        return from(new ConvertAll<>(OffsetDateTime.class).from(from, scope), scope);
+
                     try {
                         return (U) java.sql.Timestamp.valueOf(patchIso8601Timestamp((String) from, false));
                     }
@@ -1224,6 +1229,11 @@ final class Convert {
                 }
 
                 else if (fromClass == String.class && toClass == LocalDateTime.class) {
+
+                    // [#11454] Some RDBMS produce zoned timestamps instead of local ones.
+                    if (((String) from).endsWith("Z"))
+                        return from(new ConvertAll<>(OffsetDateTime.class).from(from, scope), scope);
+
                     try {
                         return (U) LocalDateTime.parse(patchIso8601Timestamp((String) from, true));
                     }

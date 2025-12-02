@@ -54,6 +54,7 @@ import static org.jooq.impl.Names.N_SAFE_CAST;
 import static org.jooq.impl.Names.N_TO_BLOB;
 import static org.jooq.impl.Names.N_TO_CLOB;
 import static org.jooq.impl.Names.N_TO_DATE;
+import static org.jooq.impl.Names.N_TO_JSON_STRING;
 import static org.jooq.impl.Names.N_TO_TIMESTAMP;
 import static org.jooq.impl.Names.N_TRY_CAST;
 import static org.jooq.impl.Names.N_XMLTYPE;
@@ -108,6 +109,11 @@ final class Cast<T> extends AbstractField<T> implements QOM.Cast<T> {
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
+
+
+
+
+
 
 
 
@@ -250,6 +256,30 @@ final class Cast<T> extends AbstractField<T> implements QOM.Cast<T> {
                 super.accept(ctx);
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -113,6 +113,7 @@ import static org.jooq.impl.Keywords.K_IF_EXISTS;
 import static org.jooq.impl.Keywords.K_IF_NOT_EXISTS;
 import static org.jooq.impl.Keywords.K_LIKE;
 import static org.jooq.impl.Keywords.K_MODIFY;
+import static org.jooq.impl.Keywords.K_NOT_IN;
 import static org.jooq.impl.Keywords.K_NOT_NULL;
 import static org.jooq.impl.Keywords.K_NULL;
 import static org.jooq.impl.Keywords.K_POSITION;
@@ -2104,6 +2105,14 @@ implements
                 break;
         }
     }
+
+
+
+
+
+
+
+
 
 
 

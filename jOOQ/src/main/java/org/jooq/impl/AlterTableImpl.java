@@ -104,6 +104,9 @@ import static org.jooq.impl.Keywords.K_ALTER_COLUMN;
 import static org.jooq.impl.Keywords.K_ALTER_CONSTRAINT;
 import static org.jooq.impl.Keywords.K_ALTER_TABLE;
 import static org.jooq.impl.Keywords.K_BEFORE;
+import static org.jooq.impl.Keywords.K_BEGIN_CATCH;
+import static org.jooq.impl.Keywords.K_BEGIN_TRY;
+import static org.jooq.impl.Keywords.K_BY;
 import static org.jooq.impl.Keywords.K_CASCADE;
 import static org.jooq.impl.Keywords.K_CHANGE;
 import static org.jooq.impl.Keywords.K_CHANGE_COLUMN;
@@ -117,7 +120,9 @@ import static org.jooq.impl.Keywords.K_DROP_CONSTRAINT;
 import static org.jooq.impl.Keywords.K_DROP_DEFAULT;
 import static org.jooq.impl.Keywords.K_DROP_NOT_NULL;
 import static org.jooq.impl.Keywords.K_ELSE;
+import static org.jooq.impl.Keywords.K_END_CATCH;
 import static org.jooq.impl.Keywords.K_END_IF;
+import static org.jooq.impl.Keywords.K_END_TRY;
 import static org.jooq.impl.Keywords.K_EXCEPTION;
 import static org.jooq.impl.Keywords.K_EXEC;
 import static org.jooq.impl.Keywords.K_FIRST;
@@ -199,6 +204,7 @@ import org.jooq.Nullability;
 import org.jooq.Query;
 import org.jooq.Record1;
 import org.jooq.SQLDialect;
+import org.jooq.SQLDialectCategory;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableElement;
@@ -1060,6 +1066,13 @@ implements
 
 
 
+
+
+
+
+
+
+
         if (renameIndexTo != null) {
             switch (family) {
 
@@ -1766,6 +1779,25 @@ implements
                 break;
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

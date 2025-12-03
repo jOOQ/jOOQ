@@ -136,6 +136,7 @@ final class Names {
     static final Name N_EVERY                       = systemName("every");
     static final Name N_EXPLODE                     = systemName("explode");
     static final Name N_EXTRACT                     = systemName("extract");
+    static final Name N_FARM_FINGERPRINT            = systemName("farm_fingerprint");
     static final Name N_FIRST_VALUE                 = systemName("first_value");
     static final Name N_FLASHBACK                   = systemName("flashback");
     static final Name N_FUNCTION                    = systemName("function");

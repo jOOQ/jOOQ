@@ -684,7 +684,7 @@ final class Diff extends AbstractScope {
 
                     if ((type1.hasLength() && type2.hasLength() && (type1.lengthDefined() != type2.lengthDefined() || type1.length() != type2.length()))
                         || (type1.hasPrecision() && type2.hasPrecision() && precisionDifference(type1, type2))
-                        || (type1.hasScale() && type2.hasScale() && (type1.scaleDefined() != type2.scaleDefined() || type1.scale() != type2.scale())))
+                        || (type1.hasScale() && type2.hasScale() && scaleDifference(type1, type2)))
                         r.queries.add(ctx.alterTable(t1).alter(f1).set(type2));
 
                     // [#9656] TODO: Change collation
@@ -732,8 +732,11 @@ final class Diff extends AbstractScope {
                         return false;
 
                     // [#10864] In most dialects, DECIMAL and NUMERIC are aliases and don't need to be changed into each other
+                    else if (type1.getFromType() == BigDecimal.class && type2.getFromType() == BigDecimal.class)
+                        return false;
+
                     else
-                        return type1.getType() != BigDecimal.class || type2.getType() != BigDecimal.class;
+                        return !type1.getDDLTypeName(configuration).equals(type2.getDDLTypeName(configuration));
                 }
 
                 private final boolean precisionDifference(DataType<?> type1, DataType<?> type2) {
@@ -744,8 +747,19 @@ final class Diff extends AbstractScope {
 
                     if (d1 || d2)
                         return d1 != d2;
+
+                    // [#11454] Some dialects may still produce the same type with different declared precisions
+                    //          E.g. when the precision source is from a DDL script that is translated to the dialect,
+                    //          the precision is omitted, and thus NUMERIC(10) is de fact just NUMERIC
                     else
-                        return type1.precision() != type2.precision();
+                        return type1.precision() != type2.precision()
+                            && !type1.getDDLTypeName(configuration).equals(type2.getDDLTypeName(configuration));
+                }
+
+                private final boolean scaleDifference(DataType<?> type1, DataType<?> type2) {
+                    return (type1.scaleDefined() != type2.scaleDefined()
+                         || type1.scale() != type2.scale())
+                        && !type1.getDDLTypeName(configuration).equals(type2.getDDLTypeName(configuration));
                 }
 
                 private final boolean defaultPrecision(DataType<?> type) {

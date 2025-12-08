@@ -4295,12 +4295,12 @@ public final class QOM {
         //permits
         //    Atan2
     {
-        @NotNull default Field<? extends Number> $x() { return $arg1(); }
+        @NotNull default Field<? extends Number> $y() { return $arg1(); }
         @CheckReturnValue
-        @NotNull default Atan2 $x(Field<? extends Number> newX) { return $arg1(newX); }
-        @NotNull default Field<? extends Number> $y() { return $arg2(); }
+        @NotNull default Atan2 $y(Field<? extends Number> newY) { return $arg1(newY); }
+        @NotNull default Field<? extends Number> $x() { return $arg2(); }
         @CheckReturnValue
-        @NotNull default Atan2 $y(Field<? extends Number> newY) { return $arg2(newY); }
+        @NotNull default Atan2 $x(Field<? extends Number> newX) { return $arg2(newX); }
     }
 
     /**

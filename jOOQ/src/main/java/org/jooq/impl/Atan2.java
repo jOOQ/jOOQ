@@ -77,20 +77,20 @@ implements
     QOM.Atan2
 {
 
-    final Field<? extends Number> x;
     final Field<? extends Number> y;
+    final Field<? extends Number> x;
 
     Atan2(
-        Field<? extends Number> x,
-        Field<? extends Number> y
+        Field<? extends Number> y,
+        Field<? extends Number> x
     ) {
         super(
             N_ATAN2,
-            allNotNull(NUMERIC, x, y)
+            allNotNull(NUMERIC, y, x)
         );
 
-        this.x = nullSafeNotNull(x, INTEGER);
         this.y = nullSafeNotNull(y, INTEGER);
+        this.x = nullSafeNotNull(x, INTEGER);
     }
 
     // -------------------------------------------------------------------------
@@ -120,7 +120,7 @@ implements
 
 
             default:
-                ctx.visit(function(N_ATAN2, getDataType(), x, y));
+                ctx.visit(function(N_ATAN2, getDataType(), y, x));
                 break;
         }
     }
@@ -144,12 +144,12 @@ implements
 
     @Override
     public final Field<? extends Number> $arg1() {
-        return x;
+        return y;
     }
 
     @Override
     public final Field<? extends Number> $arg2() {
-        return y;
+        return x;
     }
 
     @Override
@@ -175,8 +175,8 @@ implements
     public boolean equals(Object that) {
         if (that instanceof QOM.Atan2 o) {
             return
-                Objects.equals($x(), o.$x()) &&
-                Objects.equals($y(), o.$y())
+                Objects.equals($y(), o.$y()) &&
+                Objects.equals($x(), o.$x())
             ;
         }
         else

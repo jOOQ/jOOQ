@@ -41,6 +41,7 @@ import static org.jooq.SQLDialect.CUBRID;
 // ...
 // ...
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.DUCKDB;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
@@ -104,7 +105,7 @@ public interface MergeOnConditionStep<R extends Record> extends MergeMatchedStep
      * {@link Operator#AND} operator and proceed to the next step.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES })
     MergeOnConditionStep<R> and(Condition condition);
 
     /**
@@ -112,7 +113,7 @@ public interface MergeOnConditionStep<R extends Record> extends MergeMatchedStep
      * {@link Operator#AND} operator and proceed to the next step.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES })
     MergeOnConditionStep<R> and(Field<Boolean> condition);
 
     /**
@@ -128,7 +129,7 @@ public interface MergeOnConditionStep<R extends Record> extends MergeMatchedStep
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES })
     @PlainSQL
     MergeOnConditionStep<R> and(SQL sql);
 
@@ -145,7 +146,7 @@ public interface MergeOnConditionStep<R extends Record> extends MergeMatchedStep
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES })
     @PlainSQL
     MergeOnConditionStep<R> and(String sql);
 
@@ -163,7 +164,7 @@ public interface MergeOnConditionStep<R extends Record> extends MergeMatchedStep
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES })
     @PlainSQL
     MergeOnConditionStep<R> and(String sql, Object... bindings);
 
@@ -181,7 +182,7 @@ public interface MergeOnConditionStep<R extends Record> extends MergeMatchedStep
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES })
     @PlainSQL
     MergeOnConditionStep<R> and(String sql, QueryPart... parts);
 
@@ -190,7 +191,7 @@ public interface MergeOnConditionStep<R extends Record> extends MergeMatchedStep
      * the {@link Operator#AND} operator and proceed to the next step.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES })
     MergeOnConditionStep<R> andNot(Condition condition);
 
     /**
@@ -198,7 +199,7 @@ public interface MergeOnConditionStep<R extends Record> extends MergeMatchedStep
      * the {@link Operator#AND} operator and proceed to the next step.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES })
     MergeOnConditionStep<R> andNot(Field<Boolean> condition);
 
     /**
@@ -206,7 +207,7 @@ public interface MergeOnConditionStep<R extends Record> extends MergeMatchedStep
      * the {@link Operator#AND} operator and proceed to the next step.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES })
     MergeOnConditionStep<R> andExists(Select<?> select);
 
     /**
@@ -214,7 +215,7 @@ public interface MergeOnConditionStep<R extends Record> extends MergeMatchedStep
      * the {@link Operator#AND} operator and proceed to the next step.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES })
     MergeOnConditionStep<R> andNotExists(Select<?> select);
 
     /**
@@ -222,7 +223,7 @@ public interface MergeOnConditionStep<R extends Record> extends MergeMatchedStep
      * {@link Operator#OR} operator and proceed to the next step.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES })
     MergeOnConditionStep<R> or(Condition condition);
 
     /**
@@ -230,7 +231,7 @@ public interface MergeOnConditionStep<R extends Record> extends MergeMatchedStep
      * {@link Operator#OR} operator and proceed to the next step.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES })
     MergeOnConditionStep<R> or(Field<Boolean> condition);
 
     /**
@@ -246,7 +247,7 @@ public interface MergeOnConditionStep<R extends Record> extends MergeMatchedStep
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES })
     @PlainSQL
     MergeOnConditionStep<R> or(SQL sql);
 
@@ -263,7 +264,7 @@ public interface MergeOnConditionStep<R extends Record> extends MergeMatchedStep
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES })
     @PlainSQL
     MergeOnConditionStep<R> or(String sql);
 
@@ -281,7 +282,7 @@ public interface MergeOnConditionStep<R extends Record> extends MergeMatchedStep
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES })
     @PlainSQL
     MergeOnConditionStep<R> or(String sql, Object... bindings);
 
@@ -299,7 +300,7 @@ public interface MergeOnConditionStep<R extends Record> extends MergeMatchedStep
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES })
     @PlainSQL
     MergeOnConditionStep<R> or(String sql, QueryPart... parts);
 
@@ -308,7 +309,7 @@ public interface MergeOnConditionStep<R extends Record> extends MergeMatchedStep
      * the {@link Operator#OR} operator and proceed to the next step.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES })
     MergeOnConditionStep<R> orNot(Condition condition);
 
     /**
@@ -316,7 +317,7 @@ public interface MergeOnConditionStep<R extends Record> extends MergeMatchedStep
      * the {@link Operator#OR} operator and proceed to the next step.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES })
     MergeOnConditionStep<R> orNot(Field<Boolean> condition);
 
     /**
@@ -324,7 +325,7 @@ public interface MergeOnConditionStep<R extends Record> extends MergeMatchedStep
      * the {@link Operator#OR} operator and proceed to the next step.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES })
     MergeOnConditionStep<R> orExists(Select<?> select);
 
     /**
@@ -332,6 +333,6 @@ public interface MergeOnConditionStep<R extends Record> extends MergeMatchedStep
      * the {@link Operator#OR} operator and proceed to the next step.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES })
     MergeOnConditionStep<R> orNotExists(Select<?> select);
 }

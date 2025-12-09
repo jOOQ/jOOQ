@@ -41,6 +41,7 @@ import static org.jooq.SQLDialect.CUBRID;
 // ...
 // ...
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.DUCKDB;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
@@ -105,7 +106,7 @@ public interface MergeUsingStep<R extends Record> extends MergeColumnsStep<R> {
      * ordinary table references, not with derived tables.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES })
     MergeOnStep<R> using(TableLike<?> table);
 
     /**
@@ -117,7 +118,7 @@ public interface MergeUsingStep<R extends Record> extends MergeColumnsStep<R> {
      * Server, where derived tables need to be aliased.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES })
     MergeOnStep<R> usingDual();
 
 }

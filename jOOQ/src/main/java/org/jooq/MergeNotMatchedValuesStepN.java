@@ -41,6 +41,7 @@ import static org.jooq.SQLDialect.CUBRID;
 // ...
 // ...
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.DUCKDB;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
@@ -86,7 +87,7 @@ public interface MergeNotMatchedValuesStepN<R extends Record> {
      * statement's <code>WHEN NOT MATCHED THEN INSERT</code> clause.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES })
     MergeNotMatchedWhereStep<R> values(Object... values);
 
     /**
@@ -94,7 +95,7 @@ public interface MergeNotMatchedValuesStepN<R extends Record> {
      * statement's <code>WHEN NOT MATCHED THEN INSERT</code> clause.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES })
     MergeNotMatchedWhereStep<R> values(Field<?>... values);
 
     /**
@@ -102,6 +103,6 @@ public interface MergeNotMatchedValuesStepN<R extends Record> {
      * statement's <code>WHEN NOT MATCHED THEN INSERT</code> clause.
      */
     @NotNull @CheckReturnValue
-    @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES })
     MergeNotMatchedWhereStep<R> values(Collection<?> values);
 }

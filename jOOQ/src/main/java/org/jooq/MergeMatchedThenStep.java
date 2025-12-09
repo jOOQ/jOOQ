@@ -40,6 +40,7 @@ package org.jooq;
 // ...
 // ...
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.DUCKDB;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
@@ -100,7 +101,7 @@ public interface MergeMatchedThenStep<R extends Record> {
      * <code>MERGE</code> statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES })
     MergeMatchedSetStep<R> thenUpdate();
 
     /**
@@ -108,6 +109,6 @@ public interface MergeMatchedThenStep<R extends Record> {
      * <code>MERGE</code> statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES })
     MergeMatchedStep<R> thenDelete();
 }

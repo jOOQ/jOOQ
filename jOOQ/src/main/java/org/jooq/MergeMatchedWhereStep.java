@@ -40,6 +40,7 @@ package org.jooq;
 // ...
 // ...
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.DUCKDB;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
@@ -115,7 +116,7 @@ public interface MergeMatchedWhereStep<R extends Record> extends MergeMatchedDel
      * </code></pre>
      */
     @NotNull @CheckReturnValue
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES })
     MergeMatchedDeleteStep<R> where(Condition condition);
 
     /**
@@ -135,6 +136,6 @@ public interface MergeMatchedWhereStep<R extends Record> extends MergeMatchedDel
      * </code></pre>
      */
     @NotNull @CheckReturnValue
-    @Support({ DERBY, FIREBIRD, H2, HSQLDB, POSTGRES })
+    @Support({ DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES })
     MergeMatchedDeleteStep<R> where(Field<Boolean> condition);
 }

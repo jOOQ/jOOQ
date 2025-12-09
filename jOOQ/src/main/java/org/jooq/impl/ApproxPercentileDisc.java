@@ -128,17 +128,25 @@ implements
             case DUCKDB:
             case TRINO: {
                 SortField<?> sort = withinGroupOrderBy.$first();
-                Field<?> p = getArgument(0);
+                Field<?> a1 = sort.$sortOrder() == SortOrder.DESC ? inline(1).minus(getArgument(0)) : getArgument(0);
+                Field<?> a2 = sort.$field();
 
                 acceptFunctionName(ctx);
-                ctx.sql('(').visit(sort.$sortOrder() == SortOrder.DESC ? inline(1).minus(p) : p);
 
-                if (ctx.family() == CLICKHOUSE)
-                    ctx.sql(")(");
-                else
-                    ctx.sql(", ");
+                switch (ctx.family()) {
+                    case CLICKHOUSE:
+                        ctx.sql('(').visit(a1).sql(")(").visit(a2).sql(')');
+                        break;
 
-                ctx.visit(sort.$field()).sql(')');
+                    // [#19293] DuckDB only has overloads accepting FLOAT types, not DOUBLE types.
+                    case DUCKDB:
+                        ctx.sql('(').visit(a2).sql(", ").visit(castIfNeeded(a1, REAL)).sql(')');
+                        break;
+
+                    default:
+                        ctx.sql('(').visit(a1).sql(", ").visit(a2).sql(')');
+                        break;
+                }
 
                 acceptFilterClause(ctx);
                 acceptOverClause(ctx);

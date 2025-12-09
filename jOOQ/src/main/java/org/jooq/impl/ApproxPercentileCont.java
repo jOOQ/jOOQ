@@ -103,6 +103,7 @@ implements
 
 
             case CLICKHOUSE:
+            case DUCKDB:
             case TRINO: {
                 ctx.visit(ofo(new ApproxPercentileDisc($percentile())));
                 break;
@@ -126,6 +127,10 @@ implements
 
 
 
+
+            case DUCKDB:
+                ctx.visit(N_APPROX_QUANTILE);
+                break;
 
 
 

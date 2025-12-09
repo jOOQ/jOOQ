@@ -19322,24 +19322,13 @@ public class DSL {
     /**
      * The <code>ATAN2</code> function.
      *
-     * @param x is wrapped as {@link DSL#val(Object)}.
      * @param y is wrapped as {@link DSL#val(Object)}.
-     */
-    @NotNull
-    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    public static Field<BigDecimal> atan2(Number x, Number y) {
-        return new Atan2(Tools.field(x), Tools.field(y));
-    }
-
-    /**
-     * The <code>ATAN2</code> function.
-     *
      * @param x is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
     @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    public static Field<BigDecimal> atan2(Number x, Field<? extends Number> y) {
-        return new Atan2(Tools.field(x), y);
+    public static Field<BigDecimal> atan2(Number y, Number x) {
+        return new Atan2(Tools.field(y), Tools.field(x));
     }
 
     /**
@@ -19349,8 +19338,19 @@ public class DSL {
      */
     @NotNull
     @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    public static Field<BigDecimal> atan2(Field<? extends Number> x, Number y) {
-        return new Atan2(x, Tools.field(y));
+    public static Field<BigDecimal> atan2(Number y, Field<? extends Number> x) {
+        return new Atan2(Tools.field(y), x);
+    }
+
+    /**
+     * The <code>ATAN2</code> function.
+     *
+     * @param x is wrapped as {@link DSL#val(Object)}.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static Field<BigDecimal> atan2(Field<? extends Number> y, Number x) {
+        return new Atan2(y, Tools.field(x));
     }
 
     /**
@@ -19358,8 +19358,8 @@ public class DSL {
      */
     @NotNull
     @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    public static Field<BigDecimal> atan2(Field<? extends Number> x, Field<? extends Number> y) {
-        return new Atan2(x, y);
+    public static Field<BigDecimal> atan2(Field<? extends Number> y, Field<? extends Number> x) {
+        return new Atan2(y, x);
     }
 
     /**

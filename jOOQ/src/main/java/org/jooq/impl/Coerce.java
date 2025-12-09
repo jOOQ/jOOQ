@@ -164,6 +164,16 @@ implements
         return field;
     }
 
+    @Override
+    public final Coerce<T> $field(Field<?> newField) {
+        return new Coerce<>(newField, $dataType());
+    }
+
+    @Override
+    public final <U> Coerce<U> $dataType(DataType<U> newType) {
+        return new Coerce<>($field(), newType);
+    }
+
 
 
 

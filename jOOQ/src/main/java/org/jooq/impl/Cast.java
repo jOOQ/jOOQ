@@ -39,7 +39,6 @@ package org.jooq.impl;
 
 import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
-// ...
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_CAST;
@@ -81,7 +80,6 @@ import org.jooq.LanguageContext;
 import org.jooq.QueryPart;
 import org.jooq.RenderContext.CastMode;
 // ...
-import org.jooq.SQLDialect;
 // ...
 import org.jooq.impl.QOM.UTransient;
 
@@ -493,6 +491,16 @@ final class Cast<T> extends AbstractField<T> implements QOM.Cast<T> {
     @Override
     public final Field<?> $field() {
         return field;
+    }
+
+    @Override
+    public final Cast<T> $field(Field<?> newField) {
+        return new Cast<>(newField, $dataType());
+    }
+
+    @Override
+    public final <U> Cast<U> $dataType(DataType<U> newType) {
+        return new Cast<>($field(), newType);
     }
 
 

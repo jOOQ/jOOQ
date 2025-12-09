@@ -1706,6 +1706,12 @@ public final class QOM {
             Cast*/
     {
         @NotNull Field<?> $field();
+        @CheckReturnValue
+        @NotNull Cast<T> $field(Field<?> field);
+        @Override
+        @NotNull DataType<T> $dataType();
+        @CheckReturnValue
+        @NotNull <U> Cast<U> $dataType(DataType<U> type);
     }
 
     public /*sealed*/ interface Coerce<T>
@@ -1715,6 +1721,12 @@ public final class QOM {
             Coerce*/
     {
         @NotNull Field<?> $field();
+        @CheckReturnValue
+        @NotNull Coerce<T> $field(Field<?> field);
+        @Override
+        @NotNull DataType<T> $dataType();
+        @CheckReturnValue
+        @NotNull <U> Coerce<U> $dataType(DataType<U> type);
     }
 
     public /*sealed*/ interface Default<T>

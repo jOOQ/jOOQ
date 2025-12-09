@@ -140,6 +140,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.BiFunction;
+import java.util.function.Consumer;
 
 import org.jooq.Asterisk;
 import org.jooq.Binding;
@@ -177,6 +178,7 @@ import org.jooq.UniqueKey;
 import org.jooq.Update;
 import org.jooq.conf.ExecuteWithoutWhere;
 import org.jooq.conf.FetchTriggerValuesAfterReturning;
+import org.jooq.conf.ParamType;
 import org.jooq.conf.RenderNameCase;
 import org.jooq.conf.SettingsTools;
 import org.jooq.exception.DataAccessException;
@@ -971,8 +973,21 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
 
                 ctx.formatSeparator()
                    .visit(K_RETURNING)
-                   .sql(' ')
-                   .declareFields(true, c -> c.visit(returningOrResolvedAsterisks(c)));
+                   .sql(' ');
+
+                Consumer<Context<?>> r = c1 -> c1.declareFields(true, c2 -> c2.visit(returningOrResolvedAsterisks(c2)));
+
+                switch (ctx.family()) {
+
+                    // [#19483] DuckDB doesn't support bind values in the RETURNING clause.
+                    case DUCKDB:
+                        ctx.paramType(ParamType.INLINED, r);
+                        break;
+
+                    default:
+                        r.accept(ctx);
+                        break;
+                }
 
                 if (unqualify)
                     ctx.qualify(qualify);

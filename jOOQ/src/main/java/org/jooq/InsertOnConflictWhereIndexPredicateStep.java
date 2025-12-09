@@ -92,7 +92,7 @@ public interface InsertOnConflictWhereIndexPredicateStep<R extends Record> exten
      * <code>INSERT</code> statement's <code>ON CONFLICT …</code> clause.
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ POSTGRES, SQLITE, YUGABYTEDB })
     InsertOnConflictDoUpdateStep<R> where(Condition condition);
 
     /**
@@ -101,7 +101,7 @@ public interface InsertOnConflictWhereIndexPredicateStep<R extends Record> exten
      * connecting them with each other using {@link Operator#AND}.
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ POSTGRES, SQLITE, YUGABYTEDB })
     InsertOnConflictDoUpdateStep<R> where(Condition... conditions);
 
     /**
@@ -110,7 +110,7 @@ public interface InsertOnConflictWhereIndexPredicateStep<R extends Record> exten
      * connecting them with each other using {@link Operator#AND}.
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ POSTGRES, SQLITE, YUGABYTEDB })
     InsertOnConflictDoUpdateStep<R> where(Collection<? extends Condition> conditions);
 
     /**
@@ -118,7 +118,7 @@ public interface InsertOnConflictWhereIndexPredicateStep<R extends Record> exten
      * <code>INSERT</code> statement's <code>ON CONFLICT …</code> clause.
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ POSTGRES, SQLITE, YUGABYTEDB })
     InsertOnConflictDoUpdateStep<R> where(Field<Boolean> field);
 
     /**
@@ -134,7 +134,7 @@ public interface InsertOnConflictWhereIndexPredicateStep<R extends Record> exten
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ POSTGRES, SQLITE, YUGABYTEDB })
     @PlainSQL
     InsertOnConflictDoUpdateStep<R> where(SQL sql);
 
@@ -151,7 +151,7 @@ public interface InsertOnConflictWhereIndexPredicateStep<R extends Record> exten
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ POSTGRES, SQLITE, YUGABYTEDB })
     @PlainSQL
     InsertOnConflictDoUpdateStep<R> where(String sql);
 
@@ -169,7 +169,7 @@ public interface InsertOnConflictWhereIndexPredicateStep<R extends Record> exten
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ POSTGRES, SQLITE, YUGABYTEDB })
     @PlainSQL
     InsertOnConflictDoUpdateStep<R> where(String sql, Object... bindings);
 
@@ -187,7 +187,7 @@ public interface InsertOnConflictWhereIndexPredicateStep<R extends Record> exten
      * @see SQL
      */
     @NotNull @CheckReturnValue
-    @Support({ DUCKDB, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ POSTGRES, SQLITE, YUGABYTEDB })
     @PlainSQL
     InsertOnConflictDoUpdateStep<R> where(String sql, QueryPart... parts);
 }

@@ -5029,7 +5029,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     break;
 
                 default:
-                    throw new UnsupportedOperationException("Cannot inline a value of type Result using " + emulateMultiset(ctx.configuration()) + " MULTISET emulation.");
+                    throw new UnsupportedOperationException("Cannot bind a value of type Result using " + emulateMultiset(ctx.configuration()) + " MULTISET emulation.");
             }
         }
 

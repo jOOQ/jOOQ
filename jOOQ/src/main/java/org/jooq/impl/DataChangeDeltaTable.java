@@ -41,6 +41,7 @@ package org.jooq.impl;
 
 // ...
 // ...
+import static org.jooq.SQLDialect.DUCKDB;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.MARIADB;
@@ -93,9 +94,9 @@ implements
 {
 
     static final Set<SQLDialect> EMULATE_USING_CTE             = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
-    static final Set<SQLDialect> EMULATE_OLD_USING_RETURNING   = SQLDialect.supportedBy(FIREBIRD, MARIADB);
-    static final Set<SQLDialect> EMULATE_NEW_USING_RETURNING   = SQLDialect.supportedBy();
-    static final Set<SQLDialect> EMULATE_FINAL_USING_RETURNING = SQLDialect.supportedBy(FIREBIRD, MARIADB);
+    static final Set<SQLDialect> EMULATE_OLD_USING_RETURNING   = SQLDialect.supportedBy(DUCKDB, FIREBIRD, MARIADB);
+    static final Set<SQLDialect> EMULATE_NEW_USING_RETURNING   = SQLDialect.supportedBy(DUCKDB);
+    static final Set<SQLDialect> EMULATE_FINAL_USING_RETURNING = SQLDialect.supportedBy(DUCKDB, FIREBIRD, MARIADB);
 
     final ResultOption           resultOption;
     final DMLQuery<R>            query;

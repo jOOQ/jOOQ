@@ -628,22 +628,29 @@ public class JavaGenerator extends AbstractGenerator {
 
     private void generate(CatalogDefinition catalog) {
         String newVersion = catalog.getDatabase().getCatalogVersionProvider().version(catalog);
+        String newHash = generateGeneratedAnnotationConfigurationHash() ? configurationHash() : null;
 
         if (StringUtils.isBlank(newVersion)) {
             log.info("No schema version is applied for catalog " + catalog.getInputName() + ". Regenerating.");
         }
         else {
             catalogVersions.put(catalog, newVersion);
-            String oldVersion = readVersion(getFile(catalog), "catalog");
+            VersionAndHash oldVersionAndHash = readVersion(getFile(catalog), "catalog");
 
-            if (StringUtils.isBlank(oldVersion)) {
+            if (oldVersionAndHash == null || StringUtils.isBlank(oldVersionAndHash.version())) {
                 log.info("No previous version available for catalog " + catalog.getInputName() + ". Regenerating.");
             }
-            else if (!oldVersion.equals(newVersion)) {
-                log.info("Existing version " + oldVersion + " is not up to date with " + newVersion + " for catalog " + catalog.getInputName() + ". Regenerating.");
+            else if (StringUtils.isBlank(oldVersionAndHash.hash())) {
+                log.info("No previous configuration hash available for catalog " + catalog.getInputName() + ". Regenerating.");
+            }
+            else if (!oldVersionAndHash.version().equals(newVersion)) {
+                log.info("Existing version " + oldVersionAndHash.version() + " is not up to date with " + newVersion + " for catalog " + catalog.getInputName() + ". Regenerating.");
+            }
+            else if (!oldVersionAndHash.hash().equals(newHash)) {
+                log.info("Existing configuration hash " + oldVersionAndHash.hash() + " is not up to date with " + newHash + " for catalog " + catalog.getInputName() + ". Regenerating.");
             }
             else {
-                log.info("Existing version " + oldVersion + " is up to date with " + newVersion + " for catalog " + catalog.getInputName() + ". Ignoring catalog.");
+                log.info("Existing version " + oldVersionAndHash.version() + " is up to date with " + newVersion + " for catalog " + catalog.getInputName() + ". Ignoring catalog.");
 
                 // [#5614] If a catalog is not regenerated, we must flag it as "not for removal", because its contents
                 //         will not be listed in the files directory.
@@ -678,23 +685,33 @@ public class JavaGenerator extends AbstractGenerator {
 
     private void generate(SchemaDefinition schema) {
         String newVersion = schema.getDatabase().getSchemaVersionProvider().version(schema);
+        String newHash = generateGeneratedAnnotationConfigurationHash() ? configurationHash() : null;
 
         if (StringUtils.isBlank(newVersion)) {
             log.info("No schema version is applied for schema " + schema.getInputName() + ". Regenerating.");
         }
+        else if (StringUtils.isBlank(newHash)) {
+            log.info("No configuration hash is applied for schema " + schema.getInputName() + ". Regenerating.");
+        }
         else {
             schemaVersions.put(schema, newVersion);
-            String oldVersion = readVersion(getFile(schema), "schema");
+            VersionAndHash oldVersionAndHash = readVersion(getFile(schema), "schema");
 
-            if (StringUtils.isBlank(oldVersion)) {
+            if (oldVersionAndHash == null || StringUtils.isBlank(oldVersionAndHash.version())) {
                 log.info("No previous version available for schema " + schema.getInputName() + ". Regenerating.");
             }
-            else if (!oldVersion.equals(newVersion)) {
-                log.info("Existing version " + oldVersion + " is not up to date with " + newVersion + " for schema " + schema.getInputName() + ". Regenerating.");
+            else if (StringUtils.isBlank(oldVersionAndHash.hash())) {
+                log.info("No previous configuration hash available for schema " + schema.getInputName() + ". Regenerating.");
+            }
+            else if (!oldVersionAndHash.version().equals(newVersion)) {
+                log.info("Existing version " + oldVersionAndHash.version() + " is not up to date with " + newVersion + " for schema " + schema.getInputName() + ". Regenerating.");
+            }
+            else if (!oldVersionAndHash.hash().equals(newHash)) {
+                log.info("Existing configuration hash " + oldVersionAndHash.hash() + " is not up to date with " + newHash + " for schema " + schema.getInputName() + ". Regenerating.");
             }
             else {
                 if (database.skipRegenerationOnUpToDateVersion()) {
-                    log.info("Existing version " + oldVersion + " is up to date with " + newVersion + " for schema " + schema.getInputName() + ". Ignoring schema.");
+                    log.info("Existing version " + oldVersionAndHash.version() + " is up to date with " + newVersion + " for schema " + schema.getInputName() + ". Ignoring schema.");
 
                     // [#5614] If a schema is not regenerated, we must flag it as "not for removal", because its contents
                     //         will not be listed in the files directory.
@@ -702,7 +719,7 @@ public class JavaGenerator extends AbstractGenerator {
                     return;
                 }
                 else
-                    log.info("Existing version " + oldVersion + " is up to date with " + newVersion + " for schema " + schema.getInputName() + ". Regenerating because of skipRegenerationOnUpToDateVersion flag.");
+                    log.info("Existing version " + oldVersionAndHash.version() + " is up to date with " + newVersion + " for schema " + schema.getInputName() + ". Regenerating because of skipRegenerationOnUpToDateVersion flag.");
             }
         }
 
@@ -11645,10 +11662,17 @@ public class JavaGenerator extends AbstractGenerator {
                 else
                     out.println("value = {");
 
-                out.println("\"https://www.jooq.org\"%s", (generateGeneratedAnnotationJooqVersion() || hasCatalogVersion || hasSchemaVersion ? "," : ""));
+                out.println("\"https://www.jooq.org\"%s", (
+                    generateGeneratedAnnotationJooqVersion() ||
+                    generateGeneratedAnnotationConfigurationHash() ||
+                    hasCatalogVersion ||
+                    hasSchemaVersion ? "," : ""
+                ));
 
                 if (generateGeneratedAnnotationJooqVersion())
-                    out.println("\"jOOQ version:%s\"%s", Constants.VERSION, (hasCatalogVersion || hasSchemaVersion ? "," : ""));
+                    out.println("\"jOOQ version:%s\"%s", Constants.VERSION, (generateGeneratedAnnotationConfigurationHash() || hasCatalogVersion || hasSchemaVersion ? "," : ""));
+                if (generateGeneratedAnnotationConfigurationHash())
+                    out.println("\"configuration hash:%s\"%s", configurationHash(), (hasCatalogVersion || hasSchemaVersion ? "," : ""));
                 if (hasCatalogVersion)
                     out.println("\"catalog version:%s\"%s", escapeString(catalogVersions.get(catalog)), (hasSchemaVersion ? "," : ""));
                 if (hasSchemaVersion)
@@ -11705,20 +11729,22 @@ public class JavaGenerator extends AbstractGenerator {
         out.annotations(definition);
     }
 
-    private String readVersion(File file, String type) {
+    private VersionAndHash readVersion(File file, String type) {
         try (RandomAccessFile f = new RandomAccessFile(file, "r")) {
             byte[] bytes = new byte[(int) f.length()];
             f.readFully(bytes);
             String string = new String(bytes);
 
-            Matcher matcher = Pattern.compile("@(?:javax\\.annotation\\.)?Generated\\(\\s*?value\\s*?=\\s*?" + (kotlin ? "\\[[^]]*?" : scala ? "Array\\([^)]*?" : "\\{[^}]*?") + "\"" + type + " version:([^\"]*?)\"").matcher(string);
+            Matcher matcher = Pattern.compile("@(?:javax\\.annotation\\.)?Generated\\(\\s*?value\\s*?=\\s*?" + (kotlin ? "\\[" : scala ? "Array\\(" : "\\{") + "(?:.*?\"configuration hash:([^\"]*?)\")?.*?\"" + type + " version:([^\"]*?)\"", Pattern.DOTALL).matcher(string);
             if (matcher.find())
-                return matcher.group(1);
+                return new VersionAndHash(matcher.group(2), matcher.group(1));
         }
         catch (IOException ignore) {}
 
         return null;
     }
+
+    static record VersionAndHash(String version, String hash) {}
 
     protected void printPackage(JavaWriter out, Definition definition) {
         printPackage(out, definition, Mode.DEFAULT);

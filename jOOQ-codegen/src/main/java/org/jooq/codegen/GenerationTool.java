@@ -58,6 +58,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Field;
+import java.security.MessageDigest;
 import java.security.Provider;
 import java.security.Security;
 import java.sql.Connection;
@@ -80,6 +81,7 @@ import org.jooq.DSLContext;
 import org.jooq.Log.Level;
 import org.jooq.Source;
 import org.jooq.impl.DSL;
+import org.jooq.impl.Internal;
 import org.jooq.meta.CatalogVersionProvider;
 import org.jooq.meta.Database;
 import org.jooq.meta.Databases;
@@ -749,6 +751,8 @@ public class GenerationTool {
             if (!new File(g.getTarget().getDirectory()).isAbsolute())
                 g.getTarget().setDirectory(new File(configuration.getBasedir(), g.getTarget().getDirectory()).getCanonicalPath());
 
+
+            generator.setConfigurationHash(Internal.convertBytesToHex(MessageDigest.getInstance("MD5").digest(configuration.toString().getBytes())));
             generator.setTargetPackage(g.getTarget().getPackageName());
             generator.setTargetDirectory(g.getTarget().getDirectory());
             generator.setTargetEncoding(g.getTarget().getEncoding());
@@ -793,6 +797,8 @@ public class GenerationTool {
                 generator.setGenerateGeneratedAnnotationDate(g.getGenerate().isGeneratedAnnotationDate());
             if (g.getGenerate().isGeneratedAnnotationJooqVersion() != null)
                 generator.setGenerateGeneratedAnnotationJooqVersion(g.getGenerate().isGeneratedAnnotationJooqVersion());
+            if (g.getGenerate().isGeneratedAnnotationConfigurationHash() != null)
+                generator.setGenerateGeneratedAnnotationConfigurationHash(g.getGenerate().isGeneratedAnnotationConfigurationHash());
             if (g.getGenerate().isNonnullAnnotation() != null)
                 generator.setGenerateNonnullAnnotation(g.getGenerate().isNonnullAnnotation());
             if (g.getGenerate().getNonnullAnnotationType() != null)

@@ -72,6 +72,8 @@ public class Generate implements Serializable, XMLAppendable
     protected Boolean generatedAnnotationDate = false;
     @XmlElement(defaultValue = "true")
     protected Boolean generatedAnnotationJooqVersion = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean generatedAnnotationConfigurationHash = true;
     @XmlElement(defaultValue = "false")
     protected Boolean nonnullAnnotation = false;
     @XmlElement(defaultValue = "javax.annotation.Nonnull")
@@ -801,6 +803,30 @@ public class Generate implements Serializable, XMLAppendable
      */
     public void setGeneratedAnnotationJooqVersion(Boolean value) {
         this.generatedAnnotationJooqVersion = value;
+    }
+
+    /**
+     * Whether the {@link org.jooq.Generated} annotation specified by {@link #getGeneratedAnnotationType()} should include the {@link org.jooq.meta.jaxb.Configuration} hash.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isGeneratedAnnotationConfigurationHash() {
+        return generatedAnnotationConfigurationHash;
+    }
+
+    /**
+     * Whether the {@link org.jooq.Generated} annotation specified by {@link #getGeneratedAnnotationType()} should include the {@link org.jooq.meta.jaxb.Configuration} hash.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setGeneratedAnnotationConfigurationHash(Boolean value) {
+        this.generatedAnnotationConfigurationHash = value;
     }
 
     /**
@@ -3815,6 +3841,15 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
+     * Whether the {@link org.jooq.Generated} annotation specified by {@link #getGeneratedAnnotationType()} should include the {@link org.jooq.meta.jaxb.Configuration} hash.
+     * 
+     */
+    public Generate withGeneratedAnnotationConfigurationHash(Boolean value) {
+        setGeneratedAnnotationConfigurationHash(value);
+        return this;
+    }
+
+    /**
      * Whether non-nullable items should be annotated with the annotation type specified in {@link #nonnullAnnotationType}. In SQL and by consequence in jOOQ, non-nullability cannot be guaranteed statically. There may still be some cases (e.g. after unions, outer joins, etc.) where a normally non-null value turns out to be null!
      * 
      */
@@ -4968,6 +5003,7 @@ public class Generate implements Serializable, XMLAppendable
         builder.append("generatedAnnotationType", generatedAnnotationType);
         builder.append("generatedAnnotationDate", generatedAnnotationDate);
         builder.append("generatedAnnotationJooqVersion", generatedAnnotationJooqVersion);
+        builder.append("generatedAnnotationConfigurationHash", generatedAnnotationConfigurationHash);
         builder.append("nonnullAnnotation", nonnullAnnotation);
         builder.append("nonnullAnnotationType", nonnullAnnotationType);
         builder.append("nullableAnnotation", nullableAnnotation);
@@ -5282,6 +5318,15 @@ public class Generate implements Serializable, XMLAppendable
             }
         } else {
             if (!generatedAnnotationJooqVersion.equals(other.generatedAnnotationJooqVersion)) {
+                return false;
+            }
+        }
+        if (generatedAnnotationConfigurationHash == null) {
+            if (other.generatedAnnotationConfigurationHash!= null) {
+                return false;
+            }
+        } else {
+            if (!generatedAnnotationConfigurationHash.equals(other.generatedAnnotationConfigurationHash)) {
                 return false;
             }
         }
@@ -6356,6 +6401,7 @@ public class Generate implements Serializable, XMLAppendable
         result = ((prime*result)+((generatedAnnotationType == null)? 0 :generatedAnnotationType.hashCode()));
         result = ((prime*result)+((generatedAnnotationDate == null)? 0 :generatedAnnotationDate.hashCode()));
         result = ((prime*result)+((generatedAnnotationJooqVersion == null)? 0 :generatedAnnotationJooqVersion.hashCode()));
+        result = ((prime*result)+((generatedAnnotationConfigurationHash == null)? 0 :generatedAnnotationConfigurationHash.hashCode()));
         result = ((prime*result)+((nonnullAnnotation == null)? 0 :nonnullAnnotation.hashCode()));
         result = ((prime*result)+((nonnullAnnotationType == null)? 0 :nonnullAnnotationType.hashCode()));
         result = ((prime*result)+((nullableAnnotation == null)? 0 :nullableAnnotation.hashCode()));

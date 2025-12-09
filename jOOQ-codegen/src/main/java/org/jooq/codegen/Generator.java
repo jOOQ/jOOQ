@@ -58,6 +58,7 @@ import org.jooq.meta.Database;
 import org.jooq.meta.Definition;
 import org.jooq.meta.ForeignKeyDefinition;
 import org.jooq.meta.TableDefinition;
+import org.jooq.meta.jaxb.Configuration;
 import org.jooq.meta.jaxb.GeneratedAnnotationType;
 import org.jooq.meta.jaxb.GeneratedSerialVersionUID;
 import org.jooq.meta.jaxb.GeneratedTextBlocks;
@@ -75,6 +76,16 @@ public interface Generator {
      * Do the code generation
      */
     void generate(Database database);
+
+    /**
+     * A hash value over the {@link Configuration} object.
+     */
+    void setConfigurationHash(String hash);
+
+    /**
+     * A hash value over the {@link Configuration} object.
+     */
+    String configurationHash();
 
     /**
      * Set a naming strategy to this generator
@@ -327,6 +338,20 @@ public interface Generator {
      * version.
      */
     void setGenerateGeneratedAnnotationJooqVersion(boolean generateGeneratedAnnotationJooqVersion);
+
+    /**
+     * Whether the {@link Generated} annotation specified by
+     * {@link #generateGeneratedAnnotationType()} should include the
+     * {@link Configuration} hash.
+     */
+    boolean generateGeneratedAnnotationConfigurationHash();
+
+    /**
+     * Whether the {@link Generated} annotation specified by
+     * {@link #generateGeneratedAnnotationType()} should include the
+     * {@link Configuration} hash.
+     */
+    void setGenerateGeneratedAnnotationConfigurationHash(boolean generateGeneratedAnnotationConfigurationHash);
 
     /**
      * Whether Nonnull annotations should be generated.

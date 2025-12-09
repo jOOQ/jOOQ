@@ -70,6 +70,7 @@ abstract class AbstractGenerator implements Generator {
 
     private static final JooqLogger    log                                                   = JooqLogger.getLogger(AbstractGenerator.class);
 
+    String                             configurationHash                                     = null;
     boolean                            generateDeprecated                                    = true;
     boolean                            generateDeprecationOnUnknownTypes                     = true;
     boolean                            generateIndexes                                       = true;
@@ -88,6 +89,7 @@ abstract class AbstractGenerator implements Generator {
     GeneratedAnnotationType            generatedGeneratedAnnotationType                      = GeneratedAnnotationType.DETECT_FROM_JDK;
     boolean                            generateGeneratedAnnotationDate                       = false;
     boolean                            generateGeneratedAnnotationJooqVersion                = true;
+    boolean                            generateGeneratedAnnotationConfigurationHash          = true;
     boolean                            generateNonnullAnnotation                             = false;
     String                             generatedNonnullAnnotationType                        = "javax.annotation.Nonnull";
     boolean                            generateNullableAnnotation                            = false;
@@ -282,6 +284,16 @@ abstract class AbstractGenerator implements Generator {
             return false;
 
         return Stream.of(array).anyMatch(s -> s != null && s.indexOf(c) > -1);
+    }
+
+    @Override
+    public void setConfigurationHash(String hash) {
+        this.configurationHash = hash;
+    }
+
+    @Override
+    public String configurationHash() {
+        return configurationHash;
     }
 
     @Override
@@ -520,6 +532,16 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGenerateGeneratedAnnotationJooqVersion(boolean generateGeneratedAnnotationJooqVersion) {
         this.generateGeneratedAnnotationJooqVersion = generateGeneratedAnnotationJooqVersion;
+    }
+
+    @Override
+    public boolean generateGeneratedAnnotationConfigurationHash() {
+        return generateGeneratedAnnotationConfigurationHash;
+    }
+
+    @Override
+    public void setGenerateGeneratedAnnotationConfigurationHash(boolean generateGeneratedAnnotationConfigurationHash) {
+        this.generateGeneratedAnnotationConfigurationHash = generateGeneratedAnnotationConfigurationHash;
     }
 
     @Override

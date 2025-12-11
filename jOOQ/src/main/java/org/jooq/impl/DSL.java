@@ -23971,6 +23971,32 @@ public class DSL {
     }
 
     /**
+     * The <code>ARRAY_REVERSE</code> function.
+     * <p>
+     * Reverse elements in an array.
+     *
+     * @param array The array whose elements are to be reversed.
+     */
+    @NotNull
+    @Support({ DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    public static <T> Field<T[]> arrayReverse(T[] array) {
+        return new ArrayReverse<>(Tools.field(array));
+    }
+
+    /**
+     * The <code>ARRAY_REVERSE</code> function.
+     * <p>
+     * Reverse elements in an array.
+     *
+     * @param array The array whose elements are to be reversed.
+     */
+    @NotNull
+    @Support({ DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    public static <T> Field<T[]> arrayReverse(Field<T[]> array) {
+        return new ArrayReverse<>(array);
+    }
+
+    /**
      * The <code>ARRAY_TO_STRING</code> function.
      * <p>
      * Join array elements into a string.

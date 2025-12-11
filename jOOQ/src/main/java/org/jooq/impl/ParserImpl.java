@@ -95,6 +95,7 @@ import static org.jooq.impl.DSL.arrayOverlap;
 import static org.jooq.impl.DSL.arrayPrepend;
 import static org.jooq.impl.DSL.arrayRemove;
 import static org.jooq.impl.DSL.arrayReplace;
+import static org.jooq.impl.DSL.arrayReverse;
 import static org.jooq.impl.DSL.ascii;
 import static org.jooq.impl.DSL.asin;
 import static org.jooq.impl.DSL.asinh;
@@ -524,6 +525,7 @@ import static org.jooq.impl.Tools.MYSQL_MEDIUM_LOB_LENGTH;
 import static org.jooq.impl.Tools.MYSQL_TINY_LOB_LENGTH;
 import static org.jooq.impl.Tools.aliased;
 import static org.jooq.impl.Tools.anyMatch;
+import static org.jooq.impl.Tools.apply;
 import static org.jooq.impl.Tools.asInt;
 import static org.jooq.impl.Tools.deleteQueryImpl;
 import static org.jooq.impl.Tools.map;
@@ -9543,6 +9545,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                     return parseFunctionArgs2((f1, f2) -> arrayRemove((Field<Void[]>) f1, (Field<Void>) f2));
                 else if (parseFunctionNameIf("ARRAY_REPLACE"))
                     return parseFunctionArgs3((f1, f2, f3) -> arrayReplace((Field<Void[]>) f1, (Field<Void>) f2, (Field<Void>) f3));
+                else if (parseFunctionNameIf("ARRAY_REVERSE"))
+                    return arrayReverse((Field) parseFieldParenthesised());
                 else if (parseFunctionNameIf("ARRAY_TO_STRING"))
                     return parseFunctionArgs3(DSL::arrayToString, DSL::arrayToString);
                 else if ((field = parseFieldArrayConstructIf()) != null)
@@ -10084,7 +10088,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                 else if (parseFunctionNameIf("REPEAT", "REPLICATE"))
                     return parseFunctionArgs2(DSL::repeat);
                 else if (parseFunctionNameIf("REVERSE"))
-                    return reverse((Field) parseFieldParenthesised());
+                    return apply((Field) parseFieldParenthesised(), f -> f.getDataType().isArray() ? arrayReverse(f) : reverse(f));
                 else if (parseFunctionNameIf("RPAD", "rightPad"))
                     return parseFunctionArgs3(DSL::rpad, DSL::rpad);
                 else if (parseFunctionNameIf("RTRIM"))

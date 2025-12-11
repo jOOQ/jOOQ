@@ -389,6 +389,7 @@ final class Names {
     static final Name N_ARRAY_PREPEND               = systemName("array_prepend");
     static final Name N_ARRAY_REMOVE                = systemName("array_remove");
     static final Name N_ARRAY_REPLACE               = systemName("array_replace");
+    static final Name N_ARRAY_REVERSE               = systemName("array_reverse");
     static final Name N_ARRAY_TO_STRING             = systemName("array_to_string");
     static final Name N_ARRAY_TRANSFORM             = systemName("array_transform");
     static final Name N_ASC                         = systemName("asc");

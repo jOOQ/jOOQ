@@ -7132,6 +7132,31 @@ public final class QOM {
     }
 
     /**
+     * The <code>ARRAY REVERSE</code> function.
+     * <p>
+     * Reverse elements in an array.
+     */
+    public /*sealed*/ interface ArrayReverse<T>
+        extends
+            UOperator1<Field<T[]>, ArrayReverse<T>>,
+            org.jooq.Field<T[]>
+        //permits
+        //    ArrayReverse
+    {
+
+        /**
+         * The array whose elements are to be reversed.
+         */
+        @NotNull default Field<T[]> $array() { return $arg1(); }
+
+        /**
+         * The array whose elements are to be reversed.
+         */
+        @CheckReturnValue
+        @NotNull default ArrayReverse<T> $array(Field<T[]> newArray) { return $arg1(newArray); }
+    }
+
+    /**
      * The <code>ARRAY TO STRING</code> function.
      * <p>
      * Join array elements into a string.

@@ -4483,7 +4483,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             Cast.renderCastIf(ctx.render(),
                 c -> {
                     if (REQUIRE_RECORD_CAST.contains(ctx.dialect()))
-                        ctx.render().visit(inline(PostgresUtils.toPGString(ctx, value)));
+                        ctx.render().visit(inline(PostgresUtils.toPGString(value)));
                     else
                         ctx.render().visit(new QualifiedRecordConstant((QualifiedRecord) value, getRecordQualifier(dataType)));
                 },

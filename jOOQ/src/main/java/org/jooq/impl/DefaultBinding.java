@@ -777,7 +777,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
      * This base class can be safely assumed to not leak into custom bindings.
      */
     abstract static class InternalBinding<T, U> implements org.jooq.Binding<T, U> {
-        static final Set<SQLDialect> NEEDS_PRECISION_SCALE_ON_BIGDECIMAL = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB);
+        static final Set<SQLDialect> NEEDS_PRECISION_SCALE_ON_BIGDECIMAL = SQLDialect.supportedBy(CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB);
         static final Set<SQLDialect> REQUIRES_JSON_CAST                  = SQLDialect.supportedBy(POSTGRES, TRINO, YUGABYTEDB);
         static final Set<SQLDialect> NO_SUPPORT_ENUM_CAST                = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
         static final Set<SQLDialect> NO_SUPPORT_NVARCHAR                 = SQLDialect.supportedBy(CLICKHOUSE, DERBY, DUCKDB, FIREBIRD, POSTGRES, SQLITE, TRINO, YUGABYTEDB);

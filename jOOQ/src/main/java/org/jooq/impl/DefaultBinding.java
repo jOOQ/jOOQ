@@ -4482,7 +4482,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         final void sqlInline0(BindingSQLContext<U> ctx, Record value) throws SQLException {
             Cast.renderCastIf(ctx.render(),
                 c -> {
-                    if (REQUIRE_RECORD_CAST.contains(ctx.dialect()))
+                    if (ctx.family().category() == SQLDialectCategory.POSTGRES)
                         ctx.render().visit(inline(PostgresUtils.toPGString(value)));
                     else
                         ctx.render().visit(new QualifiedRecordConstant((QualifiedRecord) value, getRecordQualifier(dataType)));

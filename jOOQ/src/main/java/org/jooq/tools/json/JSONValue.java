@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.jooq.Decfloat;
+import org.jooq.Record;
 import org.jooq.types.Interval;
 
 /**
@@ -110,6 +111,11 @@ public class JSONValue {
 
         if (value instanceof Object[] a) {
             JSONArray.writeJSONString(Arrays.asList(a), out);
+            return;
+        }
+
+        if (value instanceof Record r) {
+            JSONObject.writeJSONString(r.intoMap(), out);
             return;
         }
 

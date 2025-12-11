@@ -1574,8 +1574,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                         super.sqlBind0(ctx, value);
                 },
                 c -> {
+
+                    // [#19497] Work around DuckDB limitation https://github.com/duckdb/duckdb/issues/20142
                     if (REQUIRES_JSON_CAST.contains(ctx.dialect()))
-                        ctx.render().sql(dataType.getCastTypeName(ctx.render().configuration()));
+                        ctx.render().sql(dataType.getCastTypeName(ctx.render().configuration()).replaceAll("((\"\\w+\"|\\w+)\\.)+", ""));
 
                     // Postgres needs explicit casting for enum (array) types
                     else if (EnumType.class.isAssignableFrom(dataType.getType().getComponentType()))
@@ -4481,7 +4483,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             Cast.renderCastIf(ctx.render(),
                 c -> {
                     if (REQUIRE_RECORD_CAST.contains(ctx.dialect()))
-                        ctx.render().visit(inline(PostgresUtils.toPGString(value)));
+                        ctx.render().visit(inline(PostgresUtils.toPGString(ctx, value)));
                     else
                         ctx.render().visit(new QualifiedRecordConstant((QualifiedRecord) value, getRecordQualifier(dataType)));
                 },

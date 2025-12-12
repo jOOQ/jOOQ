@@ -298,6 +298,7 @@ import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.RowId;
 import org.jooq.SQLDialect;
+import org.jooq.SQLDialectCategory;
 import org.jooq.Schema;
 import org.jooq.Scope;
 import org.jooq.Source;

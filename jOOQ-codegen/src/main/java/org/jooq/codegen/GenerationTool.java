@@ -254,6 +254,13 @@ public class GenerationTool {
 
     @SuppressWarnings({ "unchecked", "unused" })
     private void run0(Configuration configuration) throws Exception {
+
+        // [#19220] Early computation of configuration hash, to avoid environment specific side effects.
+        String configurationString = configuration.toString();
+        String configurationHash = Internal.convertBytesToHex(MessageDigest.getInstance("MD5").digest(configurationString.getBytes("UTF-8")));
+        log.debug("Configuration: " + configurationString);
+        log.debug("Configuration hash: " + configurationHash);
+
         // Trigger logging of jOOQ logo eagerly already here
         selectOne().toString();
         boolean propertyOverride = "true".equalsIgnoreCase(System.getProperty("jooq.codegen.propertyOverride"));
@@ -752,11 +759,7 @@ public class GenerationTool {
                 g.getTarget().setDirectory(new File(configuration.getBasedir(), g.getTarget().getDirectory()).getCanonicalPath());
 
 
-            String configurationString = configuration.toString();
-            String hash = Internal.convertBytesToHex(MessageDigest.getInstance("MD5").digest(configurationString.getBytes("UTF-8")));
-            log.debug("Configuration: " + configurationString);
-            log.debug("Configuration hash: " + hash);
-            generator.setConfigurationHash(hash);
+            generator.setConfigurationHash(configurationHash);
             generator.setTargetPackage(g.getTarget().getPackageName());
             generator.setTargetDirectory(g.getTarget().getDirectory());
             generator.setTargetEncoding(g.getTarget().getEncoding());

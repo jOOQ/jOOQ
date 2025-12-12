@@ -752,7 +752,11 @@ public class GenerationTool {
                 g.getTarget().setDirectory(new File(configuration.getBasedir(), g.getTarget().getDirectory()).getCanonicalPath());
 
 
-            generator.setConfigurationHash(Internal.convertBytesToHex(MessageDigest.getInstance("MD5").digest(configuration.toString().getBytes())));
+            String configurationString = configuration.toString();
+            String hash = Internal.convertBytesToHex(MessageDigest.getInstance("MD5").digest(configurationString.getBytes("UTF-8")));
+            log.debug("Configuration: " + configurationString);
+            log.debug("Configuration hash: " + hash);
+            generator.setConfigurationHash(hash);
             generator.setTargetPackage(g.getTarget().getPackageName());
             generator.setTargetDirectory(g.getTarget().getDirectory());
             generator.setTargetEncoding(g.getTarget().getEncoding());

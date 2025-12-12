@@ -102,7 +102,6 @@ implements
 
 
 
-
             case DUCKDB:
             case H2:
             case HSQLDB:
@@ -135,7 +134,6 @@ implements
                 ctx.visit(function(N_ARRAY_REVERSE, getDataType(), array));
                 break;
             }
-
 
 
 

@@ -138,6 +138,7 @@ import static org.jooq.impl.Keywords.K_FORMAT;
 import static org.jooq.impl.Keywords.K_GEOGRAPHY;
 import static org.jooq.impl.Keywords.K_GEOMETRY;
 import static org.jooq.impl.Keywords.K_HOUR_TO_SECOND;
+import static org.jooq.impl.Keywords.K_INTERVAL;
 import static org.jooq.impl.Keywords.K_JSON;
 import static org.jooq.impl.Keywords.K_NULL;
 import static org.jooq.impl.Keywords.K_TIME;
@@ -3093,7 +3094,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             // [#566] Interval data types are best bound as Strings
             if (REQUIRE_PG_INTERVAL.contains(ctx.dialect()))
-                ctx.render().visit(inline(toPGInterval(value).toString()));
+                ctx.render().visit(K_INTERVAL).sql(' ').visit(inline(toPGInterval(value).toString()));
 
             // [#11485] Truncate the nanosecond precision to (8) as Trino doesn't accept the usual precision of (9)
             //          https://trino.io/docs/current/functions/datetime.html#extraction-function
@@ -6690,7 +6691,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             // [#566] Interval data types are best bound as Strings
             if (REQUIRE_PG_INTERVAL.contains(ctx.dialect()))
-                ctx.render().visit(inline(toPGInterval(value).toString()));
+                ctx.render().visit(K_INTERVAL).sql(' ').visit(inline(toPGInterval(value).toString()));
             else
                 super.sqlInline0(ctx, value);
         }
@@ -6797,7 +6798,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             // [#566] Interval data types are best bound as Strings
             if (REQUIRE_PG_INTERVAL.contains(ctx.dialect()))
-                ctx.render().visit(inline(toPGInterval(value).toString()));
+                ctx.render().visit(K_INTERVAL).sql(' ').visit(inline(toPGInterval(value).toString()));
             else if (ctx.family() == TRINO)
                 ctx.render().sql(renderYTM(ctx, value));
             else

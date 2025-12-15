@@ -200,8 +200,10 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
         this.scale = scale == null ? 0 : scale.intValue();
         this.nullable = nullable == null ? true : nullable.booleanValue();
         this.readonly = readonly;
-        this.generatedAlwaysAs = generatedAlwaysAs;
-        this.defaultValue = defaultValue;
+
+        // [#19512] Identity and generators / defaults are mutually exclusive, even if the identity is implemented using a default.
+        this.generatedAlwaysAs = identity ? null : generatedAlwaysAs;
+        this.defaultValue = identity ? null : defaultValue;
         this.identity = identity;
 
         if (generator != null)

@@ -754,9 +754,18 @@ class DefaultExecuteContext implements ExecuteContext {
 
     private final void logVersionSupport(int majorVersion, int minorVersion, String productVersion) {
         if (!dialect().supportsDatabaseVersion(majorVersion, minorVersion, productVersion))
-            logVersionSupport.warn("Version mismatch", "Database version is older than what dialect " + dialect() + " supports: " + productVersion + ". Consider https://www.jooq.org/download/support-matrix to see what jOOQ version and edition supports which RDBMS versions.");
+            logVersionSupport.warn("Version mismatch", "Database version is older than what dialect SQLDialect." + dialectVersion() + " supports: " + productVersion + ". Consider https://www.jooq.org/download/support-matrix to see what jOOQ version and edition supports which RDBMS versions.");
         else
-            logVersionSupport.info("Version", "Database version is supported by dialect " + dialect() + ": " + productVersion);
+            logVersionSupport.info("Version", "Database version is supported by dialect SQLDialect." + dialectVersion() + ": " + productVersion);
+    }
+
+    private final String dialectVersion() {
+
+
+
+
+
+        return dialect().name();
     }
 
     private final Connection wrap(ConnectionProvider provider, Connection c) {

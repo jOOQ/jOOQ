@@ -77,6 +77,14 @@ final class JSONParser extends AbstractParseContext {
                 parseArray();
                 return true;
 
+            case 'I':
+                parseNumber();
+                return true;
+
+            case 'N':
+                parseNumber();
+                return true;
+
             case 'n':
                 parseNull();
                 return true;
@@ -118,7 +126,34 @@ final class JSONParser extends AbstractParseContext {
 
     private final String parseNumberLiteral() {
         int p = position();
-        int i;
+        int i = p;
+
+        switch (character()) {
+            case '-':
+                switch (characterNext()) {
+                    case 'N':
+                        parse("-NaN");
+                        return "-NaN";
+
+                    case 'I':
+                        if (!parseIf("-Infinity"))
+                            parse("-Inf");
+
+                        return "-Infinity";
+                }
+
+                break;
+
+            case 'N':
+                parse("NaN");
+                return "NaN";
+
+            case 'I':
+                if (!parseIf("Infinity"))
+                    parse("Inf");
+
+                return "Infinity";
+        }
 
         numberLoop:
         for (i = position(); i < chars.length; i++) {

@@ -99,7 +99,18 @@ final class DefaultJSONContentHandler implements JSONContentHandler {
 
     @Override
     public final void valueNumber(String string) {
-        add(new BigDecimal(string));
+        switch (string) {
+            case "NaN":
+            case "-NaN":
+            case "Infinity":
+            case "-Infinity":
+                add(Double.valueOf(string));
+                break;
+
+            default:
+                add(new BigDecimal(string));
+                break;
+        }
     }
 
     @Override

@@ -264,7 +264,7 @@ final class SQLDataTypes {
         static final DataType<Object>       NULL                     = new BuiltInDataType<>(FAMILY, SQLDataType.OTHER, "null");
         static final DataType<YearToSecond> INTERVAL                 = new BuiltInDataType<>(FAMILY, SQLDataType.INTERVAL, "interval");
         static final DataType<YearToMonth>  INTERVALYEARTOMONTH      = new BuiltInDataType<>(FAMILY, SQLDataType.INTERVALYEARTOMONTH, "interval year to month");
-        static final DataType<DayToSecond>  INTERVALDAYTOSECOND      = new BuiltInDataType<>(FAMILY, SQLDataType.INTERVALDAYTOSECOND, "interval day to second", "interval day(9) to second");
+        static final DataType<DayToSecond>  INTERVALDAYTOSECOND      = new BuiltInDataType<>(FAMILY, SQLDataType.INTERVALDAYTOSECOND, "interval day to second");
         static final DataType<JSON>         JSON                     = new BuiltInDataType<>(FAMILY, SQLDataType.JSON, "json");
         static final DataType<JSONB>        JSONB                    = new BuiltInDataType<>(FAMILY, SQLDataType.JSONB, "json");
         static final DataType<UByte>        UTINYINT                 = new BuiltInDataType<>(FAMILY, SQLDataType.TINYINTUNSIGNED, "utinyint");

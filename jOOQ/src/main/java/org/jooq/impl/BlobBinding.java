@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 // ...
 // ...
+import static org.jooq.SQLDialect.DUCKDB;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
@@ -89,7 +90,7 @@ import org.jooq.tools.jdbc.JDBCUtils;
 public class BlobBinding implements Binding<byte[], byte[]> {
 
     // See also https://github.com/pgjdbc/pgjdbc/issues/458
-    static final Set<SQLDialect> NO_SUPPORT_LOBS = SQLDialect.supportedBy(POSTGRES, SQLITE, TRINO, YUGABYTEDB);
+    static final Set<SQLDialect> NO_SUPPORT_LOBS = SQLDialect.supportedBy(DUCKDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB);
 
     @Override
     public final Converter<byte[], byte[]> converter() {

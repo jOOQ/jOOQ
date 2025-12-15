@@ -39,6 +39,7 @@ package org.jooq.impl;
 
 // ...
 // ...
+import static org.jooq.SQLDialect.DUCKDB;
 import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
@@ -89,7 +90,7 @@ public class ClobBinding implements Binding<String, String> {
     static final Set<SQLDialect> NO_SUPPORT_NULL_LOBS = SQLDialect.supportedBy(FIREBIRD, HSQLDB);
 
     // See also https://github.com/pgjdbc/pgjdbc/issues/458
-    static final Set<SQLDialect> NO_SUPPORT_LOBS      = SQLDialect.supportedBy(POSTGRES, SQLITE, TRINO, YUGABYTEDB);
+    static final Set<SQLDialect> NO_SUPPORT_LOBS      = SQLDialect.supportedBy(DUCKDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB);
 
     @Override
     public final Converter<String, String> converter() {

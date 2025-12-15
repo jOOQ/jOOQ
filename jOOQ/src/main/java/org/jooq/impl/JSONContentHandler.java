@@ -1,5 +1,7 @@
 package org.jooq.impl;
 
+import java.math.BigDecimal;
+
 import org.xml.sax.ContentHandler;
 
 /**
@@ -51,6 +53,10 @@ interface JSONContentHandler {
 
     /**
      * A JSON <code>number</code> value is encountered.
+     * <p>
+     * Implementations should expect typical number notation such as can be
+     * parsed by {@link BigDecimal} or {@link Double#valueOf(String)} (including
+     * {@link Double#NaN} or {@link Double#POSITIVE_INFINITY}).
      */
     void valueNumber(String string);
 

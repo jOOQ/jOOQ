@@ -6583,6 +6583,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
+
+
+
+
     static final class DefaultJSONBinding<U> extends InternalBinding<org.jooq.JSON, U> {
 
         DefaultJSONBinding(DataType<JSON> dataType, Converter<JSON, U> converter) {

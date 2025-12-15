@@ -41,6 +41,7 @@ import static java.lang.Boolean.TRUE;
 import static java.util.Arrays.asList;
 // ...
 // ...
+import static org.jooq.SQLDialect.DUCKDB;
 // ...
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
@@ -50,6 +51,8 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.TRINO;
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.impl.DSL.arrayAgg;
+import static org.jooq.impl.DSL.arrayGet;
+import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.jsonArray;
@@ -83,6 +86,7 @@ import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.JSON;
 import static org.jooq.impl.SQLDataType.JSONB;
 import static org.jooq.impl.SQLDataType.VARCHAR;
+import static org.jooq.impl.Tools.allMatch;
 import static org.jooq.impl.Tools.emulateMultiset;
 import static org.jooq.impl.Tools.fieldName;
 import static org.jooq.impl.Tools.fieldNameString;
@@ -91,6 +95,7 @@ import static org.jooq.impl.Tools.filter;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.selectQueryImpl;
 import static org.jooq.impl.Tools.sortable;
+import static org.jooq.impl.Tools.unaliasedFields;
 import static org.jooq.impl.Tools.unqualified;
 import static org.jooq.impl.Tools.visitSubquery;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_MULTISET_CONDITION;
@@ -144,10 +149,11 @@ import org.jooq.XMLAggOrderByStep;
  */
 final class Multiset<R extends Record> extends AbstractField<Result<R>> implements QOM.Multiset<R> {
 
-    static final Set<SQLDialect> NO_SUPPORT_JSON_COMPARE      = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
-    static final Set<SQLDialect> NO_SUPPORT_JSONB_COMPARE     = SQLDialect.supportedBy();
-    static final Set<SQLDialect> NO_SUPPORT_XML_COMPARE       = SQLDialect.supportedBy(POSTGRES);
-    static final Set<SQLDialect> FORCE_LIMIT_IN_DERIVED_TABLE = SQLDialect.supportedBy(MARIADB, MYSQL, TRINO);
+    static final Set<SQLDialect> NO_SUPPORT_JSON_COMPARE           = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
+    static final Set<SQLDialect> NO_SUPPORT_JSONB_COMPARE          = SQLDialect.supportedBy();
+    static final Set<SQLDialect> NO_SUPPORT_XML_COMPARE            = SQLDialect.supportedBy(POSTGRES);
+    static final Set<SQLDialect> NO_SUPPORT_DERIVED_TABLE_ORDERING = SQLDialect.supportedBy(DUCKDB);
+    static final Set<SQLDialect> FORCE_LIMIT_IN_DERIVED_TABLE      = SQLDialect.supportedBy(MARIADB, MYSQL, TRINO);
 
     final TableLike<R>           table;
     final Select<R>              select;
@@ -389,6 +395,8 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
             // TODO: Re-apply derived table's ORDER BY clause as aggregate ORDER BY
             if (multisetCondition)
                 returning = order.orderBy(t.fields());
+            else if (NO_SUPPORT_DERIVED_TABLE_ORDERING.contains(ctx.dialect()))
+                returning = orderBy(order);
 
             Select<? extends Record1<?>> s = patchOracleArrayAggBug(
                 ctx,
@@ -403,6 +411,28 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
             else
                 visitSubquery(ctx, s);
         }
+    }
+
+    private final JSONArrayAggReturningStep<?> orderBy(JSONArrayAggOrderByStep<?> order) {
+        if (!select.$orderBy().isEmpty()) {
+            List<Field<?>> s = select.getSelect();
+            List<Field<?>> u = unaliasedFields(s);
+
+            if (allMatch(select.$orderBy(), o -> s.contains(o.$field()) || u.contains(o.$field()))) {
+                return order.orderBy(map(select.$orderBy(), o -> {
+                    int i;
+
+                    if ((i = s.indexOf(o.$field())) > -1)
+                        return DSL.field(fieldName(i)).sort(o.$sortOrder());
+                    else if ((i = u.indexOf(o.$field())) > -1)
+                        return DSL.field(fieldName(i)).sort(o.$sortOrder());
+                    else
+                        return o;
+                }));
+            }
+        }
+
+        return order;
     }
 
 

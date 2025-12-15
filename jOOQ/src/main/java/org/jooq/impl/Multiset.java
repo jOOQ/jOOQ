@@ -91,6 +91,7 @@ import static org.jooq.impl.Tools.fieldName;
 import static org.jooq.impl.Tools.fieldNameString;
 import static org.jooq.impl.Tools.fieldNames;
 import static org.jooq.impl.Tools.filter;
+import static org.jooq.impl.Tools.isVal;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.selectQueryImpl;
 import static org.jooq.impl.Tools.sortable;
@@ -122,6 +123,7 @@ import org.jooq.JSONEntry;
 import org.jooq.JSONObjectNullStep;
 import org.jooq.JSONObjectReturningStep;
 import org.jooq.Name;
+import org.jooq.Param;
 // ...
 import org.jooq.QueryPart;
 import org.jooq.Record;
@@ -402,11 +404,17 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
             List<Field<?>> s = select.getSelect();
             List<Field<?>> u = unaliasedFields(s);
 
-            if (allMatch(select.$orderBy(), o -> s.contains(o.$field()) || u.contains(o.$field()))) {
+            if (allMatch(select.$orderBy(), o ->
+                s.contains(o.$field()) ||
+                u.contains(o.$field()) ||
+                Tools.isVal(o.$field())
+            )) {
                 return order.orderBy(map(select.$orderBy(), o -> {
                     int i;
 
-                    if ((i = s.indexOf(o.$field())) > -1)
+                    if (isVal(o.$field()))
+                        return DSL.field(fieldName(Convert.convert(((Param<?>) o.$field()).getValue(), int.class) - 1)).sort(o.$sortOrder());
+                    else if ((i = s.indexOf(o.$field())) > -1)
                         return DSL.field(fieldName(i)).sort(o.$sortOrder());
                     else if ((i = u.indexOf(o.$field())) > -1)
                         return DSL.field(fieldName(i)).sort(o.$sortOrder());

@@ -3146,7 +3146,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     }
 
     static final class DefaultDayToSecondBinding<U> extends InternalBinding<DayToSecond, U> {
-        private static final Set<SQLDialect> REQUIRE_PG_INTERVAL       = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
+        private static final Set<SQLDialect> REQUIRE_PG_INTERVAL       = SQLDialect.supportedBy(DUCKDB, POSTGRES, YUGABYTEDB);
         private static final Set<SQLDialect> REQUIRE_STANDARD_INTERVAL = SQLDialect.supportedBy(H2, TRINO);
 
         DefaultDayToSecondBinding(DataType<DayToSecond> dataType, Converter<DayToSecond, U> converter) {
@@ -6980,7 +6980,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     }
 
     static final class DefaultYearToSecondBinding<U> extends InternalBinding<YearToSecond, U> {
-        private static final Set<SQLDialect> REQUIRE_PG_INTERVAL = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
+        private static final Set<SQLDialect> REQUIRE_PG_INTERVAL = SQLDialect.supportedBy(DUCKDB, POSTGRES, YUGABYTEDB);
 
         DefaultYearToSecondBinding(DataType<YearToSecond> dataType, Converter<YearToSecond, U> converter) {
             super(dataType, converter);
@@ -7086,7 +7086,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     }
 
     static final class DefaultYearToMonthBinding<U> extends InternalBinding<YearToMonth, U> {
-        private static final Set<SQLDialect> REQUIRE_PG_INTERVAL       = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
+        private static final Set<SQLDialect> REQUIRE_PG_INTERVAL       = SQLDialect.supportedBy(DUCKDB, POSTGRES, YUGABYTEDB);
         private static final Set<SQLDialect> REQUIRE_STANDARD_INTERVAL = SQLDialect.supportedBy(H2, TRINO);
 
         DefaultYearToMonthBinding(DataType<YearToMonth> dataType, Converter<YearToMonth, U> converter) {

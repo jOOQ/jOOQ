@@ -44,6 +44,7 @@ import static java.util.Arrays.asList;
 // ...
 // ...
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.DUCKDB;
 import static org.jooq.SQLDialect.IGNITE;
 // ...
 // ...
@@ -107,7 +108,7 @@ implements
 {
 
     private static final JooqLogger      log                        = JooqLogger.getLogger(UpdatableRecordImpl.class);
-    private static final Set<SQLDialect> NO_SUPPORT_FOR_UPDATE      = SQLDialect.supportedBy(SQLITE);
+    private static final Set<SQLDialect> NO_SUPPORT_FOR_UPDATE      = SQLDialect.supportedBy(DUCKDB, SQLITE);
     private static final Set<SQLDialect> NO_SUPPORT_MERGE_RETURNING = SQLDialect.supportedBy(DERBY, IGNITE);
 
     public UpdatableRecordImpl(Table<R> table) {

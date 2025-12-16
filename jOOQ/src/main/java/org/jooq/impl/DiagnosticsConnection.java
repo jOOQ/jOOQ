@@ -47,6 +47,10 @@ import static org.jooq.conf.ParamType.FORCE_INDEXED;
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.QOM.commutativeCheck;
+import static org.jooq.impl.Tools.EMPTY_FIELD;
+import static org.jooq.impl.Tools.allMatch;
+import static org.jooq.impl.Tools.anyMatch;
+import static org.jooq.impl.Tools.unalias;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -54,6 +58,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -66,6 +71,7 @@ import org.jooq.AggregateFunction;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.Parser;
 // ...
 import org.jooq.Queries;
@@ -74,8 +80,13 @@ import org.jooq.QueryPart;
 import org.jooq.RenderContext;
 // ...
 import org.jooq.Select;
+import org.jooq.Table;
+import org.jooq.TableField;
 import org.jooq.TransactionContext;
+// ...
+import org.jooq.UniqueKey;
 import org.jooq.conf.Settings;
+import org.jooq.exception.ControlFlowSignal;
 import org.jooq.impl.QOM.CompareCondition;
 import org.jooq.impl.QOM.Concat;
 import org.jooq.impl.QOM.Eq;
@@ -377,6 +388,11 @@ final class DiagnosticsConnection extends DefaultConnection {
 
 
 
+
+
+
+
+
             }
         }
         catch (Error e) {
@@ -392,6 +408,56 @@ final class DiagnosticsConnection extends DefaultConnection {
 
         return sql;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -159,6 +159,8 @@ public class Settings
     @XmlElement(defaultValue = "true")
     protected Boolean diagnosticsPossiblyWrongExpression = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean diagnosticsIncompleteEquiJoin = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean diagnosticsTooManyColumnsFetched = true;
     @XmlElement(defaultValue = "true")
     protected Boolean diagnosticsTooManyRowsFetched = true;
@@ -2058,6 +2060,40 @@ public class Settings
      */
     public void setDiagnosticsPossiblyWrongExpression(Boolean value) {
         this.diagnosticsPossiblyWrongExpression = value;
+    }
+
+    /**
+     * Whether to run the {@link org.jooq.DiagnosticsListener#incompleteEquiJoin(org.jooq.DiagnosticsContext)} diagnostic.
+     * <p>
+     * Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
+     * Once configured, this diagnostic is turned on by default.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isDiagnosticsIncompleteEquiJoin() {
+        return diagnosticsIncompleteEquiJoin;
+    }
+
+    /**
+     * Whether to run the {@link org.jooq.DiagnosticsListener#incompleteEquiJoin(org.jooq.DiagnosticsContext)} diagnostic.
+     * <p>
+     * Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
+     * Once configured, this diagnostic is turned on by default.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setDiagnosticsIncompleteEquiJoin(Boolean value) {
+        this.diagnosticsIncompleteEquiJoin = value;
     }
 
     /**
@@ -8017,6 +8053,20 @@ public class Settings
     }
 
     /**
+     * Whether to run the {@link org.jooq.DiagnosticsListener#incompleteEquiJoin(org.jooq.DiagnosticsContext)} diagnostic.
+     * <p>
+     * Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
+     * Once configured, this diagnostic is turned on by default.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
+    public Settings withDiagnosticsIncompleteEquiJoin(Boolean value) {
+        setDiagnosticsIncompleteEquiJoin(value);
+        return this;
+    }
+
+    /**
      * Whether to run the {@link org.jooq.DiagnosticsListener#tooManyColumnsFetched(org.jooq.DiagnosticsContext)} diagnostic.
      * <p>
      * Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
@@ -10448,6 +10498,7 @@ public class Settings
         builder.append("diagnosticsConsecutiveAggregation", diagnosticsConsecutiveAggregation);
         builder.append("diagnosticsConcatenationInPredicate", diagnosticsConcatenationInPredicate);
         builder.append("diagnosticsPossiblyWrongExpression", diagnosticsPossiblyWrongExpression);
+        builder.append("diagnosticsIncompleteEquiJoin", diagnosticsIncompleteEquiJoin);
         builder.append("diagnosticsTooManyColumnsFetched", diagnosticsTooManyColumnsFetched);
         builder.append("diagnosticsTooManyRowsFetched", diagnosticsTooManyRowsFetched);
         builder.append("diagnosticsUnnecessaryWasNullCall", diagnosticsUnnecessaryWasNullCall);
@@ -11136,6 +11187,15 @@ public class Settings
             }
         } else {
             if (!diagnosticsPossiblyWrongExpression.equals(other.diagnosticsPossiblyWrongExpression)) {
+                return false;
+            }
+        }
+        if (diagnosticsIncompleteEquiJoin == null) {
+            if (other.diagnosticsIncompleteEquiJoin!= null) {
+                return false;
+            }
+        } else {
+            if (!diagnosticsIncompleteEquiJoin.equals(other.diagnosticsIncompleteEquiJoin)) {
                 return false;
             }
         }
@@ -13016,6 +13076,7 @@ public class Settings
         result = ((prime*result)+((diagnosticsConsecutiveAggregation == null)? 0 :diagnosticsConsecutiveAggregation.hashCode()));
         result = ((prime*result)+((diagnosticsConcatenationInPredicate == null)? 0 :diagnosticsConcatenationInPredicate.hashCode()));
         result = ((prime*result)+((diagnosticsPossiblyWrongExpression == null)? 0 :diagnosticsPossiblyWrongExpression.hashCode()));
+        result = ((prime*result)+((diagnosticsIncompleteEquiJoin == null)? 0 :diagnosticsIncompleteEquiJoin.hashCode()));
         result = ((prime*result)+((diagnosticsTooManyColumnsFetched == null)? 0 :diagnosticsTooManyColumnsFetched.hashCode()));
         result = ((prime*result)+((diagnosticsTooManyRowsFetched == null)? 0 :diagnosticsTooManyRowsFetched.hashCode()));
         result = ((prime*result)+((diagnosticsUnnecessaryWasNullCall == null)? 0 :diagnosticsUnnecessaryWasNullCall.hashCode()));

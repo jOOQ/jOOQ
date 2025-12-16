@@ -40,7 +40,6 @@ package org.jooq.impl;
 import static java.util.Arrays.asList;
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.toList;
-import static org.jooq.impl.Tools.CONFIG;
 import static org.jooq.impl.Tools.newRecord;
 
 import java.sql.Array;
@@ -58,6 +57,7 @@ import org.jooq.Nullability;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.Row;
+import org.jooq.Source;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.QOM.GenerationLocation;
 import org.jooq.impl.QOM.GenerationOption;
@@ -199,7 +199,20 @@ final class MultisetDataType<R extends Record> extends DefaultDataType<Result<R>
         }
         else if (object == null)
             return new ResultImpl<>(cc.configuration(), row);
+        else if (isJson(object))
+            return convert(parseJson(object, cc), cc);
         else
             return super.convert(object, cc);
+    }
+
+    private final boolean isJson(Object object) {
+        if ("org.duckdb.JsonNode".equals(object.getClass().getName()))
+            return true;
+        else
+            return false;
+    }
+
+    private final Object parseJson(Object object, ConverterContext cc) {
+        return new JSONReader<>(cc.dsl(), cc, row, getRecordType()).read(Source.of(object.toString()));
     }
 }

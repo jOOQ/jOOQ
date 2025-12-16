@@ -312,7 +312,10 @@ final class SQLDataTypes {
         static final DataType<Time>         TIME                     = new BuiltInDataType<>(FAMILY, SQLDataType.TIME, "time(p)");
         static final DataType<Time>         TIMEWITHOUTTIMEZONE      = new BuiltInDataType<>(FAMILY, SQLDataType.TIME, "time(p) without time zone");
         static final DataType<OffsetTime>   TIMEWITHTIMEZONE         = new BuiltInDataType<>(FAMILY, SQLDataType.TIMEWITHTIMEZONE, "time(p) with time zone");
-        static final DataType<Timestamp>    TIMESTAMP                = new BuiltInDataType<>(FAMILY, SQLDataType.TIMESTAMP, "timestamp(p)");
+        static final DataType<Timestamp>    TIMESTAMP                = new BuiltInDataType<>(FAMILY, SQLDataType.TIMESTAMP(6), "timestamp(p)");
+        static final DataType<Timestamp>    TIMESTAMP_S              = new BuiltInDataType<>(FAMILY, SQLDataType.TIMESTAMP(0), "timestamp_s");
+        static final DataType<Timestamp>    TIMESTAMP_MS             = new BuiltInDataType<>(FAMILY, SQLDataType.TIMESTAMP(3), "timestamp_ms");
+        static final DataType<Timestamp>    TIMESTAMP_NS             = new BuiltInDataType<>(FAMILY, SQLDataType.TIMESTAMP(9), "timestamp_ns");
         static final DataType<Timestamp>    TIMESTAMPWITHOUTTIMEZONE = new BuiltInDataType<>(FAMILY, SQLDataType.TIMESTAMP, "timestamp(p) without time zone");
         static final DataType<Timestamp>    DATETIME                 = new BuiltInDataType<>(FAMILY, SQLDataType.TIMESTAMP, "datetime(p)");
         static final DataType<OffsetDateTime> TIMESTAMPWITHTIMEZONE  = new BuiltInDataType<>(FAMILY, SQLDataType.TIMESTAMPWITHTIMEZONE, "timestamp(p) with time zone");

@@ -150,7 +150,10 @@ implements
                 if (getDataType().isDate())
                     ctx.visit(K_CAST).sql('(');
 
-                ctx.visit(N_DATE_ADD).sql('(').visit(date).sql(", ").visit(K_INTERVAL).sql(' ').visit(inline(1)).sql(' ').visit(standardKeyword()).sql(" * ").visit(interval).sql(')');
+                if (interval.getDataType().isInterval())
+                    ctx.visit(N_DATE_ADD).sql('(').visit(date).sql(", ").visit(interval).sql(')');
+                else
+                    ctx.visit(N_DATE_ADD).sql('(').visit(date).sql(", ").visit(K_INTERVAL).sql(' ').visit(inline(1)).sql(' ').visit(standardKeyword()).sql(" * ").visit(interval).sql(')');
 
                 if (getDataType().isDate())
                     ctx.sql(' ').visit(K_AS).sql(' ').visit(K_DATE).sql(')');

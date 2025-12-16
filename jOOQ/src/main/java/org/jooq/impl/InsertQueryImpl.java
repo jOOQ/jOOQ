@@ -56,6 +56,7 @@ import static org.jooq.Clause.INSERT_RETURNING;
 // ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.DUCKDB;
+// ...
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 // ...
@@ -480,10 +481,11 @@ implements
                 case SQLITE:
                 case YUGABYTEDB: {
 
-                    // [#7552] Dialects supporting both MERGE and ON CONFLICT should
-                    //         generate MERGE to emulate MySQL's ON DUPLICATE KEY UPDATE
-                    //         if there are multiple known unique constraints.
-                    if (ctx.dialect().supports(POSTGRES)
+                    // [#7552] [#19532]
+                    // Dialects supporting both MERGE and ON CONFLICT should
+                    // generate MERGE to emulate MySQL's ON DUPLICATE KEY UPDATE
+                    // if there are multiple known unique constraints.
+                    if ((ctx.dialect().supports(POSTGRES) || ctx.dialect().supports(DUCKDB))
                             && onConstraint == null
                             && onConflict == null
                             && returning.isEmpty()

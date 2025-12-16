@@ -137,6 +137,24 @@ public enum SQLDialect {
      */
     DUCKDB("DuckDB", false, true),
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * The Firebird dialect family.
      * <p>

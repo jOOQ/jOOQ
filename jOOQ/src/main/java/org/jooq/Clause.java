@@ -601,13 +601,13 @@ public enum Clause {
     UPDATE_SET,
 
     /**
-     * An assigment within a {@link #UPDATE_SET} clause within an
+     * An assignment within a {@link #UPDATE_SET} clause within an
      * {@link #UPDATE} statement.
      * <p>
      * This clause surrounds
      * <ul>
      * <li>a {@link #FIELD} receiving the assignment</li>
-     * <li>an assigment operator</li>
+     * <li>an assignment operator</li>
      * <li>a {@link #FIELD} being assigned</li>
      * </ul>
      */
@@ -760,13 +760,13 @@ public enum Clause {
     MERGE_SET,
 
     /**
-     * An assigment within a {@link #MERGE_SET} clause within an {@link #MERGE}
+     * An assignment within a {@link #MERGE_SET} clause within an {@link #MERGE}
      * statement.
      * <p>
      * This clause surrounds
      * <ul>
      * <li>a {@link #FIELD} receiving the assignment</li>
-     * <li>an assigment operator</li>
+     * <li>an assignment operator</li>
      * <li>a {@link #FIELD} being assigned</li>
      * </ul>
      */

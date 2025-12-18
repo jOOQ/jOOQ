@@ -104,7 +104,7 @@ import org.jooq.SQLDialect;
  * </tr>
  * </table>
  * <p>
- * Interval implementations can be expected to also also extend {@link Number}.
+ * Interval implementations can be expected to also extend {@link Number}.
  * <p>
  * Note: only a few databases actually support this data type on its own. You
  * can still use it for date time arithmetic in other databases, though, through

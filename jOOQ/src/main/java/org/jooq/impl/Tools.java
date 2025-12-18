@@ -4555,7 +4555,7 @@ final class Tools {
             List<java.lang.reflect.Field> result = new ArrayList<>();
 
             // [#1942] Caching these values before the field-loop significantly
-            // accerates POJO mapping
+            // accelerates POJO mapping
             String camelCaseLC = StringUtils.toCamelCaseLC(field.getName());
 
             for (java.lang.reflect.Field member : getInstanceMembers(type))
@@ -4621,7 +4621,7 @@ final class Tools {
             Set<SourceMethod> set = new LinkedHashSet<>();
 
             // [#1942] Caching these values before the method-loop significantly
-            // accerates POJO mapping
+            // accelerates POJO mapping
             String camelCase = StringUtils.toCamelCase(field.getName());
             String camelCaseLC = StringUtils.toLC(camelCase);
 
@@ -4655,7 +4655,7 @@ final class Tools {
     ) {
         return Cache.run(configuration, () -> {
             // [#1942] Caching these values before the method-loop significantly
-            // accerates POJO mapping
+            // accelerates POJO mapping
             String camelCase = StringUtils.toCamelCase(field.getName());
             String camelCaseLC = StringUtils.toLC(camelCase);
             Method result = null;

@@ -732,7 +732,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
     }
 
     /**
-     * Convert a record into an hash map proxy of a given type.
+     * Convert a record into a hash map proxy of a given type.
      * <p>
      * This is done for types that are not instanciable
      */

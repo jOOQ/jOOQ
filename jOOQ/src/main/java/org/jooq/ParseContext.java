@@ -336,10 +336,10 @@ public interface ParseContext extends Scope {
     Long parseSignedIntegerLiteral() throws ParserException;
 
     /**
-     * Try parsing an signed integer literal.
+     * Try parsing a signed integer literal.
      *
      * @return The signed integer literal if it could be parsed, or
-     *         <code>null</code> if the current token is not an signed integer
+     *         <code>null</code> if the current token is not a signed integer
      *         literal.
      */
     @Nullable

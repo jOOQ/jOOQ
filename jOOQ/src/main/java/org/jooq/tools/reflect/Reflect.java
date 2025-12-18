@@ -884,7 +884,7 @@ public class Reflect {
     }
 
     /**
-     * Get the POJO property name of an getter/setter
+     * Get the POJO property name of a getter/setter
      */
     private static String property(String string) {
         int length = string.length();

@@ -12787,7 +12787,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                         if (Long.valueOf(1L).equals(i1) && Long.valueOf(1L).equals(i2))
                             all = true;
                         else
-                            throw expected("Only start and occurence values of 1 are currently supported");
+                            throw expected("Only start and occurrence values of 1 are currently supported");
                     }
                 }
 

@@ -1183,7 +1183,7 @@ public class Settings
     }
 
     /**
-     * Whether the {@link org.jooq.Nullability#DEFAULT} nullablity should be rendered in generated DDL, and how it should be rendered.
+     * Whether the {@link org.jooq.Nullability#DEFAULT} nullability should be rendered in generated DDL, and how it should be rendered.
      * 
      */
     public RenderDefaultNullability getRenderDefaultNullability() {
@@ -1191,7 +1191,7 @@ public class Settings
     }
 
     /**
-     * Whether the {@link org.jooq.Nullability#DEFAULT} nullablity should be rendered in generated DDL, and how it should be rendered.
+     * Whether the {@link org.jooq.Nullability#DEFAULT} nullability should be rendered in generated DDL, and how it should be rendered.
      * 
      */
     public void setRenderDefaultNullability(RenderDefaultNullability value) {
@@ -7671,7 +7671,7 @@ public class Settings
     }
 
     /**
-     * Whether the {@link org.jooq.Nullability#DEFAULT} nullablity should be rendered in generated DDL, and how it should be rendered.
+     * Whether the {@link org.jooq.Nullability#DEFAULT} nullability should be rendered in generated DDL, and how it should be rendered.
      * 
      */
     public Settings withRenderDefaultNullability(RenderDefaultNullability value) {

@@ -189,7 +189,7 @@ unless DML joins are supported.]]></jxb:javadoc></jxb:property></appinfo></annot
       </element>
       
       <element name="renderDefaultNullability" type="jooq-runtime:RenderDefaultNullability" minOccurs="0" maxOccurs="1" default="IMPLICIT_NULL">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether the {@link org.jooq.Nullability#DEFAULT} nullablity should be rendered in generated DDL, and how it should be rendered.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether the {@link org.jooq.Nullability#DEFAULT} nullability should be rendered in generated DDL, and how it should be rendered.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
       <element name="renderCoalesceToEmptyStringInConcat" type="boolean" minOccurs="0" maxOccurs="1" default="false">

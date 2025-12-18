@@ -222,28 +222,28 @@ public enum Clause {
     CONDITION_COMPARISON,
 
     /**
-     * A <code>BEWEEN</code> condition.
+     * A <code>BETWEEN</code> condition.
      * <p>
      * This clause surrounds three {@link #FIELD} clauses.
      */
     CONDITION_BETWEEN,
 
     /**
-     * A <code>BEWEEN SYMMETRIC</code> condition.
+     * A <code>BETWEEN SYMMETRIC</code> condition.
      * <p>
      * This clause surrounds three {@link #FIELD} clauses.
      */
     CONDITION_BETWEEN_SYMMETRIC,
 
     /**
-     * A <code>NOT BEWEEN</code> condition.
+     * A <code>NOT BETWEEN</code> condition.
      * <p>
      * This clause surrounds three {@link #FIELD} clauses.
      */
     CONDITION_NOT_BETWEEN,
 
     /**
-     * A <code>NOT BEWEEN SYMMETRIC</code> condition.
+     * A <code>NOT BETWEEN SYMMETRIC</code> condition.
      * <p>
      * This clause surrounds three {@link #FIELD} clauses.
      */

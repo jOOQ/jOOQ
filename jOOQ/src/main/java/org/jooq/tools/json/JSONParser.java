@@ -451,7 +451,7 @@ public class JSONParser {
 
                     case S_IN_PAIR_VALUE:
                                         /*
-                                         * S_IN_PAIR_VALUE is just a marker to indicate the end of an object entry, it doesn't proccess any token,
+                                         * S_IN_PAIR_VALUE is just a marker to indicate the end of an object entry, it doesn't process any token,
                                          * therefore delay consuming token until next round.
                                          */
                         statusStack.removeFirst();

@@ -251,7 +251,7 @@ public class DuckDBDatabase extends AbstractDatabase implements ResultQueryDatab
             .join(pkKcu)
                 .on(pkKcu.CONSTRAINT_SCHEMA.eq(TABLE_CONSTRAINTS.CONSTRAINT_SCHEMA))
                 .and(pkKcu.CONSTRAINT_NAME.eq(TABLE_CONSTRAINTS.CONSTRAINT_NAME))
-                .and(pkKcu.ORDINAL_POSITION.eq(fkKcu.POSITION_IN_UNIQUE_CONSTRAINT.coerce(pkKcu.ORDINAL_POSITION)))
+                .and(pkKcu.ORDINAL_POSITION.eq(fkKcu.ORDINAL_POSITION))
             .where(row(fkKcu.TABLE_CATALOG, fkKcu.TABLE_SCHEMA).in(
                 getInputCatalogsAndSchemata().stream().map(e -> row(e.getKey(), e.getValue())).collect(toList())
             ))

@@ -176,7 +176,7 @@ final class BatchMultiple extends AbstractBatch {
             return result;
         }
 
-        // [#3427] ControlFlowSignals must not be passed on to ExecuteListners
+        // [#3427] ControlFlowSignals must not be passed on to ExecuteListeners
         catch (ControlFlowSignal e) {
             throw e;
         }

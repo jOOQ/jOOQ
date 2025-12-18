@@ -455,7 +455,7 @@ final class Tools {
     static final QueryPart[]                EMPTY_QUERYPART               = {};
     static final Record[]                   EMPTY_RECORD                  = {};
     static final Row[]                      EMPTY_ROW                     = {};
-    static final Schema[]                   EMTPY_SCHEMA                  = {};
+    static final Schema[]                   EMPTY_SCHEMA                  = {};
     static final SortField<?>[]             EMPTY_SORTFIELD               = {};
     static final Source[]                   EMPTY_SOURCE                  = {};
     static final String[]                   EMPTY_STRING                  = {};

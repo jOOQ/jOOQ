@@ -2263,7 +2263,7 @@ public class Settings
     }
 
     /**
-     * Whether to run the {@link org.jooq.DiagnosticsListener#nullConditoin(org.jooq.DiagnosticsContext)} diagnostic.
+     * Whether to run the {@link org.jooq.DiagnosticsListener#nullCondition(org.jooq.DiagnosticsContext)} diagnostic.
      * <p>
      * Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
      * Once configured, this diagnostic is turned on by default.
@@ -2280,7 +2280,7 @@ public class Settings
     }
 
     /**
-     * Whether to run the {@link org.jooq.DiagnosticsListener#nullConditoin(org.jooq.DiagnosticsContext)} diagnostic.
+     * Whether to run the {@link org.jooq.DiagnosticsListener#nullCondition(org.jooq.DiagnosticsContext)} diagnostic.
      * <p>
      * Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
      * Once configured, this diagnostic is turned on by default.
@@ -8135,7 +8135,7 @@ public class Settings
     }
 
     /**
-     * Whether to run the {@link org.jooq.DiagnosticsListener#nullConditoin(org.jooq.DiagnosticsContext)} diagnostic.
+     * Whether to run the {@link org.jooq.DiagnosticsListener#nullCondition(org.jooq.DiagnosticsContext)} diagnostic.
      * <p>
      * Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
      * Once configured, this diagnostic is turned on by default.

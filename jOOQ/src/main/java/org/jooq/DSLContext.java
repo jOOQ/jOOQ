@@ -13370,7 +13370,7 @@ public interface DSLContext extends Scope {
     AlterTableStep alterTableIfExists(Table<?> table);
 
     // -------------------------------------------------------------------------
-    // XXX Other queries for identites and sequences
+    // XXX Other queries for identities and sequences
     // -------------------------------------------------------------------------
 
     /**

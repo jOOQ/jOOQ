@@ -55,7 +55,7 @@ package org.jooq;
 public enum Clause {
 
     // -------------------------------------------------------------------------
-    // Clauses used in a any type of statement to model access control
+    // Clauses used in an any type of statement to model access control
     // -------------------------------------------------------------------------
 
     USER,
@@ -63,34 +63,34 @@ public enum Clause {
     PRIVILEGE,
 
     // -------------------------------------------------------------------------
-    // Clauses used in a any type of statement to model constraint references
+    // Clauses used in an any type of statement to model constraint references
     // -------------------------------------------------------------------------
 
     CONSTRAINT,
 
     // -------------------------------------------------------------------------
-    // Clauses used in a any type of statement to model catalog references
+    // Clauses used in an any type of statement to model catalog references
     // -------------------------------------------------------------------------
 
     CATALOG,
     CATALOG_REFERENCE,
 
     // -------------------------------------------------------------------------
-    // Clauses used in a any type of statement to model schema references
+    // Clauses used in an any type of statement to model schema references
     // -------------------------------------------------------------------------
 
     SCHEMA,
     SCHEMA_REFERENCE,
 
     // -------------------------------------------------------------------------
-    // Clauses used in a any type of statement to model sequence references
+    // Clauses used in an any type of statement to model sequence references
     // -------------------------------------------------------------------------
 
     SEQUENCE,
     SEQUENCE_REFERENCE,
 
     // -------------------------------------------------------------------------
-    // Clauses used in a any type of statement to model table references
+    // Clauses used in an any type of statement to model table references
     // -------------------------------------------------------------------------
 
     /**
@@ -158,7 +158,7 @@ public enum Clause {
     TABLE_VALUES,
 
     // -------------------------------------------------------------------------
-    // Clauses used in a any type of statement to model column references
+    // Clauses used in an any type of statement to model column references
     // -------------------------------------------------------------------------
 
     /**
@@ -192,7 +192,7 @@ public enum Clause {
     FIELD_FUNCTION,
 
     // -------------------------------------------------------------------------
-    // Clauses used in a any type of statement to model condition references
+    // Clauses used in an any type of statement to model condition references
     // -------------------------------------------------------------------------
 
     /**

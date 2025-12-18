@@ -51,7 +51,7 @@ public final class TimestampRange extends AbstractRange<Timestamp> {
     }
 
     /**
-     * Create a new {@link TimestampRange} with a inclusive lower bound and an
+     * Create a new {@link TimestampRange} with an inclusive lower bound and an
      * exclusive upper bound.
      */
     public static final TimestampRange timestampRange(Timestamp lower, Timestamp upper) {

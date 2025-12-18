@@ -59,7 +59,7 @@ public class DataTypeException extends DataAccessException {
      * Constructor for DataTypeException.
      *
      * @param message the detail message
-     * @param cause the root cause (usually from using a underlying data access
+     * @param cause the root cause (usually from using an underlying data access
      *            API such as JDBC)
      */
     public DataTypeException(String message, Throwable cause) {

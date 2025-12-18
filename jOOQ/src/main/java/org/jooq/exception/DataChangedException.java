@@ -70,7 +70,7 @@ public class DataChangedException extends DataAccessException {
      * Constructor for DataChangedException.
      *
      * @param message the detail message
-     * @param cause the root cause (usually from using a underlying data access
+     * @param cause the root cause (usually from using an underlying data access
      *            API such as JDBC)
      */
     public DataChangedException(String message, Throwable cause) {

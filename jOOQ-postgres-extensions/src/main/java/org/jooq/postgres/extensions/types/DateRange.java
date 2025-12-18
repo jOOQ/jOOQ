@@ -51,7 +51,7 @@ public final class DateRange extends AbstractDiscreteRange<Date, DateRange> {
     }
 
     /**
-     * Create a new {@link DateRange} with a inclusive lower bound and an
+     * Create a new {@link DateRange} with an inclusive lower bound and an
      * exclusive upper bound.
      */
     public static final DateRange dateRange(Date lower, Date upper) {

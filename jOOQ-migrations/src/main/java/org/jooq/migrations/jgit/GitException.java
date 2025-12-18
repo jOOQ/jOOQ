@@ -63,7 +63,7 @@ public class GitException extends RuntimeException {
      * Constructor for GitException.
      *
      * @param message the detail message
-     * @param cause the root cause (usually from using a underlying data access
+     * @param cause the root cause (usually from using an underlying data access
      *            API such as JDBC)
      */
     public GitException(String message, Throwable cause) {

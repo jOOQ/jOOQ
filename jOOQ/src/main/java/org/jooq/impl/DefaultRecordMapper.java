@@ -611,7 +611,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
             - Is type a Stream (false)?
             - Does row type have only 1 column ($debugVTFL) and did ConverterProvider provide a Converter for type ($debugVTCP)?
             - Is type abstract (false)?
-            - Is type a org.jooq.Record (false)?
+            - Is type an org.jooq.Record (false)?
             - Is type a mutable POJO (a POJO with setters or non-final members: $debugMutable) and has a no-args constructor ($debugMutableConstructors)?
             - Does type have a @ConstructorProperties annotated constructor (false) and is Settings.mapConstructorPropertiesParameterNames enabled ($debugCPSettings)?
             - Is type a java.lang.Record ($debugRC) and is Settings.mapRecordComponentParameterNames enabled ($debugRCSettings)?

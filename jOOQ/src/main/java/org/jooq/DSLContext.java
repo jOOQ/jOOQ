@@ -1075,7 +1075,7 @@ public interface DSLContext extends Scope {
     Block begin(Statement... statements);
 
     /**
-     * Wrap a collection of statements in an anoymous procedural block.
+     * Wrap a collection of statements in an anonymous procedural block.
      *
      * @see DSL#begin(Collection)
      */

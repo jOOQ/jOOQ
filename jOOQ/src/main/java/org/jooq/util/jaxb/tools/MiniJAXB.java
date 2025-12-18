@@ -102,7 +102,7 @@ import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
- * This class allows for mashalling / unmarshalling XML content to jOOQ
+ * This class allows for marshalling / unmarshalling XML content to jOOQ
  * configuration objects.
  * <p>
  * With jOOQ 3.12, the JAXB dependency has been removed in favour of this home

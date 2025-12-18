@@ -49,7 +49,7 @@ import org.jetbrains.annotations.Nullable;
 
 /**
  * A publicly available API for the internal parse context that allows for
- * parsing SQL fragements.
+ * parsing SQL fragments.
  * <p>
  * This type is a {@link Scope} with independent lifecycle and its own
  * {@link #data()} map.

@@ -803,7 +803,7 @@ public final class JSONFormat {
          * <p>
          * This format allows for accessing columns by index, saving space by
          * avoiding repetitive column names in large result sets. Use this
-         * preferrably with {@link JSONFormat#header()} equal to
+         * preferably with {@link JSONFormat#header()} equal to
          * <code>true</code>.
          */
         ARRAY,

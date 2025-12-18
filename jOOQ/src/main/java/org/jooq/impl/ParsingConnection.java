@@ -204,7 +204,7 @@ final class ParsingConnection extends DefaultConnection {
                     new DefaultBindContext(configuration, null, s).visit(rendered.bindValues);
 
                 // TODO: Find a less hacky way to signal that we're batching. Currently:
-                // - ArrayList<Arraylist<Param<?>>> = batching
+                // - ArrayList<ArrayList<Param<?>>> = batching
                 // - SingletonList<ArrayList<Param<?>>> = not batching
                 if (size > 1 || p instanceof ArrayList)
                     if (!inlined)

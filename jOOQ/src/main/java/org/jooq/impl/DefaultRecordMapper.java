@@ -426,7 +426,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
             // [#10194] Check if the POJO is really mutable. There might as well
             //          be a no-args constructor for other reasons, e.g. when
             //          using an immutable Kotlin data class with defaulted parameters
-            //          If the no-args constructor is the only one, take it none-theless
+            //          If the no-args constructor is the only one, take it nonetheless
             if ((debugMutable = m.isMutable()) || (debugMutableConstructors = type.getDeclaredConstructors().length <= 1)) {
                 delegate = m;
                 return;

@@ -9415,7 +9415,7 @@ public interface DSLContext extends Scope {
     /**
      * Create a batch statement to execute a set of <code>DELETE</code> queries
      * in batch mode (with bind values) according to
-     * {@link UpdatableRecord#delete()} sematics.
+     * {@link UpdatableRecord#delete()} semantics.
      * <p>
      * This batch operation can be executed in two modes:
      * <p>
@@ -9462,7 +9462,7 @@ public interface DSLContext extends Scope {
     /**
      * Create a batch statement to execute a set of <code>DELETE</code> queries
      * in batch mode (with bind values) according to
-     * {@link UpdatableRecord#delete()} sematics.
+     * {@link UpdatableRecord#delete()} semantics.
      *
      * @see #batchDelete(UpdatableRecord...)
      * @see UpdatableRecord#delete()

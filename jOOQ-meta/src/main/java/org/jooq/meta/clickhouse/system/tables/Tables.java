@@ -47,7 +47,7 @@ public class Tables extends TableImpl<Record> {
      * The column <code>system.tables.database</code>. The name of the database
      * the table is in.
      */
-    public final TableField<Record, String> DATABASE = createField(DSL.name("database"), SQLDataType.VARCHAR.nullable(false), this, "The name of the database the table is in.");
+    public final TableField<Record, String> DATABASE = createField(DSL.name("database"), SQLDataType.VARCHAR.nullable(false), this, "The name of the database containing the table.");
 
     /**
      * The column <code>system.tables.name</code>. Table name.

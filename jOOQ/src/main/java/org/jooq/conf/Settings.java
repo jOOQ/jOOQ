@@ -4329,7 +4329,7 @@ public class Settings
     /**
      * Transform <code>SIN(x) / COS(x)</code> to <code>TAN(x)</code>, and other transformations.
      * <p>
-     * This transformation turns expanded trignonometric function definitions into their shorter equivalents.
+     * This transformation turns expanded trigonometric function definitions into their shorter equivalents.
      * <p>
      * To enable this feature, {@link #transformPatterns} must be enabled as well.
      * <p>
@@ -4347,7 +4347,7 @@ public class Settings
     /**
      * Transform <code>SIN(x) / COS(x)</code> to <code>TAN(x)</code>, and other transformations.
      * <p>
-     * This transformation turns expanded trignonometric function definitions into their shorter equivalents.
+     * This transformation turns expanded trigonometric function definitions into their shorter equivalents.
      * <p>
      * To enable this feature, {@link #transformPatterns} must be enabled as well.
      * <p>
@@ -8998,7 +8998,7 @@ public class Settings
     /**
      * Transform <code>SIN(x) / COS(x)</code> to <code>TAN(x)</code>, and other transformations.
      * <p>
-     * This transformation turns expanded trignonometric function definitions into their shorter equivalents.
+     * This transformation turns expanded trigonometric function definitions into their shorter equivalents.
      * <p>
      * To enable this feature, {@link #transformPatterns} must be enabled as well.
      * <p>

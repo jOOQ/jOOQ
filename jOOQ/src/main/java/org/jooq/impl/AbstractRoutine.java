@@ -999,7 +999,7 @@ implements
             if (defaulted && context.family().category() == SQLDialectCategory.POSTGRES)
                 context.visit(parameter.getUnqualifiedName()).sql(" := ");
 
-            // OUT and IN OUT parameters are always written as a '?' bind variable
+            // OUT and IN-OUT parameters are always written as a '?' bind variable
             if (getOutParameters0(context.configuration()).contains(parameter))
                 toSQLOutParam(context, parameter, index);
 

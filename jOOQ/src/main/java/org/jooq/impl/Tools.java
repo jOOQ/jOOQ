@@ -3472,7 +3472,7 @@ final class Tools {
                     bind.visit(substitute);
             }
 
-            // [#1432] Inline substitues for {numbered placeholders} outside of string literals
+            // [#1432] Inline substitutes for {numbered placeholders} outside of string literals
             else if (sqlChars[i] == '{') {
 
                 // [#1461] Be careful not to match any JDBC escape syntax

@@ -691,7 +691,7 @@ public class Reflect {
      * <p>
      * First public methods are searched in the class hierarchy, then private
      * methods on the declaring class. If a method could be found, it is
-     * returned, otherwise a {@code NoSuchMethodException} is thrown.
+     * returned; otherwise, a {@code NoSuchMethodException} is thrown.
      */
     private Method similarMethod(String name, Class<?>[] types) throws NoSuchMethodException {
         Class<?> t = type();

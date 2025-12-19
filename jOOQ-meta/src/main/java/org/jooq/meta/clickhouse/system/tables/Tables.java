@@ -158,17 +158,17 @@ public class Tables extends TableImpl<Record> {
      * if it is possible to quickly determine exact number of rows in the table,
      * otherwise NULL (including underlying Buffer table).
      */
-    public final TableField<Record, ULong> TOTAL_ROWS = createField(DSL.name("total_rows"), SQLDataType.BIGINTUNSIGNED, this, "Total number of rows, if it is possible to quickly determine exact number of rows in the table, otherwise NULL (including underlying Buffer table).");
+    public final TableField<Record, ULong> TOTAL_ROWS = createField(DSL.name("total_rows"), SQLDataType.BIGINTUNSIGNED, this, "Total number of rows, if it is possible to quickly determine exact number of rows in the table; otherwise, NULL (including underlying Buffer table).");
 
     /**
      * The column <code>system.tables.total_bytes</code>. Total number of bytes,
      * if it is possible to quickly determine exact number of bytes for the
-     * table on storage, otherwise NULL (does not includes any underlying
+     * table on storage; otherwise, NULL (does not includes any underlying
      * storage). If the table stores data on disk, returns used space on disk
      * (i.e. compressed). If the table stores data in memory, returns
      * approximated number of used bytes in memory.
      */
-    public final TableField<Record, ULong> TOTAL_BYTES = createField(DSL.name("total_bytes"), SQLDataType.BIGINTUNSIGNED, this, "Total number of bytes, if it is possible to quickly determine exact number of bytes for the table on storage, otherwise NULL (does not includes any underlying storage). If the table stores data on disk, returns used space on disk (i.e. compressed). If the table stores data in memory, returns approximated number of used bytes in memory.");
+    public final TableField<Record, ULong> TOTAL_BYTES = createField(DSL.name("total_bytes"), SQLDataType.BIGINTUNSIGNED, this, "Total number of bytes, if it is possible to quickly determine exact number of bytes for the table on storage; otherwise, NULL (does not includes any underlying storage). If the table stores data on disk, returns used space on disk (i.e. compressed). If the table stores data in memory, returns approximated number of used bytes in memory.");
 
     /**
      * The column <code>system.tables.total_bytes_uncompressed</code>. Total
@@ -176,7 +176,7 @@ public class Tables extends TableImpl<Record> {
      * exact number of bytes from the part checksums for the table on storage,
      * otherwise NULL (does not take underlying storage (if any) into account).
      */
-    public final TableField<Record, ULong> TOTAL_BYTES_UNCOMPRESSED = createField(DSL.name("total_bytes_uncompressed"), SQLDataType.BIGINTUNSIGNED, this, "Total number of uncompressed bytes, if it's possible to quickly determine the exact number of bytes from the part checksums for the table on storage, otherwise NULL (does not take underlying storage (if any) into account).");
+    public final TableField<Record, ULong> TOTAL_BYTES_UNCOMPRESSED = createField(DSL.name("total_bytes_uncompressed"), SQLDataType.BIGINTUNSIGNED, this, "Total number of uncompressed bytes, if it's possible to quickly determine the exact number of bytes from the part checksums for the table on storage; otherwise, NULL (does not take underlying storage (if any) into account).");
 
     /**
      * The column <code>system.tables.parts</code>.

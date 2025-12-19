@@ -1340,7 +1340,7 @@ public final class StringUtils {
      *
      * @param <T> the type of the objects
      * @param objects  the elements to test, may not be {@code null} but empty
-     * @return first non-{@code null} element in {@code objects}, otherwise {@code null}
+     * @return first non-{@code null} element in {@code objects}; otherwise, {@code null}
      */
     @SafeVarargs
     public static <T> T firstNonNull(T... objects) {

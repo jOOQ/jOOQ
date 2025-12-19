@@ -130,7 +130,7 @@ abstract class AbstractNamed extends AbstractQueryPart implements Named {
     static final Name qualify(Named qualifier, Name name) {
         // [#9820] [#11292] name == null || name.empty() are special cases that
         //                  may appear when using unnamed constraint declarations.
-        //                  Their unnamedness must not be changed, nor qualified!
+        //                  Their unnamedness must neither be changed, nor qualified!
         return qualifier == null || name == null || name.empty() || name.qualified() ? name : qualifier.getQualifiedName().append(name);
     }
 

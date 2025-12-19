@@ -840,7 +840,7 @@ public class Settings
      * used by named parameters, such as <code>@</code> for SQL Server's <code>@name</code> or <code>$</code>
      * for PostgreSQL's <code>$name</code>, when generating SQL.
      * <p>
-     * "Named indexed" parameters can be obtained in the same way by specifingy {@code ParamType#NAMED} and not
+     * "Named indexed" parameters can be obtained in the same way by specifying {@code ParamType#NAMED} and not
      * providing a name to parameters, resulting in <code>:1</code> or <code>@1</code> or <code>$1</code>, etc.
      * 
      */
@@ -856,7 +856,7 @@ public class Settings
      * used by named parameters, such as <code>@</code> for SQL Server's <code>@name</code> or <code>$</code>
      * for PostgreSQL's <code>$name</code>, when generating SQL.
      * <p>
-     * "Named indexed" parameters can be obtained in the same way by specifingy {@code ParamType#NAMED} and not
+     * "Named indexed" parameters can be obtained in the same way by specifying {@code ParamType#NAMED} and not
      * providing a name to parameters, resulting in <code>:1</code> or <code>@1</code> or <code>$1</code>, etc.
      * 
      */
@@ -6810,7 +6810,7 @@ public class Settings
      * used by named parameters, such as <code>@</code> for SQL Server's <code>@name</code> or <code>$</code>
      * for PostgreSQL's <code>$name</code> when parsing SQL.
      * <p>
-     * "Named indexed" parameters can be obtained in the same way by specifingy {@code ParamType#NAMED} and not
+     * "Named indexed" parameters can be obtained in the same way by specifying {@code ParamType#NAMED} and not
      * providing a name to parameters, resulting in <code>:1</code> or <code>@1</code> or <code>$1</code>, etc.
      * 
      */
@@ -6826,7 +6826,7 @@ public class Settings
      * used by named parameters, such as <code>@</code> for SQL Server's <code>@name</code> or <code>$</code>
      * for PostgreSQL's <code>$name</code> when parsing SQL.
      * <p>
-     * "Named indexed" parameters can be obtained in the same way by specifingy {@code ParamType#NAMED} and not
+     * "Named indexed" parameters can be obtained in the same way by specifying {@code ParamType#NAMED} and not
      * providing a name to parameters, resulting in <code>:1</code> or <code>@1</code> or <code>$1</code>, etc.
      * 
      */
@@ -7498,7 +7498,7 @@ public class Settings
      * used by named parameters, such as <code>@</code> for SQL Server's <code>@name</code> or <code>$</code>
      * for PostgreSQL's <code>$name</code>, when generating SQL.
      * <p>
-     * "Named indexed" parameters can be obtained in the same way by specifingy {@code ParamType#NAMED} and not
+     * "Named indexed" parameters can be obtained in the same way by specifying {@code ParamType#NAMED} and not
      * providing a name to parameters, resulting in <code>:1</code> or <code>@1</code> or <code>$1</code>, etc.
      * 
      */
@@ -10123,7 +10123,7 @@ public class Settings
      * used by named parameters, such as <code>@</code> for SQL Server's <code>@name</code> or <code>$</code>
      * for PostgreSQL's <code>$name</code> when parsing SQL.
      * <p>
-     * "Named indexed" parameters can be obtained in the same way by specifingy {@code ParamType#NAMED} and not
+     * "Named indexed" parameters can be obtained in the same way by specifying {@code ParamType#NAMED} and not
      * providing a name to parameters, resulting in <code>:1</code> or <code>@1</code> or <code>$1</code>, etc.
      * 
      */

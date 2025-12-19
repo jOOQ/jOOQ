@@ -174,7 +174,7 @@ public final class GitCommitProvider implements CommitProvider {
 
             Commit root = commits.root();
 
-            // TODO: This algorithm is quadradic in the worst case. Can we find a better one?
+            // TODO: This algorithm is quadratic in the worst case. Can we find a better one?
             // TODO: We collect all the commits from git, when we could ignore the empty ones
             while (!revCommits.isEmpty()) {
 

@@ -1376,7 +1376,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         }
         catch (ParserException e) {
 
-            // [#9061] Don't hide this pre-existing exceptions in scopeResolve()
+            // [#9061] Don't hide this preexisting exceptions in scopeResolve()
             scope.scopeClear();
             throw e;
         }

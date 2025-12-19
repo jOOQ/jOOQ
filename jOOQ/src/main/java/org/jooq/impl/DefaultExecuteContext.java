@@ -711,7 +711,7 @@ class DefaultExecuteContext implements ExecuteContext {
     }
 
     /**
-     * Initialise this {@link DefaultExecuteContext} with a pre-existing
+     * Initialise this {@link DefaultExecuteContext} with a preexisting
      * {@link Connection}.
      * <p>
      * [#3191] This is needed, e.g. when using

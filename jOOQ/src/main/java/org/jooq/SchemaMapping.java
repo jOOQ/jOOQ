@@ -240,7 +240,7 @@ public class SchemaMapping implements Serializable {
     public void add(final Table<?> inputTable, final String outputTable) {
         logDeprecation();
 
-        // Try to find a pre-existing schema mapping in the settings
+        // Try to find a preexisting schema mapping in the settings
         MappedSchema schema = null;
         MappedTable table = null;
 

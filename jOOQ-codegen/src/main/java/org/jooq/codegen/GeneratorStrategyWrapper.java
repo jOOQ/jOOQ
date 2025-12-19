@@ -193,7 +193,7 @@ class GeneratorStrategyWrapper extends AbstractDelegatingGeneratorStrategy {
 
     /**
      * [#182] Method name disambiguation is important to avoid name clashes due
-     * to pre-existing getters / setters in super classes
+     * to preexisting getters / setters in super classes
      */
     private String disambiguateMethod(Definition definition, Mode mode, String method) {
         Set<String> reserved = null;

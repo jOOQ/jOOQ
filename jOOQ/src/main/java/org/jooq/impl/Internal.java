@@ -1356,7 +1356,7 @@ public final class Internal {
     }
 
     /**
-     * A utility to combine a possibly pre-existing condition on a
+     * A utility to combine a possibly preexisting condition on a
      * {@link TableImpl} with a new one.
      */
     public static final Condition condition(TableImpl<?> table, Condition condition) {

@@ -14523,7 +14523,7 @@ public interface DSLContext extends Scope {
      * Execute a {@link Select} query in the context of this <code>DSLContext</code> and return
      * a <code>COUNT(*)</code> value.
      * <p>
-     * This wraps a pre-existing <code>SELECT</code> query in another one to
+     * This wraps a preexisting <code>SELECT</code> query in another one to
      * calculate the <code>COUNT(*)</code> value, without modifying the original
      * <code>SELECT</code>. An example: <pre><code>
      * -- Original query:
@@ -14612,7 +14612,7 @@ public interface DSLContext extends Scope {
      * Execute a {@link Select} query in the context of this <code>DSLContext</code> and return
      * a <code>COUNT(*)</code> value.
      * <p>
-     * This wraps a pre-existing <code>SELECT</code> query in another one to
+     * This wraps a preexisting <code>SELECT</code> query in another one to
      * calculate the <code>COUNT(*)</code> value, without modifying the original
      * <code>SELECT</code>. An example: <pre><code>
      * -- Original query:
@@ -14700,7 +14700,7 @@ public interface DSLContext extends Scope {
     /**
      * Check if a {@link Select} would return any records, if it were executed.
      * <p>
-     * This wraps a pre-existing <code>SELECT</code> query in another one to
+     * This wraps a preexisting <code>SELECT</code> query in another one to
      * check for result existence, without modifying the original
      * <code>SELECT</code>. An example: <pre><code>
      * -- Original query:

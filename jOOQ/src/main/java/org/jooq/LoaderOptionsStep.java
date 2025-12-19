@@ -115,7 +115,7 @@ public interface LoaderOptionsStep<R extends Record> extends LoaderSourceStep<R>
      * supported if {@link InsertQuery#onDuplicateKeyUpdate(boolean)} is
      * supported, too.
      * <p>
-     * If the loaded table does not have any unqiue keys, then all records are
+     * If the loaded table does not have any unique keys, then all records are
      * inserted and this clause behaves like {@link #onDuplicateKeyIgnore()}
      * <p>
      * If you don't specify a behaviour, {@link #onDuplicateKeyError()} will be

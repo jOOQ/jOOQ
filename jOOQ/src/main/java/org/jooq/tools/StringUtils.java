@@ -583,7 +583,7 @@ public final class StringUtils {
      * StringUtils.padding(-2, 'e') = IndexOutOfBoundsException
      * </pre>
      *
-     * <p>Note: this method doesn't not support padding with
+     * <p>Note: this method doesn't support padding with
      * <a href="http://www.unicode.org/glossary/#supplementary_character">Unicode Supplementary Characters</a>
      * as they require a pair of <code>char</code>s to be represented.
      * If you are needing to support full I18N of your applications

@@ -5674,7 +5674,7 @@ public final class QOM {
     /**
      * The <code>REPEAT</code> function.
      * <p>
-     * Repeat a string a number of times.
+     * Repeat string a number of times.
      */
     public /*sealed*/ interface Repeat
         extends

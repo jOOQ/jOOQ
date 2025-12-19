@@ -170,7 +170,7 @@ public class MockExecuteContext {
     /**
      * Get all bind variables of a "single batch" statement.
      *
-     * @return All bind variables of a "single batch" statment, or an array of
+     * @return All bind variables of a "single batch" statement, or an array of
      *         length <code>1</code> with the bind variables of a single
      *         statement.
      */

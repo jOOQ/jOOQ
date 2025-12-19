@@ -128,9 +128,9 @@ public class MockExecuteContext {
     }
 
     /**
-     * Whether this execution context is a from a batch statement.
+     * Whether this execution context is from a batch statement.
      *
-     * @return Whether this execution context is a from a batch statement.
+     * @return Whether this execution context is from a batch statement.
      */
     public boolean batch() {
         return batchSingle() || batchMultiple();

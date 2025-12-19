@@ -6435,7 +6435,7 @@ public class Settings
     }
 
     /**
-     * Whether migrations to invalid commits ({@link org.jooq.Commit#valid()}) are allowed. <p><strong>This is a potentially destructive feature, which should not be turned on in production</strong>. It is useful mostly to quickly test uncommited or inconsistent changes in development.
+     * Whether migrations to invalid commits ({@link org.jooq.Commit#valid()}) are allowed. <p><strong>This is a potentially destructive feature, which should not be turned on in production</strong>. It is useful mostly to quickly test uncommitted or inconsistent changes in development.
      * 
      * @return
      *     possible object is
@@ -6447,7 +6447,7 @@ public class Settings
     }
 
     /**
-     * Whether migrations to invalid commits ({@link org.jooq.Commit#valid()}) are allowed. <p><strong>This is a potentially destructive feature, which should not be turned on in production</strong>. It is useful mostly to quickly test uncommited or inconsistent changes in development.
+     * Whether migrations to invalid commits ({@link org.jooq.Commit#valid()}) are allowed. <p><strong>This is a potentially destructive feature, which should not be turned on in production</strong>. It is useful mostly to quickly test uncommitted or inconsistent changes in development.
      * 
      * @param value
      *     allowed object is
@@ -9963,7 +9963,7 @@ public class Settings
     }
 
     /**
-     * Whether migrations to invalid commits ({@link org.jooq.Commit#valid()}) are allowed. <p><strong>This is a potentially destructive feature, which should not be turned on in production</strong>. It is useful mostly to quickly test uncommited or inconsistent changes in development.
+     * Whether migrations to invalid commits ({@link org.jooq.Commit#valid()}) are allowed. <p><strong>This is a potentially destructive feature, which should not be turned on in production</strong>. It is useful mostly to quickly test uncommitted or inconsistent changes in development.
      * 
      */
     public Settings withMigrationAllowInvalidCommits(Boolean value) {

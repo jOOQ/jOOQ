@@ -1589,7 +1589,7 @@ This setting does not affect any plain SQL usage.]]></jxb:javadoc></jxb:property
       </element>
       
       <element name="migrationAllowInvalidCommits" type="boolean" minOccurs="0" maxOccurs="1" default="false">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether migrations to invalid commits ({@link org.jooq.Commit#valid()}) are allowed. <p><strong>This is a potentially destructive feature, which should not be turned on in production</strong>. It is useful mostly to quickly test uncommited or inconsistent changes in development.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether migrations to invalid commits ({@link org.jooq.Commit#valid()}) are allowed. <p><strong>This is a potentially destructive feature, which should not be turned on in production</strong>. It is useful mostly to quickly test uncommitted or inconsistent changes in development.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
       <element name="migrationAllowRename" type="boolean" minOccurs="0" maxOccurs="1" default="true">

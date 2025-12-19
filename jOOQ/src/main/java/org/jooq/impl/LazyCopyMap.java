@@ -59,7 +59,7 @@ import org.jooq.ExecuteContext;
  * or {@link Map#entrySet()} will call through to the backing data structure,
  * {@link Map#get(Object)} or {@link Map#containsKey(Object)} may not, but find
  * a stale object that is no longer in the backing cache. The assumption here is
- * that in the cache use-case, the backing cache would fill up the the same
+ * that in the cache use-case, the backing cache would fill up the same
  * missing value again in case of a {@link Map#get(Object)} call, evicting
  * another entry. These caveats will not produce any issues if only "cache
  * relevant" methods like {@link Map#get(Object)} and

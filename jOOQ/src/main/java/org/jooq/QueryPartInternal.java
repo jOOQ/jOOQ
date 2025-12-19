@@ -78,7 +78,7 @@ public interface QueryPartInternal extends QueryPart {
      * {@link QueryPart}s can specify several <code>Clause</code>s for which an
      * event will be emitted {@link Context#start(Clause) before} (in forward
      * order) and {@link Context#end(Clause) after} (in reverse order) visiting
-     * the the query part through {@link Context#visit(QueryPart)}
+     * the query part through {@link Context#visit(QueryPart)}
      * <p>
      * This method is for JOOQ INTERNAL USE only. Do not reference directly
      *

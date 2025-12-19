@@ -8645,7 +8645,7 @@ public final class QOM {
      * <p>
      * Calculate the approximate value for the <code>PERCENTILE_CONT</code> inverse distribution
      * aggregate function if such a function is available in the dialect, or fall back to
-     * the exact value, otherwise..
+     * the exact value, otherwise.
      */
     public /*sealed*/ interface ApproxPercentileCont
         extends
@@ -8663,7 +8663,7 @@ public final class QOM {
      * <p>
      * Calculate the approximate value for the <code>PERCENTILE_DISC</code> inverse distribution
      * aggregate function if such a function is available in the dialect, or fall back to
-     * the exact value, otherwise..
+     * the exact value, otherwise.
      */
     public /*sealed*/ interface ApproxPercentileDisc
         extends

@@ -1468,7 +1468,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
     static final DocumentFragment createContent(DocumentBuilder builder, Document doc, String text) {
 
         // [#150] Text might hold XML content, which can be leniently identified by the presence
-        //        of either < or & characters (other entities, like >, ", ' are not stricly XML content)
+        //        of either < or & characters (other entities, like >, ", ' are not strictly XML content)
         if (text != null && (text.contains("<") || text.contains("&"))) {
 
             // [#162] Prevent log output

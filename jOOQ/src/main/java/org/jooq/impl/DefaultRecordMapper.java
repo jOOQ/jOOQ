@@ -590,7 +590,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
 
         // [#4627] if there is no exact match in terms of the number of parameters,
         // but using parameter annotations is allowed and those are in fact present,
-        // use the first available constructor (thus the choice is undeterministic)
+        // use the first available constructor (thus the choice is nondeterministic)
         if (mapConstructorParameterNames) {
             Constructor<E> constructor = constructors[0];
             Parameter[] parameters = constructor.getParameters();

@@ -903,7 +903,7 @@ public class Settings
     }
 
     /**
-     * The Locale to be used with any render locale dependent logic (as e.g. transforming names to lower / uppper case), defaulting to {@link #getLocale()}.
+     * The Locale to be used with any render locale dependent logic (as e.g. transforming names to lower / upper case), defaulting to {@link #getLocale()}.
      * 
      */
     public Locale getRenderLocale() {
@@ -911,7 +911,7 @@ public class Settings
     }
 
     /**
-     * The Locale to be used with any render locale dependent logic (as e.g. transforming names to lower / uppper case), defaulting to {@link #getLocale()}.
+     * The Locale to be used with any render locale dependent logic (as e.g. transforming names to lower / upper case), defaulting to {@link #getLocale()}.
      * 
      */
     public void setRenderLocale(Locale value) {
@@ -7529,7 +7529,7 @@ public class Settings
     }
 
     /**
-     * The Locale to be used with any render locale dependent logic (as e.g. transforming names to lower / uppper case), defaulting to {@link #getLocale()}.
+     * The Locale to be used with any render locale dependent logic (as e.g. transforming names to lower / upper case), defaulting to {@link #getLocale()}.
      * 
      */
     public Settings withRenderLocale(Locale value) {

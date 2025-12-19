@@ -503,7 +503,7 @@ public class PGInterval extends PGobject {
   }
 
   /**
-   * Returns whether an object is equal to this one or not.
+   * Returns whether or not an object is equal to this one.
    *
    * @param obj Object to compare with
    * @return true if the two intervals are identical

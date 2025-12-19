@@ -263,7 +263,7 @@ public interface LoaderOptionsStep<R extends Record> extends LoaderSourceStep<R>
     LoaderOptionsStep<R> commitAll();
 
     /**
-     * Leave committing / rollbacking up to client code.
+     * Leave committing / rolling back up to client code.
      * <p>
      * The COMMIT OPTIONS might be useful for fine-tuning performance behaviour
      * in some RDBMS, where large commits lead to a high level of concurrency in

@@ -286,7 +286,7 @@ class Yylex {
      * Creates a new scanner.
      * There is also java.io.Reader version of this constructor.
      *
-     * @param   in  the java.io.Inputstream to read input from.
+     * @param   in  the java.io.InputStream to read input from.
      */
     Yylex(java.io.InputStream in) {
         this(new java.io.InputStreamReader(in));

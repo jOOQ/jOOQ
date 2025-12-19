@@ -68,10 +68,10 @@ import org.jetbrains.annotations.Nullable;
  * <ul>
  * <li>{@link #field(int)} will return the expected field by index and isn't
  * affected by this situation.</li>
- * <li>{@link #field(String)} (case sensitive) works only with unqualified field
+ * <li>{@link #field(String)} (case-sensitive) works only with unqualified field
  * names, and can thus not distinguish between any of the 3 fields. It will pick
  * the first match.</li>
- * <li>{@link #field(Name)} (case sensitive) works with unqualified or qualified
+ * <li>{@link #field(Name)} (case-sensitive) works with unqualified or qualified
  * field names. Depending on whether qualification is available in the jOOQ
  * result (e.g. it might not be if you're using plain SQL templating, and the
  * JDBC driver isn't able to produce the qualification), the qualification

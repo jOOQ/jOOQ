@@ -2463,15 +2463,15 @@ Either &lt;input/&gt; or &lt;inputExpression/&gt; must be provided]]></jxb:javad
       </enumeration>
       
       <enumeration value="ALWAYS">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Identifiers are always case sensitive]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Identifiers are always case-sensitive]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </enumeration>
       
       <enumeration value="WHEN_QUOTED">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Only quoted identifiers are case sensitive]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Only quoted identifiers are case-sensitive]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </enumeration>
       
       <enumeration value="NEVER">
-        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Identifiers are never case sensitive]]></jxb:javadoc></jxb:property></appinfo></annotation>
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Identifiers are never case-sensitive]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </enumeration>
     </restriction>
   </simpleType>

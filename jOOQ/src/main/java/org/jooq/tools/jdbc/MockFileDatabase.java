@@ -405,7 +405,7 @@ public class MockFileDatabase implements MockDataProvider {
             if (list == null)
                 throw new SQLException("SQL statement could not be matched by any statement in the MockFileDatabase: " + sql
                     + "\nPossible reasons include: "
-                    + "\n  Your regular expressions are case sensitive."
+                    + "\n  Your regular expressions are case-sensitive."
                     + "\n  Your regular expressions use constant literals (e.g. 'Hello'), but the above SQL string uses bind variable placeholders (e.g. ?)."
                     + "\n  Your regular expressions did not quote special characters (e.g. \\?)."
                     + "\n  Your regular expressions' whitespace doesn't match the input SQL's whitespace.");

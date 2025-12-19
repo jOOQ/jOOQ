@@ -33,19 +33,19 @@ public enum InterpreterNameLookupCaseSensitivity {
     DEFAULT,
 
     /**
-     * Identifiers are always case sensitive
+     * Identifiers are always case-sensitive
      * 
      */
     ALWAYS,
 
     /**
-     * Only quoted identifiers are case sensitive
+     * Only quoted identifiers are case-sensitive
      * 
      */
     WHEN_QUOTED,
 
     /**
-     * Identifiers are never case sensitive
+     * Identifiers are never case-sensitive
      * 
      */
     NEVER;

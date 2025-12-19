@@ -206,7 +206,7 @@ public interface Meta extends Scope {
      * {@link Settings}.
      * <p>
      * Unlike {@link #getTables(String)}, which may list multiple tables by
-     * their case sensitive name, this method finds the best matching table
+     * their case-sensitive name, this method finds the best matching table
      * according to the argument as well as the underlying
      * {@link Settings#getInterpreterNameLookupCaseSensitivity()} and
      * {@link Settings#getInterpreterSearchPath()}, or returns <code>null</code>
@@ -221,7 +221,7 @@ public interface Meta extends Scope {
      * {@link Settings}.
      * <p>
      * Unlike {@link #getTables(Name)}, which may list multiple tables by their
-     * case sensitive name, this method finds the best matching table according
+     * case-sensitive name, this method finds the best matching table according
      * to the argument {@link Name#qualifier()} as well as the underlying
      * {@link Settings#getInterpreterNameLookupCaseSensitivity()} and
      * {@link Settings#getInterpreterSearchPath()}, or returns <code>null</code>
@@ -266,7 +266,7 @@ public interface Meta extends Scope {
      * {@link Settings}.
      * <p>
      * Unlike {@link #getUDTs(String)}, which may list multiple UDTs by their
-     * case sensitive name, this method finds the best matching UDTs according
+     * case-sensitive name, this method finds the best matching UDTs according
      * to the argument as well as the underlying
      * {@link Settings#getInterpreterNameLookupCaseSensitivity()} and
      * {@link Settings#getInterpreterSearchPath()}, or returns <code>null</code>
@@ -326,7 +326,7 @@ public interface Meta extends Scope {
      * {@link Settings}.
      * <p>
      * Unlike {@link #getDomains(String)}, which may list multiple domains by
-     * their case sensitive name, this method finds the best matching domain
+     * their case-sensitive name, this method finds the best matching domain
      * according to the argument as well as the underlying
      * {@link Settings#getInterpreterNameLookupCaseSensitivity()} and
      * {@link Settings#getInterpreterSearchPath()}, or returns <code>null</code>
@@ -341,7 +341,7 @@ public interface Meta extends Scope {
      * {@link Settings}.
      * <p>
      * Unlike {@link #getDomains(Name)}, which may list multiple domains by
-     * their case sensitive name, this method finds the best matching domain
+     * their case-sensitive name, this method finds the best matching domain
      * according to the argument {@link Name#qualifier()} as well as the
      * underlying {@link Settings#getInterpreterNameLookupCaseSensitivity()} and
      * {@link Settings#getInterpreterSearchPath()}, or returns <code>null</code>
@@ -555,7 +555,7 @@ public interface Meta extends Scope {
      * {@link Settings}.
      * <p>
      * Unlike {@link #getSequences(String)}, which may list multiple sequences
-     * by their case sensitive name, this method finds the best matching
+     * by their case-sensitive name, this method finds the best matching
      * sequence according to the argument as well as the underlying
      * {@link Settings#getInterpreterNameLookupCaseSensitivity()} and
      * {@link Settings#getInterpreterSearchPath()}, or returns <code>null</code>
@@ -570,7 +570,7 @@ public interface Meta extends Scope {
      * {@link Settings}.
      * <p>
      * Unlike {@link #getSequences(Name)}, which may list multiple sequences by
-     * their case sensitive name, this method finds the best matching sequence
+     * their case-sensitive name, this method finds the best matching sequence
      * according to the argument {@link Name#qualifier()} as well as the
      * underlying {@link Settings#getInterpreterNameLookupCaseSensitivity()} and
      * {@link Settings#getInterpreterSearchPath()}, or returns <code>null</code>

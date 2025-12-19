@@ -180,7 +180,7 @@ public interface AlterTableAlterStep<T> {
     AlterTableFinalStep dropNotNull();
 
     /**
-     * Make the column an <code>IDENTITY</code> column.
+     * Make the column into an <code>IDENTITY</code> column.
      */
     @NotNull @CheckReturnValue
     @Support({ H2, HSQLDB, POSTGRES, YUGABYTEDB })

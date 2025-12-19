@@ -8451,7 +8451,7 @@ public class JavaGenerator extends AbstractGenerator {
 
                     if (generateImplicitJoinPathsManyToMany()) {
                         List<ManyToManyKeyDefinition> manyToManyKeys = table.getManyToManyKeys();
-                        Map<TableDefinition, Long> pathCountsManytoMany = manyToManyKeys.stream().collect(groupingBy(d -> d.getForeignKey2().getReferencedTable(), counting()));
+                        Map<TableDefinition, Long> pathCountsManyToMany = manyToManyKeys.stream().collect(groupingBy(d -> d.getForeignKey2().getReferencedTable(), counting()));
 
                         manyToManyKeyLoop:
                         for (ManyToManyKeyDefinition manyToManyKey : manyToManyKeys) {
@@ -8491,7 +8491,7 @@ public class JavaGenerator extends AbstractGenerator {
 
                             out.javadoc(
                                 "Get the implicit many-to-many join path to the <code>" + referencedTable.getQualifiedOutputName() + "</code> table"
-                              + (pathCountsManytoMany.get(referencedTable) > 1 ? ", via the <code>" + manyToManyKey.getOutputName() + "</code> key" : "")
+                              + (pathCountsManyToMany.get(referencedTable) > 1 ? ", via the <code>" + manyToManyKey.getOutputName() + "</code> key" : "")
                             );
 
                             if (scala) {

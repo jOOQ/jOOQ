@@ -109,7 +109,7 @@ final class DiagnosticsConnection extends DefaultConnection {
     static final int                DUP_SIZE        = 500;
 
     final Configuration             configuration;
-    final Configuration             configurationTranformPatterns;
+    final Configuration             configurationTransformPatterns;
     final RenderContext             normalisingRenderer;
     final Parser                    parser;
     final DiagnosticsListeners      listeners;
@@ -126,7 +126,7 @@ final class DiagnosticsConnection extends DefaultConnection {
 
         // [#7527] The Settings.diagnosticsPattern flag overrides the Settings.transformPatterns flag.
         this.configuration = configuration;
-        this.configurationTranformPatterns = configuration.deriveSettings(s -> s.withTransformPatterns(true));
+        this.configurationTransformPatterns = configuration.deriveSettings(s -> s.withTransformPatterns(true));
         this.normalisingRenderer = configuration.deriveSettings(s -> s
 
             // Forcing all inline parameters to be indexed helps find opportunities to use bind variables

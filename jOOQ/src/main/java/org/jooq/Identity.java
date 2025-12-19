@@ -44,7 +44,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * An <code>Identity</code> is an object representing an <code>IDENTITY</code>
  * column as understood by the SQL:2003 standard. In most RDBMS, this is
- * actually called an <code>IDENTITY</code> column. Some RDMBS such as MySQL
+ * actually called an <code>IDENTITY</code> column. Some RDBMS such as MySQL
  * call it <code>AUTO_INCREMENT</code> columns.
  * <p>
  * Instances of this type cannot be created directly. They are available from

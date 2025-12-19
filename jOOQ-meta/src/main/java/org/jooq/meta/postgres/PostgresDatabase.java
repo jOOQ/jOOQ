@@ -1513,7 +1513,7 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
 
             // [#7270] The tuple in predicate is not implemented in all PostgreSQL
             //         style databases, e.g. CockroachDB
-            // [#8072] Some database versions might support in, but not not in
+            // [#8072] Some database versions might support in, but not in
             try {
                 create(true).select(field("(1, 2) in (select 1, 2)")).fetch();
                 create(true).select(field("(1, 2) not in (select 1, 2)")).fetch();

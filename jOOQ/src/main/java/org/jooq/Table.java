@@ -293,7 +293,7 @@ extends
      *
      * @param <O> The other table's record type
      * @param other The other table of the foreign key relationship
-     * @return Some other table's <code>FOREIGN KEY</code>'s towards an this
+     * @return Some other table's <code>FOREIGN KEY</code>'s towards this
      *         table. This is never <code>null</code>.
      */
     @NotNull

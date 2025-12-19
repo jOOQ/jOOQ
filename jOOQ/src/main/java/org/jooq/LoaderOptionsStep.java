@@ -71,7 +71,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * The <code>Loader</code> API is used for configuring data loads.
  * <p>
- * Add options to for the loading behaviour. For performance reasons, you can
+ * Add options for the loading behaviour. For performance reasons, you can
  * fine-tune three different types of measures:
  * <ul>
  * <li><strong>The bulk statement size</strong>. This specifies how many rows

@@ -148,7 +148,7 @@ public interface LoaderOptionsStep<R extends Record> extends LoaderSourceStep<R>
      * are any duplicate records.
      * <p>
      * If this is combined with {@link #onErrorAbort()} and {@link #commitAll()}
-     * in a later step of <code>Loader</code>, then loading is rollbacked on
+     * in a later step of <code>Loader</code>, then loading is rolled back on
      * abort.
      * <p>
      * If you don't specify a behaviour, this will be the default. This cannot
@@ -182,7 +182,7 @@ public interface LoaderOptionsStep<R extends Record> extends LoaderSourceStep<R>
      * errors with {@link Loader#errors()}
      * <p>
      * If this is combined with {@link #commitAll()} in a later step of
-     * <code>Loader</code>, then loading is rollbacked on abort.
+     * <code>Loader</code>, then loading is rolled back on abort.
      * <p>
      * If you don't specify a behaviour, this will be the default. This cannot
      * be combined with {@link #onErrorIgnore()}

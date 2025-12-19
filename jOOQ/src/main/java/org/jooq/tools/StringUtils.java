@@ -59,7 +59,7 @@ import java.util.regex.Pattern;
  * <li><b>Reverse/ReverseDelimited</b> - reverses a String</li>
  * <li><b>Abbreviate</b> - abbreviates a string using ellipsis</li>
  * <li><b>Difference</b> - compares Strings and reports on their differences</li>
- * <li><b>LevensteinDistance</b> - the number of changes needed to change one
+ * <li><b>LevenshteinDistance</b> - the number of changes needed to change one
  * String into another</li>
  * </ul>
  * <p>

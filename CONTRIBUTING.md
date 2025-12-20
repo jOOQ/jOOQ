@@ -35,7 +35,7 @@ Product roadmap
 
 Over time, we will remember the many itches reported by jOOQ users and consolidate them into a much more thoroughly designed new feature that helps many other users, not just your immediate itch. It will be much easier to maintain and have much better quality.
 
-Unfortunately, Github doesn't allow for turning on the issue tracker (very well done and useful) without turning on the PR subsystem (which seems to hint at users that they can contribute *anything* to *anyone* and reasonably expect the contribution to be merged). Think about the OpenJDK. Would you contribute tons of new methods to the `java.util.Collection` API without thoroughly discussing things first on the many OpenJDK mailing lists? Probably not. The same is true here.
+Unfortunately, GitHub doesn't allow for turning on the issue tracker (very well done and useful) without turning on the PR subsystem (which seems to hint at users that they can contribute *anything* to *anyone* and reasonably expect the contribution to be merged). Think about the OpenJDK. Would you contribute tons of new methods to the `java.util.Collection` API without thoroughly discussing things first on the many OpenJDK mailing lists? Probably not. The same is true here.
 
 Thanks a lot for your understanding, and we're definitely looking forward to your suggestions and discussions on the [issue tracker](https://github.com/jOOQ/jOOQ/issues/new) or the [mailing list](https://groups.google.com/d/forum/jooq-user)
 

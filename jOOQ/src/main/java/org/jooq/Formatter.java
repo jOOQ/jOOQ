@@ -60,7 +60,7 @@ import org.jooq.impl.SQLDataType;
  * care of doing this directly in SQL.
  * <p>
  * Unlike {@link Converter}, the formatting affects how the RDBMS embeds the
- * value into a JSON or XML datastructure <em>before</em> sending the data to
+ * value into a JSON or XML data structure <em>before</em> sending the data to
  * the client. A {@link Converter} is applied only after fetching data from
  * JDBC.
  *

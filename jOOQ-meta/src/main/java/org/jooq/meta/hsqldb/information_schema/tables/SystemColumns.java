@@ -92,11 +92,11 @@ public class SystemColumns extends TableImpl<Record> {
      * transferred to a buffer on a fetch operation.  For numeric data, this
      * size may be different than the size of the data stored on the data
      * source.  This value is the same as the COLUMN_SIZE column for binary
-     * data. This value is the twice the COLUMN_SIZE column for character data. 
+     * data. This value is twice the COLUMN_SIZE column for character data. 
      * If the actual value is larger than can be represented in an INTEGER
      * column value, this is NULL.
      */
-    public final TableField<Record, Integer> BUFFER_LENGTH = createField(DSL.name("BUFFER_LENGTH"), SQLDataType.INTEGER, this, "The maximum length in bytes of data, if definitely known, that would be transferred to a buffer on a fetch operation.  For numeric data, this size may be different than the size of the data stored on the data source.  This value is the same as the COLUMN_SIZE column for binary data. This value is the twice the COLUMN_SIZE column for character data.  If the actual value is larger than can be represented in an INTEGER column value, this is NULL.");
+    public final TableField<Record, Integer> BUFFER_LENGTH = createField(DSL.name("BUFFER_LENGTH"), SQLDataType.INTEGER, this, "The maximum length in bytes of data, if definitely known, that would be transferred to a buffer on a fetch operation.  For numeric data, this size may be different than the size of the data stored on the data source.  This value is the same as the COLUMN_SIZE column for binary data. This value is twice the COLUMN_SIZE column for character data.  If the actual value is larger than can be represented in an INTEGER column value, this is NULL.");
 
     /**
      * The column <code>INFORMATION_SCHEMA.SYSTEM_COLUMNS.DECIMAL_DIGITS</code>.

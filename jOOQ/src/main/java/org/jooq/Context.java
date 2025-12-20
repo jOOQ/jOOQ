@@ -98,7 +98,7 @@ public interface Context<C extends Context<C>> extends ExecuteScope {
 
     /**
      * Visit a {@link Field} as a {@link DSL#field(Condition)}, if it is a
-     * {@link Condition}, or as an ordinery {@link QueryPart}, otherwise.
+     * {@link Condition}, or as an ordinary {@link QueryPart}, otherwise.
      * <p>
      * [#11969] Not all RDBMS support {@link Condition} in the form of
      * {@link Field} of type {@link Boolean}, natively. As such, we must wrap

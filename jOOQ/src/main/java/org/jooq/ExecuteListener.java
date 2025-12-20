@@ -495,7 +495,7 @@ public interface ExecuteListener extends EventListener, Serializable {
      * cache.
      * <p>
      * A custom {@link PreparedStatement} needs to take into account
-     * {@link Settings#getStatementType()}, and adefault void bind variable
+     * {@link Settings#getStatementType()}, and a default void bind variable
      * markers for {@link StatementType#STATIC_STATEMENT}.
      * <p>
      * Flags such as {@link Query#queryTimeout(int)},

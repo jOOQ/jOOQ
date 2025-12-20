@@ -51,7 +51,7 @@ public final class BigDecimalRange extends AbstractRange<BigDecimal> {
     }
 
     /**
-     * Create a new {@link BigDecimalRange} with a inclusive lower bound and an
+     * Create a new {@link BigDecimalRange} with an inclusive lower bound and an
      * exclusive upper bound.
      */
     public static final BigDecimalRange bigDecimalRange(BigDecimal lower, BigDecimal upper) {

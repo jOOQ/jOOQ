@@ -1235,7 +1235,7 @@ public class GenerationTool {
                   "Unused " + objectTypes,
                   "There are unused " + objectTypes + ", which have not been used by this generation run.\n"
                 + "This can be because of misconfigurations, such as, for example:\n"
-                + "- case sensitive regular expressions\n"
+                + "- case-sensitive regular expressions\n"
                 + "- regular expressions depending on whitespace (Pattern.COMMENTS is turned on!)\n"
                 + "- missing or inadequate object qualification\n"
                 + "- the object to which the configuration was applied in the past has been dropped\n"

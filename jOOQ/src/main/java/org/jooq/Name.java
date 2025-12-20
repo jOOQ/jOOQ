@@ -109,7 +109,7 @@ import org.jetbrains.annotations.Nullable;
 public interface Name extends QueryPart, Comparable<Name> {
 
     /**
-     * A flag indicating whether the name is quoted or not.
+     * A flag indicating whether or not the name is quoted.
      * <p>
      * Quoting of names can be overridden by
      * {@link Settings#getRenderQuotedNames()}.

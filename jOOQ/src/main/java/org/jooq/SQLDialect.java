@@ -1436,7 +1436,7 @@ public enum SQLDialect {
     }
 
     /**
-     * Whether this dialect precedes an other dialect from the same family.
+     * Whether this dialect precedes another dialect from the same family.
      * <p>
      * This returns:
      * <ul>
@@ -1473,7 +1473,7 @@ public enum SQLDialect {
     }
 
     /**
-     * Whether this dialect strictly precedes an other dialect from the same
+     * Whether this dialect strictly precedes another dialect from the same
      * family.
      * <p>
      * This returns:

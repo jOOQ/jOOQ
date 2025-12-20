@@ -157,7 +157,7 @@ implements
 
             // [#9814] TODO: Implement LATERAL semantics (without it, lateral join paths will break!)
             // [#9814] TODO: Once this is implemented, move the logic to Tools.visitSubquery() to be more generic
-            // [#9814] TOOD: Avoid this logic if unnecessary (e.g. RenderTable makes it necessary)
+            // [#9814] TODO: Avoid this logic if unnecessary (e.g. RenderTable makes it necessary)
             // List<Table<?>> tables = collect(ctx.currentScopeParts((Class<Table<?>>) (Class) Table.class));
             //
             // for (Table<?> t : tables)

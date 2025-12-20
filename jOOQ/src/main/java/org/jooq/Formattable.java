@@ -352,7 +352,7 @@ public interface Formattable {
     /**
      * Get this result as a set of <code>INSERT</code> statements.
      * <p>
-     * This uses the the first record's {@link TableRecord#getTable()}, if the
+     * This uses the first record's {@link TableRecord#getTable()}, if the
      * first record is a {@link TableRecord}. Otherwise, this generates
      * <code>INSERT</code> statements into an <code>"UNKNOWN_TABLE"</code>. In
      * both cases, the {@link Result#fields()} are used for column names.

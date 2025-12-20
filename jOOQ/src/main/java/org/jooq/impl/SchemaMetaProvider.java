@@ -37,7 +37,7 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Tools.EMTPY_SCHEMA;
+import static org.jooq.impl.Tools.EMPTY_SCHEMA;
 
 import java.util.Collection;
 
@@ -63,7 +63,7 @@ public class SchemaMetaProvider implements MetaProvider {
     }
 
     public SchemaMetaProvider(Configuration configuration, Collection<? extends Schema> schemas) {
-        this(configuration, schemas.toArray(EMTPY_SCHEMA));
+        this(configuration, schemas.toArray(EMPTY_SCHEMA));
     }
 
     @Override

@@ -48,7 +48,7 @@ import java.util.List;
  * Since the sort behaviour is stable, {@link List#add(Object)} and other single
  * item methods can sort the list in O(N). However, large additions of M
  * elements should still be done using {@link List#addAll(Collection)} to sort
- * the list in O(N log N), instead of O(M*N), which is quadradic in the worst
+ * the list in O(N log N), instead of O(M*N), which is quadratic in the worst
  * case. Removals don't require sorting.
  */
 final class SortedList<E> extends AbstractList<E> {

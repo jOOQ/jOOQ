@@ -51,7 +51,7 @@ public final class IntegerRange extends AbstractDiscreteRange<Integer, IntegerRa
     }
 
     /**
-     * Create a new {@link IntegerRange} with a inclusive lower bound and an
+     * Create a new {@link IntegerRange} with an inclusive lower bound and an
      * exclusive upper bound.
      */
     public static final IntegerRange integerRange(Integer lower, Integer upper) {

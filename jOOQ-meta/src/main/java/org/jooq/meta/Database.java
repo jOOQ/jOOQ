@@ -1433,7 +1433,7 @@ public interface Database extends AutoCloseable {
     void setReadonlyIdentities(boolean readonlyIdentities);
 
     /**
-     * Whether computed columns columns should expose
+     * Whether computed columns should expose
      * {@link DataType#readonly()} behaviour.
      * <p>
      * This feature is available in the commercial distribution only.
@@ -1441,7 +1441,7 @@ public interface Database extends AutoCloseable {
     boolean readonlyComputedColumns();
 
     /**
-     * Whether computed columns columns should expose
+     * Whether computed columns should expose
      * {@link DataType#readonly()} behaviour.
      * <p>
      * This feature is available in the commercial distribution only.

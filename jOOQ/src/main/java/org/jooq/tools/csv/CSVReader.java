@@ -34,7 +34,7 @@ public class CSVReader implements Closeable, Iterator<String[]> {
     private boolean         hasNext            = true;
     private CSVParser       parser;
     private int             skipLines;
-    private boolean         linesSkiped;
+    private boolean         linesSkipped;
 
     /**
      * The default line to start reading.
@@ -214,11 +214,11 @@ public class CSVReader implements Closeable, Iterator<String[]> {
      * @throws IOException if bad things happen during the read
      */
     private String getNextLine() throws IOException {
-        if (!this.linesSkiped) {
+        if (!this.linesSkipped) {
             for (int i = 0; i < skipLines; i++) {
                 br.readLine();
             }
-            this.linesSkiped = true;
+            this.linesSkipped = true;
         }
         String nextLine = br.readLine();
         if (nextLine == null) {

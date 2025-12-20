@@ -51,7 +51,7 @@ public final class LongRange extends AbstractDiscreteRange<Long, LongRange> {
     }
 
     /**
-     * Create a new {@link LongRange} with a inclusive lower bound and an
+     * Create a new {@link LongRange} with an inclusive lower bound and an
      * exclusive upper bound.
      */
     public static final LongRange longRange(Long lower, Long upper) {

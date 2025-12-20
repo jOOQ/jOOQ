@@ -59,7 +59,7 @@ import java.util.regex.Pattern;
  * <li><b>Reverse/ReverseDelimited</b> - reverses a String</li>
  * <li><b>Abbreviate</b> - abbreviates a string using ellipsis</li>
  * <li><b>Difference</b> - compares Strings and reports on their differences</li>
- * <li><b>LevensteinDistance</b> - the number of changes needed to change one
+ * <li><b>LevenshteinDistance</b> - the number of changes needed to change one
  * String into another</li>
  * </ul>
  * <p>
@@ -583,7 +583,7 @@ public final class StringUtils {
      * StringUtils.padding(-2, 'e') = IndexOutOfBoundsException
      * </pre>
      *
-     * <p>Note: this method doesn't not support padding with
+     * <p>Note: this method doesn't support padding with
      * <a href="http://www.unicode.org/glossary/#supplementary_character">Unicode Supplementary Characters</a>
      * as they require a pair of <code>char</code>s to be represented.
      * If you are needing to support full I18N of your applications
@@ -930,7 +930,7 @@ public final class StringUtils {
             return text;
         }
 
-        // if recursing, this shouldnt be less than 0
+        // if recursing, this shouldn't be less than 0
         if (timeToLive < 0) {
             throw new IllegalStateException("TimeToLive of " + timeToLive + " is less than 0: " + text);
         }
@@ -1340,7 +1340,7 @@ public final class StringUtils {
      *
      * @param <T> the type of the objects
      * @param objects  the elements to test, may not be {@code null} but empty
-     * @return first non-{@code null} element in {@code objects}, otherwise {@code null}
+     * @return first non-{@code null} element in {@code objects}; otherwise, {@code null}
      */
     @SafeVarargs
     public static <T> T firstNonNull(T... objects) {

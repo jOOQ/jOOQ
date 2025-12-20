@@ -1676,7 +1676,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     SelectOnStep<R> fullJoin(String sql);
 
     /**
-     * Convenience method to <code>FULL OUTER JOIN</code> a tableto the last
+     * Convenience method to <code>FULL OUTER JOIN</code> a table to the last
      * table added to the <code>FROM</code> clause using
      * {@link Table#fullOuterJoin(String, Object...)}.
      * <p>
@@ -1693,7 +1693,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     SelectOnStep<R> fullJoin(String sql, Object... bindings);
 
     /**
-     * Convenience method to <code>FULL OUTER JOIN</code> a tableto the last
+     * Convenience method to <code>FULL OUTER JOIN</code> a table to the last
      * table added to the <code>FROM</code> clause using
      * {@link Table#fullOuterJoin(String, QueryPart...)}.
      * <p>
@@ -1710,7 +1710,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     SelectOnStep<R> fullJoin(String sql, QueryPart... parts);
 
     /**
-     * Convenience method to <code>FULL OUTER JOIN</code> a tableto the last
+     * Convenience method to <code>FULL OUTER JOIN</code> a table to the last
      * table added to the <code>FROM</code> clause using
      * {@link Table#fullOuterJoin(Name)}.
      * <p>
@@ -1857,7 +1857,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     SelectOnStep<R> fullOuterJoin(String sql);
 
     /**
-     * Convenience method to <code>FULL OUTER JOIN</code> a tableto the last
+     * Convenience method to <code>FULL OUTER JOIN</code> a table to the last
      * table added to the <code>FROM</code> clause using
      * {@link Table#fullOuterJoin(String, Object...)}
      * <p>
@@ -1877,7 +1877,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     SelectOnStep<R> fullOuterJoin(String sql, Object... bindings);
 
     /**
-     * Convenience method to <code>FULL OUTER JOIN</code> a tableto the last
+     * Convenience method to <code>FULL OUTER JOIN</code> a table to the last
      * table added to the <code>FROM</code> clause using
      * {@link Table#fullOuterJoin(String, QueryPart...)}
      * <p>
@@ -1897,7 +1897,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     SelectOnStep<R> fullOuterJoin(String sql, QueryPart... parts);
 
     /**
-     * Convenience method to <code>FULL OUTER JOIN</code> a tableto the last
+     * Convenience method to <code>FULL OUTER JOIN</code> a table to the last
      * table added to the <code>FROM</code> clause using
      * {@link Table#fullOuterJoin(Name)}
      *

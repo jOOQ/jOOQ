@@ -210,7 +210,7 @@ public class DerbyDatabase extends AbstractDatabase implements ResultQueryDataba
                 ukSchema,
 
                 // [#9736] See https://db.apache.org/derby/docs/10.16/ref/rrefsistabs13420.html
-                //         As of 10.17, D is parsed and reported, but not implemented nor documented
+                //         As of 10.17, D is parsed and reported, but neither implemented nor documented
                 case_(fkDeleteRule)
                     .when(inline("R"), inline(ForeignKeyRule.NO_ACTION.name()))
                     .when(inline("S"), inline(ForeignKeyRule.RESTRICT.name()))

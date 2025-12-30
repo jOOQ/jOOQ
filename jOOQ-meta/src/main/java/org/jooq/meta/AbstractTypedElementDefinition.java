@@ -487,7 +487,7 @@ implements
     public static final CustomType customType(Database db, ForcedType forcedType) {
         String name = forcedType.getName();
 
-        // [#4598] Legacy use-case where a <forcedType/> referes to a <customType/>
+        // [#4598] Legacy use-case where a <forcedType/> refers to a <customType/>
         //         element by name.
         if (StringUtils.isBlank(forcedType.getUserType())) {
             if (name != null)

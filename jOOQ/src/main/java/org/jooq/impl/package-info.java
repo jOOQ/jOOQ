@@ -149,7 +149,7 @@ interface ObjIntPredicate<T> {
 }
 
 /**
- * A missing primitive type {@link Function} for ints resturning ints.
+ * A missing primitive type {@link Function} for ints returning ints.
  */
 @FunctionalInterface
 interface IntToIntFunction {

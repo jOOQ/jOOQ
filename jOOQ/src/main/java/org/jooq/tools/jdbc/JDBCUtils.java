@@ -939,7 +939,7 @@ public class JDBCUtils {
 
     /**
      * Translate the {@link DatabaseMetaData#importedKeyCascade} and various
-     * other flag valuse to the jOOQ {@link ForeignKeyRule} representation.
+     * other flag values to the jOOQ {@link ForeignKeyRule} representation.
      */
     public static final ForeignKeyRule foreignKeyRule(int code) {
         switch (code) {

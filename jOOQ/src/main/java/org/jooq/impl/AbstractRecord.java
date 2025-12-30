@@ -315,7 +315,7 @@ implements
         // [#945] Avoid bugs resulting from setting the same value twice
         // [#948] To allow for controlling the number of hard-parses
         //        To allow for explicitly overriding default values
-        // [#979] Avoid modifying chnaged flag on unchanged primary key values
+        // [#979] Avoid modifying changed flag on unchanged primary key values
 
         UniqueKey<?> key = getPrimaryKey();
 

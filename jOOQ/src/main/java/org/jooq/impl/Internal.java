@@ -773,7 +773,7 @@ public final class Internal {
     @NotNull
     public static final <T, X, U> Parameter<U> createParameter(String name, DataType<? extends T> type, boolean isDefaulted, boolean isUnnamed, Converter<X, U> converter, Binding<T, X> binding) {
         if (isDefaulted) {
-            log.warn("Deprecated", "The Internal::createParameter methods receiving a isDefaulted flag are deprecated. Please re-generate your code or use a non-deprecated alternative for parameter name: " + name + ". To pass default expressions, use DataType::default_");
+            log.warn("Deprecated", "The Internal::createParameter methods receiving an isDefaulted flag are deprecated. Please re-generate your code or use a non-deprecated alternative for parameter name: " + name + ". To pass default expressions, use DataType::default_");
 
             if (!type.defaulted())
                 type = type.default_((Field) inline(null, type));
@@ -1356,7 +1356,7 @@ public final class Internal {
     }
 
     /**
-     * A utility to combine a possibly pre-existing condition on a
+     * A utility to combine a possibly preexisting condition on a
      * {@link TableImpl} with a new one.
      */
     public static final Condition condition(TableImpl<?> table, Condition condition) {

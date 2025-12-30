@@ -227,12 +227,12 @@ public class DefaultConfiguration extends AbstractConfiguration {
     }
 
     /**
-     * Create a new "derived" configuration object from a pre-existing one.
+     * Create a new "derived" configuration object from a preexisting one.
      * <p>
-     * This copies all properties from a pre-existing configuration into a new,
+     * This copies all properties from a preexisting configuration into a new,
      * derived one.
      *
-     * @param configuration The pre-existing configuration.
+     * @param configuration The preexisting configuration.
      */
     DefaultConfiguration(DefaultConfiguration configuration) {
         this(

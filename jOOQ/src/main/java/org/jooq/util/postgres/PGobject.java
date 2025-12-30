@@ -103,7 +103,7 @@ public class PGobject implements Serializable, Cloneable {
   }
 
   /**
-   * This is defined here, so user code need not overide it.
+   * This is defined here, so user code need not override it.
    *
    * @return the value of this object, in the syntax expected by org.postgresql
    */

@@ -956,7 +956,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
 
     static final Set<SQLDialect>         SUPPORTS_HASH_COMMENT_SYNTAX             = SQLDialect.supportedBy(MARIADB, MYSQL);
-    static final Set<SQLDialect>         NO_SUPPORT_QUOTED_BUILT_IN_FUNCION_NAMES = SQLDialect.supportedBy(DERBY, FIREBIRD, HSQLDB);
+    static final Set<SQLDialect>         NO_SUPPORT_QUOTED_BUILT_IN_FUNCTION_NAMES = SQLDialect.supportedBy(DERBY, FIREBIRD, HSQLDB);
 
     final Queries parse() {
         return wrap(() -> {
@@ -1376,7 +1376,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         }
         catch (ParserException e) {
 
-            // [#9061] Don't hide this pre-existing exceptions in scopeResolve()
+            // [#9061] Don't hide this preexisting exceptions in scopeResolve()
             scope.scopeClear();
             throw e;
         }
@@ -12787,7 +12787,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                         if (Long.valueOf(1L).equals(i1) && Long.valueOf(1L).equals(i2))
                             all = true;
                         else
-                            throw expected("Only start and occurence values of 1 are currently supported");
+                            throw expected("Only start and occurrence values of 1 are currently supported");
                     }
                 }
 
@@ -16070,7 +16070,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         ParseNameCase nameCase = null;
 
         if (quoted) {
-            if (NO_SUPPORT_QUOTED_BUILT_IN_FUNCION_NAMES.contains(parseDialect()))
+            if (NO_SUPPORT_QUOTED_BUILT_IN_FUNCTION_NAMES.contains(parseDialect()))
                 return false;
 
             nameCase = parseNameCase(configuration);

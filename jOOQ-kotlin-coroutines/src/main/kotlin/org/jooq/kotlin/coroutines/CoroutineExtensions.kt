@@ -17,7 +17,7 @@ suspend fun <T> DSLContext.transactionCoroutine(transactional: suspend (Configur
 
 suspend fun <T> DSLContext.transactionCoroutine(context: CoroutineContext, transactional: suspend (Configuration) -> T): T {
     // [#14997] Wrap values in an auxiliary class in order to allow nulls, which awaitSingle()
-    //          doesn't allow, otherwise
+    //          otherwise doesn't allow
     data class Wrap<T>(val t: T)
 
     return transactionPublisher { c ->

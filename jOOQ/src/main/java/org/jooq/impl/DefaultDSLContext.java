@@ -4999,7 +4999,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     }
 
     // -------------------------------------------------------------------------
-    // XXX Other queries for identites and sequences
+    // XXX Other queries for identities and sequences
     // -------------------------------------------------------------------------
 
     @Override

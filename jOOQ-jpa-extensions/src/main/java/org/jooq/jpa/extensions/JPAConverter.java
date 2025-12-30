@@ -73,7 +73,7 @@ public final class JPAConverter<T, U> extends AbstractContextConverter<T, U> {
             this.delegate = Reflect.on(klass).create().get();
         }
         catch (Exception e) {
-            throw new MappingException("Cannot instanciate AttributeConverter", e);
+            throw new MappingException("Cannot instantiate AttributeConverter", e);
         }
     }
 

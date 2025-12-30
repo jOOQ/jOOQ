@@ -16,7 +16,7 @@ Secondary features include:
 - [DDL statement support](https://www.jooq.org/doc/latest/manual/sql-building/ddl-statements/)
 - [DML statement support](https://www.jooq.org/doc/latest/manual/sql-building/sql-statements/)
 - [Diagnostics](https://www.jooq.org/doc/latest/manual/sql-execution/diagnostics/)
-- [Dialect agnosticity for 30+ RDBMS](https://www.jooq.org/download/#databases)
+- [Dialect agnosticism for 30+ RDBMS](https://www.jooq.org/download/#databases)
 - [Embedded types](https://www.jooq.org/doc/latest/manual/code-generation/codegen-embeddable-types/)
 - [Formatting and pretty printing](https://www.jooq.org/doc/latest/manual/sql-building/queryparts/pretty-printing/)
 - [Implicit joins](https://www.jooq.org/doc/latest/manual/sql-building/sql-statements/select-statement/implicit-join/)

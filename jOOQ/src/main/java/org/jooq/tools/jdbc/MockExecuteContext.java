@@ -128,9 +128,9 @@ public class MockExecuteContext {
     }
 
     /**
-     * Whether this execution context is a from a batch statement.
+     * Whether this execution context is from a batch statement.
      *
-     * @return Whether this execution context is a from a batch statement.
+     * @return Whether this execution context is from a batch statement.
      */
     public boolean batch() {
         return batchSingle() || batchMultiple();
@@ -170,7 +170,7 @@ public class MockExecuteContext {
     /**
      * Get all bind variables of a "single batch" statement.
      *
-     * @return All bind variables of a "single batch" statment, or an array of
+     * @return All bind variables of a "single batch" statement, or an array of
      *         length <code>1</code> with the bind variables of a single
      *         statement.
      */

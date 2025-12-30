@@ -74,7 +74,7 @@ public interface CreateIndexIncludeStep extends CreateIndexWhereStep {
      * Add the <code>INCLUDE</code> clause to the <code>CREATE INDEX</code> statement.
      * <p>
      * If this is not supported by any given database, then the included columns will simply
-     * be put in the index as ordinary columns, making the index a composite index.
+     * be put in the index as ordinary columns, making the index into a composite index.
      */
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     @NotNull @CheckReturnValue
@@ -84,7 +84,7 @@ public interface CreateIndexIncludeStep extends CreateIndexWhereStep {
      * Add the <code>INCLUDE</code> clause to the <code>CREATE INDEX</code> statement.
      * <p>
      * If this is not supported by any given database, then the included columns will simply
-     * be put in the index as ordinary columns, making the index a composite index.
+     * be put in the index as ordinary columns, making the index into a composite index.
      */
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     @NotNull @CheckReturnValue
@@ -94,7 +94,7 @@ public interface CreateIndexIncludeStep extends CreateIndexWhereStep {
      * Add the <code>INCLUDE</code> clause to the <code>CREATE INDEX</code> statement.
      * <p>
      * If this is not supported by any given database, then the included columns will simply
-     * be put in the index as ordinary columns, making the index a composite index.
+     * be put in the index as ordinary columns, making the index into a composite index.
      */
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     @NotNull @CheckReturnValue
@@ -104,7 +104,7 @@ public interface CreateIndexIncludeStep extends CreateIndexWhereStep {
      * Add the <code>INCLUDE</code> clause to the <code>CREATE INDEX</code> statement.
      * <p>
      * If this is not supported by any given database, then the included columns will simply
-     * be put in the index as ordinary columns, making the index a composite index.
+     * be put in the index as ordinary columns, making the index into a composite index.
      */
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     @NotNull @CheckReturnValue

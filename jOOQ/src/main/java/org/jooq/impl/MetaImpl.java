@@ -1584,7 +1584,7 @@ final class MetaImpl extends AbstractMeta {
                             pkFields[i] = (TableField<Record, ?>) pkTable.field(pkFieldName);
                             fkFields[i] = (TableField<Record, ?>)         field(fkFieldName);
 
-                            // [#2656] TODO: Find a more generally reusable way to perform case insensitive lookups
+                            // [#2656] TODO: Find a more generally reusable way to perform case-insensitive lookups
                             if (pkFields[i] == null)
                                 if ((pkFields[i] = lookup(pkTable, pkFieldName)) == null)
                                     return;

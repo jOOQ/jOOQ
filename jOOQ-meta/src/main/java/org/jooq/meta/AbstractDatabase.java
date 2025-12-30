@@ -993,7 +993,7 @@ public abstract class AbstractDatabase implements Database {
         if (inputCatalogs == null) {
             inputCatalogs = new ArrayList<>();
 
-            // [#1312] Allow for ommitting inputSchema configuration. Generate
+            // [#1312] Allow for omitting inputSchema configuration. Generate
             // All catalogs instead
             if (configuredCatalogs.size() == 1 && StringUtils.isBlank(configuredCatalogs.get(0).getInputCatalog())) {
                 onError(ERROR, "Could not load catalogs", () -> {

@@ -138,7 +138,7 @@ extends
      * @throws IllegalArgumentException If the argument select has the same
      *             identity as this select. The jOOQ 3.x API is mutable, which
      *             means that calls to the DSL API mutate this instance. Adding
-     *             this instance as an set operation argument would lead to a
+     *             this instance as a set operation argument would lead to a
      *             {@link StackOverflowError} when generating the SQL.
      */
     @NotNull @CheckReturnValue
@@ -155,7 +155,7 @@ extends
      * @throws IllegalArgumentException If the argument select has the same
      *             identity as this select. The jOOQ 3.x API is mutable, which
      *             means that calls to the DSL API mutate this instance. Adding
-     *             this instance as an set operation argument would lead to a
+     *             this instance as a set operation argument would lead to a
      *             {@link StackOverflowError} when generating the SQL.
      */
     @NotNull @CheckReturnValue
@@ -168,7 +168,7 @@ extends
      * @throws IllegalArgumentException If the argument select has the same
      *             identity as this select. The jOOQ 3.x API is mutable, which
      *             means that calls to the DSL API mutate this instance. Adding
-     *             this instance as an set operation argument would lead to a
+     *             this instance as a set operation argument would lead to a
      *             {@link StackOverflowError} when generating the SQL.
      */
     @NotNull @CheckReturnValue
@@ -187,7 +187,7 @@ extends
      * @throws IllegalArgumentException If the argument select has the same
      *             identity as this select. The jOOQ 3.x API is mutable, which
      *             means that calls to the DSL API mutate this instance. Adding
-     *             this instance as an set operation argument would lead to a
+     *             this instance as a set operation argument would lead to a
      *             {@link StackOverflowError} when generating the SQL.
      */
     @NotNull @CheckReturnValue
@@ -204,7 +204,7 @@ extends
      * @throws IllegalArgumentException If the argument select has the same
      *             identity as this select. The jOOQ 3.x API is mutable, which
      *             means that calls to the DSL API mutate this instance. Adding
-     *             this instance as an set operation argument would lead to a
+     *             this instance as a set operation argument would lead to a
      *             {@link StackOverflowError} when generating the SQL.
      */
     @NotNull @CheckReturnValue
@@ -217,7 +217,7 @@ extends
      * @throws IllegalArgumentException If the argument select has the same
      *             identity as this select. The jOOQ 3.x API is mutable, which
      *             means that calls to the DSL API mutate this instance. Adding
-     *             this instance as an set operation argument would lead to a
+     *             this instance as a set operation argument would lead to a
      *             {@link StackOverflowError} when generating the SQL.
      */
     @NotNull @CheckReturnValue
@@ -237,7 +237,7 @@ extends
      * @throws IllegalArgumentException If the argument select has the same
      *             identity as this select. The jOOQ 3.x API is mutable, which
      *             means that calls to the DSL API mutate this instance. Adding
-     *             this instance as an set operation argument would lead to a
+     *             this instance as a set operation argument would lead to a
      *             {@link StackOverflowError} when generating the SQL.
      */
     @NotNull @CheckReturnValue
@@ -254,7 +254,7 @@ extends
      * @throws IllegalArgumentException If the argument select has the same
      *             identity as this select. The jOOQ 3.x API is mutable, which
      *             means that calls to the DSL API mutate this instance. Adding
-     *             this instance as an set operation argument would lead to a
+     *             this instance as a set operation argument would lead to a
      *             {@link StackOverflowError} when generating the SQL.
      */
     @NotNull @CheckReturnValue
@@ -267,7 +267,7 @@ extends
      * @throws IllegalArgumentException If the argument select has the same
      *             identity as this select. The jOOQ 3.x API is mutable, which
      *             means that calls to the DSL API mutate this instance. Adding
-     *             this instance as an set operation argument would lead to a
+     *             this instance as a set operation argument would lead to a
      *             {@link StackOverflowError} when generating the SQL.
      */
     @NotNull @CheckReturnValue

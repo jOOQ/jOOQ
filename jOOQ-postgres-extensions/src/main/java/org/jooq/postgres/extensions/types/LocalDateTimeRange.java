@@ -51,7 +51,7 @@ public final class LocalDateTimeRange extends AbstractRange<LocalDateTime> {
     }
 
     /**
-     * Create a new {@link LocalDateTimeRange} with a inclusive lower bound and an
+     * Create a new {@link LocalDateTimeRange} with an inclusive lower bound and an
      * exclusive upper bound.
      */
     public static final LocalDateTimeRange localDateTimeRange(LocalDateTime lower, LocalDateTime upper) {

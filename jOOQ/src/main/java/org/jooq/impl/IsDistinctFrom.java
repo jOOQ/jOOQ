@@ -62,6 +62,8 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 
 
@@ -121,6 +123,8 @@ implements
 
 
 
+
+
         // [#3511]         These dialects need to emulate the IS DISTINCT FROM predicate,
         //                 optimally using INTERSECT...
         // [#7222] [#7224] Make sure the columns are aliased
@@ -138,6 +142,25 @@ implements
         else
             ctx.visit(arg1).sql(' ').visit(K_IS).sql(' ').visit(K_DISTINCT).sql(' ').visit(K_FROM).sql(' ').visit(arg2);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

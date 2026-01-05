@@ -173,7 +173,7 @@ public interface SelectCorrelatedSubqueryStep<R extends Record> extends SelectFi
     Condition eq(Select<? extends R> select);
 
     /**
-     * Compare this subquery with a quanitified subquery for equality.
+     * Compare this subquery with a quantified subquery for equality.
      */
     @NotNull @CheckReturnValue
     @Support
@@ -194,7 +194,7 @@ public interface SelectCorrelatedSubqueryStep<R extends Record> extends SelectFi
     Condition equal(Select<? extends R> select);
 
     /**
-     * Compare this subquery with a quanitified subquery for equality.
+     * Compare this subquery with a quantified subquery for equality.
      */
     @NotNull @CheckReturnValue
     @Support
@@ -215,7 +215,7 @@ public interface SelectCorrelatedSubqueryStep<R extends Record> extends SelectFi
     Condition ne(Select<? extends R> select);
 
     /**
-     * Compare this subquery with a quanitified subquery for non-equality.
+     * Compare this subquery with a quantified subquery for non-equality.
      */
     @NotNull @CheckReturnValue
     @Support
@@ -236,7 +236,7 @@ public interface SelectCorrelatedSubqueryStep<R extends Record> extends SelectFi
     Condition notEqual(Select<? extends R> select);
 
     /**
-     * Compare this subquery with a quanitified subquery for non-equality.
+     * Compare this subquery with a quantified subquery for non-equality.
      */
     @NotNull @CheckReturnValue
     @Support
@@ -257,7 +257,7 @@ public interface SelectCorrelatedSubqueryStep<R extends Record> extends SelectFi
     Condition lt(Select<? extends R> select);
 
     /**
-     * Compare this subquery with a quanitified subquery for order.
+     * Compare this subquery with a quantified subquery for order.
      */
     @NotNull @CheckReturnValue
     @Support
@@ -278,7 +278,7 @@ public interface SelectCorrelatedSubqueryStep<R extends Record> extends SelectFi
     Condition lessThan(Select<? extends R> select);
 
     /**
-     * Compare this subquery with a quanitified subquery for order.
+     * Compare this subquery with a quantified subquery for order.
      */
     @NotNull @CheckReturnValue
     @Support
@@ -299,7 +299,7 @@ public interface SelectCorrelatedSubqueryStep<R extends Record> extends SelectFi
     Condition le(Select<? extends R> select);
 
     /**
-     * Compare this subquery with a quanitified subquery for order.
+     * Compare this subquery with a quantified subquery for order.
      */
     @NotNull @CheckReturnValue
     @Support
@@ -320,7 +320,7 @@ public interface SelectCorrelatedSubqueryStep<R extends Record> extends SelectFi
     Condition lessOrEqual(Select<? extends R> select);
 
     /**
-     * Compare this subquery with a quanitified subquery for order.
+     * Compare this subquery with a quantified subquery for order.
      */
     @NotNull @CheckReturnValue
     @Support
@@ -341,7 +341,7 @@ public interface SelectCorrelatedSubqueryStep<R extends Record> extends SelectFi
     Condition gt(Select<? extends R> select);
 
     /**
-     * Compare this subquery with a quanitified subquery for order.
+     * Compare this subquery with a quantified subquery for order.
      */
     @NotNull @CheckReturnValue
     @Support
@@ -362,7 +362,7 @@ public interface SelectCorrelatedSubqueryStep<R extends Record> extends SelectFi
     Condition greaterThan(Select<? extends R> select);
 
     /**
-     * Compare this subquery with a quanitified subquery for order.
+     * Compare this subquery with a quantified subquery for order.
      */
     @NotNull @CheckReturnValue
     @Support
@@ -383,7 +383,7 @@ public interface SelectCorrelatedSubqueryStep<R extends Record> extends SelectFi
     Condition ge(Select<? extends R> select);
 
     /**
-     * Compare this subquery with a quanitified subquery for order.
+     * Compare this subquery with a quantified subquery for order.
      */
     @NotNull @CheckReturnValue
     @Support
@@ -404,7 +404,7 @@ public interface SelectCorrelatedSubqueryStep<R extends Record> extends SelectFi
     Condition greaterOrEqual(Select<? extends R> select);
 
     /**
-     * Compare this subquery with a quanitified subquery for order.
+     * Compare this subquery with a quantified subquery for order.
      */
     @NotNull @CheckReturnValue
     @Support

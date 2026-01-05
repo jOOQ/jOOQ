@@ -426,7 +426,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
             // [#10194] Check if the POJO is really mutable. There might as well
             //          be a no-args constructor for other reasons, e.g. when
             //          using an immutable Kotlin data class with defaulted parameters
-            //          If the no-args constructor is the only one, take it none-theless
+            //          If the no-args constructor is the only one, take it nonetheless
             if ((debugMutable = m.isMutable()) || (debugMutableConstructors = type.getDeclaredConstructors().length <= 1)) {
                 delegate = m;
                 return;
@@ -590,7 +590,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
 
         // [#4627] if there is no exact match in terms of the number of parameters,
         // but using parameter annotations is allowed and those are in fact present,
-        // use the first available constructor (thus the choice is undeterministic)
+        // use the first available constructor (thus the choice is nondeterministic)
         if (mapConstructorParameterNames) {
             Constructor<E> constructor = constructors[0];
             Parameter[] parameters = constructor.getParameters();
@@ -732,9 +732,9 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
     }
 
     /**
-     * Convert a record into an hash map proxy of a given type.
+     * Convert a record into a hash map proxy of a given type.
      * <p>
-     * This is done for types that are not instanciable
+     * This is done for types that are not instantiable
      */
     private class ProxyMapper extends AbstractDelegateMapper<R, E> {
 

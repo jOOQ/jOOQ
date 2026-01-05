@@ -41,7 +41,7 @@ public class PGInterval extends PGobject {
   }
 
   /**
-   * Initialize a interval with a given interval string representation.
+   * Initialize an interval with a given interval string representation.
    *
    * @param value String represented interval (e.g. '3 years 2 mons')
    * @see PGobject#setValue(String)
@@ -127,7 +127,7 @@ public class PGInterval extends PGobject {
   }
 
   /**
-   * Sets a interval string represented value to this instance. This method only recognize the
+   * Sets an interval string represented value to this instance. This method only recognize the
    * format, that Postgres returns - not all input formats are supported (e.g. '1 yr 2 m 3 s').
    *
    * @param value String represented interval (e.g. '3 years 2 mons')

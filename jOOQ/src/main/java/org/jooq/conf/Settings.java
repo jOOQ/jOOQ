@@ -840,7 +840,7 @@ public class Settings
      * used by named parameters, such as <code>@</code> for SQL Server's <code>@name</code> or <code>$</code>
      * for PostgreSQL's <code>$name</code>, when generating SQL.
      * <p>
-     * "Named indexed" parameters can be obtained in the same way by specifingy {@code ParamType#NAMED} and not
+     * "Named indexed" parameters can be obtained in the same way by specifying {@code ParamType#NAMED} and not
      * providing a name to parameters, resulting in <code>:1</code> or <code>@1</code> or <code>$1</code>, etc.
      * 
      */
@@ -856,7 +856,7 @@ public class Settings
      * used by named parameters, such as <code>@</code> for SQL Server's <code>@name</code> or <code>$</code>
      * for PostgreSQL's <code>$name</code>, when generating SQL.
      * <p>
-     * "Named indexed" parameters can be obtained in the same way by specifingy {@code ParamType#NAMED} and not
+     * "Named indexed" parameters can be obtained in the same way by specifying {@code ParamType#NAMED} and not
      * providing a name to parameters, resulting in <code>:1</code> or <code>@1</code> or <code>$1</code>, etc.
      * 
      */
@@ -903,7 +903,7 @@ public class Settings
     }
 
     /**
-     * The Locale to be used with any render locale dependent logic (as e.g. transforming names to lower / uppper case), defaulting to {@link #getLocale()}.
+     * The Locale to be used with any render locale dependent logic (as e.g. transforming names to lower / upper case), defaulting to {@link #getLocale()}.
      * 
      */
     public Locale getRenderLocale() {
@@ -911,7 +911,7 @@ public class Settings
     }
 
     /**
-     * The Locale to be used with any render locale dependent logic (as e.g. transforming names to lower / uppper case), defaulting to {@link #getLocale()}.
+     * The Locale to be used with any render locale dependent logic (as e.g. transforming names to lower / upper case), defaulting to {@link #getLocale()}.
      * 
      */
     public void setRenderLocale(Locale value) {
@@ -1183,7 +1183,7 @@ public class Settings
     }
 
     /**
-     * Whether the {@link org.jooq.Nullability#DEFAULT} nullablity should be rendered in generated DDL, and how it should be rendered.
+     * Whether the {@link org.jooq.Nullability#DEFAULT} nullability should be rendered in generated DDL, and how it should be rendered.
      * 
      */
     public RenderDefaultNullability getRenderDefaultNullability() {
@@ -1191,7 +1191,7 @@ public class Settings
     }
 
     /**
-     * Whether the {@link org.jooq.Nullability#DEFAULT} nullablity should be rendered in generated DDL, and how it should be rendered.
+     * Whether the {@link org.jooq.Nullability#DEFAULT} nullability should be rendered in generated DDL, and how it should be rendered.
      * 
      */
     public void setRenderDefaultNullability(RenderDefaultNullability value) {
@@ -2263,7 +2263,7 @@ public class Settings
     }
 
     /**
-     * Whether to run the {@link org.jooq.DiagnosticsListener#nullConditoin(org.jooq.DiagnosticsContext)} diagnostic.
+     * Whether to run the {@link org.jooq.DiagnosticsListener#nullCondition(org.jooq.DiagnosticsContext)} diagnostic.
      * <p>
      * Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
      * Once configured, this diagnostic is turned on by default.
@@ -2280,7 +2280,7 @@ public class Settings
     }
 
     /**
-     * Whether to run the {@link org.jooq.DiagnosticsListener#nullConditoin(org.jooq.DiagnosticsContext)} diagnostic.
+     * Whether to run the {@link org.jooq.DiagnosticsListener#nullCondition(org.jooq.DiagnosticsContext)} diagnostic.
      * <p>
      * Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
      * Once configured, this diagnostic is turned on by default.
@@ -4329,7 +4329,7 @@ public class Settings
     /**
      * Transform <code>SIN(x) / COS(x)</code> to <code>TAN(x)</code>, and other transformations.
      * <p>
-     * This transformation turns expanded trignonometric function definitions into their shorter equivalents.
+     * This transformation turns expanded trigonometric function definitions into their shorter equivalents.
      * <p>
      * To enable this feature, {@link #transformPatterns} must be enabled as well.
      * <p>
@@ -4347,7 +4347,7 @@ public class Settings
     /**
      * Transform <code>SIN(x) / COS(x)</code> to <code>TAN(x)</code>, and other transformations.
      * <p>
-     * This transformation turns expanded trignonometric function definitions into their shorter equivalents.
+     * This transformation turns expanded trigonometric function definitions into their shorter equivalents.
      * <p>
      * To enable this feature, {@link #transformPatterns} must be enabled as well.
      * <p>
@@ -6435,7 +6435,7 @@ public class Settings
     }
 
     /**
-     * Whether migrations to invalid commits ({@link org.jooq.Commit#valid()}) are allowed. <p><strong>This is a potentially destructive feature, which should not be turned on in production</strong>. It is useful mostly to quickly test uncommited or inconsistent changes in development.
+     * Whether migrations to invalid commits ({@link org.jooq.Commit#valid()}) are allowed. <p><strong>This is a potentially destructive feature, which should not be turned on in production</strong>. It is useful mostly to quickly test uncommitted or inconsistent changes in development.
      * 
      * @return
      *     possible object is
@@ -6447,7 +6447,7 @@ public class Settings
     }
 
     /**
-     * Whether migrations to invalid commits ({@link org.jooq.Commit#valid()}) are allowed. <p><strong>This is a potentially destructive feature, which should not be turned on in production</strong>. It is useful mostly to quickly test uncommited or inconsistent changes in development.
+     * Whether migrations to invalid commits ({@link org.jooq.Commit#valid()}) are allowed. <p><strong>This is a potentially destructive feature, which should not be turned on in production</strong>. It is useful mostly to quickly test uncommitted or inconsistent changes in development.
      * 
      * @param value
      *     allowed object is
@@ -6810,7 +6810,7 @@ public class Settings
      * used by named parameters, such as <code>@</code> for SQL Server's <code>@name</code> or <code>$</code>
      * for PostgreSQL's <code>$name</code> when parsing SQL.
      * <p>
-     * "Named indexed" parameters can be obtained in the same way by specifingy {@code ParamType#NAMED} and not
+     * "Named indexed" parameters can be obtained in the same way by specifying {@code ParamType#NAMED} and not
      * providing a name to parameters, resulting in <code>:1</code> or <code>@1</code> or <code>$1</code>, etc.
      * 
      */
@@ -6826,7 +6826,7 @@ public class Settings
      * used by named parameters, such as <code>@</code> for SQL Server's <code>@name</code> or <code>$</code>
      * for PostgreSQL's <code>$name</code> when parsing SQL.
      * <p>
-     * "Named indexed" parameters can be obtained in the same way by specifingy {@code ParamType#NAMED} and not
+     * "Named indexed" parameters can be obtained in the same way by specifying {@code ParamType#NAMED} and not
      * providing a name to parameters, resulting in <code>:1</code> or <code>@1</code> or <code>$1</code>, etc.
      * 
      */
@@ -7498,7 +7498,7 @@ public class Settings
      * used by named parameters, such as <code>@</code> for SQL Server's <code>@name</code> or <code>$</code>
      * for PostgreSQL's <code>$name</code>, when generating SQL.
      * <p>
-     * "Named indexed" parameters can be obtained in the same way by specifingy {@code ParamType#NAMED} and not
+     * "Named indexed" parameters can be obtained in the same way by specifying {@code ParamType#NAMED} and not
      * providing a name to parameters, resulting in <code>:1</code> or <code>@1</code> or <code>$1</code>, etc.
      * 
      */
@@ -7529,7 +7529,7 @@ public class Settings
     }
 
     /**
-     * The Locale to be used with any render locale dependent logic (as e.g. transforming names to lower / uppper case), defaulting to {@link #getLocale()}.
+     * The Locale to be used with any render locale dependent logic (as e.g. transforming names to lower / upper case), defaulting to {@link #getLocale()}.
      * 
      */
     public Settings withRenderLocale(Locale value) {
@@ -7671,7 +7671,7 @@ public class Settings
     }
 
     /**
-     * Whether the {@link org.jooq.Nullability#DEFAULT} nullablity should be rendered in generated DDL, and how it should be rendered.
+     * Whether the {@link org.jooq.Nullability#DEFAULT} nullability should be rendered in generated DDL, and how it should be rendered.
      * 
      */
     public Settings withRenderDefaultNullability(RenderDefaultNullability value) {
@@ -8135,7 +8135,7 @@ public class Settings
     }
 
     /**
-     * Whether to run the {@link org.jooq.DiagnosticsListener#nullConditoin(org.jooq.DiagnosticsContext)} diagnostic.
+     * Whether to run the {@link org.jooq.DiagnosticsListener#nullCondition(org.jooq.DiagnosticsContext)} diagnostic.
      * <p>
      * Diagnostics are turned off if no {@link org.jooq.Configuration#diagnosticsListenerProviders()} are configured.
      * Once configured, this diagnostic is turned on by default.
@@ -8998,7 +8998,7 @@ public class Settings
     /**
      * Transform <code>SIN(x) / COS(x)</code> to <code>TAN(x)</code>, and other transformations.
      * <p>
-     * This transformation turns expanded trignonometric function definitions into their shorter equivalents.
+     * This transformation turns expanded trigonometric function definitions into their shorter equivalents.
      * <p>
      * To enable this feature, {@link #transformPatterns} must be enabled as well.
      * <p>
@@ -9963,7 +9963,7 @@ public class Settings
     }
 
     /**
-     * Whether migrations to invalid commits ({@link org.jooq.Commit#valid()}) are allowed. <p><strong>This is a potentially destructive feature, which should not be turned on in production</strong>. It is useful mostly to quickly test uncommited or inconsistent changes in development.
+     * Whether migrations to invalid commits ({@link org.jooq.Commit#valid()}) are allowed. <p><strong>This is a potentially destructive feature, which should not be turned on in production</strong>. It is useful mostly to quickly test uncommitted or inconsistent changes in development.
      * 
      */
     public Settings withMigrationAllowInvalidCommits(Boolean value) {
@@ -10123,7 +10123,7 @@ public class Settings
      * used by named parameters, such as <code>@</code> for SQL Server's <code>@name</code> or <code>$</code>
      * for PostgreSQL's <code>$name</code> when parsing SQL.
      * <p>
-     * "Named indexed" parameters can be obtained in the same way by specifingy {@code ParamType#NAMED} and not
+     * "Named indexed" parameters can be obtained in the same way by specifying {@code ParamType#NAMED} and not
      * providing a name to parameters, resulting in <code>:1</code> or <code>@1</code> or <code>$1</code>, etc.
      * 
      */

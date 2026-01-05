@@ -1075,7 +1075,7 @@ public interface DSLContext extends Scope {
     Block begin(Statement... statements);
 
     /**
-     * Wrap a collection of statements in an anoymous procedural block.
+     * Wrap a collection of statements in an anonymous procedural block.
      *
      * @see DSL#begin(Collection)
      */
@@ -9415,7 +9415,7 @@ public interface DSLContext extends Scope {
     /**
      * Create a batch statement to execute a set of <code>DELETE</code> queries
      * in batch mode (with bind values) according to
-     * {@link UpdatableRecord#delete()} sematics.
+     * {@link UpdatableRecord#delete()} semantics.
      * <p>
      * This batch operation can be executed in two modes:
      * <p>
@@ -9462,7 +9462,7 @@ public interface DSLContext extends Scope {
     /**
      * Create a batch statement to execute a set of <code>DELETE</code> queries
      * in batch mode (with bind values) according to
-     * {@link UpdatableRecord#delete()} sematics.
+     * {@link UpdatableRecord#delete()} semantics.
      *
      * @see #batchDelete(UpdatableRecord...)
      * @see UpdatableRecord#delete()
@@ -13370,7 +13370,7 @@ public interface DSLContext extends Scope {
     AlterTableStep alterTableIfExists(Table<?> table);
 
     // -------------------------------------------------------------------------
-    // XXX Other queries for identites and sequences
+    // XXX Other queries for identities and sequences
     // -------------------------------------------------------------------------
 
     /**

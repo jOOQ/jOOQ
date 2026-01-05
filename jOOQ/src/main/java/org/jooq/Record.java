@@ -1740,7 +1740,7 @@ public interface Record extends Fields, Attachable, Comparable<Record>, Formatta
      * Get a converted value from this Record, providing a field, using
      * {@link #field(Field)} for lookup.
      * <p>
-     * [#2211] Future versions of jOOQ might remove tthis method. It is
+     * [#2211] Future versions of jOOQ might remove this method. It is
      * recommended to use {@link #get(Field, Class)} instead.
      *
      * @see #get(Field, Class)

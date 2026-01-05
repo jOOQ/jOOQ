@@ -26145,7 +26145,7 @@ public class DSL {
      * <p>
      * Calculate the approximate value for the <code>PERCENTILE_CONT</code> inverse distribution
      * aggregate function if such a function is available in the dialect, or fall back to
-     * the exact value, otherwise..
+     * the exact value, otherwise.
      *
      * @param percentile is wrapped as {@link DSL#val(Object)}.
      */
@@ -26160,7 +26160,7 @@ public class DSL {
      * <p>
      * Calculate the approximate value for the <code>PERCENTILE_CONT</code> inverse distribution
      * aggregate function if such a function is available in the dialect, or fall back to
-     * the exact value, otherwise..
+     * the exact value, otherwise.
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, POSTGRES, TRINO, YUGABYTEDB })
@@ -26173,7 +26173,7 @@ public class DSL {
      * <p>
      * Calculate the approximate value for the <code>PERCENTILE_DISC</code> inverse distribution
      * aggregate function if such a function is available in the dialect, or fall back to
-     * the exact value, otherwise..
+     * the exact value, otherwise.
      *
      * @param percentile is wrapped as {@link DSL#val(Object)}.
      */
@@ -26188,7 +26188,7 @@ public class DSL {
      * <p>
      * Calculate the approximate value for the <code>PERCENTILE_DISC</code> inverse distribution
      * aggregate function if such a function is available in the dialect, or fall back to
-     * the exact value, otherwise..
+     * the exact value, otherwise.
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, POSTGRES, TRINO, YUGABYTEDB })
@@ -29089,7 +29089,7 @@ public class DSL {
      * Note, while there is a <code>CURRENT_DATE</code> function in
      * {@link SQLDialect#ORACLE}, that function returns a seconds-precision
      * {@link SQLDataType#TIMESTAMP}, which is undesired from a vendor
-     * agnosticity perspective. This function thus produces an expression that
+     * agnosticism perspective. This function thus produces an expression that
      * conforms to the SQL standard idea of a {@link SQLDataType#DATE} type.
      * <p>
      * This translates into any dialect
@@ -29171,7 +29171,7 @@ public class DSL {
      * Note, while there is a <code>CURRENT_DATE</code> function in
      * {@link SQLDialect#ORACLE}, that function returns a seconds-precision
      * {@link SQLDataType#TIMESTAMP}, which is undesired from a vendor
-     * agnosticity perspective. This function thus produces an expression that
+     * agnosticism perspective. This function thus produces an expression that
      * conforms to the SQL standard idea of a {@link SQLDataType#DATE} type.
      * <p>
      * This translates into any dialect
@@ -37066,7 +37066,7 @@ public class DSL {
      * <p>
      * jOOQ tries to derive the RDBMS {@link DataType} from the provided Java
      * type <code>&lt;T&gt;</code>. This may not always be accurate, which can
-     * lead to problems in some strongly typed RDMBS, especially when value is
+     * lead to problems in some strongly typed RDBMS, especially when value is
      * <code>null</code>. These databases are namely:
      * <ul>
      * <li>{@link SQLDialect#DERBY}</li>
@@ -37078,7 +37078,7 @@ public class DSL {
      * </ul>
      * <p>
      * If you need more type-safety, please use {@link #val(Object, DataType)}
-     * instead, and provide the precise RDMBS-specific data type, that is
+     * instead, and provide the precise RDBMS-specific data type, that is
      * needed.
      * <p>
      * <b>NOTE [#15286]</b>: It is strongly recommended to pass only

@@ -438,7 +438,7 @@ public class Reflect {
      * fields. This may be convenient in situations where no
      * {@link SecurityManager} is expected to prevent this, but do note that
      * (especially static) final fields may already have been inlined by the
-     * javac and/or JIT and relevant code deleted from the runtime verison of
+     * javac and/or JIT and relevant code deleted from the runtime version of
      * your program, so setting these fields might not have any effect on your
      * execution.
      * <p>
@@ -884,7 +884,7 @@ public class Reflect {
     }
 
     /**
-     * Get the POJO property name of an getter/setter
+     * Get the POJO property name of a getter/setter
      */
     private static String property(String string) {
         int length = string.length();

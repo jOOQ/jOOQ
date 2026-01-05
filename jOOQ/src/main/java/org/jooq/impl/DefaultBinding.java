@@ -1540,7 +1540,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     return arrayType(o.getClass());
 
             // PostgreSQL often defaults to using varchar as well, so we can
-            // mimick this behaviour (without documenting it).
+            // mimic this behaviour (without documenting it).
             return String[].class;
         }
 

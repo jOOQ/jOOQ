@@ -1860,7 +1860,7 @@ final class R2DBC {
     // -------------------------------------------------------------------------
 
     /**
-     * [#18893] It might be possible to work with a more fine grained
+     * [#18893] It might be possible to work with a more fine-grained
      * {@link Lock} instead of synchronizing all subscription access to allow
      * for interleaving concurrent processing of individually requested rows.
      */

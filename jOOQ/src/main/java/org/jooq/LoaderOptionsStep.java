@@ -71,7 +71,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * The <code>Loader</code> API is used for configuring data loads.
  * <p>
- * Add options to for the loading behaviour. For performance reasons, you can
+ * Add options for the loading behaviour. For performance reasons, you can
  * fine-tune three different types of measures:
  * <ul>
  * <li><strong>The bulk statement size</strong>. This specifies how many rows
@@ -115,7 +115,7 @@ public interface LoaderOptionsStep<R extends Record> extends LoaderSourceStep<R>
      * supported if {@link InsertQuery#onDuplicateKeyUpdate(boolean)} is
      * supported, too.
      * <p>
-     * If the loaded table does not have any unqiue keys, then all records are
+     * If the loaded table does not have any unique keys, then all records are
      * inserted and this clause behaves like {@link #onDuplicateKeyIgnore()}
      * <p>
      * If you don't specify a behaviour, {@link #onDuplicateKeyError()} will be
@@ -148,7 +148,7 @@ public interface LoaderOptionsStep<R extends Record> extends LoaderSourceStep<R>
      * are any duplicate records.
      * <p>
      * If this is combined with {@link #onErrorAbort()} and {@link #commitAll()}
-     * in a later step of <code>Loader</code>, then loading is rollbacked on
+     * in a later step of <code>Loader</code>, then loading is rolled back on
      * abort.
      * <p>
      * If you don't specify a behaviour, this will be the default. This cannot
@@ -182,7 +182,7 @@ public interface LoaderOptionsStep<R extends Record> extends LoaderSourceStep<R>
      * errors with {@link Loader#errors()}
      * <p>
      * If this is combined with {@link #commitAll()} in a later step of
-     * <code>Loader</code>, then loading is rollbacked on abort.
+     * <code>Loader</code>, then loading is rolled back on abort.
      * <p>
      * If you don't specify a behaviour, this will be the default. This cannot
      * be combined with {@link #onErrorIgnore()}
@@ -263,7 +263,7 @@ public interface LoaderOptionsStep<R extends Record> extends LoaderSourceStep<R>
     LoaderOptionsStep<R> commitAll();
 
     /**
-     * Leave committing / rollbacking up to client code.
+     * Leave committing / rolling back up to client code.
      * <p>
      * The COMMIT OPTIONS might be useful for fine-tuning performance behaviour
      * in some RDBMS, where large commits lead to a high level of concurrency in

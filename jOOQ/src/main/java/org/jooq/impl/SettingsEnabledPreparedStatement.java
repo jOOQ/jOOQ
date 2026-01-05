@@ -132,7 +132,7 @@ final class SettingsEnabledPreparedStatement extends DefaultStatement implements
     // ------------------------------------------------------------------------
 
     /**
-     * A descriptor for the various methods that can create a prespared
+     * A descriptor for the various methods that can create a prepared
      * statement
      */
     private static enum MethodType {

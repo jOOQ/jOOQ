@@ -55,7 +55,7 @@ package org.jooq;
 public enum Clause {
 
     // -------------------------------------------------------------------------
-    // Clauses used in a any type of statement to model access control
+    // Clauses used in any type of statement to model access control
     // -------------------------------------------------------------------------
 
     USER,
@@ -63,34 +63,34 @@ public enum Clause {
     PRIVILEGE,
 
     // -------------------------------------------------------------------------
-    // Clauses used in a any type of statement to model constraint references
+    // Clauses used in any type of statement to model constraint references
     // -------------------------------------------------------------------------
 
     CONSTRAINT,
 
     // -------------------------------------------------------------------------
-    // Clauses used in a any type of statement to model catalog references
+    // Clauses used in any type of statement to model catalog references
     // -------------------------------------------------------------------------
 
     CATALOG,
     CATALOG_REFERENCE,
 
     // -------------------------------------------------------------------------
-    // Clauses used in a any type of statement to model schema references
+    // Clauses used in any type of statement to model schema references
     // -------------------------------------------------------------------------
 
     SCHEMA,
     SCHEMA_REFERENCE,
 
     // -------------------------------------------------------------------------
-    // Clauses used in a any type of statement to model sequence references
+    // Clauses used in any type of statement to model sequence references
     // -------------------------------------------------------------------------
 
     SEQUENCE,
     SEQUENCE_REFERENCE,
 
     // -------------------------------------------------------------------------
-    // Clauses used in a any type of statement to model table references
+    // Clauses used in any type of statement to model table references
     // -------------------------------------------------------------------------
 
     /**
@@ -158,7 +158,7 @@ public enum Clause {
     TABLE_VALUES,
 
     // -------------------------------------------------------------------------
-    // Clauses used in a any type of statement to model column references
+    // Clauses used in any type of statement to model column references
     // -------------------------------------------------------------------------
 
     /**
@@ -192,7 +192,7 @@ public enum Clause {
     FIELD_FUNCTION,
 
     // -------------------------------------------------------------------------
-    // Clauses used in a any type of statement to model condition references
+    // Clauses used in any type of statement to model condition references
     // -------------------------------------------------------------------------
 
     /**
@@ -222,28 +222,28 @@ public enum Clause {
     CONDITION_COMPARISON,
 
     /**
-     * A <code>BEWEEN</code> condition.
+     * A <code>BETWEEN</code> condition.
      * <p>
      * This clause surrounds three {@link #FIELD} clauses.
      */
     CONDITION_BETWEEN,
 
     /**
-     * A <code>BEWEEN SYMMETRIC</code> condition.
+     * A <code>BETWEEN SYMMETRIC</code> condition.
      * <p>
      * This clause surrounds three {@link #FIELD} clauses.
      */
     CONDITION_BETWEEN_SYMMETRIC,
 
     /**
-     * A <code>NOT BEWEEN</code> condition.
+     * A <code>NOT BETWEEN</code> condition.
      * <p>
      * This clause surrounds three {@link #FIELD} clauses.
      */
     CONDITION_NOT_BETWEEN,
 
     /**
-     * A <code>NOT BEWEEN SYMMETRIC</code> condition.
+     * A <code>NOT BETWEEN SYMMETRIC</code> condition.
      * <p>
      * This clause surrounds three {@link #FIELD} clauses.
      */
@@ -601,13 +601,13 @@ public enum Clause {
     UPDATE_SET,
 
     /**
-     * An assigment within a {@link #UPDATE_SET} clause within an
+     * An assignment within a {@link #UPDATE_SET} clause within an
      * {@link #UPDATE} statement.
      * <p>
      * This clause surrounds
      * <ul>
      * <li>a {@link #FIELD} receiving the assignment</li>
-     * <li>an assigment operator</li>
+     * <li>an assignment operator</li>
      * <li>a {@link #FIELD} being assigned</li>
      * </ul>
      */
@@ -760,13 +760,13 @@ public enum Clause {
     MERGE_SET,
 
     /**
-     * An assigment within a {@link #MERGE_SET} clause within an {@link #MERGE}
+     * An assignment within a {@link #MERGE_SET} clause within an {@link #MERGE}
      * statement.
      * <p>
      * This clause surrounds
      * <ul>
      * <li>a {@link #FIELD} receiving the assignment</li>
-     * <li>an assigment operator</li>
+     * <li>an assignment operator</li>
      * <li>a {@link #FIELD} being assigned</li>
      * </ul>
      */

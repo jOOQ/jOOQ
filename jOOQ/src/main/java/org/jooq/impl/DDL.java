@@ -252,7 +252,7 @@ final class DDL {
     @SuppressWarnings({ "rawtypes" })
     private final Query applyAsPlainSQL(CreateViewAsStep q, TableOptions options) {
 
-        // [#15238] If the command prefix is supplied, use a heursitic where the view
+        // [#15238] If the command prefix is supplied, use a heuristic where the view
         //          body is expected to start after the first "AS" keyword
         if (options.source().trim().toLowerCase().startsWith("create"))
             return q.as(P_CREATE_VIEW.matcher(options.source()).replaceFirst("$1"));

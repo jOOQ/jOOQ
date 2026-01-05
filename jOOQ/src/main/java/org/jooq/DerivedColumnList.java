@@ -68,7 +68,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * A derived column list.
  * <p>
- * Thist type models a table name and an optional "derived column list", which
+ * This type models a table name and an optional "derived column list", which
  * can be used to name both tables and columns in one go, e.g. when aliasing a
  * derived table or a {@link CommonTableExpression}.
  * <p>

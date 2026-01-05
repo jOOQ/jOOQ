@@ -108,7 +108,7 @@ final class Val<T> extends AbstractParam<T> implements UEmpty {
      * [#14694] Whether the data type was inferred as opposed to provided
      * explicitly.
      * <p>
-     * Numerous features depend on an inferred data type being overriden lazily
+     * Numerous features depend on an inferred data type being overridden lazily
      * once the information is available, e.g. when passing around a row(1, 2)
      * to an <code>INSERT</code> statement, the initial type information should
      * be overridden once the row is copied to the statement. It is different

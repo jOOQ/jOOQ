@@ -154,7 +154,7 @@ public interface ForeignKey<CHILD extends Record, PARENT extends Record> extends
     /**
      * Fetch child records of a given record through this foreign key
      * <p>
-     * This returns childs record referencing a given record through this
+     * This returns child records referencing a given record through this
      * foreign key, as if fetching from {@link #children(Record)}.
      *
      * @throws DataAccessException if something went wrong executing the query
@@ -168,7 +168,7 @@ public interface ForeignKey<CHILD extends Record, PARENT extends Record> extends
     /**
      * Fetch child records of a given set of records through this foreign key
      * <p>
-     * This returns childs record referencing any record in a given set of
+     * This returns child records referencing any record in a given set of
      * records through this foreign key, as if fetching from
      * {@link #children(Record...)}.
      *
@@ -183,7 +183,7 @@ public interface ForeignKey<CHILD extends Record, PARENT extends Record> extends
     /**
      * Fetch child records of a given set of records through this foreign key
      * <p>
-     * This returns childs record referencing any record in a given set of
+     * This returns child records referencing any record in a given set of
      * records through this foreign key, as if fetching from
      * {@link #children(Collection)}.
      *

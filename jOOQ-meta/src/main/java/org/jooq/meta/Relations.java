@@ -48,7 +48,7 @@ import java.util.List;
 public interface Relations {
 
     /**
-     * Get the the primary for a given column, or <code>null</code> if that
+     * Get the primary key for a given column, or <code>null</code> if that
      * column is not part of the primary key.
      */
     UniqueKeyDefinition getPrimaryKey(ColumnDefinition column);

@@ -94,7 +94,7 @@ public class JSONParser {
      * Parse JSON text into java object from the input source.
      *
      * @param in
-     * @param containerFactory - Use this factory to createyour own JSON object and JSON array containers.
+     * @param containerFactory - Use this factory to create your own JSON object and JSON array containers.
      * @return Instance of the following:
      *  org.json.simple.JSONObject,
      *      org.json.simple.JSONArray,
@@ -451,7 +451,7 @@ public class JSONParser {
 
                     case S_IN_PAIR_VALUE:
                                         /*
-                                         * S_IN_PAIR_VALUE is just a marker to indicate the end of an object entry, it doesn't proccess any token,
+                                         * S_IN_PAIR_VALUE is just a marker to indicate the end of an object entry, it doesn't process any token,
                                          * therefore delay consuming token until next round.
                                          */
                         statusStack.removeFirst();

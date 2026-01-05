@@ -74,7 +74,7 @@ import org.jooq.exception.LoaderConfigurationException;
 public interface LoaderCSVStep<R extends Record> {
 
     /**
-     * Specify the the fields to be loaded into the table in the correct order.
+     * Specify the fields to be loaded into the table in the correct order.
      * <p>
      * The CSV column at index <code>i</code> is inserted into the table field
      * at index <code>i</code>. If <code>fields[i] == null</code> or
@@ -85,7 +85,7 @@ public interface LoaderCSVStep<R extends Record> {
     LoaderCSVOptionsStep<R> fields(Field<?>... fields);
 
     /**
-     * Specify the the fields to be loaded into the table in the correct order.
+     * Specify the fields to be loaded into the table in the correct order.
      * <p>
      * The CSV column at index <code>i</code> is inserted into the table field
      * at index <code>i</code>. If

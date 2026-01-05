@@ -51,7 +51,7 @@ public final class LocalDateRange extends AbstractDiscreteRange<LocalDate, Local
     }
 
     /**
-     * Create a new {@link LocalDateRange} with a inclusive lower bound and an
+     * Create a new {@link LocalDateRange} with an inclusive lower bound and an
      * exclusive upper bound.
      */
     public static final LocalDateRange localDateRange(LocalDate lower, LocalDate upper) {

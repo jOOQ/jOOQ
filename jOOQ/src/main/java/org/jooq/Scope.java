@@ -82,7 +82,7 @@ import org.jetbrains.annotations.Nullable;
  * <li>{@link TransactionContext}: A scope that covers the execution (or
  * nesting) of a single transaction. Can be accessed by the
  * {@link TransactionListener} SPI.</li>
- * <li>{@link VisitContext}: A scope that that covers a single traversal of a
+ * <li>{@link VisitContext}: A scope that covers a single traversal of a
  * {@link QueryPart} expression tree (just like {@link Context}). Can be
  * accessed by the {@link VisitListener} SPI.</li>
  * </ul>

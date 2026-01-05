@@ -51,7 +51,7 @@ public final class OffsetDateTimeRange extends AbstractRange<OffsetDateTime> {
     }
 
     /**
-     * Create a new {@link OffsetDateTimeRange} with a inclusive lower bound and an
+     * Create a new {@link OffsetDateTimeRange} with an inclusive lower bound and an
      * exclusive upper bound.
      */
     public static final OffsetDateTimeRange offsetDateTimeRange(OffsetDateTime lower, OffsetDateTime upper) {

@@ -724,7 +724,7 @@ implements
             return 0;
         }
 
-        // [#3427] ControlFlowSignals must not be passed on to ExecuteListners
+        // [#3427] ControlFlowSignals must not be passed on to ExecuteListeners
         catch (ControlFlowSignal e) {
             throw e;
         }
@@ -2404,7 +2404,7 @@ implements
 
                   // [#4254] PostgreSQL may have stored functions that don't
                   // declare an explicit return type. Those function's return
-                  // type is in fact a RECORD type, consisting of OUT paramterers
+                  // type is in fact a RECORD type, consisting of OUT parameters
                   ? (DataType<T>) SQLDataType.RESULT
                   : AbstractRoutine.this.type);
         }

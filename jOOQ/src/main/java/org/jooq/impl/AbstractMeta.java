@@ -201,7 +201,8 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
         final InterpreterNameLookupCaseSensitivity caseSensitivity;
         final Locale                               locale;
         final Map<Name, N>                         qualified;
-        final Map<ResolveName, N>                   qualifiedForLookup;
+        final Map<ResolveName, N>                  qualifiedForLookup;
+        final Map<Name, List<N>>                   partiallyQualified;
         final Map<Name, List<N>>                   unqualified;
         final List<Name>                           searchPath;
 
@@ -211,6 +212,7 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
             this.locale = interpreterLocale(configuration.settings());
             this.qualified = new LinkedHashMap<>();
             this.qualifiedForLookup = new LinkedHashMap<>();
+            this.partiallyQualified = new LinkedHashMap<>();
             this.unqualified = new LinkedHashMap<>();
             this.searchPath = new ArrayList<>();
 
@@ -226,6 +228,10 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
 
                     qualified.put(q, object);
                     qualifiedForLookup.put(new ResolveName(q, configuration, caseSensitivity, locale), object);
+
+                    if (q.qualified() && q.qualifierQualified())
+                        partiallyQualified.computeIfAbsent(q.qualifier().unqualifiedName().append(u), n -> new ArrayList<>()).add(object);
+
                     unqualified.computeIfAbsent(u, n -> new ArrayList<>()).add(object);
                 }
             }
@@ -236,7 +242,13 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
             if (object != null)
                 return Collections.singletonList(object);
 
-            List<N> list = unqualified.get(name);
+            List<N> list;
+
+            list = partiallyQualified.get(name);
+            if (list != null)
+                return Collections.unmodifiableList(list);
+
+            list = unqualified.get(name);
             if (list == null)
                 return Collections.emptyList();
             else

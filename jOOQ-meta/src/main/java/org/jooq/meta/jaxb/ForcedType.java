@@ -55,9 +55,9 @@ public class ForcedType implements Serializable, XMLAppendable
     protected Boolean enumConverter;
     protected Boolean xmlConverter;
     protected Boolean jsonConverter;
-    @XmlElement(defaultValue = "DEFAuLT")
+    @XmlElement(defaultValue = "DEFAULT")
     @XmlSchemaType(name = "string")
-    protected JSONConverterImplementation jsonConverterImplementation;
+    protected JSONConverterImplementation jsonConverterImplementation = JSONConverterImplementation.DEFAULT;
     protected LambdaConverter lambdaConverter;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String binding;

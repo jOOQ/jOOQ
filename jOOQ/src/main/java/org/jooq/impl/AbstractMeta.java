@@ -135,9 +135,9 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
 
     abstract List<Catalog> getCatalogs0();
 
-    private static final record Cached<N extends Named>(Map<Name, N> qualified, Map<Name, List<N>> unqualified) {
+    private static final record Cached<N extends Named>(Map<Name, N> qualified, Map<Name, List<N>> partiallyQualified, Map<Name, List<N>> unqualified) {
         Cached() {
-            this(new LinkedHashMap<>(), new LinkedHashMap<>());
+            this(new LinkedHashMap<>(), new LinkedHashMap<>(), new LinkedHashMap<>());
         }
 
         final void init(Iterable<N> i) {
@@ -148,6 +148,9 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
 
                     qualified().put(q, object);
                     unqualified().computeIfAbsent(u, n -> new ArrayList<>()).add(object);
+
+                    if (q.qualified() && q.qualifierQualified())
+                        partiallyQualified().computeIfAbsent(q.qualifier().unqualifiedName().append(u), n -> new ArrayList<>()).add(object);
                 }
             }
         }
@@ -157,7 +160,13 @@ abstract class AbstractMeta extends AbstractScope implements Meta, Serializable 
             if (object != null)
                 return Collections.singletonList(object);
 
-            List<N> list = unqualified().get(name);
+            List<N> list;
+
+            list = partiallyQualified().get(name);
+            if (list != null)
+                return Collections.unmodifiableList(list);
+
+            list = unqualified().get(name);
             if (list == null)
                 return Collections.emptyList();
             else

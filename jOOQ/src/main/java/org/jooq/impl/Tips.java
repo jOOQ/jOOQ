@@ -109,6 +109,7 @@ final class Tips {
         "Should you use jOOQ's DAOs? They're convenient, but don't overuse them. SQL is often more powerful: https://blog.jooq.org/to-dao-or-not-to-dao/",
         "Different jOOQ editions support multiple JDK versions. Check out the complete list here: https://www.jooq.org/download/support-matrix-jdk",
         "Different jOOQ editions support multiple RDBMS versions. Check out the complete list here: https://www.jooq.org/download/support-matrix",
+        "You don't have to alias your tables and columns in SQL in order to \"alias\" them in Java for better readability: https://www.jooq.org/doc/latest/manual/sql-building/table-expressions/aliased-tables/client-side-aliased-tables/",
         ""
     };
 

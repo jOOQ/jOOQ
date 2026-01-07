@@ -60,6 +60,7 @@ import org.jooq.Record;
 import org.jooq.SQL;
 import org.jooq.Select;
 import org.jooq.Table;
+import org.jooq.TableLike;
 
 /**
  * @author Lukas Eder
@@ -242,12 +243,12 @@ implements
     }
 
     @Override
-    public final DivideByOnConditionStep andExists(Select<?> select) {
+    public final DivideByOnConditionStep andExists(TableLike<?> select) {
         return and(exists(select));
     }
 
     @Override
-    public final DivideByOnConditionStep andNotExists(Select<?> select) {
+    public final DivideByOnConditionStep andNotExists(TableLike<?> select) {
         return and(notExists(select));
     }
 
@@ -293,12 +294,12 @@ implements
     }
 
     @Override
-    public final DivideByOnConditionStep orExists(Select<?> select) {
+    public final DivideByOnConditionStep orExists(TableLike<?> select) {
         return or(exists(select));
     }
 
     @Override
-    public final DivideByOnConditionStep orNotExists(Select<?> select) {
+    public final DivideByOnConditionStep orNotExists(TableLike<?> select) {
         return or(notExists(select));
     }
 }

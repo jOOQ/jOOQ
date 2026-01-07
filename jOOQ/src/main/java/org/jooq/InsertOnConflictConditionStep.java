@@ -207,7 +207,7 @@ public interface InsertOnConflictConditionStep<R extends Record> extends InsertR
      */
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    InsertOnConflictConditionStep<R> andExists(Select<?> select);
+    InsertOnConflictConditionStep<R> andExists(TableLike<?> select);
 
     /**
      * Combine the currently assembled conditions with a NOT EXISTS clause using
@@ -215,7 +215,7 @@ public interface InsertOnConflictConditionStep<R extends Record> extends InsertR
      */
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    InsertOnConflictConditionStep<R> andNotExists(Select<?> select);
+    InsertOnConflictConditionStep<R> andNotExists(TableLike<?> select);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -325,7 +325,7 @@ public interface InsertOnConflictConditionStep<R extends Record> extends InsertR
      */
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    InsertOnConflictConditionStep<R> orExists(Select<?> select);
+    InsertOnConflictConditionStep<R> orExists(TableLike<?> select);
 
     /**
      * Combine the currently assembled conditions with a NOT EXISTS clause using
@@ -333,5 +333,5 @@ public interface InsertOnConflictConditionStep<R extends Record> extends InsertR
      */
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    InsertOnConflictConditionStep<R> orNotExists(Select<?> select);
+    InsertOnConflictConditionStep<R> orNotExists(TableLike<?> select);
 }

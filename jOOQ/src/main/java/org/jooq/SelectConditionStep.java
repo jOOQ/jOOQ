@@ -213,7 +213,7 @@ public interface SelectConditionStep<R extends Record> extends SelectConnectBySt
      */
     @NotNull @CheckReturnValue
     @Support
-    SelectConditionStep<R> andExists(Select<?> select);
+    SelectConditionStep<R> andExists(TableLike<?> select);
 
     /**
      * Combine the currently assembled conditions with a NOT EXISTS clause using
@@ -221,7 +221,7 @@ public interface SelectConditionStep<R extends Record> extends SelectConnectBySt
      */
     @NotNull @CheckReturnValue
     @Support
-    SelectConditionStep<R> andNotExists(Select<?> select);
+    SelectConditionStep<R> andNotExists(TableLike<?> select);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -331,7 +331,7 @@ public interface SelectConditionStep<R extends Record> extends SelectConnectBySt
      */
     @NotNull @CheckReturnValue
     @Support
-    SelectConditionStep<R> orExists(Select<?> select);
+    SelectConditionStep<R> orExists(TableLike<?> select);
 
     /**
      * Combine the currently assembled conditions with a NOT EXISTS clause using
@@ -339,6 +339,6 @@ public interface SelectConditionStep<R extends Record> extends SelectConnectBySt
      */
     @NotNull @CheckReturnValue
     @Support
-    SelectConditionStep<R> orNotExists(Select<?> select);
+    SelectConditionStep<R> orNotExists(TableLike<?> select);
 
 }

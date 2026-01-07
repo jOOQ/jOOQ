@@ -212,7 +212,7 @@ public interface SelectQualifyConditionStep<R extends Record> extends SelectOrde
      */
     @NotNull @CheckReturnValue
     @Support
-    SelectQualifyConditionStep<R> andExists(Select<?> select);
+    SelectQualifyConditionStep<R> andExists(TableLike<?> select);
 
     /**
      * Combine the currently assembled conditions with a NOT EXISTS clause using
@@ -220,7 +220,7 @@ public interface SelectQualifyConditionStep<R extends Record> extends SelectOrde
      */
     @NotNull @CheckReturnValue
     @Support
-    SelectQualifyConditionStep<R> andNotExists(Select<?> select);
+    SelectQualifyConditionStep<R> andNotExists(TableLike<?> select);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -330,7 +330,7 @@ public interface SelectQualifyConditionStep<R extends Record> extends SelectOrde
      */
     @NotNull @CheckReturnValue
     @Support
-    SelectQualifyConditionStep<R> orExists(Select<?> select);
+    SelectQualifyConditionStep<R> orExists(TableLike<?> select);
 
     /**
      * Combine the currently assembled conditions with a NOT EXISTS clause using
@@ -338,5 +338,5 @@ public interface SelectQualifyConditionStep<R extends Record> extends SelectOrde
      */
     @NotNull @CheckReturnValue
     @Support
-    SelectQualifyConditionStep<R> orNotExists(Select<?> select);
+    SelectQualifyConditionStep<R> orNotExists(TableLike<?> select);
 }

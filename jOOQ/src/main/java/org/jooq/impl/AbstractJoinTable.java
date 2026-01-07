@@ -184,12 +184,12 @@ implements
     }
 
     @Override
-    public final J andExists(Select<?> select) {
+    public final J andExists(TableLike<?> select) {
         return and(exists(select));
     }
 
     @Override
-    public final J andNotExists(Select<?> select) {
+    public final J andNotExists(TableLike<?> select) {
         return and(notExists(select));
     }
 
@@ -232,12 +232,12 @@ implements
     }
 
     @Override
-    public final J orExists(Select<?> select) {
+    public final J orExists(TableLike<?> select) {
         return or(exists(select));
     }
 
     @Override
-    public final J orNotExists(Select<?> select) {
+    public final J orNotExists(TableLike<?> select) {
         return or(notExists(select));
     }
 

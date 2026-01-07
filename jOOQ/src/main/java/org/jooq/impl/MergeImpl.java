@@ -837,12 +837,12 @@ implements
     }
 
     @Override
-    public final MergeImpl andExists(Select<?> select) {
+    public final MergeImpl andExists(TableLike<?> select) {
         return and(exists(select));
     }
 
     @Override
-    public final MergeImpl andNotExists(Select<?> select) {
+    public final MergeImpl andNotExists(TableLike<?> select) {
         return and(notExists(select));
     }
 
@@ -888,12 +888,12 @@ implements
     }
 
     @Override
-    public final MergeImpl orExists(Select<?> select) {
+    public final MergeImpl orExists(TableLike<?> select) {
         return or(exists(select));
     }
 
     @Override
-    public final MergeImpl orNotExists(Select<?> select) {
+    public final MergeImpl orNotExists(TableLike<?> select) {
         return or(notExists(select));
     }
 

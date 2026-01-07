@@ -211,7 +211,7 @@ public interface InsertOnConflictWhereStep<R extends Record> extends InsertRetur
      */
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    InsertOnConflictConditionStep<R> whereExists(Select<?> select);
+    InsertOnConflictConditionStep<R> whereExists(TableLike<?> select);
 
     /**
      * Add a <code>WHERE NOT EXISTS</code> clause to the <code>INSERT</code> statement's
@@ -219,5 +219,5 @@ public interface InsertOnConflictWhereStep<R extends Record> extends InsertRetur
      */
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    InsertOnConflictConditionStep<R> whereNotExists(Select<?> select);
+    InsertOnConflictConditionStep<R> whereNotExists(TableLike<?> select);
 }

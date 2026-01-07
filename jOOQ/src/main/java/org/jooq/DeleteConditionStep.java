@@ -183,7 +183,7 @@ public interface DeleteConditionStep<R extends Record> extends DeleteOrderByStep
      */
     @NotNull @CheckReturnValue
     @Support
-    DeleteConditionStep<R> andExists(Select<?> select);
+    DeleteConditionStep<R> andExists(TableLike<?> select);
 
     /**
      * Combine the currently assembled conditions with a NOT EXISTS clause using
@@ -191,7 +191,7 @@ public interface DeleteConditionStep<R extends Record> extends DeleteOrderByStep
      */
     @NotNull @CheckReturnValue
     @Support
-    DeleteConditionStep<R> andNotExists(Select<?> select);
+    DeleteConditionStep<R> andNotExists(TableLike<?> select);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -301,7 +301,7 @@ public interface DeleteConditionStep<R extends Record> extends DeleteOrderByStep
      */
     @NotNull @CheckReturnValue
     @Support
-    DeleteConditionStep<R> orExists(Select<?> select);
+    DeleteConditionStep<R> orExists(TableLike<?> select);
 
     /**
      * Combine the currently assembled conditions with a NOT EXISTS clause using
@@ -309,5 +309,5 @@ public interface DeleteConditionStep<R extends Record> extends DeleteOrderByStep
      */
     @NotNull @CheckReturnValue
     @Support
-    DeleteConditionStep<R> orNotExists(Select<?> select);
+    DeleteConditionStep<R> orNotExists(TableLike<?> select);
 }

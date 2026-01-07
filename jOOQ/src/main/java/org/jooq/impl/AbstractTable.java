@@ -1468,12 +1468,28 @@ implements
     }
 
     @Override
-    public /* non-final */ Table<R> whereExists(Select<?> select) {
+    public /* non-final */ Table<R> whereExists(TableLike<?> select) {
+        return where(exists(select));
+    }
+
+    /**
+     * @deprecated - [#19568] - 3.21.0 - Re-generate your code
+     */
+    @Deprecated(forRemoval = true)
+    protected /* non-final */ Table<R> whereExists(Select<?> select) {
         return where(exists(select));
     }
 
     @Override
-    public /* non-final */ Table<R> whereNotExists(Select<?> select) {
+    public /* non-final */ Table<R> whereNotExists(TableLike<?> select) {
+        return where(notExists(select));
+    }
+
+    /**
+     * @deprecated - [#19568] - 3.21.0 - Re-generate your code
+     */
+    @Deprecated(forRemoval = true)
+    protected /* non-final */ Table<R> whereNotExists(Select<?> select) {
         return where(notExists(select));
     }
 

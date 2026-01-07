@@ -179,7 +179,7 @@ public interface TableOnConditionStep<R extends Record> extends Table<R> {
      */
     @NotNull
     @Support
-    TableOnConditionStep<R> andExists(Select<?> select);
+    TableOnConditionStep<R> andExists(TableLike<?> select);
 
     /**
      * Combine the currently assembled conditions with a <code>NOT EXISTS</code>
@@ -187,7 +187,7 @@ public interface TableOnConditionStep<R extends Record> extends Table<R> {
      */
     @NotNull
     @Support
-    TableOnConditionStep<R> andNotExists(Select<?> select);
+    TableOnConditionStep<R> andNotExists(TableLike<?> select);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -297,7 +297,7 @@ public interface TableOnConditionStep<R extends Record> extends Table<R> {
      */
     @NotNull
     @Support
-    TableOnConditionStep<R> orExists(Select<?> select);
+    TableOnConditionStep<R> orExists(TableLike<?> select);
 
     /**
      * Combine the currently assembled conditions with a <code>NOT EXISTS</code>
@@ -305,5 +305,5 @@ public interface TableOnConditionStep<R extends Record> extends Table<R> {
      */
     @NotNull
     @Support
-    TableOnConditionStep<R> orNotExists(Select<?> select);
+    TableOnConditionStep<R> orNotExists(TableLike<?> select);
 }

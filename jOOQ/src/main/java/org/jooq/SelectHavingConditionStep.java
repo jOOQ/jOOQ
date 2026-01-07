@@ -213,7 +213,7 @@ public interface SelectHavingConditionStep<R extends Record> extends SelectWindo
      */
     @NotNull @CheckReturnValue
     @Support
-    SelectHavingConditionStep<R> andExists(Select<?> select);
+    SelectHavingConditionStep<R> andExists(TableLike<?> select);
 
     /**
      * Combine the currently assembled conditions with a NOT EXISTS clause using
@@ -221,7 +221,7 @@ public interface SelectHavingConditionStep<R extends Record> extends SelectWindo
      */
     @NotNull @CheckReturnValue
     @Support
-    SelectHavingConditionStep<R> andNotExists(Select<?> select);
+    SelectHavingConditionStep<R> andNotExists(TableLike<?> select);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -331,7 +331,7 @@ public interface SelectHavingConditionStep<R extends Record> extends SelectWindo
      */
     @NotNull @CheckReturnValue
     @Support
-    SelectHavingConditionStep<R> orExists(Select<?> select);
+    SelectHavingConditionStep<R> orExists(TableLike<?> select);
 
     /**
      * Combine the currently assembled conditions with a NOT EXISTS clause using
@@ -339,5 +339,5 @@ public interface SelectHavingConditionStep<R extends Record> extends SelectWindo
      */
     @NotNull @CheckReturnValue
     @Support
-    SelectHavingConditionStep<R> orNotExists(Select<?> select);
+    SelectHavingConditionStep<R> orNotExists(TableLike<?> select);
 }

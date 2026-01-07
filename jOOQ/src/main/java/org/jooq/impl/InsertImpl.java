@@ -143,6 +143,7 @@ import org.jooq.Select;
 import org.jooq.SelectField;
 import org.jooq.SelectFieldOrAsterisk;
 import org.jooq.Table;
+import org.jooq.TableLike;
 // ...
 import org.jooq.UniqueKey;
 import org.jooq.impl.QOM.Insert;
@@ -1355,12 +1356,12 @@ final class InsertImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     }
 
     @Override
-    public final InsertImpl andExists(Select<?> select) {
+    public final InsertImpl andExists(TableLike<?> select) {
         return and(exists(select));
     }
 
     @Override
-    public final InsertImpl andNotExists(Select<?> select) {
+    public final InsertImpl andNotExists(TableLike<?> select) {
         return and(notExists(select));
     }
 
@@ -1406,12 +1407,12 @@ final class InsertImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     }
 
     @Override
-    public final InsertImpl orExists(Select<?> select) {
+    public final InsertImpl orExists(TableLike<?> select) {
         return or(exists(select));
     }
 
     @Override
-    public final InsertImpl orNotExists(Select<?> select) {
+    public final InsertImpl orNotExists(TableLike<?> select) {
         return or(notExists(select));
     }
 
@@ -1471,12 +1472,12 @@ final class InsertImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10
     }
 
     @Override
-    public final InsertImpl whereExists(Select<?> select) {
+    public final InsertImpl whereExists(TableLike<?> select) {
         return where(exists(select));
     }
 
     @Override
-    public final InsertImpl whereNotExists(Select<?> select) {
+    public final InsertImpl whereNotExists(TableLike<?> select) {
         return where(notExists(select));
     }
 

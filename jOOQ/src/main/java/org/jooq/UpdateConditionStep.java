@@ -186,7 +186,7 @@ public interface UpdateConditionStep<R extends Record> extends UpdateOrderByStep
      */
     @NotNull @CheckReturnValue
     @Support
-    UpdateConditionStep<R> andExists(Select<?> select);
+    UpdateConditionStep<R> andExists(TableLike<?> select);
 
     /**
      * Combine the currently assembled conditions with a NOT EXISTS clause using
@@ -194,7 +194,7 @@ public interface UpdateConditionStep<R extends Record> extends UpdateOrderByStep
      */
     @NotNull @CheckReturnValue
     @Support
-    UpdateConditionStep<R> andNotExists(Select<?> select);
+    UpdateConditionStep<R> andNotExists(TableLike<?> select);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -304,7 +304,7 @@ public interface UpdateConditionStep<R extends Record> extends UpdateOrderByStep
      */
     @NotNull @CheckReturnValue
     @Support
-    UpdateConditionStep<R> orExists(Select<?> select);
+    UpdateConditionStep<R> orExists(TableLike<?> select);
 
     /**
      * Combine the currently assembled conditions with a NOT EXISTS clause using
@@ -312,5 +312,5 @@ public interface UpdateConditionStep<R extends Record> extends UpdateOrderByStep
      */
     @NotNull @CheckReturnValue
     @Support
-    UpdateConditionStep<R> orNotExists(Select<?> select);
+    UpdateConditionStep<R> orNotExists(TableLike<?> select);
 }

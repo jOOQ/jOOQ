@@ -205,7 +205,7 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
      */
     @NotNull
     @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    DivideByOnConditionStep andExists(Select<?> select);
+    DivideByOnConditionStep andExists(TableLike<?> select);
 
     /**
      * Combine the currently assembled conditions with a <code>NOT EXISTS</code>
@@ -213,7 +213,7 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
      */
     @NotNull
     @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    DivideByOnConditionStep andNotExists(Select<?> select);
+    DivideByOnConditionStep andNotExists(TableLike<?> select);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -323,7 +323,7 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
      */
     @NotNull
     @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    DivideByOnConditionStep orExists(Select<?> select);
+    DivideByOnConditionStep orExists(TableLike<?> select);
 
     /**
      * Combine the currently assembled conditions with a <code>NOT EXISTS</code>
@@ -331,5 +331,5 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
      */
     @NotNull
     @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
-    DivideByOnConditionStep orNotExists(Select<?> select);
+    DivideByOnConditionStep orNotExists(TableLike<?> select);
 }

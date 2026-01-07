@@ -76,10 +76,10 @@ implements
     QOM.Exists
 {
 
-    final Select<?> query;
+    final TableLike<?> query;
 
     Exists(
-        Select<?> query
+        TableLike<?> query
     ) {
 
         this.query = query;
@@ -114,7 +114,12 @@ implements
 
             default:
                 ctx.visit(K_EXISTS).sql(' ');
-                visitSubquery(ctx, query, SubqueryCharacteristics.PREDICAND);
+
+                if (query instanceof Select)
+                    visitSubquery(ctx, query, SubqueryCharacteristics.PREDICAND);
+                else
+                    visitSubquery(ctx, selectFrom(query), SubqueryCharacteristics.PREDICAND);
+
                 break;
         }
     }
@@ -142,17 +147,17 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final Select<?> $arg1() {
+    public final TableLike<?> $arg1() {
         return query;
     }
 
     @Override
-    public final QOM.Exists $arg1(Select<?> newValue) {
+    public final QOM.Exists $arg1(TableLike<?> newValue) {
         return $constructor().apply(newValue);
     }
 
     @Override
-    public final Function1<? super Select<?>, ? extends QOM.Exists> $constructor() {
+    public final Function1<? super TableLike<?>, ? extends QOM.Exists> $constructor() {
         return (a1) -> new Exists(a1);
     }
 

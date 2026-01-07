@@ -208,12 +208,12 @@ public interface SelectWhereStep<R extends Record> extends SelectConnectByStep<R
      */
     @NotNull @CheckReturnValue
     @Support
-    SelectConditionStep<R> whereExists(Select<?> select);
+    SelectConditionStep<R> whereExists(TableLike<?> select);
 
     /**
      * Add a <code>WHERE NOT EXISTS</code> clause to the query.
      */
     @NotNull @CheckReturnValue
     @Support
-    SelectConditionStep<R> whereNotExists(Select<?> select);
+    SelectConditionStep<R> whereNotExists(TableLike<?> select);
 }

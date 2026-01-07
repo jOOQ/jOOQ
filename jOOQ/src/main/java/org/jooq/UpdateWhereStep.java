@@ -181,12 +181,12 @@ public interface UpdateWhereStep<R extends Record> extends UpdateOrderByStep<R> 
      */
     @NotNull @CheckReturnValue
     @Support
-    UpdateConditionStep<R> whereExists(Select<?> select);
+    UpdateConditionStep<R> whereExists(TableLike<?> select);
 
     /**
      * Add a NOT EXISTS clause to the query
      */
     @NotNull @CheckReturnValue
     @Support
-    UpdateConditionStep<R> whereNotExists(Select<?> select);
+    UpdateConditionStep<R> whereNotExists(TableLike<?> select);
 }

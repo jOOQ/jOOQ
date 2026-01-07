@@ -209,7 +209,7 @@ public interface MergeOnConditionStep<R extends Record> extends MergeMatchedStep
      */
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES })
-    MergeOnConditionStep<R> andExists(Select<?> select);
+    MergeOnConditionStep<R> andExists(TableLike<?> select);
 
     /**
      * Combine the currently assembled conditions with a NOT EXISTS clause using
@@ -217,7 +217,7 @@ public interface MergeOnConditionStep<R extends Record> extends MergeMatchedStep
      */
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES })
-    MergeOnConditionStep<R> andNotExists(Select<?> select);
+    MergeOnConditionStep<R> andNotExists(TableLike<?> select);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -327,7 +327,7 @@ public interface MergeOnConditionStep<R extends Record> extends MergeMatchedStep
      */
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES })
-    MergeOnConditionStep<R> orExists(Select<?> select);
+    MergeOnConditionStep<R> orExists(TableLike<?> select);
 
     /**
      * Combine the currently assembled conditions with a NOT EXISTS clause using
@@ -335,5 +335,5 @@ public interface MergeOnConditionStep<R extends Record> extends MergeMatchedStep
      */
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES })
-    MergeOnConditionStep<R> orNotExists(Select<?> select);
+    MergeOnConditionStep<R> orNotExists(TableLike<?> select);
 }

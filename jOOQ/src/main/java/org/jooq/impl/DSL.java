@@ -19089,7 +19089,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static Condition exists(Select<?> query) {
+    public static Condition exists(TableLike<?> query) {
         return new Exists(query);
     }
 
@@ -19098,7 +19098,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static Condition notExists(Select<?> query) {
+    public static Condition notExists(TableLike<?> query) {
         return not(exists(query));
     }
 

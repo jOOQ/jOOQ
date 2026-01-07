@@ -213,7 +213,7 @@ public interface SelectOnConditionStep<R extends Record> extends SelectJoinStep<
      */
     @NotNull @CheckReturnValue
     @Support
-    SelectOnConditionStep<R> andExists(Select<?> select);
+    SelectOnConditionStep<R> andExists(TableLike<?> select);
 
     /**
      * Combine the currently assembled conditions with a NOT EXISTS clause using
@@ -221,7 +221,7 @@ public interface SelectOnConditionStep<R extends Record> extends SelectJoinStep<
      */
     @NotNull @CheckReturnValue
     @Support
-    SelectOnConditionStep<R> andNotExists(Select<?> select);
+    SelectOnConditionStep<R> andNotExists(TableLike<?> select);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -331,7 +331,7 @@ public interface SelectOnConditionStep<R extends Record> extends SelectJoinStep<
      */
     @NotNull @CheckReturnValue
     @Support
-    SelectOnConditionStep<R> orExists(Select<?> select);
+    SelectOnConditionStep<R> orExists(TableLike<?> select);
 
     /**
      * Combine the currently assembled conditions with a NOT EXISTS clause using
@@ -339,5 +339,5 @@ public interface SelectOnConditionStep<R extends Record> extends SelectJoinStep<
      */
     @NotNull @CheckReturnValue
     @Support
-    SelectOnConditionStep<R> orNotExists(Select<?> select);
+    SelectOnConditionStep<R> orNotExists(TableLike<?> select);
 }

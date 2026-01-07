@@ -176,12 +176,12 @@ implements
     }
 
     @Override
-    public final DeleteImpl<R> whereExists(Select<?> select) {
+    public final DeleteImpl<R> whereExists(TableLike<?> select) {
         return andExists(select);
     }
 
     @Override
-    public final DeleteImpl<R> whereNotExists(Select<?> select) {
+    public final DeleteImpl<R> whereNotExists(TableLike<?> select) {
         return andNotExists(select);
     }
 
@@ -227,12 +227,12 @@ implements
     }
 
     @Override
-    public final DeleteImpl<R> andExists(Select<?> select) {
+    public final DeleteImpl<R> andExists(TableLike<?> select) {
         return and(exists(select));
     }
 
     @Override
-    public final DeleteImpl<R> andNotExists(Select<?> select) {
+    public final DeleteImpl<R> andNotExists(TableLike<?> select) {
         return and(notExists(select));
     }
 
@@ -278,12 +278,12 @@ implements
     }
 
     @Override
-    public final DeleteImpl<R> orExists(Select<?> select) {
+    public final DeleteImpl<R> orExists(TableLike<?> select) {
         return or(exists(select));
     }
 
     @Override
-    public final DeleteImpl<R> orNotExists(Select<?> select) {
+    public final DeleteImpl<R> orNotExists(TableLike<?> select) {
         return or(notExists(select));
     }
 

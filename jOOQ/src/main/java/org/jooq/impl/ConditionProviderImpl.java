@@ -52,6 +52,7 @@ import org.jooq.Operator;
 import org.jooq.QueryPart;
 import org.jooq.SQL;
 import org.jooq.Select;
+import org.jooq.TableLike;
 import org.jooq.impl.QOM.UProxy;
 
 import org.jetbrains.annotations.NotNull;
@@ -197,12 +198,12 @@ final class ConditionProviderImpl extends AbstractField<Boolean> implements Cond
     }
 
     @Override
-    public final Condition andExists(Select<?> select) {
+    public final Condition andExists(TableLike<?> select) {
         return getWhere().andExists(select);
     }
 
     @Override
-    public final Condition andNotExists(Select<?> select) {
+    public final Condition andNotExists(TableLike<?> select) {
         return getWhere().andNotExists(select);
     }
 
@@ -247,12 +248,12 @@ final class ConditionProviderImpl extends AbstractField<Boolean> implements Cond
     }
 
     @Override
-    public final Condition orExists(Select<?> select) {
+    public final Condition orExists(TableLike<?> select) {
         return getWhere().orExists(select);
     }
 
     @Override
-    public final Condition orNotExists(Select<?> select) {
+    public final Condition orNotExists(TableLike<?> select) {
         return getWhere().orNotExists(select);
     }
 
@@ -297,12 +298,12 @@ final class ConditionProviderImpl extends AbstractField<Boolean> implements Cond
     }
 
     @Override
-    public final Condition xorExists(Select<?> select) {
+    public final Condition xorExists(TableLike<?> select) {
         return getWhere().xorExists(select);
     }
 
     @Override
-    public final Condition xorNotExists(Select<?> select) {
+    public final Condition xorNotExists(TableLike<?> select) {
         return getWhere().xorNotExists(select);
     }
 

@@ -151,6 +151,7 @@ import org.jooq.Stringly;
 // ...
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.TableLike;
 import org.jooq.TableOptions;
 // ...
 // ...
@@ -8784,8 +8785,8 @@ public class JavaGenerator extends AbstractGenerator {
                 // This produces the same erasure as the previous, in scala:
                 // (condition: String, binds: Seq)
                 // idt.accept(() -> out.println("@%s %soverride def where(@%s.SQL condition: %s, parts: %s*): %s = where(%s.condition(condition, parts:_*))", PlainSQL.class, visibilityPublic(), Stringly.class, String.class, QueryPart.class, className, DSL.class));
-                idt.accept(() -> out.println("%soverride def whereExists(select: %s[%s]): %s = where(%s.exists(select))", visibilityPublic(), Select.class, wildcard(), className, DSL.class));
-                idt.accept(() -> out.println("%soverride def whereNotExists(select: %s[%s]): %s = where(%s.notExists(select))", visibilityPublic(), Select.class, wildcard(), className, DSL.class));
+                idt.accept(() -> out.println("%soverride def whereExists(select: %s[%s]): %s = where(%s.exists(select))", visibilityPublic(), TableLike.class, wildcard(), className, DSL.class));
+                idt.accept(() -> out.println("%soverride def whereNotExists(select: %s[%s]): %s = where(%s.notExists(select))", visibilityPublic(), TableLike.class, wildcard(), className, DSL.class));
             }
         }
 
@@ -8830,8 +8831,8 @@ public class JavaGenerator extends AbstractGenerator {
                 idt.accept(() -> out.println("@%s %soverride fun where(@%s.SQL condition: %s): %s = where(%s.condition(condition))", PlainSQL.class, visibilityPublic(), Stringly.class, String.class, className, DSL.class));
                 idt.accept(() -> out.println("@%s %soverride fun where(@%s.SQL condition: %s, vararg binds: Any?): %s = where(%s.condition(condition, *binds))", PlainSQL.class, visibilityPublic(), Stringly.class, String.class, className, DSL.class));
                 idt.accept(() -> out.println("@%s %soverride fun where(@%s.SQL condition: %s, vararg parts: %s): %s = where(%s.condition(condition, *parts))", PlainSQL.class, visibilityPublic(), Stringly.class, String.class, QueryPart.class, className, DSL.class));
-                idt.accept(() -> out.println("%soverride fun whereExists(select: %s<*>): %s = where(%s.exists(select))", visibilityPublic(), Select.class, className, DSL.class));
-                idt.accept(() -> out.println("%soverride fun whereNotExists(select: %s<*>): %s = where(%s.notExists(select))", visibilityPublic(), Select.class, className, DSL.class));
+                idt.accept(() -> out.println("%soverride fun whereExists(select: %s<*>): %s = where(%s.exists(select))", visibilityPublic(), TableLike.class, className, DSL.class));
+                idt.accept(() -> out.println("%soverride fun whereNotExists(select: %s<*>): %s = where(%s.notExists(select))", visibilityPublic(), TableLike.class, className, DSL.class));
             }
         }
 
@@ -8928,12 +8929,12 @@ public class JavaGenerator extends AbstractGenerator {
                     out.println("}");
                 });
                 idt.accept(() -> {
-                    out.println("%s%s whereExists(%s<?> select) {", visibilityPublic(), className, Select.class);
+                    out.println("%s%s whereExists(%s<?> select) {", visibilityPublic(), className, TableLike.class);
                     out.println("return where(%s.exists(select));", DSL.class);
                     out.println("}");
                 });
                 idt.accept(() -> {
-                    out.println("%s%s whereNotExists(%s<?> select) {", visibilityPublic(), className, Select.class);
+                    out.println("%s%s whereNotExists(%s<?> select) {", visibilityPublic(), className, TableLike.class);
                     out.println("return where(%s.notExists(select));", DSL.class);
                     out.println("}");
                 });

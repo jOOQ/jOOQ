@@ -55,6 +55,7 @@ import org.jooq.Field;
 import org.jooq.QueryPart;
 import org.jooq.SQL;
 import org.jooq.Select;
+import org.jooq.TableLike;
 
 /**
  * @author Lukas Eder
@@ -182,32 +183,32 @@ abstract class AbstractCondition extends AbstractField<Boolean> implements Condi
     }
 
     @Override
-    public final Condition andExists(Select<?> select) {
+    public final Condition andExists(TableLike<?> select) {
         return and(exists(select));
     }
 
     @Override
-    public final Condition andNotExists(Select<?> select) {
+    public final Condition andNotExists(TableLike<?> select) {
         return and(notExists(select));
     }
 
     @Override
-    public final Condition orExists(Select<?> select) {
+    public final Condition orExists(TableLike<?> select) {
         return or(exists(select));
     }
 
     @Override
-    public final Condition orNotExists(Select<?> select) {
+    public final Condition orNotExists(TableLike<?> select) {
         return or(notExists(select));
     }
 
     @Override
-    public final Condition xorExists(Select<?> select) {
+    public final Condition xorExists(TableLike<?> select) {
         return xor(exists(select));
     }
 
     @Override
-    public final Condition xorNotExists(Select<?> select) {
+    public final Condition xorNotExists(TableLike<?> select) {
         return xor(notExists(select));
     }
 

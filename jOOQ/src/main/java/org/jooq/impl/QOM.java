@@ -3291,14 +3291,14 @@ public final class QOM {
      */
     public /*sealed*/ interface Exists
         extends
-            UOperator1<Select<?>, Exists>,
+            UOperator1<TableLike<?>, Exists>,
             org.jooq.Condition
         //permits
         //    Exists
     {
-        @NotNull default Select<?> $query() { return $arg1(); }
+        @NotNull default TableLike<?> $query() { return $arg1(); }
         @CheckReturnValue
-        @NotNull default Exists $query(Select<?> newQuery) { return $arg1(newQuery); }
+        @NotNull default Exists $query(TableLike<?> newQuery) { return $arg1(newQuery); }
     }
 
     /**

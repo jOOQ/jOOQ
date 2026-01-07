@@ -1170,7 +1170,7 @@ extends
      */
     @NotNull
     @Support
-    Table<R> whereExists(Select<?> select);
+    Table<R> whereExists(TableLike<?> select);
 
     /**
      * Add a <code>WHERE NOT EXISTS</code> clause to the table.
@@ -1182,7 +1182,7 @@ extends
      */
     @NotNull
     @Support
-    Table<R> whereNotExists(Select<?> select);
+    Table<R> whereNotExists(TableLike<?> select);
 
     // -------------------------------------------------------------------------
     // XXX: JOIN clauses on tables

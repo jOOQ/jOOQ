@@ -431,13 +431,13 @@ implements
     }
 
     @Override
-    public final SelectImpl whereExists(Select<?> select) {
+    public final SelectImpl whereExists(TableLike<?> select) {
         conditionStep = ConditionStep.WHERE;
         return andExists(select);
     }
 
     @Override
-    public final SelectImpl whereNotExists(Select<?> select) {
+    public final SelectImpl whereNotExists(TableLike<?> select) {
         conditionStep = ConditionStep.WHERE;
         return andNotExists(select);
     }
@@ -503,12 +503,12 @@ implements
     }
 
     @Override
-    public final SelectImpl andExists(Select<?> select) {
+    public final SelectImpl andExists(TableLike<?> select) {
         return and(exists(select));
     }
 
     @Override
-    public final SelectImpl andNotExists(Select<?> select) {
+    public final SelectImpl andNotExists(TableLike<?> select) {
         return and(notExists(select));
     }
 
@@ -572,12 +572,12 @@ implements
     }
 
     @Override
-    public final SelectImpl orExists(Select<?> select) {
+    public final SelectImpl orExists(TableLike<?> select) {
         return or(exists(select));
     }
 
     @Override
-    public final SelectImpl orNotExists(Select<?> select) {
+    public final SelectImpl orNotExists(TableLike<?> select) {
         return or(notExists(select));
     }
 

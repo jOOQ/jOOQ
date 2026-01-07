@@ -179,12 +179,12 @@ public interface DeleteWhereStep<R extends Record> extends DeleteOrderByStep<R> 
      */
     @NotNull @CheckReturnValue
     @Support
-    DeleteConditionStep<R> whereExists(Select<?> select);
+    DeleteConditionStep<R> whereExists(TableLike<?> select);
 
     /**
      * Add a NOT EXISTS clause to the query.
      */
     @NotNull @CheckReturnValue
     @Support
-    DeleteConditionStep<R> whereNotExists(Select<?> select);
+    DeleteConditionStep<R> whereNotExists(TableLike<?> select);
 }

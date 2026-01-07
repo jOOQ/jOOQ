@@ -207,7 +207,7 @@ public interface Condition extends Field<Boolean> {
      */
     @NotNull
     @Support
-    Condition andExists(Select<?> select);
+    Condition andExists(TableLike<?> select);
 
     /**
      * Combine this condition with a NOT EXIST clause using the
@@ -218,7 +218,7 @@ public interface Condition extends Field<Boolean> {
      */
     @NotNull
     @Support
-    Condition andNotExists(Select<?> select);
+    Condition andNotExists(TableLike<?> select);
 
     /**
      * Combine this condition with another one using the {@link Operator#OR}
@@ -344,7 +344,7 @@ public interface Condition extends Field<Boolean> {
      */
     @NotNull
     @Support
-    Condition orExists(Select<?> select);
+    Condition orExists(TableLike<?> select);
 
     /**
      * Combine this condition with a NOT EXIST clause using the
@@ -355,7 +355,7 @@ public interface Condition extends Field<Boolean> {
      */
     @NotNull
     @Support
-    Condition orNotExists(Select<?> select);
+    Condition orNotExists(TableLike<?> select);
 
     /**
      * Combine this condition with another one using the {@link Operator#XOR}
@@ -481,7 +481,7 @@ public interface Condition extends Field<Boolean> {
      */
     @NotNull
     @Support
-    Condition xorExists(Select<?> select);
+    Condition xorExists(TableLike<?> select);
 
     /**
      * Combine this condition with a NOT EXIST clause using the
@@ -492,7 +492,7 @@ public interface Condition extends Field<Boolean> {
      */
     @NotNull
     @Support
-    Condition xorNotExists(Select<?> select);
+    Condition xorNotExists(TableLike<?> select);
 
 
 

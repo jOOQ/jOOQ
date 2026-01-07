@@ -548,12 +548,12 @@ implements
     }
 
     @Override
-    public final UpdateImpl<R> whereExists(Select<?> select) {
+    public final UpdateImpl<R> whereExists(TableLike<?> select) {
         return andExists(select);
     }
 
     @Override
-    public final UpdateImpl<R> whereNotExists(Select<?> select) {
+    public final UpdateImpl<R> whereNotExists(TableLike<?> select) {
         return andNotExists(select);
     }
 
@@ -599,12 +599,12 @@ implements
     }
 
     @Override
-    public final UpdateImpl<R> andExists(Select<?> select) {
+    public final UpdateImpl<R> andExists(TableLike<?> select) {
         return and(exists(select));
     }
 
     @Override
-    public final UpdateImpl<R> andNotExists(Select<?> select) {
+    public final UpdateImpl<R> andNotExists(TableLike<?> select) {
         return and(notExists(select));
     }
 
@@ -650,12 +650,12 @@ implements
     }
 
     @Override
-    public final UpdateImpl<R> orExists(Select<?> select) {
+    public final UpdateImpl<R> orExists(TableLike<?> select) {
         return or(exists(select));
     }
 
     @Override
-    public final UpdateImpl<R> orNotExists(Select<?> select) {
+    public final UpdateImpl<R> orNotExists(TableLike<?> select) {
         return or(notExists(select));
     }
 

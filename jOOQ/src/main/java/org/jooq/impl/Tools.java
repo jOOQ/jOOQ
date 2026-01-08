@@ -6920,7 +6920,7 @@ final class Tools {
         return anyMatch(fields, f -> f.getDataType().isEmbeddable());
     }
 
-    static final <E> List<E> concat(List<? extends E> l1, List<? extends E> l2) {
+    static final <E> List<E> concat(List<E> l1, List<E> l2) {
         return new AbstractList<E>() {
             @Override
             public int size() {

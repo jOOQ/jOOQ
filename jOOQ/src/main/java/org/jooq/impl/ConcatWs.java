@@ -178,7 +178,7 @@ implements
 
 
             default:
-                ctx.visit(function(N_CONCAT_WS, getDataType(), Tools.concat(Arrays.asList(separator), values)));
+                ctx.visit(function(N_CONCAT_WS, getDataType(), Tools.concat(Arrays.asList(separator), (List<Field<String>>) values)));
                 break;
         }
     }

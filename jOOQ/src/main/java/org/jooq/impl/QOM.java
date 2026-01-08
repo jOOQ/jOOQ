@@ -5252,6 +5252,27 @@ public final class QOM {
     }
 
     /**
+     * The <code>CONCAT WS</code> function.
+     * <p>
+     * The MySQL and PostgreSQL style <code>CONCAT_WS</code> function facilitates concatenation with a separator.
+     */
+    public /*sealed*/ interface ConcatWs
+        extends
+            UReturnsNullOnNullInput,
+            UOperator2<Field<String>, QOM.UnmodifiableList<? extends Field<String>>, ConcatWs>,
+            org.jooq.Field<String>
+        //permits
+        //    ConcatWs
+    {
+        @NotNull default Field<String> $separator() { return $arg1(); }
+        @CheckReturnValue
+        @NotNull default ConcatWs $separator(Field<String> newSeparator) { return $arg1(newSeparator); }
+        @NotNull default QOM.UnmodifiableList<? extends Field<String>> $values() { return $arg2(); }
+        @CheckReturnValue
+        @NotNull default ConcatWs $values(QOM.UnmodifiableList<? extends Field<String>> newValues) { return $arg2(newValues); }
+    }
+
+    /**
      * The <code>CONTAINS</code> operator.
      * <p>
      * Convenience method for {@link Field#like(String, char)} including proper

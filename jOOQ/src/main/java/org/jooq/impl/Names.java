@@ -466,6 +466,7 @@ final class Names {
     static final Name N_CHR                         = systemName("chr");
     static final Name N_COALESCE                    = systemName("coalesce");
     static final Name N_CODE_POINTS_TO_STRING       = systemName("code_points_to_string");
+    static final Name N_CONCAT_WS                   = systemName("concat_ws");
     static final Name N_CONDITION                   = systemName("condition");
     static final Name N_CONNECT_BY_ISCYCLE          = systemName("connect_by_iscycle");
     static final Name N_CONNECT_BY_ISLEAF           = systemName("connect_by_isleaf");

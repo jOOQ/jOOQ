@@ -147,6 +147,7 @@ import static org.jooq.impl.DSL.coalesce;
 import static org.jooq.impl.DSL.coerce;
 import static org.jooq.impl.DSL.collation;
 import static org.jooq.impl.DSL.concat;
+import static org.jooq.impl.DSL.concatWs;
 import static org.jooq.impl.DSL.condition;
 // ...
 // ...
@@ -9589,6 +9590,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
             case 'C':
                 if ((field = parseFieldConcatIf()) != null)
                     return field;
+                else if ((field = parseFieldConcatWsIf()) != null)
+                    return field;
                 else if ((parseFunctionNameIf("CURRENT_CATALOG") && parseEmptyParens()))
                     return currentCatalog();
                 else if ((parseFunctionNameIf("CURRENT_DATABASE", "currentDatabase") && parseEmptyParens()))
@@ -12626,6 +12629,25 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
             Field<String> result = concat(parseList(',', c -> c.parseField()).toArray(EMPTY_FIELD));
             parse(')');
             return result;
+        }
+
+        return null;
+    }
+
+    private final Field<?> parseFieldConcatWsIf() {
+        if (parseFunctionNameIf("CONCAT_WS", "concatWithSeparator")) {
+            parse('(');
+            Field<String> separator = (Field<String>) parseField();
+
+            if (parseIf(',')) {
+                Field<String> result = concatWs(separator, (Field<String>[]) parseList(',', c -> c.parseField()).toArray(EMPTY_FIELD));
+                parse(')');
+                return result;
+            }
+            else {
+                parse(')');
+                return concatWs(separator, EMPTY_STRING);
+            }
         }
 
         return null;

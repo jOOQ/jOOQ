@@ -20740,6 +20740,78 @@ public class DSL {
     }
 
     /**
+     * The <code>CONCAT_WS</code> function.
+     * <p>
+     * The MySQL and PostgreSQL style <code>CONCAT_WS</code> function facilitates concatenation with a separator.
+     *
+     * @param separator is wrapped as {@link DSL#val(Object)}.
+     */
+    @NotNull
+    @Support
+    public static Field<String> concatWs(@Stringly.Param String separator, @Stringly.Param String... values) {
+        return new ConcatWs(Tools.field(separator), Tools.fields(values));
+    }
+
+    /**
+     * The <code>CONCAT_WS</code> function.
+     * <p>
+     * The MySQL and PostgreSQL style <code>CONCAT_WS</code> function facilitates concatenation with a separator.
+     *
+     * @param separator is wrapped as {@link DSL#val(Object)}.
+     */
+    @NotNull
+    @Support
+    public static Field<String> concatWs(@Stringly.Param String separator, Field<String>... values) {
+        return new ConcatWs(Tools.field(separator), Arrays.asList(values));
+    }
+
+    /**
+     * The <code>CONCAT_WS</code> function.
+     * <p>
+     * The MySQL and PostgreSQL style <code>CONCAT_WS</code> function facilitates concatenation with a separator.
+     *
+     * @param separator is wrapped as {@link DSL#val(Object)}.
+     */
+    @NotNull
+    @Support
+    public static Field<String> concatWs(@Stringly.Param String separator, Collection<? extends Field<String>> values) {
+        return new ConcatWs(Tools.field(separator), new QueryPartList<>(values));
+    }
+
+    /**
+     * The <code>CONCAT_WS</code> function.
+     * <p>
+     * The MySQL and PostgreSQL style <code>CONCAT_WS</code> function facilitates concatenation with a separator.
+     */
+    @NotNull
+    @Support
+    public static Field<String> concatWs(Field<String> separator, @Stringly.Param String... values) {
+        return new ConcatWs(separator, Tools.fields(values));
+    }
+
+    /**
+     * The <code>CONCAT_WS</code> function.
+     * <p>
+     * The MySQL and PostgreSQL style <code>CONCAT_WS</code> function facilitates concatenation with a separator.
+     */
+    @NotNull
+    @Support
+    public static Field<String> concatWs(Field<String> separator, Field<String>... values) {
+        return new ConcatWs(separator, Arrays.asList(values));
+    }
+
+    /**
+     * The <code>CONCAT_WS</code> function.
+     * <p>
+     * The MySQL and PostgreSQL style <code>CONCAT_WS</code> function facilitates concatenation with a separator.
+     */
+    @NotNull
+    @Support
+    public static Field<String> concatWs(Field<String> separator, Collection<? extends Field<String>> values) {
+        return new ConcatWs(separator, new QueryPartList<>(values));
+    }
+
+    /**
      * The <code>DIGITS</code> function.
      *
      * @param value is wrapped as {@link DSL#val(Object)}.

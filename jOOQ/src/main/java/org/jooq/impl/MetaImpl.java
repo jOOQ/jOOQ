@@ -113,7 +113,6 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -122,6 +121,7 @@ import java.util.function.Supplier;
 import java.util.regex.Pattern;
 
 import org.jooq.Catalog;
+import org.jooq.Check;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.ConstraintEnforcementStep;
@@ -482,6 +482,7 @@ final class MetaImpl extends AbstractMeta {
         private transient volatile Map<Name, String>         commentCache;
         private transient volatile Map<Name, Result<Record>> attributeCache;
         private transient volatile Map<Name, Generator>      generatorCache;
+        private transient volatile Map<Name, Result<Record>> checkCache;
 
 
 
@@ -632,6 +633,7 @@ final class MetaImpl extends AbstractMeta {
                         this,
                         getColumns(catalog, schema, name),
                         getUks(catalog, schema, name),
+                        getChecks(catalog, schema, name),
 
 
 
@@ -856,6 +858,28 @@ final class MetaImpl extends AbstractMeta {
                      log.info("Cannot parse or interpret sql for table " + table + ": " + sql, e);
                  }
             });
+        }
+
+        private final Result<Record> getChecks(String catalog, String schema, String table) {
+            if (checkCache == null)
+                initChecks(catalog, schema);
+
+            if (checkCache != null)
+                return checkCache.get(name(catalog, schema, table));
+            else
+                return null;
+        }
+
+        private final void initChecks(String catalog, String schema) {
+            init0(
+                c -> checkCache = c,
+                () -> checkCache,
+                catalog, schema,
+                MetaSQL::M_CHECKS,
+                r -> r.field(0),
+                r -> r.field(1),
+                r -> r.field(2)
+            );
         }
 
 
@@ -1284,6 +1308,7 @@ final class MetaImpl extends AbstractMeta {
     private final class MetaTable extends TableImpl<Record> {
         private final MetaSchema     schema;
         private final Result<Record> uks;
+        private final Result<Record> checks;
 
 
 
@@ -1294,6 +1319,7 @@ final class MetaImpl extends AbstractMeta {
             MetaSchema schema,
             Result<Record> columns,
             Result<Record> uks,
+            Result<Record> checks,
 
 
 
@@ -1311,6 +1337,7 @@ final class MetaImpl extends AbstractMeta {
 
             this.schema = schema;
             this.uks = uks;
+            this.checks = checks;
 
 
 
@@ -1713,6 +1740,28 @@ final class MetaImpl extends AbstractMeta {
 
 
 
+
+        @Override
+        public final List<Check<Record>> getChecks() {
+            List<Check<Record>> result = new ArrayList<>();
+
+            if (checks != null) {
+                for (Record r : checks.sortAsc(3)) {
+                    result.add(createCheck(r));
+                };
+            }
+
+            return result;
+        }
+
+        private final Check<Record> createCheck(Record r) {
+            return new CheckImpl<>(
+                this,
+                name(r.get(3, String.class)),
+                DSL.condition(r.get(4, String.class)),
+                true
+            );
+        }
 
         @SuppressWarnings("unchecked")
         private final UniqueKey<Record> createUniqueKey(Result<Record> result, int columnName, int keyName, boolean isPrimary) {

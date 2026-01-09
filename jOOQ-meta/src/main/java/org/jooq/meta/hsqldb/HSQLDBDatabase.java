@@ -358,7 +358,9 @@ public class HSQLDBDatabase extends AbstractDatabase implements ResultQueryDatab
                 .and(getIncludeSystemCheckConstraints()
                     ? noCondition()
                     : cc.tableConstraints().CONSTRAINT_NAME.notLike("SYS!_CT!_%", '!')
-                        .or(cc.CHECK_CLAUSE.notIn(
+
+                        // [#19572] Take into account quoted identifiers
+                        .or(replace(cc.CHECK_CLAUSE, inline("\""), inline("")).notIn(
 
                             // TODO: Should we ever quote these?
                             select(c.TABLE_SCHEMA.concat(inline('.'))

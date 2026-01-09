@@ -197,7 +197,7 @@ implements
 
 
     private final Field<String> concatEmulation() {
-        return DSL.concat(map(values, v -> when(v.isNull(), inline("")).else_(separator.concat(v)), Field[]::new));
+        return DSL.concat(map(values, v -> when(v.isNull(), inline("")).else_(separator.concat(v))).toArray(EMPTY_FIELD));
     }
 
     // -------------------------------------------------------------------------

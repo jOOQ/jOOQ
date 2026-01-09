@@ -163,7 +163,8 @@ implements
                 ? inline(null, getDataType())
                 : values.size() == 1
                 ? when(separator.isNotNull(), DSL.nvl(values.get(0), inline("")))
-                : when(separator.isNotNull(), DSL.ltrim(concatEmulation(), separator)));
+                : when(separator.eq(inline("")), concatEmulation())
+                  .when(separator.isNotNull(), DSL.ltrim(concatEmulation(), separator)));
                 break;
 
 

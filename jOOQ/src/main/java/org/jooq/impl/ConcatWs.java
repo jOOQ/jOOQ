@@ -119,9 +119,8 @@ implements
                 return false;
 
 
-
-
-
+            case H2:
+                return false;
 
             default:
                 return true;
@@ -168,14 +167,13 @@ implements
                 break;
 
 
-
-
-
-
-
-
-
-
+            case H2:
+                ctx.visit(values.isEmpty()
+                ? inline(null, getDataType())
+                : values.size() == 1
+                ? when(separator.isNotNull(), DSL.nvl(values.get(0), inline("")))
+                : function(N_CONCAT_WS, getDataType(), Tools.concat(Arrays.asList(separator), (List<Field<String>>) values)));
+                break;
 
             default:
                 ctx.visit(function(N_CONCAT_WS, getDataType(), Tools.concat(Arrays.asList(separator), (List<Field<String>>) values)));

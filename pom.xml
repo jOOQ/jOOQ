@@ -805,6 +805,9 @@
                     <version>2.22.2</version>
                     <configuration>
                         <testNGArtifactName>none:none</testNGArtifactName>
+                        
+                        <!-- Prevent Kotlin OOME -->
+                        <argLine>-Xmx4G</argLine>
                     </configuration>
 
                     <!-- Required for Java 19 -->

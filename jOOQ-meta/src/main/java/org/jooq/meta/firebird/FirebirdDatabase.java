@@ -66,9 +66,6 @@ import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.NUMERIC;
 import static org.jooq.impl.SQLDataType.SMALLINT;
 import static org.jooq.impl.SQLDataType.VARCHAR;
-import static org.jooq.meta.firebird.FirebirdDatabase.CHARACTER_LENGTH;
-import static org.jooq.meta.firebird.FirebirdDatabase.FIELD_SCALE;
-import static org.jooq.meta.firebird.FirebirdDatabase.FIELD_TYPE;
 import static org.jooq.meta.firebird.rdb.Tables.RDB$CHECK_CONSTRAINTS;
 import static org.jooq.meta.firebird.rdb.Tables.RDB$FIELDS;
 import static org.jooq.meta.firebird.rdb.Tables.RDB$FUNCTIONS;
@@ -281,15 +278,15 @@ public class FirebirdDatabase extends AbstractDatabase implements ResultQueryDat
     }
 
     @Override
-    protected void loadCheckConstraints(DefaultRelations relations) throws SQLException {
+    public ResultQuery<Record5<String, String, String, String, String>> checks(List<String> schemas) {
         Rdb$relationConstraints r = RDB$RELATION_CONSTRAINTS.as("r");
         Rdb$checkConstraints c = RDB$CHECK_CONSTRAINTS.as("c");
         Rdb$triggers t = RDB$TRIGGERS.as("t");
 
-        // [#7639] RDB$TRIGGERS is not in 3NF. The RDB$TRIGGER_SOURCE is repeated
-        //         for RDB$TRIGGER_TYPE 1 (before insert) and 3 (before update)
-        for (Record record : create()
+        return create()
             .select(
+                inline(null, VARCHAR).as("catalog"),
+                inline(null, VARCHAR).as("schema"),
                 trim(r.RDB$RELATION_NAME).as(r.RDB$RELATION_NAME),
                 trim(r.RDB$CONSTRAINT_NAME).as(r.RDB$CONSTRAINT_NAME),
                 max(trim(t.RDB$TRIGGER_SOURCE)).as(t.RDB$TRIGGER_SOURCE)
@@ -305,8 +302,17 @@ public class FirebirdDatabase extends AbstractDatabase implements ResultQueryDat
             .orderBy(
                 r.RDB$RELATION_NAME,
                 r.RDB$CONSTRAINT_NAME
-            )
-        ) {
+            );
+    }
+
+    @Override
+    protected void loadCheckConstraints(DefaultRelations relations) throws SQLException {
+        Rdb$relationConstraints r = RDB$RELATION_CONSTRAINTS.as("r");
+        Rdb$triggers t = RDB$TRIGGERS.as("t");
+
+        // [#7639] RDB$TRIGGERS is not in 3NF. The RDB$TRIGGER_SOURCE is repeated
+        //         for RDB$TRIGGER_TYPE 1 (before insert) and 3 (before update)
+        for (Record record : checks(Collections.<String>emptyList())) {
             SchemaDefinition schema = getSchemata().get(0);
             TableDefinition table = getTable(schema, record.get(r.RDB$RELATION_NAME));
 

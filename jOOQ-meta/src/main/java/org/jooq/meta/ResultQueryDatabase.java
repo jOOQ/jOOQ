@@ -283,4 +283,24 @@ public interface ResultQueryDatabase extends Database {
     @Nullable
     ResultQuery<Record6<String, String, String, String, String, String>> generators(List<String> schemas);
 
+    /**
+     * A query that produces check constraint expressions for relevant tables
+     * for a set of input schemas.
+     * <p>
+     * The resulting columns are:
+     * <ol>
+     * <li>Catalog name</li>
+     * <li>Schema name</li>
+     * <li>Table name</li>
+     * <li>Constraint name</li>
+     * <li>Constraint text</li>
+     * </ol>
+     *
+     * @return The query or <code>null</code> if this implementation doesn't
+     *         support the query.
+     */
+    @Internal
+    @Nullable
+    ResultQuery<Record5<String, String, String, String, String>> checks(List<String> schemas);
+
 }

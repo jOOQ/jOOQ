@@ -158,6 +158,7 @@ import org.jooq.util.h2.H2DataType;
 
 import org.jetbrains.annotations.ApiStatus.Internal;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * H2 implementation of {@link AbstractDatabase}
@@ -576,17 +577,7 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
     private void loadCheckConstraints2_0(DefaultRelations relations) {
         CheckConstraints cc = CHECK_CONSTRAINTS.as("cc");
 
-        for (Record record : create()
-            .select(
-                cc.tableConstraints().TABLE_SCHEMA,
-                cc.tableConstraints().TABLE_NAME,
-                cc.CONSTRAINT_NAME,
-                cc.CHECK_CLAUSE
-             )
-            .from(cc)
-            .where(cc.tableConstraints().TABLE_SCHEMA.in(getInputSchemata()))
-        ) {
-
+        for (Record record : checks(getInputSchemata())) {
             SchemaDefinition schema = getSchema(record.get(cc.tableConstraints().TABLE_SCHEMA));
             TableDefinition table = getTable(schema, record.get(cc.tableConstraints().TABLE_NAME));
 
@@ -599,6 +590,22 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
                 ));
             }
         }
+    }
+
+    @Override
+    public ResultQuery<Record5<String, String, String, String, String>> checks(List<String> schemas) {
+        CheckConstraints cc = CHECK_CONSTRAINTS.as("cc");
+
+        return create()
+            .select(
+                cc.tableConstraints().TABLE_CATALOG,
+                cc.tableConstraints().TABLE_SCHEMA,
+                cc.tableConstraints().TABLE_NAME,
+                cc.CONSTRAINT_NAME,
+                cc.CHECK_CLAUSE
+             )
+            .from(cc)
+            .where(cc.tableConstraints().TABLE_SCHEMA.in(schemas));
     }
 
     private void loadCheckConstraints1_4(DefaultRelations relations) {

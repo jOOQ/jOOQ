@@ -48,7 +48,6 @@ import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.impl.DSL.case_;
 import static org.jooq.impl.DSL.cast;
-import static org.jooq.impl.DSL.coalesce;
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.field;
@@ -82,13 +81,11 @@ import static org.jooq.meta.mysql.information_schema.Tables.TABLE_CONSTRAINTS;
 import static org.jooq.meta.mysql.information_schema.Tables.TRIGGERS;
 import static org.jooq.meta.mysql.information_schema.Tables.VIEWS;
 import static org.jooq.meta.mysql.mysql.Tables.PROC;
-import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.io.StringReader;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -113,8 +110,6 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions.TableType;
 // ...
-// ...
-// ...
 import org.jooq.impl.DSL;
 import org.jooq.impl.QOM.ForeignKeyRule;
 import org.jooq.impl.QOM.GenerationOption;
@@ -127,7 +122,6 @@ import org.jooq.meta.DefaultCheckConstraintDefinition;
 import org.jooq.meta.DefaultEnumDefinition;
 import org.jooq.meta.DefaultIndexColumnDefinition;
 import org.jooq.meta.DefaultRelations;
-// ...
 import org.jooq.meta.DomainDefinition;
 import org.jooq.meta.EnumDefinition;
 import org.jooq.meta.IndexColumnDefinition;
@@ -138,7 +132,6 @@ import org.jooq.meta.RoutineDefinition;
 import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.SequenceDefinition;
 import org.jooq.meta.TableDefinition;
-// ...
 import org.jooq.meta.UDTDefinition;
 import org.jooq.meta.XMLSchemaCollectionDefinition;
 import org.jooq.meta.mariadb.MariaDBDatabase;
@@ -146,8 +139,6 @@ import org.jooq.meta.mysql.information_schema.tables.Columns;
 import org.jooq.meta.mysql.information_schema.tables.Triggers;
 import org.jooq.meta.mysql.mysql.enums.ProcType;
 import org.jooq.tools.csv.CSVReader;
-
-import org.jetbrains.annotations.Nullable;
 
 /**
  * @author Lukas Eder
@@ -425,6 +416,43 @@ public class MySQLDatabase extends AbstractDatabase implements ResultQueryDataba
                     updateRule
                 );
         }
+    }
+
+    @Override
+    public ResultQuery<Record5<String, String, String, String, String>> checks(List<String> schemas) {
+        if (is8_0_16()) {
+            return create()
+                .select(
+                    inline(null, TABLE_CONSTRAINTS.CONSTRAINT_CATALOG).as(TABLE_CONSTRAINTS.CONSTRAINT_CATALOG),
+                    TABLE_CONSTRAINTS.TABLE_SCHEMA,
+                    TABLE_CONSTRAINTS.TABLE_NAME,
+                    CHECK_CONSTRAINTS.CONSTRAINT_NAME,
+                    CHECK_CONSTRAINTS.CHECK_CLAUSE
+                 )
+                .from(TABLE_CONSTRAINTS)
+                .join(CHECK_CONSTRAINTS)
+                .using(this instanceof MariaDBDatabase
+                    ? new Field[] {
+                        TABLE_CONSTRAINTS.CONSTRAINT_CATALOG,
+                        TABLE_CONSTRAINTS.CONSTRAINT_SCHEMA,
+                        // MariaDB has this column, but not MySQL
+                        TABLE_CONSTRAINTS.TABLE_NAME,
+                        TABLE_CONSTRAINTS.CONSTRAINT_NAME
+                    }
+                    : new Field[] {
+                        TABLE_CONSTRAINTS.CONSTRAINT_CATALOG,
+                        TABLE_CONSTRAINTS.CONSTRAINT_SCHEMA,
+                        TABLE_CONSTRAINTS.CONSTRAINT_NAME
+                    }
+                )
+                .where(TABLE_CONSTRAINTS.TABLE_SCHEMA.in(schemas))
+                .orderBy(
+                    TABLE_CONSTRAINTS.TABLE_SCHEMA,
+                    TABLE_CONSTRAINTS.TABLE_NAME,
+                    TABLE_CONSTRAINTS.CONSTRAINT_NAME);
+        }
+        else
+            return null;
     }
 
     @Override

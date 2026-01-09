@@ -360,37 +360,46 @@ public class HSQLDBDatabase extends AbstractDatabase implements ResultQueryDatab
     }
 
     @Override
-    protected void loadCheckConstraints(DefaultRelations relations) throws SQLException {
+    public ResultQuery<Record5<String, String, String, String, String>> checks(List<String> schemas) {
         CheckConstraints cc = CHECK_CONSTRAINTS.as("cc");
         Columns c = COLUMNS.as("c");
 
         // [#2808] [#3019] Workaround for bad handling of JOIN .. USING
         Field<String> constraintName = field(name(cc.CONSTRAINT_NAME.getName()), String.class);
 
-        for (Record record : create()
-                .select(
-                    cc.tableConstraints().TABLE_SCHEMA,
-                    cc.tableConstraints().TABLE_NAME,
-                    constraintName,
-                    cc.CHECK_CLAUSE
-                 )
-                .from(cc)
-                .where(cc.tableConstraints().TABLE_SCHEMA.in(getInputSchemata()))
-                .and(getIncludeSystemCheckConstraints()
-                    ? noCondition()
-                    : cc.tableConstraints().CONSTRAINT_NAME.notLike("SYS!_CT!_%", '!')
-                        .or(cc.CHECK_CLAUSE.notIn(
+        return create()
+            .select(
+                cc.tableConstraints().TABLE_CATALOG,
+                cc.tableConstraints().TABLE_SCHEMA,
+                cc.tableConstraints().TABLE_NAME,
+                constraintName,
+                cc.CHECK_CLAUSE
+             )
+            .from(cc)
+            .where(cc.tableConstraints().TABLE_SCHEMA.in(schemas))
+            .and(getIncludeSystemCheckConstraints()
+                ? noCondition()
+                : cc.tableConstraints().CONSTRAINT_NAME.notLike(inline("SYS!_CT!_%"), '!')
+                    .or(cc.CHECK_CLAUSE.notIn(
 
-                            // TODO: Should we ever quote these?
-                            select(c.TABLE_SCHEMA.concat(inline('.'))
-                                    .concat(c.TABLE_NAME).concat(inline('.'))
-                                    .concat(c.COLUMN_NAME).concat(inline(" IS NOT NULL")))
-                            .from(c)
-                            .where(c.TABLE_SCHEMA.eq(cc.tableConstraints().TABLE_SCHEMA))
-                            .and(c.TABLE_NAME.eq(cc.tableConstraints().TABLE_NAME))
-                        )))
-        ) {
+                        // TODO: Should we ever quote these?
+                        select(c.TABLE_SCHEMA.concat(inline('.'))
+                                .concat(c.TABLE_NAME).concat(inline('.'))
+                                .concat(c.COLUMN_NAME).concat(inline(" IS NOT NULL")))
+                        .from(c)
+                        .where(c.TABLE_SCHEMA.eq(cc.tableConstraints().TABLE_SCHEMA))
+                        .and(c.TABLE_NAME.eq(cc.tableConstraints().TABLE_NAME))
+                    )));
+    }
 
+    @Override
+    protected void loadCheckConstraints(DefaultRelations relations) throws SQLException {
+        CheckConstraints cc = CHECK_CONSTRAINTS.as("cc");
+
+        // [#2808] [#3019] Workaround for bad handling of JOIN .. USING
+        Field<String> constraintName = field(name(cc.CONSTRAINT_NAME.getName()), String.class);
+
+        for (Record record : checks(getInputSchemata())) {
             SchemaDefinition schema = getSchema(record.get(cc.tableConstraints().TABLE_SCHEMA));
             TableDefinition table = getTable(schema, record.get(cc.tableConstraints().TABLE_NAME));
 

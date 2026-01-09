@@ -194,8 +194,6 @@ import org.jooq.meta.postgres.pg_catalog.tables.PgInherits;
 import org.jooq.meta.postgres.pg_catalog.tables.PgType;
 import org.jooq.tools.JooqLogger;
 
-import org.jetbrains.annotations.Nullable;
-
 /**
  * Postgres uses the ANSI default INFORMATION_SCHEMA, but unfortunately ships
  * with a non-capitalised version of it: <code>information_schema</code>. Hence
@@ -461,54 +459,79 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
     }
 
     @Override
+    public ResultQuery<Record5<String, String, String, String, String>> checks(List<String> schemas) {
+        CheckConstraints cc = CHECK_CONSTRAINTS.as("cc");
+
+        // [#10940] [#10992] Workaround for issue caused by re-using implicit join paths
+        PgConstraint pc = PG_CONSTRAINT.as("pc");
+
+        Field<String> tableCatalog = field(name("table_catalog"), VARCHAR);
+        Field<String> tableSchema = field(name("table_schema"), VARCHAR);
+        Field<String> tableName = field(name("table_name"), VARCHAR);
+        Field<String> constraintName = field(name("constraint_name"), VARCHAR);
+        Field<String> constraintText = field(name("constraint_text"), VARCHAR);
+
+        return create()
+            .select(
+                tableCatalog,
+                tableSchema,
+                tableName,
+                constraintName,
+                constraintText)
+            .from(
+                 select(
+                    currentCatalog().as(tableCatalog),
+                    pc.pgClass().pgNamespace().NSPNAME.as(tableSchema),
+                    pc.pgClass().RELNAME.as(tableName),
+                    pc.CONNAME.as(cc.CONSTRAINT_NAME).as(constraintName),
+                    replace(field("pg_get_constraintdef({0}.oid)", VARCHAR, pc), inline("CHECK "), inline("")).as(constraintText))
+                .from(pc)
+                .where(pc.CONTYPE.eq(inline("c")))
+                .unionAll(
+                    getIncludeSystemCheckConstraints()
+                  ? select(
+                        currentCatalog(),
+                        pc.pgClass().pgNamespace().NSPNAME,
+                        pc.pgClass().RELNAME,
+                        cc.CONSTRAINT_NAME,
+                        cc.CHECK_CLAUSE
+                    )
+                    .from(pc)
+                    .join(cc)
+                    .on(pc.CONNAME.eq(cc.CONSTRAINT_NAME))
+                    .and(pc.pgNamespace().NSPNAME.eq(cc.CONSTRAINT_NAME))
+                    .where(row(pc.pgClass().pgNamespace().NSPNAME, pc.pgClass().RELNAME, cc.CONSTRAINT_NAME).notIn(
+                        select(
+                            pc.pgClass().pgNamespace().NSPNAME,
+                            pc.pgClass().RELNAME,
+                            pc.CONNAME)
+                        .from(pc)
+                        .where(pc.CONTYPE.eq(inline("c")))
+                    ))
+                  : select(inline(""), inline(""), inline(""), inline(""), inline("")).where(falseCondition()))
+                .asTable("t")
+            )
+            .where(tableSchema.in(schemas))
+            .orderBy(1, 2, 3);
+    }
+
+    @Override
     protected void loadCheckConstraints(DefaultRelations relations) throws SQLException {
         CheckConstraints cc = CHECK_CONSTRAINTS.as("cc");
 
         // [#10940] [#10992] Workaround for issue caused by re-using implicit join paths
         PgConstraint pc = PG_CONSTRAINT.as("pc");
 
-        for (Record record : create()
-            .select(
-                pc.pgClass().pgNamespace().NSPNAME,
-                pc.pgClass().RELNAME,
-                pc.CONNAME.as(cc.CONSTRAINT_NAME),
-                replace(field("pg_get_constraintdef({0}.oid)", VARCHAR, pc), inline("CHECK "), inline("")).as(cc.CHECK_CLAUSE))
-            .from(pc)
-            .where(pc.pgClass().pgNamespace().NSPNAME.in(getInputSchemata()))
-            .and(pc.CONTYPE.eq(inline("c")))
-            .unionAll(
-                getIncludeSystemCheckConstraints()
-              ? select(
-                    pc.pgClass().pgNamespace().NSPNAME,
-                    pc.pgClass().RELNAME,
-                    cc.CONSTRAINT_NAME,
-                    cc.CHECK_CLAUSE
-                )
-                .from(pc)
-                .join(cc)
-                .on(pc.CONNAME.eq(cc.CONSTRAINT_NAME))
-                .and(pc.pgNamespace().NSPNAME.eq(cc.CONSTRAINT_NAME))
-                .where(pc.pgNamespace().NSPNAME.in(getInputSchemata()))
-                .and(row(pc.pgClass().pgNamespace().NSPNAME, pc.pgClass().RELNAME, cc.CONSTRAINT_NAME).notIn(
-                    select(
-                        pc.pgClass().pgNamespace().NSPNAME,
-                        pc.pgClass().RELNAME,
-                        pc.CONNAME)
-                    .from(pc)
-                    .where(pc.CONTYPE.eq(inline("c")))
-                ))
-              : select(inline(""), inline(""), inline(""), inline("")).where(falseCondition()))
-            .orderBy(1, 2, 3)
-        ) {
-            SchemaDefinition schema = getSchema(record.get(pc.pgClass().pgNamespace().NSPNAME));
-            TableDefinition table = getTable(schema, record.get(pc.pgClass().RELNAME));
+        for (Record record : checks(getInputSchemata())) {
+            SchemaDefinition schema = getSchema(record.get("table_schema", String.class));
+            TableDefinition table = getTable(schema, record.get("table_name", String.class));
 
             if (table != null) {
                 relations.addCheckConstraint(table, new DefaultCheckConstraintDefinition(
                     schema,
                     table,
-                    record.get(cc.CONSTRAINT_NAME),
-                    record.get(cc.CHECK_CLAUSE)
+                    record.get("constraint_name", String.class),
+                    record.get("constraint_text", String.class)
                 ));
             }
         }

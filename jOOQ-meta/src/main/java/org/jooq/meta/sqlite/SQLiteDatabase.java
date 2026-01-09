@@ -87,11 +87,11 @@ import org.jooq.SortOrder;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableOptions.TableType;
-import org.jooq.conf.RenderQuotedNames;
 // ...
 // ...
 // ...
 import org.jooq.UniqueKey;
+import org.jooq.conf.RenderQuotedNames;
 import org.jooq.exception.DataDefinitionException;
 import org.jooq.impl.DSL;
 import org.jooq.impl.ParserException;
@@ -121,8 +121,6 @@ import org.jooq.meta.jaxb.SchemaMappingType;
 import org.jooq.meta.sqlite.sqlite_master.SQLiteMaster;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
-
-import org.jetbrains.annotations.Nullable;
 
 /**
  * SQLite implementation of {@link AbstractDatabase}
@@ -328,6 +326,11 @@ public class SQLiteDatabase extends AbstractDatabase implements ResultQueryDatab
                 }
             }
         }
+    }
+
+    @Override
+    public ResultQuery<Record5<String, String, String, String, String>> checks(List<String> schemas) {
+        return null;
     }
 
     @Override

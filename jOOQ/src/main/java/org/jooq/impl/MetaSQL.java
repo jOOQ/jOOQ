@@ -16,6 +16,7 @@ final class MetaSQL {
     private static final EnumMap<SQLDialect, String> M_COMMENTS = new EnumMap<>(SQLDialect.class);
     private static final EnumMap<SQLDialect, String> M_ATTRIBUTES = new EnumMap<>(SQLDialect.class);
     private static final EnumMap<SQLDialect, String> M_GENERATORS = new EnumMap<>(SQLDialect.class);
+    private static final EnumMap<SQLDialect, String> M_CHECKS = new EnumMap<>(SQLDialect.class);
     private static final EnumMap<SQLDialect, String> M_TRIGGERS = new EnumMap<>(SQLDialect.class);
     private static final EnumMap<SQLDialect, String> M_SYNONYMS = new EnumMap<>(SQLDialect.class);
 
@@ -57,6 +58,11 @@ final class MetaSQL {
     static final String M_GENERATORS(SQLDialect dialect) {
         String result = M_GENERATORS.get(dialect);
         return result != null ? result : M_GENERATORS.get(dialect.family());
+    }
+
+    static final String M_CHECKS(SQLDialect dialect) {
+        String result = M_CHECKS.get(dialect);
+        return result != null ? result : M_CHECKS.get(dialect.family());
     }
 
     static final String M_TRIGGERS(SQLDialect dialect) {
@@ -514,6 +520,83 @@ final class MetaSQL {
         M_GENERATORS.put(MYSQL, "select null as table_catalog, information_schema.COLUMNS.TABLE_SCHEMA, information_schema.COLUMNS.TABLE_NAME, information_schema.COLUMNS.COLUMN_NAME, information_schema.COLUMNS.GENERATION_EXPRESSION, case when information_schema.COLUMNS.EXTRA in ('VIRTUAL', 'VIRTUAL GENERATED') then 'VIRTUAL' when information_schema.COLUMNS.EXTRA in ('PERSISTENT', 'STORED GENERATED') then 'STORED' end as generationOption from information_schema.COLUMNS where (information_schema.COLUMNS.TABLE_SCHEMA in (?) and information_schema.COLUMNS.EXTRA in ('VIRTUAL', 'VIRTUAL GENERATED', 'PERSISTENT', 'STORED GENERATED')) order by information_schema.COLUMNS.ORDINAL_POSITION");
         M_GENERATORS.put(POSTGRES, "select information_schema.columns.table_catalog, information_schema.columns.table_schema, information_schema.columns.table_name, information_schema.columns.column_name, information_schema.columns.generation_expression as generation_expression, case when pg_catalog.pg_attribute.attgenerated = 's' then 'STORED' when pg_catalog.pg_attribute.attgenerated = 'v' then 'VIRTUAL' end from information_schema.columns join (pg_catalog.pg_attribute join (pg_catalog.pg_class as alias_100646588 join pg_catalog.pg_namespace as alias_117804412 on alias_100646588.relnamespace = alias_117804412.oid) on pg_catalog.pg_attribute.attrelid = alias_100646588.oid) on (pg_catalog.pg_attribute.attname = information_schema.columns.column_name and alias_100646588.relname = information_schema.columns.table_name and alias_117804412.nspname = information_schema.columns.table_schema) where (information_schema.columns.table_schema in (?) and pg_catalog.pg_attribute.attgenerated in ('s', 'v')) order by information_schema.columns.ordinal_position");
         M_GENERATORS.put(YUGABYTEDB, "select information_schema.columns.table_catalog, information_schema.columns.table_schema, information_schema.columns.table_name, information_schema.columns.column_name, information_schema.columns.generation_expression as generation_expression, case when 's' = 's' then 'STORED' when 's' = 'v' then 'VIRTUAL' end from information_schema.columns join (pg_catalog.pg_attribute join (pg_catalog.pg_class as alias_100646588 join pg_catalog.pg_namespace as alias_117804412 on alias_100646588.relnamespace = alias_117804412.oid) on pg_catalog.pg_attribute.attrelid = alias_100646588.oid) on (pg_catalog.pg_attribute.attname = information_schema.columns.column_name and alias_100646588.relname = information_schema.columns.table_name and alias_117804412.nspname = information_schema.columns.table_schema) where (information_schema.columns.table_schema in (?) and 's' in ('s', 'v')) order by information_schema.columns.ordinal_position");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        M_CHECKS.put(DERBY, "select cast(null as varchar(32672)) as catalog, alias_100280993.SCHEMANAME, alias_17970995.TABLENAME, alias_82061895.CONSTRAINTNAME, SYS.SYSCHECKS.CHECKDEFINITION from (SYS.SYSCHECKS join (SYS.SYSCONSTRAINTS as alias_82061895 join (SYS.SYSTABLES as alias_17970995 join SYS.SYSSCHEMAS as alias_100280993 on alias_17970995.SCHEMAID = alias_100280993.SCHEMAID) on alias_82061895.TABLEID = alias_17970995.TABLEID) on SYS.SYSCHECKS.CONSTRAINTID = alias_82061895.CONSTRAINTID) where alias_100280993.SCHEMANAME in (cast(? as varchar(128)))");
+        M_CHECKS.put(DUCKDB, "select duckdb_constraints.database_name, duckdb_constraints.schema_name, duckdb_constraints.table_name, ('CHECK_' || cast(i as varchar)) constraint_name, duckdb_constraints.constraint_text from duckdb_constraints() where (duckdb_constraints.schema_name in (cast(? as varchar)) and duckdb_constraints.constraint_type = 'CHECK') order by duckdb_constraints.database_name, duckdb_constraints.schema_name, duckdb_constraints.table_name, i");
+        M_CHECKS.put(FIREBIRD, "select null catalog, null schema, trim(r.RDB$RELATION_NAME) RDB$RELATION_NAME, trim(r.RDB$CONSTRAINT_NAME) RDB$CONSTRAINT_NAME, max(trim(t.RDB$TRIGGER_SOURCE)) RDB$TRIGGER_SOURCE from RDB$RELATION_CONSTRAINTS r join RDB$CHECK_CONSTRAINTS c on r.RDB$CONSTRAINT_NAME = c.RDB$CONSTRAINT_NAME join RDB$TRIGGERS t on c.RDB$TRIGGER_NAME = t.RDB$TRIGGER_NAME where r.RDB$CONSTRAINT_TYPE = 'CHECK' group by r.RDB$RELATION_NAME, r.RDB$CONSTRAINT_NAME order by r.RDB$RELATION_NAME, r.RDB$CONSTRAINT_NAME");
+        M_CHECKS.put(H2, "select alias_1111860.TABLE_CATALOG, alias_1111860.TABLE_SCHEMA, alias_1111860.TABLE_NAME, cc.CONSTRAINT_NAME, cc.CHECK_CLAUSE from (INFORMATION_SCHEMA.CHECK_CONSTRAINTS cc left outer join INFORMATION_SCHEMA.TABLE_CONSTRAINTS alias_1111860 on (cc.CONSTRAINT_CATALOG = alias_1111860.CONSTRAINT_CATALOG and cc.CONSTRAINT_SCHEMA = alias_1111860.CONSTRAINT_SCHEMA and cc.CONSTRAINT_NAME = alias_1111860.CONSTRAINT_NAME)) where alias_1111860.TABLE_SCHEMA in (cast(? as varchar(128)))");
+        M_CHECKS.put(HSQLDB, "select alias_1111860.TABLE_CATALOG, alias_1111860.TABLE_SCHEMA, alias_1111860.TABLE_NAME, CONSTRAINT_NAME, cc.CHECK_CLAUSE from (INFORMATION_SCHEMA.CHECK_CONSTRAINTS as cc left outer join INFORMATION_SCHEMA.TABLE_CONSTRAINTS as alias_1111860 on (cc.CONSTRAINT_CATALOG = alias_1111860.CONSTRAINT_CATALOG and cc.CONSTRAINT_SCHEMA = alias_1111860.CONSTRAINT_SCHEMA and cc.CONSTRAINT_NAME = alias_1111860.CONSTRAINT_NAME)) where (alias_1111860.TABLE_SCHEMA in (cast(? as varchar(128))) and (alias_1111860.CONSTRAINT_NAME not like 'SYS!_CT!_%' escape '!' or cc.CHECK_CLAUSE not in (select (((((c.TABLE_SCHEMA || '.') || c.TABLE_NAME) || '.') || c.COLUMN_NAME) || ' IS NOT NULL') from INFORMATION_SCHEMA.COLUMNS as c where (c.TABLE_SCHEMA = alias_1111860.TABLE_SCHEMA and c.TABLE_NAME = alias_1111860.TABLE_NAME))))");
+        M_CHECKS.put(MARIADB, "select null as CONSTRAINT_CATALOG, information_schema.TABLE_CONSTRAINTS.TABLE_SCHEMA, information_schema.TABLE_CONSTRAINTS.TABLE_NAME, information_schema.CHECK_CONSTRAINTS.CONSTRAINT_NAME, information_schema.CHECK_CONSTRAINTS.CHECK_CLAUSE from information_schema.TABLE_CONSTRAINTS join information_schema.CHECK_CONSTRAINTS using (CONSTRAINT_CATALOG, CONSTRAINT_SCHEMA, TABLE_NAME, CONSTRAINT_NAME) where information_schema.TABLE_CONSTRAINTS.TABLE_SCHEMA in (?) order by information_schema.TABLE_CONSTRAINTS.TABLE_SCHEMA, information_schema.TABLE_CONSTRAINTS.TABLE_NAME, information_schema.TABLE_CONSTRAINTS.CONSTRAINT_NAME");
+        M_CHECKS.put(MYSQL, "select null as CONSTRAINT_CATALOG, information_schema.TABLE_CONSTRAINTS.TABLE_SCHEMA, information_schema.TABLE_CONSTRAINTS.TABLE_NAME, information_schema.CHECK_CONSTRAINTS.CONSTRAINT_NAME, information_schema.CHECK_CONSTRAINTS.CHECK_CLAUSE from information_schema.TABLE_CONSTRAINTS join information_schema.CHECK_CONSTRAINTS using (CONSTRAINT_CATALOG, CONSTRAINT_SCHEMA, CONSTRAINT_NAME) where information_schema.TABLE_CONSTRAINTS.TABLE_SCHEMA in (?) order by information_schema.TABLE_CONSTRAINTS.TABLE_SCHEMA, information_schema.TABLE_CONSTRAINTS.TABLE_NAME, information_schema.TABLE_CONSTRAINTS.CONSTRAINT_NAME");
+        M_CHECKS.put(POSTGRES, "select table_catalog, table_schema, table_name, constraint_name, constraint_text from (select current_database() as table_catalog, alias_122251260.nspname as table_schema, alias_104821198.relname as table_name, pc.conname as constraint_name, replace(pg_get_constraintdef(pc.oid), 'CHECK ', '') as constraint_text from (pg_catalog.pg_constraint as pc join (pg_catalog.pg_class as alias_104821198 join pg_catalog.pg_namespace as alias_122251260 on alias_104821198.relnamespace = alias_122251260.oid) on pc.conrelid = alias_104821198.oid) where pc.contype = 'c' union all select '', '', '', '', '' where false) as t where table_schema in (?) order by 1, 2, 3");
+        M_CHECKS.put(YUGABYTEDB, "select table_catalog, table_schema, table_name, constraint_name, constraint_text from (select current_database() as table_catalog, alias_122251260.nspname as table_schema, alias_104821198.relname as table_name, pc.conname as constraint_name, replace(pg_get_constraintdef(pc.oid), 'CHECK ', '') as constraint_text from (pg_catalog.pg_constraint as pc join (pg_catalog.pg_class as alias_104821198 join pg_catalog.pg_namespace as alias_122251260 on alias_104821198.relnamespace = alias_122251260.oid) on pc.conrelid = alias_104821198.oid) where pc.contype = 'c' union all select '', '', '', '', '' where false) as t where table_schema in (?) order by 1, 2, 3");
+
+
+
 
 
 

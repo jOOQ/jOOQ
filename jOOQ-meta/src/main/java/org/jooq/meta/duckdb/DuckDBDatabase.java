@@ -288,32 +288,35 @@ public class DuckDBDatabase extends AbstractDatabase implements ResultQueryDatab
     }
 
     @Override
-    protected void loadCheckConstraints(DefaultRelations relations) throws SQLException {
+    public ResultQuery<Record5<String, String, String, String, String>> checks(List<String> schemas) {
         DuckdbConstraints c = DUCKDB_CONSTRAINTS;
 
         Field<Integer> i = rowNumber()
-            .over(partitionBy(c.DATABASE_NAME, c.SCHEMA_NAME, c.TABLE_NAME).orderBy(c.CONSTRAINT_TEXT))
-            .as("i");
+            .over(partitionBy(c.DATABASE_NAME, c.SCHEMA_NAME, c.TABLE_NAME).orderBy(c.CONSTRAINT_TEXT));
 
-        for (Record record : create()
+        return create()
             .select(
                 c.DATABASE_NAME,
                 c.SCHEMA_NAME,
                 c.TABLE_NAME,
-                c.CONSTRAINT_TEXT,
-                i
+                inline("CHECK_").concat(i).as("constraint_name"),
+                c.CONSTRAINT_TEXT
              )
             .from("{0}()", c)
-            .where(row(c.DATABASE_NAME, c.SCHEMA_NAME).in(
-                getInputCatalogsAndSchemata().stream().map(e -> row(e.getKey(), e.getValue())).collect(toList())
-            ))
+            .where(c.SCHEMA_NAME.in(schemas))
             .and(c.CONSTRAINT_TYPE.eq(inline("CHECK")))
             .orderBy(
                 c.DATABASE_NAME,
                 c.SCHEMA_NAME,
                 c.TABLE_NAME,
-                i)
-        ) {
+                i);
+    }
+
+    @Override
+    protected void loadCheckConstraints(DefaultRelations relations) throws SQLException {
+        DuckdbConstraints c = DUCKDB_CONSTRAINTS;
+
+        for (Record record : checks(getInputSchemata())) {
             CatalogDefinition catalog = getCatalog(record.get(c.DATABASE_NAME));
 
             if (catalog != null) {
@@ -326,7 +329,7 @@ public class DuckDBDatabase extends AbstractDatabase implements ResultQueryDatab
                         relations.addCheckConstraint(table, new DefaultCheckConstraintDefinition(
                             schema,
                             table,
-                            "CHECK_" + record.get(i),
+                            record.get("constraint_name", String.class),
                             record.get(c.CONSTRAINT_TEXT)
                         ));
                     }

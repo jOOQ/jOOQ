@@ -291,16 +291,21 @@ public class DerbyDatabase extends AbstractDatabase implements ResultQueryDataba
     }
 
     @Override
-    protected void loadCheckConstraints(DefaultRelations relations) throws SQLException {
-        for (Record record : create()
+    public ResultQuery<Record5<String, String, String, String, String>> checks(List<String> schemas) {
+        return create()
             .select(
+                inline(null, VARCHAR).cast(VARCHAR).as("catalog"),
                 SYSCHECKS.sysconstraints().systables().sysschemas().SCHEMANAME,
                 SYSCHECKS.sysconstraints().systables().TABLENAME,
                 SYSCHECKS.sysconstraints().CONSTRAINTNAME,
                 SYSCHECKS.CHECKDEFINITION)
             .from(SYSCHECKS)
-            .where(SYSCHECKS.sysconstraints().systables().sysschemas().SCHEMANAME.in(getInputSchemata()))
-        ) {
+            .where(SYSCHECKS.sysconstraints().systables().sysschemas().SCHEMANAME.in(schemas));
+    }
+
+    @Override
+    protected void loadCheckConstraints(DefaultRelations relations) throws SQLException {
+        for (Record record : checks(getInputSchemata())) {
             SchemaDefinition schema = getSchema(record.get(SYSCHECKS.sysconstraints().systables().sysschemas().SCHEMANAME));
             TableDefinition table = getTable(schema, record.get(SYSCHECKS.sysconstraints().systables().TABLENAME));
 

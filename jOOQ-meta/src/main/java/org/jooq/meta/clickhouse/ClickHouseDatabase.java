@@ -229,6 +229,11 @@ public class ClickHouseDatabase extends AbstractDatabase implements ResultQueryD
     }
 
     @Override
+    public ResultQuery<Record5<String, String, String, String, String>> checks(List<String> schemas) {
+        return null;
+    }
+
+    @Override
     protected void loadCheckConstraints(DefaultRelations relations) throws SQLException {
     }
 

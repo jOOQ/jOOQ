@@ -87,8 +87,6 @@ import org.jooq.meta.TableDefinition;
 import org.jooq.meta.UDTDefinition;
 import org.jooq.meta.XMLSchemaCollectionDefinition;
 
-import org.jetbrains.annotations.NotNull;
-
 /**
  * The Trino database
  *
@@ -143,6 +141,11 @@ public class TrinoDatabase extends AbstractDatabase implements ResultQueryDataba
 
     @Override
     protected void loadCheckConstraints(DefaultRelations relations) throws SQLException {
+    }
+
+    @Override
+    public ResultQuery<Record5<String, String, String, String, String>> checks(List<String> schemas) {
+        return null;
     }
 
     @Override

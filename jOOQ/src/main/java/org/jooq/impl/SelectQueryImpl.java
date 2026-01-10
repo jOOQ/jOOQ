@@ -1370,8 +1370,20 @@ implements
 
         Field<Integer> rn = rowNumber().over(partitionBy(partitionBy).orderBy(orderBy)).as("rn");
 
+        // [#19379] Apply column aliasing to avoid "Duplicate column name" errors
+        // when tables in a join have columns with the same name
+        final List<Field<?>> originalFields = getSelect();
+        final List<Field<?>> aliasedFields = new ArrayList<>(originalFields.size());
+
+        if (originalFields.isEmpty())
+            aliasedFields.add(DSL.field("*"));
+        else
+            aliasedFields.addAll(Tools.aliasedFields(originalFields));
+
         SelectQueryImpl<R> copy = copy(x -> {
             x.distinctOn.clear();
+            x.select.clear();
+            x.select.addAll(aliasedFields);
             x.select.add(rn);
 
 
@@ -1404,8 +1416,11 @@ implements
             x.unionLimit.clear();
         });
 
+        // [#19379] Restore original field names in the outer query
+        final List<Field<?>> unaliasedFields = Tools.unaliasedFields(originalFields);
+
         return copyAfter(CopyClause.UNION, x -> {
-            x.select.addAll(new QualifiedSelectFieldList(table(N_T), select));
+            x.select.addAll(unaliasedFields);
             x.from.add(copy.asTable(N_T));
             x.condition.addConditions(rn.eq(one()));
             x.orderBy.addAll(map(orderBy, (SortField<?> s) -> unqualified(s)));

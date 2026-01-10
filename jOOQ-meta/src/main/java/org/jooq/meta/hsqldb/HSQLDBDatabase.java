@@ -47,6 +47,7 @@ import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.nvl;
+import static org.jooq.impl.DSL.replace;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.SQLDataType.BIGINT;

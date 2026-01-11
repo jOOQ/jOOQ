@@ -150,24 +150,21 @@ implements
                 ctx.visit(function(N_substringIndex, getDataType(), string, delimiter, n));
                 break;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            default:
+            case MARIADB:
+            case MYSQL:
                 ctx.visit(function(N_SUBSTRING_INDEX, getDataType(), string, delimiter, n));
                 break;
+
+            default:
+                // For other databases, emulate negative n using REVERSE trick
+                ctx.visit(
+                    case_()
+                        .when(((Field) n).greaterOrEqual(zero()),
+                            function(N_SUBSTRING_INDEX, getDataType(), string, delimiter, n))
+                        .else_(
+                            reverse(function(N_SUBSTRING_INDEX, getDataType(),
+                                reverse(string), reverse(delimiter), n.neg())))
+                );
         }
     }
 

@@ -103,7 +103,7 @@ implements
 
     @Override
     public final boolean isSimple(Context<?> ctx) {
-        return fields.isEmpty() || fields.size() == 1 && Tools.isSimple(ctx, fields.get(0));
+        return fields.size() == 0 || fields.size() == 1 && Tools.isSimple(ctx, fields.field(0));
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -139,7 +139,7 @@ implements
                         else
                             c.visit(K_INT).sql("[]");
                     },
-                    false,
+                    isSimple(ctx),
                     () -> fields.fields.length == 0 && REQUIRES_CAST.contains(ctx.dialect()) && ctx.castMode() != CastMode.NEVER
                 );
 

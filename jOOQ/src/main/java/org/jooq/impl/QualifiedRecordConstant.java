@@ -194,6 +194,7 @@ final class QualifiedRecordConstant<R extends QualifiedRecord<R>> extends Abstra
 
             // [#13174] Need to cast inline UDT ROW expressions to the UDT type
             c -> c.visit(qualifier),
+            value != null,
             () -> REQUIRE_RECORD_CAST.contains(ctx.dialect())
         );
     }

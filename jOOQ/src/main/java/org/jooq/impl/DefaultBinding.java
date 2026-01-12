@@ -1460,6 +1460,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     else
                         ctx.render().sql(dataType.getCastTypeName(ctx.render().configuration()));
                 },
+                false,
 
                 // In Postgres, some additional casting must be done in some cases...
                 () -> REQUIRES_ARRAY_CAST.contains(ctx.family())
@@ -4061,6 +4062,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             Cast.renderCastIf(ctx.render(),
                 c -> super.sqlBind0(ctx, value),
                 c -> pgRenderRecordCast(ctx.render()),
+                false,
                 () -> REQUIRE_RECORD_CAST.contains(ctx.dialect())
             );
         }
@@ -4075,6 +4077,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                         ctx.render().sql("[UDT]");
                 },
                 c -> pgRenderRecordCast(ctx.render()),
+                false,
                 () -> REQUIRE_RECORD_CAST.contains(ctx.dialect())
             );
         }

@@ -55,6 +55,7 @@ import static org.jooq.impl.SQLDataType.DOUBLE;
 import static org.jooq.impl.SQLDataType.FLOAT;
 import static org.jooq.impl.SQLDataType.REAL;
 import static org.jooq.impl.SQLDataType.VARCHAR;
+import static org.jooq.impl.Tools.isSimple;
 
 import java.sql.Date;
 import java.sql.Time;
@@ -348,31 +349,47 @@ final class Cast<T> extends AbstractField<T> implements QOM.Cast<T> {
 
                     else
                         c.sql(type.getCastTypeName(c.configuration()));
-                }
+                },
+                isSimple(ctx, expression)
             );
         }
     }
 
-    static <E extends Throwable> void renderCast(
+    static final <E extends Throwable> void renderCast(
         Context<?> ctx,
         ThrowingConsumer<? super Context<?>, E> expression,
         ThrowingConsumer<? super Context<?>, E> type
+    ) throws E {
+        renderCast(ctx, expression, type, true);
+    }
+
+    static final <E extends Throwable> void renderCast(
+        Context<?> ctx,
+        ThrowingConsumer<? super Context<?>, E> expression,
+        ThrowingConsumer<? super Context<?>, E> type,
+        boolean isSimple
     ) throws E {
 
         // Avoid casting bind values inside an explicit cast...
         CastMode castMode = ctx.castMode();
 
         // Default rendering, if no special case has applied yet
-        ctx.visit(K_CAST).sql('(')
-           .castMode(CastMode.NEVER);
+        ctx.visit(K_CAST).castMode(CastMode.NEVER);
+        if (isSimple)
+            ctx.sql('(');
+        else
+            ctx.sqlIndentStart('(');
 
         expression.accept(ctx);
-
-        ctx.castMode(castMode)
-           .sql(' ').visit(K_AS).sql(' ');
+        ctx.castMode(castMode);
+        (isSimple ? ctx.sql(' ') : ctx.formatSeparator()).visit(K_AS).sql(' ');
 
         type.accept(ctx);
-        ctx.sql(')');
+
+        if (isSimple)
+            ctx.sql(')');
+        else
+            ctx.sqlIndentEnd(')');
     }
 
     static <E extends Throwable> void renderCastIf(
@@ -381,8 +398,18 @@ final class Cast<T> extends AbstractField<T> implements QOM.Cast<T> {
         ThrowingConsumer<? super Context<?>, E> type,
         BooleanSupplier test
     ) throws E {
+        renderCastIf(ctx, expression, type, true, test);
+    }
+
+    static <E extends Throwable> void renderCastIf(
+        Context<?> ctx,
+        ThrowingConsumer<? super Context<?>, E> expression,
+        ThrowingConsumer<? super Context<?>, E> type,
+        boolean isSimple,
+        BooleanSupplier test
+    ) throws E {
         if (test.getAsBoolean())
-            renderCast(ctx, expression, type);
+            renderCast(ctx, expression, type, isSimple);
         else
             expression.accept(ctx);
     }

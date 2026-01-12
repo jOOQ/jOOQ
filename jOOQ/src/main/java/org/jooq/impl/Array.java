@@ -137,7 +137,7 @@ implements
                         else
                             c.visit(K_INT).sql("[]");
                     },
-                    false,
+                    isSimple(ctx),
                     () -> fields.isEmpty() && REQUIRES_CAST.contains(ctx.dialect()) && ctx.castMode() != CastMode.NEVER
                 );
 

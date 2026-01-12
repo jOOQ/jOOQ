@@ -87,7 +87,8 @@ implements
             case YUGABYTEDB:
                 Cast.renderCast(ctx,
                     c -> c.visit(K_ROW).sql('(').visit(args).sql(')'),
-                    c -> c.visit(udt.getDataType())
+                    c -> c.visit(udt.getDataType()),
+                    false
                 );
                 break;
 

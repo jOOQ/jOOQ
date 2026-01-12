@@ -70,7 +70,8 @@ final class Array<T>
 extends
     AbstractField<T[]>
 implements
-    QOM.Array<T>
+    QOM.Array<T>,
+    SimpleCheckQueryPart
 {
 
     static final Set<SQLDialect>  REQUIRES_CAST              = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
@@ -94,8 +95,13 @@ implements
     }
 
     @Override
-    public boolean generatesCast() {
+    public final boolean generatesCast() {
         return true;
+    }
+
+    @Override
+    public final boolean isSimple(Context<?> ctx) {
+        return fields.isEmpty() || fields.size() == 1 && Tools.isSimple(ctx, fields.get(0));
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })

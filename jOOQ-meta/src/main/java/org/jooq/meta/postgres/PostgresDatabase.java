@@ -436,7 +436,7 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                 for (IndexDefinition index : getIndexes(uniqueKeyTable)) {
                     if (index.getName().equals(uniqueKey)) {
                         for (UniqueKeyDefinition uk : uniqueKeyTable.getKeys()) {
-                            if (uk.getKeyColumns().equals(index.getIndexColumns().stream().map(i -> i.getColumn()).collect(toList()))) {
+                            if (uk.getKeyColumns().equals(index.getColumns())) {
                                 relations.addForeignKey(
                                     foreignKey,
                                     foreignKeyTable,

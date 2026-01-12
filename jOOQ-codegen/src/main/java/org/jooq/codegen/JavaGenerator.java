@@ -5973,6 +5973,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("}");
 
         List<Definition> embeddablesAndUnreplacedColumns = embeddablesAndUnreplacedColumns(table);
+        Set<List<ColumnDefinition>> keys = new HashSet<>();
 
         columnLoop:
         for (Definition column : embeddablesAndUnreplacedColumns) {
@@ -6083,36 +6084,48 @@ public class JavaGenerator extends AbstractGenerator {
             // -----------------------
             ukLoop:
             if (column instanceof ColumnDefinition) {
-                for (UniqueKeyDefinition uk : ((ColumnDefinition) column).getKeys()) {
+                Runnable r = () -> {
+                    if (!printDeprecationIfUnknownType(out, colTypeFull))
+                        out.javadoc("Fetch a unique record that has <code>%s = value</code>", colName);
 
-                    // If column is part of a single-column unique key...
-                    if (uk.getKeyColumns().size() == 1 && uk.getKeyColumns().get(0).equals(column)) {
+                    if (scala) {
+                        out.println("%s%sdef fetchOneBy%s(value: %s): %s = fetchOne(%s, value)", visibility(), override ? "override " : "", colMemberUC, colType, pType, colIdentifier);
+                    }
+                    else if (kotlin) {
+                        out.println("%s%sfun fetchOneBy%s(value: %s): %s? = fetchOne(%s, value)", visibility(), override ? "override " : "", colMemberUC, colType, pType, colIdentifier);
+                    }
+                    else {
+                        printNullableAnnotation(out);
+                        out.overrideIf(override);
+                        out.println("%s%s fetchOneBy%s(%s value) {", visibility(), pType, colMemberUC, colType);
+                        out.println("return fetchOne(%s, value);", colIdentifier);
+                        out.println("}");
+
                         if (!printDeprecationIfUnknownType(out, colTypeFull))
                             out.javadoc("Fetch a unique record that has <code>%s = value</code>", colName);
 
-                        if (scala) {
-                            out.println("%s%sdef fetchOneBy%s(value: %s): %s = fetchOne(%s, value)", visibility(), override ? "override " : "", colMemberUC, colType, pType, colIdentifier);
-                        }
-                        else if (kotlin) {
-                            out.println("%s%sfun fetchOneBy%s(value: %s): %s? = fetchOne(%s, value)", visibility(), override ? "override " : "", colMemberUC, colType, pType, colIdentifier);
-                        }
-                        else {
-                            printNullableAnnotation(out);
-                            out.overrideIf(override);
-                            out.println("%s%s fetchOneBy%s(%s value) {", visibility(), pType, colMemberUC, colType);
-                            out.println("return fetchOne(%s, value);", colIdentifier);
-                            out.println("}");
+                        printNonnullAnnotation(out);
+                        out.overrideIf(override);
+                        out.println("%s%s<%s> fetchOptionalBy%s(%s value) {", visibility(), Optional.class, pType, colMemberUC, colType);
+                        out.println("return fetchOptional(%s, value);", colIdentifier);
+                        out.println("}");
+                    }
+                };
 
-                            if (!printDeprecationIfUnknownType(out, colTypeFull))
-                                out.javadoc("Fetch a unique record that has <code>%s = value</code>", colName);
+                for (UniqueKeyDefinition uk : ((ColumnDefinition) column).getKeys()) {
 
-                            printNonnullAnnotation(out);
-                            out.overrideIf(override);
-                            out.println("%s%s<%s> fetchOptionalBy%s(%s value) {", visibility(), Optional.class, pType, colMemberUC, colType);
-                            out.println("return fetchOptional(%s, value);", colIdentifier);
-                            out.println("}");
-                        }
+                    // If column is part of a single-column unique key...
+                    if (uk.getKeyColumns().size() == 1 && uk.getKeyColumns().get(0).equals(column) && keys.add(uk.getKeyColumns())) {
+                        r.run();
+                        break ukLoop;
+                    }
+                }
 
+                for (IndexDefinition i : ((ColumnDefinition) column).getUniqueIndexes()) {
+
+                    // If column is part of a single-column unique index...
+                    if (i.getColumns().size() == 1 && i.getColumns().get(0).equals(column) && keys.add(i.getColumns())) {
+                        r.run();
                         break ukLoop;
                     }
                 }

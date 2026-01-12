@@ -37,6 +37,8 @@
  */
 package org.jooq.meta;
 
+import static java.util.stream.Collectors.toList;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,6 +50,7 @@ public abstract class AbstractIndexDefinition extends AbstractDefinition impleme
     private final TableDefinition       table;
     private final boolean               unique;
     private List<IndexColumnDefinition> indexColumns;
+    private List<ColumnDefinition>      columns;
 
     public AbstractIndexDefinition(SchemaDefinition schema, String name, TableDefinition table, boolean unique) {
         this(schema, name, table, unique, "");
@@ -87,11 +90,18 @@ public abstract class AbstractIndexDefinition extends AbstractDefinition impleme
 
     @Override
     public List<IndexColumnDefinition> getIndexColumns() {
-        if (indexColumns == null) {
+        if (indexColumns == null)
             indexColumns = getIndexColumns0();
-        }
 
         return indexColumns;
+    }
+
+    @Override
+    public List<ColumnDefinition> getColumns() {
+        if (columns == null)
+            columns = getIndexColumns().stream().map(IndexColumnDefinition::getColumn).collect(toList());
+
+        return columns;
     }
 
     protected abstract List<IndexColumnDefinition> getIndexColumns0();

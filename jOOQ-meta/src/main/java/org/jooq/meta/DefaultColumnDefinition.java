@@ -42,6 +42,7 @@ import static java.util.Collections.singletonList;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 import org.jooq.meta.jaxb.SyntheticDefaultType;
 import org.jooq.meta.jaxb.SyntheticEnumType;
@@ -230,6 +231,25 @@ public class DefaultColumnDefinition
     @Override
     public final List<ForeignKeyDefinition> getForeignKeys() {
         return getDatabase().getRelations().getForeignKeys(this);
+    }
+
+    @Override
+    public final List<IndexDefinition> getIndexes() {
+        return getIndexes0(i -> true);
+    }
+
+    @Override
+    public final List<IndexDefinition> getUniqueIndexes() {
+        return getIndexes0(i -> i.isUnique());
+    }
+
+    private final List<IndexDefinition> getIndexes0(Predicate<? super IndexDefinition> test) {
+        return getDatabase()
+            .getIndexes(getContainer())
+            .stream()
+            .filter(test)
+            .filter(i -> i.getColumns().contains(this))
+            .toList();
     }
 
     @Override

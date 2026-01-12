@@ -47,9 +47,14 @@ import java.util.List;
 public interface IndexDefinition extends TableElementDefinition {
 
     /**
-     * The list of columns making up the index.
+     * The list of index columns making up the index.
      */
     List<IndexColumnDefinition> getIndexColumns();
+
+    /**
+     * The list of columns making up the index.
+     */
+    List<ColumnDefinition> getColumns();
 
     /**
      * Whether this is a unique index.

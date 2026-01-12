@@ -71,6 +71,16 @@ public interface ColumnDefinition extends TypedElementDefinition<TableDefinition
     List<ForeignKeyDefinition> getForeignKeys();
 
     /**
+     * All definitions of indexes that this column is part of.
+     */
+    List<IndexDefinition> getIndexes();
+
+    /**
+     * All definitions of indexes that this column is part of.
+     */
+    List<IndexDefinition> getUniqueIndexes();
+
+    /**
      * Whether this column is the table's <code>IDENTITY</code> column.
      */
     boolean isIdentity();

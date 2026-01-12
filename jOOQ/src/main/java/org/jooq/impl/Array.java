@@ -65,7 +65,13 @@ import org.jooq.impl.QOM.UnmodifiableList;
 /**
  * @author Lukas Eder
  */
-final class Array<T> extends AbstractField<T[]> implements QOM.Array<T> {
+final class Array<T>
+extends
+    AbstractField<T[]>
+implements
+    QOM.Array<T>,
+    SimpleCheckQueryPart
+{
 
     private static final Set<SQLDialect> REQUIRES_CAST = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
 
@@ -82,8 +88,13 @@ final class Array<T> extends AbstractField<T[]> implements QOM.Array<T> {
     // -------------------------------------------------------------------------
 
     @Override
-    public boolean generatesCast() {
+    public final boolean generatesCast() {
         return true;
+    }
+
+    @Override
+    public final boolean isSimple(Context<?> ctx) {
+        return fields.size() == 0 || fields.size() == 1 && Tools.isSimple(ctx, fields.field(0));
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })

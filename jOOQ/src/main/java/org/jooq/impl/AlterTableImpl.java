@@ -118,6 +118,7 @@ import static org.jooq.impl.Keywords.K_ALTER_COLUMN;
 import static org.jooq.impl.Keywords.K_ALTER_CONSTRAINT;
 import static org.jooq.impl.Keywords.K_ALTER_TABLE;
 import static org.jooq.impl.Keywords.K_AS;
+import static org.jooq.impl.Keywords.K_AUTO_INCREMENT;
 import static org.jooq.impl.Keywords.K_BEFORE;
 import static org.jooq.impl.Keywords.K_BEGIN_CATCH;
 import static org.jooq.impl.Keywords.K_BEGIN_TRY;
@@ -1897,6 +1898,15 @@ implements
 
                     case H2:
                         ctx.sql(' ').visit(K_SET).sql(' ').visit(K_GENERATED).sql(' ').visit(K_BY).sql(' ').visit(K_DEFAULT);
+                        break;
+
+
+                    case MARIADB:
+
+                    case MYSQL:
+                        ctx.sql(' ');
+                        toSQLDDLTypeDeclaration(ctx, alterColumn.getDataType());
+                        ctx.sql(' ').visit(K_AUTO_INCREMENT);
                         break;
 
                     default:

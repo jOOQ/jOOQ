@@ -39,10 +39,12 @@
 package org.jooq.meta;
 
 import static java.util.Collections.singletonList;
+import static java.util.stream.Collectors.toList;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import org.jooq.meta.jaxb.SyntheticDefaultType;
 import org.jooq.meta.jaxb.SyntheticEnumType;
@@ -249,7 +251,7 @@ public class DefaultColumnDefinition
             .stream()
             .filter(test)
             .filter(i -> i.getColumns().contains(this))
-            .toList();
+            .collect(toList());
     }
 
     @Override

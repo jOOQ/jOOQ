@@ -54,7 +54,44 @@ import static org.jooq.Clause.ALTER_TABLE_RENAME_INDEX;
 import static org.jooq.Clause.ALTER_TABLE_TABLE;
 import static org.jooq.Nullability.NOT_NULL;
 import static org.jooq.Nullability.NULL;
-import static org.jooq.SQLDialect.*;
+// ...
+// ...
+// ...
+// ...
+// ...
+import static org.jooq.SQLDialect.CLICKHOUSE;
+// ...
+import static org.jooq.SQLDialect.CUBRID;
+// ...
+// ...
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.DUCKDB;
+// ...
+import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.H2;
+// ...
+// ...
+import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.IGNITE;
+// ...
+// ...
+import static org.jooq.SQLDialect.MARIADB;
+// ...
+import static org.jooq.SQLDialect.MYSQL;
+// ...
+// ...
+import static org.jooq.SQLDialect.POSTGRES;
+// ...
+// ...
+// ...
+// ...
+import static org.jooq.SQLDialect.SQLITE;
+// ...
+// ...
+// ...
+import static org.jooq.SQLDialect.TRINO;
+// ...
+import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.impl.ConstraintType.FOREIGN_KEY;
 import static org.jooq.impl.ConstraintType.PRIMARY_KEY;
 import static org.jooq.impl.ConstraintType.UNIQUE;
@@ -142,8 +179,6 @@ import static org.jooq.impl.QOM.Cascade.CASCADE;
 import static org.jooq.impl.QOM.Cascade.RESTRICT;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.NO_SUPPORT_DEFAULT_DATETIME_LITERAL_PREFIX;
-import static org.jooq.impl.Tools.NO_SUPPORT_NOT_NULL;
-import static org.jooq.impl.Tools.NO_SUPPORT_NULL;
 import static org.jooq.impl.Tools.NO_SUPPORT_NULL_ALTER_TABLE;
 import static org.jooq.impl.Tools.begin;
 import static org.jooq.impl.Tools.beginExecuteImmediate;
@@ -160,6 +195,7 @@ import static org.jooq.impl.Tools.tryCatch;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_CONSTRAINT_REFERENCE;
 import static org.jooq.impl.Tools.ExtendedDataKey.DATA_OMIT_DATETIME_LITERAL_PREFIX;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -193,8 +229,8 @@ import org.jooq.Nullability;
 import org.jooq.Query;
 import org.jooq.Record1;
 import org.jooq.SQLDialect;
-import org.jooq.SQLDialectCategory;
 import org.jooq.Select;
+import org.jooq.Statement;
 import org.jooq.Table;
 import org.jooq.TableElement;
 // ...
@@ -202,7 +238,6 @@ import org.jooq.conf.RenderQuotedNames;
 import org.jooq.impl.QOM.Cascade;
 import org.jooq.impl.QOM.GenerationMode;
 import org.jooq.impl.QOM.UNotYetImplemented;
-import org.jooq.impl.Tools.ExtendedDataKey;
 
 /**
  * @author Lukas Eder
@@ -1166,23 +1201,36 @@ implements
         SQLDialect family = ctx.family();
 
         if (changeColumnFrom != null && NO_SUPPORT_CHANGE_COLUMN.contains(ctx.dialect())) {
-            if (changeColumnFrom.getUnqualifiedName().equals(changeColumnTo.getUnqualifiedName())) {
+            boolean nameChange = !changeColumnFrom.getUnqualifiedName().equals(changeColumnTo.getUnqualifiedName());
+            boolean identityChange = changeColumnType.identity();
+
+            if (!nameChange && !identityChange) {
                 if (ifExistsColumn)
                     ctx.visit(alterTable(table).alterIfExists(changeColumnFrom).set(changeColumnType));
                 else
                     ctx.visit(alterTable(table).alter(changeColumnFrom).set(changeColumnType));
             }
-            else if (ifExistsColumn) {
-                ctx.visit(begin(
-                    alterTable(table).renameColumnIfExists(changeColumnFrom).to(changeColumnTo),
-                    alterTable(table).alterIfExists(changeColumnTo).set(changeColumnType)
-                ));
-            }
             else {
-                ctx.visit(begin(
-                    alterTable(table).renameColumn(changeColumnFrom).to(changeColumnTo),
-                    alterTable(table).alter(changeColumnTo).set(changeColumnType)
-                ));
+                List<Statement> s = new ArrayList<>();
+
+                if (ifExistsColumn) {
+                    if (nameChange)
+                        s.add(alterTable(table).renameColumnIfExists(changeColumnFrom).to(changeColumnTo));
+                    if (identityChange)
+                        s.add(alterTable(table).alterColumnIfExists(changeColumnFrom).setGeneratedByDefaultAsIdentity());
+
+                    s.add(alterTable(table).alterIfExists(changeColumnTo).set(changeColumnType.identity(false)));
+                }
+                else {
+                    if (nameChange)
+                        s.add(alterTable(table).renameColumn(changeColumnFrom).to(changeColumnTo));
+                    if (identityChange)
+                        s.add(alterTable(table).alterColumn(changeColumnFrom).setGeneratedByDefaultAsIdentity());
+
+                    s.add(alterTable(table).alter(changeColumnTo).set(changeColumnType.identity(false)));
+                }
+
+                ctx.visit(begin(s));
             }
 
             return;

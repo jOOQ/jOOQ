@@ -6245,17 +6245,21 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
             else if (parseKeywordIf("TYPE", "SET DATA TYPE"))
                 ;
 
-        DataType<?> type = parseDataType();
+        DataType<?> t1 = parseDataType();
 
         if (parseKeywordIf("NULL"))
-            type = type.nullable(true);
+            t1 = t1.nullable(true);
         else if (parseNotNullOptionalEnable())
-            type = type.nullable(false);
+            t1 = t1.nullable(false);
+
+        DataType<?> t2 = parseDataTypeFlags(field.getUnqualifiedName(), t1);
 
         if (paren)
             parse(')');
 
-        return (ifExists ? s1.alterIfExists(field) : s1.alter(field)).set(type);
+        return t2 == t1
+            ? (ifExists ? s1.alterIfExists(field) : s1.alter(field)).set(t2)
+            : (ifExists ? s1.changeIfExists(field, field) : s1.change(field, field)).set(t2);
     }
 
     private final DDLQuery parseAlterTableChangeColumn(AlterTableStep s1) {
@@ -6269,7 +6273,33 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         else if (parseNotNullOptionalEnable())
             type = type.nullable(false);
 
+        type = parseDataTypeFlags(newName.getUnqualifiedName(), type);
         return (ifExists ? s1.changeIfExists(oldName, newName) : s1.change(oldName, newName)).set(type);
+    }
+
+    private final DataType<?> parseDataTypeFlags(Name fieldName, DataType<?> type) {
+        List<Constraint> constraints = new ArrayList<>();
+        ParseInlineConstraints r = parseInlineConstraints(
+            fieldName,
+            type,
+            constraints,
+            false,
+            false,
+            false,
+            false
+        );
+
+        if (!constraints.isEmpty() || r.primary())
+            throw notImplemented("ALTER TABLE with inline constraints", "https://github.com/jOOQ/jOOQ/issues/10163");
+
+        if (r.identity())
+            type = type.identity(true);
+        if (r.hidden())
+            type = type.hidden(true);
+        if (r.readonly())
+            type = type.readonly(true);
+
+        return type;
     }
 
     private final boolean parseNotNullOptionalEnable() {

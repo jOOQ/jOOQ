@@ -41,7 +41,6 @@ package org.jooq.impl;
 // ...
 // ...
 // ...
-// ...
 import static org.jooq.SQLDialect.CUBRID;
 // ...
 // ...
@@ -76,7 +75,14 @@ import org.jooq.SortOrder;
 import org.jooq.impl.QOM.NullOrdering;
 
 
-final class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T>, SimpleCheckQueryPart {
+final class SortFieldImpl<T>
+extends
+    AbstractQueryPart
+implements
+    SortField<T>,
+    SimpleCheckQueryPart,
+    ComplexCheckQueryPart
+{
 
     // DB2 supports NULLS FIRST/LAST only in OLAP (window) functions
     private static final Set<SQLDialect> NO_SUPPORT_NULLS = SQLDialect.supportedUntil(CUBRID, MARIADB, MYSQL);
@@ -98,6 +104,11 @@ final class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T>, 
     @Override
     public boolean isSimple(Context<?> ctx) {
         return nullOrdering == null && Tools.isSimple(ctx, field);
+    }
+
+    @Override
+    public boolean isComplex(Context<?> ctx) {
+        return Tools.isComplex(ctx, field);
     }
 
     @Override

@@ -79,8 +79,7 @@ extends
     AbstractQueryPart
 implements
     SortField<T>,
-    SimpleCheckQueryPart,
-    ComplexCheckQueryPart
+    SimpleCheckQueryPart
 {
 
     // DB2 supports NULLS FIRST/LAST only in OLAP (window) functions
@@ -103,11 +102,6 @@ implements
     @Override
     public boolean isSimple(Context<?> ctx) {
         return nullOrdering == null && Tools.isSimple(ctx, field);
-    }
-
-    @Override
-    public boolean isComplex(Context<?> ctx) {
-        return Tools.isComplex(ctx, field);
     }
 
     @Override

@@ -121,6 +121,7 @@ implements
 
 
             case H2:
+            case HSQLDB:
                 return false;
 
             default:
@@ -171,6 +172,7 @@ implements
 
 
             case H2:
+            case HSQLDB:
                 ctx.visit(values.isEmpty()
                 ? inline(null, getDataType())
                 : values.size() == 1

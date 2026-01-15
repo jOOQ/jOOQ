@@ -78,6 +78,7 @@ import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.FieldMapsForInsert.patchDefault;
 import static org.jooq.impl.Keywords.K_ROW;
+import static org.jooq.impl.Names.N_T;
 import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.apply;
 import static org.jooq.impl.Tools.collect;

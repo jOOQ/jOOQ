@@ -63,6 +63,7 @@ import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.Keywords.K_DEFAULT_VALUES;
 import static org.jooq.impl.Keywords.K_VALUES;
+import static org.jooq.impl.Names.N_EXCLUDED;
 import static org.jooq.impl.Names.N_T;
 import static org.jooq.impl.QueryPartCollectionView.wrap;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
@@ -99,6 +100,7 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.FieldOrRow;
 import org.jooq.GeneratorStatementType;
+import org.jooq.Name;
 import org.jooq.Param;
 // ...
 import org.jooq.Record;
@@ -248,6 +250,15 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
         }
     }
 
+    private final Name alias(Context<?> ctx) {
+        if (ctx.topLevel() instanceof QOM.Insert<?> i) {
+            if (i.$onDuplicateKeyUpdate())
+                return N_EXCLUDED;
+        }
+
+        return N_T;
+    }
+
     private final void toSQLValues(Context<?> ctx) {
         ctx.formatSeparator()
            .start(INSERT_VALUES)
@@ -280,6 +291,18 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
                 return select;
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

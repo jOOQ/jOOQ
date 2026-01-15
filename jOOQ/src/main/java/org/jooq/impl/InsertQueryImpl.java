@@ -97,6 +97,8 @@ import static org.jooq.impl.Keywords.K_ON_DUPLICATE_KEY_UPDATE;
 import static org.jooq.impl.Keywords.K_SET;
 import static org.jooq.impl.Keywords.K_VALUES;
 import static org.jooq.impl.Keywords.K_WHERE;
+import static org.jooq.impl.Names.N_EXCLUDED;
+import static org.jooq.impl.Names.N_T;
 import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.Tools.aliasedFields;
 import static org.jooq.impl.Tools.anyMatch;
@@ -559,14 +561,15 @@ implements
                     boolean oldQualify = ctx.qualify();
                     boolean newQualify = ctx.family() != H2 && oldQualify;
                     FieldMapForUpdate um = updateMapComputedOnClientStored(ctx);
-                    boolean requireNewMySQLExcludedEmulation = REQUIRE_NEW_MYSQL_EXCLUDED_EMULATION.contains(ctx.dialect()) && anyMatch(um.values(), v -> v instanceof Excluded);
+                    boolean requireNewMySQLExcludedEmulation = REQUIRE_NEW_MYSQL_EXCLUDED_EMULATION.contains(ctx.dialect());
 
                     Set<Field<?>> keys = toSQLInsert(ctx, requireNewMySQLExcludedEmulation);
 
                     // [#5214] The alias only applies with INSERT .. VALUES
+                    // [#16942] Always render the alias to ensure it is present even when the Excluded expression is nested in other expressions
                     if (requireNewMySQLExcludedEmulation && select == null)
                         ctx.formatSeparator()
-                           .visit(K_AS).sql(' ').visit(name("t"));
+                           .visit(K_AS).sql(' ').visit(N_EXCLUDED);
 
                     ctx.formatSeparator()
                        .start(INSERT_ON_DUPLICATE_KEY_UPDATE)
@@ -840,8 +843,15 @@ implements
 
 
 
+
+
+
+
+
+
+
             if (requireNewMySQLExcludedEmulation)
-                s = selectFrom(s.asTable(DSL.table(name("t")), keysFlattened));
+                s = selectFrom(s.asTable(DSL.table(N_EXCLUDED), keysFlattened));
 
             // [#8353] TODO: Support overlapping embeddables
             toSQLInsertSelect(ctx, s);

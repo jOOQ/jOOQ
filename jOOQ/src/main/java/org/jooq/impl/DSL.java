@@ -18771,7 +18771,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Field<T> cast(Object value, Field<T> as) {
-        return Tools.field(value, as).cast(as);
+        return Tools.field(value).cast(as);
     }
 
     /**
@@ -18830,7 +18830,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Field<T> cast(Object value, Class<T> type) {
-        return Tools.field(value, type).cast(type);
+        return Tools.field(value).cast(type);
     }
 
     /**

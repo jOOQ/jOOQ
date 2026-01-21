@@ -82,6 +82,7 @@ import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.SQLDialectCategory;
 import org.jooq.Source;
+import org.jooq.tools.json.JSONValue;
 
 /**
  * A very simple JSON reader based on Simple JSON.
@@ -245,9 +246,14 @@ final class JSONReader<R extends Record> {
             Object value = record.get(i);
             DataType<?> t = field.getDataType();
 
+            // [#19606] String values need to be quoted
+            if (t.isJSON() && value instanceof String s) {
+                record.set(i, JSONValue.toJSONString(s));
+            }
+
             // [#8829] LoaderImpl expects binary data to be encoded in base64,
             //         not according to org.jooq.tools.Convert
-            if (t.isBinary() && value instanceof String s) {
+            else if (t.isBinary() && value instanceof String s) {
                 if (multiset) {
                     Matcher m;
 

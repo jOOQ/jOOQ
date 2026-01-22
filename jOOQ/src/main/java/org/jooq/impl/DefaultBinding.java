@@ -4569,7 +4569,17 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         final JSONFormat jsonFormat(Scope ctx) {
-            return ENCODE_BINARY_AS_HEX.contains(ctx.dialect()) ? JSON_FORMAT_HEX : JSON_FORMAT_BASE64;
+            switch (ctx.family()) {
+
+
+
+
+
+
+
+                default:
+                    return ENCODE_BINARY_AS_HEX.contains(ctx.dialect()) ? JSON_FORMAT_HEX : JSON_FORMAT_BASE64;
+            }
         }
 
         @Override

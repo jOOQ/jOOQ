@@ -47,6 +47,7 @@ import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 import static org.jooq.SQLDialect.SQLITE;
+// ...
 import static org.jooq.SQLDialect.TRINO;
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.impl.DSL.field;
@@ -237,6 +238,7 @@ final class JSONReader<R extends Record> {
     static final Set<SQLDialect> ENCODE_BINARY_AS_HEX  = SQLDialect.supportedBy(H2, POSTGRES, SQLITE, TRINO, YUGABYTEDB);
     static final Set<SQLDialect> ENCODE_BINARY_AS_TEXT = SQLDialect.supportedBy(MARIADB);
     private static final Pattern P_MYSQL_BINARY_PREFIX = Pattern.compile("^base64:type\\d+:(.*)$");
+    static final Pattern         P_NON_STRING_PREFIX   = Pattern.compile("^(?s:[\\[{\"0-9].*|true|false|null)$");
 
     private static final List<Object> patchRecord(DSLContext ctx, boolean multiset, Fields result, List<Object> record) {
         ConverterContext cc = null;
@@ -248,6 +250,16 @@ final class JSONReader<R extends Record> {
 
             // [#19606] String values need to be quoted
             if (t.isJSON() && value instanceof String s) {
+
+
+
+
+
+
+
+
+
+
                 record.set(i, JSONValue.toJSONString(s));
             }
 

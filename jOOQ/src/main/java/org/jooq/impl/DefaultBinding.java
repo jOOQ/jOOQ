@@ -746,6 +746,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
      */
     abstract static class InternalBinding<T, U> implements org.jooq.Binding<T, U> {
         static final Set<SQLDialect> NEEDS_PRECISION_SCALE_ON_BIGDECIMAL = SQLDialect.supportedBy(CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB);
+        static final Set<SQLDialect> SUPPORT_JSON_LITERAL                = SQLDialect.supportedBy(DUCKDB);
         static final Set<SQLDialect> REQUIRES_JSON_CAST                  = SQLDialect.supportedBy(POSTGRES, TRINO, YUGABYTEDB);
         static final Set<SQLDialect> NO_SUPPORT_ENUM_CAST                = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
         static final Set<SQLDialect> NO_SUPPORT_NVARCHAR                 = SQLDialect.supportedBy(DERBY, FIREBIRD, POSTGRES, SQLITE, TRINO, YUGABYTEDB);
@@ -6021,6 +6022,9 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         void sqlInline0(BindingSQLContext<U> ctx, JSON value) throws SQLException {
+            if (SUPPORT_JSON_LITERAL.contains(ctx.dialect()))
+                ctx.render().visit(K_JSON).sql(' ');
+
             super.sqlInline0(ctx, value);
 
             if (ctx.family() == H2 && value != null)
@@ -6121,6 +6125,9 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 bytes(ctx.configuration()).sqlInline0(ctx, bytesConverter(ctx.configuration()).to(value, ctx.converterContext()));
             }
             else {
+                if (SUPPORT_JSON_LITERAL.contains(ctx.dialect()))
+                    ctx.render().visit(K_JSON).sql(' ');
+
                 super.sqlInline1(ctx, value.data());
 
                 if (ctx.family() == H2)

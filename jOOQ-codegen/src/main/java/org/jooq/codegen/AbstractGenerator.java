@@ -362,7 +362,7 @@ abstract class AbstractGenerator implements Generator {
     public boolean generateImplicitJoinPathsManyToMany() {
 
         // [#17681] The to-one path of the ManyToManyKeyDefinition.foreignKey2 property must be available
-        return generateImplicitJoinPathsToMany
+        return generateImplicitJoinPathsManyToMany
             && generateImplicitJoinPathsToOne()
             && generateImplicitJoinPathsToMany()
             && generateRelations();

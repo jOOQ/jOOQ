@@ -65,5 +65,10 @@
         <xsl:copy>
             <xsl:apply-templates select="@*|node()"/>
         </xsl:copy>
+
+        <xsl:if test="name() = 'description'">
+          <xsl:value-of disable-output-escaping="yes" select="concat('&#10;  &lt;packaging&gt;pom&lt;/packaging&gt;')" />
+        </xsl:if>
+
     </xsl:template>
 </xsl:stylesheet>

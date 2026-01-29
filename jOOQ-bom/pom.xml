@@ -10,6 +10,7 @@
         <version>3.20.11-SNAPSHOT</version>
     </parent>
 
+    <packaging>pom</packaging>
     <artifactId>jooq-bom</artifactId>
     <name>jOOQ BOM</name>
     <description>jOOQ's BOM (Bill of Materials)</description>

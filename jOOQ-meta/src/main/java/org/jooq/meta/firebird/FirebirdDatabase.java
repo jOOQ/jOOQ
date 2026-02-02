@@ -558,7 +558,7 @@ public class FirebirdDatabase extends AbstractDatabase implements ResultQueryDat
                     .from(RDB$PROCEDURES)
 
                     // "selectable" procedures
-                    .where(RDB$PROCEDURES.RDB$PROCEDURE_TYPE.eq((short) 1))
+                    .where(RDB$PROCEDURES.RDB$PROCEDURE_TYPE.eq(inline((short) 1)))
                     .and(tableValuedFunctionsAsTables()
                         ? noCondition()
                         : falseCondition())
@@ -592,7 +592,7 @@ public class FirebirdDatabase extends AbstractDatabase implements ResultQueryDat
                 .from(p)
 
                 // "executable" procedures
-                .where(p.RDB$PROCEDURE_TYPE.eq((short) 2))
+                .where(p.RDB$PROCEDURE_TYPE.eq(inline((short) 2)))
                 .union(is30()
                     ? select(
                         trim(fu.RDB$FUNCTION_NAME),
@@ -651,7 +651,7 @@ public class FirebirdDatabase extends AbstractDatabase implements ResultQueryDat
                 f.RDB$FIELD_PRECISION,
                 FIELD_SCALE(f).as("FIELD_SCALE"),
                 FIELD_TYPE(f).as("FIELD_TYPE"),
-                bitOr(nvl(f.RDB$NULL_FLAG, (short) 0), nvl(f.RDB$NULL_FLAG, (short) 0)).as(f.RDB$NULL_FLAG),
+                bitOr(nvl(f.RDB$NULL_FLAG, inline((short) 0)), nvl(f.RDB$NULL_FLAG, inline((short) 0))).as(f.RDB$NULL_FLAG),
                 trim(f.RDB$VALIDATION_SOURCE).as(f.RDB$VALIDATION_SOURCE),
                 trim(f.RDB$DEFAULT_SOURCE).as(f.RDB$DEFAULT_SOURCE))
             .from(f)
@@ -774,41 +774,42 @@ public class FirebirdDatabase extends AbstractDatabase implements ResultQueryDat
     // See https://firebirdsql.org/file/documentation/chunk/en/refdocs/fblangref40/fblangref-appx04-fields.html
     static Field<String> FIELD_TYPE(Rdb$fields f) {
         return decode().value(f.RDB$FIELD_TYPE)
-                .when((short) 7, decode()
-                    .when(f.RDB$FIELD_SUB_TYPE.eq((short) 1), "NUMERIC")
-                    .when(f.RDB$FIELD_SUB_TYPE.eq((short) 0)
-                     .and(f.RDB$FIELD_SCALE.lt((short) 0)), "NUMERIC")
-                    .when(f.RDB$FIELD_SUB_TYPE.eq((short) 2), "DECIMAL")
+                .when(inline((short) 7), decode()
+                    .when(f.RDB$FIELD_SUB_TYPE.eq(inline((short) 1)), "NUMERIC")
+                    .when(f.RDB$FIELD_SUB_TYPE.eq(inline((short) 0))
+                     .and(f.RDB$FIELD_SCALE.lt(inline((short) 0))), "NUMERIC")
+                    .when(f.RDB$FIELD_SUB_TYPE.eq(inline((short) 2)), "DECIMAL")
                     .otherwise("SMALLINT"))
-                .when((short) 8, decode()
-                    .when(f.RDB$FIELD_SUB_TYPE.eq((short) 1), "NUMERIC")
-                    .when(f.RDB$FIELD_SUB_TYPE.eq((short) 0)
-                     .and(f.RDB$FIELD_SCALE.lt((short) 0)), "NUMERIC")
-                    .when(f.RDB$FIELD_SUB_TYPE.eq((short) 2), "DECIMAL")
+                .when(inline((short) 8), decode()
+                    .when(f.RDB$FIELD_SUB_TYPE.eq(inline((short) 1)), "NUMERIC")
+                    .when(f.RDB$FIELD_SUB_TYPE.eq(inline((short) 0))
+                     .and(f.RDB$FIELD_SCALE.lt(inline((short) 0))), "NUMERIC")
+                    .when(f.RDB$FIELD_SUB_TYPE.eq(inline((short) 2)), "DECIMAL")
                     .otherwise("INTEGER"))
-                .when((short) 9, "QUAD")
-                .when((short) 10, "FLOAT")
-                .when((short) 11, "D_FLOAT")
-                .when((short) 12, "DATE")
-                .when((short) 13, "TIME")
-                .when((short) 14, "CHAR")
-                .when((short) 16, decode()
-                    .when(f.RDB$FIELD_SUB_TYPE.eq((short) 1), "NUMERIC")
-                    .when(f.RDB$FIELD_SUB_TYPE.eq((short) 0)
-                     .and(f.RDB$FIELD_SCALE.lt((short) 0)), "NUMERIC")
-                    .when(f.RDB$FIELD_SUB_TYPE.eq((short) 2), "DECIMAL")
+                .when(inline((short) 9), "QUAD")
+                .when(inline((short) 10), "FLOAT")
+                .when(inline((short) 11), "D_FLOAT")
+                .when(inline((short) 12), "DATE")
+                .when(inline((short) 13), "TIME")
+                .when(inline((short) 14), "CHAR")
+                .when(inline((short) 16), decode()
+                    .when(f.RDB$FIELD_SUB_TYPE.eq(inline((short) 1)), "NUMERIC")
+                    .when(f.RDB$FIELD_SUB_TYPE.eq(inline((short) 0))
+                     .and(f.RDB$FIELD_SCALE.lt(inline((short) 0))), "NUMERIC")
+                    .when(f.RDB$FIELD_SUB_TYPE.eq(inline((short) 2)), "DECIMAL")
                     .otherwise("BIGINT"))
-                .when((short) 24, "DECFLOAT(16)")
-                .when((short) 25, "DECFLOAT(34)")
-                .when((short) 27, "DOUBLE")
-                .when((short) 28, "TIME WITH TIME ZONE")
-                .when((short) 29, "TIMESTAMP WITH TIME ZONE")
-                .when((short) 35, "TIMESTAMP")
-                .when((short) 37, "VARCHAR")
-                .when((short) 40, "CSTRING")
-                .when((short) 261, decode().value(f.RDB$FIELD_SUB_TYPE)
-                    .when((short) 0, "BLOB")
-                    .when((short) 1, "BLOB SUB_TYPE TEXT")
+                .when(inline((short) 23), "BOOLEAN")
+                .when(inline((short) 24), "DECFLOAT(16)")
+                .when(inline((short) 25), "DECFLOAT(34)")
+                .when(inline((short) 27), "DOUBLE")
+                .when(inline((short) 28), "TIME WITH TIME ZONE")
+                .when(inline((short) 29), "TIMESTAMP WITH TIME ZONE")
+                .when(inline((short) 35), "TIMESTAMP")
+                .when(inline((short) 37), "VARCHAR")
+                .when(inline((short) 40), "CSTRING")
+                .when(inline((short) 261), decode().value(f.RDB$FIELD_SUB_TYPE)
+                    .when(inline((short) 0), "BLOB")
+                    .when(inline((short) 1), "BLOB SUB_TYPE TEXT")
                     .otherwise("BLOB"))
                 .otherwise("UNKNOWN");
     }
@@ -819,7 +820,7 @@ public class FirebirdDatabase extends AbstractDatabase implements ResultQueryDat
 
     static Field<Short> CHARACTER_LENGTH(Rdb$fields f) {
         return choose(f.RDB$FIELD_TYPE)
-                .when((short) 261, (short) 0)
+                .when(inline((short) 261), inline((short) 0))
                 .otherwise(f.RDB$CHARACTER_LENGTH);
     }
 

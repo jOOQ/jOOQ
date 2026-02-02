@@ -131,9 +131,18 @@ implements
 
 
 
-            case CUBRID:
-            case FIREBIRD: {
+            case CUBRID: {
                 AbstractCondition.acceptCase(ctx, condition);
+                break;
+            }
+
+            case FIREBIRD: {
+
+
+
+
+
+                acceptStandard(ctx);
                 break;
             }
 

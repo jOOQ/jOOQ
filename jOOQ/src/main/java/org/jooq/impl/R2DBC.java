@@ -117,6 +117,7 @@ import org.jooq.tools.jdbc.DefaultPreparedStatement;
 import org.jooq.tools.jdbc.DefaultResultSet;
 import org.jooq.tools.jdbc.MockArray;
 import org.jooq.types.Interval;
+import org.jooq.util.postgres.PostgresUtils;
 
 import org.reactivestreams.Publisher;
 import org.reactivestreams.Subscriber;
@@ -1465,7 +1466,22 @@ final class R2DBC {
 
         @Override
         public final Array getArray(int columnIndex) throws SQLException {
-            return new MockArray<>(c.dialect(), (Object[]) nullable(columnIndex, Object.class), Object[].class);
+            Object o = nullable(columnIndex, Object.class);
+
+            switch (c.family()) {
+                case POSTGRES: {
+
+                    // [#16684] If user defined types (e.g. enums) don't have their codecs registered,
+                    //          the driver will just return a String
+                    if (o instanceof String s)
+                        o = PostgresUtils.toPGArray(s).toArray();
+
+                    return new MockArray<>(c.dialect(), (Object[]) o, Object[].class);
+                }
+
+                default:
+                    return new MockArray<>(c.dialect(), (Object[]) o, Object[].class);
+            }
         }
 
         private static final record DefaultRow(Configuration c, Row r) implements Row {

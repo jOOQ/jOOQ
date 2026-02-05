@@ -7868,6 +7868,30 @@ public final class QOM {
     }
 
     /**
+     * The <code>JSON ARRAY</code> function.
+     */
+    public /*sealed*/ interface JSONArrayQuery<T>
+        extends
+            UOperator4<DataType<T>, Select<? extends Record1<?>>, JSONOnNull, DataType<?>, JSONArrayQuery<T>>,
+            Field<T>
+        //permits
+        //    JSONArrayQuery
+    {
+        @NotNull default DataType<T> $type() { return $arg1(); }
+        @CheckReturnValue
+        @NotNull default JSONArrayQuery<T> $type(DataType<T> newType) { return $arg1(newType); }
+        @NotNull default Select<? extends Record1<?>> $select() { return $arg2(); }
+        @CheckReturnValue
+        @NotNull default JSONArrayQuery<T> $select(Select<? extends Record1<?>> newSelect) { return $arg2(newSelect); }
+        @Nullable default JSONOnNull $onNull() { return $arg3(); }
+        @CheckReturnValue
+        @NotNull default JSONArrayQuery<T> $onNull(JSONOnNull newOnNull) { return $arg3(newOnNull); }
+        @Nullable default DataType<?> $returning() { return $arg4(); }
+        @CheckReturnValue
+        @NotNull default JSONArrayQuery<T> $returning(DataType<?> newReturning) { return $arg4(newReturning); }
+    }
+
+    /**
      * The <code>JSON OBJECT</code> function.
      */
     public /*sealed*/ interface JSONObject<T>

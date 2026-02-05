@@ -270,6 +270,7 @@ import org.jooq.InsertValuesStepN;
 import org.jooq.JSON;
 import org.jooq.JSONArrayAggOrderByStep;
 import org.jooq.JSONArrayNullStep;
+import org.jooq.JSONArrayQueryNullStep;
 import org.jooq.JSONB;
 import org.jooq.JSONEntry;
 import org.jooq.JSONEntryValueStep;
@@ -25031,6 +25032,24 @@ public class DSL {
     @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONArrayNullStep<JSONB> jsonbArray(Collection<? extends Field<?>> fields) {
         return new JSONArray(SQLDataType.JSONB, new QueryPartList<>(fields));
+    }
+
+    /**
+     * The <code>JSON_ARRAY</code> function.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    public static <T> JSONArrayQueryNullStep<JSON> jsonArray(Select<? extends Record1<?>> select) {
+        return new JSONArrayQuery<>(SQLDataType.JSON, select);
+    }
+
+    /**
+     * The <code>JSONB_ARRAY</code> function.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    public static <T> JSONArrayQueryNullStep<JSONB> jsonbArray(Select<? extends Record1<?>> select) {
+        return new JSONArrayQuery<>(SQLDataType.JSONB, select);
     }
 
     /**

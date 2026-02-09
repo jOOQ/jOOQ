@@ -1031,6 +1031,26 @@ implements
     }
 
     @Override
+    public final Condition likeRegex(String pattern) {
+        return new RegexpLike(this, Tools.field(pattern));
+    }
+
+    @Override
+    public final Condition likeRegex(Field<String> pattern) {
+        return new RegexpLike(this, nullSafe(pattern, getDataType()));
+    }
+
+    @Override
+    public final Condition notLikeRegex(String pattern) {
+        return new NotRegexpLike(this, Tools.field(pattern));
+    }
+
+    @Override
+    public final Condition notLikeRegex(Field<String> pattern) {
+        return new NotRegexpLike(this, nullSafe(pattern, getDataType()));
+    }
+
+    @Override
     public final Condition startsWith(T prefix) {
         return new StartsWith<>(this, Tools.field(prefix, this));
     }
@@ -1290,16 +1310,6 @@ implements
     }
 
     @Override
-    public final Condition likeRegex(String pattern) {
-        return likeRegex(Tools.field(pattern));
-    }
-
-    @Override
-    public final Condition likeRegex(Field<String> pattern) {
-        return new RegexpLike(this, nullSafe(pattern, getDataType()));
-    }
-
-    @Override
     public final Condition notLike(String value, char escape) {
         return notLike(Tools.field(value), escape);
     }
@@ -1317,16 +1327,6 @@ implements
     @Override
     public final Condition notLikeIgnoreCase(Field<String> field, char escape) {
         return notLikeIgnoreCase(field).escape(escape);
-    }
-
-    @Override
-    public final Condition notLikeRegex(String pattern) {
-        return likeRegex(pattern).not();
-    }
-
-    @Override
-    public final Condition notLikeRegex(Field<String> pattern) {
-        return likeRegex(pattern).not();
     }
 
     @Override

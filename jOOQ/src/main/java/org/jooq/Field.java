@@ -1786,6 +1786,58 @@ extends
     Condition endsWithIgnoreCase(Field<T> suffix);
 
     /**
+     * The <code>REGEXP_LIKE</code> operator.
+     * <p>
+     * Create a condition to regex-pattern-check this field against a pattern.
+     * <p>
+     * The pattern syntax is that of your RDBMS. Please refer to the RDBMS manual for
+     * more information.
+     *
+     * @param pattern is wrapped as {@link DSL#val(Object)}.
+     */
+    @NotNull
+    @Support({ CUBRID, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    Condition likeRegex(@Stringly.Param String pattern);
+
+    /**
+     * The <code>REGEXP_LIKE</code> operator.
+     * <p>
+     * Create a condition to regex-pattern-check this field against a pattern.
+     * <p>
+     * The pattern syntax is that of your RDBMS. Please refer to the RDBMS manual for
+     * more information.
+     */
+    @NotNull
+    @Support({ CUBRID, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    Condition likeRegex(Field<String> pattern);
+
+    /**
+     * The <code>NOT_REGEXP_LIKE</code> operator.
+     * <p>
+     * Create a condition to regex-pattern-check this field against a pattern.
+     * <p>
+     * The pattern syntax is that of your RDBMS. Please refer to the RDBMS manual for
+     * more information.
+     *
+     * @param pattern is wrapped as {@link DSL#val(Object)}.
+     */
+    @NotNull
+    @Support({ CUBRID, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    Condition notLikeRegex(@Stringly.Param String pattern);
+
+    /**
+     * The <code>NOT_REGEXP_LIKE</code> operator.
+     * <p>
+     * Create a condition to regex-pattern-check this field against a pattern.
+     * <p>
+     * The pattern syntax is that of your RDBMS. Please refer to the RDBMS manual for
+     * more information.
+     */
+    @NotNull
+    @Support({ CUBRID, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    Condition notLikeRegex(Field<String> pattern);
+
+    /**
      * The <code>STARTS_WITH</code> operator.
      * <p>
      * Convenience method for {@link Field#like(String, char)} including proper
@@ -2176,162 +2228,6 @@ extends
     @NotNull
     @Support
     Field<T> divide(Field<? extends Number> value);
-
-    // ------------------------------------------------------------------------
-    // LIKE_REGEX predicates
-    // ------------------------------------------------------------------------
-
-    /**
-     * Create a condition to regex-pattern-check this field against a pattern.
-     * <p>
-     * The SQL:2008 standard specifies a <code>&lt;regex like predicate&gt;</code>
-     * of the following form: <pre><code>
-     * &lt;regex like predicate&gt; ::=
-     *   &lt;row value predicand&gt; &lt;regex like predicate part 2&gt;
-     *
-     * &lt;regex like predicate part 2&gt; ::=
-     *  [ NOT ] LIKE_REGEX &lt;XQuery pattern&gt; [ FLAG &lt;XQuery option flag&gt; ]
-     * </code></pre>
-     * <p>
-     * This particular <code>LIKE_REGEX</code> operator comes in several
-     * flavours for various databases. jOOQ supports regular expressions as
-     * follows:
-     * <table border="1">
-     * <tr>
-     * <th>SQL dialect</th>
-     * <th>SQL syntax</th>
-     * <th>Pattern syntax</th>
-     * <th>Documentation</th>
-     * </tr>
-     * <tr>
-     * <td>{@link SQLDialect#ASE}</td>
-     * <td>-</td>
-     * <td>-</td>
-     * <td>-</td>
-     * </tr>
-     * <tr>
-     * <td>{@link SQLDialect#DB2}</td>
-     * <td>-</td>
-     * <td>-</td>
-     * <td>-</td>
-     * </tr>
-     * <tr>
-     * <td>{@link SQLDialect#DERBY}</td>
-     * <td>-</td>
-     * <td>-</td>
-     * <td>-</td>
-     * </tr>
-     * <tr>
-     * <td>{@link SQLDialect#H2}</td>
-     * <td><code>[search] REGEXP [pattern]</code></td>
-     * <td>Java</td>
-     * <td><a href=
-     * "https://www.h2database.com/html/grammar.html#condition_right_hand_side"
-     * >https
-     * ://www.h2database.com/html/grammar.html#condition_right_hand_side</a></td>
-     * </tr>
-     * <tr>
-     * <td>{@link SQLDialect#HSQLDB}</td>
-     * <td><code>REGEXP_MATCHES([search], [pattern])</code></td>
-     * <td>Java</td>
-     * <td><a
-     * href="http://hsqldb.org/doc/guide/builtinfunctions-chapt.html#N13577"
-     * >http://hsqldb.org/doc/guide/builtinfunctions-chapt.html#N13577</a></td>
-     * </tr>
-     * <tr>
-     * <td>{@link SQLDialect#INGRES}</td>
-     * <td>-</td>
-     * <td>-</td>
-     * <td>-</td>
-     * </tr>
-     * <tr>
-     * <td>{@link SQLDialect#MYSQL}</td>
-     * <td><code>[search] REGEXP [pattern]</code></td>
-     * <td>POSIX</td>
-     * <td><a href=
-     * "http://dev.mysql.com/doc/refman/5.6/en/regexp.html">http://dev
-     * .mysql.com/doc/refman/5.6/en/regexp.html</a></td>
-     * </tr>
-     * <tr>
-     * <td>{@link SQLDialect#ORACLE}</td>
-     * <td><code>REGEXP_LIKE([search], [pattern])</code></td>
-     * <td>POSIX</td>
-     * <td><a href=
-     * "http://docs.oracle.com/cd/E14072_01/server.112/e10592/conditions007.htm#sthref1994"
-     * >http://docs.oracle.com/cd/E14072_01/server.112/e10592/conditions007.htm#
-     * sthref1994</a></td>
-     * </tr>
-     * <tr>
-     * <td>{@link SQLDialect#POSTGRES}</td>
-     * <td><code>[search] ~ [pattern]</code></td>
-     * <td>POSIX</td>
-     * <td><a href=
-     * "http://www.postgresql.org/docs/9.1/static/functions-matching.html#FUNCTIONS-POSIX-REGEXP"
-     * >http://www.postgresql.org/docs/9.1/static/functions-matching.html#
-     * FUNCTIONS-POSIX-REGEXP</a></td>
-     * </tr>
-     * <tr>
-     * <td>{@link SQLDialect#SQLITE}</td>
-     * <td><code>[search] REGEXP [pattern]</code></td>
-     * <td>? This module has to be loaded explicitly</td>
-     * <td><a href="http://www.sqlite.org/lang_expr.html">http://www.sqlite.org/
-     * lang_expr.html</a></td>
-     * </tr>
-     * <tr>
-     * <td>{@link SQLDialect#SQLSERVER}</td>
-     * <td>-</td>
-     * <td>-</td>
-     * <td>-</td>
-     * </tr>
-     * <tr>
-     * <td>{@link SQLDialect#SYBASE}</td>
-     * <td><code>[search] REGEXP [pattern]</code></td>
-     * <td>Perl</td>
-     * <td><a href=
-     * "http://infocenter.sybase.com/help/topic/com.sybase.help.sqlanywhere.12.0.1/dbreference/like-regexp-similarto.html"
-     * >http://infocenter.sybase.com/help/topic/com.sybase.help.sqlanywhere.12.0
-     * .1/dbreference/like-regexp-similarto.html</a></td>
-     * </tr>
-     * </table>
-     *
-     * @see #likeRegex(String)
-     */
-    @NotNull
-    @Support({ CUBRID, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
-    Condition likeRegex(String pattern);
-
-    /**
-     * Create a condition to regex-pattern-check this field against a pattern.
-     * <p>
-     * See {@link #likeRegex(String)} for more details
-     *
-     * @see #likeRegex(String)
-     */
-    @NotNull
-    @Support({ CUBRID, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
-    Condition likeRegex(Field<String> pattern);
-
-    /**
-     * Create a condition to regex-pattern-check this field against a pattern.
-     * <p>
-     * See {@link #likeRegex(String)} for more details
-     *
-     * @see #likeRegex(String)
-     */
-    @NotNull
-    @Support({ CUBRID, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
-    Condition notLikeRegex(String pattern);
-
-    /**
-     * Create a condition to regex-pattern-check this field against a pattern.
-     * <p>
-     * See {@link #likeRegex(String)} for more details
-     *
-     * @see #likeRegex(Field)
-     */
-    @NotNull
-    @Support({ CUBRID, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
-    Condition notLikeRegex(Field<String> pattern);
 
     // ------------------------------------------------------------------------
     // SIMILAR TO predicates

@@ -66,20 +66,20 @@ import java.util.Set;
 
 
 /**
- * The <code>REGEXP LIKE</code> statement.
+ * The <code>NOT REGEXP LIKE</code> statement.
  */
 @SuppressWarnings({ "rawtypes", "unchecked", "unused" })
-final class RegexpLike
+final class NotRegexpLike
 extends
     AbstractCondition
 implements
-    QOM.RegexpLike
+    QOM.NotRegexpLike
 {
 
     final Field<?>      search;
     final Field<String> pattern;
 
-    RegexpLike(
+    NotRegexpLike(
         Field<?> search,
         Field<String> pattern
     ) {
@@ -96,68 +96,7 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
-        switch (ctx.family()) {
-
-            // [#620] These databases are compatible with the MySQL syntax
-
-
-
-
-            case CUBRID:
-            case H2:
-            case MARIADB:
-            case MYSQL:
-            case SQLITE:
-                ctx.visit(search)
-                   .sql(' ')
-                   .visit(K_REGEXP)
-                   .sql(' ')
-                   .visit(pattern);
-
-                break;
-
-            // [#620] HSQLDB has its own syntax
-            case HSQLDB:
-                ctx.visit(keyword("regexp_matches")).sql('(').visit(search).sql(", ").visit(pattern).sql(')');
-                break;
-
-            // [#620] Postgres has its own syntax
-
-
-
-            case DUCKDB:
-            case POSTGRES:
-            case YUGABYTEDB:
-                ctx.sql('(').visit(search).sql(" ~ ").visit(pattern).sql(')');
-                break;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            // Render the SQL standard for those databases that do not support
-            // regular expressions
-            default: {
-                ctx.sql('(')
-                   .visit(search)
-                   .sql(' ')
-                   .visit(K_LIKE_REGEX)
-                   .sql(' ')
-                   .visit(pattern)
-                   .sql(')');
-
-                break;
-            }
-        }
+        ctx.visit(search.likeRegex(pattern).not());
     }
 
 
@@ -186,18 +125,18 @@ implements
     }
 
     @Override
-    public final QOM.RegexpLike $arg1(Field<?> newValue) {
+    public final QOM.NotRegexpLike $arg1(Field<?> newValue) {
         return $constructor().apply(newValue, $arg2());
     }
 
     @Override
-    public final QOM.RegexpLike $arg2(Field<String> newValue) {
+    public final QOM.NotRegexpLike $arg2(Field<String> newValue) {
         return $constructor().apply($arg1(), newValue);
     }
 
     @Override
-    public final Function2<? super Field<?>, ? super Field<String>, ? extends QOM.RegexpLike> $constructor() {
-        return (a1, a2) -> new RegexpLike(a1, a2);
+    public final Function2<? super Field<?>, ? super Field<String>, ? extends QOM.NotRegexpLike> $constructor() {
+        return (a1, a2) -> new NotRegexpLike(a1, a2);
     }
 
     // -------------------------------------------------------------------------
@@ -206,7 +145,7 @@ implements
 
     @Override
     public boolean equals(Object that) {
-        if (that instanceof QOM.RegexpLike o) {
+        if (that instanceof QOM.NotRegexpLike o) {
             return
                 Objects.equals($search(), o.$search()) &&
                 Objects.equals($pattern(), o.$pattern())

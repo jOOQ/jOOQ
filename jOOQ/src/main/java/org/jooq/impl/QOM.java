@@ -1056,16 +1056,6 @@ public final class QOM {
         @NotNull default UnmodifiableList<? extends Field<T>> $list() { return $arg2(); }
     }
 
-    public /*sealed*/ interface RegexpLike
-        extends
-            Condition
-        /*permits
-            RegexpLike*/
-    {
-        @NotNull Field<?> $search();
-        @NotNull Field<String> $pattern();
-    }
-
     public /*sealed*/ interface Extract<T>
         extends
             Field<T>
@@ -5444,6 +5434,54 @@ public final class QOM {
          */
         @CheckReturnValue
         @NotNull default Left $length(Field<? extends Number> newLength) { return $arg2(newLength); }
+    }
+
+    /**
+     * The <code>REGEXP LIKE</code> operator.
+     * <p>
+     * Create a condition to regex-pattern-check this field against a pattern.
+     * <p>
+     * The pattern syntax is that of your RDBMS. Please refer to the RDBMS manual for
+     * more information.
+     */
+    public /*sealed*/ interface RegexpLike
+        extends
+            UReturnsNullOnNullInput,
+            UOperator2<Field<?>, Field<String>, RegexpLike>,
+            org.jooq.Condition
+        //permits
+        //    RegexpLike
+    {
+        @NotNull default Field<?> $search() { return $arg1(); }
+        @CheckReturnValue
+        @NotNull default RegexpLike $search(Field<?> newSearch) { return $arg1(newSearch); }
+        @NotNull default Field<String> $pattern() { return $arg2(); }
+        @CheckReturnValue
+        @NotNull default RegexpLike $pattern(Field<String> newPattern) { return $arg2(newPattern); }
+    }
+
+    /**
+     * The <code>NOT REGEXP LIKE</code> operator.
+     * <p>
+     * Create a condition to regex-pattern-check this field against a pattern.
+     * <p>
+     * The pattern syntax is that of your RDBMS. Please refer to the RDBMS manual for
+     * more information.
+     */
+    public /*sealed*/ interface NotRegexpLike
+        extends
+            UReturnsNullOnNullInput,
+            UOperator2<Field<?>, Field<String>, NotRegexpLike>,
+            org.jooq.Condition
+        //permits
+        //    NotRegexpLike
+    {
+        @NotNull default Field<?> $search() { return $arg1(); }
+        @CheckReturnValue
+        @NotNull default NotRegexpLike $search(Field<?> newSearch) { return $arg1(newSearch); }
+        @NotNull default Field<String> $pattern() { return $arg2(); }
+        @CheckReturnValue
+        @NotNull default NotRegexpLike $pattern(Field<String> newPattern) { return $arg2(newPattern); }
     }
 
     /**

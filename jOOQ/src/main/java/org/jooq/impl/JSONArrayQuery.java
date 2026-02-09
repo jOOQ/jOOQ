@@ -188,12 +188,16 @@ implements
         }
     }
 
+    private final boolean json() {
+        return getDataType().getFromType() == JSON.class;
+    }
+
     private final Field<?> empty() {
-        return inline(getDataType().getFromType() == JSON.class ? org.jooq.JSON.json("[]") : org.jooq.JSONB.jsonb("[]"));
+        return inline(json() ? org.jooq.JSON.json("[]") : org.jooq.JSONB.jsonb("[]"));
     }
 
     private final Field<?> jsonArrayAgg(Field<?> arg) {
-        return getDataType().getFromType() == JSON.class ? DSL.jsonArrayAgg(arg) : DSL.jsonbArrayAgg(arg);
+        return json() ? DSL.jsonArrayAgg(arg) : DSL.jsonbArrayAgg(arg);
     }
 
     private final void acceptJSONArrayAgg(Context<?> ctx) {
@@ -252,6 +256,17 @@ implements
 
                 break;
             }
+
+
+
+
+
+
+
+
+
+
+
 
             default: {
                 if (returning != null)

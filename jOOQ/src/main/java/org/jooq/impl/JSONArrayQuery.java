@@ -172,6 +172,8 @@ implements
 
 
 
+
+
             case DUCKDB:
             case MARIADB:
             case MYSQL:
@@ -206,6 +208,8 @@ implements
         Field<?> f = DSL.field(select(jsonArrayAgg(DSL.field(N_A, t))).from(select.asTable(N_T, N_A)));
 
         switch (ctx.family()) {
+
+
 
 
             case DUCKDB:

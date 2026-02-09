@@ -69,6 +69,7 @@ import static org.jooq.impl.Names.N_JSONB_AGG;
 import static org.jooq.impl.Names.N_JSON_AGG;
 import static org.jooq.impl.Names.N_JSON_ARRAYAGG;
 import static org.jooq.impl.Names.N_JSON_GROUP_ARRAY;
+import static org.jooq.impl.Names.N_JSON_QUERY;
 import static org.jooq.impl.Names.N_JSON_QUOTE;
 import static org.jooq.impl.Names.N_JSON_STRIP_NULLS;
 import static org.jooq.impl.Names.N_JSON_TRANSFORM;
@@ -152,6 +153,12 @@ implements
                 ctx.visit(jsonMerge(ctx, "[]", groupConcatEmulation(ctx)));
                 break;
             }
+
+
+
+
+
+
 
 
 
@@ -317,6 +324,8 @@ implements
                 case MYSQL:
                     arg1 = function(N_JSON_QUOTE, getDataType(), arg1);
                     break;
+
+
 
 
 

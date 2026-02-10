@@ -164,6 +164,8 @@ public class Database implements Serializable, XMLAppendable
     protected String embeddableUniqueKeys;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String embeddableDomains;
+    @XmlJavaTypeAdapter(StringAdapter.class)
+    protected String embeddableColumns;
     @XmlElement(defaultValue = "false")
     protected Boolean readonlyIdentities = false;
     @XmlElement(defaultValue = "true")
@@ -1842,6 +1844,26 @@ public class Database implements Serializable, XMLAppendable
     }
 
     /**
+     * A regular expression matching all columns for which an embeddable definition should be generated.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
+    public String getEmbeddableColumns() {
+        return embeddableColumns;
+    }
+
+    /**
+     * A regular expression matching all columns for which an embeddable definition should be generated.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
+    public void setEmbeddableColumns(String value) {
+        this.embeddableColumns = value;
+    }
+
+    /**
      * Whether identity columns should expose {@link org.jooq.DataType#readonly()} behaviour.
      * <p>
      * This feature is available in the commercial distribution only.
@@ -2997,6 +3019,17 @@ public class Database implements Serializable, XMLAppendable
     }
 
     /**
+     * A regular expression matching all columns for which an embeddable definition should be generated.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
+    public Database withEmbeddableColumns(String value) {
+        setEmbeddableColumns(value);
+        return this;
+    }
+
+    /**
      * Whether identity columns should expose {@link org.jooq.DataType#readonly()} behaviour.
      * <p>
      * This feature is available in the commercial distribution only.
@@ -3348,6 +3381,7 @@ public class Database implements Serializable, XMLAppendable
         builder.append("embeddablePrimaryKeys", embeddablePrimaryKeys);
         builder.append("embeddableUniqueKeys", embeddableUniqueKeys);
         builder.append("embeddableDomains", embeddableDomains);
+        builder.append("embeddableColumns", embeddableColumns);
         builder.append("readonlyIdentities", readonlyIdentities);
         builder.append("readonlyComputedColumns", readonlyComputedColumns);
         builder.append("readonlyNonUpdatableColumns", readonlyNonUpdatableColumns);
@@ -3929,6 +3963,15 @@ public class Database implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (embeddableColumns == null) {
+            if (other.embeddableColumns!= null) {
+                return false;
+            }
+        } else {
+            if (!embeddableColumns.equals(other.embeddableColumns)) {
+                return false;
+            }
+        }
         if (readonlyIdentities == null) {
             if (other.readonlyIdentities!= null) {
                 return false;
@@ -4176,6 +4219,7 @@ public class Database implements Serializable, XMLAppendable
         result = ((prime*result)+((embeddablePrimaryKeys == null)? 0 :embeddablePrimaryKeys.hashCode()));
         result = ((prime*result)+((embeddableUniqueKeys == null)? 0 :embeddableUniqueKeys.hashCode()));
         result = ((prime*result)+((embeddableDomains == null)? 0 :embeddableDomains.hashCode()));
+        result = ((prime*result)+((embeddableColumns == null)? 0 :embeddableColumns.hashCode()));
         result = ((prime*result)+((readonlyIdentities == null)? 0 :readonlyIdentities.hashCode()));
         result = ((prime*result)+((readonlyComputedColumns == null)? 0 :readonlyComputedColumns.hashCode()));
         result = ((prime*result)+((readonlyNonUpdatableColumns == null)? 0 :readonlyNonUpdatableColumns.hashCode()));

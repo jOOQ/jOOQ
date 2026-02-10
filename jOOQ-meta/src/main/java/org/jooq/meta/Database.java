@@ -1417,6 +1417,20 @@ public interface Database extends AutoCloseable {
     void setEmbeddableDomains(String embeddableDomains);
 
     /**
+     * A regular expression matching column definitions for which embeddable definitions should be generated.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     */
+    String embeddableColumns();
+
+    /**
+     * A regular expression matching column definitions for which embeddable definitions should be generated.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     */
+    void setEmbeddableColumns(String embeddableColumns);
+
+    /**
      * Whether identity columns should expose {@link DataType#readonly()}
      * behaviour.
      * <p>

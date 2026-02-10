@@ -242,6 +242,7 @@ public abstract class AbstractDatabase implements Database {
     private String                                                               embeddablePrimaryKeys                   = null;
     private String                                                               embeddableUniqueKeys                    = null;
     private String                                                               embeddableDomains                       = null;
+    private String                                                               embeddableColumns                       = null;
     private boolean                                                              readonlyIdentities                      = false;
     private boolean                                                              readonlyComputedColumns                 = true;
     private boolean                                                              readonlyNonUpdatableColumns             = true;
@@ -2826,6 +2827,23 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
+    public String embeddableColumns() {
+        return embeddableColumns;
+    }
+
+    @SuppressWarnings("unused")
+    @Override
+    public void setEmbeddableColumns(String embeddableColumns) {
+
+
+
+        if (!isBlank(embeddableColumns))
+            log.info("Commercial feature", "Embeddable columns are a commercial only feature. Please consider upgrading to the jOOQ Professional Edition");
+
+        this.embeddableColumns = embeddableColumns;
+    }
+
+    @Override
     public boolean readonlyIdentities() {
         return readonlyIdentities;
     }
@@ -2902,6 +2920,7 @@ public abstract class AbstractDatabase implements Database {
 
     private final List<EmbeddableDefinition> getEmbeddables0() {
         Map<Name, EmbeddableDefinition> result = new LinkedHashMap<>();
+        Set<ColumnDefinition> embeddableColumns = new HashSet<>();
 
         for (TableDefinition table : getTables()) {
 
@@ -2923,13 +2942,18 @@ public abstract class AbstractDatabase implements Database {
                 for (EmbeddableField embeddableField : embeddable.getFields()) {
                     boolean matched = false;
 
-                    for (ColumnDefinition column : table.getColumns())
-                        if (matches(patterns.pattern(embeddableField.getExpression()), column))
-                            if (matched)
+                    for (ColumnDefinition column : table.getColumns()) {
+                        if (matches(patterns.pattern(embeddableField.getExpression()), column)) {
+                            if (matched) {
                                 Logging.log(onMetadataProblem(),
                                     () -> "EmbeddableField configuration matched several columns in table " + table + ": " + embeddableField);
-                            else
+                            }
+                            else {
                                 matched = columns.add(column) && names.add(defaultIfEmpty(embeddableField.getName(), column.getName()));
+                                embeddableColumns.add(column);
+                            }
+                        }
+                    }
                 }
 
                 if (columns.size() == embeddable.getFields().size()) {
@@ -2973,6 +2997,35 @@ public abstract class AbstractDatabase implements Database {
                 }
             }
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

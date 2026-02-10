@@ -1456,6 +1456,12 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
 This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
+      <element name="embeddableColumns" type="string" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A regular expression matching all columns for which an embeddable definition should be generated.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="readonlyIdentities" type="boolean" default="false" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether identity columns should expose {@link org.jooq.DataType#readonly()} behaviour.
 <p>

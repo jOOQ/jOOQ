@@ -229,6 +229,7 @@ implements
         ctx.visit(N_JSON_ARRAY).sqlIndentStart('(');
 
         switch (ctx.family()) {
+
             case H2: {
                 // Work around this limitation: https://github.com/h2database/h2database/issues/4325
                 SelectQueryImpl<Record> s = Tools.selectQueryImpl(select);

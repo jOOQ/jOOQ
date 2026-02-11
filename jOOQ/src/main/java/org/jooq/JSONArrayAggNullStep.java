@@ -43,8 +43,11 @@ import org.jetbrains.annotations.*;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.DUCKDB;
 import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.MARIADB;
+import static org.jooq.SQLDialect.MYSQL;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
@@ -74,6 +77,6 @@ public interface JSONArrayAggNullStep<T> extends JSONArrayAggReturningStep<T> {
      * Exclude <code>NULL</code> values in output JSON.
      */
     @NotNull
-    @Support({ DUCKDB, H2, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     JSONArrayAggReturningStep<T> absentOnNull();
 }

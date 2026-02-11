@@ -37,7 +37,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.JSON.json;
 // ...
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
@@ -84,6 +83,7 @@ import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.JSON;
 import static org.jooq.impl.SQLDataType.JSONB;
 import static org.jooq.impl.SQLDataType.VARCHAR;
+import static org.jooq.impl.Tools.castIfNeeded;
 
 import java.util.Collection;
 import java.util.Set;
@@ -320,12 +320,22 @@ implements
     private final Field<?> groupConcatEmulation(Context<?> ctx) {
         Field<?> arg1 = arguments.get(0);
 
-        if (arg1.getDataType().isString()) {
+        // [#19643] Treat all non-JSON data types as string types
+        if (!arg1.getDataType().isBoolean()
+            && !arg1.getDataType().isNumeric()
+            && !arg1.getDataType().isJSON()
+        ) {
             switch (ctx.family()) {
                 case MARIADB:
                 case MYSQL:
-                    arg1 = function(N_JSON_QUOTE, getDataType(), arg1);
+                    arg1 = function(N_JSON_QUOTE, getDataType(), castIfNeeded(arg1, String.class));
                     break;
+
+
+
+
+
+
 
 
 

@@ -369,14 +369,17 @@ implements
 
 
 
+        if (onNull == NULL_ON_NULL) {
+            switch (ctx.family()) {
 
 
 
-
-
-
-
-
+                case MARIADB:
+                case MYSQL:
+                    arg1 = DSL.coalesce(arg1, inline("null"));
+                    break;
+            }
+        }
 
         Field<?> arg2 = arg1;
         return DSL.concat(

@@ -202,6 +202,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import org.jooq.AlterTableAddStep;
 import org.jooq.AlterTableAlterConstraintStep;
@@ -1331,7 +1332,10 @@ implements
         }
 
         // [#3805] Compound statements to alter data type and change nullability in a single statement if needed.
-        if (alterColumnType != null && alterColumnType.nullability() != Nullability.DEFAULT) {
+        if (alterColumnType != null && (
+            alterColumnType.nullability() != Nullability.DEFAULT ||
+            alterColumnType.identity()
+        )) {
             switch (family) {
 
 
@@ -1813,7 +1817,22 @@ implements
                 }
 
                 ctx.sql(' ');
-                acceptColumnType(ctx, table, alterColumnType);
+
+                DataType<?> t = alterColumnType;
+
+                // [#8935] This is already being handled elsewhere
+                switch (family) {
+
+
+                    case POSTGRES:
+                    case YUGABYTEDB:
+                        if (t.identity())
+                            t = t.identity(false);
+
+                        break;
+                }
+
+                acceptColumnType(ctx, table, t);
             }
             else if (alterColumnDefault != null) {
                 ctx.start(ALTER_TABLE_ALTER_DEFAULT);
@@ -2330,11 +2349,17 @@ implements
 
 
 
+
                 case POSTGRES:
                 case YUGABYTEDB: {
-                    AlterTableAlterStep<?> step = c1.dsl().alterTable(table).alterColumn(alterColumn);
-                    c1.visit(alterColumnType.nullable() ? step.dropNotNull() : step.setNotNull())
+                    Supplier<AlterTableAlterStep<?>> s = () -> c1.dsl().alterTable(table).alterColumn(alterColumn);
+                    c1.visit(alterColumnType.nullable() ? s.get().dropNotNull() : s.get().setNotNull())
                        .sql(';');
+
+                    // [#8935] Set identity flag separately
+                    if (alterColumnType.identity())
+                        c1.formatSeparator().visit(s.get().setGeneratedByDefaultAsIdentity()).sql(';');
+
                     break;
                 }
             }

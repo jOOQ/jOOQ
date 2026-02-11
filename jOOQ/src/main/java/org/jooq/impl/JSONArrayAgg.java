@@ -79,6 +79,7 @@ import static org.jooq.impl.QOM.JSONOnNull.ABSENT_ON_NULL;
 import static org.jooq.impl.QOM.JSONOnNull.NULL_ON_NULL;
 import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.SQLDataType.BLOB;
+import static org.jooq.impl.SQLDataType.CLOB;
 import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.JSON;
 import static org.jooq.impl.SQLDataType.JSONB;
@@ -264,7 +265,7 @@ implements
                 break;
             }
 
-            case SQLITE:
+            case SQLITE: {
                 ctx.visit(N_JSON_GROUP_ARRAY).sql('(');
                 acceptDistinct(ctx);
                 ctx.visit(arguments.get(0));
@@ -278,6 +279,7 @@ implements
 
                 acceptOverClause(ctx);
                 break;
+            }
 
             case TRINO: {
                 boolean noAggregateFilter = onNull == JSONOnNull.ABSENT_ON_NULL && !supportsFilter(ctx);
@@ -334,6 +336,25 @@ implements
 
             }
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

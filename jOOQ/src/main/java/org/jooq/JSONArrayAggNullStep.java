@@ -73,7 +73,7 @@ public interface JSONArrayAggNullStep<T> extends JSONArrayAggReturningStep<T> {
      * Include <code>NULL</code> values in output JSON.
      */
     @NotNull
-    @Support({ DUCKDB, H2, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    @Support({ DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     JSONArrayAggReturningStep<T> nullOnNull();
 
     /**

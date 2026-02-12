@@ -1226,7 +1226,7 @@ implements
                     if (nameChange)
                         s.add(alterTable(table).renameColumnIfExists(changeColumnFrom).to(changeColumnTo));
 
-                    s.add(alterTable(table).alterIfExists(changeColumnTo).set(changeColumnType.identity(false)));
+                    s.add(alterTable(table).alterIfExists(changeColumnTo).set(changeColumnType.identityMode(null)));
 
                     if (identityChange)
                         s.add(alterTable(table).alterColumnIfExists(changeColumnFrom).setGeneratedByDefaultAsIdentity());
@@ -1235,7 +1235,7 @@ implements
                     if (nameChange)
                         s.add(alterTable(table).renameColumn(changeColumnFrom).to(changeColumnTo));
 
-                    s.add(alterTable(table).alter(changeColumnTo).set(changeColumnType.identity(false)));
+                    s.add(alterTable(table).alter(changeColumnTo).set(changeColumnType.identityMode(null)));
 
                     if (identityChange)
                         s.add(alterTable(table).alterColumn(changeColumnFrom).setGeneratedByDefaultAsIdentity());
@@ -1833,7 +1833,7 @@ implements
                     case POSTGRES:
                     case YUGABYTEDB:
                         if (t.identity())
-                            t = t.identity(false);
+                            t = t.identityMode(null);
 
                         break;
                 }

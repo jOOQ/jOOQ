@@ -176,6 +176,7 @@ import org.jooq.impl.Internal;
 import org.jooq.impl.LazySchema;
 import org.jooq.impl.LazySupplier;
 import org.jooq.impl.PackageImpl;
+import org.jooq.impl.QOM.GenerationMode;
 import org.jooq.impl.QOM.GenerationOption;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.SchemaImpl;
@@ -11896,7 +11897,7 @@ public class JavaGenerator extends AbstractGenerator {
             type.getScale(),
             type.getLength(),
             type.isNullable(),
-            type.isIdentity(),
+            type.getIdentityMode(),
             type.isHidden(),
             type.isRedacted(),
             type.isReadonly(),
@@ -12351,7 +12352,7 @@ public class JavaGenerator extends AbstractGenerator {
             s,
             l,
             n,
-            i,
+            i ? GenerationMode.BY_DEFAULT : null,
             h,
             false,
             r,
@@ -12373,7 +12374,7 @@ public class JavaGenerator extends AbstractGenerator {
         int scale,
         int length,
         boolean nullable,
-        boolean identity,
+        GenerationMode identity,
         boolean hidden,
         boolean redacted,
         boolean readonly,
@@ -12445,7 +12446,7 @@ public class JavaGenerator extends AbstractGenerator {
 
             // Mostly because of unsupported data types.
             catch (SQLDialectNotSupportedException ignore) {
-                dataType = SQLDataType.OTHER.nullable(nullable).identity(identity);
+                dataType = SQLDataType.OTHER.nullable(nullable).identityMode(identity);
 
                 sb = new StringBuilder();
 
@@ -12455,7 +12456,7 @@ public class JavaGenerator extends AbstractGenerator {
                 sb.append("\")");
             }
 
-            dataType = dataType.nullable(nullable).identity(identity);
+            dataType = dataType.nullable(nullable).identityMode(identity);
 
 
 
@@ -12523,7 +12524,10 @@ public class JavaGenerator extends AbstractGenerator {
             appendTypeReferenceNullability(db, out, sb, nullable);
 
             if (dataType.identity())
-                sb.append(".identity(true)");
+                if (dataType.identityMode() == GenerationMode.ALWAYS)
+                    sb.append(".generatedAlwaysAsIdentity()");
+                else
+                    sb.append(".generatedByDefaultAsIdentity()");
 
 
 

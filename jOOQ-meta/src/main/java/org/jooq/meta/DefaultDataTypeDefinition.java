@@ -53,6 +53,7 @@ import java.util.regex.Pattern;
 import org.jooq.Name;
 import org.jooq.SQLDialect;
 import org.jooq.impl.QOM.GenerationLocation;
+import org.jooq.impl.QOM.GenerationMode;
 import org.jooq.impl.QOM.GenerationOption;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
@@ -85,7 +86,7 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
     private String                 generatedAlwaysAs;
     private GenerationOption       generationOption;
     private XMLTypeDefinition      xmlTypeDefinition;
-    private boolean                identity;
+    private GenerationMode         identity;
     private String                 defaultValue;
     private final int              length;
     private final int              precision;
@@ -115,23 +116,74 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
         this(database, schema, typeName, length, precision, scale, nullable, defaultValue, false, userType, converter, binding, javaType);
     }
 
-    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, String defaultValue, boolean isIdentity, Name userType, String converter, String binding, String javaType) {
-        this(database, schema, typeName, length, precision, scale, nullable, false, null, defaultValue, isIdentity, userType, converter, binding, javaType);
+    /**
+     * @deprecated - 3.21.0 - [#15952] - Use
+     *             {@link #DefaultDataTypeDefinition(Database, SchemaDefinition, String, Number, Number, Number, Boolean, String, GenerationMode, Name, String, String, String)} instead.
+     *             instead.
+     */
+    @Deprecated
+    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, String defaultValue, boolean identity, Name userType, String converter, String binding, String javaType) {
+        this(database, schema, typeName, length, precision, scale, nullable, false, null, defaultValue, identity, userType, converter, binding, javaType);
     }
 
+    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, String defaultValue, GenerationMode identity, Name userType, String converter, String binding, String javaType) {
+        this(database, schema, typeName, length, precision, scale, nullable, false, null, defaultValue, identity, userType, converter, binding, javaType);
+    }
+
+    /**
+     * @deprecated - 3.21.0 - [#15952] - Use
+     *             {@link #DefaultDataTypeDefinition(Database, SchemaDefinition, String, Number, Number, Number, Boolean, boolean, String, String, GenerationMode, Name, String, String, String)}
+     *             instead.
+     */
+    @Deprecated
     public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, boolean readonly, String generatedAlwaysAs, String defaultValue, boolean identity, Name userType, String converter, String binding, String javaType) {
         this(database, schema, typeName, length, precision, scale, nullable, readonly, generatedAlwaysAs, defaultValue, identity, userType, null, converter, binding, javaType);
     }
 
+    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, boolean readonly, String generatedAlwaysAs, String defaultValue, GenerationMode identity, Name userType, String converter, String binding, String javaType) {
+        this(database, schema, typeName, length, precision, scale, nullable, readonly, generatedAlwaysAs, defaultValue, identity, userType, null, converter, binding, javaType);
+    }
+
+    /**
+     * @deprecated - 3.21.0 - [#15952] - Use
+     *             {@link #DefaultDataTypeDefinition(Database, SchemaDefinition, String, Number, Number, Number, Boolean, boolean, String, String, GenerationMode, Name, String, String, String, String)}
+     *             instead.
+     */
+    @Deprecated
     public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, boolean readonly, String generatedAlwaysAs, String defaultValue, boolean identity, Name userType, String generator, String converter, String binding, String javaType) {
         this(database, schema, typeName, length, precision, scale, nullable, false, readonly, generatedAlwaysAs, defaultValue, identity, userType, generator, converter, binding, javaType);
     }
 
+    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, boolean readonly, String generatedAlwaysAs, String defaultValue, GenerationMode identity, Name userType, String generator, String converter, String binding, String javaType) {
+        this(database, schema, typeName, length, precision, scale, nullable, false, readonly, generatedAlwaysAs, defaultValue, identity, userType, generator, converter, binding, javaType);
+    }
+
+    /**
+     * @deprecated - 3.21.0 - [#15952] - Use
+     *             {@link #DefaultDataTypeDefinition(Database, SchemaDefinition, String, Number, Number, Number, Boolean, boolean, boolean, String, String, GenerationMode, Name, String, String, String, String)}
+     *             instead.
+     */
+    @Deprecated
     public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, boolean hidden, boolean readonly, String generatedAlwaysAs, String defaultValue, boolean identity, Name userType, String generator, String converter, String binding, String javaType) {
         this(database, schema, typeName, length, precision, scale, nullable, hidden, false, readonly, generatedAlwaysAs, defaultValue, identity, userType, generator, converter, binding, javaType);
     }
 
+    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, boolean hidden, boolean readonly, String generatedAlwaysAs, String defaultValue, GenerationMode identity, Name userType, String generator, String converter, String binding, String javaType) {
+        this(database, schema, typeName, length, precision, scale, nullable, hidden, false, readonly, generatedAlwaysAs, defaultValue, identity, userType, generator, converter, binding, javaType);
+    }
+
+    /**
+     * @deprecated - 3.21.0 - [#15952] - Use
+     *             {@link #DefaultDataTypeDefinition(Database, SchemaDefinition, String, Number, Number, Number, Boolean, boolean, boolean, boolean, String, String, GenerationMode, Name, String, String, String, String)}
+     *             instead.
+     */
+    @Deprecated
     public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, boolean hidden, boolean redacted, boolean readonly, String generatedAlwaysAs, String defaultValue, boolean identity, Name userType, String generator, String converter, String binding, String javaType) {
+        this(database, schema, typeName, length, precision, scale, nullable, hidden, redacted, readonly, generatedAlwaysAs, defaultValue, identity ? GenerationMode.BY_DEFAULT : null, userType, generator, converter, binding, javaType);
+    }
+
+    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, boolean hidden, boolean redacted, boolean readonly, String generatedAlwaysAs, String defaultValue, GenerationMode identity, Name userType, String generator, String converter, String binding, String javaType) {
+
         this.database = database;
         this.schema = schema;
 
@@ -170,8 +222,8 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
         this.readonly = readonly;
 
         // [#19512] Identity and generators / defaults are mutually exclusive, even if the identity is implemented using a default.
-        this.generatedAlwaysAs = identity ? null : generatedAlwaysAs;
-        this.defaultValue = identity ? null : defaultValue;
+        this.generatedAlwaysAs = identity != null ? null : generatedAlwaysAs;
+        this.defaultValue = identity != null ? null : defaultValue;
         this.identity = identity;
 
         if (generator != null)
@@ -282,7 +334,15 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
         return this;
     }
 
+    /**
+     * @deprecated - 3.21.0 - [#15952] - Use {@link #identity(GenerationMode)} instead.
+     */
+    @Deprecated
     public final DefaultDataTypeDefinition identity(boolean i) {
+        return identity(i ? GenerationMode.BY_DEFAULT : null);
+    }
+
+    public final DefaultDataTypeDefinition identity(GenerationMode i) {
         this.identity = i;
         return this;
     }
@@ -293,8 +353,13 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
     }
 
     @Override
-    public final boolean isIdentity() {
+    public final GenerationMode getIdentityMode() {
         return identity;
+    }
+
+    @Override
+    public final boolean isIdentity() {
+        return identity != null;
     }
 
     @Override

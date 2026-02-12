@@ -126,6 +126,7 @@ import org.jooq.impl.DefaultParseContext.IgnoreQuery;
 import org.jooq.impl.QOM.Cascade;
 import org.jooq.impl.QOM.CycleOption;
 import org.jooq.impl.QOM.ForeignKeyRule;
+import org.jooq.impl.QOM.GenerationMode;
 import org.jooq.impl.QOM.TableScope;
 import org.jooq.tools.JooqLogger;
 
@@ -685,9 +686,12 @@ final class Interpreter {
             else if (query.$alterColumnDropDefault())
                 existingField.type = existingField.type.default_((Field) null);
             else if (query.$alterColumnSetIdentity() != null)
-                existingField.type = existingField.type.generatedByDefaultAsIdentity();
+                if (query.$alterColumnSetIdentity() == GenerationMode.ALWAYS)
+                    existingField.type = existingField.type.generatedAlwaysAsIdentity();
+                else
+                    existingField.type = existingField.type.generatedByDefaultAsIdentity();
             else if (query.$alterColumnDropIdentity())
-                existingField.type = existingField.type.identity(false);
+                existingField.type = existingField.type.identityMode(null);
             else
                 throw unsupportedQuery(query);
         }

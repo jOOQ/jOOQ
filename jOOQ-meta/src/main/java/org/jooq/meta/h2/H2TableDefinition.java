@@ -63,6 +63,8 @@ import org.jooq.Name;
 import org.jooq.Param;
 import org.jooq.Record;
 import org.jooq.TableOptions.TableType;
+import org.jooq.impl.DSL;
+import org.jooq.impl.QOM.GenerationMode;
 import org.jooq.meta.AbstractTableDefinition;
 import org.jooq.meta.ColumnDefinition;
 import org.jooq.meta.DataTypeDefinition;
@@ -135,6 +137,8 @@ public class H2TableDefinition extends AbstractTableDefinition {
                 COLUMNS.COLUMN_DEFAULT,
                 COLUMNS.REMARKS,
                 Tables.COLUMNS.IS_IDENTITY.eq(inline("YES")).as(Tables.COLUMNS.IS_IDENTITY),
+                when(Tables.COLUMNS.IDENTITY_GENERATION.eq(inline("BY DEFAULT")), inline(GenerationMode.BY_DEFAULT.name()))
+                    .else_(Tables.COLUMNS.IDENTITY_GENERATION).as(Tables.COLUMNS.IDENTITY_GENERATION),
                 COLUMNS.DOMAIN_SCHEMA,
                 COLUMNS.DOMAIN_NAME,
                 Tables.COLUMNS.DTD_IDENTIFIER,
@@ -155,6 +159,7 @@ public class H2TableDefinition extends AbstractTableDefinition {
             boolean isIdentity =
                    record.get(Tables.COLUMNS.IS_IDENTITY, boolean.class)
                 || defaultString(record.get(COLUMNS.COLUMN_DEFAULT)).trim().toLowerCase().startsWith("nextval");
+            GenerationMode identityMode = record.get(Tables.COLUMNS.IDENTITY_GENERATION, GenerationMode.class);
 
             boolean isComputed = record.get(COLUMNS.IS_COMPUTED, boolean.class);
 
@@ -182,7 +187,8 @@ public class H2TableDefinition extends AbstractTableDefinition {
                 record.get(COLUMNS.IS_NULLABLE, boolean.class),
                 isIdentity || isComputed ? null : record.get(COLUMNS.COLUMN_DEFAULT),
                 userType
-            ).generatedAlwaysAs(isComputed ? record.get(Tables.COLUMNS.GENERATION_EXPRESSION) : null);
+            ).generatedAlwaysAs(isComputed ? record.get(Tables.COLUMNS.GENERATION_EXPRESSION) : null)
+                .identity(identityMode);
 
 
 
@@ -194,7 +200,7 @@ public class H2TableDefinition extends AbstractTableDefinition {
                 record.get(COLUMNS.COLUMN_NAME),
                 result.size() + 1,
                 type,
-                isIdentity,
+                identityMode,
                 record.get(COLUMNS.REMARKS))
             );
         }

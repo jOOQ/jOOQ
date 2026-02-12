@@ -43,6 +43,7 @@ import java.util.List;
 import org.jooq.Name;
 // ...
 import org.jooq.impl.QOM.GenerationLocation;
+import org.jooq.impl.QOM.GenerationMode;
 import org.jooq.impl.QOM.GenerationOption;
 import org.jooq.meta.jaxb.ForcedType;
 
@@ -163,6 +164,11 @@ public interface DataTypeDefinition {
      * The computed column generation location.
      */
     GenerationLocation getGenerationLocation();
+
+    /**
+     * The identity generation mode.
+     */
+    GenerationMode getIdentityMode();
 
     /**
      * Whether this data type is an identity.

@@ -571,7 +571,7 @@ class GenerationUtil {
             type.isReadonly(),
             type.getGeneratedAlwaysAs(),
             type.getDefaultValue(),
-            type.isIdentity(),
+            type.getIdentityMode(),
             bt.u(),
             type.getGenerator(),
             type.getConverter(),

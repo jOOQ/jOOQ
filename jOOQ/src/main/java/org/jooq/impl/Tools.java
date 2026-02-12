@@ -402,6 +402,7 @@ import org.jooq.exception.TemplatingException;
 import org.jooq.exception.TooManyRowsException;
 import org.jooq.impl.DefaultRecordMapper.MappedMember;
 import org.jooq.impl.DefaultRecordMapper.MappedMethod;
+import org.jooq.impl.QOM.GenerationMode;
 import org.jooq.impl.QOM.Quantifier;
 import org.jooq.impl.ResultsImpl.ResultOrRowsImpl;
 import org.jooq.tools.Ints;
@@ -5905,21 +5906,48 @@ final class Tools {
 
 
 
-                case CUBRID:    ctx.sql(' ').visit(K_AUTO_INCREMENT); break;
 
-                case HSQLDB:    ctx.sql(' ').visit(K_GENERATED).sql(' ').visit(K_BY).sql(' ').visit(K_DEFAULT).sql(' ').visit(K_AS).sql(' ').visit(K_IDENTITY).sql('(').visit(K_START_WITH).sql(" 1)"); break;
-                case SQLITE:    ctx.sql(' ').visit(K_PRIMARY_KEY).sql(' ').visit(K_AUTOINCREMENT); break;
+
+
+
+
+                case CUBRID:
+                    ctx.sql(' ').visit(K_AUTO_INCREMENT);
+                    break;
+
+
+                case HSQLDB:
+                    if (type.identityMode() == GenerationMode.ALWAYS)
+                        ctx.sql(' ').visit(K_GENERATED).sql(' ').visit(K_ALWAYS).sql(' ').visit(K_AS).sql(' ').visit(K_IDENTITY).sql('(').visit(K_START_WITH).sql(" 1)");
+                    else
+                        ctx.sql(' ').visit(K_GENERATED).sql(' ').visit(K_BY).sql(' ').visit(K_DEFAULT).sql(' ').visit(K_AS).sql(' ').visit(K_IDENTITY).sql('(').visit(K_START_WITH).sql(" 1)");
+
+                    break;
+
+                case SQLITE:
+                    ctx.sql(' ').visit(K_PRIMARY_KEY).sql(' ').visit(K_AUTOINCREMENT);
+                    break;
+
 
                 case POSTGRES:
                     if (SUPPORT_PG_IDENTITY.contains(ctx.dialect()))
-                        ctx.sql(' ').visit(K_GENERATED).sql(' ').visit(K_BY).sql(' ').visit(K_DEFAULT).sql(' ').visit(K_AS).sql(' ').visit(K_IDENTITY);
+                        if (type.identityMode() == GenerationMode.ALWAYS)
+                            ctx.sql(' ').visit(K_GENERATED).sql(' ').visit(K_BY).sql(' ').visit(K_DEFAULT).sql(' ').visit(K_AS).sql(' ').visit(K_IDENTITY);
+                        else
+                            ctx.sql(' ').visit(K_GENERATED).sql(' ').visit(K_ALWAYS).sql(' ').visit(K_AS).sql(' ').visit(K_IDENTITY);
 
                     break;
 
 
                 case DERBY:
                 case FIREBIRD:
-                case YUGABYTEDB: ctx.sql(' ').visit(K_GENERATED).sql(' ').visit(K_BY).sql(' ').visit(K_DEFAULT).sql(' ').visit(K_AS).sql(' ').visit(K_IDENTITY); break;
+                case YUGABYTEDB:
+                    if (type.identityMode() == GenerationMode.ALWAYS)
+                        ctx.sql(' ').visit(K_GENERATED).sql(' ').visit(K_ALWAYS).sql(' ').visit(K_AS).sql(' ').visit(K_IDENTITY);
+                    else
+                        ctx.sql(' ').visit(K_GENERATED).sql(' ').visit(K_BY).sql(' ').visit(K_DEFAULT).sql(' ').visit(K_AS).sql(' ').visit(K_IDENTITY);
+
+                    break;
             }
         }
     }
@@ -5939,7 +5967,13 @@ final class Tools {
 
 
 
-                case H2:     ctx.sql(' ').visit(K_GENERATED).sql(' ').visit(K_BY).sql(' ').visit(K_DEFAULT).sql(' ').visit(K_AS).sql(' ').visit(K_IDENTITY); break;
+                case H2:
+                    if (type.identityMode() == GenerationMode.ALWAYS)
+                        ctx.sql(' ').visit(K_GENERATED).sql(' ').visit(K_ALWAYS).sql(' ').visit(K_AS).sql(' ').visit(K_IDENTITY);
+                    else
+                        ctx.sql(' ').visit(K_GENERATED).sql(' ').visit(K_BY).sql(' ').visit(K_DEFAULT).sql(' ').visit(K_AS).sql(' ').visit(K_IDENTITY);
+
+                    break;
 
 
 

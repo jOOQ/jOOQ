@@ -790,6 +790,7 @@ import org.jooq.conf.RenderKeywordCase;
 import org.jooq.conf.RenderNameCase;
 import org.jooq.conf.RenderQuotedNames;
 import org.jooq.impl.QOM.DocumentOrContent;
+import org.jooq.impl.QOM.GenerationMode;
 import org.jooq.impl.QOM.JSONOnNull;
 import org.jooq.impl.QOM.JoinHint;
 import org.jooq.impl.QOM.PrimaryKey;
@@ -4862,7 +4863,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         List<Constraint> constraints = new ArrayList<>();
         List<Index> indexes = new ArrayList<>();
         boolean primary = false;
-        boolean identity = false;
+        GenerationMode identity = null;
         boolean hidden = false;
         boolean readonly = false;
         boolean ctas = false;
@@ -4882,7 +4883,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                     primary = true;
                     PrimaryKeySpecification pk = parsePrimaryKeySpecification(constraint, true);
                     constraints.add(pk.constraint());
-                    if (pk.identity()) {
+                    if (pk.identity() != null) {
                         PrimaryKey c = (PrimaryKey) pk.constraint();
 
                         replacement:
@@ -4891,7 +4892,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                                 Field<?> f = fields.get(i);
 
                                 if (f.getName().equalsIgnoreCase(c.$fields().get(0).getName())) {
-                                    fields.set(i, field(f.getQualifiedName(), f.getDataType().identity(true)));
+                                    fields.set(i, field(f.getQualifiedName(), f.getDataType().identityMode(pk.identity())));
                                     break replacement;
                                 }
                             }
@@ -5202,14 +5203,14 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         return true;
     }
 
-    private static final record ParseInlineConstraints(DataType<?> type, Comment fieldComment, boolean primary, boolean identity, boolean hidden, boolean readonly) {}
+    private static final record ParseInlineConstraints(DataType<?> type, Comment fieldComment, boolean primary, GenerationMode identity, boolean hidden, boolean readonly) {}
 
     private final ParseInlineConstraints parseInlineConstraints(
         Name fieldName,
         DataType<?> type,
         List<? super Constraint> constraints,
         boolean primary,
-        boolean identity,
+        GenerationMode identity,
         boolean hidden,
         boolean readonly
     ) {
@@ -5224,7 +5225,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         boolean sparse = false;
         Comment fieldComment = null;
 
-        identity |= type.identity();
+        if (identity == null)
+            identity = type.identityMode();
         hidden |= type.hidden();
         readonly |= type.readonly();
 
@@ -5245,7 +5247,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
             }
 
             if (!defaultValue) {
-                if (!identity && parseKeywordIf("IDENTITY")) {
+                if (identity == null && parseKeywordIf("IDENTITY")) {
                     if (parseIf('(')) {
                         parseSignedIntegerLiteral();
                         parse(',');
@@ -5253,9 +5255,9 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                         parse(')');
                     }
 
-                    type = type.identity(true);
+                    identity = GenerationMode.BY_DEFAULT;
+                    type = type.identityMode(identity);
                     defaultValue = true;
-                    identity = true;
                     continue;
                 }
                 else if (parseKeywordIf("NOT HIDDEN", "VISIBLE")) {
@@ -5275,7 +5277,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
                     // [#10963] Special case nextval('<id>_seq'::regclass)
                     if (parseSerialIf()) {
-                        type = type.identity(true);
+                        type = type.identityMode(GenerationMode.BY_DEFAULT);
                     }
                     else {
 
@@ -5321,7 +5323,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
 
                 }
-                else if ((!identity || !computed) && parseKeywordIf("GENERATED")) {
+                else if ((identity == null || !computed) && parseKeywordIf("GENERATED")) {
                     boolean always;
                     if (!(always = parseKeywordIf("ALWAYS"))) {
                         parseKeyword("BY DEFAULT");
@@ -5332,8 +5334,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
                     if (always ? parseKeywordIf("AS IDENTITY") : parseKeyword("AS IDENTITY")) {
                         parseIdentityOptionIf();
-                        type = type.identity(true);
-                        identity = true;
+                        identity = always ? GenerationMode.ALWAYS : GenerationMode.BY_DEFAULT;
+                        type = type.identityMode(identity);
                     }
                     else if (!ignoreProEdition() && parseKeyword("AS") && requireProEdition()) {
 
@@ -5402,11 +5404,11 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                 }
             }
 
-            if (!identity) {
+            if (identity == null) {
                 if (parseKeywordIf("AUTO_INCREMENT") ||
                     parseKeywordIf("AUTOINCREMENT")) {
-                    type = type.identity(true);
-                    identity = true;
+                    identity = GenerationMode.BY_DEFAULT;
+                    type = type.identityMode(identity);
                     continue;
                 }
             }
@@ -5706,7 +5708,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         return parseKeywordIf("INITIALLY") && parseKeyword("DEFERRED", "IMMEDIATE");
     }
 
-    private static final record PrimaryKeySpecification(Constraint constraint, boolean identity) {}
+    private static final record PrimaryKeySpecification(Constraint constraint, GenerationMode identity) {}
 
     private final PrimaryKeySpecification parsePrimaryKeySpecification(ConstraintTypeStep constraint, boolean allowIdentity) {
         parseUsingIndexTypeIf();
@@ -5741,7 +5743,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         return parseConstraintEnforcementIf(e);
     }
 
-    private static final record KeyColumnList(Field<?>[] fields, boolean identity) {}
+    private static final record KeyColumnList(Field<?>[] fields, GenerationMode identity) {}
 
     private final KeyColumnList parseKeyColumnList(boolean allowIdentity) {
         SortSpecification s = parseParenthesisedSortSpecification(allowIdentity);
@@ -6195,7 +6197,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
         int p = list == null ? -1 : list.size();
 
-        ParseInlineConstraints inline = parseInlineConstraints(fieldName, type, list, false, false, false, false);
+        ParseInlineConstraints inline = parseInlineConstraints(fieldName, type, list, false, null, false, false);
         Field<?> result = field(fieldName, inline.type, inline.fieldComment);
 
         if (list != null)
@@ -6285,7 +6287,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
             type,
             constraints,
             false,
-            false,
+            null,
             false,
             false
         );
@@ -6293,8 +6295,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         if (!constraints.isEmpty() || r.primary())
             throw notImplemented("ALTER TABLE with inline constraints", "https://github.com/jOOQ/jOOQ/issues/10163");
 
-        if (r.identity())
-            type = type.identity(true);
+        if (r.identity() != null)
+            type = type.identityMode(r.identity());
         if (r.hidden())
             type = type.hidden(true);
         if (r.readonly())
@@ -7155,7 +7157,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
             : s3;
     }
 
-    private static final record SortSpecification(SortField<?>[] fields, boolean identity) {}
+    private static final record SortSpecification(SortField<?>[] fields, GenerationMode identity) {}
 
     private SortSpecification parseParenthesisedSortSpecification(boolean allowIdentity) {
         parse('(');
@@ -7163,7 +7165,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         boolean identity = fields.length == 1 && allowIdentity && parseKeywordIf("AUTOINCREMENT", "AUTO_INCREMENT");
         parse(')');
 
-        return new SortSpecification(fields, identity);
+        return new SortSpecification(fields, identity ? GenerationMode.BY_DEFAULT : null);
     }
 
     private final boolean parseUsingIndexTypeIf() {

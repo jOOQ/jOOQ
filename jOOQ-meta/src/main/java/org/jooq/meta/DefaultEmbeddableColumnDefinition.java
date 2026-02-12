@@ -81,7 +81,7 @@ public class DefaultEmbeddableColumnDefinition
                 original.isReadonly(),
                 original.getGeneratedAlwaysAs(),
                 original.getDefaultValue(),
-                original.isIdentity(),
+                original.getIdentityMode(),
                 original.getQualifiedUserType(),
                 original.getGenerator(),
                 original.getConverter(),

@@ -41,6 +41,7 @@ package org.jooq.meta;
 import java.util.List;
 
 // ...
+import org.jooq.impl.QOM.GenerationMode;
 
 /**
  * An interface defining a column of a table.
@@ -79,6 +80,11 @@ public interface ColumnDefinition extends TypedElementDefinition<TableDefinition
      * All definitions of indexes that this column is part of.
      */
     List<IndexDefinition> getUniqueIndexes();
+
+    /**
+     * The identity generation mode.
+     */
+    GenerationMode getIdentityMode();
 
     /**
      * Whether this column is the table's <code>IDENTITY</code> column.

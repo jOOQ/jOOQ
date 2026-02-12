@@ -44,8 +44,8 @@ import static java.util.stream.Collectors.toList;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
+import org.jooq.impl.QOM.GenerationMode;
 import org.jooq.meta.jaxb.SyntheticDefaultType;
 import org.jooq.meta.jaxb.SyntheticEnumType;
 import org.jooq.meta.jaxb.SyntheticIdentityType;
@@ -58,12 +58,15 @@ import org.jooq.tools.JooqLogger;
  * @author Lukas Eder
  */
 public class DefaultColumnDefinition
-    extends AbstractTypedElementDefinition<TableDefinition>
-    implements ColumnDefinition {
+extends
+    AbstractTypedElementDefinition<TableDefinition>
+implements
+    ColumnDefinition
+{
 
     private static final JooqLogger              log = JooqLogger.getLogger(DefaultColumnDefinition.class);
     private final int                            position;
-    private final boolean                        identity;
+    private final GenerationMode                 identity;
     private final String                         defaultValue;
     private final boolean                        hidden;
     private final boolean                        redacted;
@@ -71,6 +74,12 @@ public class DefaultColumnDefinition
     private transient List<EmbeddableDefinition> replacedByEmbeddables;
     private boolean                              synthetic;
 
+    /**
+     * @deprecated - 3.21.0 - [#15952] - Use
+     *             {@link #DefaultColumnDefinition(TableDefinition, String, int, DataTypeDefinition, GenerationMode, String)}
+     *             instead.
+     */
+    @Deprecated
     public DefaultColumnDefinition(
         TableDefinition table,
         String name,
@@ -87,6 +96,23 @@ public class DefaultColumnDefinition
         String name,
         int position,
         DataTypeDefinition type,
+        GenerationMode identity,
+        String comment
+    ) {
+        this(table, name, position, type, identity, false, comment);
+    }
+
+    /**
+     * @deprecated - 3.21.0 - [#15952] - Use
+     *             {@link #DefaultColumnDefinition(TableDefinition, String, int, DataTypeDefinition, GenerationMode, boolean, String)}
+     *             instead.
+     */
+    @Deprecated
+    public DefaultColumnDefinition(
+        TableDefinition table,
+        String name,
+        int position,
+        DataTypeDefinition type,
         boolean identity,
         boolean readonly,
         String comment
@@ -94,6 +120,24 @@ public class DefaultColumnDefinition
         this(table, name, position, type, identity, type.isHidden(), readonly, comment);
     }
 
+    public DefaultColumnDefinition(
+        TableDefinition table,
+        String name,
+        int position,
+        DataTypeDefinition type,
+        GenerationMode identity,
+        boolean readonly,
+        String comment
+    ) {
+        this(table, name, position, type, identity, type.isHidden(), readonly, comment);
+    }
+
+    /**
+     * @deprecated - 3.21.0 - [#15952] - Use
+     *             {@link #DefaultColumnDefinition(TableDefinition, String, int, DataTypeDefinition, GenerationMode, boolean, boolean, String)}
+     *             instead.
+     */
+    @Deprecated
     public DefaultColumnDefinition(
         TableDefinition table,
         String name,
@@ -112,7 +156,40 @@ public class DefaultColumnDefinition
         String name,
         int position,
         DataTypeDefinition type,
+        GenerationMode identity,
+        boolean hidden,
+        boolean readonly,
+        String comment
+    ) {
+        this(table, name, position, type, identity, hidden, type.isRedacted(), readonly, comment);
+    }
+
+    /**
+     * @deprecated - 3.21.0 - [#15952] - Use
+     *             {@link #DefaultColumnDefinition(TableDefinition, String, int, DataTypeDefinition, GenerationMode, boolean, boolean, boolean, String)}
+     *             instead.
+     */
+    @Deprecated
+    public DefaultColumnDefinition(
+        TableDefinition table,
+        String name,
+        int position,
+        DataTypeDefinition type,
         boolean identity,
+        boolean hidden,
+        boolean redacted,
+        boolean readonly,
+        String comment
+    ) {
+        this(table, name, position, type, identity ? GenerationMode.BY_DEFAULT : null, hidden, redacted, readonly, comment);
+    }
+
+    public DefaultColumnDefinition(
+        TableDefinition table,
+        String name,
+        int position,
+        DataTypeDefinition type,
+        GenerationMode identity,
         boolean hidden,
         boolean redacted,
         boolean readonly,
@@ -121,11 +198,15 @@ public class DefaultColumnDefinition
         super(table, name, position, type, comment);
 
         this.position = position;
-        this.identity = identity || isSyntheticIdentity(this);
+        this.identity = identity != null
+            ? identity
+            : isSyntheticIdentity(this)
+            ? GenerationMode.BY_DEFAULT
+            : null;
         this.defaultValue = getSyntheticDefault(this);
         this.hidden = hidden;
         this.redacted = redacted;
-        this.readonly = readonly || isSyntheticReadonlyColumn(this, this.identity);
+        this.readonly = readonly || isSyntheticReadonlyColumn(this, this.identity != null);
 
         // [#6222] Copy the column's identity flag to the data type definition
         if (type instanceof DefaultDataTypeDefinition dd) {
@@ -255,8 +336,13 @@ public class DefaultColumnDefinition
     }
 
     @Override
-    public final boolean isIdentity() {
+    public final GenerationMode getIdentityMode() {
         return identity;
+    }
+
+    @Override
+    public final boolean isIdentity() {
+        return identity != null;
     }
 
     @Override

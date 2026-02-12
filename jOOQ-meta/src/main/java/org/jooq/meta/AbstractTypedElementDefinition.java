@@ -62,6 +62,7 @@ import org.jooq.impl.AutoConverter;
 import org.jooq.impl.DateAsTimestampBinding;
 import org.jooq.impl.DefaultDataType;
 import org.jooq.impl.EnumConverter;
+import org.jooq.impl.QOM.GenerationMode;
 import org.jooq.impl.QOM.GenerationOption;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.XMLtoJAXBConverter;
@@ -188,7 +189,7 @@ implements
                         child.getSchema(),
                         forcedDataType.getTypeName(),
                         0, 0, 0,
-                        result.isNullable(), result.getDefaultValue(), result.isIdentity(), (Name) null, null,
+                        result.isNullable(), result.getDefaultValue(), result.getIdentityMode(), (Name) null, null,
                         binding, null
                     );
                 }
@@ -213,7 +214,7 @@ implements
 
             boolean nullable = result.isNullable();
             String defaultValue = result.getDefaultValue();
-            boolean identity = result.isIdentity();
+            GenerationMode identity = result.getIdentityMode();
             boolean hidden = result.isHidden();
             boolean redacted = result.isRedacted();
             boolean readonly = result.isReadonly();

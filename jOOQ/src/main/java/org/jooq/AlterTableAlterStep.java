@@ -187,6 +187,13 @@ public interface AlterTableAlterStep<T> {
     AlterTableFinalStep setGeneratedByDefaultAsIdentity();
 
     /**
+     * Make the column an <code>IDENTITY</code> column.
+     */
+    @NotNull @CheckReturnValue
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    AlterTableFinalStep setGeneratedAlwaysAsIdentity();
+
+    /**
      * Drop the <code>IDENTITY</code> property from the column.
      */
     @NotNull @CheckReturnValue

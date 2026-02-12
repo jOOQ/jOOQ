@@ -926,6 +926,12 @@ implements
     }
 
     @Override
+    public final AlterTableImpl setGeneratedAlwaysAsIdentity() {
+        alterColumnSetIdentity = GenerationMode.ALWAYS;
+        return this;
+    }
+
+    @Override
     public final AlterTableImpl dropIdentity() {
         alterColumnDropIdentity = true;
         return this;

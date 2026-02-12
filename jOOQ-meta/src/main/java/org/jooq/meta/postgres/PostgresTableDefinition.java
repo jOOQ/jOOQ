@@ -67,6 +67,7 @@ import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.TableOptions.TableType;
 import org.jooq.impl.DSL;
+import org.jooq.impl.QOM.GenerationMode;
 import org.jooq.impl.QOM.GenerationOption;
 import org.jooq.meta.AbstractTableDefinition;
 import org.jooq.meta.ColumnDefinition;
@@ -168,6 +169,12 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
             ? isIdentity10.or(count().filterWhere(isIdentity10).over().eq(inline(0)).and(isSerial))
             : isSerial;
 
+        Field<String> identityGeneration =
+              database.is10()
+            ? when(COLUMNS.IDENTITY_GENERATION.eq(inline("BY DEFAULT")), inline(GenerationMode.BY_DEFAULT.name()))
+                .else_(COLUMNS.IDENTITY_GENERATION)
+            : when(isIdentity, inline(GenerationMode.BY_DEFAULT.name()));
+
 
         for (Record record : create().select(
                 COLUMNS.COLUMN_NAME,
@@ -177,6 +184,7 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
                 precision.as(COLUMNS.NUMERIC_PRECISION),
                 scale.as(COLUMNS.NUMERIC_SCALE),
                 (when(isIdentity, inline("YES"))).as(COLUMNS.IS_IDENTITY),
+                identityGeneration.as(COLUMNS.IDENTITY_GENERATION),
                 COLUMNS.IS_NULLABLE,
                 generationExpression.as(COLUMNS.GENERATION_EXPRESSION),
                 attgenerated.as(PG_ATTRIBUTE.ATTGENERATED),
@@ -246,7 +254,7 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
                 record.get(COLUMNS.COLUMN_NAME),
                 record.get(COLUMNS.ORDINAL_POSITION, int.class),
                 type,
-                record.get(COLUMNS.IS_IDENTITY, boolean.class),
+                record.get(COLUMNS.IDENTITY_GENERATION, GenerationMode.class),
                 record.get(PG_DESCRIPTION.DESCRIPTION)
             );
 

@@ -54,6 +54,7 @@ import java.util.List;
 import org.jooq.Record;
 import org.jooq.TableOptions.TableType;
 import org.jooq.impl.DSL;
+import org.jooq.impl.QOM.GenerationMode;
 import org.jooq.meta.AbstractTableDefinition;
 import org.jooq.meta.ColumnDefinition;
 import org.jooq.meta.DataTypeDefinition;
@@ -88,7 +89,8 @@ public class HSQLDBTableDefinition extends AbstractTableDefinition {
                     .when(COLUMNS.INTERVAL_TYPE.like(any(inline("%DAY%"), inline("%HOUR%"), inline("%MINUTE%"), inline("%SECOND%"))), inline("INTERVAL DAY TO SECOND"))
                     .else_(COLUMNS.DATA_TYPE)
                 ).as(COLUMNS.DATA_TYPE),
-                COLUMNS.IDENTITY_GENERATION,
+                when(COLUMNS.IDENTITY_GENERATION.eq(inline("BY DEFAULT")), inline(GenerationMode.BY_DEFAULT.name()))
+                    .else_(COLUMNS.IDENTITY_GENERATION).as(COLUMNS.IDENTITY_GENERATION),
                 COLUMNS.IS_NULLABLE,
                 COLUMNS.COLUMN_DEFAULT,
                 COLUMNS.GENERATION_EXPRESSION,
@@ -125,6 +127,7 @@ public class HSQLDBTableDefinition extends AbstractTableDefinition {
                 : record.get(COLUMNS.IS_SYSTEM_TIME_PERIOD_END, boolean.class)
                 ? "ROW END"
                 : record.get(COLUMNS.GENERATION_EXPRESSION);
+            GenerationMode identity = record.get(COLUMNS.IDENTITY_GENERATION, GenerationMode.class);
 
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                 getDatabase(),
@@ -143,7 +146,7 @@ public class HSQLDBTableDefinition extends AbstractTableDefinition {
 			    record.get(COLUMNS.COLUMN_NAME),
                 result.size() + 1,
 			    type,
-			    null != record.get(COLUMNS.IDENTITY_GENERATION),
+			    identity,
 			    record.get(SYSTEM_COLUMNS.REMARKS)
 		    ));
 		}

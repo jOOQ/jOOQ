@@ -1146,6 +1146,10 @@ public interface DataType<T> extends Named {
      * <p>
      * [#5709] The IDENTITY flag imposes a NOT NULL constraint, and removes all
      * DEFAULT values.
+     * <p>
+     * For backwards compatibility, this corresponds to setting
+     * {@link #generatedByDefaultAsIdentity()}, if the argument is
+     * <code>true</code>.
      *
      * @param identity The new identity flag
      * @return The new data type
@@ -1168,6 +1172,10 @@ public interface DataType<T> extends Named {
      * <p>
      * [#5709] The IDENTITY {@link GenerationMode} imposes a NOT NULL
      * constraint, and removes all DEFAULT values.
+     * <p>
+     * If the underlying dialect supports identities, but doesn't support the
+     * argument {@link GenerationMode}, then the default generation mode is
+     * used, instead.
      *
      * @param identity The new identity {@link GenerationMode}
      * @return The new data type

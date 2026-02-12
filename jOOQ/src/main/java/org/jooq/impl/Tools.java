@@ -5885,7 +5885,7 @@ final class Tools {
     }
 
     private static final Set<SQLDialect> REQUIRE_IDENTITY_AFTER_NULL = SQLDialect.supportedBy(DUCKDB, H2, MARIADB, MYSQL);
-    private static final Set<SQLDialect> SUPPORT_PG_IDENTITY         = SQLDialect.supportedBy(POSTGRES);
+    private static final Set<SQLDialect> SUPPORT_PG_IDENTITY         = SQLDialect.supportedBy(COCKROACHDB_22, SQLDialect.DEFAULT, POSTGRES);
 
     /**
      * If a type is an identity type, some dialects require the relevant
@@ -5930,6 +5930,7 @@ final class Tools {
 
 
                 case POSTGRES:
+                case DEFAULT:
                     if (SUPPORT_PG_IDENTITY.contains(ctx.dialect()))
                         if (type.identityMode() == GenerationMode.ALWAYS)
                             ctx.sql(' ').visit(K_GENERATED).sql(' ').visit(K_ALWAYS).sql(' ').visit(K_AS).sql(' ').visit(K_IDENTITY);

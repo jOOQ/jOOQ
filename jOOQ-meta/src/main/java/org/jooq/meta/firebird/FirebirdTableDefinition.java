@@ -41,6 +41,7 @@ import static org.jooq.impl.DSL.bitOr;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.nvl;
 import static org.jooq.impl.DSL.trim;
+import static org.jooq.impl.DSL.when;
 import static org.jooq.meta.firebird.FirebirdDatabase.CHARACTER_LENGTH;
 import static org.jooq.meta.firebird.FirebirdDatabase.FIELD_SCALE;
 import static org.jooq.meta.firebird.FirebirdDatabase.FIELD_TYPE;
@@ -55,6 +56,7 @@ import java.util.regex.Pattern;
 import org.jooq.Record;
 import org.jooq.TableOptions.TableType;
 import org.jooq.impl.DSL;
+import org.jooq.impl.QOM.GenerationMode;
 import org.jooq.meta.AbstractTableDefinition;
 import org.jooq.meta.ColumnDefinition;
 import org.jooq.meta.DefaultColumnDefinition;
@@ -104,7 +106,10 @@ public class FirebirdTableDefinition extends AbstractTableDefinition {
                     FIELD_TYPE(f).as("FIELD_TYPE"),
                     trim(f.RDB$FIELD_NAME).as("DOMAIN_NAME"),
                     r.RDB$DESCRIPTION,
-                    (((FirebirdDatabase) getDatabase()).is30() ? r.RDB$IDENTITY_TYPE : inline((short) 0)).as(r.RDB$IDENTITY_TYPE)
+                    trim(((FirebirdDatabase) getDatabase()).is30()
+                        ? when(r.RDB$IDENTITY_TYPE.eq(inline((short) 0)), inline(GenerationMode.ALWAYS.name()))
+                            .when(r.RDB$IDENTITY_TYPE.eq(inline((short) 1)), inline(GenerationMode.BY_DEFAULT.name()))
+                        : inline((String) null)).as("identity")
                 )
                 .from(r)
                 .leftOuterJoin(f).on(r.RDB$FIELD_SOURCE.eq(f.RDB$FIELD_NAME))
@@ -136,7 +141,7 @@ public class FirebirdTableDefinition extends AbstractTableDefinition {
                 record.get(r.RDB$FIELD_NAME),
                 result.size() + 1,
                 type,
-                record.get(r.RDB$IDENTITY_TYPE, boolean.class),
+                record.get("identity", GenerationMode.class),
                 record.get(r.RDB$DESCRIPTION)
             ));
         }

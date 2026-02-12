@@ -88,7 +88,8 @@
             <element name="udt_schema" type="string" minOccurs="0" maxOccurs="1" />
             <element name="udt_name" type="string" minOccurs="0" maxOccurs="1" />
             <element name="ordinal_position" type="int" minOccurs="0" maxOccurs="1" />
-            <element name="identity_generation" type="string" minOccurs="0" maxOccurs="1" />
+            <element name="is_identity" type="boolean" minOccurs="0" maxOccurs="1" />
+            <element name="identity_generation" type="tns:IdentityGeneration" minOccurs="0" maxOccurs="1" />
             <element name="is_nullable" type="boolean" minOccurs="0" maxOccurs="1" />
             <element name="column_default" type="string" minOccurs="0" maxOccurs="1" />
             <element name="comment" type="string" minOccurs="0" maxOccurs="1" />
@@ -524,6 +525,16 @@
             </enumeration>
             <enumeration value="INSTEAD_OF">
                 <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether the trigger should fire INSTEAD OF each {@link TriggerActionOrientation#ROW} or {@link TriggerActionOrientation#STATEMENT}.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+            </enumeration>
+        </restriction>
+    </simpleType>
+    
+    <simpleType name="IdentityGeneration">
+        <restriction base="string">
+            <enumeration value="ALWAYS"/>
+            <enumeration value="BY DEFAULT"/>
+            <enumeration value="YES">
+                <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[@deprecated - historic alternative for <code>BY DEFAULT</code>, do not reuse.]]></jxb:javadoc></jxb:property></appinfo></annotation>
             </enumeration>
         </restriction>
     </simpleType>

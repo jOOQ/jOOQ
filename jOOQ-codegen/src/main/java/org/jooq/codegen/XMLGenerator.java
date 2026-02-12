@@ -55,6 +55,7 @@ import org.jooq.Name;
 import org.jooq.SortOrder;
 // ...
 // ...
+import org.jooq.impl.QOM.GenerationMode;
 import org.jooq.meta.AttributeDefinition;
 import org.jooq.meta.CatalogDefinition;
 import org.jooq.meta.CheckConstraintDefinition;
@@ -83,6 +84,7 @@ import org.jooq.util.xml.jaxb.Catalog;
 import org.jooq.util.xml.jaxb.CheckConstraint;
 import org.jooq.util.xml.jaxb.Column;
 import org.jooq.util.xml.jaxb.DirectSupertype;
+import org.jooq.util.xml.jaxb.IdentityGeneration;
 import org.jooq.util.xml.jaxb.Index;
 import org.jooq.util.xml.jaxb.IndexColumnUsage;
 import org.jooq.util.xml.jaxb.InformationSchema;
@@ -277,8 +279,14 @@ public class XMLGenerator extends AbstractGenerator {
                             Column::setUdtSchema,
                             Column::setUdtName);
 
-                        if (co.isIdentity())
-                            column.setIdentityGeneration("YES");
+                        if (co.isIdentity()) {
+                            column.setIsIdentity(true);
+
+                            if (co.getIdentityMode() == GenerationMode.ALWAYS)
+                                column.setIdentityGeneration(IdentityGeneration.ALWAYS);
+                            else
+                                column.setIdentityGeneration(IdentityGeneration.BY_DEFAULT);
+                        }
                         column.setIsNullable(type.isNullable());
                         column.setNumericPrecision(type.getPrecision());
                         column.setNumericScale(type.getScale());

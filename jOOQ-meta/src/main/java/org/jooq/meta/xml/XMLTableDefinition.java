@@ -50,6 +50,7 @@ import java.util.List;
 
 import org.jooq.TableOptions.TableType;
 import org.jooq.impl.DSL;
+import org.jooq.impl.QOM.GenerationMode;
 import org.jooq.meta.AbstractTableDefinition;
 import org.jooq.meta.ColumnDefinition;
 import org.jooq.meta.DefaultColumnDefinition;
@@ -57,6 +58,7 @@ import org.jooq.meta.DefaultDataTypeDefinition;
 import org.jooq.meta.SchemaDefinition;
 import org.jooq.tools.StringUtils;
 import org.jooq.util.xml.jaxb.Column;
+import org.jooq.util.xml.jaxb.IdentityGeneration;
 import org.jooq.util.xml.jaxb.InformationSchema;
 import org.jooq.util.xml.jaxb.Table;
 
@@ -120,7 +122,11 @@ public class XMLTableDefinition extends AbstractTableDefinition {
                 column.getColumnName(),
                 unbox(column.getOrdinalPosition()),
                 type,
-                column.getIdentityGeneration() != null,
+                column.getIdentityGeneration() == IdentityGeneration.ALWAYS
+                    ? GenerationMode.ALWAYS
+                    : column.getIdentityGeneration() != null
+                    ? GenerationMode.BY_DEFAULT
+                    : null,
                 TRUE.equals(column.isHidden()),
                 TRUE.equals(column.isReadonly()),
                 column.getComment()

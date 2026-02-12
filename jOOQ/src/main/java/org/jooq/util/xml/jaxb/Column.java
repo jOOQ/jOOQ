@@ -5,6 +5,7 @@ import java.io.Serializable;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlSchemaType;
 import jakarta.xml.bind.annotation.XmlType;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.jooq.util.jaxb.tools.StringAdapter;
@@ -37,7 +38,8 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *         &lt;element name="udt_schema" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="udt_name" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="ordinal_position" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/&gt;
- *         &lt;element name="identity_generation" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="is_identity" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
+ *         &lt;element name="identity_generation" type="{http://www.jooq.org/xsd/jooq-meta-3.21.0.xsd}IdentityGeneration" minOccurs="0"/&gt;
  *         &lt;element name="is_nullable" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
  *         &lt;element name="column_default" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="comment" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
@@ -106,9 +108,11 @@ public class Column implements Serializable, XMLAppendable
     protected String udtName;
     @XmlElement(name = "ordinal_position")
     protected Integer ordinalPosition;
+    @XmlElement(name = "is_identity")
+    protected Boolean isIdentity;
     @XmlElement(name = "identity_generation")
-    @XmlJavaTypeAdapter(StringAdapter.class)
-    protected String identityGeneration;
+    @XmlSchemaType(name = "string")
+    protected IdentityGeneration identityGeneration;
     @XmlElement(name = "is_nullable")
     protected Boolean isNullable;
     @XmlElement(name = "column_default")
@@ -247,11 +251,35 @@ public class Column implements Serializable, XMLAppendable
         this.ordinalPosition = value;
     }
 
-    public String getIdentityGeneration() {
+    /**
+     * Gets the value of the isIdentity property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isIsIdentity() {
+        return isIdentity;
+    }
+
+    /**
+     * Sets the value of the isIdentity property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setIsIdentity(Boolean value) {
+        this.isIdentity = value;
+    }
+
+    public IdentityGeneration getIdentityGeneration() {
         return identityGeneration;
     }
 
-    public void setIdentityGeneration(String value) {
+    public void setIdentityGeneration(IdentityGeneration value) {
         this.identityGeneration = value;
     }
 
@@ -458,7 +486,12 @@ public class Column implements Serializable, XMLAppendable
         return this;
     }
 
-    public Column withIdentityGeneration(String value) {
+    public Column withIsIdentity(Boolean value) {
+        setIsIdentity(value);
+        return this;
+    }
+
+    public Column withIdentityGeneration(IdentityGeneration value) {
         setIdentityGeneration(value);
         return this;
     }
@@ -520,6 +553,7 @@ public class Column implements Serializable, XMLAppendable
         builder.append("udt_schema", udtSchema);
         builder.append("udt_name", udtName);
         builder.append("ordinal_position", ordinalPosition);
+        builder.append("is_identity", isIdentity);
         builder.append("identity_generation", identityGeneration);
         builder.append("is_nullable", isNullable);
         builder.append("column_default", columnDefault);
@@ -685,6 +719,15 @@ public class Column implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (isIdentity == null) {
+            if (other.isIdentity!= null) {
+                return false;
+            }
+        } else {
+            if (!isIdentity.equals(other.isIdentity)) {
+                return false;
+            }
+        }
         if (identityGeneration == null) {
             if (other.identityGeneration!= null) {
                 return false;
@@ -788,6 +831,7 @@ public class Column implements Serializable, XMLAppendable
         result = ((prime*result)+((udtSchema == null)? 0 :udtSchema.hashCode()));
         result = ((prime*result)+((udtName == null)? 0 :udtName.hashCode()));
         result = ((prime*result)+((ordinalPosition == null)? 0 :ordinalPosition.hashCode()));
+        result = ((prime*result)+((isIdentity == null)? 0 :isIdentity.hashCode()));
         result = ((prime*result)+((identityGeneration == null)? 0 :identityGeneration.hashCode()));
         result = ((prime*result)+((isNullable == null)? 0 :isNullable.hashCode()));
         result = ((prime*result)+((columnDefault == null)? 0 :columnDefault.hashCode()));

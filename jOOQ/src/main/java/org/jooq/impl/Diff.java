@@ -72,6 +72,7 @@ import static org.jooq.impl.Tools.NO_SUPPORT_TIMESTAMP_PRECISION;
 import static org.jooq.impl.Tools.NO_SUPPORT_TIME_PRECISION;
 import static org.jooq.impl.Tools.allMatch;
 import static org.jooq.impl.Tools.anyMatch;
+import static org.jooq.impl.Tools.apply;
 import static org.jooq.impl.Tools.autoAlias;
 import static org.jooq.impl.Tools.filter;
 import static org.jooq.impl.Tools.findAny;
@@ -127,6 +128,7 @@ import org.jooq.TableOptions.TableType;
 import org.jooq.UniqueKey;
 import org.jooq.conf.ParseUnknownFunctions;
 import org.jooq.conf.Settings;
+import org.jooq.impl.QOM.GenerationMode;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 
@@ -679,8 +681,12 @@ final class Diff extends AbstractScope {
 
                     if (type1.identity() && !type2.identity())
                         r.queries.add(ctx.alterTable(t1).alter(f1).dropIdentity());
-                    else if (type2.identity() && !type1.identity())
-                        r.queries.add(ctx.alterTable(t1).alter(f1).setGeneratedByDefaultAsIdentity());
+                    else if (type1.identityMode() != type2.identityMode())
+                        r.queries.add(apply(ctx.alterTable(t1).alter(f1),
+                            s -> type2.identityMode() == GenerationMode.ALWAYS
+                            ? s.setGeneratedAlwaysAsIdentity()
+                            : s.setGeneratedByDefaultAsIdentity()
+                        ));
 
                     if ((type1.hasLength() && type2.hasLength() && (type1.lengthDefined() != type2.lengthDefined() || type1.length() != type2.length()))
                         || (type1.hasPrecision() && type2.hasPrecision() && precisionDifference(type1, type2))

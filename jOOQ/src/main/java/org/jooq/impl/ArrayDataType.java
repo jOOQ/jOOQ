@@ -54,6 +54,7 @@ import org.jooq.Record;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
 import org.jooq.impl.QOM.GenerationLocation;
+import org.jooq.impl.QOM.GenerationMode;
 import org.jooq.impl.QOM.GenerationOption;
 
 /**
@@ -96,7 +97,7 @@ final class ArrayDataType<T> extends DefaultDataType<T[]> {
         GenerationLocation generationLocation,
         Collation collation,
         CharacterSet characterSet,
-        boolean identity,
+        GenerationMode identity,
         Field<T[]> defaultValue
     ) {
         super(t, precision, scale, length, nullability, hidden, redacted, readonly, generatedAlwaysAs, generationOption, generationLocation, collation, characterSet, identity, defaultValue);
@@ -119,7 +120,7 @@ final class ArrayDataType<T> extends DefaultDataType<T[]> {
         GenerationLocation newGenerationLocation,
         Collation newCollation,
         CharacterSet newCharacterSet,
-        boolean newIdentity,
+        GenerationMode newIdentity,
         Field<T[]> newDefaultValue
     ) {
         return new ArrayDataType<>(

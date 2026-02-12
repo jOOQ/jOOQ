@@ -143,6 +143,7 @@ import org.jooq.Table;
 import org.jooq.UDTRecord;
 import org.jooq.XML;
 import org.jooq.impl.QOM.GenerationLocation;
+import org.jooq.impl.QOM.GenerationMode;
 import org.jooq.impl.QOM.GenerationOption;
 import org.jooq.impl.QOM.UEmpty;
 import org.jooq.types.Interval;
@@ -354,16 +355,25 @@ implements
     public abstract DataType<T> characterSet(CharacterSet c);
 
     @Override
+    @Deprecated(forRemoval = true)
     public abstract DataType<T> identity(boolean i);
 
     @Override
+    public abstract DataType<T> identityMode(GenerationMode i);
+
+    @Override
     public final DataType<T> autoIncrement() {
-        return identity(true);
+        return identityMode(GenerationMode.BY_DEFAULT);
     }
 
     @Override
     public final DataType<T> generatedByDefaultAsIdentity() {
-        return identity(true);
+        return identityMode(GenerationMode.BY_DEFAULT);
+    }
+
+    @Override
+    public final DataType<T> generatedAlwaysAsIdentity() {
+        return identityMode(GenerationMode.ALWAYS);
     }
 
     @Override
@@ -926,7 +936,7 @@ implements
             generationLocation(),
             collation(),
             characterSet(),
-            identity(),
+            identityMode(),
             (Field) defaultValue()
         );
     }

@@ -59,6 +59,7 @@ import org.jooq.QualifiedRecord;
 import org.jooq.Record;
 import org.jooq.Row;
 import org.jooq.impl.QOM.GenerationLocation;
+import org.jooq.impl.QOM.GenerationMode;
 import org.jooq.impl.QOM.GenerationOption;
 
 import org.jetbrains.annotations.Nullable;
@@ -108,7 +109,7 @@ final class RecordDataType<R extends Record> extends DefaultDataType<R> {
         GenerationLocation generationLocation,
         Collation collation,
         CharacterSet characterSet,
-        boolean identity,
+        GenerationMode identity,
         Field<R> defaultValue
     ) {
         super(t, precision, scale, length, nullability, hidden, redacted, readonly, generatedAlwaysAs, generationOption, generationLocation, collation, characterSet, identity, defaultValue);
@@ -131,7 +132,7 @@ final class RecordDataType<R extends Record> extends DefaultDataType<R> {
         GenerationLocation newGenerationLocation,
         Collation newCollation,
         CharacterSet newCharacterSet,
-        boolean newIdentity,
+        GenerationMode newIdentity,
         Field<R> newDefaultValue
     ) {
         return new RecordDataType<>(

@@ -49,6 +49,7 @@ import org.jooq.Generator;
 import org.jooq.Name;
 import org.jooq.Nullability;
 import org.jooq.impl.QOM.GenerationLocation;
+import org.jooq.impl.QOM.GenerationMode;
 import org.jooq.impl.QOM.GenerationOption;
 import org.jooq.tools.JooqLogger;
 
@@ -78,7 +79,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
         GenerationLocation newGenerationLocation,
         Collation newCollation,
         CharacterSet newCharacterSet,
-        boolean newIdentity,
+        GenerationMode newIdentity,
         Field<T> newDefaultValue
     );
 
@@ -100,7 +101,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
                 generationLocation(),
                 collation(),
                 characterSet(),
-                n != null && !n.nullable() && identity(),
+                n != null && !n.nullable() && identity() ? identityMode() : null,
                 defaultValue()
             );
     }
@@ -123,7 +124,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             generationLocation(),
             collation(),
             characterSet(),
-            identity(),
+            identityMode(),
             defaultValue()
         );
     }
@@ -146,7 +147,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             generationLocation(),
             collation(),
             characterSet(),
-            identity(),
+            identityMode(),
             defaultValue()
         );
     }
@@ -169,7 +170,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             generationLocation(),
             collation(),
             characterSet(),
-            identity(),
+            identityMode(),
             defaultValue()
         );
     }
@@ -194,7 +195,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             generationLocation(),
             collation(),
             characterSet(),
-            identity(),
+            identityMode(),
             g != null ? null : defaultValue()
         );
     }
@@ -217,7 +218,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             generationLocation(),
             collation(),
             characterSet(),
-            identity(),
+            identityMode(),
             defaultValue()
         );
     }
@@ -240,7 +241,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             g,
             collation(),
             characterSet(),
-            identity(),
+            identityMode(),
             defaultValue()
         );
     }
@@ -260,7 +261,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             generationLocation(),
             c,
             characterSet(),
-            identity(),
+            identityMode(),
             defaultValue()
         );
     }
@@ -280,18 +281,23 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             generationLocation(),
             collation(),
             c,
-            identity(),
+            identityMode(),
             defaultValue()
         );
     }
 
     @Override
     public final DataType<T> identity(boolean i) {
+        return identityMode(i ? GenerationMode.BY_DEFAULT : null);
+    }
+
+    @Override
+    public final DataType<T> identityMode(GenerationMode i) {
         return construct(
             precision0(),
             scale0(),
             length0(),
-            i ? NOT_NULL : nullability(),
+            i != null ? NOT_NULL : nullability(),
             hidden(),
             redacted(),
             readonly(),
@@ -320,7 +326,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             generationLocation(),
             collation(),
             characterSet(),
-            identity(),
+            identityMode(),
             d
         );
     }
@@ -340,7 +346,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             generationLocation(),
             collation(),
             characterSet(),
-            identity(),
+            identityMode(),
             defaultValue()
         );
     }
@@ -360,7 +366,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             generationLocation(),
             collation(),
             characterSet(),
-            identity(),
+            identityMode(),
             defaultValue()
         );
     }
@@ -380,7 +386,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             generationLocation(),
             collation(),
             characterSet(),
-            identity(),
+            identityMode(),
             defaultValue()
         );
     }

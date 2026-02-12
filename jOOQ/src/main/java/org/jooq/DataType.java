@@ -89,6 +89,7 @@ import org.jooq.exception.DataTypeException;
 import org.jooq.impl.AutoConverter;
 import org.jooq.impl.DSL;
 import org.jooq.impl.QOM.GenerationLocation;
+import org.jooq.impl.QOM.GenerationMode;
 import org.jooq.impl.QOM.GenerationOption;
 import org.jooq.impl.SQLDataType;
 import org.jooq.types.DayToSecond;
@@ -1111,19 +1112,34 @@ public interface DataType<T> extends Named {
     DataType<T> autoIncrement();
 
     /**
-     * Return a new data type like this, with the {@link #identity(boolean)}
-     * flag set to <code>true</code>.
+     * Return a new data type like this, with the {@link #identityMode(GenerationMode)}
+     * flag set to {@link GenerationMode#BY_DEFAULT}.
      * <p>
      * [#5709] The IDENTITY flag imposes a NOT NULL constraint, and removes all
      * DEFAULT values.
      * <p>
-     * This is the same as calling <code>identity(true)</code>.
+     * This is the same as calling <code>identityMode(BY_DEFAULT)</code>.
      *
      * @return The new data type
      */
     @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     DataType<T> generatedByDefaultAsIdentity();
+
+    /**
+     * Return a new data type like this, with the {@link #identityMode(GenerationMode)}
+     * flag set to {@link GenerationMode#ALWAYS}.
+     * <p>
+     * [#5709] The IDENTITY flag imposes a NOT NULL constraint, and removes all
+     * DEFAULT values.
+     * <p>
+     * This is the same as calling <code>identityMode(ALWAYS)</code>.
+     *
+     * @return The new data type
+     */
+    @NotNull
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    DataType<T> generatedAlwaysAsIdentity();
 
     /**
      * Return a new data type like this, with a new identity flag.
@@ -1133,17 +1149,39 @@ public interface DataType<T> extends Named {
      *
      * @param identity The new identity flag
      * @return The new data type
+     * @deprecated - 3.21.0 - [#15952] - Use
+     *             {@link #identityMode(GenerationMode)} instead.
      */
     @NotNull
     @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    @Deprecated(forRemoval = true)
     DataType<T> identity(boolean identity);
 
     /**
-     * Get the identity flag of this data type.
-     *
-     * @return The identity flag.
+     * Whether the data type has a {@link GenerationMode} set.
      */
     boolean identity();
+
+    /**
+     * Return a new data type like this, with a new identity
+     * {@link GenerationMode}.
+     * <p>
+     * [#5709] The IDENTITY {@link GenerationMode} imposes a NOT NULL
+     * constraint, and removes all DEFAULT values.
+     *
+     * @param identity The new identity {@link GenerationMode}
+     * @return The new data type
+     */
+    @NotNull
+    @Support({ DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    DataType<T> identityMode(GenerationMode identity);
+
+    /**
+     * Get the identity {@link GenerationMode} of this data type.
+     *
+     * @return The identity {@link GenerationMode}.
+     */
+    GenerationMode identityMode();
 
     /**
      * Specify an expression to be applied as the <code>DEFAULT</code> value for

@@ -130,6 +130,7 @@ import org.jooq.exception.MappingException;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.DefaultBinding.InternalBinding;
 import org.jooq.impl.QOM.GenerationLocation;
+import org.jooq.impl.QOM.GenerationMode;
 import org.jooq.impl.QOM.GenerationOption;
 import org.jooq.tools.JooqLogger;
 import org.jooq.types.UByte;
@@ -304,7 +305,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
     private final GenerationLocation                            generationLocation;
     private final Collation                                     collation;
     private final CharacterSet                                  characterSet;
-    private final boolean                                       identity;
+    private final GenerationMode                                identity;
     private final Field<T>                                      defaultValue;
     private final Integer                                       precision;
     private final Integer                                       scale;
@@ -392,10 +393,10 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
     }
 
     DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, Class<T> type, Binding<?, T> binding, Name qualifiedTypeName, String typeName, String castTypeName, String ddlTypeName, Integer precision, Integer scale, Integer length, Nullability nullability, Field<T> defaultValue) {
-        this(dialect, sqlDataType, type, binding, qualifiedTypeName, typeName, castTypeName, ddlTypeName, precision, scale, length, nullability, false, false, false, null, GenerationOption.DEFAULT, GenerationLocation.SERVER, null, null, false, defaultValue);
+        this(dialect, sqlDataType, type, binding, qualifiedTypeName, typeName, castTypeName, ddlTypeName, precision, scale, length, nullability, false, false, false, null, GenerationOption.DEFAULT, GenerationLocation.SERVER, null, null, null, defaultValue);
     }
 
-    DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, Class<T> type, Binding<?, T> binding, Name qualifiedTypeName, String typeName, String castTypeName, String ddlTypeName, Integer precision, Integer scale, Integer length, Nullability nullability, boolean hidden, boolean redacted, boolean readonly, Generator<?, ?, T> generatedAlwaysAs, GenerationOption generationOption, GenerationLocation generationLocation, Collation collation, CharacterSet characterSet, boolean identity, Field<T> defaultValue) {
+    DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, Class<T> type, Binding<?, T> binding, Name qualifiedTypeName, String typeName, String castTypeName, String ddlTypeName, Integer precision, Integer scale, Integer length, Nullability nullability, boolean hidden, boolean redacted, boolean readonly, Generator<?, ?, T> generatedAlwaysAs, GenerationOption generationOption, GenerationLocation generationLocation, Collation collation, CharacterSet characterSet, GenerationMode identity, Field<T> defaultValue) {
         super(qualifiedTypeName, NO_COMMENT);
 
         // [#13934] Patch parameters
@@ -488,7 +489,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
         GenerationLocation newGenerationLocation,
         Collation newCollation,
         CharacterSet newCharacterSet,
-        boolean newIdentity,
+        GenerationMode newIdentity,
         Field<T> newDefaultValue
     ) {
         return new DefaultDataType<>(
@@ -527,7 +528,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
         GenerationLocation generationLocation,
         Collation collation,
         CharacterSet characterSet,
-        boolean identity,
+        GenerationMode identity,
         Field<T> defaultValue
     ) {
         super(t.getQualifiedName(), NO_COMMENT);
@@ -629,6 +630,11 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
 
     @Override
     public final boolean identity() {
+        return identity != null;
+    }
+
+    @Override
+    public final GenerationMode identityMode() {
         return identity;
     }
 

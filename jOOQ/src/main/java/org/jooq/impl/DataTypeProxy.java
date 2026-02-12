@@ -52,6 +52,7 @@ import org.jooq.Name;
 import org.jooq.Nullability;
 import org.jooq.SQLDialect;
 import org.jooq.impl.QOM.GenerationLocation;
+import org.jooq.impl.QOM.GenerationMode;
 import org.jooq.impl.QOM.GenerationOption;
 
 /**
@@ -75,7 +76,7 @@ final class DataTypeProxy<T> extends AbstractDataType<T> {
     private final GenerationLocation overrideGenerationLocation;
     private final Collation          overrideCollation;
     private final CharacterSet       overrideCharacterSet;
-    private final Boolean            overrideIdentity;
+    private final GenerationMode     overrideIdentity;
     private final Field<T>           overrideDefaultValue;
 
     DataTypeProxy(AbstractDataType<T> type) {
@@ -96,7 +97,7 @@ final class DataTypeProxy<T> extends AbstractDataType<T> {
         GenerationLocation overrideGenerationLocation,
         Collation overrideCollation,
         CharacterSet overrideCharacterSet,
-        Boolean overrideIdentity,
+        GenerationMode overrideIdentity,
         Field<T> overrideDefaultValue
     ) {
         super(type.getQualifiedName(), type.getCommentPart());
@@ -408,11 +409,21 @@ final class DataTypeProxy<T> extends AbstractDataType<T> {
 
     @Override
     public final boolean identity() {
-        return defaultIfNull(overrideIdentity, type.identity());
+        return identityMode() != null;
     }
 
     @Override
     public final DataType<T> identity(boolean i) {
+        return identityMode(i ? GenerationMode.BY_DEFAULT : null);
+    }
+
+    @Override
+    public final GenerationMode identityMode() {
+        return defaultIfNull(overrideIdentity, type.identityMode());
+    }
+
+    @Override
+    public final DataType<T> identityMode(GenerationMode i) {
         return new DataTypeProxy<>(
             this,
             overridePrecision,

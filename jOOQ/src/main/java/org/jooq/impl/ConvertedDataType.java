@@ -59,6 +59,7 @@ import org.jooq.SQLDialect;
 import org.jooq.exception.DataTypeException;
 import org.jooq.impl.DefaultBinding.InternalBinding;
 import org.jooq.impl.QOM.GenerationLocation;
+import org.jooq.impl.QOM.GenerationMode;
 import org.jooq.impl.QOM.GenerationOption;
 
 /**
@@ -97,7 +98,7 @@ final class ConvertedDataType<T, U> extends AbstractDataTypeX<U> {
         GenerationLocation newGenerationLocation,
         Collation newCollation,
         CharacterSet newCharacterSet,
-        boolean newIdentity,
+        GenerationMode newIdentity,
         Field<U> newDefaultValue
     ) {
         return (AbstractDataTypeX) delegate.construct(
@@ -269,6 +270,11 @@ final class ConvertedDataType<T, U> extends AbstractDataTypeX<U> {
     @Override
     public final boolean identity() {
         return delegate.identity();
+    }
+
+    @Override
+    public final GenerationMode identityMode() {
+        return delegate.identityMode();
     }
 
     @Override

@@ -60,6 +60,7 @@ import org.jooq.Row;
 import org.jooq.Source;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.QOM.GenerationLocation;
+import org.jooq.impl.QOM.GenerationMode;
 import org.jooq.impl.QOM.GenerationOption;
 
 /**
@@ -100,7 +101,7 @@ final class MultisetDataType<R extends Record> extends DefaultDataType<Result<R>
         GenerationLocation generationLocation,
         Collation collation,
         CharacterSet characterSet,
-        boolean identity,
+        GenerationMode identity,
         Field<Result<R>> defaultValue
     ) {
         super(t, precision, scale, length, nullability, hidden, redacted, readonly, generatedAlwaysAs, generationOption, generationLocation, collation, characterSet, identity, defaultValue);
@@ -124,7 +125,7 @@ final class MultisetDataType<R extends Record> extends DefaultDataType<Result<R>
         GenerationLocation newGenerationLocation,
         Collation newCollation,
         CharacterSet newCharacterSet,
-        boolean newIdentity,
+        GenerationMode newIdentity,
         Field<Result<R>> newDefaultValue
     ) {
         return new MultisetDataType<>(

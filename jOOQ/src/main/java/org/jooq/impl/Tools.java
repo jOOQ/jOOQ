@@ -5932,9 +5932,9 @@ final class Tools {
                 case POSTGRES:
                     if (SUPPORT_PG_IDENTITY.contains(ctx.dialect()))
                         if (type.identityMode() == GenerationMode.ALWAYS)
-                            ctx.sql(' ').visit(K_GENERATED).sql(' ').visit(K_BY).sql(' ').visit(K_DEFAULT).sql(' ').visit(K_AS).sql(' ').visit(K_IDENTITY);
-                        else
                             ctx.sql(' ').visit(K_GENERATED).sql(' ').visit(K_ALWAYS).sql(' ').visit(K_AS).sql(' ').visit(K_IDENTITY);
+                        else
+                            ctx.sql(' ').visit(K_GENERATED).sql(' ').visit(K_BY).sql(' ').visit(K_DEFAULT).sql(' ').visit(K_AS).sql(' ').visit(K_IDENTITY);
 
                     break;
 

@@ -5885,7 +5885,11 @@ final class Tools {
     }
 
     private static final Set<SQLDialect> REQUIRE_IDENTITY_AFTER_NULL = SQLDialect.supportedBy(DUCKDB, H2, MARIADB, MYSQL);
-    private static final Set<SQLDialect> SUPPORT_PG_IDENTITY         = SQLDialect.supportedBy(COCKROACHDB_22, SQLDialect.DEFAULT, POSTGRES);
+    private static final Set<SQLDialect> SUPPORT_PG_IDENTITY         = SQLDialect.supportedBy(POSTGRES);
+
+    static {
+        SUPPORT_PG_IDENTITY.add(SQLDialect.DEFAULT);
+    }
 
     /**
      * If a type is an identity type, some dialects require the relevant

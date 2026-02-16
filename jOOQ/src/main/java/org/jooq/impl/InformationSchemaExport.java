@@ -71,10 +71,12 @@ import org.jooq.SortOrder;
 import org.jooq.Table;
 import org.jooq.UDT;
 import org.jooq.UniqueKey;
+import org.jooq.impl.QOM.GenerationMode;
 import org.jooq.util.xml.XmlUtils;
 import org.jooq.util.xml.jaxb.Attribute;
 import org.jooq.util.xml.jaxb.CheckConstraint;
 import org.jooq.util.xml.jaxb.Column;
+import org.jooq.util.xml.jaxb.IdentityGeneration;
 import org.jooq.util.xml.jaxb.IndexColumnUsage;
 import org.jooq.util.xml.jaxb.InformationSchema;
 import org.jooq.util.xml.jaxb.KeyColumnUsage;
@@ -475,6 +477,14 @@ final class InformationSchemaExport {
             ic.setOrdinalPosition(i + 1);
             ic.setHidden(type.hidden());
             ic.setReadonly(type.readonly());
+
+            if (type.identity()) {
+                ic.setIsIdentity(type.identity());
+                ic.setIdentityGeneration(type.identityMode() == GenerationMode.ALWAYS
+                    ? IdentityGeneration.ALWAYS
+                    : IdentityGeneration.BY_DEFAULT
+                );
+            }
 
             if (type.computed()) {
                 ic.setIsGenerated(type.computed());

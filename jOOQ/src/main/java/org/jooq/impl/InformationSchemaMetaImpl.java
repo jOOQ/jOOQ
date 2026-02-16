@@ -94,11 +94,13 @@ import org.jooq.UDT;
 import org.jooq.UniqueKey;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.QOM.ForeignKeyRule;
+import org.jooq.impl.QOM.GenerationMode;
 import org.jooq.impl.QOM.GenerationOption;
 import org.jooq.tools.StringUtils;
 import org.jooq.util.xml.jaxb.Attribute;
 import org.jooq.util.xml.jaxb.CheckConstraint;
 import org.jooq.util.xml.jaxb.Column;
+import org.jooq.util.xml.jaxb.IdentityGeneration;
 import org.jooq.util.xml.jaxb.IndexColumnUsage;
 import org.jooq.util.xml.jaxb.InformationSchema;
 import org.jooq.util.xml.jaxb.KeyColumnUsage;
@@ -284,7 +286,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
 
             UDTImpl.createField(
                 name(xa.getAttributeName()),
-                type(typeName, length, precision, scale, null, null, null, null, null),
+                type(typeName, length, precision, scale, null, null, null, null, null, null),
                 udt,
                 xa.getComment()
             );
@@ -325,7 +327,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
                 schema,
                 name(d.getDomainName()),
                 comment(d.getComment()),
-                (DataType) type(d.getDataType(), length, precision, scale, nullable, false, false, null, null),
+                (DataType) type(d.getDataType(), length, precision, scale, nullable, false, false, null, null, null),
                 checks.toArray(EMPTY_CHECK)
             );
             domains.add(id);
@@ -411,6 +413,11 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
                     ? VIRTUAL
                     : null
                 : null;
+            GenerationMode identity = TRUE.equals(xc.isIsIdentity())
+                ? xc.getIdentityGeneration() == IdentityGeneration.ALWAYS
+                    ? GenerationMode.ALWAYS
+                    : GenerationMode.BY_DEFAULT
+                : null;
 
             // TODO: Exception handling should be moved inside SQLDataType
             Name tableName = name(xc.getTableCatalog(), xc.getTableSchema(), xc.getTableName());
@@ -423,7 +430,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
 
             AbstractTable.createField(
                 name(xc.getColumnName()),
-                type(typeName, length, precision, scale, nullable, hidden, readonly, generatedAlwaysAs, generationOption),
+                type(typeName, length, precision, scale, nullable, hidden, readonly, identity, generatedAlwaysAs, generationOption),
                 table,
                 xc.getComment()
             );
@@ -658,7 +665,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
                 xs.getSequenceName(),
                 schema,
                 comment(xs.getComment()),
-                type(typeName, length, precision, scale, nullable, false, false, null, null),
+                type(typeName, length, precision, scale, nullable, false, false, null, null, null),
                 startWith,
                 incrementBy,
                 minvalue,
@@ -805,6 +812,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
         Boolean nullable,
         Boolean hidden,
         Boolean readonly,
+        GenerationMode identity,
         Field<?> generatedAlwaysAs,
         GenerationOption generationOption
     ) {
@@ -825,6 +833,8 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
                 type = type.hidden(hidden);
             if (readonly != null)
                 type = type.readonly(readonly);
+            if (identity != null)
+                type = type.identityMode(identity);
 
             if (length != 0)
                 type = type.length(length);

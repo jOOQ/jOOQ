@@ -645,7 +645,7 @@
                              https://issues.apache.org/jira/browse/MCOMPILER-209 -->
                         <useIncrementalCompilation>false</useIncrementalCompilation>
                         <fork>true</fork>
-                        <maxmem>512m</maxmem>
+                        <maxmem>1G</maxmem>
                         <meminitial>256m</meminitial>
                         <encoding>UTF-8</encoding>
 

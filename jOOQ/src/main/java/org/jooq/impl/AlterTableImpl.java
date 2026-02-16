@@ -117,6 +117,7 @@ import static org.jooq.impl.Keywords.K_ALTER;
 import static org.jooq.impl.Keywords.K_ALTER_COLUMN;
 import static org.jooq.impl.Keywords.K_ALTER_CONSTRAINT;
 import static org.jooq.impl.Keywords.K_ALTER_TABLE;
+import static org.jooq.impl.Keywords.K_ALWAYS;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_AUTO_INCREMENT;
 import static org.jooq.impl.Keywords.K_BEFORE;
@@ -1917,15 +1918,12 @@ implements
 
 
 
-
-
-                    case POSTGRES:
-                    case YUGABYTEDB:
-                        ctx.sql(' ').visit(K_ADD).sql(' ').visit(K_GENERATED).sql(' ').visit(K_BY).sql(' ').visit(K_DEFAULT).sql(' ').visit(K_AS).sql(' ').visit(K_IDENTITY);
-                        break;
-
                     case H2:
-                        ctx.sql(' ').visit(K_SET).sql(' ').visit(K_GENERATED).sql(' ').visit(K_BY).sql(' ').visit(K_DEFAULT);
+                        if (alterColumnSetIdentity == GenerationMode.ALWAYS)
+                            ctx.sql(' ').visit(K_SET).sql(' ').visit(K_GENERATED).sql(' ').visit(K_ALWAYS);
+                        else
+                            ctx.sql(' ').visit(K_SET).sql(' ').visit(K_GENERATED).sql(' ').visit(K_BY).sql(' ').visit(K_DEFAULT);
+
                         break;
 
 
@@ -1938,7 +1936,11 @@ implements
                         break;
 
                     default:
-                        ctx.sql(' ').visit(K_SET).sql(' ').visit(K_GENERATED).sql(' ').visit(K_BY).sql(' ').visit(K_DEFAULT).sql(' ').visit(K_AS).sql(' ').visit(K_IDENTITY);
+                        if (alterColumnSetIdentity == GenerationMode.ALWAYS)
+                            ctx.sql(' ').visit(K_ADD).sql(' ').visit(K_GENERATED).sql(' ').visit(K_ALWAYS).sql(' ').visit(K_AS).sql(' ').visit(K_IDENTITY);
+                        else
+                            ctx.sql(' ').visit(K_ADD).sql(' ').visit(K_GENERATED).sql(' ').visit(K_BY).sql(' ').visit(K_DEFAULT).sql(' ').visit(K_AS).sql(' ').visit(K_IDENTITY);
+
                         break;
                 }
             }

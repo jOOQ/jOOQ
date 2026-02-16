@@ -254,7 +254,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
                 schema,
                 name(d.getDomainName()),
                 comment(d.getComment()),
-                (DataType) type(d.getDataType(), length, precision, scale, nullable, false, false, null, null),
+                (DataType) type(d.getDataType(), length, precision, scale, nullable, false, false, false, null, null),
                 checks.toArray(EMPTY_CHECK)
             );
             domains.add(id);
@@ -329,6 +329,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
             boolean nullable = !FALSE.equals(xc.isIsNullable());
             boolean hidden = TRUE.equals(xc.isHidden());
             boolean readonly = TRUE.equals(xc.isReadonly());
+            boolean identity = "YES".equals(xc.getIdentityGeneration());
             Field<?> generatedAlwaysAs = TRUE.equals(xc.isIsGenerated())
                 ? DSL.field(xc.getGenerationExpression())
                 : null;
@@ -351,7 +352,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
 
             AbstractTable.createField(
                 name(xc.getColumnName()),
-                type(typeName, length, precision, scale, nullable, hidden, readonly, generatedAlwaysAs, generationOption),
+                type(typeName, length, precision, scale, nullable, hidden, readonly, identity, generatedAlwaysAs, generationOption),
                 table,
                 xc.getComment()
             );
@@ -586,7 +587,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
                 xs.getSequenceName(),
                 schema,
                 comment(xs.getComment()),
-                type(typeName, length, precision, scale, nullable, false, false, null, null),
+                type(typeName, length, precision, scale, nullable, false, false, false, null, null),
                 startWith,
                 incrementBy,
                 minvalue,
@@ -730,6 +731,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
         boolean nullable,
         boolean hidden,
         boolean readonly,
+        boolean identity,
         Field<?> generatedAlwaysAs,
         GenerationOption generationOption
     ) {
@@ -740,6 +742,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
             type = type.nullable(nullable);
             type = type.hidden(hidden);
             type = type.readonly(readonly);
+            type = type.identity(identity);
 
             if (length != 0)
                 type = type.length(length);

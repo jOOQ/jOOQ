@@ -360,6 +360,12 @@ final class InformationSchemaExport {
             ic.setOrdinalPosition(i + 1);
             ic.setReadonly(type.readonly());
 
+            if (type.identity()) {
+
+                // [#19654] This will be changed in jOOQ 3.21
+                ic.setIdentityGeneration("YES");
+            }
+
             if (type.computed()) {
                 ic.setIsGenerated(type.computed());
                 ic.setGenerationExpression(DSL.using(configuration).render(type.generatedAlwaysAs()));

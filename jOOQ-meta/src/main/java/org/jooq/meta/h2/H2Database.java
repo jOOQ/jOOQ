@@ -58,7 +58,6 @@ import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.replace;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
-import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.impl.DSL.upper;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.SQLDataType.BIGINT;
@@ -113,11 +112,10 @@ import org.jooq.Select;
 import org.jooq.SortOrder;
 import org.jooq.Table;
 import org.jooq.TableField;
-// ...
-// ...
 import org.jooq.TableOptions.TableType;
 import org.jooq.impl.DSL;
 import org.jooq.impl.QOM.ForeignKeyRule;
+import org.jooq.impl.QOM.GenerationMode;
 import org.jooq.impl.QOM.GenerationOption;
 import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.AbstractIndexDefinition;
@@ -142,7 +140,6 @@ import org.jooq.meta.RoutineDefinition;
 import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.SequenceDefinition;
 import org.jooq.meta.TableDefinition;
-// ...
 import org.jooq.meta.UDTDefinition;
 import org.jooq.meta.XMLSchemaCollectionDefinition;
 import org.jooq.meta.h2.information_schema_2.tables.Synonyms;
@@ -154,11 +151,6 @@ import org.jooq.meta.hsqldb.information_schema.tables.ElementTypes;
 import org.jooq.meta.hsqldb.information_schema.tables.KeyColumnUsage;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.csv.CSVReader;
-import org.jooq.util.h2.H2DataType;
-
-import org.jetbrains.annotations.ApiStatus.Internal;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * H2 implementation of {@link AbstractDatabase}
@@ -789,6 +781,29 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
 
 
 
+
+    @Override
+    public ResultQuery<Record5<String, String, String, String, String>> identities(List<String> schemas) {
+        if (!is2_0_202())
+            return null;
+
+        return create()
+            .select(
+                COLUMNS.TABLE_CATALOG,
+                COLUMNS.TABLE_SCHEMA,
+                COLUMNS.TABLE_NAME,
+                COLUMNS.COLUMN_NAME,
+                when(Tables.COLUMNS.IDENTITY_GENERATION.eq(inline("BY DEFAULT")), inline(GenerationMode.BY_DEFAULT.name()))
+                    .else_(Tables.COLUMNS.IDENTITY_GENERATION).as(Tables.COLUMNS.IDENTITY_GENERATION))
+            .from(Tables.COLUMNS)
+            .where(Tables.COLUMNS.TABLE_SCHEMA.in(schemas))
+            .and(Tables.COLUMNS.IS_IDENTITY.eq(inline("YES")))
+            .orderBy(
+                COLUMNS.TABLE_CATALOG,
+                COLUMNS.TABLE_SCHEMA,
+                COLUMNS.TABLE_NAME,
+                COLUMNS.ORDINAL_POSITION);
+    }
 
     @Override
     public ResultQuery<Record6<String, String, String, String, String, String>> generators(List<String> schemas) {

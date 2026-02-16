@@ -104,6 +104,7 @@ import org.jooq.TableOptions.TableType;
 // ...
 import org.jooq.impl.DSL;
 import org.jooq.impl.QOM.ForeignKeyRule;
+import org.jooq.impl.QOM.GenerationMode;
 import org.jooq.impl.QOM.GenerationOption;
 import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.AbstractIndexDefinition;
@@ -722,6 +723,26 @@ public class HSQLDBDatabase extends AbstractDatabase implements ResultQueryDatab
 
 
 
+
+    @Override
+    public ResultQuery<Record5<String, String, String, String, String>> identities(List<String> schemas) {
+        return create()
+            .select(
+                COLUMNS.TABLE_CATALOG,
+                COLUMNS.TABLE_SCHEMA,
+                COLUMNS.TABLE_NAME,
+                COLUMNS.COLUMN_NAME,
+                when(COLUMNS.IDENTITY_GENERATION.eq(inline("BY DEFAULT")), inline(GenerationMode.BY_DEFAULT.name()))
+                    .else_(COLUMNS.IDENTITY_GENERATION).as(COLUMNS.IDENTITY_GENERATION))
+            .from(COLUMNS)
+            .where(COLUMNS.TABLE_SCHEMA.in(schemas))
+            .and(COLUMNS.IS_IDENTITY.eq(inline("YES")))
+            .orderBy(
+                COLUMNS.TABLE_CATALOG,
+                COLUMNS.TABLE_SCHEMA,
+                COLUMNS.TABLE_NAME,
+                COLUMNS.ORDINAL_POSITION);
+    }
 
     @Override
     public ResultQuery<Record6<String, String, String, String, String, String>> generators(List<String> schemas) {

@@ -159,6 +159,7 @@ import org.jooq.exception.DataDefinitionException;
 import org.jooq.exception.DataTypeException;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.QOM.ForeignKeyRule;
+import org.jooq.impl.QOM.GenerationMode;
 import org.jooq.impl.QOM.GenerationOption;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
@@ -481,6 +482,7 @@ final class MetaImpl extends AbstractMeta {
         private transient volatile Map<Name, String>         sourceCache;
         private transient volatile Map<Name, String>         commentCache;
         private transient volatile Map<Name, Result<Record>> attributeCache;
+        private transient volatile Map<Name, GenerationMode> identityCache;
         private transient volatile Map<Name, Generator>      generatorCache;
         private transient volatile Map<Name, Result<Record>> checkCache;
 
@@ -1094,12 +1096,44 @@ final class MetaImpl extends AbstractMeta {
                 return null;
         }
 
+        final GenerationMode identity(String tableName, String columnName) {
+            if (identityCache == null) {
+                String sql = MetaSQL.M_IDENTITIES(dialect());
+
+                if (sql != null) {
+                    Result<Record> result = meta(() -> "Error while fetching identities for schema " + this, meta ->
+                        withCatalog(getCatalog(), ctx(meta), ctx ->
+                            ctx.resultQuery(patchSchema(sql), MetaSchema.this.getName()).fetch()
+                        )
+                    );
+
+                    // TODO Support catalogs as well
+                    identityCache = new LinkedHashMap<>();
+                    for (Record r : result) {
+                        String e = r.get(4, String.class);
+
+                        if (e != null) {
+                            identityCache.put(
+                                name(r.get(1, String.class), r.get(2, String.class), r.get(3, String.class)),
+                                r.get(4, GenerationMode.class)
+                            );
+                        }
+                    }
+                }
+            }
+
+            if (identityCache != null)
+                return identityCache.get(name(MetaSchema.this.getName(), tableName, columnName));
+            else
+                return null;
+        }
+
         final Generator generator(String tableName, String columnName) {
             if (generatorCache == null) {
                 String sql = MetaSQL.M_GENERATORS(dialect());
 
                 if (sql != null) {
-                    Result<Record> result = meta(() -> "Error while fetching sources for schema " + this, meta ->
+                    Result<Record> result = meta(() -> "Error while fetching generators for schema " + this, meta ->
                         withCatalog(getCatalog(), ctx(meta), ctx ->
                             ctx.resultQuery(patchSchema(sql), MetaSchema.this.getName()).fetch()
                         )
@@ -1980,12 +2014,18 @@ final class MetaImpl extends AbstractMeta {
 
 
 
+                GenerationMode identity = isAutoIncrement ? schema.identity(getName(), columnName) : null;
+
                 // [#10207] Ignore secondary identity columns, as allowed e.g. in PostgreSQL
-                if (isAutoIncrement)
-                    if (!hasAutoIncrement)
-                        type = type.identity(hasAutoIncrement = isAutoIncrement);
+                if (isAutoIncrement) {
+                    if (!hasAutoIncrement) {
+                        type = type.identityMode(identity != null ? identity : GenerationMode.BY_DEFAULT);
+                    }
                     else
                         log.info("Multiple identities", "jOOQ does not support tables with multiple identities. Identity is ignored on column " + columnName + " of table " + this);
+
+                    hasAutoIncrement = true;
+                }
 
                 if (nullable == DatabaseMetaData.columnNoNulls)
                     type = type.nullable(false);

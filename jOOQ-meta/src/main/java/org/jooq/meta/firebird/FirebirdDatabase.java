@@ -110,6 +110,7 @@ import org.jooq.TableOptions.TableType;
 import org.jooq.conf.Settings;
 import org.jooq.impl.DSL;
 import org.jooq.impl.QOM.ForeignKeyRule;
+import org.jooq.impl.QOM.GenerationMode;
 import org.jooq.impl.QOM.GenerationOption;
 import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.AbstractIndexDefinition;
@@ -727,6 +728,29 @@ public class FirebirdDatabase extends AbstractDatabase implements ResultQueryDat
 
 
 
+
+    @Override
+    public ResultQuery<Record5<String, String, String, String, String>> identities(List<String> schemas) {
+        if (!is30())
+            return null;
+
+        Rdb$relationFields r = RDB$RELATION_FIELDS.as("r");
+
+        return create()
+            .select(
+                inline(null, VARCHAR).as("catalog_name"),
+                inline(null, VARCHAR).as("schema_name"),
+                trim(r.RDB$RELATION_NAME).as(r.RDB$RELATION_NAME),
+                trim(r.RDB$FIELD_NAME).as(r.RDB$FIELD_NAME),
+                trim(
+                    when(r.RDB$IDENTITY_TYPE.eq(inline((short) 0)), inline(GenerationMode.ALWAYS.name()))
+                        .when(r.RDB$IDENTITY_TYPE.eq(inline((short) 1)), inline(GenerationMode.BY_DEFAULT.name())))
+                    .as("identity"))
+            .from(r)
+            .where(r.RDB$IDENTITY_TYPE.in(inline((short) 0), inline((short) 1)))
+            .orderBy(r.RDB$RELATION_NAME, r.RDB$FIELD_POSITION)
+            ;
+    }
 
     @Override
     public ResultQuery<Record6<String, String, String, String, String, String>> generators(List<String> schemas) {

@@ -15,6 +15,7 @@ final class MetaSQL {
     private static final EnumMap<SQLDialect, String> M_SOURCES = new EnumMap<>(SQLDialect.class);
     private static final EnumMap<SQLDialect, String> M_COMMENTS = new EnumMap<>(SQLDialect.class);
     private static final EnumMap<SQLDialect, String> M_ATTRIBUTES = new EnumMap<>(SQLDialect.class);
+    private static final EnumMap<SQLDialect, String> M_IDENTITIES = new EnumMap<>(SQLDialect.class);
     private static final EnumMap<SQLDialect, String> M_GENERATORS = new EnumMap<>(SQLDialect.class);
     private static final EnumMap<SQLDialect, String> M_CHECKS = new EnumMap<>(SQLDialect.class);
     private static final EnumMap<SQLDialect, String> M_TRIGGERS = new EnumMap<>(SQLDialect.class);
@@ -53,6 +54,11 @@ final class MetaSQL {
     static final String M_ATTRIBUTES(SQLDialect dialect) {
         String result = M_ATTRIBUTES.get(dialect);
         return result != null ? result : M_ATTRIBUTES.get(dialect.family());
+    }
+
+    static final String M_IDENTITIES(SQLDialect dialect) {
+        String result = M_IDENTITIES.get(dialect);
+        return result != null ? result : M_IDENTITIES.get(dialect.family());
     }
 
     static final String M_GENERATORS(SQLDialect dialect) {
@@ -480,6 +486,51 @@ final class MetaSQL {
 
         M_ATTRIBUTES.put(POSTGRES, "select null as catalog_name, alias_87241969.nspname, null as package_name, pg_catalog.pg_class.relname, a.attribute_name, a.ordinal_position, coalesce(d.data_type, case when (a.data_type = 'USER-DEFINED' and a.attribute_udt_name = 'geometry') then 'geometry' else case when a.data_type = 'ARRAY' then (substring(a.attribute_udt_name, 2) || repeat(' ARRAY', greatest(coalesce(pg_a.attndims, 0), 1))) else a.data_type end end) as data_type, coalesce(d.character_maximum_length, a.character_maximum_length, d.numeric_precision, a.numeric_precision) as numeric_precision, coalesce(d.numeric_scale, a.numeric_scale) as numeric_scale, a.is_nullable as is_nullable, a.attribute_default, null as data_type_catalog_name, a.attribute_udt_schema, null as data_type_package_name, coalesce(d.data_type, case when a.data_type = 'USER-DEFINED' then a.attribute_udt_name else case when a.data_type = 'ARRAY' then (substring(a.attribute_udt_name, 2) || repeat(' ARRAY', greatest(coalesce(pg_a.attndims, 0), 1))) else a.data_type end end) as data_type from (pg_catalog.pg_class join pg_catalog.pg_namespace as alias_87241969 on pg_catalog.pg_class.relnamespace = alias_87241969.oid) join (pg_catalog.pg_attribute as pg_a join (pg_catalog.pg_class as alias_51947009 join pg_catalog.pg_namespace as alias_41153833 on alias_51947009.relnamespace = alias_41153833.oid) on pg_a.attrelid = alias_51947009.oid) on pg_a.attrelid = pg_catalog.pg_class.oid join information_schema.attributes as a on (a.attribute_name = pg_a.attname and a.udt_name = alias_51947009.relname and a.udt_schema = alias_41153833.nspname) left outer join information_schema.domains as d on (a.attribute_udt_catalog = d.domain_catalog and a.attribute_udt_schema = d.domain_schema and a.attribute_udt_name = d.domain_name) where (pg_catalog.pg_class.relkind = 'c' and alias_87241969.nspname in (?)) order by alias_87241969.nspname, pg_catalog.pg_class.relname, a.ordinal_position");
         M_ATTRIBUTES.put(YUGABYTEDB, "select null as catalog_name, alias_87241969.nspname, null as package_name, pg_catalog.pg_class.relname, a.attribute_name, a.ordinal_position, coalesce(d.data_type, case when (a.data_type = 'USER-DEFINED' and a.attribute_udt_name = 'geometry') then 'geometry' else case when a.data_type = 'ARRAY' then (substring(a.attribute_udt_name, 2) || repeat(' ARRAY', greatest(coalesce(pg_a.attndims, 0), 1))) else a.data_type end end) as data_type, coalesce(d.character_maximum_length, a.character_maximum_length, d.numeric_precision, a.numeric_precision) as numeric_precision, coalesce(d.numeric_scale, a.numeric_scale) as numeric_scale, a.is_nullable as is_nullable, a.attribute_default, null as data_type_catalog_name, a.attribute_udt_schema, null as data_type_package_name, coalesce(d.data_type, case when a.data_type = 'USER-DEFINED' then a.attribute_udt_name else case when a.data_type = 'ARRAY' then (substring(a.attribute_udt_name, 2) || repeat(' ARRAY', greatest(coalesce(pg_a.attndims, 0), 1))) else a.data_type end end) as data_type from (pg_catalog.pg_class join pg_catalog.pg_namespace as alias_87241969 on pg_catalog.pg_class.relnamespace = alias_87241969.oid) join (pg_catalog.pg_attribute as pg_a join (pg_catalog.pg_class as alias_51947009 join pg_catalog.pg_namespace as alias_41153833 on alias_51947009.relnamespace = alias_41153833.oid) on pg_a.attrelid = alias_51947009.oid) on pg_a.attrelid = pg_catalog.pg_class.oid join information_schema.attributes as a on (a.attribute_name = pg_a.attname and a.udt_name = alias_51947009.relname and a.udt_schema = alias_41153833.nspname) left outer join information_schema.domains as d on (a.attribute_udt_catalog = d.domain_catalog and a.attribute_udt_schema = d.domain_schema and a.attribute_udt_name = d.domain_name) where (pg_catalog.pg_class.relkind = 'c' and alias_87241969.nspname in (?)) order by alias_87241969.nspname, pg_catalog.pg_class.relname, a.ordinal_position");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        M_IDENTITIES.put(FIREBIRD, "select null catalog_name, null schema_name, trim(r.RDB$RELATION_NAME) RDB$RELATION_NAME, trim(r.RDB$FIELD_NAME) RDB$FIELD_NAME, trim(case when r.RDB$IDENTITY_TYPE = 0 then 'ALWAYS' when r.RDB$IDENTITY_TYPE = 1 then 'BY_DEFAULT' end) identity from RDB$RELATION_FIELDS r where r.RDB$IDENTITY_TYPE in (0, 1) order by r.RDB$RELATION_NAME, r.RDB$FIELD_POSITION");
+        M_IDENTITIES.put(H2, "select INFORMATION_SCHEMA.COLUMNS.TABLE_CATALOG, INFORMATION_SCHEMA.COLUMNS.TABLE_SCHEMA, INFORMATION_SCHEMA.COLUMNS.TABLE_NAME, INFORMATION_SCHEMA.COLUMNS.COLUMN_NAME, case when INFORMATION_SCHEMA.COLUMNS.IDENTITY_GENERATION = 'BY DEFAULT' then 'BY_DEFAULT' else INFORMATION_SCHEMA.COLUMNS.IDENTITY_GENERATION end IDENTITY_GENERATION from INFORMATION_SCHEMA.COLUMNS where (INFORMATION_SCHEMA.COLUMNS.TABLE_SCHEMA in (cast(? as varchar(128))) and INFORMATION_SCHEMA.COLUMNS.IS_IDENTITY = 'YES') order by INFORMATION_SCHEMA.COLUMNS.TABLE_CATALOG, INFORMATION_SCHEMA.COLUMNS.TABLE_SCHEMA, INFORMATION_SCHEMA.COLUMNS.TABLE_NAME, INFORMATION_SCHEMA.COLUMNS.ORDINAL_POSITION");
+        M_IDENTITIES.put(HSQLDB, "select INFORMATION_SCHEMA.COLUMNS.TABLE_CATALOG, INFORMATION_SCHEMA.COLUMNS.TABLE_SCHEMA, INFORMATION_SCHEMA.COLUMNS.TABLE_NAME, INFORMATION_SCHEMA.COLUMNS.COLUMN_NAME, case when INFORMATION_SCHEMA.COLUMNS.IDENTITY_GENERATION = 'BY DEFAULT' then 'BY_DEFAULT' else INFORMATION_SCHEMA.COLUMNS.IDENTITY_GENERATION end as IDENTITY_GENERATION from INFORMATION_SCHEMA.COLUMNS where (INFORMATION_SCHEMA.COLUMNS.TABLE_SCHEMA in (cast(? as varchar(128))) and INFORMATION_SCHEMA.COLUMNS.IS_IDENTITY = 'YES') order by INFORMATION_SCHEMA.COLUMNS.TABLE_CATALOG, INFORMATION_SCHEMA.COLUMNS.TABLE_SCHEMA, INFORMATION_SCHEMA.COLUMNS.TABLE_NAME, INFORMATION_SCHEMA.COLUMNS.ORDINAL_POSITION");
+        M_IDENTITIES.put(POSTGRES, "select information_schema.columns.table_catalog, information_schema.columns.table_schema, information_schema.columns.table_name, information_schema.columns.column_name, case when information_schema.columns.identity_generation = 'BY DEFAULT' then 'BY_DEFAULT' else information_schema.columns.identity_generation end as identity_generation from information_schema.columns where (information_schema.columns.table_schema in (?) and information_schema.columns.is_identity = 'YES') order by information_schema.columns.table_catalog, information_schema.columns.table_schema, information_schema.columns.table_name, information_schema.columns.ordinal_position");
+        M_IDENTITIES.put(YUGABYTEDB, "select information_schema.columns.table_catalog, information_schema.columns.table_schema, information_schema.columns.table_name, information_schema.columns.column_name, case when information_schema.columns.identity_generation = 'BY DEFAULT' then 'BY_DEFAULT' else information_schema.columns.identity_generation end as identity_generation from information_schema.columns where (information_schema.columns.table_schema in (?) and information_schema.columns.is_identity = 'YES') order by information_schema.columns.table_catalog, information_schema.columns.table_schema, information_schema.columns.table_name, information_schema.columns.ordinal_position");
+
+
+
+
+
+
+
 
 
 

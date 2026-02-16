@@ -272,6 +272,26 @@ public interface ResultQueryDatabase extends Database {
      * <li>Schema name</li>
      * <li>Table name</li>
      * <li>Column name</li>
+     * <li>Generation mode as in {@link DataType#identityMode()}</li>
+     * </ol>
+     *
+     * @return The query or <code>null</code> if this implementation doesn't
+     *         support the query.
+     */
+    @Internal
+    @Nullable
+    ResultQuery<Record5<String, String, String, String, String>> identities(List<String> schemas);
+
+    /**
+     * A query that produces generator expressions for computed columns for a
+     * set of input schemas.
+     * <p>
+     * The resulting columns are:
+     * <ol>
+     * <li>Catalog name</li>
+     * <li>Schema name</li>
+     * <li>Table name</li>
+     * <li>Column name</li>
      * <li>Generator expression as in {@link DataType#generatedAlwaysAs()}</li>
      * <li>Generation option as in {@link DataType#generationOption()}</li>
      * </ol>

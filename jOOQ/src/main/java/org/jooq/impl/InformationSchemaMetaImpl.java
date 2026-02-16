@@ -238,7 +238,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
             InformationSchemaDomain<?> id = new InformationSchemaDomain<Object>(
                 schema,
                 name(d.getDomainName()),
-                (DataType) type(d.getDataType(), length, precision, scale, nullable, false, null, null),
+                (DataType) type(d.getDataType(), length, precision, scale, nullable, false, false, null, null),
                 checks.toArray(EMPTY_CHECK)
             );
             domains.add(id);
@@ -312,6 +312,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
             int scale = xc.getNumericScale() == null ? 0 : xc.getNumericScale();
             boolean nullable = !FALSE.equals(xc.isIsNullable());
             boolean readonly = TRUE.equals(xc.isReadonly());
+            boolean identity = "YES".equals(xc.getIdentityGeneration());
             Field<?> generatedAlwaysAs = TRUE.equals(xc.isIsGenerated())
                 ? DSL.field(xc.getGenerationExpression())
                 : null;
@@ -334,7 +335,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
 
             AbstractTable.createField(
                 name(xc.getColumnName()),
-                type(typeName, length, precision, scale, nullable, readonly, generatedAlwaysAs, generationOption),
+                type(typeName, length, precision, scale, nullable, readonly, identity, generatedAlwaysAs, generationOption),
                 table,
                 xc.getComment()
             );
@@ -553,7 +554,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
             InformationSchemaSequence is = new InformationSchemaSequence(
                 xs.getSequenceName(),
                 schema,
-                type(typeName, length, precision, scale, nullable, false, null, null),
+                type(typeName, length, precision, scale, nullable, false, false, null, null),
                 startWith,
                 incrementBy,
                 minvalue,
@@ -651,6 +652,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
         int scale,
         boolean nullable,
         boolean readonly,
+        boolean identity,
         Field<?> generatedAlwaysAs,
         GenerationOption generationOption
     ) {
@@ -660,6 +662,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
             type = DefaultDataType.getDataType(configuration.family(), typeName);
             type = type.nullable(nullable);
             type = type.readonly(readonly);
+            type = type.identity(identity);
 
             if (length != 0)
                 type = type.length(length);

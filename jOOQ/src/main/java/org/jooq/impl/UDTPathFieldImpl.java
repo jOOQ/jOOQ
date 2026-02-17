@@ -75,6 +75,8 @@ import org.jooq.impl.QOM.UEmpty;
 import org.jooq.impl.QOM.UNotYetImplemented;
 import org.jooq.tools.StringUtils;
 
+import org.jetbrains.annotations.Nullable;
+
 /**
  * A common base type for UDT path fields.
  *
@@ -113,6 +115,14 @@ implements
             return u.getTableField();
         else if (this instanceof UDTPathTableField<?, ?, ?> tf)
             return tf;
+        else
+            throw new IllegalStateException();
+    }
+
+    @Override
+    public final UDTPathField<?, ?, ? extends UDTRecord<?>> getParentField() {
+        if (getQualifier() instanceof UDTPathTableFieldImpl<?, ?, ?>.UDTPathFieldImplAsQualifier u)
+            return u.getPathField();
         else
             throw new IllegalStateException();
     }
@@ -183,8 +193,9 @@ implements
             super(UDTPathFieldImpl.this.getQualifiedName(), UDTPathFieldImpl.this.getCommentPart());
         }
 
-        UDTPathField<?, ?, ?> getPathField() {
-            return UDTPathFieldImpl.this;
+        @SuppressWarnings("unchecked")
+        UDTPathField<?, ?, ? extends UDTRecord<?>> getPathField() {
+            return (UDTPathField<?, ?, ? extends UDTRecord<?>>) UDTPathFieldImpl.this;
         }
 
         UDTPathTableField<?, ?, ?> getTableField() {

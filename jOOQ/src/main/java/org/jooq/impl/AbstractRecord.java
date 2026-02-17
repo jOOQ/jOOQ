@@ -102,6 +102,7 @@ import org.jooq.RecordMapper;
 import org.jooq.Result;
 import org.jooq.TXTFormat;
 import org.jooq.Table;
+import org.jooq.UDTPathField;
 import org.jooq.UDTRecord;
 import org.jooq.UniqueKey;
 import org.jooq.XMLFormat;
@@ -211,6 +212,8 @@ implements
             return (T) Tools
                 .newRecord(fetched, configuration(), ((EmbeddableTableField<?, ?>) field).recordType)
                 .operate(new TransferRecordState<>(embeddedFields(field)));
+        else if (field instanceof UDTPathField<?, ?, ?> u)
+            return get(u.getParentField()).get(field);
         else
             throw Tools.indexFail(fields, field);
     }

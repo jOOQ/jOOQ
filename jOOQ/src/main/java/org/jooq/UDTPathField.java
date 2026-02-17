@@ -65,6 +65,17 @@ public interface UDTPathField<R extends Record, U extends UDTRecord<U>, T> exten
     UDTPathTableField<?, ?, ?> getTableField();
 
     /**
+     * Get the parent {@link UDTPathField} reference on this UDT path.
+     * <p>
+     * While this currently returns non-<code>null</code> values only, as
+     * there's always a {@link UDTPathTableField} on the path, there might not
+     * be in the future, e.g. when a UDT path is based on a UDT constructor or
+     * UDT returning function, which jOOQ currently does not yet support.
+     */
+    @Nullable
+    UDTPathField<?, ?, ? extends UDTRecord<?>> getParentField();
+
+    /**
      * @return The UDT path this field is contained in.
      */
     @Nullable

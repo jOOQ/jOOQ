@@ -1918,6 +1918,17 @@ implements
 
 
 
+
+
+                    case POSTGRES:
+                    case YUGABYTEDB:
+                        if (alterColumnSetIdentity == GenerationMode.ALWAYS)
+                            ctx.sql(' ').visit(K_ADD).sql(' ').visit(K_GENERATED).sql(' ').visit(K_ALWAYS).sql(' ').visit(K_AS).sql(' ').visit(K_IDENTITY);
+                        else
+                            ctx.sql(' ').visit(K_ADD).sql(' ').visit(K_GENERATED).sql(' ').visit(K_BY).sql(' ').visit(K_DEFAULT).sql(' ').visit(K_AS).sql(' ').visit(K_IDENTITY);
+
+                        break;
+
                     case H2:
                         if (alterColumnSetIdentity == GenerationMode.ALWAYS)
                             ctx.sql(' ').visit(K_SET).sql(' ').visit(K_GENERATED).sql(' ').visit(K_ALWAYS);
@@ -1937,9 +1948,9 @@ implements
 
                     default:
                         if (alterColumnSetIdentity == GenerationMode.ALWAYS)
-                            ctx.sql(' ').visit(K_ADD).sql(' ').visit(K_GENERATED).sql(' ').visit(K_ALWAYS).sql(' ').visit(K_AS).sql(' ').visit(K_IDENTITY);
+                            ctx.sql(' ').visit(K_SET).sql(' ').visit(K_GENERATED).sql(' ').visit(K_ALWAYS).sql(' ').visit(K_AS).sql(' ').visit(K_IDENTITY);
                         else
-                            ctx.sql(' ').visit(K_ADD).sql(' ').visit(K_GENERATED).sql(' ').visit(K_BY).sql(' ').visit(K_DEFAULT).sql(' ').visit(K_AS).sql(' ').visit(K_IDENTITY);
+                            ctx.sql(' ').visit(K_SET).sql(' ').visit(K_GENERATED).sql(' ').visit(K_BY).sql(' ').visit(K_DEFAULT).sql(' ').visit(K_AS).sql(' ').visit(K_IDENTITY);
 
                         break;
                 }

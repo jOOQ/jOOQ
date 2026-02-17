@@ -124,7 +124,7 @@ implements
         if (getQualifier() instanceof UDTPathTableFieldImpl<?, ?, ?>.UDTPathFieldImplAsQualifier u)
             return u.getPathField();
         else
-            throw new IllegalStateException();
+            return null;
     }
 
     static final <R extends UDTRecord<R>> Field<R> construct(

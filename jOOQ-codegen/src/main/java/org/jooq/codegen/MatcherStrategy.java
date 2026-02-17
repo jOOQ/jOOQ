@@ -834,6 +834,12 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
     @Override
     public boolean getJavaMemberOverride(Definition definition, Mode mode) {
         switch (mode) {
+            case DEFAULT:
+                return getJavaOverride0(definition,
+                    MatchersFieldType::isTableMemberOverride,
+                    MatchersAttributeType::isUdtMemberOverride,
+                    () -> super.getJavaMemberOverride(definition, mode)
+                );
             case RECORD:
                 return getJavaOverride0(definition,
                     MatchersFieldType::isRecordMemberOverride,

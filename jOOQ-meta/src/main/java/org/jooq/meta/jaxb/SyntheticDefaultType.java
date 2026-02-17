@@ -44,7 +44,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class SyntheticDefaultType implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 32009L;
+    private final static long serialVersionUID = 32012L;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String tables;
     @XmlElement(required = true)

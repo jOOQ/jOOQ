@@ -28,7 +28,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *       &lt;all&gt;
  *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="tables" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="fields" type="{http://www.jooq.org/xsd/jooq-codegen-3.20.9.xsd}SyntheticKeyFieldsType"/&gt;
+ *         &lt;element name="fields" type="{http://www.jooq.org/xsd/jooq-codegen-3.20.12.xsd}SyntheticKeyFieldsType"/&gt;
  *         &lt;element name="key" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="ignoreUnused" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
  *       &lt;/all&gt;
@@ -49,7 +49,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class SyntheticPrimaryKeyType implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 32009L;
+    private final static long serialVersionUID = 32012L;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String name;
     @XmlJavaTypeAdapter(StringAdapter.class)

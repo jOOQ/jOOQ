@@ -32,7 +32,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class CatalogMappingType implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 32009L;
+    private final static long serialVersionUID = 32012L;
     @XmlElement(required = true, defaultValue = "")
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String inputCatalog = "";

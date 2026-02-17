@@ -70,11 +70,9 @@ import org.jooq.SortOrder;
 // ...
 import org.jooq.Table;
 import org.jooq.UniqueKey;
-import org.jooq.impl.QOM.GenerationMode;
 import org.jooq.util.xml.XmlUtils;
 import org.jooq.util.xml.jaxb.CheckConstraint;
 import org.jooq.util.xml.jaxb.Column;
-import org.jooq.util.xml.jaxb.IdentityGeneration;
 import org.jooq.util.xml.jaxb.IndexColumnUsage;
 import org.jooq.util.xml.jaxb.InformationSchema;
 import org.jooq.util.xml.jaxb.KeyColumnUsage;

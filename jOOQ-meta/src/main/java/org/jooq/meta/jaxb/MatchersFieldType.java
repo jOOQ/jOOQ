@@ -28,7 +28,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class MatchersFieldType implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 32009L;
+    private final static long serialVersionUID = 32012L;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String expression;
     protected MatcherRule fieldIdentifier;
@@ -36,6 +36,8 @@ public class MatchersFieldType implements Serializable, XMLAppendable
     protected MatcherRule fieldSetter;
     protected MatcherRule fieldGetter;
     protected MatcherRule daoMember;
+    @XmlElement(defaultValue = "false")
+    protected Boolean tableMemberOverride = false;
     @XmlElement(defaultValue = "false")
     protected Boolean recordSetterOverride = false;
     @XmlElement(defaultValue = "false")
@@ -149,6 +151,30 @@ public class MatchersFieldType implements Serializable, XMLAppendable
      */
     public void setDaoMember(MatcherRule value) {
         this.daoMember = value;
+    }
+
+    /**
+     * Whether an "override" modifier in generated table members (table fields) should be generated.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTableMemberOverride() {
+        return tableMemberOverride;
+    }
+
+    /**
+     * Whether an "override" modifier in generated table members (table fields) should be generated.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTableMemberOverride(Boolean value) {
+        this.tableMemberOverride = value;
     }
 
     /**
@@ -422,6 +448,15 @@ public class MatchersFieldType implements Serializable, XMLAppendable
     }
 
     /**
+     * Whether an "override" modifier in generated table members (table fields) should be generated.
+     * 
+     */
+    public MatchersFieldType withTableMemberOverride(Boolean value) {
+        setTableMemberOverride(value);
+        return this;
+    }
+
+    /**
      * Whether an "override" modifier in generated record setters should be generated.
      * 
      */
@@ -510,6 +545,7 @@ public class MatchersFieldType implements Serializable, XMLAppendable
         builder.append("fieldSetter", fieldSetter);
         builder.append("fieldGetter", fieldGetter);
         builder.append("daoMember", daoMember);
+        builder.append("tableMemberOverride", tableMemberOverride);
         builder.append("recordSetterOverride", recordSetterOverride);
         builder.append("recordGetterOverride", recordGetterOverride);
         builder.append("recordMemberOverride", recordMemberOverride);
@@ -591,6 +627,15 @@ public class MatchersFieldType implements Serializable, XMLAppendable
             }
         } else {
             if (!daoMember.equals(other.daoMember)) {
+                return false;
+            }
+        }
+        if (tableMemberOverride == null) {
+            if (other.tableMemberOverride!= null) {
+                return false;
+            }
+        } else {
+            if (!tableMemberOverride.equals(other.tableMemberOverride)) {
                 return false;
             }
         }
@@ -688,6 +733,7 @@ public class MatchersFieldType implements Serializable, XMLAppendable
         result = ((prime*result)+((fieldSetter == null)? 0 :fieldSetter.hashCode()));
         result = ((prime*result)+((fieldGetter == null)? 0 :fieldGetter.hashCode()));
         result = ((prime*result)+((daoMember == null)? 0 :daoMember.hashCode()));
+        result = ((prime*result)+((tableMemberOverride == null)? 0 :tableMemberOverride.hashCode()));
         result = ((prime*result)+((recordSetterOverride == null)? 0 :recordSetterOverride.hashCode()));
         result = ((prime*result)+((recordGetterOverride == null)? 0 :recordGetterOverride.hashCode()));
         result = ((prime*result)+((recordMemberOverride == null)? 0 :recordMemberOverride.hashCode()));

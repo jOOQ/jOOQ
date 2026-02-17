@@ -46,7 +46,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class SyntheticViewType implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 32009L;
+    private final static long serialVersionUID = 32012L;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String catalog;
     @XmlJavaTypeAdapter(StringAdapter.class)

@@ -48,6 +48,7 @@ import java.util.function.Predicate;
 import org.jooq.impl.QOM.GenerationMode;
 import org.jooq.meta.jaxb.SyntheticDefaultType;
 import org.jooq.meta.jaxb.SyntheticEnumType;
+import org.jooq.meta.jaxb.SyntheticIdentityGenerationMode;
 import org.jooq.meta.jaxb.SyntheticIdentityType;
 import org.jooq.meta.jaxb.SyntheticReadonlyColumnType;
 import org.jooq.tools.JooqLogger;
@@ -197,11 +198,13 @@ implements
     ) {
         super(table, name, position, type, comment);
 
+        GenerationMode si = isSyntheticIdentity(this);
+
         this.position = position;
         this.identity = identity != null
             ? identity
-            : isSyntheticIdentity(this)
-            ? GenerationMode.BY_DEFAULT
+            : si != null
+            ? si
             : null;
         this.defaultValue = getSyntheticDefault(this);
         this.hidden = hidden;
@@ -225,7 +228,7 @@ implements
     }
 
     @SuppressWarnings("unused")
-    private static boolean isSyntheticIdentity(DefaultColumnDefinition column) {
+    private static GenerationMode isSyntheticIdentity(DefaultColumnDefinition column) {
         AbstractDatabase db = (AbstractDatabase) column.getDatabase();
 
         for (SyntheticIdentityType id : db.getConfiguredSyntheticIdentities()) {
@@ -233,12 +236,15 @@ implements
                 for (ColumnDefinition c : db.filter(singletonList(column), id.getFields())) {
                     log.info("Synthetic identity", column.getQualifiedName());
                     db.markUsed(id);
-                    return true;
+
+                    return id.getGenerationMode() == SyntheticIdentityGenerationMode.ALWAYS
+                        ? GenerationMode.ALWAYS
+                        : GenerationMode.BY_DEFAULT;
                 }
             }
         }
 
-        return false;
+        return null;
     }
 
     @SuppressWarnings("unused")

@@ -5,6 +5,7 @@ import java.io.Serializable;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlSchemaType;
 import jakarta.xml.bind.annotation.XmlType;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.jooq.util.jaxb.tools.StringAdapter;
@@ -25,6 +26,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *         &lt;element name="tables" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="fields" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *         &lt;element name="ignoreUnused" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
+ *         &lt;element name="generationMode" type="{http://www.jooq.org/xsd/jooq-codegen-3.21.0.xsd}SyntheticIdentityGenerationMode" minOccurs="0"/&gt;
  *       &lt;/all&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -51,6 +53,9 @@ public class SyntheticIdentityType implements Serializable, XMLAppendable
     protected String fields;
     @XmlElement(defaultValue = "false")
     protected Boolean ignoreUnused = false;
+    @XmlElement(defaultValue = "BY DEFAULT")
+    @XmlSchemaType(name = "string")
+    protected SyntheticIdentityGenerationMode generationMode = SyntheticIdentityGenerationMode.BY_DEFAULT;
 
     /**
      * A regular expression matching all tables on which to apply this synthetic identity.
@@ -109,6 +114,22 @@ public class SyntheticIdentityType implements Serializable, XMLAppendable
     }
 
     /**
+     * The generation mode for the synthetic identities
+     * 
+     */
+    public SyntheticIdentityGenerationMode getGenerationMode() {
+        return generationMode;
+    }
+
+    /**
+     * The generation mode for the synthetic identities
+     * 
+     */
+    public void setGenerationMode(SyntheticIdentityGenerationMode value) {
+        this.generationMode = value;
+    }
+
+    /**
      * A regular expression matching all tables on which to apply this synthetic identity.
      * 
      */
@@ -135,11 +156,21 @@ public class SyntheticIdentityType implements Serializable, XMLAppendable
         return this;
     }
 
+    /**
+     * The generation mode for the synthetic identities
+     * 
+     */
+    public SyntheticIdentityType withGenerationMode(SyntheticIdentityGenerationMode value) {
+        setGenerationMode(value);
+        return this;
+    }
+
     @Override
     public final void appendTo(XMLBuilder builder) {
         builder.append("tables", tables);
         builder.append("fields", fields);
         builder.append("ignoreUnused", ignoreUnused);
+        builder.append("generationMode", generationMode);
     }
 
     @Override
@@ -188,6 +219,15 @@ public class SyntheticIdentityType implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (generationMode == null) {
+            if (other.generationMode!= null) {
+                return false;
+            }
+        } else {
+            if (!generationMode.equals(other.generationMode)) {
+                return false;
+            }
+        }
         return true;
     }
 
@@ -198,6 +238,7 @@ public class SyntheticIdentityType implements Serializable, XMLAppendable
         result = ((prime*result)+((tables == null)? 0 :tables.hashCode()));
         result = ((prime*result)+((fields == null)? 0 :fields.hashCode()));
         result = ((prime*result)+((ignoreUnused == null)? 0 :ignoreUnused.hashCode()));
+        result = ((prime*result)+((generationMode == null)? 0 :generationMode.hashCode()));
         return result;
     }
 

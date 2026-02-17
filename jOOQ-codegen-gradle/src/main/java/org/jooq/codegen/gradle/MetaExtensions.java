@@ -503,6 +503,10 @@ public class MetaExtensions {
             setDaoMember(o);
         }
 
+        public Boolean getTableMemberOverride() {
+            return isTableMemberOverride();
+        }
+
         public Boolean getRecordSetterOverride() {
             return isRecordSetterOverride();
         }
@@ -711,6 +715,10 @@ public class MetaExtensions {
             MatcherRuleExtension o = objects.newInstance(MatcherRuleExtension.class, objects);
             action.execute(o);
             setAttributeGetter(o);
+        }
+
+        public Boolean getUdtMemberOverride() {
+            return isUdtMemberOverride();
         }
 
         public Boolean getRecordSetterOverride() {
@@ -1609,6 +1617,10 @@ public class MetaExtensions {
 
         public Boolean getGeneratedAnnotationJooqVersion() {
             return isGeneratedAnnotationJooqVersion();
+        }
+
+        public Boolean getGeneratedAnnotationConfigurationHash() {
+            return isGeneratedAnnotationConfigurationHash();
         }
 
         public Boolean getNonnullAnnotation() {

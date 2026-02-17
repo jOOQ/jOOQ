@@ -7731,6 +7731,8 @@ public class JavaGenerator extends AbstractGenerator {
             final List<String> converter = new ArrayList<>();
             final List<String> binding = new ArrayList<>();
             final List<String> generator = new ArrayList<>();
+            final boolean override = getStrategy().getJavaMemberOverride(column, Mode.DEFAULT);
+
             // [#14916] Domain types may already have bindings/converters. Don't re-apply them.
             if (domain == null || !StringUtils.equals(domain.getType(resolver(out)).getConverter(), columnTypeDef.getConverter()))
                 converter.addAll(out.ref(list(columnTypeDef.getConverter())));
@@ -7758,7 +7760,7 @@ public class JavaGenerator extends AbstractGenerator {
 
 
 
-            columnVisibility = visibility();
+            columnVisibility = visibility(override);
 
             if (!printDeprecationIfUnknownType(out, columnTypeFull))
                 out.javadocAndAnnotations(column, "The column <code>%s</code>.[[before= ][%s]]", column.getQualifiedOutputName(), list(escapeEntities(comment(column))));
@@ -7770,15 +7772,15 @@ public class JavaGenerator extends AbstractGenerator {
 
                 if (scala) {
                     if (converter.isEmpty())
-                        out.println("%sval %s: %s[%s, %s] = %s.createUDTPathTableField[ %s, %s, %s[%s, %s] ](%s.name(\"%s\"), %s, this, \"%s\", classOf[ %s[%s, %s] ]" + converterTemplate(converter) + converterTemplate(binding) + ")",
-                            columnVisibility, scalaWhitespaceSuffix(columnId), columnPathType, recordType, columnType, Internal.class, recordType, columnType, columnPathType, recordType, columnType, DSL.class, escapeString(columnName), columnTypeRef, escapeString(comment(column)), columnPathType, recordType, columnType, converter, binding);
+                        out.println("%s%sval %s: %s[%s, %s] = %s.createUDTPathTableField[ %s, %s, %s[%s, %s] ](%s.name(\"%s\"), %s, this, \"%s\", classOf[ %s[%s, %s] ]" + converterTemplate(converter) + converterTemplate(binding) + ")",
+                            columnVisibility, override ? "override " : "", scalaWhitespaceSuffix(columnId), columnPathType, recordType, columnType, Internal.class, recordType, columnType, columnPathType, recordType, columnType, DSL.class, escapeString(columnName), columnTypeRef, escapeString(comment(column)), columnPathType, recordType, columnType, converter, binding);
                     else
-                        out.println("%sval %s: %s[%s, %s] = %s.createUDTPathTableField(%s.name(\"%s\"), %s, this, \"%s\", classOf[ %s[%s, %s] ]" + converterTemplate(converter) + converterTemplate(binding) + ")",
-                            columnVisibility, scalaWhitespaceSuffix(columnId), columnPathType, recordType, columnType, Internal.class, DSL.class, escapeString(columnName), columnTypeRef, escapeString(comment(column)), columnPathType, recordType, columnType, converter, binding);
+                        out.println("%s%sval %s: %s[%s, %s] = %s.createUDTPathTableField(%s.name(\"%s\"), %s, this, \"%s\", classOf[ %s[%s, %s] ]" + converterTemplate(converter) + converterTemplate(binding) + ")",
+                            columnVisibility, override ? "override " : "", scalaWhitespaceSuffix(columnId), columnPathType, recordType, columnType, Internal.class, DSL.class, escapeString(columnName), columnTypeRef, escapeString(comment(column)), columnPathType, recordType, columnType, converter, binding);
                 }
                 else if (kotlin)
-                    out.println("%sval %s: %s<%s, %s> = %s.createUDTPathTableField(%s.name(\"%s\"), %s, this, \"%s\", %s::class.java as %s<%s<%s, %s>>" + converterTemplate(converter) + converterTemplate(binding) + ")",
-                        columnVisibility, columnId, columnPathType, recordType, columnType, Internal.class, DSL.class, escapeString(columnName), columnTypeRef, escapeString(comment(column)), columnPathType, Class.class, columnPathType, recordType, columnType, converter, binding);
+                    out.println("%s%sval %s: %s<%s, %s> = %s.createUDTPathTableField(%s.name(\"%s\"), %s, this, \"%s\", %s::class.java as %s<%s<%s, %s>>" + converterTemplate(converter) + converterTemplate(binding) + ")",
+                        columnVisibility, override ? "override " : "", columnId, columnPathType, recordType, columnType, Internal.class, DSL.class, escapeString(columnName), columnTypeRef, escapeString(comment(column)), columnPathType, Class.class, columnPathType, recordType, columnType, converter, binding);
                 else
                     out.println("%sfinal %s<%s, %s> %s = %s.createUDTPathTableField(%s.name(\"%s\"), %s, this, \"%s\", %s.class" + converterTemplate(converter) + converterTemplate(binding) + ");",
                         visibility(), columnPathType, recordType, columnType, columnId, Internal.class, DSL.class, escapeString(columnName), columnTypeRef, escapeString(comment(column)), columnPathType, converter, binding);
@@ -7792,15 +7794,15 @@ public class JavaGenerator extends AbstractGenerator {
                     //         can't be overloaded, so it has that "0" suffix...
                     // [#15505] TODO: Use Internal API instead
                     if (generator.isEmpty())
-                        out.println("%sval %s: %s[%s, %s] = createField(%s.name(\"%s\"), %s, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + converterTemplate(generator) + ")",
-                            columnVisibility, scalaWhitespaceSuffix(columnId), TableField.class, recordType, columnType, DSL.class, escapeString(columnName), columnTypeRef, escapeString(comment(column)), converter, binding, generator);
+                        out.println("%s%sval %s: %s[%s, %s] = createField(%s.name(\"%s\"), %s, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + converterTemplate(generator) + ")",
+                            columnVisibility, override ? "override " : "", scalaWhitespaceSuffix(columnId), TableField.class, recordType, columnType, DSL.class, escapeString(columnName), columnTypeRef, escapeString(comment(column)), converter, binding, generator);
                     else
-                        out.println("%sval %s: %s[%s, %s] = createField0(%s.name(\"%s\"), %s, this, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + converterTemplate(generator) + ")",
-                            columnVisibility, scalaWhitespaceSuffix(columnId), TableField.class, recordType, columnType, DSL.class, escapeString(columnName), columnTypeRef, escapeString(comment(column)), converter, binding, generator);
+                        out.println("%s%sval %s: %s[%s, %s] = createField0(%s.name(\"%s\"), %s, this, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + converterTemplate(generator) + ")",
+                            columnVisibility, override ? "override " : "", scalaWhitespaceSuffix(columnId), TableField.class, recordType, columnType, DSL.class, escapeString(columnName), columnTypeRef, escapeString(comment(column)), converter, binding, generator);
                 }
                 else if (kotlin) {
-                    out.println("%sval %s: %s<%s, %s?> = createField(%s.name(\"%s\"), %s, this, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + converterTemplate(generator) + ")",
-                        columnVisibility, columnId, TableField.class, recordType, columnType, DSL.class, escapeString(columnName), columnTypeRef, escapeString(comment(column)), converter, binding, generator);
+                    out.println("%s%sval %s: %s<%s, %s?> = createField(%s.name(\"%s\"), %s, this, \"%s\"" + converterTemplate(converter) + converterTemplate(binding) + converterTemplate(generator) + ")",
+                        columnVisibility, override ? "override " : "", columnId, TableField.class, recordType, columnType, DSL.class, escapeString(columnName), columnTypeRef, escapeString(comment(column)), converter, binding, generator);
                 }
                 else {
                     String isStatic = generateInstanceFields() ? "" : "static ";
@@ -7816,6 +7818,7 @@ public class JavaGenerator extends AbstractGenerator {
         for (EmbeddableDefinition embeddable : table.getReferencedEmbeddables()) {
             final String columnId = out.ref(getStrategy().getJavaIdentifier(embeddable), colRefSegments(null));
             final String columnType = out.ref(getStrategy().getFullJavaClassName(embeddable, Mode.RECORD));
+            final boolean override = getStrategy().getJavaMemberOverride(embeddable, Mode.DEFAULT);
 
             final List<String> columnIds = new ArrayList<>();
             for (EmbeddableColumnDefinition column : embeddable.getColumns())
@@ -7824,11 +7827,11 @@ public class JavaGenerator extends AbstractGenerator {
             out.javadoc("The embeddable type <code>%s</code>.[[before= ][%s]]", embeddable.getOutputName(), list(escapeEntities(referencingComment(embeddable))));
 
             if (scala)
-                out.println("%sval %s: %s[%s, %s] = %s.createEmbeddable(%s.name(\"%s\"), classOf[%s], %s, this, [[%s]])",
-                    visibility(), scalaWhitespaceSuffix(columnId), TableField.class, recordType, columnType, Internal.class, DSL.class, escapeString(embeddable.getName()), columnType, embeddable.replacesFields(), columnIds);
+                out.println("%s%sval %s: %s[%s, %s] = %s.createEmbeddable(%s.name(\"%s\"), classOf[%s], %s, this, [[%s]])",
+                    visibility(override), override ? "override " : "", scalaWhitespaceSuffix(columnId), TableField.class, recordType, columnType, Internal.class, DSL.class, escapeString(embeddable.getName()), columnType, embeddable.replacesFields(), columnIds);
             else if (kotlin)
-                out.println("%sval %s: %s<%s, %s> = %s.createEmbeddable(%s.name(\"%s\"), %s::class.java, %s, this, [[%s]])",
-                    visibility(), columnId, TableField.class, recordType, columnType, Internal.class, DSL.class, escapeString(embeddable.getName()), columnType, embeddable.replacesFields(), columnIds);
+                out.println("%s%sval %s: %s<%s, %s> = %s.createEmbeddable(%s.name(\"%s\"), %s::class.java, %s, this, [[%s]])",
+                    visibility(override), override ? "override " : "", columnId, TableField.class, recordType, columnType, Internal.class, DSL.class, escapeString(embeddable.getName()), columnType, embeddable.replacesFields(), columnIds);
             else
                 out.println("%sfinal %s<%s, %s> %s = %s.createEmbeddable(%s.name(\"%s\"), %s.class, %s, this, [[%s]]);",
                     visibility(), TableField.class, recordType, columnType, columnId, Internal.class, DSL.class, escapeString(embeddable.getName()), columnType, embeddable.replacesFields(), columnIds);

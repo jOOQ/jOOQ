@@ -36,6 +36,8 @@ public class MatchersAttributeType implements Serializable, XMLAppendable
     protected MatcherRule attributeSetter;
     protected MatcherRule attributeGetter;
     @XmlElement(defaultValue = "false")
+    protected Boolean udtMemberOverride = false;
+    @XmlElement(defaultValue = "false")
     protected Boolean recordSetterOverride = false;
     @XmlElement(defaultValue = "false")
     protected Boolean recordGetterOverride = false;
@@ -138,6 +140,30 @@ public class MatchersAttributeType implements Serializable, XMLAppendable
      */
     public void setAttributeGetter(MatcherRule value) {
         this.attributeGetter = value;
+    }
+
+    /**
+     * Whether an "override" modifier in generated udt members (table fields) should be generated.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isUdtMemberOverride() {
+        return udtMemberOverride;
+    }
+
+    /**
+     * Whether an "override" modifier in generated udt members (table fields) should be generated.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setUdtMemberOverride(Boolean value) {
+        this.udtMemberOverride = value;
     }
 
     /**
@@ -474,6 +500,15 @@ public class MatchersAttributeType implements Serializable, XMLAppendable
     }
 
     /**
+     * Whether an "override" modifier in generated udt members (table fields) should be generated.
+     * 
+     */
+    public MatchersAttributeType withUdtMemberOverride(Boolean value) {
+        setUdtMemberOverride(value);
+        return this;
+    }
+
+    /**
      * Whether an "override" modifier in generated record setters should be generated.
      * 
      */
@@ -588,6 +623,7 @@ public class MatchersAttributeType implements Serializable, XMLAppendable
         builder.append("attributeMember", attributeMember);
         builder.append("attributeSetter", attributeSetter);
         builder.append("attributeGetter", attributeGetter);
+        builder.append("udtMemberOverride", udtMemberOverride);
         builder.append("recordSetterOverride", recordSetterOverride);
         builder.append("recordGetterOverride", recordGetterOverride);
         builder.append("recordMemberOverride", recordMemberOverride);
@@ -663,6 +699,15 @@ public class MatchersAttributeType implements Serializable, XMLAppendable
             }
         } else {
             if (!attributeGetter.equals(other.attributeGetter)) {
+                return false;
+            }
+        }
+        if (udtMemberOverride == null) {
+            if (other.udtMemberOverride!= null) {
+                return false;
+            }
+        } else {
+            if (!udtMemberOverride.equals(other.udtMemberOverride)) {
                 return false;
             }
         }
@@ -786,6 +831,7 @@ public class MatchersAttributeType implements Serializable, XMLAppendable
         result = ((prime*result)+((attributeMember == null)? 0 :attributeMember.hashCode()));
         result = ((prime*result)+((attributeSetter == null)? 0 :attributeSetter.hashCode()));
         result = ((prime*result)+((attributeGetter == null)? 0 :attributeGetter.hashCode()));
+        result = ((prime*result)+((udtMemberOverride == null)? 0 :udtMemberOverride.hashCode()));
         result = ((prime*result)+((recordSetterOverride == null)? 0 :recordSetterOverride.hashCode()));
         result = ((prime*result)+((recordGetterOverride == null)? 0 :recordGetterOverride.hashCode()));
         result = ((prime*result)+((recordMemberOverride == null)? 0 :recordMemberOverride.hashCode()));

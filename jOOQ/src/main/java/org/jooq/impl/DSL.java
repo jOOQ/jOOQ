@@ -278,6 +278,7 @@ import org.jooq.JSONExistsOnStep;
 import org.jooq.JSONFormat;
 import org.jooq.JSONObjectAggNullStep;
 import org.jooq.JSONObjectNullStep;
+import org.jooq.JSONQueryOnStep;
 import org.jooq.JSONTableColumnsFirstStep;
 import org.jooq.JSONValueOnStep;
 import org.jooq.Keyword;
@@ -31986,6 +31987,42 @@ public class DSL {
     @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static JSONValueOnStep<JSONB> jsonbValue(Field<JSONB> json, Field<String> path) {
         return new JSONValue<>(SQLDataType.JSONB, json, path, null);
+    }
+
+    /**
+     * The JSON value extractor function.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static JSONQueryOnStep<JSON> jsonQuery(Field<JSON> json, String path) {
+        return jsonQuery(json, Tools.field(path));
+    }
+
+    /**
+     * The JSON value extractor function.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static JSONQueryOnStep<JSON> jsonQuery(Field<JSON> json, Field<String> path) {
+        return new JSONQuery<>(SQLDataType.JSON, json, path, null);
+    }
+
+    /**
+     * The JSON value extractor function.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static JSONQueryOnStep<JSONB> jsonbQuery(Field<JSONB> json, String path) {
+        return jsonbQuery(json, Tools.field(path));
+    }
+
+    /**
+     * The JSON value extractor function.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static JSONQueryOnStep<JSONB> jsonbQuery(Field<JSONB> json, Field<String> path) {
+        return new JSONQuery<>(SQLDataType.JSONB, json, path, null);
     }
 
     /**

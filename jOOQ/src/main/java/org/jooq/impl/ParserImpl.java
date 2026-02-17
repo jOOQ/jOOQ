@@ -235,6 +235,7 @@ import static org.jooq.impl.DSL.jsonGetElementAsText;
 import static org.jooq.impl.DSL.jsonKeyExists;
 import static org.jooq.impl.DSL.jsonObject;
 import static org.jooq.impl.DSL.jsonObjectAgg;
+import static org.jooq.impl.DSL.jsonQuery;
 import static org.jooq.impl.DSL.jsonTable;
 import static org.jooq.impl.DSL.jsonValue;
 import static org.jooq.impl.DSL.jsonbArray;
@@ -247,6 +248,8 @@ import static org.jooq.impl.DSL.jsonbGetElementAsText;
 import static org.jooq.impl.DSL.jsonbKeyExists;
 import static org.jooq.impl.DSL.jsonbObject;
 import static org.jooq.impl.DSL.jsonbObjectAgg;
+import static org.jooq.impl.DSL.jsonbQuery;
+import static org.jooq.impl.DSL.jsonbValue;
 import static org.jooq.impl.DSL.key;
 import static org.jooq.impl.DSL.keyword;
 import static org.jooq.impl.DSL.lag;
@@ -684,6 +687,7 @@ import org.jooq.JSONObjectAggNullStep;
 import org.jooq.JSONObjectAggReturningStep;
 import org.jooq.JSONObjectNullStep;
 import org.jooq.JSONObjectReturningStep;
+import org.jooq.JSONQueryOnStep;
 import org.jooq.JSONTableColumnPathStep;
 import org.jooq.JSONTableColumnsStep;
 import org.jooq.JSONValueDefaultStep;
@@ -9911,6 +9915,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                     return field;
                 else if ((field = parseFieldJSONValueIf()) != null)
                     return field;
+                else if ((field = parseFieldJSONQueryIf()) != null)
+                    return field;
                 else if ((field = parseFieldJSONLiteralIf()) != null)
                     return field;
                 else if (parseFunctionNameIf("JSON_ARRAY_LENGTH", "JSON_LENGTH", "JSONARRAYLENGTH"))
@@ -11371,6 +11377,57 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
             return JSONValue.Behaviour.NULL;
         else if (parseProKeywordIf("DEFAULT"))
             return JSONValue.Behaviour.DEFAULT;
+        else
+            return null;
+    }
+
+    private final Field<?> parseFieldJSONQueryIf() {
+        if (parseFunctionNameIf("JSON_QUERY")) {
+            parse('(');
+            Field json = parseField();
+            parse(',');
+            Field<String> path = (Field<String>) parseField();
+
+            JSONQueryOnStep<?> s1 = jsonQuery(json, path);
+            JSONQuery.Behaviour behaviour = parseJSONQueryBehaviourIf();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            DataType<?> returning = parseJSONReturningIf();
+            parse(')');
+            return returning == null ? s1 : s1.returning(returning);
+        }
+
+        return null;
+    }
+
+    private final JSONQuery.Behaviour parseJSONQueryBehaviourIf() {
+        if (parseProKeywordIf("ERROR"))
+            return JSONQuery.Behaviour.ERROR;
+        else if (parseProKeywordIf("NULL"))
+            return JSONQuery.Behaviour.NULL;
         else
             return null;
     }

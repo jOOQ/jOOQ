@@ -37,118 +37,141 @@
  */
 package org.jooq.impl;
 
-// ...
-import static org.jooq.SQLDialect.SQLITE;
-import static org.jooq.conf.ParamType.INLINED;
-import static org.jooq.impl.DSL.function;
-import static org.jooq.impl.DSL.systemName;
-import static org.jooq.impl.JSONQuery.Behaviour.ERROR;
-import static org.jooq.impl.JSONQuery.Behaviour.NULL;
-import static org.jooq.impl.Keywords.K_EMPTY;
-import static org.jooq.impl.Keywords.K_ERROR;
-import static org.jooq.impl.Keywords.K_ON;
-import static org.jooq.impl.Names.N_JSONB_PATH_QUERY_FIRST;
-import static org.jooq.impl.Names.N_JSON_EXTRACT;
-import static org.jooq.impl.Names.N_JSON_QUERY;
-import static org.jooq.impl.Names.N_JSON_VALUE;
-import static org.jooq.impl.SQLDataType.JSONB;
-import static org.jooq.impl.Tools.castIfNeeded;
-import static org.jooq.impl.Tools.isSimple;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.impl.Tools.ExtendedDataKey.*;
+import static org.jooq.impl.Tools.SimpleDataKey.*;
+import static org.jooq.SQLDialect.*;
 
+import org.jooq.*;
+import org.jooq.Function1;
+import org.jooq.Record;
+import org.jooq.conf.ParamType;
+import org.jooq.impl.QOM.JSONQueryBehavior;
+import org.jooq.impl.QOM.JSONQueryBehavior;
+import org.jooq.tools.StringUtils;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
-import org.jooq.Context;
-import org.jooq.DataType;
-import org.jooq.Field;
-import org.jooq.JSONQueryOnStep;
-import org.jooq.Keyword;
-// ...
-import org.jooq.SQLDialect;
-import org.jooq.impl.QOM.UNotYetImplemented;
 
 
 /**
- * The JSON value constructor.
- *
- * @author Lukas Eder
+ * The <code>JSON QUERY</code> statement.
  */
-final class JSONQuery<J>
+@SuppressWarnings({ "hiding", "rawtypes", "unchecked", "unused" })
+final class JSONQuery<T>
 extends
-    AbstractField<J>
+    AbstractField<T>
 implements
-    JSONQueryOnStep<J>,
-    UNotYetImplemented
+    QOM.JSONQuery<T>,
+    JSONQueryOnStep<T>,
+    JSONQueryReturningStep<T>
 {
 
+    final DataType<T>       type;
+    final Field<T>          json;
+    final Field<String>     path;
+          JSONQueryBehavior onEmpty;
+          JSONQueryBehavior onError;
+          DataType<?>       returning;
 
-
-
-
-
-    private final Field<?>       json;
-    private final Field<String>  path;
-    private final DataType<?>    returning;
-    private final Behaviour      onError;
-    private final Behaviour      onEmpty;
-
-    JSONQuery(DataType<J> type, Field<?> json, Field<String> path, DataType<?> returning) {
-        this(type, json, path, returning, null, null);
+    JSONQuery(
+        DataType<T> type,
+        Field<T> json,
+        Field<String> path
+    ) {
+        this(
+            type,
+            json,
+            path,
+            null,
+            null,
+            null
+        );
     }
 
-    private JSONQuery(
-        DataType<J> type,
-        Field<?> json,
+    JSONQuery(
+        DataType<T> type,
+        Field<T> json,
         Field<String> path,
-        DataType<?> returning,
-        Behaviour onError,
-        Behaviour onEmpty
+        JSONQueryBehavior onEmpty,
+        JSONQueryBehavior onError,
+        DataType<?> returning
     ) {
-        super(N_JSON_QUERY, type);
+        super(
+            N_JSON_QUERY,
+            type
+        );
 
-        this.json = json;
-        this.path = path;
-        this.returning = returning;
-        this.onError = onError;
+        this.type = type;
+        this.json = nullSafeNotNull(json, ((DataType) OTHER));
+        this.path = nullSafeNotNull(path, VARCHAR);
         this.onEmpty = onEmpty;
-
+        this.onError = onError;
+        this.returning = returning;
     }
 
     // -------------------------------------------------------------------------
     // XXX: DSL API
     // -------------------------------------------------------------------------
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    @Override
+    public final JSONQuery<T> errorOnEmpty() {
+        this.onEmpty = JSONQueryBehavior.ERROR;
+        return this;
+    }
 
     @Override
-    public final JSONQuery<J> returning(DataType<?> r) {
-        return new JSONQuery<>(getDataType(), json, path, r, onError, onEmpty);
+    public final JSONQuery<T> errorOnError() {
+        this.onError = JSONQueryBehavior.ERROR;
+        return this;
+    }
+
+    @Override
+    public final JSONQuery<T> nullOnEmpty() {
+        this.onEmpty = JSONQueryBehavior.NULL;
+        return this;
+    }
+
+    @Override
+    public final JSONQuery<T> nullOnError() {
+        this.onError = JSONQueryBehavior.NULL;
+        return this;
+    }
+
+    @Override
+    public final JSONQuery<T> returning(DataType<?> returning) {
+        this.returning = returning;
+        return this;
     }
 
     // -------------------------------------------------------------------------
     // XXX: QueryPart API
     // -------------------------------------------------------------------------
+
+    @Override
+    final boolean isNullable() {
+        return false;
+    }
+
+
+
+
+
+
+
 
     @SuppressWarnings("unchecked")
     @Override
@@ -269,13 +292,111 @@ implements
 
 
 
-    enum Behaviour {
-        ERROR, NULL;
 
-        final Keyword keyword;
 
-        Behaviour() {
-            this.keyword = DSL.keyword(name().toLowerCase());
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final DataType<T> $arg1() {
+        return type;
+    }
+
+    @Override
+    public final Field<T> $arg2() {
+        return json;
+    }
+
+    @Override
+    public final Field<String> $arg3() {
+        return path;
+    }
+
+    @Override
+    public final JSONQueryBehavior $arg4() {
+        return onEmpty;
+    }
+
+    @Override
+    public final JSONQueryBehavior $arg5() {
+        return onError;
+    }
+
+    @Override
+    public final DataType<?> $arg6() {
+        return returning;
+    }
+
+    @Override
+    public final QOM.JSONQuery<T> $arg1(DataType<T> newValue) {
+        return $constructor().apply(newValue, $arg2(), $arg3(), $arg4(), $arg5(), $arg6());
+    }
+
+    @Override
+    public final QOM.JSONQuery<T> $arg2(Field<T> newValue) {
+        return $constructor().apply($arg1(), newValue, $arg3(), $arg4(), $arg5(), $arg6());
+    }
+
+    @Override
+    public final QOM.JSONQuery<T> $arg3(Field<String> newValue) {
+        return $constructor().apply($arg1(), $arg2(), newValue, $arg4(), $arg5(), $arg6());
+    }
+
+    @Override
+    public final QOM.JSONQuery<T> $arg4(JSONQueryBehavior newValue) {
+        return $constructor().apply($arg1(), $arg2(), $arg3(), newValue, $arg5(), $arg6());
+    }
+
+    @Override
+    public final QOM.JSONQuery<T> $arg5(JSONQueryBehavior newValue) {
+        return $constructor().apply($arg1(), $arg2(), $arg3(), $arg4(), newValue, $arg6());
+    }
+
+    @Override
+    public final QOM.JSONQuery<T> $arg6(DataType<?> newValue) {
+        return $constructor().apply($arg1(), $arg2(), $arg3(), $arg4(), $arg5(), newValue);
+    }
+
+    @Override
+    public final Function6<? super DataType<T>, ? super Field<T>, ? super Field<String>, ? super JSONQueryBehavior, ? super JSONQueryBehavior, ? super DataType<?>, ? extends QOM.JSONQuery<T>> $constructor() {
+        return (a1, a2, a3, a4, a5, a6) -> new JSONQuery(a1, a2, a3, a4, a5, a6);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: The Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public boolean equals(Object that) {
+        if (that instanceof QOM.JSONQuery<?> o) {
+            return
+                Objects.equals($type(), o.$type()) &&
+                Objects.equals($json(), o.$json()) &&
+                Objects.equals($path(), o.$path()) &&
+                Objects.equals($onEmpty(), o.$onEmpty()) &&
+                Objects.equals($onError(), o.$onError()) &&
+                Objects.equals($returning(), o.$returning())
+            ;
         }
+        else
+            return super.equals(that);
     }
 }

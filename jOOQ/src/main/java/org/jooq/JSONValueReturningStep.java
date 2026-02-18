@@ -38,8 +38,11 @@
 package org.jooq;
 
 import static org.jooq.SQLDialect.*;
+import static org.jooq.impl.DSL.*;
 
 import java.util.*;
+
+import org.jooq.impl.DSL;
 
 import org.jetbrains.annotations.*;
 
@@ -71,6 +74,6 @@ public interface JSONValueReturningStep<T> extends Field<T> {
      * Add the <code>RETURNING</code> clause to the <code>JSON VALUE</code> function.
      */
     @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    @NotNull
+    @NotNull @CheckReturnValue
     Field<T> returning(DataType<?> returning);
 }

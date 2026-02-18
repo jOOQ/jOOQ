@@ -25090,6 +25090,86 @@ public class DSL {
     }
 
     /**
+     * The <code>JSON_VALUE</code> function.
+     *
+     * @param path is wrapped as {@link DSL#val(Object)}.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static JSONValueOnStep<JSON> jsonValue(Field<JSON> json, @Stringly.Param String path) {
+        return new JSONValue(SQLDataType.JSON, json, Tools.field(path));
+    }
+
+    /**
+     * The <code>JSON_VALUE</code> function.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static JSONValueOnStep<JSON> jsonValue(Field<JSON> json, Field<String> path) {
+        return new JSONValue(SQLDataType.JSON, json, path);
+    }
+
+    /**
+     * The <code>JSONB_VALUE</code> function.
+     *
+     * @param path is wrapped as {@link DSL#val(Object)}.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static JSONValueOnStep<JSONB> jsonbValue(Field<JSONB> json, @Stringly.Param String path) {
+        return new JSONValue(SQLDataType.JSONB, json, Tools.field(path));
+    }
+
+    /**
+     * The <code>JSONB_VALUE</code> function.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static JSONValueOnStep<JSONB> jsonbValue(Field<JSONB> json, Field<String> path) {
+        return new JSONValue(SQLDataType.JSONB, json, path);
+    }
+
+    /**
+     * The <code>JSON_QUERY</code> function.
+     *
+     * @param path is wrapped as {@link DSL#val(Object)}.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static JSONQueryOnStep<JSON> jsonQuery(Field<JSON> json, @Stringly.Param String path) {
+        return new JSONQuery(SQLDataType.JSON, json, Tools.field(path));
+    }
+
+    /**
+     * The <code>JSON_QUERY</code> function.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static JSONQueryOnStep<JSON> jsonQuery(Field<JSON> json, Field<String> path) {
+        return new JSONQuery(SQLDataType.JSON, json, path);
+    }
+
+    /**
+     * The <code>JSONB_QUERY</code> function.
+     *
+     * @param path is wrapped as {@link DSL#val(Object)}.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static JSONQueryOnStep<JSONB> jsonbQuery(Field<JSONB> json, @Stringly.Param String path) {
+        return new JSONQuery(SQLDataType.JSONB, json, Tools.field(path));
+    }
+
+    /**
+     * The <code>JSONB_QUERY</code> function.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static JSONQueryOnStep<JSONB> jsonbQuery(Field<JSONB> json, Field<String> path) {
+        return new JSONQuery(SQLDataType.JSONB, json, path);
+    }
+
+    /**
      * The <code>JSON_GET_ELEMENT</code> function.
      * <p>
      * Access an array element from a JSON array expression.
@@ -31952,78 +32032,6 @@ public class DSL {
     // -------------------------------------------------------------------------
     // XXX JSON functions
     // -------------------------------------------------------------------------
-
-    /**
-     * The JSON value extractor function.
-     */
-    @NotNull
-    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    public static JSONValueOnStep<JSON> jsonValue(Field<JSON> json, String path) {
-        return jsonValue(json, Tools.field(path));
-    }
-
-    /**
-     * The JSON value extractor function.
-     */
-    @NotNull
-    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    public static JSONValueOnStep<JSON> jsonValue(Field<JSON> json, Field<String> path) {
-        return new JSONValue<>(SQLDataType.JSON, json, path, null);
-    }
-
-    /**
-     * The JSON value extractor function.
-     */
-    @NotNull
-    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    public static JSONValueOnStep<JSONB> jsonbValue(Field<JSONB> json, String path) {
-        return jsonbValue(json, Tools.field(path));
-    }
-
-    /**
-     * The JSON value extractor function.
-     */
-    @NotNull
-    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    public static JSONValueOnStep<JSONB> jsonbValue(Field<JSONB> json, Field<String> path) {
-        return new JSONValue<>(SQLDataType.JSONB, json, path, null);
-    }
-
-    /**
-     * The JSON value extractor function.
-     */
-    @NotNull
-    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    public static JSONQueryOnStep<JSON> jsonQuery(Field<JSON> json, String path) {
-        return jsonQuery(json, Tools.field(path));
-    }
-
-    /**
-     * The JSON value extractor function.
-     */
-    @NotNull
-    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    public static JSONQueryOnStep<JSON> jsonQuery(Field<JSON> json, Field<String> path) {
-        return new JSONQuery<>(SQLDataType.JSON, json, path, null);
-    }
-
-    /**
-     * The JSON value extractor function.
-     */
-    @NotNull
-    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    public static JSONQueryOnStep<JSONB> jsonbQuery(Field<JSONB> json, String path) {
-        return jsonbQuery(json, Tools.field(path));
-    }
-
-    /**
-     * The JSON value extractor function.
-     */
-    @NotNull
-    @Support({ CLICKHOUSE, DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    public static JSONQueryOnStep<JSONB> jsonbQuery(Field<JSONB> json, Field<String> path) {
-        return new JSONQuery<>(SQLDataType.JSONB, json, path, null);
-    }
 
     /**
      * A constructor for JSON entries to be used with

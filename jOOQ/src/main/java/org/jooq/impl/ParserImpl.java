@@ -796,6 +796,8 @@ import org.jooq.conf.RenderQuotedNames;
 import org.jooq.impl.QOM.DocumentOrContent;
 import org.jooq.impl.QOM.GenerationMode;
 import org.jooq.impl.QOM.JSONOnNull;
+import org.jooq.impl.QOM.JSONQueryBehavior;
+import org.jooq.impl.QOM.JSONValueBehavior;
 import org.jooq.impl.QOM.JoinHint;
 import org.jooq.impl.QOM.PrimaryKey;
 // ...
@@ -11329,7 +11331,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
             Field<String> path = (Field<String>) parseField();
 
             JSONValueOnStep<?> s1 = jsonValue(json, path);
-            JSONValue.Behaviour behaviour = parseJSONValueBehaviourIf();
+            JSONValueBehavior behaviour = parseJSONValueBehaviourIf();
 
 
 
@@ -11370,13 +11372,13 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         return null;
     }
 
-    private final JSONValue.Behaviour parseJSONValueBehaviourIf() {
+    private final JSONValueBehavior parseJSONValueBehaviourIf() {
         if (parseProKeywordIf("ERROR"))
-            return JSONValue.Behaviour.ERROR;
+            return JSONValueBehavior.ERROR;
         else if (parseProKeywordIf("NULL"))
-            return JSONValue.Behaviour.NULL;
+            return JSONValueBehavior.NULL;
         else if (parseProKeywordIf("DEFAULT"))
-            return JSONValue.Behaviour.DEFAULT;
+            return JSONValueBehavior.DEFAULT;
         else
             return null;
     }
@@ -11389,7 +11391,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
             Field<String> path = (Field<String>) parseField();
 
             JSONQueryOnStep<?> s1 = jsonQuery(json, path);
-            JSONQuery.Behaviour behaviour = parseJSONQueryBehaviourIf();
+            JSONQueryBehavior behaviour = parseJSONQueryBehaviourIf();
 
 
 
@@ -11423,11 +11425,11 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         return null;
     }
 
-    private final JSONQuery.Behaviour parseJSONQueryBehaviourIf() {
+    private final JSONQueryBehavior parseJSONQueryBehaviourIf() {
         if (parseProKeywordIf("ERROR"))
-            return JSONQuery.Behaviour.ERROR;
+            return JSONQueryBehavior.ERROR;
         else if (parseProKeywordIf("NULL"))
-            return JSONQuery.Behaviour.NULL;
+            return JSONQueryBehavior.NULL;
         else
             return null;
     }

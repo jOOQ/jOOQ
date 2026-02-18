@@ -7954,6 +7954,72 @@ public final class QOM {
     }
 
     /**
+     * The <code>JSON VALUE</code> function.
+     */
+    public /*sealed*/ interface JSONValue<T>
+        extends
+            UOperator8<DataType<T>, Field<T>, Field<String>, JSONValueBehavior, JSONValueBehavior, Field<?>, Field<?>, DataType<?>, JSONValue<T>>,
+            Field<T>
+        //permits
+        //    JSONValue
+    {
+        @NotNull default DataType<T> $type() { return $arg1(); }
+        @CheckReturnValue
+        @NotNull default JSONValue<T> $type(DataType<T> newType) { return $arg1(newType); }
+        @NotNull default Field<T> $json() { return $arg2(); }
+        @CheckReturnValue
+        @NotNull default JSONValue<T> $json(Field<T> newJson) { return $arg2(newJson); }
+        @NotNull default Field<String> $path() { return $arg3(); }
+        @CheckReturnValue
+        @NotNull default JSONValue<T> $path(Field<String> newPath) { return $arg3(newPath); }
+        @Nullable default JSONValueBehavior $onEmpty() { return $arg4(); }
+        @CheckReturnValue
+        @NotNull default JSONValue<T> $onEmpty(JSONValueBehavior newOnEmpty) { return $arg4(newOnEmpty); }
+        @Nullable default JSONValueBehavior $onError() { return $arg5(); }
+        @CheckReturnValue
+        @NotNull default JSONValue<T> $onError(JSONValueBehavior newOnError) { return $arg5(newOnError); }
+        @Nullable default Field<?> $onEmptyDefault() { return $arg6(); }
+        @CheckReturnValue
+        @NotNull default JSONValue<T> $onEmptyDefault(Field<?> newOnEmptyDefault) { return $arg6(newOnEmptyDefault); }
+        @Nullable default Field<?> $onErrorDefault() { return $arg7(); }
+        @CheckReturnValue
+        @NotNull default JSONValue<T> $onErrorDefault(Field<?> newOnErrorDefault) { return $arg7(newOnErrorDefault); }
+        @Nullable default DataType<?> $returning() { return $arg8(); }
+        @CheckReturnValue
+        @NotNull default JSONValue<T> $returning(DataType<?> newReturning) { return $arg8(newReturning); }
+    }
+
+    /**
+     * The <code>JSON QUERY</code> function.
+     */
+    public /*sealed*/ interface JSONQuery<T>
+        extends
+            UOperator6<DataType<T>, Field<T>, Field<String>, JSONQueryBehavior, JSONQueryBehavior, DataType<?>, JSONQuery<T>>,
+            Field<T>
+        //permits
+        //    JSONQuery
+    {
+        @NotNull default DataType<T> $type() { return $arg1(); }
+        @CheckReturnValue
+        @NotNull default JSONQuery<T> $type(DataType<T> newType) { return $arg1(newType); }
+        @NotNull default Field<T> $json() { return $arg2(); }
+        @CheckReturnValue
+        @NotNull default JSONQuery<T> $json(Field<T> newJson) { return $arg2(newJson); }
+        @NotNull default Field<String> $path() { return $arg3(); }
+        @CheckReturnValue
+        @NotNull default JSONQuery<T> $path(Field<String> newPath) { return $arg3(newPath); }
+        @Nullable default JSONQueryBehavior $onEmpty() { return $arg4(); }
+        @CheckReturnValue
+        @NotNull default JSONQuery<T> $onEmpty(JSONQueryBehavior newOnEmpty) { return $arg4(newOnEmpty); }
+        @Nullable default JSONQueryBehavior $onError() { return $arg5(); }
+        @CheckReturnValue
+        @NotNull default JSONQuery<T> $onError(JSONQueryBehavior newOnError) { return $arg5(newOnError); }
+        @Nullable default DataType<?> $returning() { return $arg6(); }
+        @CheckReturnValue
+        @NotNull default JSONQuery<T> $returning(DataType<?> newReturning) { return $arg6(newReturning); }
+    }
+
+    /**
      * The <code>JSON GET ELEMENT</code> function.
      * <p>
      * Access an array element from a JSON array expression.
@@ -10922,6 +10988,41 @@ public final class QOM {
     }
 
     /**
+     * The <code>JSONValueBehavior</code> type.
+     * <p>
+     * The beahviour of the JSON_VALUE function.
+     */
+    public enum JSONValueBehavior {
+        ERROR(keyword("error")),
+        NULL(keyword("null")),
+        DEFAULT(keyword("default")),
+        ;
+
+        final Keyword keyword;
+
+        private JSONValueBehavior(Keyword keyword) {
+            this.keyword = keyword;
+        }
+    }
+
+    /**
+     * The <code>JSONQueryBehavior</code> type.
+     * <p>
+     * The beahviour of the JSON_QUERY function.
+     */
+    public enum JSONQueryBehavior {
+        ERROR(keyword("error")),
+        NULL(keyword("null")),
+        ;
+
+        final Keyword keyword;
+
+        private JSONQueryBehavior(Keyword keyword) {
+            this.keyword = keyword;
+        }
+    }
+
+    /**
      * The <code>XMLPassingMechanism</code> type.
      * <p>
      * Specify how XML contents should be passed to certain XML functions.
@@ -11296,6 +11397,186 @@ public final class QOM {
         default List<?> $args() {
             return unmodifiableList(asList($arg1(), $arg2(), $arg3(), $arg4(), $arg5()));
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
+
+    interface UOperator6<Q1, Q2, Q3, Q4, Q5, Q6, R extends UOperator6<Q1, Q2, Q3, Q4, Q5, Q6, R>> extends UOperator<R> {
+        Q1 $arg1();
+        Q2 $arg2();
+        Q3 $arg3();
+        Q4 $arg4();
+        Q5 $arg5();
+        Q6 $arg6();
+
+        @CheckReturnValue
+        @NotNull default R $arg1(Q1 newArg1) { return $constructor().apply(newArg1, $arg2(), $arg3(), $arg4(), $arg5(), $arg6()); }
+        @CheckReturnValue
+        @NotNull default R $arg2(Q2 newArg2) { return $constructor().apply($arg1(), newArg2, $arg3(), $arg4(), $arg5(), $arg6()); }
+        @CheckReturnValue
+        @NotNull default R $arg3(Q3 newArg3) { return $constructor().apply($arg1(), $arg2(), newArg3, $arg4(), $arg5(), $arg6()); }
+        @CheckReturnValue
+        @NotNull default R $arg4(Q4 newArg4) { return $constructor().apply($arg1(), $arg2(), $arg3(), newArg4, $arg5(), $arg6()); }
+        @CheckReturnValue
+        @NotNull default R $arg5(Q5 newArg5) { return $constructor().apply($arg1(), $arg2(), $arg3(), $arg4(), newArg5, $arg6()); }
+        @CheckReturnValue
+        @NotNull default R $arg6(Q6 newArg6) { return $constructor().apply($arg1(), $arg2(), $arg3(), $arg4(), $arg5(), newArg6); }
+
+        @NotNull
+        Function6<? super Q1, ? super Q2, ? super Q3, ? super Q4, ? super Q5, ? super Q6, ? extends R> $constructor();
+
+        @NotNull
+        @Override
+        default List<?> $args() {
+            return unmodifiableList(asList($arg1(), $arg2(), $arg3(), $arg4(), $arg5(), $arg6()));
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
+
+    interface UOperator7<Q1, Q2, Q3, Q4, Q5, Q6, Q7, R extends UOperator7<Q1, Q2, Q3, Q4, Q5, Q6, Q7, R>> extends UOperator<R> {
+        Q1 $arg1();
+        Q2 $arg2();
+        Q3 $arg3();
+        Q4 $arg4();
+        Q5 $arg5();
+        Q6 $arg6();
+        Q7 $arg7();
+
+        @CheckReturnValue
+        @NotNull default R $arg1(Q1 newArg1) { return $constructor().apply(newArg1, $arg2(), $arg3(), $arg4(), $arg5(), $arg6(), $arg7()); }
+        @CheckReturnValue
+        @NotNull default R $arg2(Q2 newArg2) { return $constructor().apply($arg1(), newArg2, $arg3(), $arg4(), $arg5(), $arg6(), $arg7()); }
+        @CheckReturnValue
+        @NotNull default R $arg3(Q3 newArg3) { return $constructor().apply($arg1(), $arg2(), newArg3, $arg4(), $arg5(), $arg6(), $arg7()); }
+        @CheckReturnValue
+        @NotNull default R $arg4(Q4 newArg4) { return $constructor().apply($arg1(), $arg2(), $arg3(), newArg4, $arg5(), $arg6(), $arg7()); }
+        @CheckReturnValue
+        @NotNull default R $arg5(Q5 newArg5) { return $constructor().apply($arg1(), $arg2(), $arg3(), $arg4(), newArg5, $arg6(), $arg7()); }
+        @CheckReturnValue
+        @NotNull default R $arg6(Q6 newArg6) { return $constructor().apply($arg1(), $arg2(), $arg3(), $arg4(), $arg5(), newArg6, $arg7()); }
+        @CheckReturnValue
+        @NotNull default R $arg7(Q7 newArg7) { return $constructor().apply($arg1(), $arg2(), $arg3(), $arg4(), $arg5(), $arg6(), newArg7); }
+
+        @NotNull
+        Function7<? super Q1, ? super Q2, ? super Q3, ? super Q4, ? super Q5, ? super Q6, ? super Q7, ? extends R> $constructor();
+
+        @NotNull
+        @Override
+        default List<?> $args() {
+            return unmodifiableList(asList($arg1(), $arg2(), $arg3(), $arg4(), $arg5(), $arg6(), $arg7()));
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
+
+    interface UOperator8<Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, R extends UOperator8<Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, R>> extends UOperator<R> {
+        Q1 $arg1();
+        Q2 $arg2();
+        Q3 $arg3();
+        Q4 $arg4();
+        Q5 $arg5();
+        Q6 $arg6();
+        Q7 $arg7();
+        Q8 $arg8();
+
+        @CheckReturnValue
+        @NotNull default R $arg1(Q1 newArg1) { return $constructor().apply(newArg1, $arg2(), $arg3(), $arg4(), $arg5(), $arg6(), $arg7(), $arg8()); }
+        @CheckReturnValue
+        @NotNull default R $arg2(Q2 newArg2) { return $constructor().apply($arg1(), newArg2, $arg3(), $arg4(), $arg5(), $arg6(), $arg7(), $arg8()); }
+        @CheckReturnValue
+        @NotNull default R $arg3(Q3 newArg3) { return $constructor().apply($arg1(), $arg2(), newArg3, $arg4(), $arg5(), $arg6(), $arg7(), $arg8()); }
+        @CheckReturnValue
+        @NotNull default R $arg4(Q4 newArg4) { return $constructor().apply($arg1(), $arg2(), $arg3(), newArg4, $arg5(), $arg6(), $arg7(), $arg8()); }
+        @CheckReturnValue
+        @NotNull default R $arg5(Q5 newArg5) { return $constructor().apply($arg1(), $arg2(), $arg3(), $arg4(), newArg5, $arg6(), $arg7(), $arg8()); }
+        @CheckReturnValue
+        @NotNull default R $arg6(Q6 newArg6) { return $constructor().apply($arg1(), $arg2(), $arg3(), $arg4(), $arg5(), newArg6, $arg7(), $arg8()); }
+        @CheckReturnValue
+        @NotNull default R $arg7(Q7 newArg7) { return $constructor().apply($arg1(), $arg2(), $arg3(), $arg4(), $arg5(), $arg6(), newArg7, $arg8()); }
+        @CheckReturnValue
+        @NotNull default R $arg8(Q8 newArg8) { return $constructor().apply($arg1(), $arg2(), $arg3(), $arg4(), $arg5(), $arg6(), $arg7(), newArg8); }
+
+        @NotNull
+        Function8<? super Q1, ? super Q2, ? super Q3, ? super Q4, ? super Q5, ? super Q6, ? super Q7, ? super Q8, ? extends R> $constructor();
+
+        @NotNull
+        @Override
+        default List<?> $args() {
+            return unmodifiableList(asList($arg1(), $arg2(), $arg3(), $arg4(), $arg5(), $arg6(), $arg7(), $arg8()));
+        }
+
+
+
 
 
 

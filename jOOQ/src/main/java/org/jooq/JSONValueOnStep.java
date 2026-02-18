@@ -73,35 +73,35 @@ public interface JSONValueOnStep<T> extends JSONValueReturningStep<T> {
     /**
      * Add the <code>ERROR ON EMPTY</code> clause to the <code>JSON VALUE</code> function.
      */
-    @Support({  })
+    @Support({ POSTGRES })
     @NotNull @CheckReturnValue
     JSONValueOnStep<T> errorOnEmpty();
 
     /**
      * Add the <code>ERROR ON ERROR</code> clause to the <code>JSON VALUE</code> function.
      */
-    @Support({  })
+    @Support({ POSTGRES })
     @NotNull @CheckReturnValue
     JSONValueOnStep<T> errorOnError();
 
     /**
      * Add the <code>NULL ON EMPTY</code> clause to the <code>JSON VALUE</code> function.
      */
-    @Support({  })
+    @Support({ POSTGRES })
     @NotNull @CheckReturnValue
     JSONValueOnStep<T> nullOnEmpty();
 
     /**
      * Add the <code>NULL ON ERROR</code> clause to the <code>JSON VALUE</code> function.
      */
-    @Support({  })
+    @Support({ POSTGRES })
     @NotNull @CheckReturnValue
     JSONValueOnStep<T> nullOnError();
 
     /**
      * Add the <code>DEFAULT_</code> clause to the <code>JSON VALUE</code> function.
      */
-    @Support({  })
+    @Support({ POSTGRES })
     @NotNull @CheckReturnValue
     JSONValueDefaultStep<T> default_(Field<?> default_);
 }

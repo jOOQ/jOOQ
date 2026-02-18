@@ -73,14 +73,14 @@ public interface JSONValueDefaultStep<T> {
     /**
      * Add the <code>ON EMPTY</code> clause to the <code>JSON VALUE</code> function.
      */
-    @Support({  })
+    @Support({ POSTGRES })
     @NotNull @CheckReturnValue
     JSONValueOnStep<T> onEmpty();
 
     /**
      * Add the <code>ON ERROR</code> clause to the <code>JSON VALUE</code> function.
      */
-    @Support({  })
+    @Support({ POSTGRES })
     @NotNull @CheckReturnValue
     JSONValueOnStep<T> onError();
 }

@@ -73,28 +73,28 @@ public interface JSONQueryOnStep<T> extends JSONQueryReturningStep<T> {
     /**
      * Add the <code>ERROR ON EMPTY</code> clause to the <code>JSON QUERY</code> function.
      */
-    @Support({  })
+    @Support({ POSTGRES })
     @NotNull @CheckReturnValue
     JSONQueryOnStep<T> errorOnEmpty();
 
     /**
      * Add the <code>ERROR ON ERROR</code> clause to the <code>JSON QUERY</code> function.
      */
-    @Support({  })
+    @Support({ POSTGRES })
     @NotNull @CheckReturnValue
     JSONQueryOnStep<T> errorOnError();
 
     /**
      * Add the <code>NULL ON EMPTY</code> clause to the <code>JSON QUERY</code> function.
      */
-    @Support({  })
+    @Support({ POSTGRES })
     @NotNull @CheckReturnValue
     JSONQueryOnStep<T> nullOnEmpty();
 
     /**
      * Add the <code>NULL ON ERROR</code> clause to the <code>JSON QUERY</code> function.
      */
-    @Support({  })
+    @Support({ POSTGRES })
     @NotNull @CheckReturnValue
     JSONQueryOnStep<T> nullOnError();
 }

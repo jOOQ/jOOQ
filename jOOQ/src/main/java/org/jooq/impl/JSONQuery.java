@@ -199,7 +199,11 @@ implements
 
             case POSTGRES:
             case YUGABYTEDB:
-                ctx.visit(function(N_JSONB_PATH_QUERY_FIRST, json.getDataType(), castIfNeeded(json, JSONB), DSL.field("cast({0} as jsonpath)", path)));
+                if (onEmpty != null || onError != null)
+                    acceptDefault(ctx);
+                else
+                    ctx.visit(function(N_JSONB_PATH_QUERY_FIRST, json.getDataType(), castIfNeeded(json, JSONB), DSL.field("cast({0} as jsonpath)", path)));
+
                 break;
 
             case CLICKHOUSE:

@@ -40,9 +40,6 @@ package org.jooq.impl;
 // ...
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.function;
-import static org.jooq.impl.DSL.inline;
-import static org.jooq.impl.DSL.jsonTable;
-import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.systemName;
 import static org.jooq.impl.JSONQuery.Behaviour.ERROR;
 import static org.jooq.impl.JSONQuery.Behaviour.NULL;
@@ -54,7 +51,6 @@ import static org.jooq.impl.Names.N_JSON_EXTRACT;
 import static org.jooq.impl.Names.N_JSON_QUERY;
 import static org.jooq.impl.Names.N_JSON_VALUE;
 import static org.jooq.impl.SQLDataType.JSONB;
-import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.castIfNeeded;
 import static org.jooq.impl.Tools.isSimple;
 
@@ -63,13 +59,10 @@ import java.util.Set;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
-import org.jooq.JSON;
 import org.jooq.JSONQueryOnStep;
 import org.jooq.Keyword;
-import org.jooq.Param;
 // ...
 import org.jooq.SQLDialect;
-import org.jooq.TableField;
 import org.jooq.impl.QOM.UNotYetImplemented;
 
 
@@ -109,7 +102,7 @@ implements
         Behaviour onError,
         Behaviour onEmpty
     ) {
-        super(N_JSON_VALUE, type);
+        super(N_JSON_QUERY, type);
 
         this.json = json;
         this.path = path;
@@ -188,21 +181,9 @@ implements
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-            default: {
+            default:
                 acceptDefault(ctx);
                 break;
-            }
         }
     }
 

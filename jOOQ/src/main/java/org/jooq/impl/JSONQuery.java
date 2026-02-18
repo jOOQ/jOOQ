@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 // ...
+import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.systemName;
@@ -157,8 +158,19 @@ implements
             case DUCKDB:
             case MARIADB:
             case MYSQL:
-            case SQLITE:
                 ctx.visit(function(N_JSON_EXTRACT, json.getDataType(), json, path));
+                break;
+
+            case SQLITE:
+
+
+
+
+
+
+
+                ctx.sql('(').visit(json).sql("->").visit(path).sql(')');
+
                 break;
 
 

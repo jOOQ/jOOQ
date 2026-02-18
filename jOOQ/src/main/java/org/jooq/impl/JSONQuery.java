@@ -155,6 +155,7 @@ implements
         switch (ctx.family()) {
 
             case DUCKDB:
+            case MARIADB:
             case MYSQL:
             case SQLITE:
                 ctx.visit(function(N_JSON_EXTRACT, json.getDataType(), json, path));

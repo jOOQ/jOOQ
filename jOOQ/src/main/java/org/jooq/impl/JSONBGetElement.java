@@ -169,9 +169,6 @@ implements
 
 
 
-
-
-
             case MARIADB:
             case MYSQL:
             case TRINO:

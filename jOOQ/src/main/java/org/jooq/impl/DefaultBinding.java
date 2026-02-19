@@ -143,6 +143,7 @@ import static org.jooq.impl.Keywords.K_GEOMETRY;
 import static org.jooq.impl.Keywords.K_HOUR_TO_SECOND;
 import static org.jooq.impl.Keywords.K_INTERVAL;
 import static org.jooq.impl.Keywords.K_JSON;
+import static org.jooq.impl.Keywords.K_JSONB;
 import static org.jooq.impl.Keywords.K_NULL;
 import static org.jooq.impl.Keywords.K_TIME;
 import static org.jooq.impl.Keywords.K_TIMESTAMP;
@@ -6622,15 +6623,21 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         void sqlInline0(BindingSQLContext<U> ctx, JSON value) throws SQLException {
             if (SUPPORT_JSON_LITERAL.contains(ctx.dialect()))
                 ctx.render().visit(K_JSON).sql(' ');
+            else if (ctx.dialect() == SQLITE)
+                ctx.render().visit(K_JSON).sql('(');
 
             super.sqlInline0(ctx, value);
 
             if (ctx.family() == H2 && value != null)
                 ctx.render().sql(' ').visit(K_FORMAT).sql(' ').visit(K_JSON);
+            else if (ctx.family() == SQLITE)
+                ctx.render().sql(')');
         }
 
         @Override
         void sqlBind0(BindingSQLContext<U> ctx, JSON value) throws SQLException {
+            if (ctx.dialect() == SQLITE)
+                ctx.render().visit(K_JSON).sql('(');
 
 
 
@@ -6642,6 +6649,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             if (ctx.family() == H2 && value != null)
                 ctx.render().sql(' ').visit(K_FORMAT).sql(' ').visit(K_JSON);
+            else if (ctx.family() == SQLITE)
+                ctx.render().sql(')');
         }
 
 
@@ -6755,17 +6764,23 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             else {
                 if (SUPPORT_JSON_LITERAL.contains(ctx.dialect()))
                     ctx.render().visit(K_JSON).sql(' ');
+                else if (ctx.dialect() == SQLITE)
+                    ctx.render().visit(K_JSON).sql('(');
 
                 super.sqlInline1(ctx, value.data());
 
                 if (ctx.family() == H2)
                     ctx.render().sql(' ').visit(K_FORMAT).sql(' ').visit(K_JSON);
+                else if (ctx.family() == SQLITE)
+                    ctx.render().sql(')');
             }
         }
 
         @Override
         void sqlBind0(BindingSQLContext<U> ctx, JSONB value) throws SQLException {
 
+            if (ctx.dialect() == SQLITE)
+                ctx.render().visit(K_JSON).sql('(');
 
 
 
@@ -6777,6 +6792,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             if (ctx.family() == H2 && value != null)
                 ctx.render().sql(' ').visit(K_FORMAT).sql(' ').visit(K_JSON);
+            else if (ctx.family() == SQLITE)
+                ctx.render().sql(')');
         }
 
         @Override

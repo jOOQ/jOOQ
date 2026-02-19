@@ -143,7 +143,6 @@ import static org.jooq.impl.Keywords.K_GEOMETRY;
 import static org.jooq.impl.Keywords.K_HOUR_TO_SECOND;
 import static org.jooq.impl.Keywords.K_INTERVAL;
 import static org.jooq.impl.Keywords.K_JSON;
-import static org.jooq.impl.Keywords.K_JSONB;
 import static org.jooq.impl.Keywords.K_NULL;
 import static org.jooq.impl.Keywords.K_TIME;
 import static org.jooq.impl.Keywords.K_TIMESTAMP;

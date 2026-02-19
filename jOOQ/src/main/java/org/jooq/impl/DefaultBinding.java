@@ -60,6 +60,7 @@ import static org.jooq.JSONB.jsonb;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
@@ -151,6 +152,8 @@ import static org.jooq.impl.Keywords.K_YEAR_TO_FRACTION;
 import static org.jooq.impl.Names.N_BYTEA;
 import static org.jooq.impl.Names.N_CREATEXML;
 import static org.jooq.impl.Names.N_HEX;
+import static org.jooq.impl.Names.N_JSON;
+import static org.jooq.impl.Names.N_JSON_EXTRACT;
 import static org.jooq.impl.Names.N_JSON_PARSE;
 import static org.jooq.impl.Names.N_PARSE_JSON;
 import static org.jooq.impl.Names.N_ST_GEOMFROMTEXT;
@@ -6411,31 +6414,77 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
-        void sqlInline0(BindingSQLContext<U> ctx, JSON value) throws SQLException {
-            if (SUPPORT_JSON_LITERAL.contains(ctx.dialect()))
-                ctx.render().visit(K_JSON).sql(' ');
-            else if (ctx.dialect() == SQLITE)
-                ctx.render().visit(K_JSON).sql('(');
+        final void sqlInline0(BindingSQLContext<U> ctx, JSON value) throws SQLException {
+            switch (ctx.family()) {
 
-            super.sqlInline0(ctx, value);
+                case H2:
+                case MARIADB:
+                case MYSQL:
+                case SQLITE:
+                    renderJSONWrapped(ctx, () -> super.sqlInline0(ctx, value), SQLDataType.JSON);
+                    break;
 
-            if (ctx.family() == H2 && value != null)
-                ctx.render().sql(' ').visit(K_FORMAT).sql(' ').visit(K_JSON);
-            else if (ctx.family() == SQLITE)
-                ctx.render().sql(')');
+                default:
+                    super.sqlInline0(ctx, value);
+                    break;
+            }
         }
 
         @Override
-        void sqlBind0(BindingSQLContext<U> ctx, JSON value) throws SQLException {
-            if (ctx.dialect() == SQLITE)
-                ctx.render().visit(K_JSON).sql('(');
+        final void sqlBind0(BindingSQLContext<U> ctx, JSON value) throws SQLException {
+            switch (ctx.family()) {
 
-            super.sqlBind0(ctx, value);
+                case H2:
+                case MARIADB:
+                case MYSQL:
+                case SQLITE:
+                    renderJSONWrapped(ctx, () -> super.sqlBind0(ctx, value), SQLDataType.JSON);
+                    break;
 
-            if (ctx.family() == H2 && value != null)
-                ctx.render().sql(' ').visit(K_FORMAT).sql(' ').visit(K_JSON);
-            else if (ctx.family() == SQLITE)
-                ctx.render().sql(')');
+                default:
+                    super.sqlBind0(ctx, value);
+                    break;
+            }
+        }
+
+        static final void renderJSONWrapped(
+            BindingSQLContext<?> ctx,
+            ThrowingRunnable<SQLException> runnable,
+            DataType<?> type
+        ) throws SQLException {
+            switch (ctx.family()) {
+                case DUCKDB:
+                    if (ctx.render().paramType() == INLINED)
+                        ctx.render().visit(K_JSON).sql(' ');
+
+                    runnable.run();
+                    break;
+
+                case H2:
+                    runnable.run();
+                    ctx.render().sql(' ').visit(K_FORMAT).sql(' ').visit(K_JSON);
+                    break;
+
+                case MARIADB:
+                    ctx.render().visit(N_JSON_EXTRACT).sql('(');
+                    runnable.run();
+                    ctx.render().sql(", ").visit(inline("$")).sql(')');
+                    break;
+
+                case SQLITE:
+                    ctx.render().visit(K_JSON).sql('(');
+                    runnable.run();
+                    ctx.render().sql(')');
+                    break;
+
+                default: {
+                    Cast.renderCast(ctx.render(),
+                        c -> runnable.run(),
+                        c -> c.visit(type)
+                    );
+                    break;
+                }
+            }
         }
 
         @Override
@@ -6519,36 +6568,42 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
-        void sqlInline0(BindingSQLContext<U> ctx, JSONB value) throws SQLException {
+        final void sqlInline0(BindingSQLContext<U> ctx, JSONB value) throws SQLException {
             if (EMULATE_AS_BLOB.contains(ctx.dialect())) {
                 bytes(ctx.configuration()).sqlInline0(ctx, bytesConverter(ctx.configuration()).to(value, ctx.converterContext()));
             }
             else {
-                if (SUPPORT_JSON_LITERAL.contains(ctx.dialect()))
-                    ctx.render().visit(K_JSON).sql(' ');
-                else if (ctx.dialect() == SQLITE)
-                    ctx.render().visit(K_JSON).sql('(');
+                switch (ctx.family()) {
 
-                super.sqlInline1(ctx, value.data());
+                    case H2:
+                    case MARIADB:
+                    case MYSQL:
+                    case SQLITE:
+                        DefaultJSONBinding.renderJSONWrapped(ctx, () -> super.sqlInline1(ctx, value.data()), SQLDataType.JSON);
+                        break;
 
-                if (ctx.family() == H2)
-                    ctx.render().sql(' ').visit(K_FORMAT).sql(' ').visit(K_JSON);
-                else if (ctx.family() == SQLITE)
-                    ctx.render().sql(')');
+                    default:
+                        super.sqlInline1(ctx, value.data());
+                        break;
+                }
             }
         }
 
         @Override
-        void sqlBind0(BindingSQLContext<U> ctx, JSONB value) throws SQLException {
-            if (ctx.dialect() == SQLITE)
-                ctx.render().visit(K_JSON).sql('(');
+        final void sqlBind0(BindingSQLContext<U> ctx, JSONB value) throws SQLException {
+            switch (ctx.family()) {
 
-            super.sqlBind0(ctx, value);
+                case H2:
+                case MARIADB:
+                case MYSQL:
+                case SQLITE:
+                    DefaultJSONBinding.renderJSONWrapped(ctx, () -> super.sqlBind0(ctx, value), SQLDataType.JSON);
+                    break;
 
-            if (ctx.family() == H2 && value != null)
-                ctx.render().sql(' ').visit(K_FORMAT).sql(' ').visit(K_JSON);
-            else if (ctx.family() == SQLITE)
-                ctx.render().sql(')');
+                default:
+                    super.sqlBind0(ctx, value);
+                    break;
+            }
         }
 
         @Override

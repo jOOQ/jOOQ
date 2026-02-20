@@ -59,7 +59,6 @@ import static org.jooq.impl.ExpressionOperator.ADD;
 import static org.jooq.impl.ExpressionOperator.MULTIPLY;
 import static org.jooq.impl.ExpressionOperator.SUBTRACT;
 import static org.jooq.impl.Keywords.K_AS;
-import static org.jooq.impl.Keywords.K_CAST;
 import static org.jooq.impl.Keywords.K_DAY;
 import static org.jooq.impl.Keywords.K_DAY_MICROSECOND;
 import static org.jooq.impl.Keywords.K_DAY_MILLISECOND;
@@ -74,6 +73,7 @@ import static org.jooq.impl.Keywords.K_YEAR_TO_MONTH;
 import static org.jooq.impl.Names.N_ADD_DAYS;
 import static org.jooq.impl.Names.N_ADD_MONTHS;
 import static org.jooq.impl.Names.N_ADD_SECONDS;
+import static org.jooq.impl.Names.N_CAST;
 import static org.jooq.impl.Names.N_DATEADD;
 import static org.jooq.impl.Names.N_DATE_ADD;
 import static org.jooq.impl.Names.N_SQL_TSI_FRAC_SECOND;
@@ -419,7 +419,7 @@ implements
                 case DERBY: {
                     boolean needsCast = getDataType().getType() != Timestamp.class;
                     if (needsCast)
-                        ctx.visit(K_CAST).sql('(');
+                        ctx.visit(N_CAST).sql('(');
 
                     if (rhs.getDataType().getFromType() == YearToMonth.class)
                         ctx.sql("{fn ").visit(N_TIMESTAMPADD).sql('(').visit(N_SQL_TSI_MONTH).sql(", ")
@@ -730,7 +730,7 @@ implements
                 case DERBY: {
                     boolean needsCast = getDataType().getType() != Timestamp.class;
                     if (needsCast)
-                        ctx.visit(K_CAST).sql('(');
+                        ctx.visit(N_CAST).sql('(');
 
                     if (operator == ADD)
                         ctx.sql("{fn ").visit(N_TIMESTAMPADD).sql('(').visit(keyword("sql_tsi_day")).sql(", ").visit(rhsAsNumber()).sql(", ").visit(lhs).sql(") }");

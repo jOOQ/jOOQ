@@ -204,7 +204,7 @@ implements
         ctx.visit(arg1).sql(' ').visit(op.toKeyword()).sql(' ');
 
         if (castRhs)
-            ctx.visit(K_CAST).sql('(');
+            ctx.visit(N_CAST).sql('(');
 
         ctx.visit(arg2, forcedParamType(ctx, escape));
 

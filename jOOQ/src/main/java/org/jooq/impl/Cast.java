@@ -40,7 +40,6 @@ package org.jooq.impl;
 // ...
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.Keywords.K_AS;
-import static org.jooq.impl.Keywords.K_CAST;
 import static org.jooq.impl.Keywords.K_TRIM;
 import static org.jooq.impl.Names.N_CAST;
 import static org.jooq.impl.Names.N_TO_BLOB;
@@ -374,7 +373,7 @@ final class Cast<T> extends AbstractField<T> implements QOM.Cast<T> {
         CastMode castMode = ctx.castMode();
 
         // Default rendering, if no special case has applied yet
-        ctx.visit(K_CAST).castMode(CastMode.NEVER);
+        ctx.visit(N_CAST).castMode(CastMode.NEVER);
         if (isSimple)
             ctx.sql('(');
         else

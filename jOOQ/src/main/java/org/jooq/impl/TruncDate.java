@@ -40,7 +40,7 @@ package org.jooq.impl;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.keyword;
-import static org.jooq.impl.Keywords.K_CAST;
+import static org.jooq.impl.Names.N_CAST;
 import static org.jooq.impl.Names.N_DATETIME_TRUNC;
 import static org.jooq.impl.Names.N_DATE_TRUNC;
 import static org.jooq.impl.Names.N_TRUNC;

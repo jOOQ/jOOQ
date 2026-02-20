@@ -219,6 +219,17 @@ implements
                 ctx.visit(function(systemName("JSON_QUERY"), getDataType(), json, path));
                 break;
 
+
+
+
+
+
+
+
+
+
+
+
             default:
                 acceptDefault(ctx);
                 break;

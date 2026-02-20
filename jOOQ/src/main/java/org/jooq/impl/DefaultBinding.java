@@ -6421,7 +6421,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 case MARIADB:
                 case MYSQL:
                 case SQLITE:
-                    renderJSONWrapped(ctx, () -> super.sqlInline0(ctx, value), SQLDataType.JSON);
+                    renderJSONWrapped(ctx, () -> super.sqlInline0(ctx, value), value, SQLDataType.JSON);
                     break;
 
                 default:
@@ -6438,7 +6438,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 case MARIADB:
                 case MYSQL:
                 case SQLITE:
-                    renderJSONWrapped(ctx, () -> super.sqlBind0(ctx, value), SQLDataType.JSON);
+                    renderJSONWrapped(ctx, () -> super.sqlBind0(ctx, value), value, SQLDataType.JSON);
                     break;
 
                 default:
@@ -6450,6 +6450,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         static final void renderJSONWrapped(
             BindingSQLContext<?> ctx,
             ThrowingRunnable<SQLException> runnable,
+            Object value,
             DataType<?> type
         ) throws SQLException {
             switch (ctx.family()) {
@@ -6462,7 +6463,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                 case H2:
                     runnable.run();
-                    ctx.render().sql(' ').visit(K_FORMAT).sql(' ').visit(K_JSON);
+
+                    if (value != null)
+                        ctx.render().sql(' ').visit(K_FORMAT).sql(' ').visit(K_JSON);
+
                     break;
 
                 case MARIADB:
@@ -6579,7 +6583,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     case MARIADB:
                     case MYSQL:
                     case SQLITE:
-                        DefaultJSONBinding.renderJSONWrapped(ctx, () -> super.sqlInline1(ctx, value.data()), SQLDataType.JSON);
+                        DefaultJSONBinding.renderJSONWrapped(ctx, () -> super.sqlInline1(ctx, value.data()), value, SQLDataType.JSON);
                         break;
 
                     default:
@@ -6597,7 +6601,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 case MARIADB:
                 case MYSQL:
                 case SQLITE:
-                    DefaultJSONBinding.renderJSONWrapped(ctx, () -> super.sqlBind0(ctx, value), SQLDataType.JSON);
+                    DefaultJSONBinding.renderJSONWrapped(ctx, () -> super.sqlBind0(ctx, value), value, SQLDataType.JSON);
                     break;
 
                 default:

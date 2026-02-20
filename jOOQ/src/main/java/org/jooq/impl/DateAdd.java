@@ -141,7 +141,7 @@ implements
 
             case DUCKDB: {
                 if (getDataType().isDate())
-                    ctx.visit(K_CAST).sql('(');
+                    ctx.visit(N_CAST).sql('(');
 
                 if (interval.getDataType().isInterval())
                     ctx.visit(N_DATE_ADD).sql('(').visit(date).sql(", ").visit(interval).sql(')');

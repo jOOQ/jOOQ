@@ -1245,8 +1245,8 @@ final class Tools {
     static final Set<SQLDialect>         NO_SUPPORT_NULL                            = SQLDialect.supportedBy(CLICKHOUSE, DERBY, FIREBIRD, H2, HSQLDB, TRINO);
     static final Set<SQLDialect>         NO_SUPPORT_NULL_ALTER_TABLE                = SQLDialect.supportedBy(CLICKHOUSE, DERBY, FIREBIRD, HSQLDB, TRINO);
     static final Set<SQLDialect>         NO_SUPPORT_NOT_NULL                        = SQLDialect.supportedBy(CLICKHOUSE, TRINO);
-    static final Set<SQLDialect>         NO_SUPPORT_BINARY_TYPE_LENGTH              = SQLDialect.supportedBy(POSTGRES, TRINO, YUGABYTEDB);
-    static final Set<SQLDialect>         NO_SUPPORT_BINARY_TYPE_LENGTH_IN_CASTS     = SQLDialect.supportedBy(POSTGRES, TRINO, YUGABYTEDB);
+    static final Set<SQLDialect>         NO_SUPPORT_BINARY_TYPE_LENGTH              = SQLDialect.supportedBy(DUCKDB, POSTGRES, TRINO, YUGABYTEDB);
+    static final Set<SQLDialect>         NO_SUPPORT_BINARY_TYPE_LENGTH_IN_CASTS     = SQLDialect.supportedBy(DUCKDB, POSTGRES, TRINO, YUGABYTEDB);
     static final Set<SQLDialect>         NO_SUPPORT_CAST_TYPE_IN_DDL                = SQLDialect.supportedBy(MARIADB, MYSQL);
     static final Set<SQLDialect>         SUPPORT_NON_BIND_VARIABLE_SUFFIXES         = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
     static final Set<SQLDialect>         SUPPORT_POSTGRES_LITERALS                  = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);

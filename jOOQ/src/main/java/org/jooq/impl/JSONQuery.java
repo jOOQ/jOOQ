@@ -197,7 +197,6 @@ implements
                 break;
 
 
-            case POSTGRES:
             case YUGABYTEDB:
                 if (onEmpty != null || onError != null)
                     acceptDefault(ctx);
@@ -206,20 +205,19 @@ implements
 
                 break;
 
+            case POSTGRES:
+
+
+
+
+
+                acceptDefault(ctx);
+
+                break;
+
             case CLICKHOUSE:
                 ctx.visit(function(systemName("JSON_QUERY"), getDataType(), json, path));
                 break;
-
-
-
-
-
-
-
-
-
-
-
 
             default:
                 acceptDefault(ctx);

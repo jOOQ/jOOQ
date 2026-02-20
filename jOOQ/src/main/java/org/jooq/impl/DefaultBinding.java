@@ -6626,6 +6626,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             switch (ctx.family()) {
 
 
+                case DUCKDB:
                 case H2:
                 case MARIADB:
                 case MYSQL:
@@ -6644,6 +6645,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             switch (ctx.family()) {
 
 
+                case DUCKDB:
                 case H2:
                 case MARIADB:
                 case MYSQL:
@@ -6817,6 +6819,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 switch (ctx.family()) {
 
 
+                    case DUCKDB:
                     case H2:
                     case MARIADB:
                     case MYSQL:
@@ -6836,6 +6839,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             switch (ctx.family()) {
 
 
+                case DUCKDB:
                 case H2:
                 case MARIADB:
                 case MYSQL:

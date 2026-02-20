@@ -6036,6 +6036,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         final void sqlInline0(BindingSQLContext<U> ctx, JSON value) throws SQLException {
             switch (ctx.family()) {
 
+                case DUCKDB:
                 case H2:
                 case MARIADB:
                 case MYSQL:
@@ -6053,6 +6054,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         final void sqlBind0(BindingSQLContext<U> ctx, JSON value) throws SQLException {
             switch (ctx.family()) {
 
+                case DUCKDB:
                 case H2:
                 case MARIADB:
                 case MYSQL:
@@ -6198,6 +6200,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             else {
                 switch (ctx.family()) {
 
+                    case DUCKDB:
                     case H2:
                     case MARIADB:
                     case MYSQL:
@@ -6216,6 +6219,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         final void sqlBind0(BindingSQLContext<U> ctx, JSONB value) throws SQLException {
             switch (ctx.family()) {
 
+                case DUCKDB:
                 case H2:
                 case MARIADB:
                 case MYSQL:

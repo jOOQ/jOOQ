@@ -132,7 +132,6 @@ import static org.jooq.impl.JSONReader.ENCODE_BINARY_AS_HEX;
 import static org.jooq.impl.Keywords.K_ARRAY;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_BLOB;
-import static org.jooq.impl.Keywords.K_CAST;
 import static org.jooq.impl.Keywords.K_DATE;
 import static org.jooq.impl.Keywords.K_DATETIME;
 import static org.jooq.impl.Keywords.K_DATETIME2;
@@ -153,6 +152,7 @@ import static org.jooq.impl.Keywords.K_TRUE;
 import static org.jooq.impl.Keywords.K_YEAR_TO_DAY;
 import static org.jooq.impl.Keywords.K_YEAR_TO_FRACTION;
 import static org.jooq.impl.Names.N_BYTEA;
+import static org.jooq.impl.Names.N_CAST;
 import static org.jooq.impl.Names.N_CREATEXML;
 import static org.jooq.impl.Names.N_HEX;
 import static org.jooq.impl.Names.N_JSON;
@@ -1191,7 +1191,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         private final void sqlCast0(BindingSQLContext<U> ctx, T converted, DataType<?> t, Integer length, Integer precision, Integer scale) throws SQLException {
-            ctx.render().visit(K_CAST).sql('(');
+            ctx.render().visit(N_CAST).sql('(');
             sql(ctx, converted);
             ctx.render().sql(' ').visit(K_AS).sql(' ');
             ctx.render().sql(DefaultDataType.set(t, length, precision, scale).getCastTypeName(ctx.configuration()));
@@ -1553,7 +1553,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             Cast.renderCastIf(ctx.render(),
                 c -> {
                     if (REQUIRES_JSON_CAST.contains(ctx.dialect())) {
-                        ctx.render().visit(K_CAST).sql('(');
+                        ctx.render().visit(N_CAST).sql('(');
                         super.sqlBind0(ctx, value);
                         ctx.render().sql(' ').visit(K_AS).sql(' ').visit(K_JSON).sql(')');
                     }
@@ -2673,7 +2673,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             switch (ctx.family()) {
                 case DUCKDB:
                     ctx.render()
-                       .visit(K_CAST)
+                       .visit(N_CAST)
                        .sql("('")
                        .sql(escapeHexDigitPairs(convertBytesToHex(value)))
                        .sql("' ")
@@ -2686,7 +2686,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                 case DERBY:
                     ctx.render()
-                       .visit(K_CAST)
+                       .visit(N_CAST)
                        .sql("(X'")
                        .sql(convertBytesToHex(value))
                        .sql("' ")

@@ -41,7 +41,6 @@ import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.Keywords.K_AS;
-import static org.jooq.impl.Keywords.K_CAST;
 import static org.jooq.impl.Keywords.K_CONVERSION;
 import static org.jooq.impl.Keywords.K_DEFAULT;
 import static org.jooq.impl.Keywords.K_ERROR;
@@ -460,7 +459,7 @@ final class Cast<T> extends AbstractField<T> implements QOM.Cast<T> {
             }
         }
         else
-            ctx.visit(K_CAST);
+            ctx.visit(N_CAST);
 
         ctx.castMode(CastMode.NEVER);
         if (isSimple)

@@ -413,7 +413,7 @@ final class Cast<T> extends AbstractField<T> implements QOM.Cast<T> {
             }
         }
         else
-            ctx.visit(K_CAST);
+            ctx.visit(N_CAST);
 
         ctx.castMode(CastMode.NEVER);
         if (isSimple)

@@ -948,7 +948,6 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
             "BY",
             "CASCADE",
             "CASE",
-            "CAST",
             "CHECK",
             "COLLATE",
             "COLUMN",

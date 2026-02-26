@@ -107,6 +107,7 @@ import static org.jooq.impl.DSL.index;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.noCondition;
+import static org.jooq.impl.DSL.query;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.sql;
 // ...
@@ -127,6 +128,7 @@ import static org.jooq.impl.Keywords.K_BY;
 import static org.jooq.impl.Keywords.K_CASCADE;
 import static org.jooq.impl.Keywords.K_CHANGE;
 import static org.jooq.impl.Keywords.K_CHANGE_COLUMN;
+import static org.jooq.impl.Keywords.K_CHECKED;
 import static org.jooq.impl.Keywords.K_COLUMN;
 import static org.jooq.impl.Keywords.K_COMMENT;
 import static org.jooq.impl.Keywords.K_CONSTRAINT;
@@ -145,17 +147,22 @@ import static org.jooq.impl.Keywords.K_EXCEPTION;
 import static org.jooq.impl.Keywords.K_EXEC;
 import static org.jooq.impl.Keywords.K_EXPRESSION;
 import static org.jooq.impl.Keywords.K_FIRST;
+import static org.jooq.impl.Keywords.K_FOR;
+import static org.jooq.impl.Keywords.K_FORCE;
 import static org.jooq.impl.Keywords.K_FOREIGN_KEY;
 import static org.jooq.impl.Keywords.K_GENERATED;
 import static org.jooq.impl.Keywords.K_IDENTITY;
 import static org.jooq.impl.Keywords.K_IF;
 import static org.jooq.impl.Keywords.K_IF_EXISTS;
 import static org.jooq.impl.Keywords.K_IF_NOT_EXISTS;
+import static org.jooq.impl.Keywords.K_IMMEDIATE;
+import static org.jooq.impl.Keywords.K_INTEGRITY;
 import static org.jooq.impl.Keywords.K_LIKE;
 import static org.jooq.impl.Keywords.K_MODIFY;
 import static org.jooq.impl.Keywords.K_NOT_IN;
 import static org.jooq.impl.Keywords.K_NOT_NULL;
 import static org.jooq.impl.Keywords.K_NULL;
+import static org.jooq.impl.Keywords.K_OFF;
 import static org.jooq.impl.Keywords.K_POSITION;
 import static org.jooq.impl.Keywords.K_PRIMARY_KEY;
 import static org.jooq.impl.Keywords.K_RAISE;
@@ -1296,6 +1303,22 @@ implements
                 return;
             }
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

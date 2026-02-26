@@ -96,6 +96,7 @@ final class Keywords {
     static final Keyword K_CHANGE_COLUMN            = keyword("change column");
     static final Keyword K_CHARACTER_SET            = keyword("character set");
     static final Keyword K_CHECK                    = keyword("check");
+    static final Keyword K_CHECKED                  = keyword("checked");
     static final Keyword K_COLLATE                  = keyword("collate");
     static final Keyword K_COLUMN                   = keyword("column");
     static final Keyword K_COLUMNS                  = keyword("columns");
@@ -195,6 +196,7 @@ final class Keywords {
     static final Keyword K_FOLLOWING                = keyword("following");
     static final Keyword K_FOR                      = keyword("for");
     static final Keyword K_FORALL                   = keyword("forall");
+    static final Keyword K_FORCE                    = keyword("force");
     static final Keyword K_FORCE_INDEX              = keyword("force_index");
     static final Keyword K_FOREIGN_KEY              = keyword("foreign key");
     static final Keyword K_FORMAT                   = keyword("format");
@@ -236,6 +238,7 @@ final class Keywords {
     static final Keyword K_INSERT                   = keyword("insert");
     static final Keyword K_INSTEAD                  = keyword("instead");
     static final Keyword K_INT                      = keyword("int");
+    static final Keyword K_INTEGRITY                = keyword("integrity");
     static final Keyword K_INTERVAL                 = keyword("interval");
     static final Keyword K_INTO                     = keyword("into");
     static final Keyword K_INVISIBLE                = keyword("invisible");
@@ -306,6 +309,7 @@ final class Keywords {
     static final Keyword K_OBJECT                   = keyword("object");
     static final Keyword K_OCCURRENCE               = keyword("occurrence");
     static final Keyword K_OF                       = keyword("of");
+    static final Keyword K_OFF                      = keyword("off");
     static final Keyword K_OFFSET                   = keyword("offset");
     static final Keyword K_OLD                      = keyword("old");
     static final Keyword K_ON                       = keyword("on");

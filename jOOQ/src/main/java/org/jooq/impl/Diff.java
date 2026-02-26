@@ -688,6 +688,11 @@ final class Diff extends AbstractScope {
                             : s.setGeneratedByDefaultAsIdentity()
                         ));
 
+                    if (type1.generatedAlwaysAs() != null && type2.generatedAlwaysAs() == null)
+                        r.queries.add(ctx.alterTable(t1).alter(f1).dropGenerated());
+                    else if (!equivalent(type1.generatedAlwaysAs(), type2.generatedAlwaysAs()))
+                        r.queries.add(ctx.alterTable(t1).alter(f1).setGeneratedAlwaysAs((Field) type2.generatedAlwaysAs()));
+
                     if ((type1.hasLength() && type2.hasLength() && (type1.lengthDefined() != type2.lengthDefined() || type1.length() != type2.length()))
                         || (type1.hasPrecision() && type2.hasPrecision() && precisionDifference(type1, type2))
                         || (type1.hasScale() && type2.hasScale() && scaleDifference(type1, type2)))
@@ -698,7 +703,10 @@ final class Diff extends AbstractScope {
                 }
 
                 private final boolean equivalent(Field<?> d2, Field<?> d1) {
-                    if (d2.equals(d1))
+                    if (d2 == null ^ d1 == null)
+                        return false;
+                    
+                    if (Objects.equals(d2, d1))
                         return true;
 
                     // [#17688] Some expressions can be considered "equivalent," even if not exactly identical.

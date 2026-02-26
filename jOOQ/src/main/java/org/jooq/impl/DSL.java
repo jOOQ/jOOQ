@@ -26521,6 +26521,42 @@ public class DSL {
     }
 
     /**
+     * The <code>COUNT_MULTIPLE</code> function.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static AggregateFunction<Integer> countDistinct(Field<?>... fields) {
+        return new CountMultiple(Arrays.asList(fields), true);
+    }
+
+    /**
+     * The <code>COUNT_MULTIPLE</code> function.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static AggregateFunction<Integer> countDistinct(Collection<? extends Field<?>> fields) {
+        return new CountMultiple(new QueryPartList<>(fields), true);
+    }
+
+    /**
+     * The <code>COUNT_LARGE_MULTIPLE</code> function.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static AggregateFunction<Long> countLargeDistinct(Field<?>... fields) {
+        return new CountLargeMultiple(Arrays.asList(fields), true);
+    }
+
+    /**
+     * The <code>COUNT_LARGE_MULTIPLE</code> function.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    public static AggregateFunction<Long> countLargeDistinct(Collection<? extends Field<?>> fields) {
+        return new CountLargeMultiple(new QueryPartList<>(fields), true);
+    }
+
+    /**
      * The <code>COVAR_SAMP</code> function.
      * <p>
      * Calculate the sample covariance. This standard SQL function may be supported natively,
@@ -32645,38 +32681,6 @@ public class DSL {
     @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     public static AggregateFunction<Long> countLargeDistinct(Table<?> table) {
         return new CountLargeTable(table, true);
-    }
-
-    /**
-     * Get the count(distinct field1, field2) function.
-     * <p>
-     * Some dialects support several expressions in the
-     * <code>COUNT(DISTINCT expr1, expr2)</code> aggregate function.
-     * <p>
-     * {@link SQLDialect#POSTGRES} supports this as
-     * <code>COUNT(DISTINCT(expr1, expr2))</code>.
-     */
-    @NotNull
-    @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static AggregateFunction<Integer> countDistinct(Field<?>... fields) {
-        fields = Tools.nullSafe(fields);
-        return fields.length == 0 ? countDistinct(asterisk()) : new DefaultAggregateFunction<>(true, N_COUNT, SQLDataType.INTEGER, fields);
-    }
-
-    /**
-     * Get the count(distinct field1, field2) function.
-     * <p>
-     * Some dialects support several expressions in the
-     * <code>COUNT(DISTINCT expr1, expr2)</code> aggregate function.
-     * <p>
-     * {@link SQLDialect#POSTGRES} supports this as
-     * <code>COUNT(DISTINCT(expr1, expr2))</code>.
-     */
-    @NotNull
-    @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
-    public static AggregateFunction<Long> countLargeDistinct(Field<?>... fields) {
-        fields = Tools.nullSafe(fields);
-        return fields.length == 0 ? countLargeDistinct(asterisk()) : new DefaultAggregateFunction<>(true, N_COUNT, SQLDataType.BIGINT, fields);
     }
 
     /**

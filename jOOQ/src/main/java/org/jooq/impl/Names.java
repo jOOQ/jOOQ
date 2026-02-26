@@ -476,6 +476,8 @@ final class Names {
     static final Name N_COT                         = systemName("cot");
     static final Name N_COTH                        = systemName("coth");
     static final Name N_COUNT                       = systemName("count");
+    static final Name N_COUNT_LARGE_MULTIPLE        = systemName("count_large_multiple");
+    static final Name N_COUNT_MULTIPLE              = systemName("count_multiple");
     static final Name N_COVAR_POP                   = systemName("covar_pop");
     static final Name N_COVAR_SAMP                  = systemName("covar_samp");
     static final Name N_CUME_DIST                   = systemName("cume_dist");

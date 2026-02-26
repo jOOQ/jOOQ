@@ -9006,6 +9006,40 @@ public final class QOM {
     }
 
     /**
+     * The <code>COUNT MULTIPLE</code> function.
+     */
+    public /*sealed*/ interface CountMultiple
+        extends
+            AggregateFunction<Integer, CountMultiple>
+        //permits
+        //    CountMultiple
+    {
+        @NotNull UnmodifiableList<? extends Field<?>> $fields();
+        boolean $distinct();
+        @CheckReturnValue
+        @NotNull CountMultiple $fields(Collection<? extends Field<?>> fields);
+        @CheckReturnValue
+        @NotNull CountMultiple $distinct(boolean distinct);
+    }
+
+    /**
+     * The <code>COUNT LARGE MULTIPLE</code> function.
+     */
+    public /*sealed*/ interface CountLargeMultiple
+        extends
+            AggregateFunction<Long, CountLargeMultiple>
+        //permits
+        //    CountLargeMultiple
+    {
+        @NotNull UnmodifiableList<? extends Field<?>> $fields();
+        boolean $distinct();
+        @CheckReturnValue
+        @NotNull CountLargeMultiple $fields(Collection<? extends Field<?>> fields);
+        @CheckReturnValue
+        @NotNull CountLargeMultiple $distinct(boolean distinct);
+    }
+
+    /**
      * The <code>COVAR SAMP</code> function.
      * <p>
      * Calculate the sample covariance. This standard SQL function may be supported natively,

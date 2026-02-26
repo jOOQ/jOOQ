@@ -159,8 +159,7 @@ implements
 
 
 
-            case POSTGRES:
-            case YUGABYTEDB: {
+            case POSTGRES: {
                 ctx.visit(N_COALESCE).sqlIndentStart('(');
                 acceptStandard(ctx);
                 ctx.sql(',').formatSeparator()
@@ -178,7 +177,8 @@ implements
             case MARIADB:
             case MYSQL:
             case SQLITE:
-            case TRINO: {
+            case TRINO:
+            case YUGABYTEDB: {
                 acceptJSONArrayAgg(ctx);
                 break;
             }

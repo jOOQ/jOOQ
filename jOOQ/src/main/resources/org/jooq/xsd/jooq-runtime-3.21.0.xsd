@@ -599,6 +599,16 @@ To enable this feature, {@link #transformPatterns} must be enabled as well.
 This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
       
+      <element name="transformPatternsCountDistinctMultipleRedundant" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform <code>COUNT(DISTINCT a, a)</code> to <code>COUNT(DISTINCT a)</code>.
+<p>
+There is no benefit to repeating an expression in a <code>COUNT(DISTINCT ..)</code> expression.
+<p>
+To enable this feature, {@link #transformPatterns} must be enabled as well.
+<p>
+This feature is available in the commercial distribution only.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+      
       <element name="transformPatternsTrim" type="boolean" minOccurs="0" maxOccurs="1" default="true">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Transform <code>LTRIM(RTRIM(x))</code> or <code>RTRIM(LTRIM(x))</code> to <code>TRIM(x)</code>.
 <p>

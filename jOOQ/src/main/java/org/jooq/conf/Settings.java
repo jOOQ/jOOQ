@@ -191,6 +191,8 @@ public class Settings
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsCountConstant = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean transformPatternsCountDistinctMultipleRedundant = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsTrim = true;
     @XmlElement(defaultValue = "true")
     protected Boolean transformPatternsNotAnd = true;
@@ -2628,6 +2630,42 @@ public class Settings
      */
     public void setTransformPatternsCountConstant(Boolean value) {
         this.transformPatternsCountConstant = value;
+    }
+
+    /**
+     * Transform <code>COUNT(DISTINCT a, a)</code> to <code>COUNT(DISTINCT a)</code>.
+     * <p>
+     * There is no benefit to repeating an expression in a <code>COUNT(DISTINCT …)</code> expression.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isTransformPatternsCountDistinctMultipleRedundant() {
+        return transformPatternsCountDistinctMultipleRedundant;
+    }
+
+    /**
+     * Transform <code>COUNT(DISTINCT a, a)</code> to <code>COUNT(DISTINCT a)</code>.
+     * <p>
+     * There is no benefit to repeating an expression in a <code>COUNT(DISTINCT …)</code> expression.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setTransformPatternsCountDistinctMultipleRedundant(Boolean value) {
+        this.transformPatternsCountDistinctMultipleRedundant = value;
     }
 
     /**
@@ -8289,6 +8327,21 @@ public class Settings
     }
 
     /**
+     * Transform <code>COUNT(DISTINCT a, a)</code> to <code>COUNT(DISTINCT a)</code>.
+     * <p>
+     * There is no benefit to repeating an expression in a <code>COUNT(DISTINCT …)</code> expression.
+     * <p>
+     * To enable this feature, {@link #transformPatterns} must be enabled as well.
+     * <p>
+     * This feature is available in the commercial distribution only.
+     * 
+     */
+    public Settings withTransformPatternsCountDistinctMultipleRedundant(Boolean value) {
+        setTransformPatternsCountDistinctMultipleRedundant(value);
+        return this;
+    }
+
+    /**
      * Transform <code>LTRIM(RTRIM(x))</code> or <code>RTRIM(LTRIM(x))</code> to <code>TRIM(x)</code>.
      * <p>
      * Historically, a few dialects did not implement <code>TRIM(x)</code> or <code>TRIM(BOTH FROM x)</code>,
@@ -10514,6 +10567,7 @@ public class Settings
         builder.append("transformPatternsUnnecessaryOrderByExpressions", transformPatternsUnnecessaryOrderByExpressions);
         builder.append("transformPatternsUnnecessaryExistsSubqueryClauses", transformPatternsUnnecessaryExistsSubqueryClauses);
         builder.append("transformPatternsCountConstant", transformPatternsCountConstant);
+        builder.append("transformPatternsCountDistinctMultipleRedundant", transformPatternsCountDistinctMultipleRedundant);
         builder.append("transformPatternsTrim", transformPatternsTrim);
         builder.append("transformPatternsNotAnd", transformPatternsNotAnd);
         builder.append("transformPatternsNotOr", transformPatternsNotOr);
@@ -11331,6 +11385,15 @@ public class Settings
             }
         } else {
             if (!transformPatternsCountConstant.equals(other.transformPatternsCountConstant)) {
+                return false;
+            }
+        }
+        if (transformPatternsCountDistinctMultipleRedundant == null) {
+            if (other.transformPatternsCountDistinctMultipleRedundant!= null) {
+                return false;
+            }
+        } else {
+            if (!transformPatternsCountDistinctMultipleRedundant.equals(other.transformPatternsCountDistinctMultipleRedundant)) {
                 return false;
             }
         }
@@ -13092,6 +13155,7 @@ public class Settings
         result = ((prime*result)+((transformPatternsUnnecessaryOrderByExpressions == null)? 0 :transformPatternsUnnecessaryOrderByExpressions.hashCode()));
         result = ((prime*result)+((transformPatternsUnnecessaryExistsSubqueryClauses == null)? 0 :transformPatternsUnnecessaryExistsSubqueryClauses.hashCode()));
         result = ((prime*result)+((transformPatternsCountConstant == null)? 0 :transformPatternsCountConstant.hashCode()));
+        result = ((prime*result)+((transformPatternsCountDistinctMultipleRedundant == null)? 0 :transformPatternsCountDistinctMultipleRedundant.hashCode()));
         result = ((prime*result)+((transformPatternsTrim == null)? 0 :transformPatternsTrim.hashCode()));
         result = ((prime*result)+((transformPatternsNotAnd == null)? 0 :transformPatternsNotAnd.hashCode()));
         result = ((prime*result)+((transformPatternsNotOr == null)? 0 :transformPatternsNotOr.hashCode()));

@@ -378,7 +378,7 @@ implements
     final boolean                  $alterColumnDropDefault()   { return alterColumnDropDefault; }
     final GenerationMode           $alterColumnSetIdentity()   { return alterColumnSetIdentity; }
     final boolean                  $alterColumnDropIdentity()  { return alterColumnDropIdentity; }
-    final Field<?>                 $alterColumnSetGenerated()  { return $alterColumnSetGenerated(); }
+    final Field<?>                 $alterColumnSetGenerated()  { return alterColumnSetGenerated; }
     final boolean                  $alterColumnDropGenerated() { return alterColumnDropGenerated; }
     final Constraint               $alterConstraint()          { return alterConstraint; }
     final boolean                  $alterConstraintEnforced()  { return alterConstraintEnforced; }

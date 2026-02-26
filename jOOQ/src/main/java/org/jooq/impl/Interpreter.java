@@ -86,6 +86,7 @@ import org.jooq.Delete;
 import org.jooq.Domain;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Generator;
 import org.jooq.Index;
 import org.jooq.Insert;
 import org.jooq.Merge;
@@ -692,6 +693,10 @@ final class Interpreter {
                     existingField.type = existingField.type.generatedByDefaultAsIdentity();
             else if (query.$alterColumnDropIdentity())
                 existingField.type = existingField.type.identityMode(null);
+            else if (query.$alterColumnSetGenerated() != null)
+                existingField.type = existingField.type.generatedAlwaysAs((Field) query.$alterColumnSetGenerated());
+            else if (query.$alterColumnDropGenerated())
+                existingField.type = existingField.type.generatedAlwaysAs((Generator) null);
             else
                 throw unsupportedQuery(query);
         }

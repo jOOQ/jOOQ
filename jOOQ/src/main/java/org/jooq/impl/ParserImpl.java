@@ -6233,6 +6233,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                 return (ifExists ? s1.alterIfExists(field) : s1.alter(field)).dropDefault();
             else if (parseKeywordIf("DROP IDENTITY"))
                 return (ifExists ? s1.alterIfExists(field) : s1.alter(field)).dropIdentity();
+            else if (parseKeywordIf("DROP EXPRESSION", "DROP GENERATED"))
+                return (ifExists ? s1.alterIfExists(field) : s1.alter(field)).dropGenerated();
             else if (parseKeywordIf("SET NOT NULL") || parseNotNullOptionalEnable())
                 return (ifExists ? s1.alterIfExists(field) : s1.alter(field)).setNotNull();
             else if (parseKeywordIf("SET DEFAULT", "DEFAULT"))
@@ -6244,8 +6246,13 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                 return (ifExists ? s1.alterIfExists(field) : s1.alter(field)).setGeneratedByDefaultAsIdentity();
             else if (parseKeywordIf(
                     "SET GENERATED ALWAYS AS IDENTITY",
-                    "SET GENERATED ALWAYS",
                     "ADD GENERATED ALWAYS AS IDENTITY"))
+                return (ifExists ? s1.alterIfExists(field) : s1.alter(field)).setGeneratedAlwaysAsIdentity();
+            else if (parseKeywordIf(
+                    "SET GENERATED ALWAYS AS",
+                    "SET EXPRESSION AS"))
+                return parseParenthesised(c -> (ifExists ? s1.alterIfExists(field) : s1.alter(field)).setGeneratedAlwaysAs((Field) c.parseField()));
+            else if (parseKeywordIf("SET GENERATED ALWAYS"))
                 return (ifExists ? s1.alterIfExists(field) : s1.alter(field)).setGeneratedAlwaysAsIdentity();
             else if (peekKeyword("SET OPTIONS") && parseKeywordIf("SET"))
                 return dsl.commentOnColumn(field(table.getQualifiedName().append(field.getUnqualifiedName()))).is(parseOptionsDescription());

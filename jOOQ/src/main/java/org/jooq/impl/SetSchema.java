@@ -132,6 +132,7 @@ implements
                 ctx.visit(K_SET).sql(' ').visit(K_SEARCH_PATH).sql(" = ").visit(schema);
                 break;
 
+
             case DERBY:
             case H2:
             case HSQLDB:

@@ -2002,6 +2002,12 @@ implements
             }
             else if (alterColumnSetGenerated != null) {
                 switch (ctx.family()) {
+
+
+
+
+
+
                     case FIREBIRD:
                         ctx.sql(' ').visit(K_GENERATED).sql(' ').visit(K_ALWAYS).sql(' ').visit(K_AS).sql(" (").visit(alterColumnSetGenerated).sql(')');
                         break;

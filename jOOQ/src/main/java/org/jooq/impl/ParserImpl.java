@@ -6249,6 +6249,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                     "ADD GENERATED ALWAYS AS IDENTITY"))
                 return (ifExists ? s1.alterIfExists(field) : s1.alter(field)).setGeneratedAlwaysAsIdentity();
             else if (parseKeywordIf(
+                    "AS",
                     "COMPUTED BY",
                     "COMPUTED",
                     "GENERATED ALWAYS AS",

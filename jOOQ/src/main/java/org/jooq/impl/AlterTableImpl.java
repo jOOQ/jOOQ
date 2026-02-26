@@ -143,6 +143,7 @@ import static org.jooq.impl.Keywords.K_END_IF;
 import static org.jooq.impl.Keywords.K_END_TRY;
 import static org.jooq.impl.Keywords.K_EXCEPTION;
 import static org.jooq.impl.Keywords.K_EXEC;
+import static org.jooq.impl.Keywords.K_EXPRESSION;
 import static org.jooq.impl.Keywords.K_FIRST;
 import static org.jooq.impl.Keywords.K_FOREIGN_KEY;
 import static org.jooq.impl.Keywords.K_GENERATED;
@@ -330,6 +331,8 @@ implements
     private boolean                      alterColumnDropDefault;
     private GenerationMode               alterColumnSetIdentity;
     private boolean                      alterColumnDropIdentity;
+    private Field<?>                     alterColumnSetGenerated;
+    private boolean                      alterColumnDropGenerated;
     private Field<?>                     changeColumnFrom;
     private Field<?>                     changeColumnTo;
     private DataType<?>                  changeColumnType;
@@ -349,39 +352,41 @@ implements
         this.ifExists = ifExists;
     }
 
-    final Table<?>                 $table()                   { return table; }
-    final boolean                  $ifExists()                { return ifExists; }
-    final boolean                  $ifExistsColumn()          { return ifExistsColumn; }
-    final boolean                  $ifExistsConstraint()      { return ifExistsConstraint; }
-    final boolean                  $ifNotExistsColumn()       { return ifNotExistsColumn; }
-    final List<TableElement>       $add()                     { return add; }
-    final Field<?>                 $addColumn()               { return addColumn; }
-    final DataType<?>              $addColumnType()           { return addColumnType; }
-    final Constraint               $addConstraint()           { return addConstraint; }
-    final boolean                  $addFirst()                { return addFirst; }
-    final Field<?>                 $addBefore()               { return addBefore; }
-    final Field<?>                 $addAfter()                { return addAfter; }
-    final Field<?>                 $alterColumn()             { return alterColumn; }
-    final Nullability              $alterColumnNullability()  { return alterColumnNullability; }
-    final DataType<?>              $alterColumnType()         { return alterColumnType; }
-    final Field<?>                 $alterColumnDefault()      { return alterColumnDefault; }
-    final boolean                  $alterColumnDropDefault()  { return alterColumnDropDefault; }
-    final GenerationMode           $alterColumnSetIdentity()  { return alterColumnSetIdentity; }
-    final boolean                  $alterColumnDropIdentity() { return alterColumnDropIdentity; }
-    final Constraint               $alterConstraint()         { return alterConstraint; }
-    final boolean                  $alterConstraintEnforced() { return alterConstraintEnforced; }
-    final Field<?>                 $changeColumnFrom()        { return changeColumnFrom; }
-    final Field<?>                 $changeColumnTo()          { return changeColumnTo; }
-    final DataType<?>              $changeColumnType()        { return changeColumnType; }
-    final Table<?>                 $renameTo()                { return renameTo; }
-    final Field<?>                 $renameColumn()            { return renameColumn; }
-    final Field<?>                 $renameColumnTo()          { return renameColumnTo; }
-    final Constraint               $renameConstraint()        { return renameConstraint; }
-    final Constraint               $renameConstraintTo()      { return renameConstraintTo; }
-    final List<Field<?>>           $dropColumns()             { return dropColumns; }
-    final Cascade                  $dropCascade()             { return dropCascade; }
-    final Constraint               $dropConstraint()          { return dropConstraint; }
-    final ConstraintType           $dropConstraintType()      { return dropConstraintType; }
+    final Table<?>                 $table()                    { return table; }
+    final boolean                  $ifExists()                 { return ifExists; }
+    final boolean                  $ifExistsColumn()           { return ifExistsColumn; }
+    final boolean                  $ifExistsConstraint()       { return ifExistsConstraint; }
+    final boolean                  $ifNotExistsColumn()        { return ifNotExistsColumn; }
+    final List<TableElement>       $add()                      { return add; }
+    final Field<?>                 $addColumn()                { return addColumn; }
+    final DataType<?>              $addColumnType()            { return addColumnType; }
+    final Constraint               $addConstraint()            { return addConstraint; }
+    final boolean                  $addFirst()                 { return addFirst; }
+    final Field<?>                 $addBefore()                { return addBefore; }
+    final Field<?>                 $addAfter()                 { return addAfter; }
+    final Field<?>                 $alterColumn()              { return alterColumn; }
+    final Nullability              $alterColumnNullability()   { return alterColumnNullability; }
+    final DataType<?>              $alterColumnType()          { return alterColumnType; }
+    final Field<?>                 $alterColumnDefault()       { return alterColumnDefault; }
+    final boolean                  $alterColumnDropDefault()   { return alterColumnDropDefault; }
+    final GenerationMode           $alterColumnSetIdentity()   { return alterColumnSetIdentity; }
+    final boolean                  $alterColumnDropIdentity()  { return alterColumnDropIdentity; }
+    final Field<?>                 $alterColumnSetGenerated()  { return $alterColumnSetGenerated(); }
+    final boolean                  $alterColumnDropGenerated() { return alterColumnDropGenerated; }
+    final Constraint               $alterConstraint()          { return alterConstraint; }
+    final boolean                  $alterConstraintEnforced()  { return alterConstraintEnforced; }
+    final Field<?>                 $changeColumnFrom()         { return changeColumnFrom; }
+    final Field<?>                 $changeColumnTo()           { return changeColumnTo; }
+    final DataType<?>              $changeColumnType()         { return changeColumnType; }
+    final Table<?>                 $renameTo()                 { return renameTo; }
+    final Field<?>                 $renameColumn()             { return renameColumn; }
+    final Field<?>                 $renameColumnTo()           { return renameColumnTo; }
+    final Constraint               $renameConstraint()         { return renameConstraint; }
+    final Constraint               $renameConstraintTo()       { return renameConstraintTo; }
+    final List<Field<?>>           $dropColumns()              { return dropColumns; }
+    final Cascade                  $dropCascade()              { return dropCascade; }
+    final Constraint               $dropConstraint()           { return dropConstraint; }
+    final ConstraintType           $dropConstraintType()       { return dropConstraintType; }
 
     // ------------------------------------------------------------------------
     // XXX: DSL API
@@ -935,6 +940,23 @@ implements
     @Override
     public final AlterTableImpl dropIdentity() {
         alterColumnDropIdentity = true;
+        return this;
+    }
+
+    @Override
+    public final AlterTableImpl setGeneratedAlwaysAs(Object generatedAlwaysAsValue) {
+        return setGeneratedAlwaysAs(Tools.field(generatedAlwaysAsValue, alterColumn));
+    }
+
+    @Override
+    public final AlterTableImpl setGeneratedAlwaysAs(Field generatedAlwaysAsValue) {
+        alterColumnSetGenerated = generatedAlwaysAsValue;
+        return this;
+    }
+
+    @Override
+    public final AlterTableImpl dropGenerated() {
+        alterColumnDropGenerated = true;
         return this;
     }
 
@@ -1955,6 +1977,13 @@ implements
                         break;
                 }
             }
+            else if (alterColumnSetGenerated != null) {
+                switch (ctx.family()) {
+                    default:
+                        ctx.sql(' ').visit(K_SET).sql(' ').visit(K_EXPRESSION).sql(' ').visit(K_AS).sql(" (").visit(alterColumnSetGenerated).sql(')');
+                        break;
+                }
+            }
             else if (alterColumnDropIdentity) {
                 switch (ctx.family()) {
 
@@ -1965,6 +1994,13 @@ implements
 
                     default:
                         ctx.sql(' ').visit(K_DROP).sql(' ').visit(K_IDENTITY);
+                        break;
+                }
+            }
+            else if (alterColumnDropGenerated) {
+                switch (ctx.family()) {
+                    default:
+                        ctx.sql(' ').visit(K_DROP).sql(' ').visit(K_EXPRESSION);
                         break;
                 }
             }

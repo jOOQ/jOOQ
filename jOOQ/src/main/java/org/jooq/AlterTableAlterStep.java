@@ -65,7 +65,10 @@ import static org.jooq.SQLDialect.MARIADB;
 // ...
 import static org.jooq.SQLDialect.MYSQL;
 // ...
+// ...
+// ...
 import static org.jooq.SQLDialect.POSTGRES;
+// ...
 // ...
 // ...
 // ...
@@ -199,5 +202,26 @@ public interface AlterTableAlterStep<T> {
     @NotNull @CheckReturnValue
     @Support({ FIREBIRD, H2, HSQLDB, POSTGRES, YUGABYTEDB })
     AlterTableFinalStep dropIdentity();
+
+    /**
+     * Make the column an <code>GENERATED</code> column.
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CLICKHOUSE, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    AlterTableFinalStep setGeneratedAlwaysAs(T generatedAlwaysAsValue);
+
+    /**
+     * Make the column an <code>GENERATED</code> column.
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CLICKHOUSE, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    AlterTableFinalStep setGeneratedAlwaysAs(Field<T> generatedAlwaysAsValue);
+
+    /**
+     * Drop the <code>GENERATED</code> property from the column.
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CLICKHOUSE, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    AlterTableFinalStep dropGenerated();
 
 }

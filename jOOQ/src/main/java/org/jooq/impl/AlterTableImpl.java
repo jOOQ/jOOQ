@@ -1979,6 +1979,10 @@ implements
             }
             else if (alterColumnSetGenerated != null) {
                 switch (ctx.family()) {
+                    case FIREBIRD:
+                        ctx.sql(' ').visit(K_GENERATED).sql(' ').visit(K_ALWAYS).sql(' ').visit(K_AS).sql(" (").visit(alterColumnSetGenerated).sql(')');
+                        break;
+
                     default:
                         ctx.sql(' ').visit(K_SET).sql(' ').visit(K_EXPRESSION).sql(' ').visit(K_AS).sql(" (").visit(alterColumnSetGenerated).sql(')');
                         break;
@@ -1999,6 +2003,12 @@ implements
             }
             else if (alterColumnDropGenerated) {
                 switch (ctx.family()) {
+
+
+
+
+
+
                     default:
                         ctx.sql(' ').visit(K_DROP).sql(' ').visit(K_EXPRESSION);
                         break;

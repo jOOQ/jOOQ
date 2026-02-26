@@ -207,21 +207,21 @@ public interface AlterTableAlterStep<T> {
      * Make the column an <code>GENERATED</code> column.
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterTableFinalStep setGeneratedAlwaysAs(T generatedAlwaysAsValue);
 
     /**
      * Make the column an <code>GENERATED</code> column.
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ FIREBIRD, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterTableFinalStep setGeneratedAlwaysAs(Field<T> generatedAlwaysAsValue);
 
     /**
      * Drop the <code>GENERATED</code> property from the column.
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
+    @Support({ H2, HSQLDB, MARIADB, MYSQL, POSTGRES })
     AlterTableFinalStep dropGenerated();
 
 }

@@ -49,6 +49,7 @@ import java.time.Year;
 import java.util.UUID;
 
 import org.jooq.DataType;
+import org.jooq.Geometry;
 import org.jooq.JSON;
 import org.jooq.JSONB;
 // ...
@@ -185,6 +186,7 @@ final class SQLDataTypes {
         static final DataType<JSON>        JSON                     = new BuiltInDataType<>(FAMILY, SQLDataType.JSON, "JSON");
         static final DataType<Object>      OTHER                    = new BuiltInDataType<>(FAMILY, SQLDataType.OTHER, "other");
         static final DataType<UUID>        UUID                     = new BuiltInDataType<>(FAMILY, SQLDataType.UUID, "UUID");
+        static final DataType<Geometry>    GEOMETRY                 = new BuiltInDataType<>(FAMILY, SQLDataType.GEOMETRY, "Geometry");
 
         static final DataType<UByte>       UINT8                    = new BuiltInDataType<>(FAMILY, SQLDataType.TINYINTUNSIGNED, "UInt8");
         static final DataType<UShort>      UINT16                   = new BuiltInDataType<>(FAMILY, SQLDataType.SMALLINTUNSIGNED, "UInt16");

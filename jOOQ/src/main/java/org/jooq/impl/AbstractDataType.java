@@ -661,15 +661,17 @@ implements
     }
 
     private final String getCastTypeName0(Configuration configuration) {
+        String n = getCastTypeName1(configuration);
+
         switch (configuration.family()) {
             case CLICKHOUSE:
-                if (nullable() && !isJSON() && !isArray())
-                    return "Nullable(" + getCastTypeName1(configuration) + ")";
+                if (nullable() && !isJSON() && !isArray() && !isSpatial())
+                    return "Nullable(" + n + ")";
                 else
-                    return getCastTypeName1(configuration);
+                    return n;
 
             default:
-                return getCastTypeName1(configuration);
+                return n;
         }
     }
 

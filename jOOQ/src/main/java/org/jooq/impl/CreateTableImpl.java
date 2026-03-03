@@ -516,6 +516,9 @@ implements
         if (storage != null && ctx.configuration().data("org.jooq.ddl.ignore-storage-clauses") == null)
             ctx.formatSeparator()
                .visit(storage);
+        else if (ctx.family() == CLICKHOUSE)
+            ctx.formatSeparator()
+               .sql("SETTINGS enable_block_number_column = 1, enable_block_offset_column = 1");
 
 
 

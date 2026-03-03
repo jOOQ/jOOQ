@@ -489,10 +489,12 @@ implements
 
     private final void toSQLTableClauses(Context<?> ctx) {
         // [#7539] ClickHouse has a mandatory ENGINE clause. We default to the two most popular engines for now.
+        boolean mergeTree = false;
+
         if (ctx.family() == CLICKHOUSE) {
             ctx.formatSeparator().visit(K_ENGINE).sql(' ');
 
-            if (anyMatch(tableElements, e -> e instanceof QOM.PrimaryKey))
+            if (mergeTree |= anyMatch(tableElements, e -> e instanceof QOM.PrimaryKey))
                 ctx.visit(unquotedName("MergeTree")).sql("()");
             else
                 ctx.visit(unquotedName("Log")).sql("()");
@@ -516,9 +518,9 @@ implements
         if (storage != null && ctx.configuration().data("org.jooq.ddl.ignore-storage-clauses") == null)
             ctx.formatSeparator()
                .visit(storage);
-        else if (ctx.family() == CLICKHOUSE)
+        else if (mergeTree)
             ctx.formatSeparator()
-               .sql("SETTINGS enable_block_number_column = 1, enable_block_offset_column = 1");
+               .visit(K_SETTINGS).sql(" enable_block_number_column = 1, enable_block_offset_column = 1");
 
 
 

@@ -423,6 +423,7 @@ final class Keywords {
     static final Keyword K_SET_DATA_TYPE            = keyword("set data type");
     static final Keyword K_SET_DEFAULT              = keyword("set default");
     static final Keyword K_SET_NOT_NULL             = keyword("set not null");
+    static final Keyword K_SETTINGS                 = keyword("settings");
     static final Keyword K_SIBLINGS                 = keyword("siblings");
     static final Keyword K_SIGNAL                   = keyword("signal");
     static final Keyword K_SKIP                     = keyword("skip");

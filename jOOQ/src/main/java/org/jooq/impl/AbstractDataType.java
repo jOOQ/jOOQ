@@ -665,7 +665,7 @@ implements
 
         switch (configuration.family()) {
             case CLICKHOUSE:
-                if (nullable() && !isJSON() && !isArray() && !isSpatial())
+                if (nullable() && !isJSON() && !isArray() && !isSpatial() && !n.startsWith("Nullable("))
                     return "Nullable(" + n + ")";
                 else
                     return n;

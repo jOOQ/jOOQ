@@ -216,6 +216,7 @@ implements
             case MARIADB:
             case MYSQL:
             case TRINO:
+            case YUGABYTEDB:
                 ctx.visit(DSL.nvl(f, empty()));
                 break;
 

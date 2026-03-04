@@ -45,6 +45,7 @@ import static org.jooq.Decfloat.decfloat;
 import static org.jooq.impl.Internal.arrayType;
 import static org.jooq.impl.Internal.converterContext;
 import static org.jooq.impl.Internal.toJSONString;
+import static org.jooq.impl.Tools.CTX;
 import static org.jooq.impl.Tools.configuration;
 import static org.jooq.impl.Tools.emulateMultiset;
 import static org.jooq.tools.StringUtils.leftPad;
@@ -96,6 +97,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
+import java.util.function.Supplier;
 import java.util.regex.Pattern;
 
 // ...
@@ -118,6 +120,7 @@ import org.jooq.SQLDialect;
 import org.jooq.XML;
 import org.jooq.XMLFormat;
 import org.jooq.exception.DataTypeException;
+import org.jooq.exception.MappingException;
 import org.jooq.tools.Ints;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.Longs;
@@ -1404,42 +1407,22 @@ final class Convert {
 
                 // [#12509] JSON data types can be written to Maps
                 else if (fromClass == JSON.class && Map.class.isAssignableFrom(toClass)) {
-                    try {
-                        return require(toClass, new JSONParser().parse(((JSON) from).data(), containerFactoryForMaps(toClass)));
-                    }
-                    catch (ParseException e) {
-                        throw new DataTypeException("Error while mapping JSON to Map", e);
-                    }
+                    return require(toClass, parseJSON(((JSON) from).data(), ArrayList::new, mapSupplier(toClass)));
                 }
 
                 // [#12509] JSON data types can be written to Maps
                 else if (fromClass == JSONB.class && Map.class.isAssignableFrom(toClass)) {
-                    try {
-                        return require(toClass, new JSONParser().parse(((JSONB) from).data(), containerFactoryForMaps(toClass)));
-                    }
-                    catch (ParseException e) {
-                        throw new DataTypeException("Error while mapping JSONB to Map", e);
-                    }
+                    return require(toClass, parseJSON(((JSONB) from).data(), ArrayList::new, mapSupplier(toClass)));
                 }
 
                 // [#12509] JSON data types can be written to Lists
                 else if (fromClass == JSON.class && List.class.isAssignableFrom(toClass)) {
-                    try {
-                        return require(toClass, new JSONParser().parse(((JSON) from).data(), containerFactoryForLists(toClass)));
-                    }
-                    catch (ParseException e) {
-                        throw new DataTypeException("Error while mapping JSON to List", e);
-                    }
+                    return require(toClass, parseJSON(((JSON) from).data(), listSupplier(toClass), LinkedHashMap::new));
                 }
 
                 // [#12509] JSON data types can be written to Lists
                 else if (fromClass == JSONB.class && List.class.isAssignableFrom(toClass)) {
-                    try {
-                        return require(toClass, new JSONParser().parse(((JSONB) from).data(), containerFactoryForLists(toClass)));
-                    }
-                    catch (ParseException e) {
-                        throw new DataTypeException("Error while mapping JSONB to List", e);
-                    }
+                    return require(toClass, parseJSON(((JSONB) from).data(), listSupplier(toClass), LinkedHashMap::new));
                 }
 
                 // [#10072] Out of the box Jackson JSON mapping support
@@ -1572,6 +1555,12 @@ final class Convert {
             throw fail(from, toClass);
         }
 
+        private final Object parseJSON(String json, Supplier<List<?>> list, Supplier<Map<?, ?>> map) {
+            DefaultJSONContentHandler handler = new DefaultJSONContentHandler(list, map);
+            new org.jooq.impl.JSONParser(CTX.get(), json, handler, CTX.get().creationTime()).parse();
+            return handler.result();
+        }
+
         private final Object[] toObjectArray(Object from) {
             Object[] result;
 
@@ -1661,49 +1650,33 @@ final class Convert {
         }
 
         @SuppressWarnings("rawtypes")
-        private static final ContainerFactory containerFactoryForMaps(Class<?> mapClass) {
-            return new ContainerFactory() {
-                @Override
-                public Map createObjectContainer() {
+        private static final Supplier<Map<?, ?>> mapSupplier(Class<?> mapClass) {
+            if (mapClass == Map.class)
+                return LinkedHashMap::new;
+            else
+                return () -> {
                     try {
-                        if (mapClass == Map.class)
-                            return new LinkedHashMap<>();
-                        else
-                            return (Map) mapClass.getConstructor().newInstance();
+                        return (Map<?, ?>) mapClass.getConstructor().newInstance();
                     }
                     catch (Exception e) {
-                        throw new DataTypeException("Error while mapping JSON to Map", e);
+                        throw new MappingException("Cannot construct map: ", e);
                     }
-                }
-
-                @Override
-                public List createArrayContainer() {
-                    return new ArrayList<>();
-                }
-            };
+                };
         }
 
         @SuppressWarnings("rawtypes")
-        private static final ContainerFactory containerFactoryForLists(Class<?> listClass) {
-            return new ContainerFactory() {
-                @Override
-                public Map createObjectContainer() {
-                    return new LinkedHashMap<>();
-                }
-
-                @Override
-                public List createArrayContainer() {
+        private static final Supplier<List<?>> listSupplier(Class<?> mapClass) {
+            if (mapClass == List.class)
+                return ArrayList::new;
+            else
+                return () -> {
                     try {
-                        if (listClass == List.class)
-                            return new ArrayList<>();
-                        else
-                            return (List) listClass.getConstructor().newInstance();
+                        return (List<?>) mapClass.getConstructor().newInstance();
                     }
                     catch (Exception e) {
-                        throw new DataTypeException("Error while mapping JSON to List", e);
+                        throw new MappingException("Cannot construct list: ", e);
                     }
-                }
-            };
+                };
         }
 
         @Override

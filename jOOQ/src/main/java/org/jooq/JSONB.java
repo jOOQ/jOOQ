@@ -41,8 +41,8 @@ import static org.jooq.impl.Internal.toJSONString;
 
 import java.util.Objects;
 
-import org.jooq.tools.json.JSONParser;
-import org.jooq.tools.json.ParseException;
+import org.jooq.impl.Internal;
+import org.jooq.impl.ParserException;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -121,9 +121,9 @@ public final class JSONB implements Data {
     private final Object parsed() {
         if (parsed == null) {
             try {
-                parsed = new JSONParser().parse(data);
+                parsed = Internal.parseJSON(data);
             }
-            catch (ParseException e) {
+            catch (ParserException e) {
                 parsed = data;
             }
         }

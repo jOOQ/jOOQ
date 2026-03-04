@@ -42,6 +42,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 
 /**
  * A default implementation of the {@link JSONContentHandler} API that returns
@@ -51,15 +52,23 @@ import java.util.Map;
  */
 final class DefaultJSONContentHandler implements JSONContentHandler {
 
-    private final List<Object> result;
+    private final List<Object>        result;
+    private final Supplier<List<?>>   list;
+    private final Supplier<Map<?, ?>> map;
 
     DefaultJSONContentHandler() {
-        result = new ArrayList<>();
+        this(ArrayList::new, LinkedHashMap::new);
+    }
+
+    DefaultJSONContentHandler(Supplier<List<?>> list, Supplier<Map<?, ?>> map) {
+        this.result = new ArrayList<>();
+        this.list = list;
+        this.map = map;
     }
 
     @Override
     public final void startObject() {
-        result.add(new LinkedHashMap<>());
+        result.add(map.get());
     }
 
     @Override
@@ -74,7 +83,7 @@ final class DefaultJSONContentHandler implements JSONContentHandler {
 
     @Override
     public final void startArray() {
-        result.add(new ArrayList<>());
+        result.add(list.get());
     }
 
     @Override

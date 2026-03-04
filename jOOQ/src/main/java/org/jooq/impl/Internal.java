@@ -56,7 +56,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -70,10 +69,10 @@ import org.jooq.Configuration;
 import org.jooq.Converter;
 import org.jooq.ConverterContext;
 import org.jooq.DDLExportConfiguration;
+import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.Domain;
 import org.jooq.EmbeddableRecord;
-import org.jooq.EnumType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Generator;
@@ -121,8 +120,6 @@ import org.jooq.impl.QOM.CreateTable;
 import org.jooq.impl.QOM.ForeignKeyRule;
 import org.jooq.impl.QOM.GenerationLocation;
 import org.jooq.tools.JooqLogger;
-import org.jooq.tools.json.JSONArray;
-import org.jooq.tools.json.JSONObject;
 import org.jooq.tools.json.JSONValue;
 import org.jooq.tools.reflect.Reflect;
 import org.jooq.tools.reflect.ReflectException;
@@ -1492,6 +1489,22 @@ public final class Internal {
      */
     public static final byte[] convertHexToBytes(String value) {
         return convertHexToBytes(value, 0, value.length());
+    }
+
+    /**
+     * Parse a JSON string.
+     */
+    public static final Object parseJSON(String json) {
+        return parseJSON(CTX.get(), json);
+    }
+
+    /**
+     * Parse a JSON string.
+     */
+    public static final Object parseJSON(DSLContext ctx, String json) {
+        DefaultJSONContentHandler handler = new DefaultJSONContentHandler();
+        new JSONParser(ctx, json, handler, ctx.creationTime()).parse();
+        return handler.result();
     }
 
     /**

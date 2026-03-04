@@ -128,6 +128,7 @@ import static org.jooq.impl.DefaultDataType.unsupportedDatetimePrecision;
 import static org.jooq.impl.DefaultExecuteContext.localExecuteContext;
 import static org.jooq.impl.DefaultExecuteContext.localTargetConnection;
 import static org.jooq.impl.Internal.arrayType;
+import static org.jooq.impl.Internal.toJSONString;
 import static org.jooq.impl.JSONReader.ENCODE_BINARY_AS_HEX;
 import static org.jooq.impl.Keywords.K_ARRAY;
 import static org.jooq.impl.Keywords.K_AS;
@@ -1680,7 +1681,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                 // [#15732] Use JSON as a workaround to bind array types for now.
                 case DUCKDB: {
-                    ctx.statement().setString(ctx.index(), JSONValue.toJSONString(value));
+                    ctx.statement().setString(ctx.index(), toJSONString(value));
                     break;
                 }
 

@@ -44,6 +44,7 @@ import static org.jooq.ContextConverter.scoped;
 import static org.jooq.Decfloat.decfloat;
 import static org.jooq.impl.Internal.arrayType;
 import static org.jooq.impl.Internal.converterContext;
+import static org.jooq.impl.Internal.toJSONString;
 import static org.jooq.impl.Tools.configuration;
 import static org.jooq.impl.Tools.emulateMultiset;
 import static org.jooq.tools.StringUtils.leftPad;
@@ -1383,22 +1384,22 @@ final class Convert {
 
                 // [#12509] JSON data types can be read from Maps
                 else if (Map.class.isAssignableFrom(fromClass) && toClass == JSON.class) {
-                    return (U) JSON.valueOf(JSONObject.toJSONString((Map) from));
+                    return (U) JSON.valueOf(toJSONString(from));
                 }
 
                 // [#12509] JSONB data types can be read from Maps
                 else if (Map.class.isAssignableFrom(fromClass) && toClass == JSONB.class) {
-                    return (U) JSONB.valueOf(JSONObject.toJSONString((Map) from));
+                    return (U) JSONB.valueOf(toJSONString(from));
                 }
 
                 // [#12509] JSON data types can be read from Lists
                 else if (List.class.isAssignableFrom(fromClass) && toClass == JSON.class) {
-                    return (U) JSON.valueOf(JSONArray.toJSONString((List) from));
+                    return (U) JSON.valueOf(toJSONString(from));
                 }
 
                 // [#12509] JSONB data types can be read from Lists
                 else if (List.class.isAssignableFrom(fromClass) && toClass == JSONB.class) {
-                    return (U) JSONB.valueOf(JSONArray.toJSONString((List) from));
+                    return (U) JSONB.valueOf(toJSONString(from));
                 }
 
                 // [#12509] JSON data types can be written to Maps

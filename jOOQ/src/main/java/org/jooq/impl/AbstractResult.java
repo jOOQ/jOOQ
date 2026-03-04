@@ -49,6 +49,7 @@ import static org.jooq.conf.SettingsTools.renderLocale;
 import static org.jooq.impl.DSL.insertInto;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.table;
+import static org.jooq.impl.Internal.toJSONString;
 import static org.jooq.impl.Tools.recordDirtyTrackingPredicate;
 import static org.jooq.tools.StringUtils.abbreviate;
 import static org.jooq.tools.StringUtils.leftPad;
@@ -542,7 +543,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
                                 if (format.format())
                                     writer.append(' ');
 
-                                JSONValue.writeJSONString(schema.getName(), writer);
+                                toJSONString(schema.getName(), writer);
                                 writer.append(',');
 
                                 if (format.format())
@@ -554,7 +555,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
                             if (format.format())
                                 writer.append(' ');
 
-                            JSONValue.writeJSONString(table.getName(), writer);
+                            toJSONString(table.getName(), writer);
                             writer.append(',');
 
                             if (format.format())
@@ -567,7 +568,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
                     if (format.format())
                         writer.append(' ');
 
-                    JSONValue.writeJSONString(field.getName(), writer);
+                    toJSONString(field.getName(), writer);
 
                     if (!field.getDataType().getQualifiedName().empty()) {
                         writer.append(',');
@@ -580,7 +581,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
                         if (format.format())
                             writer.append(' ');
 
-                        JSONValue.writeJSONString(formatTypeName(field), writer);
+                        toJSONString(formatTypeName(field), writer);
                     }
 
                     if (format.format())
@@ -671,9 +672,9 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
         // [#2741] TODO: This logic will be externalised in new SPI
         if (value instanceof byte[] a) {
             if (format.binaryFormat() == BinaryFormat.HEX)
-                JSONValue.writeJSONString(Tools.convertBytesToHex(a), writer);
+                toJSONString(Tools.convertBytesToHex(a), writer);
             else
-                JSONValue.writeJSONString(Base64.getEncoder().encodeToString(a), writer);
+                toJSONString(Base64.getEncoder().encodeToString(a), writer);
 
         }
 
@@ -706,7 +707,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
         else if (value instanceof JSONB && !format.quoteNested())
             writer.write(((JSONB) value).data());
         else
-            JSONValue.writeJSONString(value, writer, format.nanAsString(), format.infinityAsString());
+            toJSONString(value, writer, format.nanAsString(), format.infinityAsString());
     }
 
     static final void formatJSONMap0(
@@ -757,7 +758,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
                     writer.append(' ');
 
             if (wrapRecords) {
-                JSONValue.writeJSONString(record.field(index).getName(), writer);
+                toJSONString(record.field(index).getName(), writer);
                 writer.append(':');
 
                 if (format.format())

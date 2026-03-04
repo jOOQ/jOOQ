@@ -47,6 +47,8 @@ import static org.jooq.impl.Tools.nullSafe;
 import static org.jooq.impl.Tools.qualify;
 import static org.jooq.tools.StringUtils.isBlank;
 
+import java.io.IOException;
+import java.io.Writer;
 import java.lang.reflect.Array;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -54,6 +56,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -118,6 +121,9 @@ import org.jooq.impl.QOM.CreateTable;
 import org.jooq.impl.QOM.ForeignKeyRule;
 import org.jooq.impl.QOM.GenerationLocation;
 import org.jooq.tools.JooqLogger;
+import org.jooq.tools.json.JSONArray;
+import org.jooq.tools.json.JSONObject;
+import org.jooq.tools.json.JSONValue;
 import org.jooq.tools.reflect.Reflect;
 import org.jooq.tools.reflect.ReflectException;
 // ...
@@ -1486,5 +1492,26 @@ public final class Internal {
      */
     public static final byte[] convertHexToBytes(String value) {
         return convertHexToBytes(value, 0, value.length());
+    }
+
+    /**
+     * Turn an object into a JSON string.
+     */
+    public static final String toJSONString(Object value) {
+        return JSONValue.toJSONString(value);
+    }
+
+    /**
+     * Turn an object into a JSON string.
+     */
+    public static final void toJSONString(Object value, Writer out) throws IOException {
+        toJSONString(value, out, false, false);
+    }
+
+    /**
+     * Turn an object into a JSON string.
+     */
+    public static final void toJSONString(Object value, Writer out, boolean nanAsString, boolean infinityAsString) throws IOException {
+        JSONValue.writeJSONString(value, out, nanAsString, infinityAsString);
     }
 }

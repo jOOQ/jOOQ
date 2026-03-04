@@ -53,6 +53,7 @@ import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DefaultDataType.getDataType;
+import static org.jooq.impl.Internal.toJSONString;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 import static org.jooq.impl.Tools.allMatch;
 import static org.jooq.impl.Tools.convertHexToBytes;
@@ -267,7 +268,7 @@ final class JSONReader<R extends Record> {
 
 
 
-                record.set(i, JSONValue.toJSONString(s));
+                record.set(i, toJSONString(s));
             }
 
             // [#8829] LoaderImpl expects binary data to be encoded in base64,

@@ -37,10 +37,11 @@
  */
 package org.jooq;
 
+import static org.jooq.impl.Internal.toJSONString;
+
 import java.util.Objects;
 
 import org.jooq.tools.json.JSONParser;
-import org.jooq.tools.json.JSONValue;
 import org.jooq.tools.json.ParseException;
 
 import org.jetbrains.annotations.NotNull;
@@ -181,6 +182,6 @@ public final class JSONB implements Data {
      */
     @Override
     public String toString() {
-        return JSONValue.toJSONString(parsed());
+        return toJSONString(parsed());
     }
 }

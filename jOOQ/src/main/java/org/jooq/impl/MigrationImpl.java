@@ -52,6 +52,7 @@ import static org.jooq.impl.HistoryStatus.MIGRATING;
 import static org.jooq.impl.HistoryStatus.REVERTING;
 import static org.jooq.impl.HistoryStatus.STARTING;
 import static org.jooq.impl.HistoryStatus.SUCCESS;
+import static org.jooq.impl.Internal.toJSONString;
 import static org.jooq.impl.SchemaImpl.DEFAULT_SCHEMA;
 import static org.jooq.impl.Tools.collect;
 import static org.jooq.impl.Tools.map;
@@ -595,7 +596,7 @@ final class MigrationImpl extends AbstractScope implements Migration {
             .setMigratedFrom(from0.id())
             .setMigratedTo(to0.id())
             .setMigratedToMessage(to0.message())
-            .setMigratedToTags(new JSONArray(map(to0.tags(), Tag::id)).toString())
+            .setMigratedToTags(toJSONString(map(to0.tags(), Tag::id)))
             .setMigrationTime(0L)
             .setClientUserName(System.getProperty("user.name"))
             .setClientHostName(hostName)

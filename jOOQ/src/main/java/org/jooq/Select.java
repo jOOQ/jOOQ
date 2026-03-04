@@ -276,7 +276,10 @@ extends
 
     /**
      * All fields selected in this query
+     *
+     * @deprecated - 3.21.0 - [#7129] - Do not reuse this method, work with {@link #$select()} instead.
      */
+    @Deprecated
     @NotNull @CheckReturnValue
     List<Field<?>> getSelect();
 

@@ -245,7 +245,8 @@ public abstract class AbstractDatabase implements Database {
     private String                                                               embeddableUniqueKeys                    = null;
     private String                                                               embeddableDomains                       = null;
     private String                                                               embeddableColumns                       = null;
-    private boolean                                                              readonlyIdentities                      = false;
+    private boolean                                                              readonlyGeneratedByDefaultIdentities    = false;
+    private boolean                                                              readonlyGeneratedAlwaysIdentities       = true;
     private boolean                                                              readonlyComputedColumns                 = true;
     private boolean                                                              readonlyNonUpdatableColumns             = true;
     private boolean                                                              supportsUnsignedTypes;
@@ -2847,12 +2848,34 @@ public abstract class AbstractDatabase implements Database {
 
     @Override
     public boolean readonlyIdentities() {
-        return readonlyIdentities;
+        return readonlyGeneratedByDefaultIdentities
+            && readonlyGeneratedAlwaysIdentities;
     }
 
     @Override
     public void setReadonlyIdentities(boolean readonlyIdentities) {
-        this.readonlyIdentities = readonlyIdentities;
+        setReadonlyGeneratedByDefaultIdentities(readonlyIdentities);
+        setReadonlyGeneratedAlwaysIdentities(readonlyIdentities);
+    }
+
+    @Override
+    public boolean readonlyGeneratedByDefaultIdentities() {
+        return readonlyGeneratedByDefaultIdentities;
+    }
+
+    @Override
+    public void setReadonlyGeneratedByDefaultIdentities(boolean readonlyGeneratedByDefaultIdentities) {
+        this.readonlyGeneratedByDefaultIdentities = readonlyGeneratedByDefaultIdentities;
+    }
+
+    @Override
+    public boolean readonlyGeneratedAlwaysIdentities() {
+        return readonlyGeneratedAlwaysIdentities;
+    }
+
+    @Override
+    public void setReadonlyGeneratedAlwaysIdentities(boolean readonlyGeneratedAlwaysIdentities) {
+        this.readonlyGeneratedAlwaysIdentities = readonlyGeneratedAlwaysIdentities;
     }
 
     @Override

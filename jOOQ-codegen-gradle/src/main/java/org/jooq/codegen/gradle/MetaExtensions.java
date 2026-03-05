@@ -937,6 +937,14 @@ public class MetaExtensions {
             return isReadonlyIdentities();
         }
 
+        public Boolean getReadonlyGeneratedByDefaultIdentities() {
+            return isReadonlyGeneratedByDefaultIdentities();
+        }
+
+        public Boolean getReadonlyGeneratedAlwaysIdentities() {
+            return isReadonlyGeneratedAlwaysIdentities();
+        }
+
         public Boolean getReadonlyComputedColumns() {
             return isReadonlyComputedColumns();
         }

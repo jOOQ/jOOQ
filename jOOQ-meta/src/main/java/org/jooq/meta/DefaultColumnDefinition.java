@@ -209,7 +209,7 @@ implements
         this.defaultValue = getSyntheticDefault(this);
         this.hidden = hidden;
         this.redacted = redacted;
-        this.readonly = readonly || isSyntheticReadonlyColumn(this, this.identity != null);
+        this.readonly = readonly || isSyntheticReadonlyColumn(this, this.identity);
 
         // [#6222] Copy the column's identity flag to the data type definition
         if (type instanceof DefaultDataTypeDefinition dd) {
@@ -266,7 +266,9 @@ implements
         return column.getDefinedType().getDefaultValue();
     }
 
-    private static boolean isSyntheticReadonlyColumn(DefaultColumnDefinition column, boolean identity) {
+    private static boolean isSyntheticReadonlyColumn(DefaultColumnDefinition column, GenerationMode identity) {
+
+
 
 
 

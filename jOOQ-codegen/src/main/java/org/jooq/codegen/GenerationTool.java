@@ -663,7 +663,10 @@ public class GenerationTool {
             database.setEmbeddableUniqueKeys(d.getEmbeddableUniqueKeys());
             database.setEmbeddableDomains(d.getEmbeddableDomains());
             database.setEmbeddableColumns(d.getEmbeddableColumns());
-            database.setReadonlyIdentities(TRUE.equals(d.isReadonlyIdentities()));
+            database.setReadonlyGeneratedByDefaultIdentities(d.isReadonlyGeneratedByDefaultIdentities());
+            database.setReadonlyGeneratedAlwaysIdentities(d.isReadonlyGeneratedAlwaysIdentities());
+            if (TRUE.equals(d.isReadonlyIdentities()))
+                database.setReadonlyIdentities(d.isReadonlyIdentities());
             database.setReadonlyComputedColumns(!FALSE.equals(d.isReadonlyComputedColumns()));
             database.setReadonlyNonUpdatableColumns(!FALSE.equals(d.isReadonlyNonUpdatableColumns()));
             database.setLogSlowQueriesAfterSeconds(defaultIfNull(d.getLogSlowQueriesAfterSeconds(), 5));

@@ -1530,7 +1530,7 @@ final class CursorImpl<R extends Record> extends AbstractCursor<R> {
                 if (f instanceof AbstractRowAsField
                         && NO_NATIVE_SUPPORT.contains(ctx.dialect())
                         && !TRUE.equals(ctx.data(DATA_MULTISET_CONTENT))) {
-                    nested = ((AbstractRowAsField<?>) f).emulatedFields(ctx.configuration());
+                    nested = Tools.row0(((AbstractRowAsField<?>) f).fields0().fields());
                     recordType = (Class<? extends AbstractRecord>) ((AbstractRowAsField<?>) f).getRecordType();
                 }
                 else if (f.getDataType().isEmbeddable()) {

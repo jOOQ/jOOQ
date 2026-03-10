@@ -91,6 +91,8 @@ import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.notExists;
+import static org.jooq.impl.DSL.selectFrom;
+import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.Keywords.K_AND;
@@ -1560,6 +1562,25 @@ implements
                         break;
                     default:
                         c2.visit(DSL.selectOne());
+                        break;
+                }
+            }
+
+            // [#19724] Not all dialects support derived column lists in MERGE .. USING
+            else if (using instanceof TableAlias<?> a) {
+                switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+
+                    default:
+                        c2.visit(using);
                         break;
                 }
             }

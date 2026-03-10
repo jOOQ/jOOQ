@@ -3875,6 +3875,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 // [#5895] HSQLDB derives the specific data type from the literal
 
 
+
                 case FIREBIRD:
                 case HSQLDB:
                 case TRINO:

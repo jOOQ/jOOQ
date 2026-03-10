@@ -66,6 +66,7 @@ import static org.jooq.impl.Tools.BooleanDataKey.DATA_FORCE_STATIC_STATEMENT;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Set;
@@ -479,6 +480,21 @@ abstract class AbstractQuery<R extends Record> extends AbstractAttachableQueryPa
                     : stmt.getUpdateCount();
                 ctx.rowsLarge(result);
             }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

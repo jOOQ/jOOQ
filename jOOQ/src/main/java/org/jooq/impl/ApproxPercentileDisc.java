@@ -138,6 +138,12 @@ implements
                         ctx.sql('(').visit(a1).sql(")(").visit(a2).sql(')');
                         break;
 
+
+
+
+
+
+
                     // [#19293] DuckDB only has overloads accepting FLOAT types, not DOUBLE types.
                     case DUCKDB:
                         ctx.sql('(').visit(a2).sql(", ").visit(castIfNeeded(a1, REAL)).sql(')');

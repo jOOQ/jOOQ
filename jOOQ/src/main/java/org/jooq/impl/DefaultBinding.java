@@ -945,6 +945,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
+
                     case CLICKHOUSE:
                     case HSQLDB:
                     case POSTGRES:
@@ -4450,6 +4451,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final void setNull0(BindingSetStatementContext<U> ctx) throws SQLException {
             switch (ctx.family()) {
+
+
 
 
 

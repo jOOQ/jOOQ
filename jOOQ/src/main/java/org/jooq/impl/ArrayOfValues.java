@@ -40,6 +40,7 @@ package org.jooq.impl;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.systemName;
 import static org.jooq.impl.Keywords.K_ARRAY;
+import static org.jooq.impl.Keywords.K_EXPLODE;
 import static org.jooq.impl.Keywords.K_UNNEST;
 import static org.jooq.impl.Names.N_ARRAY_TABLE;
 import static org.jooq.impl.Names.N_COLUMN_VALUE;
@@ -139,6 +140,12 @@ implements
                 ctx.visit(new ArrayTableEmulation(array, fieldAliases));
                 break;
 
+
+
+
+
+
+
             case CLICKHOUSE:
                 ctx.visit(new ClickHouseUnnest());
                 break;
@@ -153,9 +160,21 @@ implements
 
         @Override
         public final void accept(Context<?> ctx) {
-            ctx.visit(K_UNNEST).sql('(').visit(K_ARRAY).sql('[').visit(QueryPartListView.wrap(array)).sql(']').sql(")");
+            ctx.visit(K_UNNEST).sql('(').visit(DSL.array(array)).sql(")");
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
 
     private final class ClickHouseUnnest extends DialectArrayTable {
 

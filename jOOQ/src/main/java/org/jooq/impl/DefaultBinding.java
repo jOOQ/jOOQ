@@ -255,6 +255,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -4746,17 +4747,44 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     s -> s != null && (s.startsWith("<")) ? "<result>" + s + "</result>" : null,
 
                     // [#18175] H2 uses nested ResultSet values instead of Struct to model ROW expressions
-                    s -> s instanceof ResultSet rs
-                         ? asList(rs)
-                         : s instanceof Struct x
-                         ? asList(x)
-                         : s instanceof List<?> l
-                         ? asList(l)
-                         : null
+                    s -> {
+                        switch (ctx.family()) {
+
+                                return readDatabricksRecord(ctx, row, s);
+
+                            default:
+                                return s instanceof ResultSet rs
+                                    ? asList(rs)
+                                    : s instanceof Struct x
+                                    ? asList(x)
+                                    : s instanceof List<?> l
+                                    ? asList(l)
+                                    : null;
+                        }
+                    }
                 );
 
             return isEmpty(result) ? null : result.get(0);
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         @Override
         final int sqltype(Statement statement, Configuration configuration) {

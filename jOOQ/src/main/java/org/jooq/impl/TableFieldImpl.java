@@ -47,8 +47,8 @@ import static org.jooq.Clause.FIELD_REFERENCE;
 // ...
 // ...
 // ...
-import static org.jooq.conf.RenderImplicitJoinType.DEFAULT;
 import static org.jooq.conf.RenderImplicitJoinType.SCALAR_SUBQUERY;
+import static org.jooq.impl.DSL.anyValue;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DefaultMetaProvider.meta;
 import static org.jooq.impl.QualifiedName.hashCode0;
@@ -75,16 +75,12 @@ import org.jooq.GeneratorStatementType;
 import org.jooq.Name;
 // ...
 import org.jooq.Record;
-import org.jooq.RowId;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.Update;
 import org.jooq.impl.QOM.UEmpty;
 import org.jooq.impl.Tools.SimpleDataKey;
-import org.jooq.tools.StringUtils;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * A common base type for table fields.
@@ -212,7 +208,20 @@ implements
                 Condition c = t.childPath != null
                     ? JoinTable.onKey0(t.childPath, t.path, parent)
                     : JoinTable.onKey0(t.parentPath.getForeignKey(), parent, t.path);
-                ctx.visit(DSL.field(select(parentField).from(parent).where(c)));
+
+                switch (ctx.family()) {
+
+
+
+
+
+
+
+                    default:
+                        ctx.visit(DSL.field(select(parentField).from(parent).where(c)));
+                        break;
+                }
+
             }
         }
         else

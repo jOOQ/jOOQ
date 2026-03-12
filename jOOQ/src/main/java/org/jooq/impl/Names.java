@@ -305,6 +305,7 @@ final class Names {
     static final Name N_STRING_AGG                  = systemName("string_agg");
     static final Name N_STRING_SPLIT                = systemName("string_split");
     static final Name N_STRPOS                      = systemName("strpos");
+    static final Name N_STRUCT                      = systemName("struct");
     static final Name N_STR_REPLACE                 = systemName("str_replace");
     static final Name N_SUB                         = systemName("sub");
     static final Name N_SUBSTR                      = systemName("substr");
@@ -513,6 +514,7 @@ final class Names {
     static final Name N_GET                         = systemName("get");
     static final Name N_GETBIT                      = systemName("getbit");
     static final Name N_GET_BIT                     = systemName("get_bit");
+    static final Name N_GET_JSON_OBJECT             = systemName("get_json_object");
     static final Name N_GOTO                        = systemName("goto");
     static final Name N_HEX                         = systemName("hex");
     static final Name N_IFNULL                      = systemName("ifnull");
@@ -553,6 +555,7 @@ final class Names {
     static final Name N_JSON_LENGTH                 = systemName("json_length");
     static final Name N_JSON_MODIFY                 = systemName("json_modify");
     static final Name N_JSON_OBJECT                 = systemName("json_object");
+    static final Name N_JSON_OBJECT_KEYS            = systemName("json_object_keys");
     static final Name N_JSON_QUERY                  = systemName("json_query");
     static final Name N_JSON_QUERY_ARRAY            = systemName("json_query_array");
     static final Name N_JSON_REMOVE                 = systemName("json_remove");

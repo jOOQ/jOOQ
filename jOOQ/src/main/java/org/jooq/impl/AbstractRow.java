@@ -38,21 +38,18 @@
 package org.jooq.impl;
 
 import static org.jooq.Clause.FIELD_ROW;
-// ...
-// ...
 import static org.jooq.impl.Keywords.K_ROW;
+import static org.jooq.impl.Keywords.K_STRUCT;
 import static org.jooq.impl.Names.N_COALESCE;
 import static org.jooq.impl.Names.N_ROW;
+import static org.jooq.impl.Names.N_STRUCT;
 import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.Tools.extractVal;
-import static org.jooq.impl.Tools.isVal;
 import static org.jooq.impl.Tools.isVal1;
 import static org.jooq.impl.Tools.map;
-import static org.jooq.impl.Tools.nullSafe;
 
 import java.util.Collection;
 import java.util.function.Function;
-import java.util.stream.Stream;
 
 import org.jooq.Binding;
 import org.jooq.Clause;
@@ -61,21 +58,21 @@ import org.jooq.Comparator;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Context;
+import org.jooq.ContextConverter;
 import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Fields;
+import org.jooq.Keyword;
 import org.jooq.Name;
 // ...
 import org.jooq.QueryPart;
 import org.jooq.Record;
-import org.jooq.Record1;
 // ...
 import org.jooq.Row;
 import org.jooq.Row1;
 import org.jooq.Row2;
-import org.jooq.Select;
-import org.jooq.ContextConverter;
+import org.jooq.Scope;
 import org.jooq.SelectField;
 import org.jooq.TableField;
 // ...
@@ -110,6 +107,28 @@ implements
         super();
 
         this.fields = fields;
+    }
+
+    static final Keyword keyword(Scope ctx) {
+        switch (ctx.family()) {
+
+
+
+
+            default:
+                return K_ROW;
+        }
+    }
+
+    static final Name name(Scope ctx) {
+        switch (ctx.family()) {
+
+
+
+
+            default:
+                return N_ROW;
+        }
     }
 
     // ------------------------------------------------------------------------

@@ -304,6 +304,25 @@ implements
                 break;
             }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             case DUCKDB:
             case TRINO: {
 
@@ -348,6 +367,18 @@ implements
             default:
                 acceptStandard(ctx);
                 break;
+        }
+    }
+
+    private final Field<?> castAsJsonIfNeeded(Context<?> ctx, Field<?> f) {
+        switch (ctx.family()) {
+
+
+
+
+
+            default:
+                return f.cast(JSON);
         }
     }
 

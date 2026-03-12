@@ -245,6 +245,7 @@ implements
                 acceptOverClause(ctx);
                 break;
 
+
             case DUCKDB: {
                 Field<?> agg = arrayAggEmulation(distinct, arguments.get(0), withinGroupOrderBy);
 

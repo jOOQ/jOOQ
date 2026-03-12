@@ -111,6 +111,7 @@ implements
             case MYSQL:
                 return true;
 
+
             case DUCKDB:
             case SQLITE:
                 return true;
@@ -150,6 +151,7 @@ implements
             case MYSQL:
                 ctx.visit(function(N_JSON_LENGTH, getDataType(), field));
                 break;
+
 
             case DUCKDB:
             case SQLITE:

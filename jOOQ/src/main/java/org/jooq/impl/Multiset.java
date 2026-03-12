@@ -65,6 +65,7 @@ import static org.jooq.impl.DSL.jsonbArrayAgg;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectFrom;
+import static org.jooq.impl.DSL.systemName;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.unnest;
 import static org.jooq.impl.DSL.values;
@@ -357,12 +358,26 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
 
             case NATIVE:
                 switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                     case DUCKDB: {
-                        SelectOrderByStep<?> s = select(DSL.field(N_T)).from(select.asTable(N_T));
-                        visitSubquery(ctx.visit(K_ARRAY), multisetCondition
+                        SelectOrderByStep<? extends Record1<?>> s = select(DSL.field(N_T)).from(select.asTable(N_T));
+                        ctx.visit(DSL.array((Select<? extends Record1<?>>) (multisetCondition
                             ? s.orderBy(DSL.field(N_T))
                             : s
-                        );
+                        )));
                         break;
                     }
 

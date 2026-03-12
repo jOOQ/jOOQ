@@ -51,6 +51,7 @@ import static org.jooq.impl.Keywords.K_NESTED;
 import static org.jooq.impl.Keywords.K_PATH;
 import static org.jooq.impl.Keywords.K_REPLACE;
 import static org.jooq.impl.Keywords.K_ROW;
+import static org.jooq.impl.Keywords.K_STRUCT;
 import static org.jooq.impl.Names.N_ARRAY_AGG;
 import static org.jooq.impl.Names.N_CAST;
 import static org.jooq.impl.Names.N_FIELD;
@@ -185,6 +186,7 @@ implements
                 acceptSQLite(ctx);
                 break;
 
+
             case DUCKDB:
                 acceptDuckDB(ctx);
                 break;
@@ -203,7 +205,7 @@ implements
         ctx.visit(N_TO_JSON).sql('(');
         ctx.visit(N_MAP_FROM_ENTRIES).sql('(');
         ctx.visit(N_ARRAY_AGG).sql('(');
-        ctx.visit(K_ROW).sql('(').visit(entry.key()).sql(", ").visit(jsonCast(ctx, entry.value())).sql(')');
+        ctx.visit(AbstractRow.keyword(ctx)).sql('(').visit(entry.key()).sql(", ").visit(jsonCast(ctx, entry.value())).sql(')');
         ctx.sql(')');
 
         if (onNull == ABSENT_ON_NULL)

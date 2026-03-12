@@ -204,6 +204,7 @@ final class SQLDataTypes {
 
 
 
+
     static class ClickHouseDataType {
 
         private static final SQLDialect FAMILY = SQLDialect.CLICKHOUSE;

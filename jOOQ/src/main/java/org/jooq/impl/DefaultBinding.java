@@ -4788,6 +4788,26 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         @Override
         final int sqltype(Statement statement, Configuration configuration) {
             return Types.STRUCT;
@@ -5126,18 +5146,30 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @SuppressWarnings("unchecked")
         static final <R extends Record> Result<R> readMultiset(BindingGetResultSetContext<?> ctx, DataType<Result<R>> type) throws SQLException {
+            AbstractRow<R> row = (AbstractRow<R>) type.getRow();
+
             return readMultiset(ctx,
-                (AbstractRow<R>) type.getRow(),
+                row,
                 (Class<R>) type.getRecordType(),
                 identity(),
                 identity(),
-                o -> o instanceof List<?> l
-                   ? l
-                   : o instanceof Object[] a
-                   ? asList(a)
-                   : o instanceof Array a
-                   ? asList((Object[]) a.getArray())
-                   : null
+                o -> {
+                    switch (ctx.family()) {
+
+
+
+
+
+                        default:
+                            return o instanceof List<?> l
+                               ? l
+                               : o instanceof Object[] a
+                               ? asList(a)
+                               : o instanceof Array a
+                               ? asList((Object[]) a.getArray())
+                               : null;
+                    }
+                }
             );
         }
 

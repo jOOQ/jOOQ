@@ -265,6 +265,18 @@ implements
                 break;
             }
 
+
+
+
+
+
+
+
+
+
+
+
+
             case DUCKDB:
             case TRINO: {
                 if (ctx.family() == DUCKDB && onNull != JSONOnNull.ABSENT_ON_NULL) {

@@ -41,6 +41,7 @@ package org.jooq.impl;
 // ...
 import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
+// ...
 import static org.jooq.SQLDialect.DUCKDB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
@@ -52,6 +53,7 @@ import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.Keywords.K_OVER;
 import static org.jooq.impl.SelectQueryImpl.NO_SUPPORT_WINDOW_CLAUSE;
+import static org.jooq.impl.SelectQueryImpl.NO_SUPPORT_WINDOW_REFINEMENT;
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_WINDOW_DEFINITIONS;
 
 import java.util.Collection;
@@ -78,8 +80,6 @@ import org.jooq.WindowRowsAndStep;
 import org.jooq.WindowRowsStep;
 import org.jooq.WindowSpecification;
 import org.jooq.impl.Tools.ExtendedDataKey;
-
-import org.jetbrains.annotations.NotNull;
 
 
 /**
@@ -131,8 +131,11 @@ implements
 
         // [#3727] Referenced WindowDefinitions that contain a frame clause
         // shouldn't be referenced from within parentheses (in MySQL and PostgreSQL)
+        // [#19742] Some dialects support unparenthesised window references, but not reference refinements
         if (windowDefinition != null)
-            if (SUPPORT_NO_PARENS_WINDOW_REFERENCE.contains(ctx.dialect()) && !NO_SUPPORT_WINDOW_CLAUSE.contains(ctx.dialect()))
+            if ((windowDefinition.$windowSpecification() == null || !NO_SUPPORT_WINDOW_REFINEMENT.contains(ctx.dialect()))
+                    && SUPPORT_NO_PARENS_WINDOW_REFERENCE.contains(ctx.dialect())
+                    && !NO_SUPPORT_WINDOW_CLAUSE.contains(ctx.dialect()))
                 return windowDefinition;
             else
                 return CustomQueryPart.of(c -> c.sql('(').visit(windowDefinition).sql(')'));

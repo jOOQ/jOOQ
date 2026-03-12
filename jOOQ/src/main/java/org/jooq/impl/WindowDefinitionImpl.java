@@ -40,6 +40,7 @@ package org.jooq.impl;
 // ...
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.SelectQueryImpl.NO_SUPPORT_WINDOW_CLAUSE;
+import static org.jooq.impl.SelectQueryImpl.NO_SUPPORT_WINDOW_REFINEMENT;
 import static org.jooq.impl.Tools.apply;
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_WINDOW_DEFINITIONS;
 
@@ -112,7 +113,7 @@ final class WindowDefinitionImpl extends AbstractQueryPart implements WindowDefi
 
         // Outside the WINDOW clause, only few dialects actually support
         // referencing WINDOW definitions
-        else if (!NO_SUPPORT_WINDOW_CLAUSE.contains(ctx.dialect())) {
+        else if (!NO_SUPPORT_WINDOW_CLAUSE.contains(ctx.dialect()) && !NO_SUPPORT_WINDOW_REFINEMENT.contains(ctx.dialect())) {
             ctx.visit(name);
         }
 

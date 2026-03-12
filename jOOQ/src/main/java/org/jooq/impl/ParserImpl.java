@@ -9934,7 +9934,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                     return field;
                 else if (parseFunctionNameIf("JSON_ARRAY_LENGTH", "JSON_LENGTH", "JSONARRAYLENGTH"))
                     return parseFunctionArgs1(DSL::jsonArrayLength);
-                else if (parseFunctionNameIf("JSON_KEYS", "JSONExtractKeys"))
+                else if (parseFunctionNameIf("JSON_KEYS", "JSON_OBJECT_KEYS", "JSONExtractKeys"))
                     return parseFunctionArgs1(DSL::jsonKeys);
                 else if (parseFunctionNameIf("JSON_KEY_EXISTS"))
                     return parseFunctionArgs2(DSL::jsonKeyExists);

@@ -4750,7 +4750,9 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     s -> {
                         switch (ctx.family()) {
 
-                                return readDatabricksRecord(ctx, row, s);
+
+
+
 
                             default:
                                 return s instanceof ResultSet rs

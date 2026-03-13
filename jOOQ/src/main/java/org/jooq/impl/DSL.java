@@ -33711,7 +33711,43 @@ public class DSL {
      */
     @NotNull
     @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    public static ArrayAggOrderByStep<Result<Record>> multisetAggDistinct(Collection<? extends Field<?>> fields) {
+    public static ArrayAggOrderByStep<Result<Record>> multisetAggDistinct(Collection<? extends SelectField<?>> fields) {
+        return new MultisetAgg<>(true, row(fields));
+    }
+
+    /**
+     * Get the <code>MULTISET_AGG(DISTINCT)</code> aggregate function to nest group
+     * contents.
+     * <p>
+     * This synthetic, non-standard aggregate function works in a similar way as
+     * the standard SQL <code>ARRAY_AGG</code> aggregate function. It is
+     * emulated using mappings to any of:
+     * <p>
+     * <ul>
+     * <li>{@link NestedCollectionEmulation#JSON}: A MULTISET of ROW types works
+     * just like a {@link #jsonArrayAggDistinct(Field)} of
+     * {@link #jsonObject(Field...)}, or an application of
+     * {@link SelectForStep#forJSON()}. jOOQ produces a JSON encoding that is
+     * compatible with {@link DSLContext#fetchFromJSON(String)}. Future jOOQ
+     * versions will make this format configurable according to
+     * {@link JSONFormat.RecordFormat}.</li>
+     * <li>{@link NestedCollectionEmulation#JSONB}: Just like <code>JSON</code>,
+     * but we're using {@link #jsonbArrayAggDistinct(Field)} and
+     * {@link #jsonbObject(Field...)}, or {@link SelectForStep#forJSONB()}.</li>
+     * <li>{@link NestedCollectionEmulation#DEFAULT}: By default, jOOQ chooses
+     * the optimal encoding among the above depending on your dialect,
+     * transparently.</li>
+     * </ul>
+     * <p>
+     * Note that unlike <code>MULTISET_AGG</code>, this depends on whether the
+     * underlying emulation supports the <code>DISTINCT</code> clause.
+     * <p>
+     * The emulation to be chosen is governed by
+     * {@link Settings#getEmulateMultiset()}.
+     */
+    @NotNull
+    @Support({ H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
+    public static ArrayAggOrderByStep<Result<Record>> multisetAggDistinct(SelectField<?>... fields) {
         return new MultisetAgg<>(true, row(fields));
     }
 

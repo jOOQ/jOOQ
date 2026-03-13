@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import org.jooq.Context;
+import org.jooq.QueryPart;
 import org.jooq.impl.QOM.UTransient;
 
 /**
@@ -46,6 +47,14 @@ import org.jooq.impl.QOM.UTransient;
 final class WrappedList extends AbstractQueryPart implements UTransient {
 
     private final QueryPartList<?> wrapped;
+
+    WrappedList(QueryPart... wrapped) {
+        this(new QueryPartList<>(wrapped));
+    }
+
+    WrappedList(Iterable<? extends QueryPart> wrapped) {
+        this(new QueryPartList<>(wrapped));
+    }
 
     WrappedList(QueryPartList<?> wrapped) {
         this.wrapped = wrapped;

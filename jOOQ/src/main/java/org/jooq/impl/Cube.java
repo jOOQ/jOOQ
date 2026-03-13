@@ -41,10 +41,12 @@ import static org.jooq.impl.Keywords.K_CUBE;
 import static org.jooq.impl.Names.N_CUBE;
 import static org.jooq.impl.SQLDataType.OTHER;
 import static org.jooq.impl.Tools.EMPTY_FIELD_OR_ROW;
+import static org.jooq.impl.Tools.map;
 
 import org.jooq.Context;
 import org.jooq.FieldOrRow;
 import org.jooq.Function1;
+import org.jooq.Row;
 import org.jooq.impl.QOM.UnmodifiableList;
 
 /**
@@ -62,7 +64,7 @@ final class Cube extends AbstractField<Object> implements QOM.Cube {
 
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.visit(K_CUBE).sql(" (").visit(arguments).sql(')');
+        ctx.visit(K_CUBE).sql(" (").visit(GroupingSets.wrappedList(arguments)).sql(')');
     }
 
     // -------------------------------------------------------------------------

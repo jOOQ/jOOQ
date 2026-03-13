@@ -32294,7 +32294,7 @@ public class DSL {
      * The JSON array aggregate function.
      */
     @NotNull
-    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, SQLITE, TRINO })
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     public static JSONArrayAggOrderByStep<JSON> jsonArrayAggDistinct(Field<?> value) {
         return new JSONArrayAgg<>(JSON, value, true);
     }

@@ -38,10 +38,13 @@
 package org.jooq.impl;
 
 // ...
+// ...
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
+import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.impl.DSL.array;
 import static org.jooq.impl.DSL.arrayAgg;
 import static org.jooq.impl.DSL.arrayAggDistinct;
@@ -94,7 +97,9 @@ import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Function1;
+import org.jooq.JSON;
 import org.jooq.JSONArrayAggOrderByStep;
+import org.jooq.JSONB;
 import org.jooq.OrderField;
 // ...
 import org.jooq.QueryPart;
@@ -121,6 +126,7 @@ implements
 {
 
     static final Set<SQLDialect> EMULATE_WITH_GROUP_CONCAT = SQLDialect.supportedBy(MARIADB, MYSQL);
+    static final Set<SQLDialect> EMULATE_WITH_JSONB        = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
 
 
 
@@ -231,23 +237,29 @@ implements
 
             case POSTGRES:
             case YUGABYTEDB:
-                ctx.visit(getDataType() == JSON ? N_JSON_AGG : N_JSONB_AGG).sql('(');
-                acceptDistinct(ctx);
-                ctx.visit(arguments.get(0));
-                acceptOrderBy(ctx);
-                ctx.sql(')');
+                if (distinct && getDataType().getFromType() == JSON.class && EMULATE_WITH_JSONB.contains(ctx.dialect())) {
+                    ctx.visit(ofo(new JSONArrayAgg<>(JSONB, $arg1().getDataType().getFromType() == JSON.class ? $arg1().cast(JSONB) : $arg1(), true)).cast(JSON));
+                }
+                else {
+                    ctx.visit(getDataType().getFromType() == JSON.class ? N_JSON_AGG : N_JSONB_AGG).sql('(');
+                    acceptDistinct(ctx);
+                    ctx.visit($arg1());
+                    acceptOrderBy(ctx);
+                    ctx.sql(')');
 
-                if (onNull == ABSENT_ON_NULL)
-                    acceptFilterClause(ctx, f(arguments.get(0).isNotNull()));
-                else
-                    acceptFilterClause(ctx);
+                    if (onNull == ABSENT_ON_NULL)
+                        acceptFilterClause(ctx, f($arg1().isNotNull()));
+                    else
+                        acceptFilterClause(ctx);
 
-                acceptOverClause(ctx);
+                    acceptOverClause(ctx);
+                }
+
                 break;
 
 
             case DUCKDB: {
-                Field<?> agg = arrayAggEmulation(distinct, arguments.get(0), withinGroupOrderBy);
+                Field<?> agg = arrayAggEmulation(distinct, $arg1(), withinGroupOrderBy);
 
                 ctx.visit(N_TO_JSON).sql('(').visit(agg).sql(')');
 
@@ -255,10 +267,10 @@ implements
             }
 
             case CLICKHOUSE: {
-                Field<?> agg = arrayAggEmulation(distinct, arguments.get(0), withinGroupOrderBy);
+                Field<?> agg = arrayAggEmulation(distinct, $arg1(), withinGroupOrderBy);
 
                 ctx.visit(N_toJSONString).sql('(').visit(
-                    arguments.get(0).getDataType().isJSON()
+                    $arg1().getDataType().isJSON()
                        ? agg.cast(JSON.array())
                        : agg
                 ).sql(')');
@@ -269,12 +281,12 @@ implements
             case SQLITE: {
                 ctx.visit(N_JSON_GROUP_ARRAY).sql('(');
                 acceptDistinct(ctx);
-                ctx.visit(arguments.get(0));
+                ctx.visit($arg1());
                 acceptOrderBy(ctx);
                 ctx.sql(')');
 
                 if (onNull == ABSENT_ON_NULL)
-                    acceptFilterClause(ctx, f(arguments.get(0).isNotNull()));
+                    acceptFilterClause(ctx, f($arg1().isNotNull()));
                 else
                     acceptFilterClause(ctx);
 
@@ -292,12 +304,12 @@ implements
 
                 ctx.visit(N_ARRAY_AGG).sql('(');
                 acceptDistinct(ctx);
-                ctx.visit(jsonCast(ctx, arguments.get(0)));
+                ctx.visit(jsonCast(ctx, $arg1()));
                 acceptOrderBy(ctx);
                 ctx.sql(')');
 
                 if (onNull == ABSENT_ON_NULL)
-                    acceptFilterClause(ctx, f(arguments.get(0).isNotNull()));
+                    acceptFilterClause(ctx, f($arg1().isNotNull()));
                 else
                     acceptFilterClause(ctx);
 
@@ -319,7 +331,7 @@ implements
 
     @SuppressWarnings("unchecked")
     private final Field<?> groupConcatEmulation(Context<?> ctx) {
-        Field<?> arg1 = arguments.get(0);
+        Field<?> arg1 = $arg1();
 
         // [#19643] Treat all non-JSON data types as string types
         if (!arg1.getDataType().isBoolean()

@@ -46,6 +46,7 @@ import static org.jooq.impl.Keywords.K_WITH_ROLLUP;
 import static org.jooq.impl.Names.N_ROLLUP;
 import static org.jooq.impl.SQLDataType.OTHER;
 import static org.jooq.impl.Tools.EMPTY_FIELD_OR_ROW;
+import static org.jooq.impl.Tools.map;
 
 import java.util.Set;
 
@@ -53,6 +54,7 @@ import org.jooq.Context;
 import org.jooq.FieldOrRow;
 import org.jooq.Function1;
 import org.jooq.GroupField;
+import org.jooq.Row;
 import org.jooq.SQLDialect;
 import org.jooq.impl.QOM.UnmodifiableList;
 
@@ -79,7 +81,7 @@ final class Rollup extends AbstractField<Object> implements QOM.Rollup {
                .visit(K_WITH_ROLLUP);
         }
         else
-            ctx.visit(K_ROLLUP).sql(" (").visit(arguments).sql(')');
+            ctx.visit(K_ROLLUP).sql(" (").visit(GroupingSets.wrappedList(arguments)).sql(')');
     }
 
     // -------------------------------------------------------------------------

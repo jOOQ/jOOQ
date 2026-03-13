@@ -41,6 +41,7 @@ import static org.jooq.impl.Keywords.K_GROUPING_SETS;
 import static org.jooq.impl.Names.N_GROUPING_SETS;
 import static org.jooq.impl.SQLDataType.OTHER;
 import static org.jooq.impl.Tools.EMPTY_COLLECTION;
+import static org.jooq.impl.Tools.map;
 
 import java.util.Collection;
 
@@ -49,6 +50,7 @@ import org.jooq.Field;
 import org.jooq.FieldOrRow;
 import org.jooq.Function1;
 import org.jooq.GroupField;
+import org.jooq.Row;
 import org.jooq.impl.QOM.UnmodifiableList;
 
 /**
@@ -73,9 +75,13 @@ final class GroupingSets extends AbstractField<Object> implements QOM.GroupingSe
         QueryPartList<WrappedList> arg = new QueryPartList<>();
 
         for (Collection<? extends Field<?>> fieldsSet : fieldSets)
-            arg.add(new WrappedList(new QueryPartList<>(fieldsSet)));
+            arg.add(new WrappedList(wrappedList(fieldsSet)));
 
         ctx.visit(K_GROUPING_SETS).sql(" (").visit(arg).sql(')');
+    }
+
+    static final QueryPartListView<?> wrappedList(Collection<? extends FieldOrRow> fields) {
+        return QueryPartListView.wrap(map(fields, a -> a instanceof Row r ? new WrappedList(r.fields()) : a));
     }
 
     // -------------------------------------------------------------------------

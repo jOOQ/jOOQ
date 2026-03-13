@@ -6344,6 +6344,16 @@ final class Tools {
             return;
         }
 
+        // [#19757] Or, it's array<varchar>, but it should be array<varchar(36)>
+        else if (type.getFromType() == UUID[].class && (
+            NO_SUPPORT_CAST_TYPE_IN_DDL.contains(ctx.dialect())
+            || typeName.contains("varchar")
+            || typeName.contains("string")
+        )) {
+            toSQLDDLTypeDeclaration(ctx, VARCHAR(36).array());
+            return;
+        }
+
         if (ctx.family() == CLICKHOUSE) {
             ctx.sql(type.getDDLTypeName(ctx.configuration()));
             return;

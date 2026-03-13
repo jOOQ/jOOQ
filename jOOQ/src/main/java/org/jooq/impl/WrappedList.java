@@ -52,10 +52,6 @@ final class WrappedList extends AbstractQueryPart implements UTransient {
         this(new QueryPartList<>(wrapped));
     }
 
-    WrappedList(Iterable<? extends QueryPart> wrapped) {
-        this(new QueryPartList<>(wrapped));
-    }
-
     WrappedList(QueryPartList<?> wrapped) {
         this.wrapped = wrapped;
     }

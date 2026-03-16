@@ -98,7 +98,6 @@ import org.jooq.Select;
 // ...
 import org.jooq.conf.NestedCollectionEmulation;
 import org.jooq.impl.QOM.UNoQueryPart;
-import org.jooq.impl.SQLDataTypes.DatabricksDataType;
 
 
 

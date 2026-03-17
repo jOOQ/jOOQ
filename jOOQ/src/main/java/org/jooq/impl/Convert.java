@@ -1220,11 +1220,11 @@ final class Convert {
 
                     // Try "local" ISO date formats first
                     try {
-                        return (U) java.sql.Time.valueOf((String) from).toLocalTime().atOffset(OffsetTime.now().getOffset());
+                        return (U) LocalTime.parse(patchIso8601Time((String) from)).atOffset(OffsetTime.now().getOffset());
                     }
-                    catch (IllegalArgumentException e1) {
+                    catch (DateTimeParseException e1) {
                         try {
-                            return (U) OffsetTime.parse((String) from);
+                            return (U) OffsetTime.parse(patchIso8601Time((String) from));
                         }
                         catch (DateTimeParseException e2) {
                             return null;
@@ -1825,9 +1825,18 @@ final class Convert {
             int c2 = s.indexOf(':', c1 + 1);
 
             if (c2 == -1)
-                return padLead2(s, c1) + ':' + padMid2(s, c1) + ":00";
+                s = padLead2(s, c1) + ':' + padMid2(s, c1) + ":00";
             else if (l < 8 || c2 != l - 3 || c1 != l - 6)
-                return padLead2(s, c1) + ':' + padMid2(s, c1, c2) + ':' + padMid2(s, c2);
+                s = padLead2(s, c1) + ':' + padMid2(s, c1, c2) + ':' + padMid2(s, c2);
+
+            // [#19768] PostgreSQL returns timezones as +01 instead of +01:00, which OffsetTime cannot parse
+            int c3 = s.indexOf('+');
+            int c4 = s.indexOf(':', c3 + 1);
+
+            if (c4 == -1)
+                s = s + ":00";
+
+            return s;
         }
 
         // [#12158] Support Db2's 15.30.45 format

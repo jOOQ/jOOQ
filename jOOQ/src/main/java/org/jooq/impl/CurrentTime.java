@@ -113,9 +113,25 @@ final class CurrentTime<T> extends AbstractField<T> implements QOM.CurrentTime<T
                 Cast.renderCast(ctx, c -> c.visit(N_CURRENT_TIME), c -> c.visit(K_TIME));
                 break;
 
+
+
+            case POSTGRES:
+            case SQLITE:
+            case YUGABYTEDB:
+                if (getDataType().isTimeWithTimeZone())
+                    acceptDefault(ctx);
+                else
+                    Cast.renderCast(ctx, this::acceptDefault, c -> c.sql(getDataType().getCastTypeName(c.configuration())));
+
+                break;
+
             default:
-                ctx.visit(K_CURRENT).sql('_').visit(K_TIME);
+                acceptDefault(ctx);
                 break;
         }
+    }
+
+    private final void acceptDefault(Context<?> ctx) {
+        ctx.visit(K_CURRENT).sql('_').visit(K_TIME);
     }
 }

@@ -134,6 +134,8 @@ public class Settings
     protected Boolean bindOffsetDateTimeType = false;
     @XmlElement(defaultValue = "false")
     protected Boolean bindOffsetTimeType = false;
+    @XmlElement(defaultValue = "true")
+    protected Boolean bindLocalTimeType = true;
     @XmlElement(defaultValue = "false")
     protected Boolean fetchTrimmedCharValues = false;
     @XmlElement(defaultValue = "true")
@@ -1680,6 +1682,42 @@ public class Settings
      */
     public void setBindOffsetTimeType(Boolean value) {
         this.bindOffsetTimeType = value;
+    }
+
+    /**
+     * Whether the <code>java.time</code> (JSR 310) type {@link java.time.LocalTime} should be bound natively to JDBC.
+     * <p>
+     * Historically, jOOQ encoded the <code>java.time</code> types as <code>java.sql</code> types to offer better compatibility with older JDBC drivers, taking into account that {@link java.sql.Time} truncates milliseconds. By now, most drivers should support the <code>java.time</code> types. Using them may produce better performance both on the server and on the client side.
+     * <p>
+     * This flag allows for reverting to pre-jOOQ 3.21 behaviour, where the default is to bind these types natively.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/17070">https://github.com/jOOQ/jOOQ/issues/17070</a>.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isBindLocalTimeType() {
+        return bindLocalTimeType;
+    }
+
+    /**
+     * Whether the <code>java.time</code> (JSR 310) type {@link java.time.LocalTime} should be bound natively to JDBC.
+     * <p>
+     * Historically, jOOQ encoded the <code>java.time</code> types as <code>java.sql</code> types to offer better compatibility with older JDBC drivers, taking into account that {@link java.sql.Time} truncates milliseconds. By now, most drivers should support the <code>java.time</code> types. Using them may produce better performance both on the server and on the client side.
+     * <p>
+     * This flag allows for reverting to pre-jOOQ 3.21 behaviour, where the default is to bind these types natively.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/17070">https://github.com/jOOQ/jOOQ/issues/17070</a>.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setBindLocalTimeType(Boolean value) {
+        this.bindLocalTimeType = value;
     }
 
     /**
@@ -7926,6 +7964,21 @@ public class Settings
     }
 
     /**
+     * Whether the <code>java.time</code> (JSR 310) type {@link java.time.LocalTime} should be bound natively to JDBC.
+     * <p>
+     * Historically, jOOQ encoded the <code>java.time</code> types as <code>java.sql</code> types to offer better compatibility with older JDBC drivers, taking into account that {@link java.sql.Time} truncates milliseconds. By now, most drivers should support the <code>java.time</code> types. Using them may produce better performance both on the server and on the client side.
+     * <p>
+     * This flag allows for reverting to pre-jOOQ 3.21 behaviour, where the default is to bind these types natively.
+     * <p>
+     * For details, see <a href="https://github.com/jOOQ/jOOQ/issues/17070">https://github.com/jOOQ/jOOQ/issues/17070</a>.
+     * 
+     */
+    public Settings withBindLocalTimeType(Boolean value) {
+        setBindLocalTimeType(value);
+        return this;
+    }
+
+    /**
      * Whether right trim fetched <code>CHAR</code> typed strings from JDBC {@link java.sql.ResultSet}.
      * <p>
      * By default, jOOQ's internal {@link String} data type {@link org.jooq.Binding} fetched strings
@@ -10540,6 +10593,7 @@ public class Settings
         builder.append("namePathSeparator", namePathSeparator);
         builder.append("bindOffsetDateTimeType", bindOffsetDateTimeType);
         builder.append("bindOffsetTimeType", bindOffsetTimeType);
+        builder.append("bindLocalTimeType", bindLocalTimeType);
         builder.append("fetchTrimmedCharValues", fetchTrimmedCharValues);
         builder.append("fetchTriggerValuesAfterSQLServerOutput", fetchTriggerValuesAfterSQLServerOutput);
         builder.append("fetchTriggerValuesAfterReturning", fetchTriggerValuesAfterReturning);
@@ -11142,6 +11196,15 @@ public class Settings
             }
         } else {
             if (!bindOffsetTimeType.equals(other.bindOffsetTimeType)) {
+                return false;
+            }
+        }
+        if (bindLocalTimeType == null) {
+            if (other.bindLocalTimeType!= null) {
+                return false;
+            }
+        } else {
+            if (!bindLocalTimeType.equals(other.bindLocalTimeType)) {
                 return false;
             }
         }
@@ -13128,6 +13191,7 @@ public class Settings
         result = ((prime*result)+((namePathSeparator == null)? 0 :namePathSeparator.hashCode()));
         result = ((prime*result)+((bindOffsetDateTimeType == null)? 0 :bindOffsetDateTimeType.hashCode()));
         result = ((prime*result)+((bindOffsetTimeType == null)? 0 :bindOffsetTimeType.hashCode()));
+        result = ((prime*result)+((bindLocalTimeType == null)? 0 :bindLocalTimeType.hashCode()));
         result = ((prime*result)+((fetchTrimmedCharValues == null)? 0 :fetchTrimmedCharValues.hashCode()));
         result = ((prime*result)+((fetchTriggerValuesAfterSQLServerOutput == null)? 0 :fetchTriggerValuesAfterSQLServerOutput.hashCode()));
         result = ((prime*result)+((fetchTriggerValuesAfterReturning == null)? 0 :fetchTriggerValuesAfterReturning.hashCode()));

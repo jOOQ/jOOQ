@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.Keywords.K_DATE;
 import static org.jooq.impl.Keywords.K_TIME;
 import static org.jooq.impl.Keywords.K_TIMESTAMP;
@@ -94,8 +95,7 @@ final class DateOrTime<T> extends AbstractField<T> implements UNotYetImplemented
                 if (getDataType().isDate())
                     ctx.visit(K_DATE).sql('(').visit(field).sql(')');
                 else if (getDataType().isTime())
-                    // [#8733] No fractional seconds for time literals
-                    ctx.visit(K_TIME).sql('(').visit(field).sql(')');
+                    ctx.visit(K_TIME).sql('(').visit(field).sql(", ").visit(inline("subsec")).sql(')');
                 else
                     ctx.visit(N_STRFTIME).sql("('%Y-%m-%d %H:%M:%f', ").visit(field).sql(')');
 

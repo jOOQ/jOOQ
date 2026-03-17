@@ -465,15 +465,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 c -> new DefaultTimestampBinding<>(TIMESTAMP, c)
             );
         else if (type == LocalTime.class)
-            return (Binding<T, U>) new DelegatingBinding<>(
-                (DataType<LocalTime>) dataType,
-                ContextConverter.ofNullable(Time.class, LocalTime.class,
-                    (BiFunction<Time, ConverterContext, LocalTime> & Serializable) (t, x) -> t.toLocalTime(),
-                    (BiFunction<LocalTime, ConverterContext, Time> & Serializable) (t, x) -> Time.valueOf(t)
-                ),
-                (ContextConverter<LocalTime, U>) converter,
-                c -> new DefaultTimeBinding<>(TIME, c)
-            );
+            return new DefaultLocalTimeBinding(dataType, converter);
         else if (type == Long.class || type == long.class)
             return new DefaultLongBinding(dataType, converter);
         else if (type == OffsetDateTime.class)
@@ -680,7 +672,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             return Date.valueOf(date.split(" ")[0]).getTime();
 
         else if (type == Time.class)
-            return Time.valueOf(date).getTime();
+            return Convert.convert(date, type).getTime();
 
         throw new SQLException("Could not parse date " + date);
     }
@@ -4877,22 +4869,15 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 return converter.from((T) Short.valueOf(string), ctx.converterContext());
             else if (type == String.class)
                 return converter.from((T) string, ctx.converterContext());
-            else if (type == Time.class)
-                return converter.from((T) Time.valueOf(string), ctx.converterContext());
-            else if (type == Timestamp.class)
-                return converter.from((T) Timestamp.valueOf(patchIso8601Timestamp(string, false)), ctx.converterContext());
-            else if (type == LocalTime.class)
-                return converter.from((T) LocalTime.parse(string), ctx.converterContext());
-            else if (type == LocalDate.class)
-                return converter.from((T) LocalDate.parse(string), ctx.converterContext());
-            else if (type == LocalDateTime.class)
-                return converter.from((T) LocalDateTime.parse(patchIso8601Timestamp(string, true)), ctx.converterContext());
-            else if (type == OffsetTime.class)
-                return converter.from((T) OffsetDateTimeParser.offsetTime(string), ctx.converterContext());
-            else if (type == OffsetDateTime.class)
-                return converter.from((T) OffsetDateTimeParser.offsetDateTime(string), ctx.converterContext());
-            else if (type == Instant.class)
-                return converter.from((T) OffsetDateTimeParser.offsetDateTime(string).toInstant(), ctx.converterContext());
+            else if (type == Time.class
+                  || type == Timestamp.class
+                  || type == LocalTime.class
+                  || type == LocalDate.class
+                  || type == LocalDateTime.class
+                  || type == OffsetTime.class
+                  || type == OffsetDateTime.class
+                  || type == Instant.class)
+                return converter.from((T) new AutoConverter<>(String.class, type).from(string, ctx.converterContext()), ctx.converterContext());
             else if (type == JSON.class)
                 return converter.from((T) JSON.json(string), ctx.converterContext());
             else if (type == JSONB.class)
@@ -5589,6 +5574,183 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
             else
                 return Types.NVARCHAR;
+        }
+    }
+
+    static final class DefaultLocalTimeBinding<U> extends InternalBinding<LocalTime, U> {
+
+        final DelegatingBinding<LocalTime, Time, U> delegate;
+
+        DefaultLocalTimeBinding(DataType<LocalTime> dataType, Converter<LocalTime, U> converter) {
+            super(dataType, converter);
+
+            delegate = new DelegatingBinding<>(
+                (DataType<LocalTime>) dataType,
+                ContextConverter.ofNullable(Time.class, LocalTime.class,
+                    (BiFunction<Time, ConverterContext, LocalTime> & Serializable) (t, x) -> t.toLocalTime(),
+                    (BiFunction<LocalTime, ConverterContext, Time> & Serializable) (t, x) -> Time.valueOf(t)
+                ),
+                (ContextConverter<LocalTime, U>) converter,
+                c -> new DefaultTimeBinding<>(TIME, c)
+            );
+        }
+
+        @Override
+        final void setNull0(BindingSetStatementContext<U> ctx) throws SQLException {
+            delegate.setNull0(ctx);
+        }
+
+        private final boolean delegate(Scope ctx) {
+            return FALSE.equals(ctx.configuration().settings().isBindLocalTimeType());
+        }
+
+        @Override
+        final void sqlInline0(BindingSQLContext<U> ctx, LocalTime value) throws SQLException {
+            if (delegate(ctx)) {
+                delegate.sqlInline0(ctx, value);
+                return;
+            }
+
+            switch (ctx.family()) {
+                // The SQLite JDBC driver does not implement the escape syntax
+                // [#1253] Sybase does not implement time literals
+
+
+                case SQLITE:
+                    ctx.render().sql('\'').sql(escape(value, ctx.render())).sql('\'');
+                    break;
+
+
+
+
+
+
+
+
+
+
+
+                // [#1253] Derby doesn't support the standard literal
+                case DERBY:
+                    ctx.render().visit(K_TIME).sql("('").sql(escape(value, ctx.render())).sql("')");
+                    break;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                default:
+
+
+
+
+
+
+
+
+
+                    // [#16498] Special cases where the standard datetime literal prefix needs to be omitted
+                    //          See: https://bugs.mysql.com/bug.php?id=114450
+                    if (ctx.data(DATA_OMIT_DATETIME_LITERAL_PREFIX) != null)
+                        ctx.render().sql('\'').sql(escape(value, ctx.render())).sql('\'');
+
+                    // Most dialects implement SQL standard time literals
+                    else
+                        ctx.render().visit(K_TIME).sql(" '").sql(escape(value, ctx.render())).sql('\'');
+
+                    break;
+            }
+        }
+
+        @Override
+        final void set0(BindingSetStatementContext<U> ctx, LocalTime value) throws SQLException {
+            if (delegate(ctx)) {
+                delegate.set0(ctx, value);
+                return;
+            }
+
+            switch (ctx.family()) {
+
+
+
+
+
+
+                case DUCKDB:
+                case SQLITE:
+                    ctx.statement().setString(ctx.index(), value.toString());
+                    break;
+
+                default:
+                    ctx.statement().setObject(ctx.index(), value);
+                    break;
+            }
+        }
+
+        @Override
+        final void set0(BindingSetSQLOutputContext<U> ctx, LocalTime value) throws SQLException {
+            if (delegate(ctx))
+                delegate.set0(ctx, value);
+            else
+                ctx.output().writeObject(value, JDBCType.TIME);
+        }
+
+        @Override
+        final LocalTime get0(BindingGetResultSetContext<U> ctx) throws SQLException {
+            if (delegate(ctx))
+                return delegate.get0(ctx);
+
+            switch (ctx.family()) {
+
+
+
+
+
+
+
+                // ResultSet.getTime() isn't implemented correctly, see: https://github.com/duckdb/duckdb/issues/10682
+                // SQLite's type affinity needs special care...
+                case DUCKDB:
+                case SQLITE: {
+                    String time = ctx.resultSet().getString(ctx.index());
+                    return time == null ? null : Convert.convert(time, LocalTime.class);
+                }
+
+                default:
+                    return ctx.resultSet().getObject(ctx.index(), LocalTime.class);
+            }
+        }
+
+        @Override
+        final LocalTime get0(BindingGetStatementContext<U> ctx) throws SQLException {
+            if (delegate(ctx))
+                return delegate.get0(ctx);
+            else
+                return ctx.statement().getObject(ctx.index(), LocalTime.class);
+        }
+
+        @Override
+        final LocalTime get0(BindingGetSQLInputContext<U> ctx) throws SQLException {
+            if (delegate(ctx))
+                return delegate.get0(ctx);
+            else
+                return ctx.input().readObject(LocalTime.class);
+        }
+
+        @Override
+        final int sqltype(Statement statement, Configuration configuration) {
+            return Types.TIME;
         }
     }
 

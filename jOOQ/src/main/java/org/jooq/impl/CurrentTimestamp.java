@@ -69,6 +69,7 @@ import static org.jooq.impl.Names.N_GETDATE;
 import static org.jooq.impl.Names.N_NOW;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 import org.jooq.Context;
@@ -132,6 +133,15 @@ final class CurrentTimestamp<T> extends AbstractField<T> implements QOM.CurrentT
 
 
 
+
+
+
+
+
+
+
+
+
             case CLICKHOUSE:
             case MARIADB:
             case MYSQL:
@@ -142,16 +152,32 @@ final class CurrentTimestamp<T> extends AbstractField<T> implements QOM.CurrentT
 
                 break;
 
-            default:
-                if (precision != null && !NO_SUPPORT_PRECISION.contains(ctx.dialect()))
-                    if (NO_SUPPORT_PRECISION_BIND.contains(ctx.dialect()))
-                        ctx.visit(K_CURRENT).sql('_').visit(K_TIMESTAMP).sql('(').paramType(INLINED, c -> c.visit(precision)).sql(')');
-                    else
-                        ctx.visit(K_CURRENT).sql('_').visit(K_TIMESTAMP).sql('(').visit(precision).sql(')');
+
+
+            case DUCKDB:
+            case POSTGRES:
+            case SQLITE:
+            case YUGABYTEDB:
+                if (getDataType().isTimestampWithTimeZone())
+                    acceptDefault(ctx);
                 else
-                    ctx.visit(K_CURRENT).sql('_').visit(K_TIMESTAMP);
+                    Cast.renderCast(ctx, this::acceptDefault, c -> c.sql(getDataType().getCastTypeName(c.configuration())));
 
                 break;
+
+            default:
+                acceptDefault(ctx);
+                break;
         }
+    }
+
+    private final void acceptDefault(Context<?> ctx) {
+        if (precision != null && !NO_SUPPORT_PRECISION.contains(ctx.dialect()))
+            if (NO_SUPPORT_PRECISION_BIND.contains(ctx.dialect()))
+                ctx.visit(K_CURRENT).sql('_').visit(K_TIMESTAMP).sql('(').paramType(INLINED, c -> c.visit(precision)).sql(')');
+            else
+                ctx.visit(K_CURRENT).sql('_').visit(K_TIMESTAMP).sql('(').visit(precision).sql(')');
+        else
+            ctx.visit(K_CURRENT).sql('_').visit(K_TIMESTAMP);
     }
 }

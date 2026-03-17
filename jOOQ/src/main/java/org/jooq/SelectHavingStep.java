@@ -167,7 +167,7 @@ public interface SelectHavingStep<R extends Record> extends SelectWindowStep<R> 
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    SelectHavingConditionStep<R> having(String sql);
+    SelectHavingConditionStep<R> having(@Stringly.SQL String sql);
 
     /**
      * Add a <code>HAVING</code> clause to the query.
@@ -184,7 +184,7 @@ public interface SelectHavingStep<R extends Record> extends SelectWindowStep<R> 
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    SelectHavingConditionStep<R> having(String sql, Object... bindings);
+    SelectHavingConditionStep<R> having(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * Add a <code>HAVING</code> clause to the query.
@@ -201,5 +201,5 @@ public interface SelectHavingStep<R extends Record> extends SelectWindowStep<R> 
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    SelectHavingConditionStep<R> having(String sql, QueryPart... parts);
+    SelectHavingConditionStep<R> having(@Stringly.SQL String sql, QueryPart... parts);
 }

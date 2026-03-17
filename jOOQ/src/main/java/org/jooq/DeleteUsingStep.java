@@ -150,7 +150,7 @@ public interface DeleteUsingStep<R extends Record> extends DeleteWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    DeleteWhereStep<R> using(String sql);
+    DeleteWhereStep<R> using(@Stringly.SQL String sql);
 
     /**
      * Add a <code>USING</code> clause to the query.
@@ -167,7 +167,7 @@ public interface DeleteUsingStep<R extends Record> extends DeleteWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    DeleteWhereStep<R> using(String sql, Object... bindings);
+    DeleteWhereStep<R> using(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * Add a <code>USING</code> clause to the query.
@@ -184,7 +184,7 @@ public interface DeleteUsingStep<R extends Record> extends DeleteWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    DeleteWhereStep<R> using(String sql, QueryPart... parts);
+    DeleteWhereStep<R> using(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * Add a <code>USING</code> clause to the query.

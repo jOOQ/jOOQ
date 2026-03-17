@@ -153,7 +153,7 @@ public interface UpdateFromStep<R extends Record> extends UpdateWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    UpdateWhereStep<R> from(String sql);
+    UpdateWhereStep<R> from(@Stringly.SQL String sql);
 
     /**
      * Add a <code>FROM</code> clause to the query.
@@ -170,7 +170,7 @@ public interface UpdateFromStep<R extends Record> extends UpdateWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    UpdateWhereStep<R> from(String sql, Object... bindings);
+    UpdateWhereStep<R> from(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * Add a <code>FROM</code> clause to the query.
@@ -187,7 +187,7 @@ public interface UpdateFromStep<R extends Record> extends UpdateWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    UpdateWhereStep<R> from(String sql, QueryPart... parts);
+    UpdateWhereStep<R> from(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * Add a <code>FROM</code> clause to the query.

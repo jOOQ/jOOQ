@@ -157,7 +157,7 @@ public interface SelectFromStep<R extends Record> extends SelectWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    SelectJoinStep<R> from(String sql);
+    SelectJoinStep<R> from(@Stringly.SQL String sql);
 
     /**
      * Add a <code>FROM</code> clause to the query.
@@ -174,7 +174,7 @@ public interface SelectFromStep<R extends Record> extends SelectWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    SelectJoinStep<R> from(String sql, Object... bindings);
+    SelectJoinStep<R> from(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * Add a <code>FROM</code> clause to the query.
@@ -191,7 +191,7 @@ public interface SelectFromStep<R extends Record> extends SelectWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    SelectJoinStep<R> from(String sql, QueryPart... parts);
+    SelectJoinStep<R> from(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * Add a <code>FROM</code> clause to the query.

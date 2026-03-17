@@ -165,7 +165,7 @@ public interface MergeMatchedStep<R extends Record> extends MergeNotMatchedStep<
     @PlainSQL
     @NotNull @CheckReturnValue
     @Support({ DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES })
-    MergeMatchedThenStep<R> whenMatchedAnd(String sql);
+    MergeMatchedThenStep<R> whenMatchedAnd(@Stringly.SQL String sql);
 
     /**
      * Add the <code>WHEN MATCHED AND</code> clause to the
@@ -183,7 +183,7 @@ public interface MergeMatchedStep<R extends Record> extends MergeNotMatchedStep<
     @PlainSQL
     @NotNull @CheckReturnValue
     @Support({ DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES })
-    MergeMatchedThenStep<R> whenMatchedAnd(String sql, Object... bindings);
+    MergeMatchedThenStep<R> whenMatchedAnd(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * Add the <code>WHEN MATCHED AND</code> clause to the <code>MERGE</code>
@@ -201,6 +201,6 @@ public interface MergeMatchedStep<R extends Record> extends MergeNotMatchedStep<
     @PlainSQL
     @NotNull @CheckReturnValue
     @Support({ DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES })
-    MergeMatchedThenStep<R> whenMatchedAnd(String sql, QueryPart... parts);
+    MergeMatchedThenStep<R> whenMatchedAnd(@Stringly.SQL String sql, QueryPart... parts);
 
 }

@@ -153,7 +153,7 @@ public interface SelectHavingConditionStep<R extends Record> extends SelectWindo
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    SelectHavingConditionStep<R> and(String sql);
+    SelectHavingConditionStep<R> and(@Stringly.SQL String sql);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -171,7 +171,7 @@ public interface SelectHavingConditionStep<R extends Record> extends SelectWindo
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    SelectHavingConditionStep<R> and(String sql, Object... bindings);
+    SelectHavingConditionStep<R> and(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -189,7 +189,7 @@ public interface SelectHavingConditionStep<R extends Record> extends SelectWindo
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    SelectHavingConditionStep<R> and(String sql, QueryPart... parts);
+    SelectHavingConditionStep<R> and(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * Combine the currently assembled conditions with a negated other one using
@@ -271,7 +271,7 @@ public interface SelectHavingConditionStep<R extends Record> extends SelectWindo
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    SelectHavingConditionStep<R> or(String sql);
+    SelectHavingConditionStep<R> or(@Stringly.SQL String sql);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -289,7 +289,7 @@ public interface SelectHavingConditionStep<R extends Record> extends SelectWindo
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    SelectHavingConditionStep<R> or(String sql, Object... bindings);
+    SelectHavingConditionStep<R> or(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -307,7 +307,7 @@ public interface SelectHavingConditionStep<R extends Record> extends SelectWindo
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    SelectHavingConditionStep<R> or(String sql, QueryPart... parts);
+    SelectHavingConditionStep<R> or(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * Combine the currently assembled conditions with a negated other one using

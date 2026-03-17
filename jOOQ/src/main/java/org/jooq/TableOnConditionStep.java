@@ -119,7 +119,7 @@ public interface TableOnConditionStep<R extends Record> extends Table<R> {
     @NotNull
     @Support
     @PlainSQL
-    TableOnConditionStep<R> and(String sql);
+    TableOnConditionStep<R> and(@Stringly.SQL String sql);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -137,7 +137,7 @@ public interface TableOnConditionStep<R extends Record> extends Table<R> {
     @NotNull
     @Support
     @PlainSQL
-    TableOnConditionStep<R> and(String sql, Object... bindings);
+    TableOnConditionStep<R> and(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -155,7 +155,7 @@ public interface TableOnConditionStep<R extends Record> extends Table<R> {
     @NotNull
     @Support
     @PlainSQL
-    TableOnConditionStep<R> and(String sql, QueryPart... parts);
+    TableOnConditionStep<R> and(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * Combine the currently assembled conditions with a negated other one using
@@ -237,7 +237,7 @@ public interface TableOnConditionStep<R extends Record> extends Table<R> {
     @NotNull
     @Support
     @PlainSQL
-    TableOnConditionStep<R> or(String sql);
+    TableOnConditionStep<R> or(@Stringly.SQL String sql);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -255,7 +255,7 @@ public interface TableOnConditionStep<R extends Record> extends Table<R> {
     @NotNull
     @Support
     @PlainSQL
-    TableOnConditionStep<R> or(String sql, Object... bindings);
+    TableOnConditionStep<R> or(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -273,7 +273,7 @@ public interface TableOnConditionStep<R extends Record> extends Table<R> {
     @NotNull
     @Support
     @PlainSQL
-    TableOnConditionStep<R> or(String sql, QueryPart... parts);
+    TableOnConditionStep<R> or(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * Combine the currently assembled conditions with a negated other one using

@@ -37,8 +37,7 @@
  */
 package org.jooq;
 
-import static org.jooq.SQLDialect.*;
-
+import org.jooq.Stringly; 
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -56,7 +55,7 @@ public interface ConstraintForeignKeyReferencesStep5<T1, T2, T3, T4, T5> {
      */
     @NotNull
     @Support
-    ConstraintForeignKeyOnStep references(String table);
+    ConstraintForeignKeyOnStep references(@Stringly.Name String table);
 
     /**
      * Add a <code>REFERENCES</code> clause to the <code>CONSTRAINT</code>,
@@ -64,7 +63,7 @@ public interface ConstraintForeignKeyReferencesStep5<T1, T2, T3, T4, T5> {
      */
     @NotNull
     @Support
-    ConstraintForeignKeyOnStep references(String table, String field1, String field2, String field3, String field4, String field5);
+    ConstraintForeignKeyOnStep references(@Stringly.Name String table, String field1, String field2, String field3, String field4, String field5);
 
     /**
      * Add a <code>REFERENCES</code> clause to the <code>CONSTRAINT</code>,

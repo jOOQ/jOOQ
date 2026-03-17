@@ -112,6 +112,17 @@ public final class Stringly {
     }
 
     /**
+     * The annotated string type represents an identifier, i.e. a
+     * {@link org.jooq.Name}, which will be wrapped by {@link DSL#unquotedName(String)}.
+     */
+    @Target(PARAMETER)
+    @Retention(SOURCE)
+    @Documented
+    @Inherited
+    public @interface UnquotedName {
+    }
+
+    /**
      * The annotated string type represents a keyword {@link org.jooq.Keyword},
      * which will be wrapped by {@link DSL#keyword(String)}.
      */

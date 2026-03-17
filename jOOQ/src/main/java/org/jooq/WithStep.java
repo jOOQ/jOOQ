@@ -599,7 +599,7 @@ public interface WithStep extends QueryPart {
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    SelectWhereStep<Record> selectFrom(String sql);
+    SelectWhereStep<Record> selectFrom(@Stringly.SQL String sql);
 
     /**
      * Create a new DSL select statement, projecting <code>*</code>.
@@ -625,7 +625,7 @@ public interface WithStep extends QueryPart {
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    SelectWhereStep<Record> selectFrom(String sql, Object... bindings);
+    SelectWhereStep<Record> selectFrom(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * Create a new DSL select statement, projecting <code>*</code>.
@@ -651,7 +651,7 @@ public interface WithStep extends QueryPart {
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    SelectWhereStep<Record> selectFrom(String sql, QueryPart... parts);
+    SelectWhereStep<Record> selectFrom(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * Create a new DSL select statement.

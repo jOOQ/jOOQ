@@ -67,6 +67,7 @@ import static org.jooq.SQLDialect.YUGABYTEDB;
 import java.util.Collection;
 
 import org.jetbrains.annotations.NotNull;
+import org.jooq.Stringly;
 
 /**
  * The step in the {@link Constraint} construction DSL API that allows for
@@ -99,7 +100,7 @@ public interface ConstraintTypeStep extends ConstraintFinalStep {
      */
     @NotNull
     @Support
-    ConstraintEnforcementStep primaryKey(String... fields);
+    ConstraintEnforcementStep primaryKey(@Stringly.Name String... fields);
 
     /**
      * Create a <code>PRIMARY KEY</code> constraint.
@@ -127,7 +128,7 @@ public interface ConstraintTypeStep extends ConstraintFinalStep {
      */
     @NotNull
     @Support
-    ConstraintForeignKeyReferencesStepN foreignKey(String... fields);
+    ConstraintForeignKeyReferencesStepN foreignKey(@Stringly.Name String... fields);
 
     /**
      * Add a <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
@@ -465,154 +466,154 @@ public interface ConstraintTypeStep extends ConstraintFinalStep {
      */
     @NotNull
     @Support
-    ConstraintForeignKeyReferencesStep1<?> foreignKey(String field1);
+    ConstraintForeignKeyReferencesStep1<?> foreignKey(@Stringly.Name String field1);
 
     /**
      * Add a <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
     @Support
-    ConstraintForeignKeyReferencesStep2<?, ?> foreignKey(String field1, String field2);
+    ConstraintForeignKeyReferencesStep2<?, ?> foreignKey(@Stringly.Name String field1, @Stringly.Name String field2);
 
     /**
      * Add a <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
     @Support
-    ConstraintForeignKeyReferencesStep3<?, ?, ?> foreignKey(String field1, String field2, String field3);
+    ConstraintForeignKeyReferencesStep3<?, ?, ?> foreignKey(@Stringly.Name String field1, @Stringly.Name String field2, @Stringly.Name String field3);
 
     /**
      * Add a <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
     @Support
-    ConstraintForeignKeyReferencesStep4<?, ?, ?, ?> foreignKey(String field1, String field2, String field3, String field4);
+    ConstraintForeignKeyReferencesStep4<?, ?, ?, ?> foreignKey(@Stringly.Name String field1, @Stringly.Name String field2, @Stringly.Name String field3, @Stringly.Name String field4);
 
     /**
      * Add a <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
     @Support
-    ConstraintForeignKeyReferencesStep5<?, ?, ?, ?, ?> foreignKey(String field1, String field2, String field3, String field4, String field5);
+    ConstraintForeignKeyReferencesStep5<?, ?, ?, ?, ?> foreignKey(@Stringly.Name String field1, @Stringly.Name String field2, @Stringly.Name String field3, @Stringly.Name String field4, @Stringly.Name String field5);
 
     /**
      * Add a <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
     @Support
-    ConstraintForeignKeyReferencesStep6<?, ?, ?, ?, ?, ?> foreignKey(String field1, String field2, String field3, String field4, String field5, String field6);
+    ConstraintForeignKeyReferencesStep6<?, ?, ?, ?, ?, ?> foreignKey(@Stringly.Name String field1, @Stringly.Name String field2, @Stringly.Name String field3, @Stringly.Name String field4, @Stringly.Name String field5, @Stringly.Name String field6);
 
     /**
      * Add a <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
     @Support
-    ConstraintForeignKeyReferencesStep7<?, ?, ?, ?, ?, ?, ?> foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7);
+    ConstraintForeignKeyReferencesStep7<?, ?, ?, ?, ?, ?, ?> foreignKey(@Stringly.Name String field1, @Stringly.Name String field2, @Stringly.Name String field3, @Stringly.Name String field4, @Stringly.Name String field5, @Stringly.Name String field6, @Stringly.Name String field7);
 
     /**
      * Add a <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
     @Support
-    ConstraintForeignKeyReferencesStep8<?, ?, ?, ?, ?, ?, ?, ?> foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8);
+    ConstraintForeignKeyReferencesStep8<?, ?, ?, ?, ?, ?, ?, ?> foreignKey(@Stringly.Name String field1, @Stringly.Name String field2, @Stringly.Name String field3, @Stringly.Name String field4, @Stringly.Name String field5, @Stringly.Name String field6, @Stringly.Name String field7, @Stringly.Name String field8);
 
     /**
      * Add a <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
     @Support
-    ConstraintForeignKeyReferencesStep9<?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9);
+    ConstraintForeignKeyReferencesStep9<?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(@Stringly.Name String field1, @Stringly.Name String field2, @Stringly.Name String field3, @Stringly.Name String field4, @Stringly.Name String field5, @Stringly.Name String field6, @Stringly.Name String field7, @Stringly.Name String field8, @Stringly.Name String field9);
 
     /**
      * Add a <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
     @Support
-    ConstraintForeignKeyReferencesStep10<?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10);
+    ConstraintForeignKeyReferencesStep10<?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(@Stringly.Name String field1, @Stringly.Name String field2, @Stringly.Name String field3, @Stringly.Name String field4, @Stringly.Name String field5, @Stringly.Name String field6, @Stringly.Name String field7, @Stringly.Name String field8, @Stringly.Name String field9, @Stringly.Name String field10);
 
     /**
      * Add a <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
     @Support
-    ConstraintForeignKeyReferencesStep11<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11);
+    ConstraintForeignKeyReferencesStep11<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(@Stringly.Name String field1, @Stringly.Name String field2, @Stringly.Name String field3, @Stringly.Name String field4, @Stringly.Name String field5, @Stringly.Name String field6, @Stringly.Name String field7, @Stringly.Name String field8, @Stringly.Name String field9, @Stringly.Name String field10, @Stringly.Name String field11);
 
     /**
      * Add a <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
     @Support
-    ConstraintForeignKeyReferencesStep12<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11, String field12);
+    ConstraintForeignKeyReferencesStep12<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(@Stringly.Name String field1, @Stringly.Name String field2, @Stringly.Name String field3, @Stringly.Name String field4, @Stringly.Name String field5, @Stringly.Name String field6, @Stringly.Name String field7, @Stringly.Name String field8, @Stringly.Name String field9, @Stringly.Name String field10, @Stringly.Name String field11, @Stringly.Name String field12);
 
     /**
      * Add a <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
     @Support
-    ConstraintForeignKeyReferencesStep13<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11, String field12, String field13);
+    ConstraintForeignKeyReferencesStep13<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(@Stringly.Name String field1, @Stringly.Name String field2, @Stringly.Name String field3, @Stringly.Name String field4, @Stringly.Name String field5, @Stringly.Name String field6, @Stringly.Name String field7, @Stringly.Name String field8, @Stringly.Name String field9, @Stringly.Name String field10, @Stringly.Name String field11, @Stringly.Name String field12, @Stringly.Name String field13);
 
     /**
      * Add a <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
     @Support
-    ConstraintForeignKeyReferencesStep14<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11, String field12, String field13, String field14);
+    ConstraintForeignKeyReferencesStep14<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(@Stringly.Name String field1, @Stringly.Name String field2, @Stringly.Name String field3, @Stringly.Name String field4, @Stringly.Name String field5, @Stringly.Name String field6, @Stringly.Name String field7, @Stringly.Name String field8, @Stringly.Name String field9, @Stringly.Name String field10, @Stringly.Name String field11, @Stringly.Name String field12, @Stringly.Name String field13, @Stringly.Name String field14);
 
     /**
      * Add a <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
     @Support
-    ConstraintForeignKeyReferencesStep15<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11, String field12, String field13, String field14, String field15);
+    ConstraintForeignKeyReferencesStep15<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(@Stringly.Name String field1, @Stringly.Name String field2, @Stringly.Name String field3, @Stringly.Name String field4, @Stringly.Name String field5, @Stringly.Name String field6, @Stringly.Name String field7, @Stringly.Name String field8, @Stringly.Name String field9, @Stringly.Name String field10, @Stringly.Name String field11, @Stringly.Name String field12, @Stringly.Name String field13, @Stringly.Name String field14, @Stringly.Name String field15);
 
     /**
      * Add a <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
     @Support
-    ConstraintForeignKeyReferencesStep16<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11, String field12, String field13, String field14, String field15, String field16);
+    ConstraintForeignKeyReferencesStep16<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(@Stringly.Name String field1, @Stringly.Name String field2, @Stringly.Name String field3, @Stringly.Name String field4, @Stringly.Name String field5, @Stringly.Name String field6, @Stringly.Name String field7, @Stringly.Name String field8, @Stringly.Name String field9, @Stringly.Name String field10, @Stringly.Name String field11, @Stringly.Name String field12, @Stringly.Name String field13, @Stringly.Name String field14, @Stringly.Name String field15, @Stringly.Name String field16);
 
     /**
      * Add a <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
     @Support
-    ConstraintForeignKeyReferencesStep17<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11, String field12, String field13, String field14, String field15, String field16, String field17);
+    ConstraintForeignKeyReferencesStep17<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(@Stringly.Name String field1, @Stringly.Name String field2, @Stringly.Name String field3, @Stringly.Name String field4, @Stringly.Name String field5, @Stringly.Name String field6, @Stringly.Name String field7, @Stringly.Name String field8, @Stringly.Name String field9, @Stringly.Name String field10, @Stringly.Name String field11, @Stringly.Name String field12, @Stringly.Name String field13, @Stringly.Name String field14, @Stringly.Name String field15, @Stringly.Name String field16, @Stringly.Name String field17);
 
     /**
      * Add a <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
     @Support
-    ConstraintForeignKeyReferencesStep18<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11, String field12, String field13, String field14, String field15, String field16, String field17, String field18);
+    ConstraintForeignKeyReferencesStep18<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(@Stringly.Name String field1, @Stringly.Name String field2, @Stringly.Name String field3, @Stringly.Name String field4, @Stringly.Name String field5, @Stringly.Name String field6, @Stringly.Name String field7, @Stringly.Name String field8, @Stringly.Name String field9, @Stringly.Name String field10, @Stringly.Name String field11, @Stringly.Name String field12, @Stringly.Name String field13, @Stringly.Name String field14, @Stringly.Name String field15, @Stringly.Name String field16, @Stringly.Name String field17, @Stringly.Name String field18);
 
     /**
      * Add a <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
     @Support
-    ConstraintForeignKeyReferencesStep19<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11, String field12, String field13, String field14, String field15, String field16, String field17, String field18, String field19);
+    ConstraintForeignKeyReferencesStep19<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(@Stringly.Name String field1, @Stringly.Name String field2, @Stringly.Name String field3, @Stringly.Name String field4, @Stringly.Name String field5, @Stringly.Name String field6, @Stringly.Name String field7, @Stringly.Name String field8, @Stringly.Name String field9, @Stringly.Name String field10, @Stringly.Name String field11, @Stringly.Name String field12, @Stringly.Name String field13, @Stringly.Name String field14, @Stringly.Name String field15, @Stringly.Name String field16, @Stringly.Name String field17, @Stringly.Name String field18, @Stringly.Name String field19);
 
     /**
      * Add a <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
     @Support
-    ConstraintForeignKeyReferencesStep20<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11, String field12, String field13, String field14, String field15, String field16, String field17, String field18, String field19, String field20);
+    ConstraintForeignKeyReferencesStep20<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(@Stringly.Name String field1, @Stringly.Name String field2, @Stringly.Name String field3, @Stringly.Name String field4, @Stringly.Name String field5, @Stringly.Name String field6, @Stringly.Name String field7, @Stringly.Name String field8, @Stringly.Name String field9, @Stringly.Name String field10, @Stringly.Name String field11, @Stringly.Name String field12, @Stringly.Name String field13, @Stringly.Name String field14, @Stringly.Name String field15, @Stringly.Name String field16, @Stringly.Name String field17, @Stringly.Name String field18, @Stringly.Name String field19, @Stringly.Name String field20);
 
     /**
      * Add a <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
     @Support
-    ConstraintForeignKeyReferencesStep21<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11, String field12, String field13, String field14, String field15, String field16, String field17, String field18, String field19, String field20, String field21);
+    ConstraintForeignKeyReferencesStep21<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(@Stringly.Name String field1, @Stringly.Name String field2, @Stringly.Name String field3, @Stringly.Name String field4, @Stringly.Name String field5, @Stringly.Name String field6, @Stringly.Name String field7, @Stringly.Name String field8, @Stringly.Name String field9, @Stringly.Name String field10, @Stringly.Name String field11, @Stringly.Name String field12, @Stringly.Name String field13, @Stringly.Name String field14, @Stringly.Name String field15, @Stringly.Name String field16, @Stringly.Name String field17, @Stringly.Name String field18, @Stringly.Name String field19, @Stringly.Name String field20, @Stringly.Name String field21);
 
     /**
      * Add a <code>FOREIGN KEY</code> clause to the <code>CONSTRAINT</code>.
      */
     @NotNull
     @Support
-    ConstraintForeignKeyReferencesStep22<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(String field1, String field2, String field3, String field4, String field5, String field6, String field7, String field8, String field9, String field10, String field11, String field12, String field13, String field14, String field15, String field16, String field17, String field18, String field19, String field20, String field21, String field22);
+    ConstraintForeignKeyReferencesStep22<?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> foreignKey(@Stringly.Name String field1, @Stringly.Name String field2, @Stringly.Name String field3, @Stringly.Name String field4, @Stringly.Name String field5, @Stringly.Name String field6, @Stringly.Name String field7, @Stringly.Name String field8, @Stringly.Name String field9, @Stringly.Name String field10, @Stringly.Name String field11, @Stringly.Name String field12, @Stringly.Name String field13, @Stringly.Name String field14, @Stringly.Name String field15, @Stringly.Name String field16, @Stringly.Name String field17, @Stringly.Name String field18, @Stringly.Name String field19, @Stringly.Name String field20, @Stringly.Name String field21, @Stringly.Name String field22);
 
 
 
@@ -621,7 +622,7 @@ public interface ConstraintTypeStep extends ConstraintFinalStep {
      */
     @NotNull
     @Support
-    ConstraintEnforcementStep unique(String... fields);
+    ConstraintEnforcementStep unique(@Stringly.Name String... fields);
 
     /**
      * Create a <code>UNIQUE</code> constraint.

@@ -167,7 +167,7 @@ public interface SelectWhereStep<R extends Record> extends SelectConnectByStep<R
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    SelectConditionStep<R> where(String sql);
+    SelectConditionStep<R> where(@Stringly.SQL String sql);
 
     /**
      * Add a <code>WHERE</code> clause to the query.
@@ -184,7 +184,7 @@ public interface SelectWhereStep<R extends Record> extends SelectConnectByStep<R
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    SelectConditionStep<R> where(String sql, Object... bindings);
+    SelectConditionStep<R> where(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * Add a <code>WHERE</code> clause to the query.
@@ -201,7 +201,7 @@ public interface SelectWhereStep<R extends Record> extends SelectConnectByStep<R
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    SelectConditionStep<R> where(String sql, QueryPart... parts);
+    SelectConditionStep<R> where(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * Add a <code>WHERE EXISTS</code> clause to the query.

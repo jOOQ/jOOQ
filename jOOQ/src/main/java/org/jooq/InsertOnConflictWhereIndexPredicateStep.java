@@ -153,7 +153,7 @@ public interface InsertOnConflictWhereIndexPredicateStep<R extends Record> exten
     @NotNull @CheckReturnValue
     @Support({ POSTGRES, SQLITE, YUGABYTEDB })
     @PlainSQL
-    InsertOnConflictDoUpdateStep<R> where(String sql);
+    InsertOnConflictDoUpdateStep<R> where(@Stringly.SQL String sql);
 
     /**
      * Add a <code>WHERE</code> clause to supply an index predicate to the
@@ -171,7 +171,7 @@ public interface InsertOnConflictWhereIndexPredicateStep<R extends Record> exten
     @NotNull @CheckReturnValue
     @Support({ POSTGRES, SQLITE, YUGABYTEDB })
     @PlainSQL
-    InsertOnConflictDoUpdateStep<R> where(String sql, Object... bindings);
+    InsertOnConflictDoUpdateStep<R> where(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * Add a <code>WHERE</code> clause to supply an index predicate to the
@@ -189,5 +189,5 @@ public interface InsertOnConflictWhereIndexPredicateStep<R extends Record> exten
     @NotNull @CheckReturnValue
     @Support({ POSTGRES, SQLITE, YUGABYTEDB })
     @PlainSQL
-    InsertOnConflictDoUpdateStep<R> where(String sql, QueryPart... parts);
+    InsertOnConflictDoUpdateStep<R> where(@Stringly.SQL String sql, QueryPart... parts);
 }

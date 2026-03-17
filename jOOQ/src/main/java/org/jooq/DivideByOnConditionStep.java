@@ -145,7 +145,7 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
     @NotNull
     @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @PlainSQL
-    DivideByOnConditionStep and(String sql);
+    DivideByOnConditionStep and(@Stringly.SQL String sql);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -163,7 +163,7 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
     @NotNull
     @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @PlainSQL
-    DivideByOnConditionStep and(String sql, Object... bindings);
+    DivideByOnConditionStep and(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -181,7 +181,7 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
     @NotNull
     @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @PlainSQL
-    DivideByOnConditionStep and(String sql, QueryPart... parts);
+    DivideByOnConditionStep and(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * Combine the currently assembled conditions with a negated other one using
@@ -263,7 +263,7 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
     @NotNull
     @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @PlainSQL
-    DivideByOnConditionStep or(String sql);
+    DivideByOnConditionStep or(@Stringly.SQL String sql);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -281,7 +281,7 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
     @NotNull
     @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @PlainSQL
-    DivideByOnConditionStep or(String sql, Object... bindings);
+    DivideByOnConditionStep or(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -299,7 +299,7 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
     @NotNull
     @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @PlainSQL
-    DivideByOnConditionStep or(String sql, QueryPart... parts);
+    DivideByOnConditionStep or(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * Combine the currently assembled conditions with a negated other one using

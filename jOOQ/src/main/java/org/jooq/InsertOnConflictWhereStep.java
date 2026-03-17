@@ -167,7 +167,7 @@ public interface InsertOnConflictWhereStep<R extends Record> extends InsertRetur
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     @PlainSQL
-    InsertOnConflictConditionStep<R> where(String sql);
+    InsertOnConflictConditionStep<R> where(@Stringly.SQL String sql);
 
     /**
      * Add a <code>WHERE</code> clause to the <code>INSERT</code> statement's
@@ -185,7 +185,7 @@ public interface InsertOnConflictWhereStep<R extends Record> extends InsertRetur
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     @PlainSQL
-    InsertOnConflictConditionStep<R> where(String sql, Object... bindings);
+    InsertOnConflictConditionStep<R> where(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * Add a <code>WHERE</code> clause to the <code>INSERT</code> statement's
@@ -203,7 +203,7 @@ public interface InsertOnConflictWhereStep<R extends Record> extends InsertRetur
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     @PlainSQL
-    InsertOnConflictConditionStep<R> where(String sql, QueryPart... parts);
+    InsertOnConflictConditionStep<R> where(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * Add a <code>WHERE EXISTS</code> clause to the <code>INSERT</code> statement's

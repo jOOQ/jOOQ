@@ -123,7 +123,7 @@ public interface DeleteConditionStep<R extends Record> extends DeleteOrderByStep
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    DeleteConditionStep<R> and(String sql);
+    DeleteConditionStep<R> and(@Stringly.SQL String sql);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -141,7 +141,7 @@ public interface DeleteConditionStep<R extends Record> extends DeleteOrderByStep
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    DeleteConditionStep<R> and(String sql, Object... bindings);
+    DeleteConditionStep<R> and(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -159,7 +159,7 @@ public interface DeleteConditionStep<R extends Record> extends DeleteOrderByStep
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    DeleteConditionStep<R> and(String sql, QueryPart... parts);
+    DeleteConditionStep<R> and(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * Combine the currently assembled conditions with a negated other one using
@@ -241,7 +241,7 @@ public interface DeleteConditionStep<R extends Record> extends DeleteOrderByStep
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    DeleteConditionStep<R> or(String sql);
+    DeleteConditionStep<R> or(@Stringly.SQL String sql);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -259,7 +259,7 @@ public interface DeleteConditionStep<R extends Record> extends DeleteOrderByStep
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    DeleteConditionStep<R> or(String sql, Object... bindings);
+    DeleteConditionStep<R> or(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -277,7 +277,7 @@ public interface DeleteConditionStep<R extends Record> extends DeleteOrderByStep
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    DeleteConditionStep<R> or(String sql, QueryPart... parts);
+    DeleteConditionStep<R> or(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * Combine the currently assembled conditions with a negated other one using

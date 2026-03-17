@@ -1114,7 +1114,7 @@ extends
     @NotNull
     @Support
     @PlainSQL
-    Table<R> where(String sql);
+    Table<R> where(@Stringly.SQL String sql);
 
     /**
      * Add a <code>WHERE</code> clause to the table.
@@ -1136,7 +1136,7 @@ extends
     @NotNull
     @Support
     @PlainSQL
-    Table<R> where(String sql, Object... bindings);
+    Table<R> where(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * Add a <code>WHERE</code> clause to the table.
@@ -1158,7 +1158,7 @@ extends
     @NotNull
     @Support
     @PlainSQL
-    Table<R> where(String sql, QueryPart... parts);
+    Table<R> where(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * Add a <code>WHERE EXISTS</code> clause to the table.
@@ -1348,7 +1348,7 @@ extends
     @NotNull
     @Support
     @PlainSQL
-    TableOnStep<Record> join(String sql);
+    TableOnStep<Record> join(@Stringly.SQL String sql);
 
     /**
      * <code>INNER JOIN</code> a table to this table.
@@ -1368,7 +1368,7 @@ extends
     @NotNull
     @Support
     @PlainSQL
-    TableOnStep<Record> join(String sql, Object... bindings);
+    TableOnStep<Record> join(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * <code>INNER JOIN</code> a table to this table.
@@ -1388,7 +1388,7 @@ extends
     @NotNull
     @Support
     @PlainSQL
-    TableOnStep<Record> join(String sql, QueryPart... parts);
+    TableOnStep<Record> join(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * <code>INNER JOIN</code> a table to this table.
@@ -1505,7 +1505,7 @@ extends
     @NotNull
     @Support
     @PlainSQL
-    TableOnStep<Record> innerJoin(String sql);
+    TableOnStep<Record> innerJoin(@Stringly.SQL String sql);
 
     /**
      * <code>INNER JOIN</code> a table to this table.
@@ -1522,7 +1522,7 @@ extends
     @NotNull
     @Support
     @PlainSQL
-    TableOnStep<Record> innerJoin(String sql, Object... bindings);
+    TableOnStep<Record> innerJoin(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * <code>INNER JOIN</code> a table to this table.
@@ -1539,7 +1539,7 @@ extends
     @NotNull
     @Support
     @PlainSQL
-    TableOnStep<Record> innerJoin(String sql, QueryPart... parts);
+    TableOnStep<Record> innerJoin(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * <code>INNER JOIN</code> a table to this table.
@@ -1710,7 +1710,7 @@ extends
     @NotNull
     @Support
     @PlainSQL
-    TablePartitionByStep<Record> leftJoin(String sql);
+    TablePartitionByStep<Record> leftJoin(@Stringly.SQL String sql);
 
     /**
      * <code>LEFT OUTER JOIN</code> a table to this table.
@@ -1730,7 +1730,7 @@ extends
     @NotNull
     @Support
     @PlainSQL
-    TablePartitionByStep<Record> leftJoin(String sql, Object... bindings);
+    TablePartitionByStep<Record> leftJoin(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * <code>LEFT OUTER JOIN</code> a table to this table.
@@ -1750,7 +1750,7 @@ extends
     @NotNull
     @Support
     @PlainSQL
-    TablePartitionByStep<Record> leftJoin(String sql, QueryPart... parts);
+    TablePartitionByStep<Record> leftJoin(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * <code>LEFT OUTER JOIN</code> a table to this table.
@@ -1866,7 +1866,7 @@ extends
     @NotNull
     @Support
     @PlainSQL
-    TablePartitionByStep<Record> leftOuterJoin(String sql);
+    TablePartitionByStep<Record> leftOuterJoin(@Stringly.SQL String sql);
 
     /**
      * <code>LEFT OUTER JOIN</code> a table to this table.
@@ -1883,7 +1883,7 @@ extends
     @NotNull
     @Support
     @PlainSQL
-    TablePartitionByStep<Record> leftOuterJoin(String sql, Object... bindings);
+    TablePartitionByStep<Record> leftOuterJoin(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * <code>LEFT OUTER JOIN</code> a table to this table.
@@ -1900,7 +1900,7 @@ extends
     @NotNull
     @Support
     @PlainSQL
-    TablePartitionByStep<Record> leftOuterJoin(String sql, QueryPart... parts);
+    TablePartitionByStep<Record> leftOuterJoin(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * <code>LEFT OUTER JOIN</code> a table to this table.
@@ -2052,7 +2052,7 @@ extends
     @NotNull
     @Support
     @PlainSQL
-    TablePartitionByStep<Record> rightJoin(String sql);
+    TablePartitionByStep<Record> rightJoin(@Stringly.SQL String sql);
 
     /**
      * <code>RIGHT OUTER JOIN</code> a table to this table.
@@ -2072,7 +2072,7 @@ extends
     @NotNull
     @Support
     @PlainSQL
-    TablePartitionByStep<Record> rightJoin(String sql, Object... bindings);
+    TablePartitionByStep<Record> rightJoin(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * <code>RIGHT OUTER JOIN</code> a table to this table.
@@ -2092,7 +2092,7 @@ extends
     @NotNull
     @Support
     @PlainSQL
-    TablePartitionByStep<Record> rightJoin(String sql, QueryPart... parts);
+    TablePartitionByStep<Record> rightJoin(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * <code>RIGHT OUTER JOIN</code> a table to this table.
@@ -2208,7 +2208,7 @@ extends
     @NotNull
     @Support
     @PlainSQL
-    TablePartitionByStep<Record> rightOuterJoin(String sql);
+    TablePartitionByStep<Record> rightOuterJoin(@Stringly.SQL String sql);
 
     /**
      * <code>RIGHT OUTER JOIN</code> a table to this table.
@@ -2225,7 +2225,7 @@ extends
     @NotNull
     @Support
     @PlainSQL
-    TablePartitionByStep<Record> rightOuterJoin(String sql, Object... bindings);
+    TablePartitionByStep<Record> rightOuterJoin(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * <code>RIGHT OUTER JOIN</code> a table to this table.
@@ -2242,7 +2242,7 @@ extends
     @NotNull
     @Support
     @PlainSQL
-    TablePartitionByStep<Record> rightOuterJoin(String sql, QueryPart... parts);
+    TablePartitionByStep<Record> rightOuterJoin(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * <code>RIGHT OUTER JOIN</code> a table to this table.
@@ -2369,7 +2369,7 @@ extends
     @NotNull
     @Support({ CLICKHOUSE, FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
-    TablePartitionByStep<Record> fullJoin(String sql);
+    TablePartitionByStep<Record> fullJoin(@Stringly.SQL String sql);
 
     /**
      * <code>FULL OUTER JOIN</code> a table to this table.
@@ -2384,7 +2384,7 @@ extends
     @NotNull
     @Support({ CLICKHOUSE, FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
-    TablePartitionByStep<Record> fullJoin(String sql, Object... bindings);
+    TablePartitionByStep<Record> fullJoin(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * <code>FULL OUTER JOIN</code> a table to this table.
@@ -2399,7 +2399,7 @@ extends
     @NotNull
     @Support({ CLICKHOUSE, FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
-    TablePartitionByStep<Record> fullJoin(String sql, QueryPart... parts);
+    TablePartitionByStep<Record> fullJoin(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * <code>FULL OUTER JOIN</code> a table to this table.
@@ -2512,7 +2512,7 @@ extends
     @NotNull
     @Support({ CLICKHOUSE, FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
-    TablePartitionByStep<Record> fullOuterJoin(String sql);
+    TablePartitionByStep<Record> fullOuterJoin(@Stringly.SQL String sql);
 
     /**
      * <code>FULL OUTER JOIN</code> a table to this table.
@@ -2529,7 +2529,7 @@ extends
     @NotNull
     @Support({ CLICKHOUSE, FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
-    TablePartitionByStep<Record> fullOuterJoin(String sql, Object... bindings);
+    TablePartitionByStep<Record> fullOuterJoin(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * <code>FULL OUTER JOIN</code> a table to this table.
@@ -2546,7 +2546,7 @@ extends
     @NotNull
     @Support({ CLICKHOUSE, FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
-    TablePartitionByStep<Record> fullOuterJoin(String sql, QueryPart... parts);
+    TablePartitionByStep<Record> fullOuterJoin(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * <code>FULL OUTER JOIN</code> a table to this table.
@@ -2615,7 +2615,7 @@ extends
     @NotNull
     @Support({ CLICKHOUSE, CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
-    Table<Record> crossJoin(String sql);
+    Table<Record> crossJoin(@Stringly.SQL String sql);
 
     /**
      * <code>CROSS JOIN</code> a table to this table.
@@ -2639,7 +2639,7 @@ extends
     @NotNull
     @Support({ CLICKHOUSE, CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
-    Table<Record> crossJoin(String sql, Object... bindings);
+    Table<Record> crossJoin(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * <code>CROSS JOIN</code> a table to this table.
@@ -2663,7 +2663,7 @@ extends
     @NotNull
     @Support({ CLICKHOUSE, CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
-    Table<Record> crossJoin(String sql, QueryPart... parts);
+    Table<Record> crossJoin(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * <code>CROSS JOIN</code> a table to this table.
@@ -2727,7 +2727,7 @@ extends
     @NotNull
     @Support
     @PlainSQL
-    Table<Record> naturalJoin(String sql);
+    Table<Record> naturalJoin(@Stringly.SQL String sql);
 
     /**
      * <code>NATURAL JOIN</code> a table to this table.
@@ -2747,7 +2747,7 @@ extends
     @NotNull
     @Support
     @PlainSQL
-    Table<Record> naturalJoin(String sql, Object... bindings);
+    Table<Record> naturalJoin(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * <code>NATURAL JOIN</code> a table to this table.
@@ -2779,7 +2779,7 @@ extends
     @NotNull
     @Support
     @PlainSQL
-    Table<Record> naturalJoin(String sql, QueryPart... parts);
+    Table<Record> naturalJoin(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * <code>NATURAL LEFT OUTER JOIN</code> a table to this table.
@@ -2827,7 +2827,7 @@ extends
     @NotNull
     @Support
     @PlainSQL
-    Table<Record> naturalLeftOuterJoin(String sql);
+    Table<Record> naturalLeftOuterJoin(@Stringly.SQL String sql);
 
     /**
      * <code>NATURAL LEFT OUTER JOIN</code> a table to this table.
@@ -2847,7 +2847,7 @@ extends
     @NotNull
     @Support
     @PlainSQL
-    Table<Record> naturalLeftOuterJoin(String sql, Object... bindings);
+    Table<Record> naturalLeftOuterJoin(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * <code>NATURAL LEFT OUTER JOIN</code> a table to this table.
@@ -2867,7 +2867,7 @@ extends
     @NotNull
     @Support
     @PlainSQL
-    Table<Record> naturalLeftOuterJoin(String sql, QueryPart... parts);
+    Table<Record> naturalLeftOuterJoin(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * <code>NATURAL LEFT OUTER JOIN</code> a table to this table.
@@ -2928,7 +2928,7 @@ extends
     @NotNull
     @Support({ CLICKHOUSE, CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
-    Table<Record> naturalRightOuterJoin(String sql);
+    Table<Record> naturalRightOuterJoin(@Stringly.SQL String sql);
 
     /**
      * <code>NATURAL RIGHT OUTER JOIN</code> a table to this table.
@@ -2948,7 +2948,7 @@ extends
     @NotNull
     @Support({ CLICKHOUSE, CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
-    Table<Record> naturalRightOuterJoin(String sql, Object... bindings);
+    Table<Record> naturalRightOuterJoin(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * <code>NATURAL RIGHT OUTER JOIN</code> a table to this table.
@@ -2968,7 +2968,7 @@ extends
     @NotNull
     @Support({ CLICKHOUSE, CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
-    Table<Record> naturalRightOuterJoin(String sql, QueryPart... parts);
+    Table<Record> naturalRightOuterJoin(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * <code>NATURAL RIGHT OUTER JOIN</code> a table to this table.
@@ -3028,7 +3028,7 @@ extends
     @NotNull
     @Support({ CLICKHOUSE, FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
-    Table<Record> naturalFullOuterJoin(String sql);
+    Table<Record> naturalFullOuterJoin(@Stringly.SQL String sql);
 
     /**
      * <code>NATURAL FULL OUTER JOIN</code> a table to this table.
@@ -3048,7 +3048,7 @@ extends
     @NotNull
     @Support({ CLICKHOUSE, FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
-    Table<Record> naturalFullOuterJoin(String sql, Object... bindings);
+    Table<Record> naturalFullOuterJoin(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * <code>NATURAL FULL OUTER JOIN</code> a table to this table.
@@ -3068,7 +3068,7 @@ extends
     @NotNull
     @Support({ CLICKHOUSE, FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
-    Table<Record> naturalFullOuterJoin(String sql, QueryPart... parts);
+    Table<Record> naturalFullOuterJoin(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * <code>NATURAL FULL OUTER JOIN</code> a table to this table.
@@ -3123,7 +3123,7 @@ extends
     @NotNull
     @Support({ FIREBIRD, POSTGRES, TRINO, YUGABYTEDB })
     @PlainSQL
-    Table<Record> crossApply(String sql);
+    Table<Record> crossApply(@Stringly.SQL String sql);
 
     /**
      * <code>CROSS APPLY</code> a table to this table.
@@ -3140,7 +3140,7 @@ extends
     @NotNull
     @Support({ FIREBIRD, POSTGRES, TRINO, YUGABYTEDB })
     @PlainSQL
-    Table<Record> crossApply(String sql, Object... bindings);
+    Table<Record> crossApply(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * <code>CROSS APPLY</code> a table to this table.
@@ -3157,7 +3157,7 @@ extends
     @NotNull
     @Support({ FIREBIRD, POSTGRES, TRINO, YUGABYTEDB })
     @PlainSQL
-    Table<Record> crossApply(String sql, QueryPart... parts);
+    Table<Record> crossApply(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * <code>CROSS APPLY</code> a table to this table.
@@ -3205,7 +3205,7 @@ extends
     @NotNull
     @Support({ FIREBIRD, POSTGRES, TRINO, YUGABYTEDB })
     @PlainSQL
-    Table<Record> outerApply(String sql);
+    Table<Record> outerApply(@Stringly.SQL String sql);
 
     /**
      * <code>OUTER APPLY</code> a table to this table.
@@ -3222,7 +3222,7 @@ extends
     @NotNull
     @Support({ FIREBIRD, POSTGRES, TRINO, YUGABYTEDB })
     @PlainSQL
-    Table<Record> outerApply(String sql, Object... bindings);
+    Table<Record> outerApply(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * <code>OUTER APPLY</code> a table to this table.
@@ -3239,7 +3239,7 @@ extends
     @NotNull
     @Support({ FIREBIRD, POSTGRES, TRINO, YUGABYTEDB })
     @PlainSQL
-    Table<Record> outerApply(String sql, QueryPart... parts);
+    Table<Record> outerApply(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * <code>OUTER APPLY</code> a table to this table.
@@ -3294,7 +3294,7 @@ extends
     @NotNull
     @Support({ MARIADB, MYSQL })
     @PlainSQL
-    TableOnStep<Record> straightJoin(String sql);
+    TableOnStep<Record> straightJoin(@Stringly.SQL String sql);
 
     /**
      * <code>STRAIGHT_JOIN</code> a table to this table.
@@ -3311,7 +3311,7 @@ extends
     @NotNull
     @Support({ MARIADB, MYSQL })
     @PlainSQL
-    TableOnStep<Record> straightJoin(String sql, Object... bindings);
+    TableOnStep<Record> straightJoin(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * <code>STRAIGHT_JOIN</code> a table to this table.
@@ -3328,7 +3328,7 @@ extends
     @NotNull
     @Support({ MARIADB, MYSQL })
     @PlainSQL
-    TableOnStep<Record> straightJoin(String sql, QueryPart... parts);
+    TableOnStep<Record> straightJoin(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * <code>STRAIGHT_JOIN</code> a table to this table.

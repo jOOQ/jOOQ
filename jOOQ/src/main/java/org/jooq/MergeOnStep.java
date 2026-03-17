@@ -154,7 +154,7 @@ public interface MergeOnStep<R extends Record> {
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES })
     @PlainSQL
-    MergeOnConditionStep<R> on(String sql);
+    MergeOnConditionStep<R> on(@Stringly.SQL String sql);
 
     /**
      * Provide join conditions and proceed to the next step
@@ -171,7 +171,7 @@ public interface MergeOnStep<R extends Record> {
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES })
     @PlainSQL
-    MergeOnConditionStep<R> on(String sql, Object... bindings);
+    MergeOnConditionStep<R> on(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * Provide join conditions and proceed to the next step
@@ -188,5 +188,5 @@ public interface MergeOnStep<R extends Record> {
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES })
     @PlainSQL
-    MergeOnConditionStep<R> on(String sql, QueryPart... parts);
+    MergeOnConditionStep<R> on(@Stringly.SQL String sql, QueryPart... parts);
 }

@@ -72,7 +72,7 @@ public interface Parser {
     @NotNull
     @Support
     @PlainSQL
-    Queries parse(String sql, Object... bindings) throws ParserException;
+    Queries parse(@Stringly.SQL String sql, Object... bindings) throws ParserException;
 
     /**
      * Parse a SQL string into a {@link Query}.
@@ -97,7 +97,7 @@ public interface Parser {
     @Nullable
     @Support
     @PlainSQL
-    Query parseQuery(String sql, Object... bindings) throws ParserException;
+    Query parseQuery(@Stringly.SQL String sql, Object... bindings) throws ParserException;
 
     /**
      * Parse a SQL string into a procedural {@link Statement}.
@@ -123,7 +123,7 @@ public interface Parser {
     @Nullable
     @Support
     @PlainSQL
-    Statement parseStatement(String sql, Object... bindings) throws ParserException;
+    Statement parseStatement(@Stringly.SQL String sql, Object... bindings) throws ParserException;
 
 
 
@@ -180,7 +180,7 @@ public interface Parser {
     @Nullable
     @Support
     @PlainSQL
-    ResultQuery<?> parseResultQuery(String sql, Object... bindings) throws ParserException;
+    ResultQuery<?> parseResultQuery(@Stringly.SQL String sql, Object... bindings) throws ParserException;
 
     /**
      * Parse a SQL string into a {@link Select} statement.
@@ -205,7 +205,7 @@ public interface Parser {
     @Nullable
     @Support
     @PlainSQL
-    Select<?> parseSelect(String sql, Object... bindings) throws ParserException;
+    Select<?> parseSelect(@Stringly.SQL String sql, Object... bindings) throws ParserException;
 
     /**
      * Parse a SQL string into a {@link Table}.
@@ -230,7 +230,7 @@ public interface Parser {
     @NotNull
     @Support
     @PlainSQL
-    Table<?> parseTable(String sql, Object... bindings) throws ParserException;
+    Table<?> parseTable(@Stringly.SQL String sql, Object... bindings) throws ParserException;
 
     /**
      * Parse a SQL string into a {@link Field}.
@@ -255,7 +255,7 @@ public interface Parser {
     @NotNull
     @Support
     @PlainSQL
-    Field<?> parseField(String sql, Object... bindings) throws ParserException;
+    Field<?> parseField(@Stringly.SQL String sql, Object... bindings) throws ParserException;
 
     /**
      * Parse a SQL string into a {@link Row}.
@@ -280,7 +280,7 @@ public interface Parser {
     @NotNull
     @Support
     @PlainSQL
-    Row parseRow(String sql, Object... bindings) throws ParserException;
+    Row parseRow(@Stringly.SQL String sql, Object... bindings) throws ParserException;
 
     /**
      * Parse a SQL string into a {@link Condition}.
@@ -305,7 +305,7 @@ public interface Parser {
     @NotNull
     @Support
     @PlainSQL
-    Condition parseCondition(String sql, Object... bindings) throws ParserException;
+    Condition parseCondition(@Stringly.SQL String sql, Object... bindings) throws ParserException;
 
     /**
      * Parse a SQL string into a name {@link Name}.
@@ -330,5 +330,5 @@ public interface Parser {
     @NotNull
     @Support
     @PlainSQL
-    Name parseName(String sql, Object... bindings) throws ParserException;
+    Name parseName(@Stringly.SQL String sql, Object... bindings) throws ParserException;
 }

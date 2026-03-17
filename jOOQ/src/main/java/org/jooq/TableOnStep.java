@@ -126,7 +126,7 @@ public interface TableOnStep<R extends Record> {
     @NotNull
     @Support
     @PlainSQL
-    TableOnConditionStep<R> on(String sql);
+    TableOnConditionStep<R> on(@Stringly.SQL String sql);
 
     /**
      * Add an <code>ON</code> clause to the <code>JOIN</code>.
@@ -143,7 +143,7 @@ public interface TableOnStep<R extends Record> {
     @NotNull
     @Support
     @PlainSQL
-    TableOnConditionStep<R> on(String sql, Object... bindings);
+    TableOnConditionStep<R> on(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * Add an <code>ON</code> clause to the <code>JOIN</code>.
@@ -160,7 +160,7 @@ public interface TableOnStep<R extends Record> {
     @NotNull
     @Support
     @PlainSQL
-    TableOnConditionStep<R> on(String sql, QueryPart... parts);
+    TableOnConditionStep<R> on(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * Join a table with the <code>USING(column [, column…])</code> syntax.

@@ -153,7 +153,7 @@ public interface SelectOnConditionStep<R extends Record> extends SelectJoinStep<
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    SelectOnConditionStep<R> and(String sql);
+    SelectOnConditionStep<R> and(@Stringly.SQL String sql);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -171,7 +171,7 @@ public interface SelectOnConditionStep<R extends Record> extends SelectJoinStep<
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    SelectOnConditionStep<R> and(String sql, Object... bindings);
+    SelectOnConditionStep<R> and(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -189,7 +189,7 @@ public interface SelectOnConditionStep<R extends Record> extends SelectJoinStep<
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    SelectOnConditionStep<R> and(String sql, QueryPart... parts);
+    SelectOnConditionStep<R> and(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * Combine the currently assembled conditions with a negated other one using
@@ -271,7 +271,7 @@ public interface SelectOnConditionStep<R extends Record> extends SelectJoinStep<
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    SelectOnConditionStep<R> or(String sql);
+    SelectOnConditionStep<R> or(@Stringly.SQL String sql);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -289,7 +289,7 @@ public interface SelectOnConditionStep<R extends Record> extends SelectJoinStep<
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    SelectOnConditionStep<R> or(String sql, Object... bindings);
+    SelectOnConditionStep<R> or(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -307,7 +307,7 @@ public interface SelectOnConditionStep<R extends Record> extends SelectJoinStep<
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    SelectOnConditionStep<R> or(String sql, QueryPart... parts);
+    SelectOnConditionStep<R> or(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * Combine the currently assembled conditions with a negated other one using

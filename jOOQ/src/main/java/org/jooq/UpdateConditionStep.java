@@ -126,7 +126,7 @@ public interface UpdateConditionStep<R extends Record> extends UpdateOrderByStep
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    UpdateConditionStep<R> and(String sql);
+    UpdateConditionStep<R> and(@Stringly.SQL String sql);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -144,7 +144,7 @@ public interface UpdateConditionStep<R extends Record> extends UpdateOrderByStep
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    UpdateConditionStep<R> and(String sql, Object... bindings);
+    UpdateConditionStep<R> and(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -162,7 +162,7 @@ public interface UpdateConditionStep<R extends Record> extends UpdateOrderByStep
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    UpdateConditionStep<R> and(String sql, QueryPart... parts);
+    UpdateConditionStep<R> and(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * Combine the currently assembled conditions with a negated other one using
@@ -244,7 +244,7 @@ public interface UpdateConditionStep<R extends Record> extends UpdateOrderByStep
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    UpdateConditionStep<R> or(String sql);
+    UpdateConditionStep<R> or(@Stringly.SQL String sql);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -262,7 +262,7 @@ public interface UpdateConditionStep<R extends Record> extends UpdateOrderByStep
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    UpdateConditionStep<R> or(String sql, Object... bindings);
+    UpdateConditionStep<R> or(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -280,7 +280,7 @@ public interface UpdateConditionStep<R extends Record> extends UpdateOrderByStep
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    UpdateConditionStep<R> or(String sql, QueryPart... parts);
+    UpdateConditionStep<R> or(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * Combine the currently assembled conditions with a negated other one using

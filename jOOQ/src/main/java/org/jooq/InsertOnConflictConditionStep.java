@@ -147,7 +147,7 @@ public interface InsertOnConflictConditionStep<R extends Record> extends InsertR
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     @PlainSQL
-    InsertOnConflictConditionStep<R> and(String sql);
+    InsertOnConflictConditionStep<R> and(@Stringly.SQL String sql);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -165,7 +165,7 @@ public interface InsertOnConflictConditionStep<R extends Record> extends InsertR
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     @PlainSQL
-    InsertOnConflictConditionStep<R> and(String sql, Object... bindings);
+    InsertOnConflictConditionStep<R> and(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -183,7 +183,7 @@ public interface InsertOnConflictConditionStep<R extends Record> extends InsertR
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     @PlainSQL
-    InsertOnConflictConditionStep<R> and(String sql, QueryPart... parts);
+    InsertOnConflictConditionStep<R> and(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * Combine the currently assembled conditions with a negated other one using
@@ -265,7 +265,7 @@ public interface InsertOnConflictConditionStep<R extends Record> extends InsertR
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     @PlainSQL
-    InsertOnConflictConditionStep<R> or(String sql);
+    InsertOnConflictConditionStep<R> or(@Stringly.SQL String sql);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -283,7 +283,7 @@ public interface InsertOnConflictConditionStep<R extends Record> extends InsertR
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     @PlainSQL
-    InsertOnConflictConditionStep<R> or(String sql, Object... bindings);
+    InsertOnConflictConditionStep<R> or(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -301,7 +301,7 @@ public interface InsertOnConflictConditionStep<R extends Record> extends InsertR
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     @PlainSQL
-    InsertOnConflictConditionStep<R> or(String sql, QueryPart... parts);
+    InsertOnConflictConditionStep<R> or(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * Combine the currently assembled conditions with a negated other one using

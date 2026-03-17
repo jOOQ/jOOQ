@@ -195,7 +195,7 @@ public interface SelectQualifyStep<R extends Record> extends SelectOrderByStep<R
     @NotNull @CheckReturnValue
     @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
-    SelectQualifyConditionStep<R> qualify(String sql);
+    SelectQualifyConditionStep<R> qualify(@Stringly.SQL String sql);
 
     /**
      * Add a <code>QUALIFY</code> clause to the query.
@@ -212,7 +212,7 @@ public interface SelectQualifyStep<R extends Record> extends SelectOrderByStep<R
     @NotNull @CheckReturnValue
     @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
-    SelectQualifyConditionStep<R> qualify(String sql, Object... bindings);
+    SelectQualifyConditionStep<R> qualify(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * Add a <code>QUALIFY</code> clause to the query.
@@ -229,6 +229,6 @@ public interface SelectQualifyStep<R extends Record> extends SelectOrderByStep<R
     @NotNull @CheckReturnValue
     @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
-    SelectQualifyConditionStep<R> qualify(String sql, QueryPart... parts);
+    SelectQualifyConditionStep<R> qualify(@Stringly.SQL String sql, QueryPart... parts);
 
 }

@@ -326,7 +326,7 @@ public interface MergeNotMatchedStep<R extends Record> extends MergeFinalStep<R>
     @PlainSQL
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES })
-    MergeNotMatchedThenStep<R> whenNotMatchedAnd(String sql);
+    MergeNotMatchedThenStep<R> whenNotMatchedAnd(@Stringly.SQL String sql);
 
     /**
      * Add the <code>WHEN NOT MATCHED AND</code> clause to the
@@ -344,7 +344,7 @@ public interface MergeNotMatchedStep<R extends Record> extends MergeFinalStep<R>
     @PlainSQL
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES })
-    MergeNotMatchedThenStep<R> whenNotMatchedAnd(String sql, Object... bindings);
+    MergeNotMatchedThenStep<R> whenNotMatchedAnd(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * Add the <code>WHEN NOT MATCHED AND</code> clause to the <code>MERGE</code>
@@ -362,7 +362,7 @@ public interface MergeNotMatchedStep<R extends Record> extends MergeFinalStep<R>
     @PlainSQL
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES })
-    MergeNotMatchedThenStep<R> whenNotMatchedAnd(String sql, QueryPart... parts);
+    MergeNotMatchedThenStep<R> whenNotMatchedAnd(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * Add the <code>WHEN NOT MATCHED BY SOURCE THEN INSERT</code> clause to the
@@ -420,7 +420,7 @@ public interface MergeNotMatchedStep<R extends Record> extends MergeFinalStep<R>
     @PlainSQL
     @NotNull @CheckReturnValue
     @Support({ POSTGRES })
-    MergeMatchedThenStep<R> whenNotMatchedBySourceAnd(String sql);
+    MergeMatchedThenStep<R> whenNotMatchedBySourceAnd(@Stringly.SQL String sql);
 
     /**
      * Add the <code>WHEN NOT MATCHED BY SOURCE AND</code> clause to the
@@ -438,7 +438,7 @@ public interface MergeNotMatchedStep<R extends Record> extends MergeFinalStep<R>
     @PlainSQL
     @NotNull @CheckReturnValue
     @Support({ POSTGRES })
-    MergeMatchedThenStep<R> whenNotMatchedBySourceAnd(String sql, Object... bindings);
+    MergeMatchedThenStep<R> whenNotMatchedBySourceAnd(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * Add the <code>WHEN NOT MATCHED BY SOURCE AND</code> clause to the <code>MERGE</code>
@@ -456,7 +456,7 @@ public interface MergeNotMatchedStep<R extends Record> extends MergeFinalStep<R>
     @PlainSQL
     @NotNull @CheckReturnValue
     @Support({ POSTGRES })
-    MergeMatchedThenStep<R> whenNotMatchedBySourceAnd(String sql, QueryPart... parts);
+    MergeMatchedThenStep<R> whenNotMatchedBySourceAnd(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * Add the <code>WHEN NOT MATCHED BY TARGET THEN INSERT</code> clause to the
@@ -514,7 +514,7 @@ public interface MergeNotMatchedStep<R extends Record> extends MergeFinalStep<R>
     @PlainSQL
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES })
-    MergeNotMatchedThenStep<R> whenNotMatchedByTargetAnd(String sql);
+    MergeNotMatchedThenStep<R> whenNotMatchedByTargetAnd(@Stringly.SQL String sql);
 
     /**
      * Add the <code>WHEN NOT MATCHED BY TARGET AND</code> clause to the
@@ -532,7 +532,7 @@ public interface MergeNotMatchedStep<R extends Record> extends MergeFinalStep<R>
     @PlainSQL
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES })
-    MergeNotMatchedThenStep<R> whenNotMatchedByTargetAnd(String sql, Object... bindings);
+    MergeNotMatchedThenStep<R> whenNotMatchedByTargetAnd(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * Add the <code>WHEN NOT MATCHED BY TARGET AND</code> clause to the <code>MERGE</code>
@@ -550,5 +550,5 @@ public interface MergeNotMatchedStep<R extends Record> extends MergeFinalStep<R>
     @PlainSQL
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES })
-    MergeNotMatchedThenStep<R> whenNotMatchedByTargetAnd(String sql, QueryPart... parts);
+    MergeNotMatchedThenStep<R> whenNotMatchedByTargetAnd(@Stringly.SQL String sql, QueryPart... parts);
 }

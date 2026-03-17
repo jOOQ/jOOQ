@@ -328,7 +328,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    SelectOnStep<R> join(String sql);
+    SelectOnStep<R> join(@Stringly.SQL String sql);
 
     /**
      * Convenience method to <code>INNER JOIN</code> a table to the last table
@@ -351,7 +351,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    SelectOnStep<R> join(String sql, Object... bindings);
+    SelectOnStep<R> join(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * Convenience method to <code>INNER JOIN</code> a table to the last table
@@ -374,7 +374,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    SelectOnStep<R> join(String sql, QueryPart... parts);
+    SelectOnStep<R> join(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * Convenience method to <code>INNER JOIN</code> a table to the last table
@@ -516,7 +516,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    SelectOnStep<R> innerJoin(String sql);
+    SelectOnStep<R> innerJoin(@Stringly.SQL String sql);
 
     /**
      * Convenience method to <code>INNER JOIN</code> a table to the last table
@@ -536,7 +536,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    SelectOnStep<R> innerJoin(String sql, Object... bindings);
+    SelectOnStep<R> innerJoin(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * Convenience method to <code>INNER JOIN</code> a table to the last table
@@ -556,7 +556,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    SelectOnStep<R> innerJoin(String sql, QueryPart... parts);
+    SelectOnStep<R> innerJoin(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * Convenience method to <code>INNER JOIN</code> a table to the last table
@@ -638,7 +638,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support({ CLICKHOUSE, CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
-    SelectJoinStep<R> crossJoin(String sql);
+    SelectJoinStep<R> crossJoin(@Stringly.SQL String sql);
 
     /**
      * Convenience method to <code>CROSS JOIN</code> a table to the last table
@@ -665,7 +665,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support({ CLICKHOUSE, CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
-    SelectJoinStep<R> crossJoin(String sql, Object... bindings);
+    SelectJoinStep<R> crossJoin(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * Convenience method to <code>CROSS JOIN</code> a table to the last table
@@ -692,7 +692,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support({ CLICKHOUSE, CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
-    SelectJoinStep<R> crossJoin(String sql, QueryPart... parts);
+    SelectJoinStep<R> crossJoin(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * Convenience method to <code>CROSS JOIN</code> a table to the last table
@@ -877,7 +877,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    SelectJoinPartitionByStep<R> leftJoin(String sql);
+    SelectJoinPartitionByStep<R> leftJoin(@Stringly.SQL String sql);
 
     /**
      * Convenience method to <code>LEFT OUTER JOIN</code> a table to the last
@@ -900,7 +900,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    SelectJoinPartitionByStep<R> leftJoin(String sql, Object... bindings);
+    SelectJoinPartitionByStep<R> leftJoin(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * Convenience method to <code>LEFT OUTER JOIN</code> a table to the last
@@ -923,7 +923,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    SelectJoinPartitionByStep<R> leftJoin(String sql, QueryPart... parts);
+    SelectJoinPartitionByStep<R> leftJoin(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * Convenience method to <code>LEFT OUTER JOIN</code> a table to the last
@@ -1074,7 +1074,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    SelectJoinPartitionByStep<R> leftOuterJoin(String sql);
+    SelectJoinPartitionByStep<R> leftOuterJoin(@Stringly.SQL String sql);
 
     /**
      * Convenience method to <code>LEFT OUTER JOIN</code> a table to the last
@@ -1094,7 +1094,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    SelectJoinPartitionByStep<R> leftOuterJoin(String sql, Object... bindings);
+    SelectJoinPartitionByStep<R> leftOuterJoin(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * Convenience method to <code>LEFT OUTER JOIN</code> a table to the last
@@ -1114,7 +1114,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    SelectJoinPartitionByStep<R> leftOuterJoin(String sql, QueryPart... parts);
+    SelectJoinPartitionByStep<R> leftOuterJoin(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * Convenience method to <code>LEFT OUTER JOIN</code> a table to the last
@@ -1292,7 +1292,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    SelectJoinPartitionByStep<R> rightJoin(String sql);
+    SelectJoinPartitionByStep<R> rightJoin(@Stringly.SQL String sql);
 
     /**
      * Convenience method to <code>RIGHT OUTER JOIN</code> a table to the last
@@ -1315,7 +1315,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    SelectJoinPartitionByStep<R> rightJoin(String sql, Object... bindings);
+    SelectJoinPartitionByStep<R> rightJoin(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * Convenience method to <code>RIGHT OUTER JOIN</code> a table to the last
@@ -1338,7 +1338,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    SelectJoinPartitionByStep<R> rightJoin(String sql, QueryPart... parts);
+    SelectJoinPartitionByStep<R> rightJoin(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * Convenience method to <code>RIGHT OUTER JOIN</code> a table to the last
@@ -1489,7 +1489,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    SelectJoinPartitionByStep<R> rightOuterJoin(String sql);
+    SelectJoinPartitionByStep<R> rightOuterJoin(@Stringly.SQL String sql);
 
     /**
      * Convenience method to <code>RIGHT OUTER JOIN</code> a table to the last
@@ -1509,7 +1509,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    SelectJoinPartitionByStep<R> rightOuterJoin(String sql, Object... bindings);
+    SelectJoinPartitionByStep<R> rightOuterJoin(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * Convenience method to <code>RIGHT OUTER JOIN</code> a table to the last
@@ -1529,7 +1529,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    SelectJoinPartitionByStep<R> rightOuterJoin(String sql, QueryPart... parts);
+    SelectJoinPartitionByStep<R> rightOuterJoin(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * Convenience method to <code>RIGHT OUTER JOIN</code> a table to the last
@@ -1673,7 +1673,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support({ CLICKHOUSE, FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
-    SelectOnStep<R> fullJoin(String sql);
+    SelectOnStep<R> fullJoin(@Stringly.SQL String sql);
 
     /**
      * Convenience method to <code>FULL OUTER JOIN</code> a table to the last
@@ -1690,7 +1690,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support({ CLICKHOUSE, FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
-    SelectOnStep<R> fullJoin(String sql, Object... bindings);
+    SelectOnStep<R> fullJoin(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * Convenience method to <code>FULL OUTER JOIN</code> a table to the last
@@ -1707,7 +1707,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support({ CLICKHOUSE, FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
-    SelectOnStep<R> fullJoin(String sql, QueryPart... parts);
+    SelectOnStep<R> fullJoin(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * Convenience method to <code>FULL OUTER JOIN</code> a table to the last
@@ -1854,7 +1854,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support({ CLICKHOUSE, FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
-    SelectOnStep<R> fullOuterJoin(String sql);
+    SelectOnStep<R> fullOuterJoin(@Stringly.SQL String sql);
 
     /**
      * Convenience method to <code>FULL OUTER JOIN</code> a table to the last
@@ -1874,7 +1874,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support({ CLICKHOUSE, FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
-    SelectOnStep<R> fullOuterJoin(String sql, Object... bindings);
+    SelectOnStep<R> fullOuterJoin(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * Convenience method to <code>FULL OUTER JOIN</code> a table to the last
@@ -1894,7 +1894,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support({ CLICKHOUSE, FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
-    SelectOnStep<R> fullOuterJoin(String sql, QueryPart... parts);
+    SelectOnStep<R> fullOuterJoin(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * Convenience method to <code>FULL OUTER JOIN</code> a table to the last
@@ -1964,7 +1964,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    SelectJoinStep<R> naturalJoin(String sql);
+    SelectJoinStep<R> naturalJoin(@Stringly.SQL String sql);
 
     /**
      * Convenience method to <code>NATURAL JOIN</code> a table to the last table
@@ -1987,7 +1987,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    SelectJoinStep<R> naturalJoin(String sql, Object... bindings);
+    SelectJoinStep<R> naturalJoin(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * Convenience method to <code>NATURAL JOIN</code> a table to the last table
@@ -2010,7 +2010,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    SelectJoinStep<R> naturalJoin(String sql, QueryPart... parts);
+    SelectJoinStep<R> naturalJoin(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * Convenience method to <code>NATURAL JOIN</code> a table to the last table
@@ -2083,7 +2083,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    SelectJoinStep<R> naturalLeftOuterJoin(String sql);
+    SelectJoinStep<R> naturalLeftOuterJoin(@Stringly.SQL String sql);
 
     /**
      * Convenience method to <code>NATURAL LEFT OUTER JOIN</code> a table to the
@@ -2106,7 +2106,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    SelectJoinStep<R> naturalLeftOuterJoin(String sql, Object... bindings);
+    SelectJoinStep<R> naturalLeftOuterJoin(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * Convenience method to <code>NATURAL LEFT OUTER JOIN</code> a table to the
@@ -2129,7 +2129,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    SelectJoinStep<R> naturalLeftOuterJoin(String sql, QueryPart... parts);
+    SelectJoinStep<R> naturalLeftOuterJoin(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * Convenience method to <code>NATURAL LEFT OUTER JOIN</code> a table to the
@@ -2202,7 +2202,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support({ CLICKHOUSE, CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
-    SelectJoinStep<R> naturalRightOuterJoin(String sql);
+    SelectJoinStep<R> naturalRightOuterJoin(@Stringly.SQL String sql);
 
     /**
      * Convenience method to <code>NATURAL RIGHT OUTER JOIN</code> a table to
@@ -2225,7 +2225,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support({ CLICKHOUSE, CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
-    SelectJoinStep<R> naturalRightOuterJoin(String sql, Object... bindings);
+    SelectJoinStep<R> naturalRightOuterJoin(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * Convenience method to <code>NATURAL RIGHT OUTER JOIN</code> a table to
@@ -2248,7 +2248,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support({ CLICKHOUSE, CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
-    SelectJoinStep<R> naturalRightOuterJoin(String sql, QueryPart... parts);
+    SelectJoinStep<R> naturalRightOuterJoin(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * Convenience method to <code>NATURAL RIGHT OUTER JOIN</code> a table to
@@ -2321,7 +2321,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support({ CLICKHOUSE, FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
-    SelectJoinStep<R> naturalFullOuterJoin(String sql);
+    SelectJoinStep<R> naturalFullOuterJoin(@Stringly.SQL String sql);
 
     /**
      * Convenience method to <code>NATURAL FULL OUTER JOIN</code> a table to
@@ -2344,7 +2344,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support({ CLICKHOUSE, FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
-    SelectJoinStep<R> naturalFullOuterJoin(String sql, Object... bindings);
+    SelectJoinStep<R> naturalFullOuterJoin(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * Convenience method to <code>NATURAL FULL OUTER JOIN</code> a table to
@@ -2367,7 +2367,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support({ CLICKHOUSE, FIREBIRD, HSQLDB, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     @PlainSQL
-    SelectJoinStep<R> naturalFullOuterJoin(String sql, QueryPart... parts);
+    SelectJoinStep<R> naturalFullOuterJoin(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * Convenience method to <code>NATURAL FULL OUTER JOIN</code> a table to
@@ -2557,7 +2557,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support({ FIREBIRD, POSTGRES, TRINO, YUGABYTEDB })
     @PlainSQL
-    SelectJoinStep<R> crossApply(String sql);
+    SelectJoinStep<R> crossApply(@Stringly.SQL String sql);
 
     /**
      * <code>CROSS APPLY</code> a table to this table.
@@ -2575,7 +2575,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support({ FIREBIRD, POSTGRES, TRINO, YUGABYTEDB })
     @PlainSQL
-    SelectJoinStep<R> crossApply(String sql, Object... bindings);
+    SelectJoinStep<R> crossApply(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * <code>CROSS APPLY</code> a table to this table.
@@ -2593,7 +2593,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support({ FIREBIRD, POSTGRES, TRINO, YUGABYTEDB })
     @PlainSQL
-    SelectJoinStep<R> crossApply(String sql, QueryPart... parts);
+    SelectJoinStep<R> crossApply(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * <code>CROSS APPLY</code> a table to this table.
@@ -2646,7 +2646,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support({ FIREBIRD, POSTGRES, TRINO, YUGABYTEDB })
     @PlainSQL
-    SelectJoinStep<R> outerApply(String sql);
+    SelectJoinStep<R> outerApply(@Stringly.SQL String sql);
 
     /**
      * <code>OUTER APPLY</code> a table to this table.
@@ -2664,7 +2664,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support({ FIREBIRD, POSTGRES, TRINO, YUGABYTEDB })
     @PlainSQL
-    SelectJoinStep<R> outerApply(String sql, Object... bindings);
+    SelectJoinStep<R> outerApply(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * <code>OUTER APPLY</code> a table to this table.
@@ -2682,7 +2682,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support({ FIREBIRD, POSTGRES, TRINO, YUGABYTEDB })
     @PlainSQL
-    SelectJoinStep<R> outerApply(String sql, QueryPart... parts);
+    SelectJoinStep<R> outerApply(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * <code>OUTER APPLY</code> a table to this table.
@@ -2742,7 +2742,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support({ MARIADB, MYSQL })
     @PlainSQL
-    SelectOnStep<R> straightJoin(String sql);
+    SelectOnStep<R> straightJoin(@Stringly.SQL String sql);
 
     /**
      * <code>STRAIGHT_JOIN</code> a table to this table.
@@ -2759,7 +2759,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support({ MARIADB, MYSQL })
     @PlainSQL
-    SelectOnStep<R> straightJoin(String sql, Object... bindings);
+    SelectOnStep<R> straightJoin(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * <code>STRAIGHT_JOIN</code> a table to this table.
@@ -2776,7 +2776,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support({ MARIADB, MYSQL })
     @PlainSQL
-    SelectOnStep<R> straightJoin(String sql, QueryPart... parts);
+    SelectOnStep<R> straightJoin(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * <code>STRAIGHT_JOIN</code> a table to this table.

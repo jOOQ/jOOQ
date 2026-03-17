@@ -138,7 +138,7 @@ public interface DeleteWhereStep<R extends Record> extends DeleteOrderByStep<R> 
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    DeleteConditionStep<R> where(String sql);
+    DeleteConditionStep<R> where(@Stringly.SQL String sql);
 
     /**
      * Add conditions to the query.
@@ -155,7 +155,7 @@ public interface DeleteWhereStep<R extends Record> extends DeleteOrderByStep<R> 
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    DeleteConditionStep<R> where(String sql, Object... bindings);
+    DeleteConditionStep<R> where(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * Add conditions to the query.
@@ -172,7 +172,7 @@ public interface DeleteWhereStep<R extends Record> extends DeleteOrderByStep<R> 
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    DeleteConditionStep<R> where(String sql, QueryPart... parts);
+    DeleteConditionStep<R> where(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * Add an EXISTS clause to the query.

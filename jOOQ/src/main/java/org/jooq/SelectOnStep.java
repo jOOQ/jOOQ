@@ -160,7 +160,7 @@ public interface SelectOnStep<R extends Record> {
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    SelectOnConditionStep<R> on(String sql);
+    SelectOnConditionStep<R> on(@Stringly.SQL String sql);
 
     /**
      * Add an <code>ON</code> clause to the previous <code>JOIN</code>.
@@ -177,7 +177,7 @@ public interface SelectOnStep<R extends Record> {
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    SelectOnConditionStep<R> on(String sql, Object... bindings);
+    SelectOnConditionStep<R> on(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * Add an <code>ON</code> clause to the previous <code>JOIN</code>.
@@ -194,7 +194,7 @@ public interface SelectOnStep<R extends Record> {
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    SelectOnConditionStep<R> on(String sql, QueryPart... parts);
+    SelectOnConditionStep<R> on(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * Join the previous table on a non-ambiguous foreign key relationship

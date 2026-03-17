@@ -150,7 +150,7 @@ public interface DivideByOnStep {
     @NotNull
     @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @PlainSQL
-    DivideByOnConditionStep on(String sql);
+    DivideByOnConditionStep on(@Stringly.SQL String sql);
 
     /**
      * Add a division condition to the <code>DIVIDE BY</code> clause
@@ -167,7 +167,7 @@ public interface DivideByOnStep {
     @NotNull
     @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @PlainSQL
-    DivideByOnConditionStep on(String sql, Object... bindings);
+    DivideByOnConditionStep on(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * Add a division condition to the <code>DIVIDE BY</code> clause
@@ -184,5 +184,5 @@ public interface DivideByOnStep {
     @NotNull
     @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     @PlainSQL
-    DivideByOnConditionStep on(String sql, QueryPart... parts);
+    DivideByOnConditionStep on(@Stringly.SQL String sql, QueryPart... parts);
 }

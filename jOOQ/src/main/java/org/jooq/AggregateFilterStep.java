@@ -130,7 +130,7 @@ public interface AggregateFilterStep<T> extends WindowBeforeOverStep<T> {
     @NotNull
     @Support
     @PlainSQL
-    WindowBeforeOverStep<T> filterWhere(String sql);
+    WindowBeforeOverStep<T> filterWhere(@Stringly.SQL String sql);
 
     /**
      * Add a <code>FILTER clause</code> to the aggregate function.
@@ -147,7 +147,7 @@ public interface AggregateFilterStep<T> extends WindowBeforeOverStep<T> {
     @NotNull
     @Support
     @PlainSQL
-    WindowBeforeOverStep<T> filterWhere(String sql, Object... bindings);
+    WindowBeforeOverStep<T> filterWhere(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * Add a <code>FILTER clause</code> to the aggregate function.
@@ -164,6 +164,6 @@ public interface AggregateFilterStep<T> extends WindowBeforeOverStep<T> {
     @NotNull
     @Support
     @PlainSQL
-    WindowBeforeOverStep<T> filterWhere(String sql, QueryPart... parts);
+    WindowBeforeOverStep<T> filterWhere(@Stringly.SQL String sql, QueryPart... parts);
 
 }

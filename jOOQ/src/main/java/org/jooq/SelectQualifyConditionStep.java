@@ -152,7 +152,7 @@ public interface SelectQualifyConditionStep<R extends Record> extends SelectOrde
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    SelectQualifyConditionStep<R> and(String sql);
+    SelectQualifyConditionStep<R> and(@Stringly.SQL String sql);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -170,7 +170,7 @@ public interface SelectQualifyConditionStep<R extends Record> extends SelectOrde
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    SelectQualifyConditionStep<R> and(String sql, Object... bindings);
+    SelectQualifyConditionStep<R> and(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -188,7 +188,7 @@ public interface SelectQualifyConditionStep<R extends Record> extends SelectOrde
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    SelectQualifyConditionStep<R> and(String sql, QueryPart... parts);
+    SelectQualifyConditionStep<R> and(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * Combine the currently assembled conditions with a negated other one using
@@ -270,7 +270,7 @@ public interface SelectQualifyConditionStep<R extends Record> extends SelectOrde
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    SelectQualifyConditionStep<R> or(String sql);
+    SelectQualifyConditionStep<R> or(@Stringly.SQL String sql);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -288,7 +288,7 @@ public interface SelectQualifyConditionStep<R extends Record> extends SelectOrde
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    SelectQualifyConditionStep<R> or(String sql, Object... bindings);
+    SelectQualifyConditionStep<R> or(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -306,7 +306,7 @@ public interface SelectQualifyConditionStep<R extends Record> extends SelectOrde
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    SelectQualifyConditionStep<R> or(String sql, QueryPart... parts);
+    SelectQualifyConditionStep<R> or(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * Combine the currently assembled conditions with a negated other one using

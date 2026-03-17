@@ -130,7 +130,7 @@ public interface Condition extends Field<Boolean> {
     @NotNull
     @Support
     @PlainSQL
-    Condition and(String sql);
+    Condition and(@Stringly.SQL String sql);
 
     /**
      * Combine this condition with another one using the {@link Operator#AND}
@@ -151,7 +151,7 @@ public interface Condition extends Field<Boolean> {
     @NotNull
     @Support
     @PlainSQL
-    Condition and(String sql, Object... bindings);
+    Condition and(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * Combine this condition with another one using the {@link Operator#AND}
@@ -174,7 +174,7 @@ public interface Condition extends Field<Boolean> {
     @NotNull
     @Support
     @PlainSQL
-    Condition and(String sql, QueryPart... parts);
+    Condition and(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * Combine this condition with a negated other one using the
@@ -267,7 +267,7 @@ public interface Condition extends Field<Boolean> {
     @NotNull
     @Support
     @PlainSQL
-    Condition or(String sql);
+    Condition or(@Stringly.SQL String sql);
 
     /**
      * Combine this condition with another one using the {@link Operator#OR}
@@ -288,7 +288,7 @@ public interface Condition extends Field<Boolean> {
     @NotNull
     @Support
     @PlainSQL
-    Condition or(String sql, Object... bindings);
+    Condition or(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * Combine this condition with another one using the {@link Operator#OR}
@@ -311,7 +311,7 @@ public interface Condition extends Field<Boolean> {
     @NotNull
     @Support
     @PlainSQL
-    Condition or(String sql, QueryPart... parts);
+    Condition or(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * Combine this condition with a negated other one using the
@@ -404,7 +404,7 @@ public interface Condition extends Field<Boolean> {
     @NotNull
     @Support
     @PlainSQL
-    Condition xor(String sql);
+    Condition xor(@Stringly.SQL String sql);
 
     /**
      * Combine this condition with another one using the {@link Operator#XOR}
@@ -425,7 +425,7 @@ public interface Condition extends Field<Boolean> {
     @NotNull
     @Support
     @PlainSQL
-    Condition xor(String sql, Object... bindings);
+    Condition xor(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * Combine this condition with another one using the {@link Operator#XOR}
@@ -448,7 +448,7 @@ public interface Condition extends Field<Boolean> {
     @NotNull
     @Support
     @PlainSQL
-    Condition xor(String sql, QueryPart... parts);
+    Condition xor(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * Combine this condition with a negated other one using the

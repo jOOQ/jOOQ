@@ -140,7 +140,7 @@ public interface UpdateWhereStep<R extends Record> extends UpdateOrderByStep<R> 
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    UpdateConditionStep<R> where(String sql);
+    UpdateConditionStep<R> where(@Stringly.SQL String sql);
 
     /**
      * Add conditions to the query
@@ -157,7 +157,7 @@ public interface UpdateWhereStep<R extends Record> extends UpdateOrderByStep<R> 
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    UpdateConditionStep<R> where(String sql, Object... bindings);
+    UpdateConditionStep<R> where(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * Add conditions to the query
@@ -174,7 +174,7 @@ public interface UpdateWhereStep<R extends Record> extends UpdateOrderByStep<R> 
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    UpdateConditionStep<R> where(String sql, QueryPart... parts);
+    UpdateConditionStep<R> where(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * Add an EXISTS clause to the query

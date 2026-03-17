@@ -149,7 +149,7 @@ public interface MergeOnConditionStep<R extends Record> extends MergeMatchedStep
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES })
     @PlainSQL
-    MergeOnConditionStep<R> and(String sql);
+    MergeOnConditionStep<R> and(@Stringly.SQL String sql);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -167,7 +167,7 @@ public interface MergeOnConditionStep<R extends Record> extends MergeMatchedStep
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES })
     @PlainSQL
-    MergeOnConditionStep<R> and(String sql, Object... bindings);
+    MergeOnConditionStep<R> and(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -185,7 +185,7 @@ public interface MergeOnConditionStep<R extends Record> extends MergeMatchedStep
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES })
     @PlainSQL
-    MergeOnConditionStep<R> and(String sql, QueryPart... parts);
+    MergeOnConditionStep<R> and(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * Combine the currently assembled conditions with a negated other one using
@@ -267,7 +267,7 @@ public interface MergeOnConditionStep<R extends Record> extends MergeMatchedStep
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES })
     @PlainSQL
-    MergeOnConditionStep<R> or(String sql);
+    MergeOnConditionStep<R> or(@Stringly.SQL String sql);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -285,7 +285,7 @@ public interface MergeOnConditionStep<R extends Record> extends MergeMatchedStep
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES })
     @PlainSQL
-    MergeOnConditionStep<R> or(String sql, Object... bindings);
+    MergeOnConditionStep<R> or(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -303,7 +303,7 @@ public interface MergeOnConditionStep<R extends Record> extends MergeMatchedStep
     @NotNull @CheckReturnValue
     @Support({ CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, POSTGRES })
     @PlainSQL
-    MergeOnConditionStep<R> or(String sql, QueryPart... parts);
+    MergeOnConditionStep<R> or(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * Combine the currently assembled conditions with a negated other one using

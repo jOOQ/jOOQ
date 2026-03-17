@@ -1157,7 +1157,7 @@ public interface DSLContext extends Scope {
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    RowCountQuery query(String sql);
+    RowCountQuery query(@Stringly.SQL String sql);
 
     /**
      * Create a new query holding plain SQL. There must be as many bind
@@ -1182,7 +1182,7 @@ public interface DSLContext extends Scope {
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    RowCountQuery query(String sql, Object... bindings);
+    RowCountQuery query(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * Create a new query holding plain SQL.
@@ -1215,7 +1215,7 @@ public interface DSLContext extends Scope {
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    RowCountQuery query(String sql, QueryPart... parts);
+    RowCountQuery query(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * Execute a new query holding plain SQL.
@@ -1273,7 +1273,7 @@ public interface DSLContext extends Scope {
     @Support
     @PlainSQL
     @Blocking
-    Result<Record> fetch(String sql) throws DataAccessException;
+    Result<Record> fetch(@Stringly.SQL String sql) throws DataAccessException;
 
     /**
      * Execute a new query holding plain SQL.
@@ -1306,7 +1306,7 @@ public interface DSLContext extends Scope {
     @Support
     @PlainSQL
     @Blocking
-    Result<Record> fetch(String sql, Object... bindings) throws DataAccessException;
+    Result<Record> fetch(@Stringly.SQL String sql, Object... bindings) throws DataAccessException;
 
     /**
      * Execute a new query holding plain SQL.
@@ -1342,7 +1342,7 @@ public interface DSLContext extends Scope {
     @Support
     @PlainSQL
     @Blocking
-    Result<Record> fetch(String sql, QueryPart... parts) throws DataAccessException;
+    Result<Record> fetch(@Stringly.SQL String sql, QueryPart... parts) throws DataAccessException;
 
     /**
      * Execute a new query holding plain SQL and "lazily" return the generated
@@ -1428,7 +1428,7 @@ public interface DSLContext extends Scope {
     @Support
     @PlainSQL
     @Blocking
-    Cursor<Record> fetchLazy(String sql) throws DataAccessException;
+    Cursor<Record> fetchLazy(@Stringly.SQL String sql) throws DataAccessException;
 
     /**
      * Execute a new query holding plain SQL and "lazily" return the generated
@@ -1476,7 +1476,7 @@ public interface DSLContext extends Scope {
     @Support
     @PlainSQL
     @Blocking
-    Cursor<Record> fetchLazy(String sql, Object... bindings) throws DataAccessException;
+    Cursor<Record> fetchLazy(@Stringly.SQL String sql, Object... bindings) throws DataAccessException;
 
     /**
      * Execute a new query holding plain SQL and "lazily" return the generated
@@ -1526,7 +1526,7 @@ public interface DSLContext extends Scope {
     @Support
     @PlainSQL
     @Blocking
-    Cursor<Record> fetchLazy(String sql, QueryPart... parts) throws DataAccessException;
+    Cursor<Record> fetchLazy(@Stringly.SQL String sql, QueryPart... parts) throws DataAccessException;
 
     /**
      * Fetch results in a new {@link CompletionStage}.
@@ -1588,7 +1588,7 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support
     @PlainSQL
-    CompletionStage<Result<Record>> fetchAsync(String sql);
+    CompletionStage<Result<Record>> fetchAsync(@Stringly.SQL String sql);
 
     /**
      * Fetch results in a new {@link CompletionStage}.
@@ -1624,7 +1624,7 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support
     @PlainSQL
-    CompletionStage<Result<Record>> fetchAsync(String sql, Object... bindings);
+    CompletionStage<Result<Record>> fetchAsync(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * Fetch results in a new {@link CompletionStage}.
@@ -1662,7 +1662,7 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support
     @PlainSQL
-    CompletionStage<Result<Record>> fetchAsync(String sql, QueryPart... parts);
+    CompletionStage<Result<Record>> fetchAsync(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * Fetch results in a new {@link CompletionStage} that is asynchronously
@@ -1718,7 +1718,7 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support
     @PlainSQL
-    CompletionStage<Result<Record>> fetchAsync(Executor executor, String sql);
+    CompletionStage<Result<Record>> fetchAsync(Executor executor, @Stringly.SQL String sql);
 
     /**
      * Fetch results in a new {@link CompletionStage} that is asynchronously
@@ -1751,7 +1751,7 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support
     @PlainSQL
-    CompletionStage<Result<Record>> fetchAsync(Executor executor, String sql, Object... bindings);
+    CompletionStage<Result<Record>> fetchAsync(Executor executor, @Stringly.SQL String sql, Object... bindings);
 
     /**
      * Fetch results in a new {@link CompletionStage} that is asynchronously
@@ -1786,7 +1786,7 @@ public interface DSLContext extends Scope {
     @NotNull
     @Support
     @PlainSQL
-    CompletionStage<Result<Record>> fetchAsync(Executor executor, String sql, QueryPart... parts);
+    CompletionStage<Result<Record>> fetchAsync(Executor executor, @Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * Execute a new query holding plain SQL and "lazily" return the generated
@@ -1876,7 +1876,7 @@ public interface DSLContext extends Scope {
     @Support
     @PlainSQL
     @Blocking
-    Stream<Record> fetchStream(String sql) throws DataAccessException;
+    Stream<Record> fetchStream(@Stringly.SQL String sql) throws DataAccessException;
 
     /**
      * Execute a new query holding plain SQL and "lazily" return the generated
@@ -1926,7 +1926,7 @@ public interface DSLContext extends Scope {
     @Support
     @PlainSQL
     @Blocking
-    Stream<Record> fetchStream(String sql, Object... bindings) throws DataAccessException;
+    Stream<Record> fetchStream(@Stringly.SQL String sql, Object... bindings) throws DataAccessException;
 
     /**
      * Execute a new query holding plain SQL and "lazily" return the generated
@@ -1978,7 +1978,7 @@ public interface DSLContext extends Scope {
     @Support
     @PlainSQL
     @Blocking
-    Stream<Record> fetchStream(String sql, QueryPart... parts) throws DataAccessException;
+    Stream<Record> fetchStream(@Stringly.SQL String sql, QueryPart... parts) throws DataAccessException;
 
     /**
      * Execute a new query holding plain SQL, possibly returning several result
@@ -2028,7 +2028,7 @@ public interface DSLContext extends Scope {
     @Support
     @PlainSQL
     @Blocking
-    Results fetchMany(String sql) throws DataAccessException;
+    Results fetchMany(@Stringly.SQL String sql) throws DataAccessException;
 
     /**
      * Execute a new query holding plain SQL, possibly returning several result
@@ -2058,7 +2058,7 @@ public interface DSLContext extends Scope {
     @Support
     @PlainSQL
     @Blocking
-    Results fetchMany(String sql, Object... bindings) throws DataAccessException;
+    Results fetchMany(@Stringly.SQL String sql, Object... bindings) throws DataAccessException;
 
     /**
      * Execute a new query holding plain SQL, possibly returning several result
@@ -2094,7 +2094,7 @@ public interface DSLContext extends Scope {
     @Support
     @PlainSQL
     @Blocking
-    Results fetchMany(String sql, QueryPart... parts) throws DataAccessException;
+    Results fetchMany(@Stringly.SQL String sql, QueryPart... parts) throws DataAccessException;
 
     /**
      * Execute a new query holding plain SQL.
@@ -2152,7 +2152,7 @@ public interface DSLContext extends Scope {
     @Support
     @PlainSQL
     @Blocking
-    Record fetchOne(String sql) throws DataAccessException, TooManyRowsException;
+    Record fetchOne(@Stringly.SQL String sql) throws DataAccessException, TooManyRowsException;
 
     /**
      * Execute a new query holding plain SQL.
@@ -2186,7 +2186,7 @@ public interface DSLContext extends Scope {
     @Support
     @PlainSQL
     @Blocking
-    Record fetchOne(String sql, Object... bindings) throws DataAccessException, TooManyRowsException;
+    Record fetchOne(@Stringly.SQL String sql, Object... bindings) throws DataAccessException, TooManyRowsException;
 
     /**
      * Execute a new query holding plain SQL.
@@ -2222,7 +2222,7 @@ public interface DSLContext extends Scope {
     @Support
     @PlainSQL
     @Blocking
-    Record fetchOne(String sql, QueryPart... parts) throws DataAccessException, TooManyRowsException;
+    Record fetchOne(@Stringly.SQL String sql, QueryPart... parts) throws DataAccessException, TooManyRowsException;
 
     /**
      * Execute a new query holding plain SQL.
@@ -2282,7 +2282,7 @@ public interface DSLContext extends Scope {
     @Support
     @PlainSQL
     @Blocking
-    Record fetchSingle(String sql) throws DataAccessException, NoDataFoundException, TooManyRowsException;
+    Record fetchSingle(@Stringly.SQL String sql) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
      * Execute a new query holding plain SQL.
@@ -2317,7 +2317,7 @@ public interface DSLContext extends Scope {
     @Support
     @PlainSQL
     @Blocking
-    Record fetchSingle(String sql, Object... bindings) throws DataAccessException, NoDataFoundException, TooManyRowsException;
+    Record fetchSingle(@Stringly.SQL String sql, Object... bindings) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
      * Execute a new query holding plain SQL.
@@ -2354,7 +2354,7 @@ public interface DSLContext extends Scope {
     @Support
     @PlainSQL
     @Blocking
-    Record fetchSingle(String sql, QueryPart... parts) throws DataAccessException, NoDataFoundException, TooManyRowsException;
+    Record fetchSingle(@Stringly.SQL String sql, QueryPart... parts) throws DataAccessException, NoDataFoundException, TooManyRowsException;
 
     /**
      * Execute a new query holding plain SQL.
@@ -2412,7 +2412,7 @@ public interface DSLContext extends Scope {
     @Support
     @PlainSQL
     @Blocking
-    Optional<Record> fetchOptional(String sql) throws DataAccessException, TooManyRowsException;
+    Optional<Record> fetchOptional(@Stringly.SQL String sql) throws DataAccessException, TooManyRowsException;
 
     /**
      * Execute a new query holding plain SQL.
@@ -2446,7 +2446,7 @@ public interface DSLContext extends Scope {
     @Support
     @PlainSQL
     @Blocking
-    Optional<Record> fetchOptional(String sql, Object... bindings) throws DataAccessException, TooManyRowsException;
+    Optional<Record> fetchOptional(@Stringly.SQL String sql, Object... bindings) throws DataAccessException, TooManyRowsException;
 
     /**
      * Execute a new query holding plain SQL.
@@ -2482,7 +2482,7 @@ public interface DSLContext extends Scope {
     @Support
     @PlainSQL
     @Blocking
-    Optional<Record> fetchOptional(String sql, QueryPart... parts) throws DataAccessException, TooManyRowsException;
+    Optional<Record> fetchOptional(@Stringly.SQL String sql, QueryPart... parts) throws DataAccessException, TooManyRowsException;
 
     /**
      * Execute a new query holding plain SQL.
@@ -2544,7 +2544,7 @@ public interface DSLContext extends Scope {
     @Support
     @PlainSQL
     @Blocking
-    Object fetchValue(String sql) throws DataAccessException, TooManyRowsException, InvalidResultException;
+    Object fetchValue(@Stringly.SQL String sql) throws DataAccessException, TooManyRowsException, InvalidResultException;
 
     /**
      * Execute a new query holding plain SQL.
@@ -2580,7 +2580,7 @@ public interface DSLContext extends Scope {
     @Support
     @PlainSQL
     @Blocking
-    Object fetchValue(String sql, Object... bindings) throws DataAccessException, TooManyRowsException, InvalidResultException;
+    Object fetchValue(@Stringly.SQL String sql, Object... bindings) throws DataAccessException, TooManyRowsException, InvalidResultException;
 
     /**
      * Execute a new query holding plain SQL.
@@ -2618,7 +2618,7 @@ public interface DSLContext extends Scope {
     @Support
     @PlainSQL
     @Blocking
-    Object fetchValue(String sql, QueryPart... parts) throws DataAccessException, TooManyRowsException, InvalidResultException;
+    Object fetchValue(@Stringly.SQL String sql, QueryPart... parts) throws DataAccessException, TooManyRowsException, InvalidResultException;
 
     /**
      * Execute a new query holding plain SQL.
@@ -2680,7 +2680,7 @@ public interface DSLContext extends Scope {
     @Support
     @PlainSQL
     @Blocking
-    Optional<?> fetchOptionalValue(String sql) throws DataAccessException, TooManyRowsException, InvalidResultException;
+    Optional<?> fetchOptionalValue(@Stringly.SQL String sql) throws DataAccessException, TooManyRowsException, InvalidResultException;
 
     /**
      * Execute a new query holding plain SQL.
@@ -2716,7 +2716,7 @@ public interface DSLContext extends Scope {
     @Support
     @PlainSQL
     @Blocking
-    Optional<?> fetchOptionalValue(String sql, Object... bindings) throws DataAccessException, TooManyRowsException, InvalidResultException;
+    Optional<?> fetchOptionalValue(@Stringly.SQL String sql, Object... bindings) throws DataAccessException, TooManyRowsException, InvalidResultException;
 
     /**
      * Execute a new query holding plain SQL.
@@ -2754,7 +2754,7 @@ public interface DSLContext extends Scope {
     @Support
     @PlainSQL
     @Blocking
-    Optional<?> fetchOptionalValue(String sql, QueryPart... parts) throws DataAccessException, TooManyRowsException, InvalidResultException;
+    Optional<?> fetchOptionalValue(@Stringly.SQL String sql, QueryPart... parts) throws DataAccessException, TooManyRowsException, InvalidResultException;
 
     /**
      * Execute a new query holding plain SQL.
@@ -2814,7 +2814,7 @@ public interface DSLContext extends Scope {
     @Support
     @PlainSQL
     @Blocking
-    List<?> fetchValues(String sql) throws DataAccessException, InvalidResultException;
+    List<?> fetchValues(@Stringly.SQL String sql) throws DataAccessException, InvalidResultException;
 
     /**
      * Execute a new query holding plain SQL.
@@ -2849,7 +2849,7 @@ public interface DSLContext extends Scope {
     @Support
     @PlainSQL
     @Blocking
-    List<?> fetchValues(String sql, Object... bindings) throws DataAccessException, InvalidResultException;
+    List<?> fetchValues(@Stringly.SQL String sql, Object... bindings) throws DataAccessException, InvalidResultException;
 
     /**
      * Execute a new query holding plain SQL.
@@ -2886,7 +2886,7 @@ public interface DSLContext extends Scope {
     @Support
     @PlainSQL
     @Blocking
-    List<?> fetchValues(String sql, QueryPart... parts) throws DataAccessException, InvalidResultException;
+    List<?> fetchValues(@Stringly.SQL String sql, QueryPart... parts) throws DataAccessException, InvalidResultException;
 
     /**
      * Execute a query holding plain SQL.
@@ -2922,7 +2922,7 @@ public interface DSLContext extends Scope {
     @Support
     @PlainSQL
     @Blocking
-    int execute(String sql) throws DataAccessException;
+    int execute(@Stringly.SQL String sql) throws DataAccessException;
 
     /**
      * Execute a new query holding plain SQL.
@@ -2945,7 +2945,7 @@ public interface DSLContext extends Scope {
     @Support
     @PlainSQL
     @Blocking
-    int execute(String sql, Object... bindings) throws DataAccessException;
+    int execute(@Stringly.SQL String sql, Object... bindings) throws DataAccessException;
 
     /**
      * Execute a new query holding plain SQL.
@@ -2979,7 +2979,7 @@ public interface DSLContext extends Scope {
     @Support
     @PlainSQL
     @Blocking
-    int execute(String sql, QueryPart... parts) throws DataAccessException;
+    int execute(@Stringly.SQL String sql, QueryPart... parts) throws DataAccessException;
 
     /**
      * Execute a query holding plain SQL.
@@ -3023,7 +3023,7 @@ public interface DSLContext extends Scope {
     @Support
     @PlainSQL
     @Blocking
-    long executeLarge(String sql) throws DataAccessException;
+    long executeLarge(@Stringly.SQL String sql) throws DataAccessException;
 
     /**
      * Execute a new query holding plain SQL.
@@ -3050,7 +3050,7 @@ public interface DSLContext extends Scope {
     @Support
     @PlainSQL
     @Blocking
-    long executeLarge(String sql, Object... bindings) throws DataAccessException;
+    long executeLarge(@Stringly.SQL String sql, Object... bindings) throws DataAccessException;
 
     /**
      * Execute a new query holding plain SQL.
@@ -3092,7 +3092,7 @@ public interface DSLContext extends Scope {
     @Support
     @PlainSQL
     @Blocking
-    long executeLarge(String sql, QueryPart... parts) throws DataAccessException;
+    long executeLarge(@Stringly.SQL String sql, QueryPart... parts) throws DataAccessException;
 
     /**
      * Create a new query holding plain SQL.
@@ -3186,7 +3186,7 @@ public interface DSLContext extends Scope {
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    ResultQuery<Record> resultQuery(String sql);
+    ResultQuery<Record> resultQuery(@Stringly.SQL String sql);
 
     /**
      * Create a new query holding plain SQL.
@@ -3236,7 +3236,7 @@ public interface DSLContext extends Scope {
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    ResultQuery<Record> resultQuery(String sql, Object... bindings);
+    ResultQuery<Record> resultQuery(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * Create a new query holding plain SQL.
@@ -3269,7 +3269,7 @@ public interface DSLContext extends Scope {
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    ResultQuery<Record> resultQuery(String sql, QueryPart... parts);
+    ResultQuery<Record> resultQuery(@Stringly.SQL String sql, QueryPart... parts);
 
     // -------------------------------------------------------------------------
     // XXX JDBC convenience methods
@@ -4509,7 +4509,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support
-    WithAsStep with(String alias);
+    WithAsStep with(@Stringly.Name String alias);
 
     /**
      * Create a <code>WITH</code> clause to supply subsequent
@@ -4526,7 +4526,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support
-    WithAsStep with(String alias, String... fieldAliases);
+    WithAsStep with(@Stringly.Name String alias, @Stringly.Name String... fieldAliases);
 
     /**
      * Create a <code>WITH</code> clause to supply subsequent
@@ -4543,7 +4543,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support
-    WithAsStep with(String alias, Collection<String> fieldAliases);
+    WithAsStep with(@Stringly.Name String alias, @Stringly.Name Collection<String> fieldAliases);
 
     /**
      * Create a <code>WITH</code> clause to supply subsequent
@@ -4621,7 +4621,7 @@ public interface DSLContext extends Scope {
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull @CheckReturnValue
     @Support
-    WithAsStep with(String alias, Function<? super Field<?>, ? extends String> fieldNameFunction);
+    WithAsStep with(@Stringly.Name String alias, Function<? super Field<?>, ? extends String> fieldNameFunction);
 
     /**
      * Create a <code>WITH</code> clause to supply subsequent
@@ -4648,7 +4648,7 @@ public interface DSLContext extends Scope {
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull @CheckReturnValue
     @Support
-    WithAsStep with(String alias, BiFunction<? super Field<?>, ? super Integer, ? extends String> fieldNameFunction);
+    WithAsStep with(@Stringly.Name String alias, BiFunction<? super Field<?>, ? super Integer, ? extends String> fieldNameFunction);
 
 
 
@@ -4667,7 +4667,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support
-    WithAsStep1 with(String alias, String fieldAlias1);
+    WithAsStep1 with(@Stringly.Name String alias, @Stringly.Name String fieldAlias1);
 
     /**
      * Create a <code>WITH</code> clause to supply subsequent
@@ -4684,7 +4684,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support
-    WithAsStep2 with(String alias, String fieldAlias1, String fieldAlias2);
+    WithAsStep2 with(@Stringly.Name String alias, @Stringly.Name String fieldAlias1, @Stringly.Name String fieldAlias2);
 
     /**
      * Create a <code>WITH</code> clause to supply subsequent
@@ -4701,7 +4701,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support
-    WithAsStep3 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3);
+    WithAsStep3 with(@Stringly.Name String alias, @Stringly.Name String fieldAlias1, @Stringly.Name String fieldAlias2, @Stringly.Name String fieldAlias3);
 
     /**
      * Create a <code>WITH</code> clause to supply subsequent
@@ -4718,7 +4718,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support
-    WithAsStep4 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4);
+    WithAsStep4 with(@Stringly.Name String alias, @Stringly.Name String fieldAlias1, @Stringly.Name String fieldAlias2, @Stringly.Name String fieldAlias3, @Stringly.Name String fieldAlias4);
 
     /**
      * Create a <code>WITH</code> clause to supply subsequent
@@ -4735,7 +4735,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support
-    WithAsStep5 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5);
+    WithAsStep5 with(@Stringly.Name String alias, @Stringly.Name String fieldAlias1, @Stringly.Name String fieldAlias2, @Stringly.Name String fieldAlias3, @Stringly.Name String fieldAlias4, @Stringly.Name String fieldAlias5);
 
     /**
      * Create a <code>WITH</code> clause to supply subsequent
@@ -4752,7 +4752,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support
-    WithAsStep6 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6);
+    WithAsStep6 with(@Stringly.Name String alias, @Stringly.Name String fieldAlias1, @Stringly.Name String fieldAlias2, @Stringly.Name String fieldAlias3, @Stringly.Name String fieldAlias4, @Stringly.Name String fieldAlias5, @Stringly.Name String fieldAlias6);
 
     /**
      * Create a <code>WITH</code> clause to supply subsequent
@@ -4769,7 +4769,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support
-    WithAsStep7 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7);
+    WithAsStep7 with(@Stringly.Name String alias, @Stringly.Name String fieldAlias1, @Stringly.Name String fieldAlias2, @Stringly.Name String fieldAlias3, @Stringly.Name String fieldAlias4, @Stringly.Name String fieldAlias5, @Stringly.Name String fieldAlias6, @Stringly.Name String fieldAlias7);
 
     /**
      * Create a <code>WITH</code> clause to supply subsequent
@@ -4786,7 +4786,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support
-    WithAsStep8 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8);
+    WithAsStep8 with(@Stringly.Name String alias, @Stringly.Name String fieldAlias1, @Stringly.Name String fieldAlias2, @Stringly.Name String fieldAlias3, @Stringly.Name String fieldAlias4, @Stringly.Name String fieldAlias5, @Stringly.Name String fieldAlias6, @Stringly.Name String fieldAlias7, @Stringly.Name String fieldAlias8);
 
     /**
      * Create a <code>WITH</code> clause to supply subsequent
@@ -4803,7 +4803,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support
-    WithAsStep9 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9);
+    WithAsStep9 with(@Stringly.Name String alias, @Stringly.Name String fieldAlias1, @Stringly.Name String fieldAlias2, @Stringly.Name String fieldAlias3, @Stringly.Name String fieldAlias4, @Stringly.Name String fieldAlias5, @Stringly.Name String fieldAlias6, @Stringly.Name String fieldAlias7, @Stringly.Name String fieldAlias8, @Stringly.Name String fieldAlias9);
 
     /**
      * Create a <code>WITH</code> clause to supply subsequent
@@ -4820,7 +4820,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support
-    WithAsStep10 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10);
+    WithAsStep10 with(@Stringly.Name String alias, @Stringly.Name String fieldAlias1, @Stringly.Name String fieldAlias2, @Stringly.Name String fieldAlias3, @Stringly.Name String fieldAlias4, @Stringly.Name String fieldAlias5, @Stringly.Name String fieldAlias6, @Stringly.Name String fieldAlias7, @Stringly.Name String fieldAlias8, @Stringly.Name String fieldAlias9, @Stringly.Name String fieldAlias10);
 
     /**
      * Create a <code>WITH</code> clause to supply subsequent
@@ -4837,7 +4837,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support
-    WithAsStep11 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11);
+    WithAsStep11 with(@Stringly.Name String alias, @Stringly.Name String fieldAlias1, @Stringly.Name String fieldAlias2, @Stringly.Name String fieldAlias3, @Stringly.Name String fieldAlias4, @Stringly.Name String fieldAlias5, @Stringly.Name String fieldAlias6, @Stringly.Name String fieldAlias7, @Stringly.Name String fieldAlias8, @Stringly.Name String fieldAlias9, @Stringly.Name String fieldAlias10, @Stringly.Name String fieldAlias11);
 
     /**
      * Create a <code>WITH</code> clause to supply subsequent
@@ -4854,7 +4854,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support
-    WithAsStep12 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12);
+    WithAsStep12 with(@Stringly.Name String alias, @Stringly.Name String fieldAlias1, @Stringly.Name String fieldAlias2, @Stringly.Name String fieldAlias3, @Stringly.Name String fieldAlias4, @Stringly.Name String fieldAlias5, @Stringly.Name String fieldAlias6, @Stringly.Name String fieldAlias7, @Stringly.Name String fieldAlias8, @Stringly.Name String fieldAlias9, @Stringly.Name String fieldAlias10, @Stringly.Name String fieldAlias11, @Stringly.Name String fieldAlias12);
 
     /**
      * Create a <code>WITH</code> clause to supply subsequent
@@ -4871,7 +4871,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support
-    WithAsStep13 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13);
+    WithAsStep13 with(@Stringly.Name String alias, @Stringly.Name String fieldAlias1, @Stringly.Name String fieldAlias2, @Stringly.Name String fieldAlias3, @Stringly.Name String fieldAlias4, @Stringly.Name String fieldAlias5, @Stringly.Name String fieldAlias6, @Stringly.Name String fieldAlias7, @Stringly.Name String fieldAlias8, @Stringly.Name String fieldAlias9, @Stringly.Name String fieldAlias10, @Stringly.Name String fieldAlias11, @Stringly.Name String fieldAlias12, @Stringly.Name String fieldAlias13);
 
     /**
      * Create a <code>WITH</code> clause to supply subsequent
@@ -4888,7 +4888,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support
-    WithAsStep14 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14);
+    WithAsStep14 with(@Stringly.Name String alias, @Stringly.Name String fieldAlias1, @Stringly.Name String fieldAlias2, @Stringly.Name String fieldAlias3, @Stringly.Name String fieldAlias4, @Stringly.Name String fieldAlias5, @Stringly.Name String fieldAlias6, @Stringly.Name String fieldAlias7, @Stringly.Name String fieldAlias8, @Stringly.Name String fieldAlias9, @Stringly.Name String fieldAlias10, @Stringly.Name String fieldAlias11, @Stringly.Name String fieldAlias12, @Stringly.Name String fieldAlias13, @Stringly.Name String fieldAlias14);
 
     /**
      * Create a <code>WITH</code> clause to supply subsequent
@@ -4905,7 +4905,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support
-    WithAsStep15 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15);
+    WithAsStep15 with(@Stringly.Name String alias, @Stringly.Name String fieldAlias1, @Stringly.Name String fieldAlias2, @Stringly.Name String fieldAlias3, @Stringly.Name String fieldAlias4, @Stringly.Name String fieldAlias5, @Stringly.Name String fieldAlias6, @Stringly.Name String fieldAlias7, @Stringly.Name String fieldAlias8, @Stringly.Name String fieldAlias9, @Stringly.Name String fieldAlias10, @Stringly.Name String fieldAlias11, @Stringly.Name String fieldAlias12, @Stringly.Name String fieldAlias13, @Stringly.Name String fieldAlias14, @Stringly.Name String fieldAlias15);
 
     /**
      * Create a <code>WITH</code> clause to supply subsequent
@@ -4922,7 +4922,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support
-    WithAsStep16 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16);
+    WithAsStep16 with(@Stringly.Name String alias, @Stringly.Name String fieldAlias1, @Stringly.Name String fieldAlias2, @Stringly.Name String fieldAlias3, @Stringly.Name String fieldAlias4, @Stringly.Name String fieldAlias5, @Stringly.Name String fieldAlias6, @Stringly.Name String fieldAlias7, @Stringly.Name String fieldAlias8, @Stringly.Name String fieldAlias9, @Stringly.Name String fieldAlias10, @Stringly.Name String fieldAlias11, @Stringly.Name String fieldAlias12, @Stringly.Name String fieldAlias13, @Stringly.Name String fieldAlias14, @Stringly.Name String fieldAlias15, @Stringly.Name String fieldAlias16);
 
     /**
      * Create a <code>WITH</code> clause to supply subsequent
@@ -4939,7 +4939,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support
-    WithAsStep17 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17);
+    WithAsStep17 with(@Stringly.Name String alias, @Stringly.Name String fieldAlias1, @Stringly.Name String fieldAlias2, @Stringly.Name String fieldAlias3, @Stringly.Name String fieldAlias4, @Stringly.Name String fieldAlias5, @Stringly.Name String fieldAlias6, @Stringly.Name String fieldAlias7, @Stringly.Name String fieldAlias8, @Stringly.Name String fieldAlias9, @Stringly.Name String fieldAlias10, @Stringly.Name String fieldAlias11, @Stringly.Name String fieldAlias12, @Stringly.Name String fieldAlias13, @Stringly.Name String fieldAlias14, @Stringly.Name String fieldAlias15, @Stringly.Name String fieldAlias16, @Stringly.Name String fieldAlias17);
 
     /**
      * Create a <code>WITH</code> clause to supply subsequent
@@ -4956,7 +4956,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support
-    WithAsStep18 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18);
+    WithAsStep18 with(@Stringly.Name String alias, @Stringly.Name String fieldAlias1, @Stringly.Name String fieldAlias2, @Stringly.Name String fieldAlias3, @Stringly.Name String fieldAlias4, @Stringly.Name String fieldAlias5, @Stringly.Name String fieldAlias6, @Stringly.Name String fieldAlias7, @Stringly.Name String fieldAlias8, @Stringly.Name String fieldAlias9, @Stringly.Name String fieldAlias10, @Stringly.Name String fieldAlias11, @Stringly.Name String fieldAlias12, @Stringly.Name String fieldAlias13, @Stringly.Name String fieldAlias14, @Stringly.Name String fieldAlias15, @Stringly.Name String fieldAlias16, @Stringly.Name String fieldAlias17, @Stringly.Name String fieldAlias18);
 
     /**
      * Create a <code>WITH</code> clause to supply subsequent
@@ -4973,7 +4973,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support
-    WithAsStep19 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19);
+    WithAsStep19 with(@Stringly.Name String alias, @Stringly.Name String fieldAlias1, @Stringly.Name String fieldAlias2, @Stringly.Name String fieldAlias3, @Stringly.Name String fieldAlias4, @Stringly.Name String fieldAlias5, @Stringly.Name String fieldAlias6, @Stringly.Name String fieldAlias7, @Stringly.Name String fieldAlias8, @Stringly.Name String fieldAlias9, @Stringly.Name String fieldAlias10, @Stringly.Name String fieldAlias11, @Stringly.Name String fieldAlias12, @Stringly.Name String fieldAlias13, @Stringly.Name String fieldAlias14, @Stringly.Name String fieldAlias15, @Stringly.Name String fieldAlias16, @Stringly.Name String fieldAlias17, @Stringly.Name String fieldAlias18, @Stringly.Name String fieldAlias19);
 
     /**
      * Create a <code>WITH</code> clause to supply subsequent
@@ -4990,7 +4990,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support
-    WithAsStep20 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19, String fieldAlias20);
+    WithAsStep20 with(@Stringly.Name String alias, @Stringly.Name String fieldAlias1, @Stringly.Name String fieldAlias2, @Stringly.Name String fieldAlias3, @Stringly.Name String fieldAlias4, @Stringly.Name String fieldAlias5, @Stringly.Name String fieldAlias6, @Stringly.Name String fieldAlias7, @Stringly.Name String fieldAlias8, @Stringly.Name String fieldAlias9, @Stringly.Name String fieldAlias10, @Stringly.Name String fieldAlias11, @Stringly.Name String fieldAlias12, @Stringly.Name String fieldAlias13, @Stringly.Name String fieldAlias14, @Stringly.Name String fieldAlias15, @Stringly.Name String fieldAlias16, @Stringly.Name String fieldAlias17, @Stringly.Name String fieldAlias18, @Stringly.Name String fieldAlias19, @Stringly.Name String fieldAlias20);
 
     /**
      * Create a <code>WITH</code> clause to supply subsequent
@@ -5007,7 +5007,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support
-    WithAsStep21 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19, String fieldAlias20, String fieldAlias21);
+    WithAsStep21 with(@Stringly.Name String alias, @Stringly.Name String fieldAlias1, @Stringly.Name String fieldAlias2, @Stringly.Name String fieldAlias3, @Stringly.Name String fieldAlias4, @Stringly.Name String fieldAlias5, @Stringly.Name String fieldAlias6, @Stringly.Name String fieldAlias7, @Stringly.Name String fieldAlias8, @Stringly.Name String fieldAlias9, @Stringly.Name String fieldAlias10, @Stringly.Name String fieldAlias11, @Stringly.Name String fieldAlias12, @Stringly.Name String fieldAlias13, @Stringly.Name String fieldAlias14, @Stringly.Name String fieldAlias15, @Stringly.Name String fieldAlias16, @Stringly.Name String fieldAlias17, @Stringly.Name String fieldAlias18, @Stringly.Name String fieldAlias19, @Stringly.Name String fieldAlias20, @Stringly.Name String fieldAlias21);
 
     /**
      * Create a <code>WITH</code> clause to supply subsequent
@@ -5024,7 +5024,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support
-    WithAsStep22 with(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19, String fieldAlias20, String fieldAlias21, String fieldAlias22);
+    WithAsStep22 with(@Stringly.Name String alias, @Stringly.Name String fieldAlias1, @Stringly.Name String fieldAlias2, @Stringly.Name String fieldAlias3, @Stringly.Name String fieldAlias4, @Stringly.Name String fieldAlias5, @Stringly.Name String fieldAlias6, @Stringly.Name String fieldAlias7, @Stringly.Name String fieldAlias8, @Stringly.Name String fieldAlias9, @Stringly.Name String fieldAlias10, @Stringly.Name String fieldAlias11, @Stringly.Name String fieldAlias12, @Stringly.Name String fieldAlias13, @Stringly.Name String fieldAlias14, @Stringly.Name String fieldAlias15, @Stringly.Name String fieldAlias16, @Stringly.Name String fieldAlias17, @Stringly.Name String fieldAlias18, @Stringly.Name String fieldAlias19, @Stringly.Name String fieldAlias20, @Stringly.Name String fieldAlias21, @Stringly.Name String fieldAlias22);
 
     /**
      * Create a <code>WITH</code> clause to supply subsequent
@@ -5467,7 +5467,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support({ CLICKHOUSE, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    WithAsStep withRecursive(String alias);
+    WithAsStep withRecursive(@Stringly.Name String alias);
 
     /**
      * Create a <code>WITH</code> clause to supply subsequent
@@ -5484,7 +5484,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support({ CLICKHOUSE, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    WithAsStep withRecursive(String alias, String... fieldAliases);
+    WithAsStep withRecursive(@Stringly.Name String alias, @Stringly.Name String... fieldAliases);
 
     /**
      * Create a <code>WITH</code> clause to supply subsequent
@@ -5501,7 +5501,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support({ CLICKHOUSE, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    WithAsStep withRecursive(String alias, Collection<String> fieldAliases);
+    WithAsStep withRecursive(@Stringly.Name String alias, @Stringly.Name Collection<String> fieldAliases);
 
     /**
      * Create a <code>WITH</code> clause to supply subsequent
@@ -5580,7 +5580,7 @@ public interface DSLContext extends Scope {
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull @CheckReturnValue
     @Support({ CLICKHOUSE, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    WithAsStep withRecursive(String alias, Function<? super Field<?>, ? extends String> fieldNameFunction);
+    WithAsStep withRecursive(@Stringly.Name String alias, Function<? super Field<?>, ? extends String> fieldNameFunction);
 
     /**
      * Create a <code>WITH</code> clause to supply subsequent
@@ -5608,7 +5608,7 @@ public interface DSLContext extends Scope {
     @Deprecated(forRemoval = true, since = "3.14")
     @NotNull @CheckReturnValue
     @Support({ CLICKHOUSE, FIREBIRD, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
-    WithAsStep withRecursive(String alias, BiFunction<? super Field<?>, ? super Integer, ? extends String> fieldNameFunction);
+    WithAsStep withRecursive(@Stringly.Name String alias, BiFunction<? super Field<?>, ? super Integer, ? extends String> fieldNameFunction);
 
 
 
@@ -5627,7 +5627,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support({ CLICKHOUSE, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    WithAsStep1 withRecursive(String alias, String fieldAlias1);
+    WithAsStep1 withRecursive(@Stringly.Name String alias, @Stringly.Name String fieldAlias1);
 
     /**
      * Create a <code>WITH</code> clause to supply subsequent
@@ -5644,7 +5644,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support({ CLICKHOUSE, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    WithAsStep2 withRecursive(String alias, String fieldAlias1, String fieldAlias2);
+    WithAsStep2 withRecursive(@Stringly.Name String alias, @Stringly.Name String fieldAlias1, @Stringly.Name String fieldAlias2);
 
     /**
      * Create a <code>WITH</code> clause to supply subsequent
@@ -5661,7 +5661,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support({ CLICKHOUSE, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    WithAsStep3 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3);
+    WithAsStep3 withRecursive(@Stringly.Name String alias, @Stringly.Name String fieldAlias1, @Stringly.Name String fieldAlias2, @Stringly.Name String fieldAlias3);
 
     /**
      * Create a <code>WITH</code> clause to supply subsequent
@@ -5678,7 +5678,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support({ CLICKHOUSE, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    WithAsStep4 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4);
+    WithAsStep4 withRecursive(@Stringly.Name String alias, @Stringly.Name String fieldAlias1, @Stringly.Name String fieldAlias2, @Stringly.Name String fieldAlias3, @Stringly.Name String fieldAlias4);
 
     /**
      * Create a <code>WITH</code> clause to supply subsequent
@@ -5695,7 +5695,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support({ CLICKHOUSE, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    WithAsStep5 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5);
+    WithAsStep5 withRecursive(@Stringly.Name String alias, @Stringly.Name String fieldAlias1, @Stringly.Name String fieldAlias2, @Stringly.Name String fieldAlias3, @Stringly.Name String fieldAlias4, @Stringly.Name String fieldAlias5);
 
     /**
      * Create a <code>WITH</code> clause to supply subsequent
@@ -5712,7 +5712,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support({ CLICKHOUSE, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    WithAsStep6 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6);
+    WithAsStep6 withRecursive(@Stringly.Name String alias, @Stringly.Name String fieldAlias1, @Stringly.Name String fieldAlias2, @Stringly.Name String fieldAlias3, @Stringly.Name String fieldAlias4, @Stringly.Name String fieldAlias5, @Stringly.Name String fieldAlias6);
 
     /**
      * Create a <code>WITH</code> clause to supply subsequent
@@ -5729,7 +5729,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support({ CLICKHOUSE, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    WithAsStep7 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7);
+    WithAsStep7 withRecursive(@Stringly.Name String alias, @Stringly.Name String fieldAlias1, @Stringly.Name String fieldAlias2, @Stringly.Name String fieldAlias3, @Stringly.Name String fieldAlias4, @Stringly.Name String fieldAlias5, @Stringly.Name String fieldAlias6, @Stringly.Name String fieldAlias7);
 
     /**
      * Create a <code>WITH</code> clause to supply subsequent
@@ -5746,7 +5746,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support({ CLICKHOUSE, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    WithAsStep8 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8);
+    WithAsStep8 withRecursive(@Stringly.Name String alias, @Stringly.Name String fieldAlias1, @Stringly.Name String fieldAlias2, @Stringly.Name String fieldAlias3, @Stringly.Name String fieldAlias4, @Stringly.Name String fieldAlias5, @Stringly.Name String fieldAlias6, @Stringly.Name String fieldAlias7, @Stringly.Name String fieldAlias8);
 
     /**
      * Create a <code>WITH</code> clause to supply subsequent
@@ -5763,7 +5763,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support({ CLICKHOUSE, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    WithAsStep9 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9);
+    WithAsStep9 withRecursive(@Stringly.Name String alias, @Stringly.Name String fieldAlias1, @Stringly.Name String fieldAlias2, @Stringly.Name String fieldAlias3, @Stringly.Name String fieldAlias4, @Stringly.Name String fieldAlias5, @Stringly.Name String fieldAlias6, @Stringly.Name String fieldAlias7, @Stringly.Name String fieldAlias8, @Stringly.Name String fieldAlias9);
 
     /**
      * Create a <code>WITH</code> clause to supply subsequent
@@ -5780,7 +5780,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support({ CLICKHOUSE, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    WithAsStep10 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10);
+    WithAsStep10 withRecursive(@Stringly.Name String alias, @Stringly.Name String fieldAlias1, @Stringly.Name String fieldAlias2, @Stringly.Name String fieldAlias3, @Stringly.Name String fieldAlias4, @Stringly.Name String fieldAlias5, @Stringly.Name String fieldAlias6, @Stringly.Name String fieldAlias7, @Stringly.Name String fieldAlias8, @Stringly.Name String fieldAlias9, @Stringly.Name String fieldAlias10);
 
     /**
      * Create a <code>WITH</code> clause to supply subsequent
@@ -5797,7 +5797,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support({ CLICKHOUSE, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    WithAsStep11 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11);
+    WithAsStep11 withRecursive(@Stringly.Name String alias, @Stringly.Name String fieldAlias1, @Stringly.Name String fieldAlias2, @Stringly.Name String fieldAlias3, @Stringly.Name String fieldAlias4, @Stringly.Name String fieldAlias5, @Stringly.Name String fieldAlias6, @Stringly.Name String fieldAlias7, @Stringly.Name String fieldAlias8, @Stringly.Name String fieldAlias9, @Stringly.Name String fieldAlias10, @Stringly.Name String fieldAlias11);
 
     /**
      * Create a <code>WITH</code> clause to supply subsequent
@@ -5814,7 +5814,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support({ CLICKHOUSE, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    WithAsStep12 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12);
+    WithAsStep12 withRecursive(@Stringly.Name String alias, @Stringly.Name String fieldAlias1, @Stringly.Name String fieldAlias2, @Stringly.Name String fieldAlias3, @Stringly.Name String fieldAlias4, @Stringly.Name String fieldAlias5, @Stringly.Name String fieldAlias6, @Stringly.Name String fieldAlias7, @Stringly.Name String fieldAlias8, @Stringly.Name String fieldAlias9, @Stringly.Name String fieldAlias10, @Stringly.Name String fieldAlias11, @Stringly.Name String fieldAlias12);
 
     /**
      * Create a <code>WITH</code> clause to supply subsequent
@@ -5831,7 +5831,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support({ CLICKHOUSE, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    WithAsStep13 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13);
+    WithAsStep13 withRecursive(@Stringly.Name String alias, @Stringly.Name String fieldAlias1, @Stringly.Name String fieldAlias2, @Stringly.Name String fieldAlias3, @Stringly.Name String fieldAlias4, @Stringly.Name String fieldAlias5, @Stringly.Name String fieldAlias6, @Stringly.Name String fieldAlias7, @Stringly.Name String fieldAlias8, @Stringly.Name String fieldAlias9, @Stringly.Name String fieldAlias10, @Stringly.Name String fieldAlias11, @Stringly.Name String fieldAlias12, @Stringly.Name String fieldAlias13);
 
     /**
      * Create a <code>WITH</code> clause to supply subsequent
@@ -5848,7 +5848,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support({ CLICKHOUSE, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    WithAsStep14 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14);
+    WithAsStep14 withRecursive(@Stringly.Name String alias, @Stringly.Name String fieldAlias1, @Stringly.Name String fieldAlias2, @Stringly.Name String fieldAlias3, @Stringly.Name String fieldAlias4, @Stringly.Name String fieldAlias5, @Stringly.Name String fieldAlias6, @Stringly.Name String fieldAlias7, @Stringly.Name String fieldAlias8, @Stringly.Name String fieldAlias9, @Stringly.Name String fieldAlias10, @Stringly.Name String fieldAlias11, @Stringly.Name String fieldAlias12, @Stringly.Name String fieldAlias13, @Stringly.Name String fieldAlias14);
 
     /**
      * Create a <code>WITH</code> clause to supply subsequent
@@ -5865,7 +5865,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support({ CLICKHOUSE, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    WithAsStep15 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15);
+    WithAsStep15 withRecursive(@Stringly.Name String alias, @Stringly.Name String fieldAlias1, @Stringly.Name String fieldAlias2, @Stringly.Name String fieldAlias3, @Stringly.Name String fieldAlias4, @Stringly.Name String fieldAlias5, @Stringly.Name String fieldAlias6, @Stringly.Name String fieldAlias7, @Stringly.Name String fieldAlias8, @Stringly.Name String fieldAlias9, @Stringly.Name String fieldAlias10, @Stringly.Name String fieldAlias11, @Stringly.Name String fieldAlias12, @Stringly.Name String fieldAlias13, @Stringly.Name String fieldAlias14, @Stringly.Name String fieldAlias15);
 
     /**
      * Create a <code>WITH</code> clause to supply subsequent
@@ -5882,7 +5882,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support({ CLICKHOUSE, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    WithAsStep16 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16);
+    WithAsStep16 withRecursive(@Stringly.Name String alias, @Stringly.Name String fieldAlias1, @Stringly.Name String fieldAlias2, @Stringly.Name String fieldAlias3, @Stringly.Name String fieldAlias4, @Stringly.Name String fieldAlias5, @Stringly.Name String fieldAlias6, @Stringly.Name String fieldAlias7, @Stringly.Name String fieldAlias8, @Stringly.Name String fieldAlias9, @Stringly.Name String fieldAlias10, @Stringly.Name String fieldAlias11, @Stringly.Name String fieldAlias12, @Stringly.Name String fieldAlias13, @Stringly.Name String fieldAlias14, @Stringly.Name String fieldAlias15, @Stringly.Name String fieldAlias16);
 
     /**
      * Create a <code>WITH</code> clause to supply subsequent
@@ -5899,7 +5899,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support({ CLICKHOUSE, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    WithAsStep17 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17);
+    WithAsStep17 withRecursive(@Stringly.Name String alias, @Stringly.Name String fieldAlias1, @Stringly.Name String fieldAlias2, @Stringly.Name String fieldAlias3, @Stringly.Name String fieldAlias4, @Stringly.Name String fieldAlias5, @Stringly.Name String fieldAlias6, @Stringly.Name String fieldAlias7, @Stringly.Name String fieldAlias8, @Stringly.Name String fieldAlias9, @Stringly.Name String fieldAlias10, @Stringly.Name String fieldAlias11, @Stringly.Name String fieldAlias12, @Stringly.Name String fieldAlias13, @Stringly.Name String fieldAlias14, @Stringly.Name String fieldAlias15, @Stringly.Name String fieldAlias16, @Stringly.Name String fieldAlias17);
 
     /**
      * Create a <code>WITH</code> clause to supply subsequent
@@ -5916,7 +5916,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support({ CLICKHOUSE, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    WithAsStep18 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18);
+    WithAsStep18 withRecursive(@Stringly.Name String alias, @Stringly.Name String fieldAlias1, @Stringly.Name String fieldAlias2, @Stringly.Name String fieldAlias3, @Stringly.Name String fieldAlias4, @Stringly.Name String fieldAlias5, @Stringly.Name String fieldAlias6, @Stringly.Name String fieldAlias7, @Stringly.Name String fieldAlias8, @Stringly.Name String fieldAlias9, @Stringly.Name String fieldAlias10, @Stringly.Name String fieldAlias11, @Stringly.Name String fieldAlias12, @Stringly.Name String fieldAlias13, @Stringly.Name String fieldAlias14, @Stringly.Name String fieldAlias15, @Stringly.Name String fieldAlias16, @Stringly.Name String fieldAlias17, @Stringly.Name String fieldAlias18);
 
     /**
      * Create a <code>WITH</code> clause to supply subsequent
@@ -5933,7 +5933,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support({ CLICKHOUSE, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    WithAsStep19 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19);
+    WithAsStep19 withRecursive(@Stringly.Name String alias, @Stringly.Name String fieldAlias1, @Stringly.Name String fieldAlias2, @Stringly.Name String fieldAlias3, @Stringly.Name String fieldAlias4, @Stringly.Name String fieldAlias5, @Stringly.Name String fieldAlias6, @Stringly.Name String fieldAlias7, @Stringly.Name String fieldAlias8, @Stringly.Name String fieldAlias9, @Stringly.Name String fieldAlias10, @Stringly.Name String fieldAlias11, @Stringly.Name String fieldAlias12, @Stringly.Name String fieldAlias13, @Stringly.Name String fieldAlias14, @Stringly.Name String fieldAlias15, @Stringly.Name String fieldAlias16, @Stringly.Name String fieldAlias17, @Stringly.Name String fieldAlias18, @Stringly.Name String fieldAlias19);
 
     /**
      * Create a <code>WITH</code> clause to supply subsequent
@@ -5950,7 +5950,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support({ CLICKHOUSE, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    WithAsStep20 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19, String fieldAlias20);
+    WithAsStep20 withRecursive(@Stringly.Name String alias, @Stringly.Name String fieldAlias1, @Stringly.Name String fieldAlias2, @Stringly.Name String fieldAlias3, @Stringly.Name String fieldAlias4, @Stringly.Name String fieldAlias5, @Stringly.Name String fieldAlias6, @Stringly.Name String fieldAlias7, @Stringly.Name String fieldAlias8, @Stringly.Name String fieldAlias9, @Stringly.Name String fieldAlias10, @Stringly.Name String fieldAlias11, @Stringly.Name String fieldAlias12, @Stringly.Name String fieldAlias13, @Stringly.Name String fieldAlias14, @Stringly.Name String fieldAlias15, @Stringly.Name String fieldAlias16, @Stringly.Name String fieldAlias17, @Stringly.Name String fieldAlias18, @Stringly.Name String fieldAlias19, @Stringly.Name String fieldAlias20);
 
     /**
      * Create a <code>WITH</code> clause to supply subsequent
@@ -5967,7 +5967,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support({ CLICKHOUSE, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    WithAsStep21 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19, String fieldAlias20, String fieldAlias21);
+    WithAsStep21 withRecursive(@Stringly.Name String alias, @Stringly.Name String fieldAlias1, @Stringly.Name String fieldAlias2, @Stringly.Name String fieldAlias3, @Stringly.Name String fieldAlias4, @Stringly.Name String fieldAlias5, @Stringly.Name String fieldAlias6, @Stringly.Name String fieldAlias7, @Stringly.Name String fieldAlias8, @Stringly.Name String fieldAlias9, @Stringly.Name String fieldAlias10, @Stringly.Name String fieldAlias11, @Stringly.Name String fieldAlias12, @Stringly.Name String fieldAlias13, @Stringly.Name String fieldAlias14, @Stringly.Name String fieldAlias15, @Stringly.Name String fieldAlias16, @Stringly.Name String fieldAlias17, @Stringly.Name String fieldAlias18, @Stringly.Name String fieldAlias19, @Stringly.Name String fieldAlias20, @Stringly.Name String fieldAlias21);
 
     /**
      * Create a <code>WITH</code> clause to supply subsequent
@@ -5984,7 +5984,7 @@ public interface DSLContext extends Scope {
      */
     @NotNull @CheckReturnValue
     @Support({ CLICKHOUSE, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
-    WithAsStep22 withRecursive(String alias, String fieldAlias1, String fieldAlias2, String fieldAlias3, String fieldAlias4, String fieldAlias5, String fieldAlias6, String fieldAlias7, String fieldAlias8, String fieldAlias9, String fieldAlias10, String fieldAlias11, String fieldAlias12, String fieldAlias13, String fieldAlias14, String fieldAlias15, String fieldAlias16, String fieldAlias17, String fieldAlias18, String fieldAlias19, String fieldAlias20, String fieldAlias21, String fieldAlias22);
+    WithAsStep22 withRecursive(@Stringly.Name String alias, @Stringly.Name String fieldAlias1, @Stringly.Name String fieldAlias2, @Stringly.Name String fieldAlias3, @Stringly.Name String fieldAlias4, @Stringly.Name String fieldAlias5, @Stringly.Name String fieldAlias6, @Stringly.Name String fieldAlias7, @Stringly.Name String fieldAlias8, @Stringly.Name String fieldAlias9, @Stringly.Name String fieldAlias10, @Stringly.Name String fieldAlias11, @Stringly.Name String fieldAlias12, @Stringly.Name String fieldAlias13, @Stringly.Name String fieldAlias14, @Stringly.Name String fieldAlias15, @Stringly.Name String fieldAlias16, @Stringly.Name String fieldAlias17, @Stringly.Name String fieldAlias18, @Stringly.Name String fieldAlias19, @Stringly.Name String fieldAlias20, @Stringly.Name String fieldAlias21, @Stringly.Name String fieldAlias22);
 
     /**
      * Create a <code>WITH</code> clause to supply subsequent
@@ -6498,7 +6498,7 @@ public interface DSLContext extends Scope {
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    SelectWhereStep<Record> selectFrom(String sql);
+    SelectWhereStep<Record> selectFrom(@Stringly.SQL String sql);
 
     /**
      * Create a new DSL select statement, projecting <code>*</code>.
@@ -6524,7 +6524,7 @@ public interface DSLContext extends Scope {
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    SelectWhereStep<Record> selectFrom(String sql, Object... bindings);
+    SelectWhereStep<Record> selectFrom(@Stringly.SQL String sql, Object... bindings);
 
     /**
      * Create a new DSL select statement, projecting <code>*</code>.
@@ -6550,7 +6550,7 @@ public interface DSLContext extends Scope {
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    SelectWhereStep<Record> selectFrom(String sql, QueryPart... parts);
+    SelectWhereStep<Record> selectFrom(@Stringly.SQL String sql, QueryPart... parts);
 
     /**
      * Create a new DSL select statement.
@@ -9161,7 +9161,7 @@ public interface DSLContext extends Scope {
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    Batch batch(String... queries);
+    Batch batch(@Stringly.SQL String... queries);
 
     /**
      * Create a batch statement to execute a set of queries in batch mode
@@ -9232,7 +9232,7 @@ public interface DSLContext extends Scope {
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    BatchBindStep batch(String sql);
+    BatchBindStep batch(@Stringly.SQL String sql);
 
     /**
      * Create a batch statement to execute a set of queries in batch mode (with
@@ -9266,7 +9266,7 @@ public interface DSLContext extends Scope {
     @NotNull @CheckReturnValue
     @Support
     @PlainSQL
-    Batch batch(String sql, Object[]... bindings);
+    Batch batch(@Stringly.SQL String sql, Object[]... bindings);
 
     /**
      * Create a batch statement to execute a set of <code>INSERT</code> and

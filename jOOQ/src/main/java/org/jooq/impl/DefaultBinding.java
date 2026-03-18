@@ -5617,13 +5617,15 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 return;
             }
 
+            Supplier<String> render = () -> escape(Convert.convert(value, String.class), ctx.render());
+
             switch (ctx.family()) {
                 // The SQLite JDBC driver does not implement the escape syntax
                 // [#1253] Sybase does not implement time literals
 
 
                 case SQLITE:
-                    ctx.render().sql('\'').sql(escape(value, ctx.render())).sql('\'');
+                    ctx.render().sql('\'').sql(render.get()).sql('\'');
                     break;
 
 
@@ -5638,7 +5640,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
                 // [#1253] Derby doesn't support the standard literal
                 case DERBY:
-                    ctx.render().visit(K_TIME).sql("('").sql(escape(value, ctx.render())).sql("')");
+                    ctx.render().visit(K_TIME).sql("('").sql(render.get()).sql("')");
                     break;
 
 
@@ -5669,11 +5671,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     // [#16498] Special cases where the standard datetime literal prefix needs to be omitted
                     //          See: https://bugs.mysql.com/bug.php?id=114450
                     if (ctx.data(DATA_OMIT_DATETIME_LITERAL_PREFIX) != null)
-                        ctx.render().sql('\'').sql(escape(value, ctx.render())).sql('\'');
+                        ctx.render().sql('\'').sql(render.get()).sql('\'');
 
                     // Most dialects implement SQL standard time literals
                     else
-                        ctx.render().visit(K_TIME).sql(" '").sql(escape(value, ctx.render())).sql('\'');
+                        ctx.render().visit(K_TIME).sql(" '").sql(render.get()).sql('\'');
 
                     break;
             }

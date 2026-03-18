@@ -846,6 +846,10 @@ final class Convert {
                         else if (from instanceof SQLXML s)
                             return (U) s.getString();
 
+                        // [#19773] LocalTime produces some abbreviated formats, e.g. 00:00, which don't play well with some RDBMS
+                        else if (from instanceof LocalTime lt)
+                            return (U) patchIso8601Time(lt.toString());
+
                         else
                             return (U) from.toString();
                     }

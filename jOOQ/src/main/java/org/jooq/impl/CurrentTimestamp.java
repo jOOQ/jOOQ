@@ -156,7 +156,6 @@ final class CurrentTimestamp<T> extends AbstractField<T> implements QOM.CurrentT
 
             case DUCKDB:
             case POSTGRES:
-            case SQLITE:
             case YUGABYTEDB:
                 if (getDataType().isTimestampWithTimeZone())
                     acceptDefault(ctx);

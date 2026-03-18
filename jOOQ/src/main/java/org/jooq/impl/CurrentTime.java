@@ -123,7 +123,6 @@ final class CurrentTime<T> extends AbstractField<T> implements QOM.CurrentTime<T
 
 
             case POSTGRES:
-            case SQLITE:
             case YUGABYTEDB:
                 if (getDataType().isTimeWithTimeZone())
                     acceptDefault(ctx);

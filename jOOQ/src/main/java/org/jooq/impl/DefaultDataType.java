@@ -1242,7 +1242,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
         return d;
     }
 
-    static final boolean unsupportedDatetimePrecision(Scope ctx, DataType<?> type) {
+    static final boolean unsupportedDatetimePrecision(Configuration ctx, DataType<?> type) {
         if (!type.isDateTime())
             return false;
         else if (!type.precisionDefined())
@@ -1257,8 +1257,10 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
             return false;
     }
 
-    static final boolean requiresTimePrecision(Scope ctx, Object value, DataType<?> type) {
-        if (type.getFromType() == LocalTime.class && value instanceof LocalTime lt)
+    static final boolean requiresTimePrecision(Configuration ctx, Object value, DataType<?> type) {
+        if (NO_SUPPORT_TIME_PRECISION.contains(ctx.dialect()))
+            return false;
+        else if (type.getFromType() == LocalTime.class && value instanceof LocalTime lt)
             return lt.getNano() != 0;
         else if (type.getFromType() == OffsetTime.class && value instanceof OffsetTime ot)
             return ot.getNano() != 0;

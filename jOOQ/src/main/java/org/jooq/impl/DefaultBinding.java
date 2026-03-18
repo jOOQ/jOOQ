@@ -1121,11 +1121,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 );
 
             // [#17212] Avoid precision on datetime casts when not supported
-            else if (dataType.isDateTime() && unsupportedDatetimePrecision(ctx, dataType))
+            else if (dataType.isDateTime() && unsupportedDatetimePrecision(ctx.configuration(), dataType))
                 sqlCast(ctx, converted, dataType, null, null, null);
 
             // [#19772] Make precision explicit where there would be truncation, otherwise
-            else if (dataType.isTime() && requiresTimePrecision(ctx, converted, dataType))
+            else if (dataType.isTime() && requiresTimePrecision(ctx.configuration(), converted, dataType))
                 sqlCast(ctx, converted, dataType, null, requiredTimePrecision(converted), null);
 
             // In all other cases, the bind variable can be cast normally
@@ -5607,7 +5607,15 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         private final boolean delegate(Scope ctx) {
-            return FALSE.equals(ctx.configuration().settings().isBindLocalTimeType());
+            switch (ctx.family()) {
+
+
+
+
+
+                default:
+                    return FALSE.equals(ctx.configuration().settings().isBindLocalTimeType());
+            }
         }
 
         @Override

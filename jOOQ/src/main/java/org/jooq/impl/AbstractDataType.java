@@ -68,6 +68,9 @@ import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.TRINO;
 // ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
+import static org.jooq.impl.DefaultDataType.requiredTimePrecision;
+import static org.jooq.impl.DefaultDataType.requiresTimePrecision;
+import static org.jooq.impl.DefaultDataType.unsupportedDatetimePrecision;
 import static org.jooq.impl.Internal.arrayType;
 import static org.jooq.impl.Internal.converterContext;
 import static org.jooq.impl.QOM.GenerationOption.STORED;
@@ -740,6 +743,11 @@ implements
             // precision support in DDL.
             if (isTimestamp() && NO_SUPPORT_TIMESTAMP_PRECISION.contains(dialect))
                 return castTypePrefix0() + castTypeSuffix0();
+
+            // [#17212] Avoid precision on datetime casts when not supported
+            else if (isDateTime() && unsupportedDatetimePrecision(configuration, this))
+                return castTypePrefix0() + castTypeSuffix0();
+
 
 
 

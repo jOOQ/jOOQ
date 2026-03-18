@@ -6401,7 +6401,7 @@ final class Tools {
         }
         else if (type.hasPrecision()
             && type.precisionDefined()
-            && !unsupportedDatetimePrecision(ctx, type)
+            && !unsupportedDatetimePrecision(ctx.configuration(), type)
         ) {
 
             // [#6745] [#9473] The DataType.getDDLTypeName() cannot be used in some dialects, for DDL

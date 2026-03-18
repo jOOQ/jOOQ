@@ -124,6 +124,8 @@ import static org.jooq.impl.DefaultBinding.DefaultResultBinding.readMultisetJSON
 import static org.jooq.impl.DefaultBinding.DefaultResultBinding.readMultisetXML;
 import static org.jooq.impl.DefaultBinding.DefaultStringBinding.autoRtrim;
 import static org.jooq.impl.DefaultDataType.getDataType;
+import static org.jooq.impl.DefaultDataType.requiredTimePrecision;
+import static org.jooq.impl.DefaultDataType.requiresTimePrecision;
 import static org.jooq.impl.DefaultDataType.unsupportedDatetimePrecision;
 import static org.jooq.impl.DefaultExecuteContext.localExecuteContext;
 import static org.jooq.impl.DefaultExecuteContext.localTargetConnection;
@@ -1121,6 +1123,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             // [#17212] Avoid precision on datetime casts when not supported
             else if (dataType.isDateTime() && unsupportedDatetimePrecision(ctx, dataType))
                 sqlCast(ctx, converted, dataType, null, null, null);
+
+            // [#19772] Make precision explicit where there would be truncation, otherwise
+            else if (dataType.isTime() && requiresTimePrecision(ctx, converted, dataType))
+                sqlCast(ctx, converted, dataType, null, requiredTimePrecision(converted), null);
 
             // In all other cases, the bind variable can be cast normally
             else

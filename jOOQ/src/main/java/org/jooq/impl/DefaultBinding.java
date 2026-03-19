@@ -5585,6 +5585,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
     static final class DefaultLocalTimeBinding<U> extends InternalBinding<LocalTime, U> {
 
+        static final Set<SQLDialect>                NO_SUPPORT_LOCAL_TIME_BINDING = SQLDialect.supportedBy(DERBY);
         final DelegatingBinding<LocalTime, Time, U> delegate;
 
         DefaultLocalTimeBinding(DataType<LocalTime> dataType, Converter<LocalTime, U> converter) {
@@ -5607,15 +5608,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         private final boolean delegate(Scope ctx) {
-            switch (ctx.family()) {
-
-
-
-
-
-                default:
-                    return FALSE.equals(ctx.configuration().settings().isBindLocalTimeType());
-            }
+            if (NO_SUPPORT_LOCAL_TIME_BINDING.contains(ctx.dialect()))
+                return true;
+            else
+                return FALSE.equals(ctx.configuration().settings().isBindLocalTimeType());
         }
 
         @Override
@@ -5704,8 +5700,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
                 case DUCKDB:
+
+                // [#17070] HSQLDB 2.7.2 has a time zone issue when binding LocalTime directly
+                case HSQLDB:
                 case SQLITE:
-                    ctx.statement().setString(ctx.index(), value.toString());
+                    ctx.statement().setString(ctx.index(), Convert.convert(value, String.class));
                     break;
 
                 default:

@@ -374,7 +374,7 @@ final class Multiset<R extends Record> extends AbstractField<Result<R>> implemen
 
                     case DUCKDB: {
                         SelectOrderByStep<? extends Record1<?>> s = select(DSL.field(N_T)).from(select.asTable(N_T));
-                        ctx.visit(DSL.array((Select<? extends Record1<?>>) (multisetCondition
+                        ctx.visit(DSL.array((Select) (multisetCondition
                             ? s.orderBy(DSL.field(N_T))
                             : s
                         )));

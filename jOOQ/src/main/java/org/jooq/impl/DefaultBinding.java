@@ -5604,7 +5604,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final void setNull0(BindingSetStatementContext<U> ctx) throws SQLException {
-            delegate.setNull0(ctx);
+            if (delegate(ctx))
+                delegate.setNull0(ctx);
+            else
+                super.setNull0(ctx);
         }
 
         private final boolean delegate(Scope ctx) {
@@ -5737,10 +5740,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 // ResultSet.getTime() isn't implemented correctly, see: https://github.com/duckdb/duckdb/issues/10682
                 // SQLite's type affinity needs special care...
                 case DUCKDB:
-                case SQLITE: {
-                    String time = ctx.resultSet().getString(ctx.index());
-                    return time == null ? null : Convert.convert(time, LocalTime.class);
-                }
+                case SQLITE:
+                    return Convert.convert(ctx.resultSet().getString(ctx.index()), LocalTime.class);
 
                 default:
                     return ctx.resultSet().getObject(ctx.index(), LocalTime.class);
@@ -5764,8 +5765,18 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
-        final int sqltype(Statement statement, Configuration configuration) {
-            return Types.TIME;
+        final int sqltype(Statement statement, Configuration configuration) throws SQLException {
+            if (delegate(configuration.dsl()))
+                return delegate.sqltype(statement, configuration);
+
+            switch (configuration.family()) {
+
+
+
+
+                default:
+                    return Types.TIME;
+            }
         }
     }
 

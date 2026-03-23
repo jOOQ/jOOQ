@@ -122,6 +122,7 @@ final class CurrentTime<T> extends AbstractField<T> implements QOM.CurrentTime<T
 
 
 
+            case FIREBIRD:
             case POSTGRES:
             case YUGABYTEDB:
                 if (getDataType().isTimeWithTimeZone())

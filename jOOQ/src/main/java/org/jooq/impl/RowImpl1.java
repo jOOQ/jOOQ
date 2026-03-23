@@ -67,9 +67,9 @@ import org.jetbrains.annotations.NotNull;
 @SuppressWarnings({ "rawtypes", "unchecked" })
 final class RowImpl1<T1>
 extends
-    AbstractRow<Record1<T1>>
+    AbstractRow<org.jooq.Record1<T1>>
 implements
-    Row1<T1> {
+    org.jooq.Row1<T1> {
 
     RowImpl1(SelectField<T1> field1) {
         super(field1);

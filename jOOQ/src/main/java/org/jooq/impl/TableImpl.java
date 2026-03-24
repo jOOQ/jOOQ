@@ -149,12 +149,54 @@ implements
         this(name, schema, null, null, null, aliased, parameters, comment, options, where);
     }
 
+    /**
+     * @deprecated - [#13639] [#14985] [#15005] - 3.19.0 - Please re-generate your code.
+     */
+    @Deprecated
+    public TableImpl(Table<?> path, ForeignKey<?, R> childPath, Table<R> aliased) {
+        this(path, childPath, null, aliased);
+    }
+
     public TableImpl(Table<?> path, ForeignKey<?, R> childPath, InverseForeignKey<?, R> parentPath, Table<R> aliased) {
         this(createPathAlias(path, childPath, parentPath), null, path, childPath, parentPath, aliased, null, aliased.getCommentPart());
     }
 
+    /**
+     * @deprecated - [#13639] [#14985] [#15005] - 3.19.0 - Please re-generate your code.
+     */
+    @Deprecated
+    public TableImpl(Name name, Schema schema, Table<?> path, ForeignKey<?, R> childPath, Table<R> aliased, Field<?>[] parameters, Comment comment) {
+        this(name, schema, path, childPath, aliased, parameters, comment, TableOptions.table());
+    }
+
     public TableImpl(Name name, Schema schema, Table<?> path, ForeignKey<?, R> childPath, InverseForeignKey<?, R> parentPath, Table<R> aliased, Field<?>[] parameters, Comment comment) {
         this(name, schema, path, childPath, parentPath, aliased, parameters, comment, TableOptions.table(), null);
+    }
+
+    /**
+     * @deprecated - [#13639] [#14985] [#15005] - 3.19.0 - Please re-generate your code.
+     */
+    @Deprecated
+    public TableImpl(Name name, Schema schema, Table<?> path, ForeignKey<?, R> childPath, Table<R> aliased, Field<?>[] parameters, Comment comment, TableOptions options) {
+        this(name, schema, path, childPath, null, aliased, parameters, comment, options);
+    }
+
+    /**
+     * @deprecated - [#8012] - 3.19.0 - Please re-generate your code.
+     */
+    @Deprecated
+    public TableImpl(
+        Name name,
+        Schema schema,
+        Table<?> path,
+        ForeignKey<?, R> childPath,
+        InverseForeignKey<?, R> parentPath,
+        Table<R> aliased,
+        Field<?>[] parameters,
+        Comment comment,
+        TableOptions options
+    ) {
+        this(name, schema, path, childPath, parentPath, aliased, parameters, comment, options, null);
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })

@@ -43,14 +43,13 @@ import static org.jooq.Nullability.NULL;
 import org.jooq.DataType;
 import org.jooq.Nullability;
 import org.jooq.SQLDialect;
-import org.jooq.util.postgres.PostgresDataType;
 
 import org.jetbrains.annotations.ApiStatus.Internal;
 
 /**
  * An internal marker subtype of {@link DefaultDataType}, to be used only by
  * built-in data types in {@link SQLDataType} and dialect specific data type
- * classes, such as e.g. {@link PostgresDataType}.
+ * classes.
  *
  * @author Lukas Eder
  */

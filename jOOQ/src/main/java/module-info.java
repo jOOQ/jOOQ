@@ -64,21 +64,11 @@ module org.jooq {
 
 
 
-
-
-
-
-
-
-
-
-
     exports org.jooq.util.cubrid;
     exports org.jooq.util.derby;
     exports org.jooq.util.firebird;
     exports org.jooq.util.h2;
     exports org.jooq.util.hsqldb;
-    exports org.jooq.util.ignite;
     exports org.jooq.util.mariadb;
     exports org.jooq.util.mysql;
     exports org.jooq.util.postgres;

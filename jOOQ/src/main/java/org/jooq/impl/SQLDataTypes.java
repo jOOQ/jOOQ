@@ -426,4 +426,110 @@ final class SQLDataTypes {
         static final DataType<BigInteger> __BIGINTEGER           = new BuiltInDataType<>(FAMILY, SQLDataType.DECIMAL_INTEGER, "decimal(p, s)");
 
     }
+
+
+    static class YugabyteDBDataType {
+
+        private static final SQLDialect FAMILY = SQLDialect.YUGABYTEDB;
+
+        // -------------------------------------------------------------------------
+        // Default SQL data types and synonyms thereof
+        // -------------------------------------------------------------------------
+
+        static final DataType<Short>          SMALLINT                 = new BuiltInDataType<>(FAMILY, SQLDataType.SMALLINT, "smallint");
+        static final DataType<Short>          INT2                     = new BuiltInDataType<>(FAMILY, SQLDataType.SMALLINT, "int2");
+        static final DataType<Integer>        INT                      = new BuiltInDataType<>(FAMILY, SQLDataType.INTEGER, "int");
+        static final DataType<Integer>        INTEGER                  = new BuiltInDataType<>(FAMILY, SQLDataType.INTEGER, "integer");
+        static final DataType<Integer>        INT4                     = new BuiltInDataType<>(FAMILY, SQLDataType.INTEGER, "int4");
+        static final DataType<Long>           BIGINT                   = new BuiltInDataType<>(FAMILY, SQLDataType.BIGINT, "bigint");
+        static final DataType<Long>           INT8                     = new BuiltInDataType<>(FAMILY, SQLDataType.BIGINT, "int8");
+        static final DataType<Double>         DOUBLEPRECISION          = new BuiltInDataType<>(FAMILY, SQLDataType.DOUBLE, "double precision");
+        static final DataType<Double>         FLOAT8                   = new BuiltInDataType<>(FAMILY, SQLDataType.FLOAT, "float8");
+        static final DataType<Float>          REAL                     = new BuiltInDataType<>(FAMILY, SQLDataType.REAL, "real");
+        static final DataType<Float>          FLOAT4                   = new BuiltInDataType<>(FAMILY, SQLDataType.REAL, "float4");
+        static final DataType<Boolean>        BOOLEAN                  = new BuiltInDataType<>(FAMILY, SQLDataType.BOOLEAN, "boolean");
+        static final DataType<Boolean>        BOOL                     = new BuiltInDataType<>(FAMILY, SQLDataType.BOOLEAN, "bool");
+        static final DataType<BigDecimal>     NUMERIC                  = new BuiltInDataType<>(FAMILY, SQLDataType.NUMERIC, "numeric(p, s)");
+        static final DataType<BigDecimal>     DECIMAL                  = new BuiltInDataType<>(FAMILY, SQLDataType.DECIMAL, "decimal(p, s)");
+        static final DataType<String>         VARCHAR                  = new BuiltInDataType<>(FAMILY, SQLDataType.VARCHAR, "varchar(l)");
+        static final DataType<String>         CHARACTERVARYING         = new BuiltInDataType<>(FAMILY, SQLDataType.VARCHAR, "character varying(l)");
+        static final DataType<String>         CHAR                     = new BuiltInDataType<>(FAMILY, SQLDataType.CHAR, "char(l)");
+        static final DataType<String>         CHARACTER                = new BuiltInDataType<>(FAMILY, SQLDataType.CHAR, "character(l)");
+        static final DataType<String>         TEXT                     = new BuiltInDataType<>(FAMILY, SQLDataType.CLOB, "text");
+        static final DataType<Date>           DATE                     = new BuiltInDataType<>(FAMILY, SQLDataType.DATE, "date");
+        static final DataType<Time>           TIME                     = new BuiltInDataType<>(FAMILY, SQLDataType.TIME, "time(p)");
+        static final DataType<Time>           TIMEWITHOUTTIMEZONE      = new BuiltInDataType<>(FAMILY, SQLDataType.TIME, "time(p) without time zone");
+        static final DataType<OffsetTime>     TIMEWITHTIMEZONE         = new BuiltInDataType<>(FAMILY, SQLDataType.TIMEWITHTIMEZONE, "time(p) with time zone");
+        static final DataType<OffsetTime>     TIMETZ                   = new BuiltInDataType<>(FAMILY, SQLDataType.TIMEWITHTIMEZONE, "timetz(p)");
+        static final DataType<Timestamp>      TIMESTAMP                = new BuiltInDataType<>(FAMILY, SQLDataType.TIMESTAMP, "timestamp(p)");
+        static final DataType<Timestamp>      TIMESTAMPWITHOUTTIMEZONE = new BuiltInDataType<>(FAMILY, SQLDataType.TIMESTAMP, "timestamp(p) without time zone");
+        static final DataType<OffsetDateTime> TIMESTAMPWITHTIMEZONE    = new BuiltInDataType<>(FAMILY, SQLDataType.TIMESTAMPWITHTIMEZONE, "timestamp(p) with time zone");
+        static final DataType<OffsetDateTime> TIMESTAMPTZ              = new BuiltInDataType<>(FAMILY, SQLDataType.TIMESTAMPWITHTIMEZONE, "timestamptz(p)");
+        static final DataType<Instant>        INSTANT                  = new BuiltInDataType<>(FAMILY, SQLDataType.INSTANT, "timestamp(p) with time zone");
+        static final DataType<byte[]>         BYTEA                    = new BuiltInDataType<>(FAMILY, SQLDataType.BLOB, "bytea");
+        static final DataType<YearToSecond>   INTERVAL                 = new BuiltInDataType<>(FAMILY, SQLDataType.INTERVAL, "interval");
+        static final DataType<YearToMonth>    INTERVALYEARTOMONTH      = new BuiltInDataType<>(FAMILY, SQLDataType.INTERVALYEARTOMONTH, "interval year to month");
+        static final DataType<DayToSecond>    INTERVALDAYTOSECOND      = new BuiltInDataType<>(FAMILY, SQLDataType.INTERVALDAYTOSECOND, "interval day to second");
+
+        // -------------------------------------------------------------------------
+        // Compatibility types for supported SQLDialect.POSTGRES, SQLDataTypes
+        // -------------------------------------------------------------------------
+
+        static final DataType<byte[]>     __BINARY                = new BuiltInDataType<>(FAMILY, SQLDataType.BINARY, "bytea");
+        static final DataType<Boolean>    __BIT                   = new BuiltInDataType<>(FAMILY, SQLDataType.BIT, "boolean");
+        static final DataType<byte[]>     __LONGVARBINARY         = new BuiltInDataType<>(FAMILY, SQLDataType.LONGVARBINARY, "bytea");
+        static final DataType<String>     __LONGVARCHAR           = new BuiltInDataType<>(FAMILY, SQLDataType.LONGVARCHAR, "varchar(l)");
+        static final DataType<String>     __NCHAR                 = new BuiltInDataType<>(FAMILY, SQLDataType.NCHAR, "char(l)");
+        static final DataType<String>     __NCLOB                 = new BuiltInDataType<>(FAMILY, SQLDataType.NCLOB, "text");
+        static final DataType<String>     __LONGNVARCHAR          = new BuiltInDataType<>(FAMILY, SQLDataType.LONGNVARCHAR, "varchar(l)");
+        static final DataType<String>     __NVARCHAR              = new BuiltInDataType<>(FAMILY, SQLDataType.NVARCHAR, "varchar(l)");
+        static final DataType<Byte>       __TINYINT               = new BuiltInDataType<>(FAMILY, SQLDataType.TINYINT, "smallint");
+        static final DataType<byte[]>     __VARBINARY             = new BuiltInDataType<>(FAMILY, SQLDataType.VARBINARY, "bytea");
+        static final DataType<UByte>      __TINYINTUNSIGNED       = new BuiltInDataType<>(FAMILY, SQLDataType.TINYINTUNSIGNED, "smallint");
+        static final DataType<UShort>     __SMALLINTUNSIGNED      = new BuiltInDataType<>(FAMILY, SQLDataType.SMALLINTUNSIGNED, "int");
+        static final DataType<UInteger>   __INTEGERUNSIGNED       = new BuiltInDataType<>(FAMILY, SQLDataType.INTEGERUNSIGNED, "bigint");
+        static final DataType<ULong>      __BIGINTUNSIGNED        = new BuiltInDataType<>(FAMILY, SQLDataType.BIGINTUNSIGNED, "decimal(p, s)");
+        static final DataType<Year>       __YEAR                  = new BuiltInDataType<>(FAMILY, SQLDataType.YEAR, "smallint");
+
+        // -------------------------------------------------------------------------
+        // Compatibility types for supported Java types
+        // -------------------------------------------------------------------------
+
+        static final DataType<BigInteger> __BIGINTEGER            = new BuiltInDataType<>(FAMILY, SQLDataType.DECIMAL_INTEGER, "decimal(p, s)");
+
+        // -------------------------------------------------------------------------
+        // Dialect-specific data types and synonyms thereof
+        // -------------------------------------------------------------------------
+
+        static final DataType<Short>      SMALLSERIAL                = new BuiltInDataType<>(FAMILY, SQLDataType.SMALLINT, "smallserial");
+        static final DataType<Short>      SERIAL2                    = new BuiltInDataType<>(FAMILY, SQLDataType.SMALLINT, "serial2");
+        static final DataType<Integer>    SERIAL                     = new BuiltInDataType<>(FAMILY, SQLDataType.INTEGER, "serial");
+        static final DataType<Integer>    SERIAL4                    = new BuiltInDataType<>(FAMILY, SQLDataType.INTEGER, "serial4");
+        static final DataType<Long>       BIGSERIAL                  = new BuiltInDataType<>(FAMILY, SQLDataType.BIGINT, "bigserial");
+        static final DataType<Long>       SERIAL8                    = new BuiltInDataType<>(FAMILY, SQLDataType.BIGINT, "serial8");
+
+    //  [#6852] This type was never really supported and cannot be mapped to BigDecimal automatically by the JDBC driver
+    //  public static final DataType<BigDecimal> MONEY                      = new BuiltInDataType<>(FAMILY, SQLDataType.DECIMAL, "money");
+
+        static final DataType<String>     BITVARYING                 = new BuiltInDataType<>(FAMILY, SQLDataType.VARCHAR, "bit varying(l)");
+        static final DataType<String>     VARBIT                     = new BuiltInDataType<>(FAMILY, SQLDataType.VARCHAR, "varbit(l)");
+        static final DataType<String>     BIT                        = new BuiltInDataType<>(FAMILY, SQLDataType.CHAR, "bit(l)");
+        static final DataType<String>     BPCHAR                     = new BuiltInDataType<>(FAMILY, SQLDataType.CHAR, "bpchar");
+        static final DataType<Result<Record>> REFCURSOR              = new BuiltInDataType<>(FAMILY, SQLDataType.RESULT, "refcursor");
+        static final DataType<Object>     ANY                        = new BuiltInDataType<>(FAMILY, SQLDataType.OTHER, "any");
+        static final DataType<UUID>       UUID                       = new BuiltInDataType<>(FAMILY, SQLDataType.UUID, "uuid");
+        static final DataType<JSON>       JSON                       = new BuiltInDataType<>(FAMILY, SQLDataType.JSON, "json");
+        static final DataType<JSONB>      JSONB                      = new BuiltInDataType<>(FAMILY, SQLDataType.JSONB, "jsonb");
+
+        // Meta-table types
+        static final DataType<Long>       OID                        = new BuiltInDataType<>(FAMILY, SQLDataType.BIGINT, "oid");
+        static final DataType<Long>       OIDVECTOR                  = new BuiltInDataType<>(FAMILY, SQLDataType.BIGINT, "oidvector");
+        static final DataType<Long>       XID                        = new BuiltInDataType<>(FAMILY, SQLDataType.BIGINT, "xid");
+        static final DataType<Long>       TID                        = new BuiltInDataType<>(FAMILY, SQLDataType.BIGINT, "tid");
+        static final DataType<Long>       CID                        = new BuiltInDataType<>(FAMILY, SQLDataType.BIGINT, "cid");
+        static final DataType<String>     ACLITEM                    = new BuiltInDataType<>(FAMILY, SQLDataType.VARCHAR, "aclitem");
+        static final DataType<String>     NAME                       = new BuiltInDataType<>(FAMILY, SQLDataType.VARCHAR, "name");
+        static final DataType<String>     REGPROC                    = new BuiltInDataType<>(FAMILY, SQLDataType.VARCHAR, "regproc");
+        static final DataType<Object>     VOID                       = new BuiltInDataType<>(FAMILY, SQLDataType.OTHER, "void");
+    }
 }

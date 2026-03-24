@@ -107,6 +107,7 @@ import org.jooq.XML;
 import org.jooq.impl.SQLDataTypes.ClickHouseDataType;
 import org.jooq.impl.SQLDataTypes.DuckDBDataType;
 import org.jooq.impl.SQLDataTypes.TrinoDataType;
+import org.jooq.impl.SQLDataTypes.YugabyteDBDataType;
 import org.jooq.types.DayToSecond;
 import org.jooq.types.UByte;
 import org.jooq.types.UInteger;
@@ -144,7 +145,6 @@ import org.jooq.util.sqlite.SQLiteDataType;
 // ...
 // ...
 // ...
-import org.jooq.util.yugabytedb.YugabyteDBDataType;
 
 
 

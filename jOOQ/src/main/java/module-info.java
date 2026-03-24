@@ -83,5 +83,4 @@ module org.jooq {
     exports org.jooq.util.mysql;
     exports org.jooq.util.postgres;
     exports org.jooq.util.sqlite;
-    exports org.jooq.util.yugabytedb;
 }

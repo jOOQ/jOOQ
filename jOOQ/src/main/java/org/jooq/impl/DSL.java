@@ -39598,13 +39598,9 @@ public class DSL {
      * @param type The Java type. This must be a type supported by
      *            {@link SQLDataType}.
      * @return The <code>DSL</code>'s underlying default data type.
-     * @deprecated - 3.11.0 - [#7483] - The (indirect) use of the internal
-     *             static data type registry is not recommended.
      */
-    @Deprecated(forRemoval = true, since = "3.11")
     @NotNull
-    @Support
-    public static <T> DataType<T> getDataType(Class<T> type) {
+    static <T> DataType<T> getDataType(Class<T> type) {
         return DefaultDataType.getDataType(SQLDialect.DEFAULT, type);
     }
 

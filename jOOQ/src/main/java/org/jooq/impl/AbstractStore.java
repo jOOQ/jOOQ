@@ -69,14 +69,7 @@ abstract class AbstractStore extends AbstractFormattable {
     // The Attachable API
     // -------------------------------------------------------------------------
 
-    /**
-     * This method is used in generated code!
-     *
-     * @deprecated - 3.11.0 - [#6720] [#6721] - Use {@link Attachable#configuration()} and
-     *             {@link Configuration#dsl()} instead.
-     */
-    @Deprecated
-    protected final DSLContext create() {
+    final DSLContext create() {
         return DSL.using(configuration());
     }
 

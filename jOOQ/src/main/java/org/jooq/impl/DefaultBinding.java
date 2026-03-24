@@ -567,14 +567,6 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
     }
 
     /**
-     * @deprecated - 3.11 - [#6631] - Use {@link #binding(Converter)} instead.
-     */
-    @Deprecated(forRemoval = true)
-    public DefaultBinding(Converter<T, U> converter) {
-        this.delegate = binding(converter);
-    }
-
-    /**
      * @deprecated - 3.21.0 - [#19125] - This class will be removed from public
      *             API, do not reuse.
      */

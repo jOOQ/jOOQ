@@ -206,36 +206,15 @@ abstract class AbstractQueryPart implements QueryPartInternal {
     // Internal convenience methods
     // -------------------------------------------------------------------------
 
-    /**
-     * Internal convenience method
-     *
-     * @deprecated - 3.11.0 - [#6722] - Use {@link Attachable#configuration()}
-     *             and {@link Configuration#dsl()} instead.
-     */
-    @Deprecated
-    protected final DSLContext create() {
+    final DSLContext create() {
         return create(configuration());
     }
 
-    /**
-     * Internal convenience method
-     *
-     * @deprecated - 3.11.0 - [#6722] - Use {@link Attachable#configuration()}
-     *             and {@link Configuration#dsl()} instead.
-     */
-    @Deprecated
-    protected final DSLContext create(Configuration configuration) {
+    final DSLContext create(Configuration configuration) {
         return DSL.using(configuration);
     }
 
-    /**
-     * Internal convenience method
-     *
-     * @deprecated - 3.11.0 - [#6722] - Use {@link Attachable#configuration()}
-     *             and {@link Configuration#dsl()} instead.
-     */
-    @Deprecated
-    protected final DSLContext create(Context<?> ctx) {
+    final DSLContext create(Context<?> ctx) {
         return DSL.using(ctx.configuration());
     }
 

@@ -32,7 +32,7 @@ public class Keys {
 	// [#1459] distribute members to avoid static initialisers > 64kb
 	// -------------------------------------------------------------------------
 
-	private static class UniqueKeys0 extends org.jooq.impl.AbstractKeys {
-		public static final org.jooq.UniqueKey<org.jooq.Record> DB_SERIAL__PK_DB_SERIAL_NAME = createUniqueKey(org.jooq.meta.cubrid.dba.tables.DbSerial.DB_SERIAL, org.jooq.meta.cubrid.dba.tables.DbSerial.DB_SERIAL.NAME);
+	private static class UniqueKeys0 {
+		public static final org.jooq.UniqueKey<org.jooq.Record> DB_SERIAL__PK_DB_SERIAL_NAME = org.jooq.impl.Internal.createUniqueKey(org.jooq.meta.cubrid.dba.tables.DbSerial.DB_SERIAL, org.jooq.meta.cubrid.dba.tables.DbSerial.DB_SERIAL.NAME);
 	}
 }

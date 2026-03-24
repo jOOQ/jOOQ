@@ -39,10 +39,6 @@
 package org.jooq.impl;
 
 import static java.util.Collections.emptyMap;
-import static org.jooq.Clause.DELETE;
-import static org.jooq.Clause.DELETE_DELETE;
-import static org.jooq.Clause.DELETE_RETURNING;
-import static org.jooq.Clause.DELETE_WHERE;
 // ...
 // ...
 // ...
@@ -121,7 +117,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
 
-import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Context;
@@ -156,7 +151,6 @@ implements
     QOM.Delete<R>
 {
 
-    private static final Clause[]       CLAUSES                          = { DELETE };
     static final Set<SQLDialect>        SPECIAL_DELETE_AS_SYNTAX         = SQLDialect.supportedBy(MARIADB, MYSQL);
 
     // LIMIT is not supported at all
@@ -341,8 +335,7 @@ implements
             return;
         }
 
-        ctx.start(DELETE_DELETE)
-           .visit(K_DELETE).sql(' ');
+        ctx.visit(K_DELETE).sql(' ');
 
         Table<?> t = table(ctx);
         ctx.scopeRegister(t, true);
@@ -415,8 +408,6 @@ implements
                .declareTables(true, c -> c.visit(u0));
         }
 
-        ctx.end(DELETE_DELETE);
-
 
 
 
@@ -453,8 +444,6 @@ implements
         else if (!where0.hasWhere() && REQUIRES_WHERE.contains(ctx.dialect()))
             where0.addConditions(trueCondition());
 
-        ctx.start(DELETE_WHERE);
-
         if (where0.hasWhere()) {
             ctx.paramTypeIf(ParamType.INLINED, noSupportParametersInWhere, c -> {
                 if (noQualifyInWhere)
@@ -468,8 +457,6 @@ implements
             });
         }
 
-        ctx.end(DELETE_WHERE);
-
         if (!limitEmulation(ctx)) {
             if (!orderBy.isEmpty())
                 ctx.formatSeparator()
@@ -479,9 +466,7 @@ implements
             acceptLimit(ctx, limit);
         }
 
-        ctx.start(DELETE_RETURNING);
         toSQLReturning(ctx);
-        ctx.end(DELETE_RETURNING);
     }
 
     static final TableList traverseJoinsAndAddPathConditions(Context<?> ctx, ConditionProviderImpl where0, TableList u) {
@@ -592,11 +577,6 @@ implements
                 ctx.formatSeparator()
                    .visit(K_LIMIT).sql(' ')
                    .visit(limit);
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return CLAUSES;
     }
 
     @Override

@@ -40,15 +40,6 @@ package org.jooq.impl;
 import static java.lang.Boolean.FALSE;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
-import static org.jooq.Clause.MERGE;
-import static org.jooq.Clause.MERGE_MERGE_INTO;
-import static org.jooq.Clause.MERGE_ON;
-import static org.jooq.Clause.MERGE_SET;
-import static org.jooq.Clause.MERGE_SET_ASSIGNMENT;
-import static org.jooq.Clause.MERGE_USING;
-import static org.jooq.Clause.MERGE_VALUES;
-import static org.jooq.Clause.MERGE_WHEN_MATCHED_THEN_UPDATE;
-import static org.jooq.Clause.MERGE_WHEN_NOT_MATCHED_THEN_INSERT;
 // ...
 // ...
 // ...
@@ -130,7 +121,6 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.function.Consumer;
 
-import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Context;
@@ -210,7 +200,6 @@ import org.jooq.impl.QOM.Merge;
 import org.jooq.impl.QOM.MergeMatched;
 import org.jooq.impl.QOM.MergeNotMatched;
 import org.jooq.impl.QOM.MergeNotMatchedBySource;
-import org.jooq.impl.QOM.UNotYetImplemented;
 import org.jooq.impl.QOM.UnmodifiableList;
 import org.jooq.impl.QOM.UnmodifiableMap;
 import org.jooq.impl.QOM.With;
@@ -298,7 +287,6 @@ implements
 
     private static final JooqLogger      log                                     = JooqLogger.getLogger(MergeImpl.class);
 
-    private static final Clause[]        CLAUSES                                 = { MERGE };
 
 
 
@@ -1465,7 +1453,7 @@ implements
         r.usingDual = usingDual;
         r.on.addConditions(extractCondition(on));
         for (MatchedClause m : concat(matched, notMatchedBySource)) {
-            MatchedClause m2 = new MatchedClause(t, m.condition, m.delete, m.notMatchedBySource, new FieldMapForUpdate(t, m.updateMap.setClause, m.updateMap.assignmentClause));
+            MatchedClause m2 = new MatchedClause(t, m.condition, m.delete, m.notMatchedBySource, new FieldMapForUpdate(t, m.updateMap.setClause));
             m2.updateMap.putAll(m.updateMap);
 
             if (m.notMatchedBySource)
@@ -1621,12 +1609,9 @@ implements
         if (with != null)
             ctx.visit(with);
 
-        ctx.start(MERGE_MERGE_INTO)
-           .visit(K_MERGE_INTO).sql(' ')
+        ctx.visit(K_MERGE_INTO).sql(' ')
            .declareTables(true, c -> c.visit(table))
-           .end(MERGE_MERGE_INTO)
            .formatSeparator()
-           .start(MERGE_USING)
            .visit(K_USING).sql(' ');
 
         ctx.declareTables(true, c1 -> c1.data(DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES, true, c2 -> {
@@ -1705,9 +1690,7 @@ implements
             }
         }
 
-        ctx.end(MERGE_USING)
-           .formatSeparator()
-           .start(MERGE_ON)
+        ctx.formatSeparator()
            .visit(K_ON).sql(' ');
 
 
@@ -1737,10 +1720,6 @@ implements
 
 
 
-
-        ctx.end(MERGE_ON)
-           .start(MERGE_WHEN_MATCHED_THEN_UPDATE)
-           .start(MERGE_SET);
 
         // [#7291] Multi MATCHED emulation
         boolean emulateMatched = false;
@@ -1816,10 +1795,6 @@ implements
                 toSQLMatched(ctx, m, requireMatchedConditions);
         }
 
-        ctx.end(MERGE_SET)
-           .end(MERGE_WHEN_MATCHED_THEN_UPDATE)
-           .start(MERGE_WHEN_NOT_MATCHED_THEN_INSERT);
-
         if ((NO_SUPPORT_MULTI.contains(ctx.dialect()) && notMatched.size() > 1)) {
             emulateNotMatched = notMatched.size() > 1;
         }
@@ -1860,7 +1835,6 @@ implements
                 toSQLNotMatched(ctx, m);
         }
 
-        ctx.end(MERGE_WHEN_NOT_MATCHED_THEN_INSERT);
 
 
 
@@ -2023,20 +1997,13 @@ implements
            .visit(K_INSERT);
         m.insertMap.toSQLReferenceKeys(ctx);
         ctx.formatSeparator()
-           .start(MERGE_VALUES)
            .visit(K_VALUES).sql(' ');
         m.insertMap.toSQL92Values(ctx);
-        ctx.end(MERGE_VALUES);
 
 
 
 
 
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return CLAUSES;
     }
 
     private static final class MatchedClause
@@ -2057,7 +2024,7 @@ implements
         }
 
         MatchedClause(Table<?> table, Condition condition, boolean delete, boolean notMatchedBySource) {
-            this(table, condition, delete, notMatchedBySource, new FieldMapForUpdate(table, SetClause.MERGE, MERGE_SET_ASSIGNMENT));
+            this(table, condition, delete, notMatchedBySource, new FieldMapForUpdate(table, SetClause.MERGE));
         }
 
         MatchedClause(Table<?> table, Condition condition, boolean delete, boolean notMatchedBySource, FieldMapForUpdate updateMap) {
@@ -2082,7 +2049,7 @@ implements
                 w,
                 d,
                 notMatchedBySource,
-                new FieldMapForUpdate(updateMap.table, SetClause.MERGE, MERGE_SET_ASSIGNMENT)
+                new FieldMapForUpdate(updateMap.table, SetClause.MERGE)
             );
             result.updateMap.putAll(u);
             return result;

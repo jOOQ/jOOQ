@@ -159,7 +159,6 @@ implements
 
 
 
-    private static final Clause[]        CLAUSES                        = { Clause.CREATE_VIEW };
     private static final Set<SQLDialect> NO_SUPPORT_IF_NOT_EXISTS       = SQLDialect.supportedUntil(DERBY, FIREBIRD, MYSQL, POSTGRES, YUGABYTEDB);
     private static final Set<SQLDialect> NO_SUPPORT_COLUMN_RENAME       = SQLDialect.supportedBy(CLICKHOUSE, TRINO);
     private static final Set<SQLDialect> NO_SUPPORT_COLUMN_RENAME_MVIEW = SQLDialect.supportedBy(H2);
@@ -225,10 +224,6 @@ implements
 
 
 
-
-
-
-
     private final void acceptDefault(Context<?> ctx) {
         List<? extends Field<?>> f = fields;
 
@@ -247,8 +242,7 @@ implements
 
 
 
-        ctx.start(Clause.CREATE_VIEW_NAME)
-           .visit(replaceSupported && orReplace ? K_REPLACE : K_CREATE);
+        ctx.visit(replaceSupported && orReplace ? K_REPLACE : K_CREATE);
 
         if (orReplace && !replaceSupported) {
             ctx.sql(' ').visit(K_OR);
@@ -291,19 +285,16 @@ implements
 
 
 
-        ctx.end(Clause.CREATE_VIEW_NAME)
-           .formatSeparator()
+        ctx.formatSeparator()
            .visit(K_AS)
            .formatSeparator()
-           .start(Clause.CREATE_VIEW_AS)
            // [#4806] CREATE VIEW doesn't accept parameters in most databases
            .visit(
                rename && !renameSupported
              ? renameSelect(parsed(), f)
              : query,
                ParamType.INLINED
-           )
-           .end(Clause.CREATE_VIEW_AS);
+           );
     }
 
     static final Select<?> renameSelect(Select<?> s, List<? extends Field<?>> f) {
@@ -319,11 +310,6 @@ implements
 
         DSLContext dsl = configuration().dsl();
         return dsl.parser().parseSelect(dsl.renderInlined(query));
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return CLAUSES;
     }
 
 

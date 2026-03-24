@@ -94,7 +94,6 @@ implements
 
 
 
-    private static final Clause[]        CLAUSES           = { Clause.CONDITION, Clause.CONDITION_XOR };
     private static final Set<SQLDialect> NO_SUPPORT_NATIVE = SQLDialect.supportedBy(CLICKHOUSE, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, IGNITE, POSTGRES, SQLITE, TRINO, YUGABYTEDB);
 
     @Override
@@ -130,11 +129,6 @@ implements
     @Override
     final boolean isNullable() {
         return ((AbstractCondition) arg1).isNullable() || ((AbstractCondition) arg2).isNullable();
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return CLAUSES;
     }
 
 

@@ -54,29 +54,6 @@ import org.jetbrains.annotations.Nullable;
 public interface VisitContext extends Scope {
 
     /**
-     * The most recent clause that was encountered through
-     * {@link Context#start(Clause)}.
-     */
-    @NotNull
-    Clause clause();
-
-    /**
-     * A path of clauses going through the visiting tree.
-     * <p>
-     * This returns all previous clauses that were encountered through
-     * {@link Context#start(Clause)} and that haven't been removed yet through
-     * {@link Context#end(Clause)}. In other words, <code>VisitContext</code>
-     * contains a stack of clauses.
-     */
-    @NotNull
-    Clause @NotNull [] clauses();
-
-    /**
-     * This is the same as calling {@link #clauses()}<code>.length</code>.
-     */
-    int clausesLength();
-
-    /**
      * The most recent {@link QueryPart} that was encountered through
      * {@link Context#visit(QueryPart)}.
      */

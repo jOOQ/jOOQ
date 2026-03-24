@@ -39,9 +39,6 @@
 package org.jooq.impl;
 
 import static java.util.stream.Collectors.joining;
-import static org.jooq.Clause.TABLE;
-import static org.jooq.Clause.TABLE_ALIAS;
-import static org.jooq.Clause.TABLE_REFERENCE;
 // ...
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
@@ -69,7 +66,6 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import org.jooq.Clause;
 import org.jooq.Comment;
 import org.jooq.Condition;
 import org.jooq.Context;
@@ -113,8 +109,6 @@ implements
     UEmpty
 {
 
-    private static final Clause[]        CLAUSES_TABLE_REFERENCE           = { TABLE, TABLE_REFERENCE };
-    private static final Clause[]        CLAUSES_TABLE_ALIAS               = { TABLE, TABLE_ALIAS };
     private static final Set<SQLDialect> NO_SUPPORT_QUALIFIED_TVF_CALLS    = SQLDialect.supportedBy(HSQLDB, POSTGRES, YUGABYTEDB);
     private static final Set<SQLDialect> REQUIRES_TVF_TABLE_CONSTRUCTOR    = SQLDialect.supportedBy(HSQLDB);
 
@@ -374,11 +368,6 @@ implements
     @Override
     public Identity<R, ?> getIdentity() {
         return super.getIdentity();
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return alias != null ? CLAUSES_TABLE_ALIAS : CLAUSES_TABLE_REFERENCE;
     }
 
     @Override

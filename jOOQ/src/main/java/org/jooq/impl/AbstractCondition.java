@@ -37,24 +37,20 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.CONDITION;
 import static org.jooq.Operator.AND;
 import static org.jooq.Operator.OR;
 import static org.jooq.Operator.XOR;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.inline;
-import static org.jooq.impl.DSL.not;
 import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.Names.N_CONDITION;
 
-import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.QueryPart;
 import org.jooq.SQL;
-import org.jooq.Select;
 import org.jooq.TableLike;
 
 /**
@@ -62,15 +58,8 @@ import org.jooq.TableLike;
  */
 abstract class AbstractCondition extends AbstractField<Boolean> implements Condition {
 
-    private static final Clause[] CLAUSES = { CONDITION };
-
     AbstractCondition() {
         super(N_CONDITION, SQLDataType.BOOLEAN);
-    }
-
-    @Override
-    public Clause[] clauses(Context<?> ctx) {
-        return CLAUSES;
     }
 
     /*

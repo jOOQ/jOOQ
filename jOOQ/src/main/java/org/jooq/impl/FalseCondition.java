@@ -37,13 +37,10 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.CONDITION;
-import static org.jooq.Clause.CONDITION_COMPARISON;
 // ...
 import static org.jooq.impl.Keywords.K_FALSE;
 import static org.jooq.impl.TrueCondition.NO_SUPPORT_BOOLEAN;
 
-import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.False;
 import org.jooq.impl.QOM.UEmpty;
@@ -61,7 +58,6 @@ implements
     SimpleQueryPart
 {
 
-    private static final Clause[] CLAUSES  = { CONDITION, CONDITION_COMPARISON };
     static final FalseCondition   INSTANCE = new FalseCondition(false);
     static final FalseCondition   OPTIONAL = new FalseCondition(true);
     final boolean                 optional;
@@ -86,11 +82,6 @@ implements
 
         else
             ctx.visit(K_FALSE);
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return CLAUSES;
     }
 
     private FalseCondition(boolean optional) {

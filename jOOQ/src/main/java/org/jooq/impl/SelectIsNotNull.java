@@ -50,7 +50,6 @@ import static org.jooq.impl.Tools.visitSubquery;
 
 import java.util.List;
 
-import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Function1;
@@ -115,11 +114,6 @@ final class SelectIsNotNull extends AbstractCondition implements QOM.SelectIsNot
                    .visit(K_IS_NOT_NULL);
                 break;
         }
-    }
-
-    @Override // Avoid AbstractCondition implementation
-    public final Clause[] clauses(Context<?> ctx) {
-        return null;
     }
 
     // -------------------------------------------------------------------------

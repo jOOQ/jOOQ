@@ -44,7 +44,6 @@ import static org.jooq.impl.Tools.increment;
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_TOP_LEVEL_CTE;
 import static org.jooq.impl.WithImpl.acceptWithRecursive;
 
-import org.jooq.Clause;
 import org.jooq.Context;
 // ...
 import org.jooq.QueryPartInternal;
@@ -192,11 +191,6 @@ enum ScopeMarker {
 
         @Override
         public final void accept(Context<?> ctx) {}
-
-        @Override
-        public final Clause[] clauses(Context<?> ctx) {
-            return null;
-        }
 
         @Override
         public final boolean declaresFields() {

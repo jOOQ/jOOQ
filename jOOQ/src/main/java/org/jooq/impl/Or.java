@@ -94,8 +94,6 @@ implements
 
 
 
-    private static final Clause[] CLAUSES = { Clause.CONDITION, Clause.CONDITION_OR };
-
     @Override
     final boolean parenthesised(Context<?> ctx) {
         return true;
@@ -133,11 +131,6 @@ implements
     @Override
     final boolean isNullable() {
         return ((AbstractCondition) arg1).isNullable() || ((AbstractCondition) arg2).isNullable();
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return CLAUSES;
     }
 
 

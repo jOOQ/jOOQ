@@ -37,8 +37,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.CONDITION;
-import static org.jooq.Clause.CONDITION_COMPARISON;
 import static org.jooq.Comparator.EQUALS;
 import static org.jooq.Comparator.GREATER;
 import static org.jooq.Comparator.GREATER_OR_EQUAL;
@@ -70,11 +68,8 @@ import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.Keywords.K_NOT;
 import static org.jooq.impl.Tools.map;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
-import org.jooq.Clause;
 import org.jooq.Comparator;
 import org.jooq.Condition;
 import org.jooq.Context;
@@ -94,7 +89,6 @@ extends
 implements
     UNotYetImplemented
 {
-    private static final Clause[]        CLAUSES            = { CONDITION, CONDITION_COMPARISON };
 
 
 
@@ -244,10 +238,5 @@ implements
         }
 
         return result;
-    }
-
-    @Override // Avoid AbstractCondition implementation
-    public final Clause[] clauses(Context<?> ctx) {
-        return null;
     }
 }

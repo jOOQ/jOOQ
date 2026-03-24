@@ -37,86 +37,74 @@
  */
 package org.jooq.impl;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+import java.util.function.Consumer;
+
+import org.jooq.Context;
+// ...
+import org.jooq.Statement;
+import org.jooq.impl.QOM.UEmptyStatement;
+import org.jooq.impl.QOM.UOpaque;
+
+/**
+ * A base class for custom {@link Statement} implementations in client code.
+ * <p>
+ * Client code may provide proper {@link Statement} implementations extending
+ * this useful base class. All necessary parts of the {@link Statement}
+ * interface are already implemented. Only this method needs further
+ * implementation: {@link #accept(Context)}.
+ * <p>
+ * Refer to that methods' Javadoc for further details about their expected
+ * behaviour.
+ *
+ * @author Lukas Eder
+ */
+@Pro
+public abstract class CustomStatement
+extends
+    AbstractStatement
+implements
+    UEmptyStatement,
+    UOpaque
+{
+    protected CustomStatement() {}
+
+    /**
+     * Create a {@link CustomStatement} from a lambda expression.
+     */
+    public static final CustomStatement of(Consumer<? super Context<?>> consumer) {
+        return new CustomStatement() {
+            @Override
+            public void accept(Context<?> ctx) {
+                consumer.accept(ctx);
+            }
+        };
+    }
+
+    // -------------------------------------------------------------------------
+    // Implementation required
+    // -------------------------------------------------------------------------
+
+    /**
+     * Subclasses must implement this method.
+     * <hr>
+     * {@inheritDoc}
+     */
+    @Override
+    public abstract void accept(Context<?> ctx);
+
+    // -------------------------------------------------------------------------
+    // No further overrides allowed
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final boolean declaresFields() {
+        return super.declaresFields();
+    }
+
+    @Override
+    public final boolean declaresTables() {
+        return super.declaresTables();
+    }
+}
+
+/* [/pro] */

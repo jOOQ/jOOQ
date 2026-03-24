@@ -37,8 +37,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.SEQUENCE;
-import static org.jooq.Clause.SEQUENCE_REFERENCE;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 // ...
@@ -63,7 +61,6 @@ import static org.jooq.impl.Names.N_GET_NEXT_SEQUENCE_VALUE;
 import static org.jooq.impl.Names.N_NEXTVAL;
 
 import org.jooq.Catalog;
-import org.jooq.Clause;
 import org.jooq.Comment;
 import org.jooq.Configuration;
 import org.jooq.Context;
@@ -93,8 +90,6 @@ implements
     Sequence<T>,
     UNotYetImplemented
 {
-
-    private static final Clause[]     CLAUSES          = { SEQUENCE, SEQUENCE_REFERENCE };
 
     private final Schema              schema;
     private final Field<T>            startWith;
@@ -336,11 +331,6 @@ implements
         QualifiedImpl.acceptMappedSchemaPrefix(ctx, getSchema());
 
         ctx.visit(getUnqualifiedName());
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return CLAUSES;
     }
 
     // -------------------------------------------------------------------------

@@ -42,23 +42,6 @@ import static java.lang.Boolean.TRUE;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static java.util.stream.IntStream.range;
-import static org.jooq.Clause.SELECT;
-import static org.jooq.Clause.SELECT_CONNECT_BY;
-import static org.jooq.Clause.SELECT_EXCEPT;
-import static org.jooq.Clause.SELECT_EXCEPT_ALL;
-import static org.jooq.Clause.SELECT_FROM;
-import static org.jooq.Clause.SELECT_GROUP_BY;
-import static org.jooq.Clause.SELECT_HAVING;
-import static org.jooq.Clause.SELECT_INTERSECT;
-import static org.jooq.Clause.SELECT_INTERSECT_ALL;
-import static org.jooq.Clause.SELECT_INTO;
-import static org.jooq.Clause.SELECT_ORDER_BY;
-import static org.jooq.Clause.SELECT_SELECT;
-import static org.jooq.Clause.SELECT_START_WITH;
-import static org.jooq.Clause.SELECT_UNION;
-import static org.jooq.Clause.SELECT_UNION_ALL;
-import static org.jooq.Clause.SELECT_WHERE;
-import static org.jooq.Clause.SELECT_WINDOW;
 import static org.jooq.JoinType.CROSS_JOIN;
 import static org.jooq.JoinType.JOIN;
 import static org.jooq.JoinType.LEFT_OUTER_JOIN;
@@ -279,7 +262,6 @@ import java.util.function.Predicate;
 
 import org.jooq.AggregateFunction;
 import org.jooq.Asterisk;
-import org.jooq.Clause;
 import org.jooq.CommonTableExpression;
 import org.jooq.Comparator;
 import org.jooq.Condition;
@@ -342,9 +324,6 @@ import org.jooq.impl.Tools.SimpleDataKey;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 
 /**
  * A sub-select is a <code>SELECT</code> statement that can be combined with
@@ -360,7 +339,6 @@ implements
     SelectQuery<R>
 {
     private static final JooqLogger      log                                     = JooqLogger.getLogger(SelectQueryImpl.class);
-    private static final Clause[]        CLAUSES                                 = { SELECT };
     static final Set<SQLDialect>         EMULATE_SELECT_INTO_AS_CTAS             = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB);
     private static final Set<SQLDialect> SUPPORT_SELECT_INTO_TABLE               = SQLDialect.supportedBy(HSQLDB, POSTGRES, YUGABYTEDB);
 
@@ -873,11 +851,6 @@ implements
             fields = getSelect();
 
         return fieldArray(fields);
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return CLAUSES;
     }
 
 
@@ -2162,10 +2135,6 @@ implements
 
 
 
-
-
-
-
         }
         finally {
             if (transformRownumToLimit != null)
@@ -2500,14 +2469,6 @@ implements
                 context.data(DATA_NESTED_SET_OPERATIONS, unionOpNesting = unionOpNesting());
 
             for (int i = unionOpSize - 1; i >= 0; i--) {
-                switch (unionOp.get(i)) {
-                    case EXCEPT:        context.start(SELECT_EXCEPT);        break;
-                    case EXCEPT_ALL:    context.start(SELECT_EXCEPT_ALL);    break;
-                    case INTERSECT:     context.start(SELECT_INTERSECT);     break;
-                    case INTERSECT_ALL: context.start(SELECT_INTERSECT_ALL); break;
-                    case UNION:         context.start(SELECT_UNION);         break;
-                    case UNION_ALL:     context.start(SELECT_UNION_ALL);     break;
-                }
 
                 // [#3676] There might be cases where nested set operations do not
                 //         imply required parentheses in some dialects, but better
@@ -2548,8 +2509,7 @@ implements
 
         // SELECT clause
         // -------------
-        context.start(SELECT_SELECT)
-               .visit(K_SELECT).separatorRequired(true);
+        context.visit(K_SELECT).separatorRequired(true);
 
         // [#1493] Oracle hints come directly after the SELECT keyword
         if (!StringUtils.isBlank(hint))
@@ -2606,16 +2566,13 @@ implements
         if (Integer.valueOf(1).equals(context.data(DATA_RENDERING_DATA_CHANGE_DELTA_TABLE)))
             context.qualify(qualify);
 
-        context.declareFields(false)
-               .end(SELECT_SELECT);
+        context.declareFields(false);
 
         // INTO clauses
         // ------------
         // [#4910] This clause (and the Clause.SELECT_INTO signal) must be emitted
         //         only in top level SELECTs
         if (!context.subquery()) {
-            context.start(SELECT_INTO);
-
             QueryPart actualIntoTable = (QueryPart) context.data(DATA_SELECT_INTO_TABLE);
 
 
@@ -2646,16 +2603,13 @@ implements
 
 
 
-
-            context.end(SELECT_INTO);
         }
 
         // FROM and JOIN clauses
         // ---------------------
         where = getWhere(context, tablelist, where);
 
-        context.start(SELECT_FROM)
-               .declareTables(true);
+        context.declareTables(true);
 
         // [#....] Some SQL dialects do not require a FROM clause. Others do and
         //         jOOQ generates a "DUAL" table or something equivalent.
@@ -2722,12 +2676,10 @@ implements
             context.data(DATA_COLLECT_SEMI_ANTI_JOIN, previousCollect);
         }
 
-        context.declareTables(false)
-               .end(SELECT_FROM);
+        context.declareTables(false);
 
         // WHERE clause
         // ------------
-        context.start(SELECT_WHERE);
         boolean hasWhere = where.hasWhere() || semiAntiJoinPredicates != null || TRUE.equals(context.data().get(BooleanDataKey.DATA_MANDATORY_WHERE_CLAUSE));
         boolean hasQualify = additionalQualify != null || getQualify().hasWhere();
 
@@ -2758,16 +2710,6 @@ implements
                    .visit(actual);
         }
 
-        context.end(SELECT_WHERE);
-
-
-
-
-
-
-
-
-
 
 
 
@@ -2795,8 +2737,6 @@ implements
 
         // GROUP BY and HAVING clause
         // --------------------------
-        context.start(SELECT_GROUP_BY);
-
         ConditionProviderImpl having0 = getHaving(context);
         if (!getGroupBy().isEmpty() || having0.hasWhere() && NO_IMPLICIT_GROUP_BY_ON_HAVING.contains(context.dialect())) {
             context.formatSeparator()
@@ -2827,19 +2767,13 @@ implements
             context.separatorRequired(true).visit(g);
         }
 
-        context.end(SELECT_GROUP_BY);
-
         // HAVING clause
         // -------------
-        context.start(SELECT_HAVING);
-
         if (having0.hasWhere())
             context.formatSeparator()
                    .visit(K_HAVING)
                    .sql(' ')
                    .visit(having0);
-
-        context.end(SELECT_HAVING);
 
         // WINDOW clause
         // -------------
@@ -2900,15 +2834,6 @@ implements
                 // [#1658] Close parentheses opened previously
                 if (i < unionOpSize - 1)
                     unionParenthesis(context, ')', null, derivedTableRequired(context, this), unionParensRequired, null);
-
-                switch (unionOp.get(i)) {
-                    case EXCEPT:        context.end(SELECT_EXCEPT);        break;
-                    case EXCEPT_ALL:    context.end(SELECT_EXCEPT_ALL);    break;
-                    case INTERSECT:     context.end(SELECT_INTERSECT);     break;
-                    case INTERSECT_ALL: context.end(SELECT_INTERSECT_ALL); break;
-                    case UNION:         context.end(SELECT_UNION);         break;
-                    case UNION_ALL:     context.end(SELECT_UNION_ALL);     break;
-                }
             }
 
             if (unionOpNesting)
@@ -2938,15 +2863,11 @@ implements
     }
 
     private void acceptWindow(Context<?> context) {
-        context.start(SELECT_WINDOW);
-
         if (Tools.isNotEmpty(window) && !NO_SUPPORT_WINDOW_CLAUSE.contains(context.dialect()))
             context.formatSeparator()
                    .visit(K_WINDOW)
                    .separatorRequired(true)
                    .declareWindows(true, c -> c.visit(window));
-
-        context.end(SELECT_WINDOW);
     }
 
 
@@ -3551,8 +3472,6 @@ implements
         Limit actualLimit
     ) {
 
-        ctx.start(SELECT_ORDER_BY);
-
         // [#6197] When emulating WITH TIES using RANK() in a subquery, we must avoid rendering the
         //         subquery's ORDER BY clause
         if (!actualLimit.withTies()
@@ -3676,8 +3595,6 @@ implements
 
 
         }
-
-        ctx.end(SELECT_ORDER_BY);
 
         if (wrapQueryExpressionInDerivedTable)
             ctx.formatIndentEnd()

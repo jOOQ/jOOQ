@@ -155,7 +155,6 @@ implements
 
 
 
-    private static final Clause[]            CLAUSES              = { Clause.ALTER_INDEX };
     private static final Set<SQLDialect>     NO_SUPPORT_IF_EXISTS = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, MARIADB, MYSQL);
     private static final Set<SQLDialect>     SUPPORT_RENAME_INDEX = SQLDialect.supportedBy(DERBY);
 
@@ -217,8 +216,7 @@ implements
 
 
             default: {
-                ctx.start(Clause.ALTER_INDEX_INDEX)
-                   .visit(renameIndex ? K_RENAME_INDEX : K_ALTER_INDEX);
+                ctx.visit(renameIndex ? K_RENAME_INDEX : K_ALTER_INDEX);
 
                 if (ifExists && supportsIfExists(ctx))
                     ctx.sql(' ').visit(K_IF_EXISTS);
@@ -230,22 +228,15 @@ implements
                 else
                     ctx.visit(index);
 
-                ctx.end(Clause.ALTER_INDEX_INDEX).sql(' ');
+                ctx.sql(' ');
 
                 if (renameTo != null)
-                    ctx.start(Clause.ALTER_INDEX_RENAME)
-                       .visit(renameIndex ? K_TO : K_RENAME_TO).sql(' ')
-                       .qualify(false, c -> c.visit(renameTo))
-                       .end(Clause.ALTER_INDEX_RENAME);
+                    ctx.visit(renameIndex ? K_TO : K_RENAME_TO).sql(' ')
+                       .qualify(false, c -> c.visit(renameTo));
 
                 break;
             }
         }
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return CLAUSES;
     }
 
 

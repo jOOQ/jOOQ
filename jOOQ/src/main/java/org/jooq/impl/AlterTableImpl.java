@@ -41,17 +41,6 @@ import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
-import static org.jooq.Clause.ALTER_TABLE;
-import static org.jooq.Clause.ALTER_TABLE_ADD;
-import static org.jooq.Clause.ALTER_TABLE_ALTER;
-import static org.jooq.Clause.ALTER_TABLE_ALTER_DEFAULT;
-import static org.jooq.Clause.ALTER_TABLE_ALTER_NULL;
-import static org.jooq.Clause.ALTER_TABLE_DROP;
-import static org.jooq.Clause.ALTER_TABLE_RENAME;
-import static org.jooq.Clause.ALTER_TABLE_RENAME_COLUMN;
-import static org.jooq.Clause.ALTER_TABLE_RENAME_CONSTRAINT;
-import static org.jooq.Clause.ALTER_TABLE_RENAME_INDEX;
-import static org.jooq.Clause.ALTER_TABLE_TABLE;
 import static org.jooq.Nullability.NOT_NULL;
 import static org.jooq.Nullability.NULL;
 // ...
@@ -224,7 +213,6 @@ import org.jooq.AlterTableRenameConstraintToStep;
 import org.jooq.AlterTableRenameIndexToStep;
 import org.jooq.AlterTableStep;
 import org.jooq.AlterTableUsingIndexStep;
-import org.jooq.Clause;
 import org.jooq.Comment;
 import org.jooq.Configuration;
 import org.jooq.Constraint;
@@ -271,7 +259,6 @@ implements
     UNotYetImplemented
 {
 
-    private static final Clause[] CLAUSES                               = { ALTER_TABLE };
     static final Set<SQLDialect>  NO_SUPPORT_IF_EXISTS                  = SQLDialect.supportedUntil(CUBRID, DERBY, FIREBIRD, MARIADB, MYSQL);
     static final Set<SQLDialect>  NO_SUPPORT_IF_EXISTS_COLUMN           = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD);
     static final Set<SQLDialect>  NO_SUPPORT_IF_EXISTS_COLUMN_ALTER     = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, MYSQL, POSTGRES, YUGABYTEDB);
@@ -1486,8 +1473,7 @@ implements
         boolean renameObject = renameTo != null && (false );
 
         if (!omitAlterTable) {
-            ctx.start(ALTER_TABLE_TABLE)
-               .visit(renameObject
+            ctx.visit(renameObject
                    ? K_RENAME_OBJECT
                    : renameTable
                    ? K_RENAME_TABLE
@@ -1496,8 +1482,7 @@ implements
             if (ifExists && supportsIfExists(ctx))
                 ctx.sql(' ').visit(K_IF_EXISTS);
 
-            ctx.sql(' ').visit(table).sql(' ')
-               .end(ALTER_TABLE_TABLE);
+            ctx.sql(' ').visit(table).sql(' ');
         }
 
         if (comment != null) {
@@ -1506,8 +1491,6 @@ implements
         else if (renameTo != null) {
             boolean qualify = ctx.qualify();
             boolean unqualify = unqualifyRenameTo(ctx);
-
-            ctx.start(ALTER_TABLE_RENAME);
 
             if (unqualify)
                 ctx.qualify(false);
@@ -1526,12 +1509,8 @@ implements
 
             if (unqualify)
                 ctx.qualify(qualify);
-
-            ctx.end(ALTER_TABLE_RENAME);
         }
         else if (renameColumn != null) {
-            ctx.start(ALTER_TABLE_RENAME_COLUMN);
-
             switch (ctx.family()) {
 
 
@@ -1586,17 +1565,12 @@ implements
 
                     break;
             }
-
-            ctx.end(ALTER_TABLE_RENAME_COLUMN);
         }
         else if (renameIndex != null) {
-            ctx.start(ALTER_TABLE_RENAME_INDEX)
-               .visit(K_RENAME_INDEX).sql(' ').qualify(false, c -> c.visit(renameIndex)).sql(' ')
-               .visit(K_TO).sql(' ').qualify(false, c -> c.visit(renameIndexTo))
-               .end(ALTER_TABLE_RENAME_INDEX);
+            ctx.visit(K_RENAME_INDEX).sql(' ').qualify(false, c -> c.visit(renameIndex)).sql(' ')
+               .visit(K_TO).sql(' ').qualify(false, c -> c.visit(renameIndexTo));
         }
         else if (renameConstraint != null) {
-            ctx.start(ALTER_TABLE_RENAME_CONSTRAINT);
             ctx.data(DATA_CONSTRAINT_REFERENCE, true, c1 -> {
                 if (family == HSQLDB)
                     c1.visit(K_ALTER_CONSTRAINT).sql(' ').qualify(false, c2 -> c2.visit(renameConstraint)).sql(' ')
@@ -1606,16 +1580,13 @@ implements
                       .qualify(false, c2 -> c2.visit(renameConstraint)).sql(' ')
                       .visit(K_TO).sql(' ').qualify(false, c2 -> c2.visit(renameConstraintTo));
             });
-
-            ctx.end(ALTER_TABLE_RENAME_CONSTRAINT);
         }
         else if (add != null) {
             boolean multiAdd = REQUIRE_REPEAT_ADD_ON_MULTI_ALTER.contains(ctx.dialect());
             boolean parens = !multiAdd ;
             boolean comma = true ;
 
-            ctx.start(ALTER_TABLE_ADD)
-               .visit(addColumnKeyword(ctx))
+            ctx.visit(addColumnKeyword(ctx))
                .sql(' ');
 
             if (parens)
@@ -1664,11 +1635,9 @@ implements
 
 
             acceptFirstBeforeAfter(ctx);
-            ctx.end(ALTER_TABLE_ADD);
         }
         else if (addColumn != null) {
-            ctx.start(ALTER_TABLE_ADD)
-               .visit(addColumnKeyword(ctx)).sql(' ');
+            ctx.visit(addColumnKeyword(ctx)).sql(' ');
 
             if (ifNotExistsColumn && supportsIfNotExistsColumn(ctx))
                 ctx.visit(K_IF_NOT_EXISTS).sql(' ');
@@ -1687,12 +1656,8 @@ implements
 
 
 
-
-            ctx.end(ALTER_TABLE_ADD);
         }
         else if (addConstraint != null) {
-            ctx.start(ALTER_TABLE_ADD);
-
             ctx.visit(K_ADD)
                .sql(' ');
 
@@ -1711,12 +1676,9 @@ implements
 
 
 
-
-            ctx.end(ALTER_TABLE_ADD);
         }
 
         else if (alterConstraint != null) {
-            ctx.start(ALTER_TABLE_ALTER);
             ctx.data(DATA_CONSTRAINT_REFERENCE, true, c -> {
                 switch (family) {
 
@@ -1733,13 +1695,9 @@ implements
                 ctx.sql(' ').visit(K_CONSTRAINT).sql(' ').visit(alterConstraint);
                 AbstractConstraint.acceptEnforced(ctx, alterConstraintEnforced);
             });
-
-            ctx.end(ALTER_TABLE_ALTER);
         }
 
         else if (changeColumnFrom != null) {
-            ctx.start(ALTER_TABLE_ALTER);
-
             switch (family) {
 
                 case MARIADB:
@@ -1756,12 +1714,8 @@ implements
                     acceptColumnType(ctx, table, changeColumnType);
                     break;
             }
-
-            ctx.end(ALTER_TABLE_ALTER);
         }
         else if (alterColumn != null) {
-            ctx.start(ALTER_TABLE_ALTER);
-
             switch (family) {
 
 
@@ -1887,8 +1841,6 @@ implements
                 acceptColumnType(ctx, table, t);
             }
             else if (alterColumnDefault != null) {
-                ctx.start(ALTER_TABLE_ALTER_DEFAULT);
-
                 switch (family) {
 
 
@@ -1920,12 +1872,8 @@ implements
 
 
 
-
-                ctx.end(ALTER_TABLE_ALTER_DEFAULT);
             }
             else if (alterColumnDropDefault) {
-                ctx.start(ALTER_TABLE_ALTER_DEFAULT);
-
                 switch (family) {
 
 
@@ -1952,8 +1900,6 @@ implements
                         ctx.sql(' ').visit(K_DROP_DEFAULT);
                         break;
                 }
-
-                ctx.end(ALTER_TABLE_ALTER_DEFAULT);
             }
             else if (alterColumnSetIdentity != null) {
                 switch (ctx.family()) {
@@ -2044,8 +1990,6 @@ implements
                 }
             }
             else if (alterColumnNullability != null) {
-                ctx.start(ALTER_TABLE_ALTER_NULL);
-
                 switch (ctx.family()) {
 
 
@@ -2068,20 +2012,14 @@ implements
                         ctx.sql(' ').visit(alterColumnNullability.nullable() ? K_DROP_NOT_NULL : K_SET_NOT_NULL);
                         break;
                 }
-
-                ctx.end(ALTER_TABLE_ALTER_NULL);
             }
 
 
 
 
 
-
-            ctx.end(ALTER_TABLE_ALTER);
         }
         else if (dropColumns != null) {
-            ctx.start(ALTER_TABLE_DROP);
-
             if (REQUIRE_REPEAT_DROP_ON_MULTI_ALTER.contains(ctx.dialect())) {
                 String separator = "";
 
@@ -2132,10 +2070,8 @@ implements
 
 
 
-            ctx.end(ALTER_TABLE_DROP);
         }
         else if (dropConstraint != null) {
-            ctx.start(ALTER_TABLE_DROP);
             ctx.data(DATA_CONSTRAINT_REFERENCE, true, c -> {
                 if (dropConstraintType == FOREIGN_KEY && NO_SUPPORT_DROP_CONSTRAINT.contains(c.dialect())) {
                     c.visit(K_DROP).sql(' ').visit(K_FOREIGN_KEY)
@@ -2159,13 +2095,9 @@ implements
 
                 acceptCascade(c);
             });
-
-            ctx.end(ALTER_TABLE_DROP);
         }
         else if (dropConstraintType == PRIMARY_KEY) {
-            ctx.start(ALTER_TABLE_DROP);
             ctx.visit(K_DROP).sql(' ').visit(K_PRIMARY_KEY);
-            ctx.end(ALTER_TABLE_DROP);
         }
     }
 
@@ -2458,10 +2390,5 @@ implements
                 }
             }
         });
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return CLAUSES;
     }
 }

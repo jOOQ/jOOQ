@@ -97,7 +97,6 @@ implements
 
 
 
-    private static final Clause[]        CLAUSES              = { Clause.DROP_SEQUENCE };
     private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS = SQLDialect.supportedUntil(DERBY, FIREBIRD);
 
     private final boolean supportsIfExists(Context<?> ctx) {
@@ -113,8 +112,7 @@ implements
     }
 
     private void accept0(Context<?> ctx) {
-        ctx.start(Clause.DROP_SEQUENCE_SEQUENCE)
-           .visit(K_DROP)
+        ctx.visit(K_DROP)
            .sql(' ')
            .visit(ctx.family() == CUBRID ? K_SERIAL : K_SEQUENCE);
 
@@ -130,13 +128,6 @@ implements
 
         if (ctx.family() == DERBY)
             ctx.sql(' ').visit(K_RESTRICT);
-
-        ctx.end(Clause.DROP_SEQUENCE_SEQUENCE);
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return CLAUSES;
     }
 
 

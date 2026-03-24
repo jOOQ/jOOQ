@@ -37,8 +37,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.CATALOG;
-import static org.jooq.Clause.CATALOG_REFERENCE;
 import static org.jooq.impl.Tools.getMappedCatalog;
 
 import java.util.Collections;
@@ -46,7 +44,6 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import org.jooq.Catalog;
-import org.jooq.Clause;
 import org.jooq.Comment;
 import org.jooq.Context;
 import org.jooq.Name;
@@ -71,7 +68,6 @@ implements
     UEmpty
 {
 
-    private static final Clause[] CLAUSES          = { CATALOG, CATALOG_REFERENCE };
     static final Catalog          DEFAULT_CATALOG  = new CatalogImpl("");
 
     public CatalogImpl(Name name) {
@@ -94,11 +90,6 @@ implements
     public final void accept(Context<?> ctx) {
         Catalog mappedCatalog = getMappedCatalog(ctx, this);
         ctx.visit(mappedCatalog != null ? mappedCatalog.getUnqualifiedName() : getUnqualifiedName());
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return CLAUSES;
     }
 
     @Override

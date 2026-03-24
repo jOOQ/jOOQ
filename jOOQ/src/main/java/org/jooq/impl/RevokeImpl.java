@@ -160,24 +160,17 @@ implements
 
 
 
-    private static final Clause[] CLAUSE = { Clause.REVOKE };
-
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.start(Clause.REVOKE_PRIVILEGE)
-           .visit(K_REVOKE).sql(' ');
+        ctx.visit(K_REVOKE).sql(' ');
 
         if (grantOptionFor)
             ctx.visit(K_GRANT_OPTION_FOR)
                .sql(' ');
 
-        ctx.visit(privileges)
-           .end(Clause.REVOKE_PRIVILEGE).sql(' ')
-           .start(Clause.REVOKE_ON)
+        ctx.visit(privileges).sql(' ')
            .visit(K_ON).sql(' ')
-           .visit(on)
-           .end(Clause.REVOKE_ON).sql(' ')
-           .start(Clause.REVOKE_FROM)
+           .visit(on).sql(' ')
            .visit(K_FROM).sql(' ');
 
         if (from != null)
@@ -187,13 +180,6 @@ implements
 
         if (ctx.family() == HSQLDB)
             ctx.sql(' ').visit(K_RESTRICT);
-
-        ctx.end(Clause.REVOKE_FROM);
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return CLAUSE;
     }
 
 

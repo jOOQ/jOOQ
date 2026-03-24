@@ -39,7 +39,6 @@ package org.jooq.impl;
 
 import java.util.Objects;
 
-import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
@@ -47,10 +46,6 @@ import org.jooq.Name;
 import org.jooq.QueryPart;
 // ...
 // ...
-import org.jooq.tools.StringUtils;
-
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * @author Lukas Eder
@@ -80,11 +75,6 @@ implements
     @Override
     public final void accept(Context<?> ctx) {
         ctx.visit(field);
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return field.clauses(ctx);
     }
 
     @Override

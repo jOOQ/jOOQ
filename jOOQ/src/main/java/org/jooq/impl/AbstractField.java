@@ -37,7 +37,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.FIELD;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.ExpressionOperator.ADD;
 import static org.jooq.impl.ExpressionOperator.SUBTRACT;
@@ -58,7 +57,6 @@ import java.util.function.Function;
 
 import org.jooq.BetweenAndStep;
 import org.jooq.Binding;
-import org.jooq.Clause;
 import org.jooq.Collation;
 import org.jooq.Comment;
 import org.jooq.Comparator;
@@ -93,8 +91,6 @@ implements
     Aliasable<Field<?>>
 {
 
-    private static final Clause[] CLAUSES = { FIELD };
-
     AbstractField(Name name, DataType<T> type) {
         this(name, type, null);
     }
@@ -123,11 +119,6 @@ implements
 
     @Override
     public abstract void accept(Context<?> ctx);
-
-    @Override
-    public Clause[] clauses(Context<?> ctx) {
-        return CLAUSES;
-    }
 
     /* non-final */ int projectionSize() {
         return 1;

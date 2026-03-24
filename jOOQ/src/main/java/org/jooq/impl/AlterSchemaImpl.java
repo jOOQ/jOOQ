@@ -134,7 +134,6 @@ implements
 
 
 
-    private static final Clause[] CLAUSES                 = { Clause.ALTER_SCHEMA };
     static final Set<SQLDialect>  SUPPORT_RENAME_DATABASE = SQLDialect.supportedBy(CLICKHOUSE);
 
 
@@ -159,8 +158,6 @@ implements
     }
 
     private final void accept0(Context<?> ctx) {
-        ctx.start(Clause.ALTER_SCHEMA_SCHEMA);
-
         boolean supportRename = false;
 
         if (supportRename = SUPPORT_RENAME_DATABASE.contains(ctx.dialect()))
@@ -178,19 +175,11 @@ implements
 
                 ctx.sql(' ').visit(K_IF_EXISTS);
 
-        ctx.sql(' ').visit(schema)
-           .end(Clause.ALTER_SCHEMA_SCHEMA).sql(' ');
+        ctx.sql(' ').visit(schema).sql(' ');
 
         if (renameTo != null)
-            ctx.start(Clause.ALTER_SCHEMA_RENAME)
-               .visit(supportRename ? K_TO : K_RENAME_TO).sql(' ')
-               .qualify(false, c -> c.visit(renameTo))
-               .end(Clause.ALTER_SCHEMA_RENAME);
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return CLAUSES;
+            ctx.visit(supportRename ? K_TO : K_RENAME_TO).sql(' ')
+               .qualify(false, c -> c.visit(renameTo));
     }
 
 

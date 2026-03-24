@@ -41,8 +41,6 @@ package org.jooq.impl;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static java.util.stream.Collectors.joining;
-import static org.jooq.Clause.FIELD;
-import static org.jooq.Clause.FIELD_REFERENCE;
 // ...
 // ...
 // ...
@@ -64,7 +62,6 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 import org.jooq.Binding;
-import org.jooq.Clause;
 import org.jooq.Comment;
 import org.jooq.Condition;
 import org.jooq.Context;
@@ -99,7 +96,6 @@ implements
     UEmpty
 {
 
-    private static final Clause[]        CLAUSES                           = { FIELD, FIELD_REFERENCE };
 
 
 
@@ -139,11 +135,6 @@ implements
     @Override
     public boolean declaresFields() {
         return  super.declaresFields();
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return CLAUSES;
     }
 
     @Override

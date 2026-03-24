@@ -38,8 +38,6 @@
 
 package org.jooq.impl;
 
-import static org.jooq.Clause.CONDITION;
-import static org.jooq.Clause.CONDITION_COMPARISON;
 // ...
 // ...
 // ...
@@ -62,7 +60,6 @@ import static org.jooq.impl.Keywords.K_TRUE;
 
 import java.util.Set;
 
-import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.SQLDialect;
 import org.jooq.True;
@@ -81,7 +78,6 @@ implements
     SimpleQueryPart
 {
 
-    private static final Clause[] CLAUSES            = { CONDITION, CONDITION_COMPARISON };
     static final Set<SQLDialect>  NO_SUPPORT_BOOLEAN = SQLDialect.supportedBy(FIREBIRD, SQLITE);
     static final TrueCondition    INSTANCE           = new TrueCondition(false);
     static final TrueCondition    OPTIONAL           = new TrueCondition(true);
@@ -107,11 +103,6 @@ implements
 
         else
             ctx.visit(K_TRUE);
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return CLAUSES;
     }
 
     private TrueCondition(boolean optional) {

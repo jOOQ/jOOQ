@@ -46,7 +46,6 @@ import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.JoinTable.onKey0;
 import static org.jooq.impl.Tools.DATAKEY_RESET_IN_SUBQUERY_SCOPE;
-import static org.jooq.impl.Tools.EMPTY_CLAUSE;
 import static org.jooq.impl.Tools.EMPTY_QUERYPART;
 import static org.jooq.impl.Tools.lazy;
 import static org.jooq.impl.Tools.traverseJoins;
@@ -75,7 +74,6 @@ import java.util.Map.Entry;
 import java.util.function.Consumer;
 
 import org.jooq.BindContext;
-import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Context;
@@ -144,7 +142,6 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     // [#2665] VisitListener API
     private final VisitListener[]                  visitListenersStart;
     private final VisitListener[]                  visitListenersEnd;
-    private final Deque<Clause>                    visitClauses;
     private final DefaultVisitContext              visitContext;
     private final Deque<QueryPart>                 visitParts;
 
@@ -184,7 +181,6 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
             this.visitContext = new DefaultVisitContext();
             this.visitParts = new ArrayDeque<>();
-            this.visitClauses = new ArrayDeque<>();
 
             this.visitListenersStart = configuration.settings().getVisitListenerStartInvocationOrder() != REVERSE
                 ? visitListeners
@@ -196,7 +192,6 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
         else {
             this.visitContext = null;
             this.visitParts = null;
-            this.visitClauses = null;
             this.visitListenersStart = null;
             this.visitListenersEnd = null;
         }
@@ -309,13 +304,6 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
             //          and for which an internal VisitListener is overkill
             part = typeSpecificReplacements(part);
 
-            // Issue start clause events
-            // -----------------------------------------------------------------
-            Clause[] clauses = Tools.isNotEmpty(visitListenersStart) ? clause(part) : null;
-            if (clauses != null)
-                for (int i = 0; i < clauses.length; i++)
-                    start(clauses[i]);
-
             // Perform the actual visiting, or recurse into the replacement
             // -----------------------------------------------------------------
             QueryPart replacement = start(part);
@@ -391,12 +379,6 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
             }
 
             end(replacement);
-
-            // Issue end clause events
-            // -----------------------------------------------------------------
-            if (clauses != null)
-                for (int i = clauses.length - 1; i >= 0; i--)
-                    end(clauses[i]);
         }
 
         return (C) this;
@@ -450,54 +432,6 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
                 data().remove(key);
             else
                 data(key, previous);
-        }
-
-        return (C) this;
-    }
-
-    /**
-     * Emit a clause from a query part being visited.
-     * <p>
-     * This method returns a clause to emit as a surrounding event before /
-     * after visiting a query part. This is needed for all reusable query parts,
-     * whose clause type is ambiguous at the container site. An example:
-     * <p>
-     * <pre><code>SELECT * FROM [A CROSS JOIN B]</code></pre>
-     * <p>
-     * The type of the above <code>JoinTable</code> modelling
-     * <code>A CROSS JOIN B</code> is not known to the surrounding
-     * <code>SELECT</code> statement, which only knows {@link Table} types. The
-     * {@link Clause#TABLE_JOIN} event that is required to be emitted around the
-     * {@link Context#visit(QueryPart)} event has to be issued here in
-     * <code>AbstractContext</code>.
-     */
-    private final Clause[] clause(QueryPart part) {
-        if (part instanceof QueryPartInternal && !TRUE.equals(data(DATA_OMIT_CLAUSE_EVENT_EMISSION)))
-            return ((QueryPartInternal) part).clauses(this);
-
-        return null;
-    }
-
-    @Override
-    public final C start(Clause clause) {
-        if (clause != null && visitClauses != null) {
-            visitClauses.addLast(clause);
-
-            for (VisitListener listener : visitListenersStart)
-                listener.clauseStart(visitContext);
-        }
-
-        return (C) this;
-    }
-
-    @Override
-    public final C end(Clause clause) {
-        if (clause != null && visitClauses != null) {
-            for (VisitListener listener : visitListenersEnd)
-                listener.clauseEnd(visitContext);
-
-            if (visitClauses.removeLast() != clause)
-                throw new IllegalStateException("Mismatch between visited clauses!");
         }
 
         return (C) this;
@@ -576,21 +510,6 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
         @Override
         public final SQLDialect family() {
             return AbstractContext.this.family();
-        }
-
-        @Override
-        public final Clause clause() {
-            return visitClauses.peekLast();
-        }
-
-        @Override
-        public final Clause[] clauses() {
-            return visitClauses.toArray(EMPTY_CLAUSE);
-        }
-
-        @Override
-        public final int clausesLength() {
-            return visitClauses.size();
         }
 
         @Override

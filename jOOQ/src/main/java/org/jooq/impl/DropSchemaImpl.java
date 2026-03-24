@@ -131,7 +131,6 @@ implements
 
 
 
-    private static final Clause[]        CLAUSES                    = { Clause.DROP_SCHEMA };
     private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS       = SQLDialect.supportedUntil(DERBY, FIREBIRD);
     private static final Set<SQLDialect> REQUIRES_RESTRICT          = SQLDialect.supportedBy(DERBY);
     private static final Set<SQLDialect> SUPPORT_SCHEMA_AS_DATABASE = SQLDialect.supportedBy(CLICKHOUSE);
@@ -174,8 +173,7 @@ implements
     }
 
     private void accept1(Context<?> ctx) {
-        ctx.start(Clause.DROP_SCHEMA_SCHEMA)
-           .visit(K_DROP);
+        ctx.visit(K_DROP);
 
 
 
@@ -198,14 +196,6 @@ implements
 
         else if (cascade == Cascade.RESTRICT || REQUIRES_RESTRICT.contains(ctx.dialect()))
             ctx.sql(' ').visit(K_RESTRICT);
-
-        ctx.end(Clause.DROP_SCHEMA_SCHEMA);
-    }
-
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return CLAUSES;
     }
 
 

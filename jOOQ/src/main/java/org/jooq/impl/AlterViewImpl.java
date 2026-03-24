@@ -184,7 +184,6 @@ implements
 
 
 
-    private static final Clause[]        CLAUSES                     = { Clause.ALTER_VIEW };
     private static final Set<SQLDialect> NO_SUPPORT_RENAME_IF_EXISTS = SQLDialect.supportedUntil(CUBRID, DERBY, FIREBIRD);
     private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS        = SQLDialect.supportedUntil(CUBRID, DERBY, FIREBIRD);
     private static final Set<SQLDialect> SUPPORT_ALTER_TABLE_RENAME  = SQLDialect.supportedBy(CLICKHOUSE, HSQLDB, YUGABYTEDB);
@@ -341,21 +340,8 @@ implements
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
     private final void accept1(Context<?> ctx) {
-        ctx.start(Clause.ALTER_VIEW_VIEW)
-           .visit(K_ALTER).sql(' ');
+        ctx.visit(K_ALTER).sql(' ');
 
         if (materialized)
             ctx.visit(K_MATERIALIZED).sql(' ').visit(K_VIEW);
@@ -365,19 +351,11 @@ implements
         if (ifExists && supportsIfExists(ctx))
             ctx.sql(' ').visit(K_IF_EXISTS);
 
-        ctx.sql(' ').visit(view).sql(' ')
-           .end(Clause.ALTER_VIEW_VIEW);
+        ctx.sql(' ').visit(view).sql(' ');
 
         if (renameTo != null)
-            ctx.start(Clause.ALTER_VIEW_RENAME)
-               .visit(K_RENAME_TO).sql(' ')
-               .qualify(false, c -> c.visit(renameTo))
-               .end(Clause.ALTER_VIEW_RENAME);
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return CLAUSES;
+            ctx.visit(K_RENAME_TO).sql(' ')
+               .qualify(false, c -> c.visit(renameTo));
     }
 
 

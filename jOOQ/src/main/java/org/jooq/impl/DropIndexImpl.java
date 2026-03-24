@@ -152,7 +152,6 @@ implements
 
 
 
-    private static final Clause[]        CLAUSES              = { Clause.DROP_INDEX };
     private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS = SQLDialect.supportedUntil(CUBRID, DERBY, FIREBIRD, MYSQL);
     private static final Set<SQLDialect> REQUIRES_ON          = SQLDialect.supportedBy(CLICKHOUSE, MARIADB, MYSQL);
 
@@ -215,11 +214,6 @@ implements
         if (index != null)
             ctx.qualify(false, c -> c.visit(index))
                .sql(' ');
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return CLAUSES;
     }
 
 

@@ -96,8 +96,6 @@ implements
 
 
 
-    private static final Clause[] CLAUSES = { Clause.CONDITION, Clause.CONDITION_IS_NOT_NULL };
-
     @Override
     public final void accept(Context<?> ctx) {
 
@@ -109,11 +107,6 @@ implements
             ctx.visit(row(embeddedFields(field)).isNotNull());
         else
             ctx.visit(field).sql(' ').visit(K_IS_NOT_NULL);
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return CLAUSES;
     }
 
 

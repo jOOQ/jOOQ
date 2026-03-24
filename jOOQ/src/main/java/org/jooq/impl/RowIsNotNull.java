@@ -41,7 +41,6 @@ import static java.util.Arrays.asList;
 import static org.jooq.impl.Keywords.K_IS_NOT_NULL;
 import static org.jooq.impl.Tools.allNotNull;
 
-import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Function1;
 import org.jooq.Row;
@@ -91,11 +90,6 @@ final class RowIsNotNull extends AbstractCondition implements QOM.RowIsNotNull {
                    .visit(K_IS_NOT_NULL);
                 break;
         }
-    }
-
-    @Override // Avoid AbstractCondition implementation
-    public final Clause[] clauses(Context<?> ctx) {
-        return null;
     }
 
     // -------------------------------------------------------------------------

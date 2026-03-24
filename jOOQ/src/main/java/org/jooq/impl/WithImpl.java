@@ -37,7 +37,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.WITH;
 // ...
 // ...
 // ...
@@ -62,7 +61,6 @@ import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-import org.jooq.Clause;
 import org.jooq.CommonTableExpression;
 import org.jooq.Configuration;
 import org.jooq.Context;
@@ -153,7 +151,6 @@ implements
     WithStep,
     With
 {
-    private static final Clause[]                                                     CLAUSES              = { WITH };
 
 
 
@@ -243,11 +240,6 @@ implements
 
         )
             ctx.sql(' ').visit(K_RECURSIVE);
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return CLAUSES;
     }
 
     // -------------------------------------------------------------------------

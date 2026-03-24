@@ -41,8 +41,6 @@ import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;
-import static org.jooq.Clause.FIELD;
-import static org.jooq.Clause.FIELD_FUNCTION;
 // ...
 // ...
 // ...
@@ -103,7 +101,6 @@ import static org.jooq.impl.Keywords.K_WHILE;
 import static org.jooq.impl.Keywords.K_XMLTABLE;
 import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.NUMERIC;
-import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_NAME;
 import static org.jooq.impl.Tools.configurationOrThrow;
 // ...
@@ -134,7 +131,6 @@ import org.jooq.AggregateFunction;
 import org.jooq.BindContext;
 import org.jooq.Binding;
 import org.jooq.Catalog;
-import org.jooq.Clause;
 import org.jooq.Comment;
 import org.jooq.Configuration;
 import org.jooq.Context;
@@ -173,7 +169,6 @@ import org.jooq.impl.QOM.UTransient;
 import org.jooq.impl.ResultsImpl.ResultOrRowsImpl;
 import org.jooq.tools.reflect.Reflect;
 
-import org.jetbrains.annotations.NotNull;
 
 /**
  * A common base class for stored procedures
@@ -190,8 +185,6 @@ implements
     Routine<T>,
     UNotYetImplemented
 {
-
-    private static final Clause[]             CLAUSES                            = { FIELD, FIELD_FUNCTION };
 
 
 
@@ -777,11 +770,6 @@ implements
             results.resultsOrRows().add(new ResultOrRowsImpl(Tools.translate(ctx, ctx.sql(), e)));
 
         return e;
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return CLAUSES;
     }
 
     @Override

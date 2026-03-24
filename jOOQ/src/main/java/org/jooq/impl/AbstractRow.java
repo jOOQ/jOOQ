@@ -37,7 +37,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.FIELD_ROW;
 import static org.jooq.impl.Keywords.K_ROW;
 import static org.jooq.impl.Keywords.K_STRUCT;
 import static org.jooq.impl.Names.N_COALESCE;
@@ -52,7 +51,6 @@ import java.util.Collection;
 import java.util.function.Function;
 
 import org.jooq.Binding;
-import org.jooq.Clause;
 import org.jooq.Comment;
 import org.jooq.Comparator;
 import org.jooq.Condition;
@@ -90,8 +88,6 @@ implements
     FieldsTrait,
     SelectField<R>
 {
-
-    private static final Clause[] CLAUSES = { FIELD_ROW };
 
     final FieldsImpl<R>           fields;
 
@@ -307,11 +303,6 @@ implements
         ctx.sql("(")
            .visit(wrap(fields.fields))
            .sql(")");
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return CLAUSES;
     }
 
     // ------------------------------------------------------------------------

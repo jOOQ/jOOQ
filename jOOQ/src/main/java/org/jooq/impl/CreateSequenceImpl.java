@@ -252,7 +252,6 @@ implements
 
 
 
-    private static final Clause[] CLAUSES                    = { Clause.CREATE_SEQUENCE };
     static final Set<SQLDialect>  NO_SUPPORT_IF_NOT_EXISTS   = SQLDialect.supportedUntil(DERBY, FIREBIRD);
     static final Set<SQLDialect>  REQUIRES_START_WITH        = SQLDialect.supportedBy(DERBY);
     static final Set<SQLDialect>  NO_SUPPORT_CACHE           = SQLDialect.supportedBy(DERBY, FIREBIRD, HSQLDB);
@@ -281,8 +280,7 @@ implements
     }
 
     private final void accept0(Context<?> ctx) {
-        ctx.start(Clause.CREATE_SEQUENCE_SEQUENCE)
-           .visit(K_CREATE)
+        ctx.visit(K_CREATE)
            .sql(' ')
            .visit(ctx.family() == CUBRID ? K_SERIAL : K_SEQUENCE)
            .sql(' ');
@@ -339,13 +337,6 @@ implements
 
 
 
-
-        ctx.end(Clause.CREATE_SEQUENCE_SEQUENCE);
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return CLAUSES;
     }
 
 

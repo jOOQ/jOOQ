@@ -37,9 +37,12 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.CONDITION;
-import static org.jooq.Clause.CONDITION_COMPARISON;
-import static org.jooq.SQLDialect.*;
+// ...
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.HSQLDB;
+// ...
+// ...
+// ...
 import static org.jooq.impl.DSL.castNull;
 import static org.jooq.impl.Keywords.K_NULL;
 import static org.jooq.impl.SQLDataType.BOOLEAN;
@@ -47,9 +50,7 @@ import static org.jooq.impl.TrueCondition.NO_SUPPORT_BOOLEAN;
 
 import java.util.Set;
 
-import org.jooq.Clause;
 import org.jooq.Context;
-import org.jooq.False;
 import org.jooq.Null;
 import org.jooq.SQLDialect;
 import org.jooq.impl.QOM.UEmpty;
@@ -67,7 +68,6 @@ implements
     SimpleQueryPart
 {
 
-    private static final Clause[] CLAUSES  = { CONDITION, CONDITION_COMPARISON };
     static final NullCondition    INSTANCE = new NullCondition();
     static final Set<SQLDialect>  NO_SUPPORT_UNTYPED_NULL = SQLDialect.supportedBy(DERBY, HSQLDB);
 
@@ -89,11 +89,6 @@ implements
 
         else
             ctx.visit(K_NULL);
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return CLAUSES;
     }
 
     private NullCondition() {}

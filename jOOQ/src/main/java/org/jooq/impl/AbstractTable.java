@@ -37,7 +37,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.TABLE;
 import static org.jooq.JoinType.CROSS_APPLY;
 import static org.jooq.JoinType.CROSS_JOIN;
 import static org.jooq.JoinType.FULL_OUTER_JOIN;
@@ -75,7 +74,6 @@ import static org.jooq.impl.HintedTable.HintType.USE_INDEX_FOR_ORDER_BY;
 import static org.jooq.impl.QOM.JoinHint.HASH;
 import static org.jooq.impl.QOM.JoinHint.LOOP;
 import static org.jooq.impl.QOM.JoinHint.MERGE;
-import static org.jooq.impl.QOM.SampleMethod.BERNOULLI;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.EMPTY_NAME;
 import static org.jooq.impl.Tools.EMPTY_TABLE_FIELD;
@@ -97,11 +95,9 @@ import java.util.function.Function;
 import org.jooq.Binding;
 import org.jooq.Catalog;
 import org.jooq.Check;
-import org.jooq.Clause;
 import org.jooq.Comment;
 import org.jooq.Condition;
 import org.jooq.Configuration;
-import org.jooq.Context;
 import org.jooq.ContextConverter;
 import org.jooq.Converter;
 import org.jooq.DataType;
@@ -165,7 +161,6 @@ implements
 {
 
     private static final JooqLogger  log              = JooqLogger.getLogger(AbstractTable.class);
-    private static final Clause[]    CLAUSES          = { TABLE };
 
     private final TableOptions       options;
     private Schema                   tableschema;
@@ -273,15 +268,6 @@ implements
 
     final TableAsField<R> tf() {
         return new TableAsField<>(this);
-    }
-
-    // ------------------------------------------------------------------------
-    // XXX: QueryPart API
-    // ------------------------------------------------------------------------
-
-    @Override
-    public Clause[] clauses(Context<?> ctx) {
-        return CLAUSES;
     }
 
     // ------------------------------------------------------------------------

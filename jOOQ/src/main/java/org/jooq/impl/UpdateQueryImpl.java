@@ -38,14 +38,48 @@
 
 package org.jooq.impl;
 
-import static org.jooq.Clause.UPDATE;
-import static org.jooq.Clause.UPDATE_FROM;
-import static org.jooq.Clause.UPDATE_RETURNING;
-import static org.jooq.Clause.UPDATE_SET;
-import static org.jooq.Clause.UPDATE_SET_ASSIGNMENT;
-import static org.jooq.Clause.UPDATE_UPDATE;
-import static org.jooq.Clause.UPDATE_WHERE;
-import static org.jooq.SQLDialect.*;
+// ...
+// ...
+// ...
+// ...
+// ...
+import static org.jooq.SQLDialect.CLICKHOUSE;
+// ...
+import static org.jooq.SQLDialect.CUBRID;
+// ...
+// ...
+// ...
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.DUCKDB;
+// ...
+import static org.jooq.SQLDialect.FIREBIRD;
+// ...
+// ...
+import static org.jooq.SQLDialect.H2;
+// ...
+import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.IGNITE;
+// ...
+// ...
+import static org.jooq.SQLDialect.MARIADB;
+// ...
+// ...
+import static org.jooq.SQLDialect.MYSQL;
+// ...
+// ...
+import static org.jooq.SQLDialect.POSTGRES;
+// ...
+// ...
+// ...
+// ...
+import static org.jooq.SQLDialect.SQLITE;
+// ...
+// ...
+// ...
+// ...
+import static org.jooq.SQLDialect.TRINO;
+// ...
+import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.conf.SettingsTools.getExecuteUpdateWithoutWhere;
 import static org.jooq.impl.ConditionProviderImpl.extractCondition;
 import static org.jooq.impl.DSL.insertInto;
@@ -64,19 +98,15 @@ import static org.jooq.impl.DeleteQueryImpl.traverseJoinsAndAddPathConditions;
 import static org.jooq.impl.InlineDerivedTable.hasInlineDerivedTables;
 import static org.jooq.impl.InlineDerivedTable.transformInlineDerivedTables;
 import static org.jooq.impl.InlineDerivedTable.transformInlineDerivedTables0;
-import static org.jooq.impl.Keywords.K_AND;
 import static org.jooq.impl.Keywords.K_FROM;
 import static org.jooq.impl.Keywords.K_ORDER_BY;
 import static org.jooq.impl.Keywords.K_SET;
 import static org.jooq.impl.Keywords.K_UPDATE;
 import static org.jooq.impl.Keywords.K_WHERE;
 import static org.jooq.impl.SQLDataType.INTEGER;
-import static org.jooq.impl.SelectQueryImpl.addPathConditions;
-import static org.jooq.impl.SelectQueryImpl.prependPathJoins;
 import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.containsDeclaredTable;
 import static org.jooq.impl.Tools.findAny;
-import static org.jooq.impl.Tools.traverseJoins;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_UNQUALIFY_LOCAL_SCOPE;
 
 import java.util.Arrays;
@@ -87,7 +117,6 @@ import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Context;
@@ -172,7 +201,6 @@ implements
     QOM.Update<R>
 {
 
-    private static final Clause[]       CLAUSES                       = { UPDATE };
 
 
 
@@ -203,7 +231,7 @@ implements
     UpdateQueryImpl(Configuration configuration, WithImpl with, Table<R> table) {
         super(configuration, with, table);
 
-        this.updateMap = new FieldMapForUpdate(table, SetClause.UPDATE, UPDATE_SET_ASSIGNMENT);
+        this.updateMap = new FieldMapForUpdate(table, SetClause.UPDATE);
         this.from = new TableList();
         this.condition = new ConditionProviderImpl();
         this.orderBy = new SortFieldList();
@@ -719,8 +747,7 @@ implements
             t0 = emulateUpdateJoin(t0, f, where0);
         }
 
-        ctx.start(UPDATE_UPDATE)
-           .visit(K_UPDATE)
+        ctx.visit(K_UPDATE)
            .sql(' ')
 
            // [#4314] Not all SQL dialects support declaring aliased tables in
@@ -733,8 +760,7 @@ implements
 
            )
            .visit(t0)
-           .declareTables(declareTables)
-           .end(UPDATE_UPDATE);
+           .declareTables(declareTables);
 
 
 
@@ -743,14 +769,12 @@ implements
 
 
         ctx.formatSeparator()
-           .start(UPDATE_SET)
            .visit(K_SET)
            .separatorRequired(true)
            .formatIndentStart()
            .formatSeparator()
            .visit(updateMap)
-           .formatIndentEnd()
-           .end(UPDATE_SET);
+           .formatIndentEnd();
 
 
 
@@ -791,8 +815,6 @@ implements
         else if (!where0.hasWhere() && REQUIRES_WHERE.contains(ctx.dialect()))
             where0.addConditions(trueCondition());
 
-        ctx.start(UPDATE_WHERE);
-
         if (where0.hasWhere()) {
             boolean noQualifyInWhere = NO_SUPPORT_QUALIFY_IN_WHERE.contains(ctx.dialect());
 
@@ -806,8 +828,6 @@ implements
                 ctx.data(DATA_UNQUALIFY_LOCAL_SCOPE, false);
         }
 
-        ctx.end(UPDATE_WHERE);
-
         if (!limitEmulation(ctx)) {
             if (!orderBy.isEmpty())
                 ctx.formatSeparator()
@@ -817,9 +837,7 @@ implements
             DeleteQueryImpl.acceptLimit(ctx, limit);
         }
 
-        ctx.start(UPDATE_RETURNING);
         toSQLReturning(ctx);
-        ctx.end(UPDATE_RETURNING);
     }
 
     private final Table<?> emulateUpdateJoin(Table<?> t0, TableList from0, ConditionProviderImpl where0) {
@@ -887,7 +905,6 @@ implements
     }
 
     private final void acceptFrom(Context<?> ctx, ConditionProviderImpl where0, TableList f) {
-        ctx.start(UPDATE_FROM);
 
         // [#16634] Prevent unnecessary FROM clause in some dialects, e.g. HANA
         if (!NO_SUPPORT_FROM.contains(ctx.dialect())) {
@@ -896,13 +913,6 @@ implements
                    .visit(K_FROM).sql(' ')
                    .declareTables(true, c -> c.visit(f));
         }
-
-        ctx.end(UPDATE_FROM);
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return CLAUSES;
     }
 
     @Override

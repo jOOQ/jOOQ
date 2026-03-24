@@ -37,13 +37,9 @@
  */
 package org.jooq.impl;
 
-import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
-import org.jooq.QueryPart;
-import org.jooq.QueryPartInternal;
 import org.jooq.SQL;
-import org.jooq.impl.QOM.UEmpty;
 import org.jooq.impl.QOM.UEmptyQuery;
 
 /**
@@ -76,13 +72,5 @@ final class SQLQuery extends AbstractRowCountQuery implements UEmptyQuery {
                 ctx.visit(delegate);
                 break;
         }
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        if (delegate instanceof QueryPartInternal q)
-            return q.clauses(ctx);
-
-        return null;
     }
 }

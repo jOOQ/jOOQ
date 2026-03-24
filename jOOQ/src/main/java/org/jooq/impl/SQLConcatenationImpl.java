@@ -37,9 +37,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.TEMPLATE;
-
-import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.QueryPart;
 import org.jooq.SQL;
@@ -47,7 +44,6 @@ import org.jooq.impl.QOM.UEmpty;
 
 final class SQLConcatenationImpl extends AbstractQueryPart implements SQL, UEmpty {
 
-    private static final Clause[] CLAUSES = { TEMPLATE };
     private final QueryPart[]     input;
 
     SQLConcatenationImpl(QueryPart... input) {
@@ -62,10 +58,5 @@ final class SQLConcatenationImpl extends AbstractQueryPart implements SQL, UEmpt
 
             ctx.visit(input[i]);
         }
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return CLAUSES;
     }
 }

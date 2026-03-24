@@ -38,7 +38,6 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
-import static org.jooq.Clause.CONSTRAINT;
 // ...
 import static org.jooq.SQLDialect.CLICKHOUSE;
 import static org.jooq.SQLDialect.IGNITE;
@@ -55,7 +54,6 @@ import static org.jooq.impl.Tools.BooleanDataKey.DATA_CONSTRAINT_REFERENCE;
 
 import java.util.Set;
 
-import org.jooq.Clause;
 import org.jooq.ConstraintEnforcementStep;
 import org.jooq.Context;
 import org.jooq.Name;
@@ -72,7 +70,6 @@ extends
 implements
     ConstraintEnforcementStep
 {
-    private static final Clause[] CLAUSES                   = { CONSTRAINT };
     static final Set<SQLDialect>  NO_SUPPORT_NAMED          = SQLDialect.supportedBy();
     static final Set<SQLDialect>  NO_SUPPORT_NAMED_PK       = SQLDialect.supportedBy(CLICKHOUSE);
 
@@ -140,11 +137,6 @@ implements
     }
 
     abstract void accept0(Context<?> ctx);
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return CLAUSES;
-    }
 
     static void acceptEnforced(Context<?> ctx, boolean enforced) {
         switch (ctx.family()) {

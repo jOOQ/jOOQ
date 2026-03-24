@@ -130,18 +130,6 @@ public interface Context<C extends Context<C>> extends ExecuteScope {
     C visitSubquery(QueryPart part) throws DataAccessException;
 
     /**
-     * TODO [#2667]
-     *
-     * Properties of these methods:
-     * - A clause is always started / ended, even if it isn't rendered or if it's empty!
-     */
-    @NotNull
-    C start(Clause clause);
-
-    @NotNull
-    C end(Clause clause);
-
-    /**
      * Set a data value for a key for the scope of a {@link Consumer}.
      */
     @NotNull

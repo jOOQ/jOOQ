@@ -37,7 +37,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.TABLE_VALUES;
 // ...
 // ...
 // ...
@@ -261,8 +260,6 @@ implements
 
         // [#915] Native support of VALUES(..)
         else {
-            ctx.start(TABLE_VALUES);
-
             if (!NO_SUPPORT_PARENTHESES.contains(ctx.dialect()))
                 ctx.sqlIndentStart('(');
 
@@ -327,8 +324,6 @@ implements
 
             if (!NO_SUPPORT_PARENTHESES.contains(ctx.dialect()))
                 ctx.sqlIndentEnd(')');
-
-            ctx.end(TABLE_VALUES);
         }
     }
 

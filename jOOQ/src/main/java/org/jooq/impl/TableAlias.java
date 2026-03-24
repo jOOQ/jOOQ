@@ -44,7 +44,6 @@ import static org.jooq.impl.Tools.removeGenerator;
 import java.util.List;
 import java.util.function.Predicate;
 
-import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
@@ -171,11 +170,6 @@ implements
         }
         else
             ctx.visit(alias);
-    }
-
-    @Override // Avoid AbstractTable implementation
-    public final Clause[] clauses(Context<?> ctx) {
-        return null;
     }
 
     @Override

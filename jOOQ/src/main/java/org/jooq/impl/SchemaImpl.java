@@ -38,8 +38,6 @@
 
 package org.jooq.impl;
 
-import static org.jooq.Clause.SCHEMA;
-import static org.jooq.Clause.SCHEMA_REFERENCE;
 import static org.jooq.impl.CatalogImpl.DEFAULT_CATALOG;
 import static org.jooq.impl.Tools.flatMap;
 import static org.jooq.impl.Tools.getMappedCatalog;
@@ -53,7 +51,6 @@ import java.util.Objects;
 import java.util.stream.Stream;
 
 import org.jooq.Catalog;
-import org.jooq.Clause;
 import org.jooq.Comment;
 import org.jooq.Context;
 import org.jooq.Domain;
@@ -68,7 +65,6 @@ import org.jooq.Table;
 import org.jooq.UDT;
 import org.jooq.UniqueKey;
 import org.jooq.impl.QOM.UEmpty;
-import org.jooq.tools.StringUtils;
 
 /**
  * A common base class for database schemata
@@ -87,7 +83,6 @@ implements
     UEmpty
 {
 
-    private static final Clause[] CLAUSES        = { SCHEMA, SCHEMA_REFERENCE };
     static final Lazy<Schema>     DEFAULT_SCHEMA = Lazy.of(() -> new SchemaImpl(""));
 
     private Catalog               catalog;
@@ -139,11 +134,6 @@ implements
 
         Schema mappedSchema = getMappedSchema(ctx, this);
         ctx.visit(mappedSchema != null ? mappedSchema.getUnqualifiedName() : getUnqualifiedName());
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return CLAUSES;
     }
 
     @Override

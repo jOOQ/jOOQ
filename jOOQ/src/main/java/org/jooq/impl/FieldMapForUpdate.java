@@ -111,7 +111,6 @@ import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.Field;
@@ -155,25 +154,21 @@ extends
 
     final Table<?>               table;
     final SetClause              setClause;
-    final Clause                 assignmentClause;
 
     FieldMapForUpdate(FieldMapForUpdate um, SetClause setClause) {
-        this(um.table, setClause, um.assignmentClause);
+        this(um.table, setClause);
 
         putAll(um);
     }
 
-    FieldMapForUpdate(Table<?> table, SetClause setClause, Clause assignmentClause) {
+    FieldMapForUpdate(Table<?> table, SetClause setClause) {
         this.table = table;
         this.setClause = setClause;
-        this.assignmentClause = assignmentClause;
     }
-
-
 
     final FieldMapForUpdate emulateUDTPaths(Context<?> ctx) {
         if (EMULATE_UDT_PATHS.contains(ctx.dialect()) && anyMatch(keySet(), f -> f instanceof UDTPathField && table.indexOf((Field<?>) f) == -1)) {
-            FieldMapForUpdate result = new FieldMapForUpdate(table, setClause, assignmentClause);
+            FieldMapForUpdate result = new FieldMapForUpdate(table, setClause);
 
             for (Entry<FieldOrRow, FieldOrRowOrSelect> e : entrySet()) {
                 FieldOrRow key = e.getKey();
@@ -278,9 +273,6 @@ extends
             ctx.sql(separator)
                .formatSeparator();
 
-        if (assignmentClause != null)
-            ctx.start(assignmentClause);
-
         // A multi-row update was specified
         if (key instanceof Row multiRow) {
             Row multiValue = value instanceof Row ? (Row) value : null;
@@ -291,7 +283,7 @@ extends
                 && (NO_SUPPORT_RVE_SET.contains(ctx.dialect())
                         || (NO_SUPPORT_RVE_SET_IN_MERGE.contains(ctx.dialect()) && setClause == SetClause.MERGE))
             ) {
-                FieldMapForUpdate map = new FieldMapForUpdate(table(), setClause, null);
+                FieldMapForUpdate map = new FieldMapForUpdate(table(), setClause);
 
                 for (int i = 0; i < multiRow.size(); i++) {
                     Field<?> k = multiRow.field(i);
@@ -345,7 +337,7 @@ extends
                 }
                 else {
                     for (int i = 0; i < size; i++) {
-                        FieldMapForUpdate mu = new FieldMapForUpdate(table, setClause, null);
+                        FieldMapForUpdate mu = new FieldMapForUpdate(table, setClause);
                         separator = mu.acceptAssignmentClause(ctx,
                             supportsQualify,
                             row.field(i),
@@ -406,9 +398,6 @@ extends
             else
                 ctx.visit(patchDefaultForUpdate(ctx, (Field) value, (Field) key));
         }
-
-        if (assignmentClause != null)
-            ctx.end(assignmentClause);
 
         return ",";
     }
@@ -628,7 +617,7 @@ extends
     @Override
     final Function<? super Map<FieldOrRow, FieldOrRowOrSelect>, ? extends AbstractQueryPartMap<FieldOrRow, FieldOrRowOrSelect>> $construct() {
         return m -> {
-            FieldMapForUpdate r = new FieldMapForUpdate(table, setClause, assignmentClause);
+            FieldMapForUpdate r = new FieldMapForUpdate(table, setClause);
             r.putAll(m);
             return r;
         };

@@ -55,7 +55,6 @@ import static org.jooq.impl.Tools.SimpleDataKey.DATA_SELECT_ALIASES;
 
 import java.util.List;
 
-import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Name;
@@ -161,10 +160,5 @@ final class AliasedSelect<R extends Record> extends AbstractTable<R> implements 
             || !q.getOrderBy().isEmpty()
             || Tools.hasEmbeddedFields(q.getSelect())
         );
-    }
-
-    @Override // Avoid AbstractTable implementation
-    public final Clause[] clauses(Context<?> ctx) {
-        return null;
     }
 }

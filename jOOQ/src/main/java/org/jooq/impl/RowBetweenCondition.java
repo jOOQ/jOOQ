@@ -37,11 +37,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.CONDITION;
-import static org.jooq.Clause.CONDITION_BETWEEN;
-import static org.jooq.Clause.CONDITION_BETWEEN_SYMMETRIC;
-import static org.jooq.Clause.CONDITION_NOT_BETWEEN;
-import static org.jooq.Clause.CONDITION_NOT_BETWEEN_SYMMETRIC;
 import static org.jooq.SQLDialect.*;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.Keywords.K_AND;
@@ -74,7 +69,6 @@ import org.jooq.BetweenAndStep20;
 import org.jooq.BetweenAndStep21;
 import org.jooq.BetweenAndStep22;
 import org.jooq.BetweenAndStepN;
-import org.jooq.Clause;
 import org.jooq.Comparator;
 import org.jooq.Condition;
 import org.jooq.Context;
@@ -163,10 +157,6 @@ implements
     BetweenAndStepN,
     UNotYetImplemented {
 
-    private static final Clause[]            CLAUSES_BETWEEN               = { CONDITION, CONDITION_BETWEEN };
-    private static final Clause[]            CLAUSES_BETWEEN_SYMMETRIC     = { CONDITION, CONDITION_BETWEEN_SYMMETRIC };
-    private static final Clause[]            CLAUSES_NOT_BETWEEN           = { CONDITION, CONDITION_NOT_BETWEEN };
-    private static final Clause[]            CLAUSES_NOT_BETWEEN_SYMMETRIC = { CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC };
     private static final Set<SQLDialect>     NO_SUPPORT_SYMMETRIC          = SQLDialect.supportedBy(CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, IGNITE, MARIADB, MYSQL, SQLITE, TRINO);
     private static final Set<SQLDialect>     EMULATE_BETWEEN               = SQLDialect.supportedBy(CUBRID, DERBY, DUCKDB, FIREBIRD, MARIADB, MYSQL);
 
@@ -704,13 +694,5 @@ implements
                            ctx.sql(" ").visit(K_AND);
                            ctx.sql(" ").visit(maxValue);
         }
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return not ? symmetric ? CLAUSES_NOT_BETWEEN_SYMMETRIC
-                               : CLAUSES_NOT_BETWEEN
-                   : symmetric ? CLAUSES_BETWEEN_SYMMETRIC
-                               : CLAUSES_BETWEEN;
     }
 }

@@ -91,7 +91,6 @@ import static org.jooq.impl.Tools.visitSubquery;
 
 import java.util.Set;
 
-import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Function3;
@@ -267,11 +266,6 @@ implements
     @Override
     final FieldsImpl<Record1<Integer>> fields0() {
         return new FieldsImpl<>(DSL.field(DSL.name(name, N_GENERATE_SERIES), Integer.class));
-    }
-
-    @Override // Avoid AbstractTable implementation
-    public final Clause[] clauses(Context<?> ctx) {
-        return null;
     }
 
     @Override

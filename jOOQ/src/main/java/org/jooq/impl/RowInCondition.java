@@ -37,9 +37,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.CONDITION;
-import static org.jooq.Clause.CONDITION_IN;
-import static org.jooq.Clause.CONDITION_NOT_IN;
 import static org.jooq.Comparator.EQUALS;
 import static org.jooq.Comparator.IN;
 import static org.jooq.Comparator.NOT_EQUALS;
@@ -67,18 +64,10 @@ import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.map;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
-import org.jooq.Clause;
-import org.jooq.Comparator;
 import org.jooq.Condition;
-import org.jooq.Configuration;
-import org.jooq.Constants;
 import org.jooq.Context;
-import org.jooq.Field;
-import org.jooq.QueryPartInternal;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
 import org.jooq.impl.QOM.UNotYetImplemented;
@@ -92,9 +81,6 @@ extends
 implements
     UNotYetImplemented
 {
-
-    private static final Clause[]        CLAUSES_IN     = { CONDITION, CONDITION_IN };
-    private static final Clause[]        CLAUSES_IN_NOT = { CONDITION, CONDITION_NOT_IN };
 
     // Currently not yet supported in SQLite:
     // https://www.sqlite.org/rowvalue.html
@@ -163,10 +149,5 @@ implements
                .visit((not ? NOT_IN : IN).toKeyword())
                .sql(" (").visit(new QueryPartListView<>(AbstractInList.padded(ctx, right, Integer.MAX_VALUE))).sql(')');
         }
-    }
-
-    @Override // Avoid AbstractCondition implementation
-    public final Clause[] clauses(Context<?> ctx) {
-        return null;
     }
 }

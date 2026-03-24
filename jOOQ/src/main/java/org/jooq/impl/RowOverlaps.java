@@ -70,7 +70,6 @@ import static org.jooq.impl.Tools.castIfNeeded;
 
 import java.util.Set;
 
-import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
@@ -139,11 +138,6 @@ final class RowOverlaps<T1, T2> extends AbstractCondition implements QOM.RowOver
                .sql(' ').visit(K_OVERLAPS)
                .sql(' ').visit(right)
                .sql(')');
-    }
-
-    @Override // Avoid AbstractCondition implementation
-    public final Clause[] clauses(Context<?> ctx) {
-        return null;
     }
 
     // -------------------------------------------------------------------------

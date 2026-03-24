@@ -37,11 +37,8 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.CUSTOM;
-
 import java.util.function.Consumer;
 
-import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.DataType;
@@ -70,8 +67,6 @@ implements
     UEmptyField<T>,
     UOpaque
 {
-
-    private static final Clause[] CLAUSES = { CUSTOM };
 
     protected CustomField(String name, DataType<T> type) {
         this(DSL.name(name), type);
@@ -115,11 +110,6 @@ implements
     // -------------------------------------------------------------------------
     // No further overrides allowed
     // -------------------------------------------------------------------------
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return CLAUSES;
-    }
 
     @Override
     public final Field<T> as(Name alias) {

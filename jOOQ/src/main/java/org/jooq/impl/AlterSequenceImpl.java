@@ -282,7 +282,6 @@ implements
 
 
 
-    private static final Clause[]        CLAUSES                     = { Clause.ALTER_SEQUENCE };
     private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS        = SQLDialect.supportedUntil(CUBRID, DERBY, FIREBIRD);
     private static final Set<SQLDialect> NO_SUPPORT_RENAME_IF_EXISTS = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD);
     private static final Set<SQLDialect> NO_SEPARATOR                = SQLDialect.supportedBy(CUBRID, MARIADB);
@@ -336,17 +335,13 @@ implements
     }
 
     private final void acceptRenameTable(Context<?> ctx) {
-        ctx.start(Clause.ALTER_SEQUENCE_SEQUENCE)
-           .start(Clause.ALTER_SEQUENCE_RENAME)
-           .visit(K_ALTER_TABLE)
+        ctx.visit(K_ALTER_TABLE)
            .sql(' ')
            .visit(sequence)
            .sql(' ')
            .visit(K_RENAME_TO)
            .sql(' ')
-           .qualifySchema(false, c -> c.visit(renameTo))
-           .end(Clause.ALTER_SEQUENCE_RENAME)
-           .end(Clause.ALTER_SEQUENCE_SEQUENCE);
+           .qualifySchema(false, c -> c.visit(renameTo));
     }
 
 
@@ -362,13 +357,8 @@ implements
 
 
 
-
-
-
-
     private final void accept1(Context<?> ctx) {
-        ctx.start(Clause.ALTER_SEQUENCE_SEQUENCE)
-           .visit(K_ALTER)
+        ctx.visit(K_ALTER)
            .sql(' ')
            .visit(ctx.family() == CUBRID ? K_SERIAL : K_SEQUENCE);
 
@@ -382,18 +372,12 @@ implements
 
         ctx.sql(' ').visit(sequence);
 
-        ctx.end(Clause.ALTER_SEQUENCE_SEQUENCE);
-
         if (renameTo != null) {
-            ctx.start(Clause.ALTER_SEQUENCE_RENAME)
-               .sql(' ').visit(K_RENAME_TO)
+            ctx.sql(' ').visit(K_RENAME_TO)
                .sql(' ')
-               .qualify(false, c -> c.visit(renameTo))
-               .end(Clause.ALTER_SEQUENCE_RENAME);
+               .qualify(false, c -> c.visit(renameTo));
         }
         else {
-            ctx.start(Clause.ALTER_SEQUENCE_RESTART);
-
             String noSeparator = NO_SEPARATOR.contains(ctx.dialect()) ? "" : " ";
 
             if (incrementBy != null) {
@@ -451,14 +435,7 @@ implements
                 ctx.sql(' ').visit(K_CYCLE);
             else if (cycle == CycleOption.NO_CYCLE)
                 ctx.sql(' ').visit(K_NO).sql(noSeparator).visit(K_CYCLE);
-
-            ctx.end(Clause.ALTER_SEQUENCE_RESTART);
         }
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return CLAUSES;
     }
 
 

@@ -45,7 +45,6 @@ import static org.jooq.impl.Tools.CONFIG_FORMATTED;
 import java.sql.SQLException;
 
 import org.jooq.Attachable;
-import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.DSLContext;
@@ -67,20 +66,6 @@ abstract class AbstractQueryPart implements QueryPartInternal {
 
     Configuration configuration() {
         return CONFIG.get();
-    }
-
-    // -------------------------------------------------------------------------
-    // Deprecated API
-    // -------------------------------------------------------------------------
-
-    /**
-     * @deprecated - 3.11.0 - [#8179] - This functionality will be removed in
-     *             the future.
-     */
-    @Deprecated
-    @Override
-    public Clause[] clauses(Context<?> ctx) {
-        return null;
     }
 
     // -------------------------------------------------------------------------

@@ -39,7 +39,6 @@ package org.jooq.impl;
 
 import static org.jooq.impl.DSL.noCondition;
 
-import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.Field;
@@ -75,10 +74,5 @@ final class RecordCondition extends AbstractCondition implements UEmpty {
         }
 
         ctx.visit(c);
-    }
-
-    @Override // Avoid AbstractCondition implementation
-    public final Clause[] clauses(Context<?> ctx) {
-        return null;
     }
 }

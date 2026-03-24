@@ -96,8 +96,6 @@ implements
 
 
 
-    private static final Clause[] CLAUSES_EXISTS = { Clause.CONDITION, Clause.CONDITION_EXISTS };
-
     @Override
     final boolean parenthesised(Context<?> ctx) {
         return true;
@@ -122,11 +120,6 @@ implements
 
                 break;
         }
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return CLAUSES_EXISTS;
     }
 
 

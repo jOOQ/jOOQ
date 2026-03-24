@@ -460,8 +460,6 @@ implements
     }
 
     private final void accept1(Context<?> ctx) {
-        ctx.start(Clause.CREATE_TABLE);
-
         if (CREATE_SEQUENCE_FOR_IDENTITY.contains(ctx.family())
             && anyMatch(tableElements, e -> e instanceof Field && ((Field<?>) e).getDataType().identity())
         )
@@ -483,8 +481,6 @@ implements
             toSQLOnCommit(ctx);
             toSQLTableClauses(ctx);
         }
-
-        ctx.end(Clause.CREATE_TABLE);
     }
 
     private final void toSQLTableClauses(Context<?> ctx) {
@@ -541,8 +537,7 @@ implements
         QOM.UnmodifiableList<? extends Field<?>> columns = $columns();
         if (!columns.isEmpty()
                 && (select == null || !NO_SUPPORT_CTAS_COLUMN_NAMES.contains(ctx.dialect()))) {
-            ctx.sqlIndentStart(" (")
-               .start(Clause.CREATE_TABLE_COLUMNS);
+            ctx.sqlIndentStart(" (");
 
             Field<?> identity = null;
             boolean qualify = ctx.qualify();
@@ -577,9 +572,6 @@ implements
 
             // [#10551] Ignite requires at least one non-PK column.
             toSQLDummyColumns(ctx);
-
-            ctx.end(Clause.CREATE_TABLE_COLUMNS)
-               .start(Clause.CREATE_TABLE_CONSTRAINTS);
 
             for (Constraint constraint : $constraints()) {
 
@@ -616,8 +608,6 @@ implements
                     }
                 }
             }
-
-            ctx.end(Clause.CREATE_TABLE_CONSTRAINTS);
 
             if (!$indexes().isEmpty() && !EMULATE_INDEXES_IN_BLOCK.contains(ctx.dialect())) {
                 ctx.qualify(false);
@@ -726,14 +716,10 @@ implements
         if (WithOrWithoutData.WITH_NO_DATA == withData && NO_SUPPORT_WITH_DATA.contains(ctx.dialect()))
             ctx.data(DATA_SELECT_NO_DATA, true);
 
-        ctx.start(Clause.CREATE_TABLE_AS);
-
         if (!$columns().isEmpty() && NO_SUPPORT_CTAS_COLUMN_NAMES.contains(ctx.dialect()))
             ctx.visit(select(asterisk()).from(select.asTable(table(name("t")), $columns())));
         else
             ctx.visit(select);
-
-        ctx.end(Clause.CREATE_TABLE_AS);
 
         if (WithOrWithoutData.WITH_NO_DATA == withData && NO_SUPPORT_WITH_DATA.contains(ctx.dialect()))
             ctx.data().remove(DATA_SELECT_NO_DATA);
@@ -789,13 +775,7 @@ implements
 
 
 
-
-
-
-
     private final void toSQLCreateTableName(Context<?> ctx) {
-        ctx.start(Clause.CREATE_TABLE_NAME);
-
         switch (ctx.family()) {
 
 
@@ -820,8 +800,7 @@ implements
             ctx.visit(K_IF_NOT_EXISTS)
                .sql(' ');
 
-        ctx.visit(tableName(ctx, tableScope, table))
-           .end(Clause.CREATE_TABLE_NAME);
+        ctx.visit(tableName(ctx, tableScope, table));
     }
 
     static final Table<?> tableName(Context<?> ctx, TableScope tableScope, Table<?> table) {

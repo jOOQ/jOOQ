@@ -136,7 +136,6 @@ implements
 
 
 
-    private static final Clause[]        CLAUSES              = { Clause.DROP_VIEW };
     private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS = SQLDialect.supportedUntil(DERBY, FIREBIRD);
 
     private final boolean supportsIfExists(Context<?> ctx) {
@@ -152,8 +151,7 @@ implements
     }
 
     private void accept0(Context<?> ctx) {
-        ctx.start(Clause.DROP_VIEW_TABLE)
-           .visit(K_DROP).sql(' ');
+        ctx.visit(K_DROP).sql(' ');
 
         if (materialized) {
             switch (ctx.family()) {
@@ -185,12 +183,6 @@ implements
 
         ctx.visit(view);
         DropTableImpl.acceptCascade0(ctx, cascade);
-        ctx.end(Clause.DROP_VIEW_TABLE);
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return CLAUSES;
     }
 
 

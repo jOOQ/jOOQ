@@ -39,12 +39,6 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
-import static org.jooq.Clause.FIELD;
-import static org.jooq.Clause.FIELD_ALIAS;
-import static org.jooq.Clause.FIELD_REFERENCE;
-import static org.jooq.Clause.TABLE;
-import static org.jooq.Clause.TABLE_ALIAS;
-import static org.jooq.Clause.TABLE_REFERENCE;
 // ...
 // ...
 // ...
@@ -106,7 +100,6 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.function.Predicate;
 
-import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Name;
@@ -125,10 +118,6 @@ import org.jooq.impl.Tools.BooleanDataKey;
  */
 final class Alias<Q extends QueryPart> extends AbstractQueryPart implements UEmpty, SimpleCheckQueryPart {
 
-    private static final Clause[] CLAUSES_TABLE_REFERENCE               = { TABLE, TABLE_REFERENCE };
-    private static final Clause[] CLAUSES_TABLE_ALIAS                   = { TABLE, TABLE_ALIAS };
-    private static final Clause[] CLAUSES_FIELD_REFERENCE               = { FIELD, FIELD_REFERENCE };
-    private static final Clause[] CLAUSES_FIELD_ALIAS                   = { FIELD, FIELD_ALIAS };
     static final Set<SQLDialect>  NO_SUPPORT_ALIASED_JOIN_TABLES        = SQLDialect.supportedBy(DERBY, DUCKDB, FIREBIRD, MARIADB, MYSQL, SQLITE);
     static final Set<SQLDialect>  SUPPORT_AS_REQUIRED                   = SQLDialect.supportedBy(DERBY, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB);
     static final Set<SQLDialect>  SUPPORT_DERIVED_COLUMN_NAMES_SPECIAL1 = SQLDialect.supportedBy(CUBRID, FIREBIRD, MYSQL);
@@ -457,22 +446,6 @@ final class Alias<Q extends QueryPart> extends AbstractQueryPart implements UEmp
 
     private final void toSQLDerivedColumnList(Context<?> ctx) {
         ctx.sql(" (").visit(wrap(fieldAliases)).sql(')');
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        if (ctx.declareFields() || ctx.declareTables()) {
-            if (wrapped instanceof Table)
-                return CLAUSES_TABLE_ALIAS;
-            else
-                return CLAUSES_FIELD_ALIAS;
-        }
-        else {
-            if (wrapped instanceof Table)
-                return CLAUSES_TABLE_REFERENCE;
-            else
-                return CLAUSES_FIELD_REFERENCE;
-        }
     }
 
     @Override

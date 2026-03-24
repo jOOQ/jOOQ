@@ -38,14 +38,12 @@
 package org.jooq.impl;
 
 import static java.util.Objects.requireNonNull;
-import static org.jooq.Clause.TEMPLATE;
 import static org.jooq.impl.DSL.list;
 import static org.jooq.impl.Tools.renderAndBind;
 import static org.jooq.impl.Tools.stringLiteral;
 
 import java.util.List;
 
-import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.QueryPart;
 import org.jooq.SQL;
@@ -53,7 +51,6 @@ import org.jooq.impl.QOM.UEmpty;
 
 final class SQLImpl extends AbstractQueryPart implements SQL, UEmpty {
 
-    private static final Clause[] CLAUSES = { TEMPLATE };
     final String                  sql;
     final boolean                 isName;
     final boolean                 raw;
@@ -107,11 +104,6 @@ final class SQLImpl extends AbstractQueryPart implements SQL, UEmpty {
 
                 break;
         }
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return CLAUSES;
     }
 
     @Override

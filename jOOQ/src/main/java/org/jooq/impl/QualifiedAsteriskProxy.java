@@ -39,7 +39,6 @@ package org.jooq.impl;
 
 import java.util.Collection;
 
-import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Name;
@@ -155,11 +154,6 @@ implements
     @Override
     public final void accept(Context<?> ctx) {
         delegate.accept(ctx);
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return delegate.clauses(ctx);
     }
 
     @Override

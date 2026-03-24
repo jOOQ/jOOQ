@@ -37,9 +37,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.PRIVILEGE;
-
-import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Keyword;
 import org.jooq.Privilege;
@@ -50,7 +47,6 @@ import org.jooq.impl.QOM.UEmpty;
  */
 final class PrivilegeImpl extends AbstractQueryPart implements Privilege, SimpleQueryPart, UEmpty {
 
-    private static final Clause[] CLAUSES = { PRIVILEGE };
     private final Keyword         privilege;
 
     PrivilegeImpl(Keyword privilege) {
@@ -64,10 +60,5 @@ final class PrivilegeImpl extends AbstractQueryPart implements Privilege, Simple
     @Override
     public final void accept(Context<?> ctx) {
         ctx.visit(privilege);
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return CLAUSES;
     }
 }

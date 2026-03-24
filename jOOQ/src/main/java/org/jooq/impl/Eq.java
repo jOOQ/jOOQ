@@ -94,8 +94,6 @@ implements
 
 
 
-    static final Clause[] CLAUSES = { Clause.CONDITION, Clause.CONDITION_COMPARISON };
-
     @Override
     public final void accept(Context<?> ctx) {
 
@@ -147,11 +145,6 @@ implements
                 }
             }
         );
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return Eq.CLAUSES;
     }
 
     /**

@@ -51,7 +51,6 @@ import java.util.function.BiFunction;
 
 import org.jooq.Binding;
 import org.jooq.Catalog;
-import org.jooq.Clause;
 import org.jooq.Comment;
 import org.jooq.Context;
 import org.jooq.DataType;
@@ -62,7 +61,6 @@ import org.jooq.Package;
 import org.jooq.Record;
 import org.jooq.RecordQualifier;
 import org.jooq.Row;
-import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -73,9 +71,6 @@ import org.jooq.UDTRecord;
 import org.jooq.exception.MetaDataUnavailableException;
 import org.jooq.impl.QOM.UEmpty;
 import org.jooq.impl.QOM.UNotYetImplemented;
-import org.jooq.tools.StringUtils;
-
-import org.jetbrains.annotations.Nullable;
 
 /**
  * A common base type for UDT path fields.
@@ -278,11 +273,6 @@ implements
     @Override
     public boolean declaresFields() {
         return  super.declaresFields();
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return null;
     }
 
     @Override

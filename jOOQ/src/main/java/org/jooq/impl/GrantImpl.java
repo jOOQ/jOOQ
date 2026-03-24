@@ -166,19 +166,12 @@ implements
 
 
 
-    private static final Clause[] CLAUSE = { Clause.GRANT };
-
     @Override
     public final void accept(Context<?> ctx) {
-        ctx.start(Clause.GRANT_PRIVILEGE)
-           .visit(K_GRANT).sql(' ')
-           .visit(QueryPartCollectionView.wrap(privileges))
-           .end(Clause.GRANT_PRIVILEGE).sql(' ')
-           .start(Clause.GRANT_ON)
+        ctx.visit(K_GRANT).sql(' ')
+           .visit(QueryPartCollectionView.wrap(privileges)).sql(' ')
            .visit(K_ON).sql(' ')
-           .visit(on)
-           .end(Clause.GRANT_ON).sql(' ')
-           .start(Clause.GRANT_TO)
+           .visit(on).sql(' ')
            .visit(K_TO).sql(' ');
 
         if (to != null)
@@ -189,13 +182,6 @@ implements
         if (withGrantOption)
             ctx.sql(' ')
                .visit(K_WITH_GRANT_OPTION);
-
-        ctx.end(Clause.GRANT_TO);
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return CLAUSE;
     }
 
 

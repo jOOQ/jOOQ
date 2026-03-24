@@ -150,7 +150,6 @@ implements
 
 
 
-    private static final Clause[]        CLAUSES              = { Clause.DROP_TABLE };
     private static final Set<SQLDialect> NO_SUPPORT_IF_EXISTS = SQLDialect.supportedUntil(DERBY, FIREBIRD);
     private static final Set<SQLDialect> TEMPORARY_SEMANTIC   = SQLDialect.supportedBy(MARIADB, MYSQL);
 
@@ -167,8 +166,6 @@ implements
     }
 
     private void accept0(Context<?> ctx) {
-        ctx.start(Clause.DROP_TABLE_TABLE);
-
         ctx.visit(K_DROP).sql(' ');
 
         // [#6371] [#9019] While many dialects do not require this keyword, in
@@ -184,7 +181,6 @@ implements
 
         ctx.visit(CreateTableImpl.tableName(ctx, tableScope, table));
         acceptCascade0(ctx, cascade);
-        ctx.end(Clause.DROP_TABLE_TABLE);
     }
 
     static final void acceptCascade0(Context<?> ctx, Cascade cascade) {
@@ -202,11 +198,6 @@ implements
                 AbstractDDLQuery.acceptCascade(ctx, cascade);
                 break;
         }
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return CLAUSES;
     }
 
 

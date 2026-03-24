@@ -54,7 +54,6 @@ import static org.jooq.impl.Tools.visitSubquery;
 
 import java.util.Set;
 
-import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Function1;
 import org.jooq.Name;
@@ -120,11 +119,6 @@ class DerivedTable<R extends Record> extends AbstractTable<R> implements QOM.Der
 
 
         visitSubquery(ctx, query(), DERIVED_TABLE, false);
-    }
-
-    @Override // Avoid AbstractTable implementation
-    public final Clause[] clauses(Context<?> ctx) {
-        return null;
     }
 
     // -------------------------------------------------------------------------

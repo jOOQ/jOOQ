@@ -73,7 +73,6 @@ import static org.jooq.impl.Tools.allNull;
 
 import java.util.Set;
 
-import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Function1;
 import org.jooq.Row;
@@ -128,11 +127,6 @@ final class RowIsNull extends AbstractCondition implements QOM.RowIsNull {
                    .visit(K_IS_NULL);
                 break;
         }
-    }
-
-    @Override // Avoid AbstractCondition implementation
-    public final Clause[] clauses(Context<?> ctx) {
-        return null;
     }
 
     // -------------------------------------------------------------------------

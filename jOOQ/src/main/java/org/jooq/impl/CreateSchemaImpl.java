@@ -97,7 +97,6 @@ implements
 
 
 
-    private static final Clause[]            CLAUSES                    = { Clause.CREATE_SCHEMA };
     private static final Set<SQLDialect>     NO_SUPPORT_IF_NOT_EXISTS   = SQLDialect.supportedUntil(DERBY, FIREBIRD);
     private static final Set<SQLDialect>     SUPPORT_SCHEMA_AS_DATABASE = SQLDialect.supportedBy(CLICKHOUSE);
 
@@ -156,8 +155,7 @@ implements
     }
 
     private final void accept2(Context<?> ctx) {
-        ctx.start(Clause.CREATE_SCHEMA_NAME)
-           .visit(K_CREATE);
+        ctx.visit(K_CREATE);
 
         if (SUPPORT_SCHEMA_AS_DATABASE.contains(ctx.dialect()))
             ctx.sql(' ').visit(K_DATABASE);
@@ -181,13 +179,6 @@ implements
 
 
 
-
-        ctx.end(Clause.CREATE_SCHEMA_NAME);
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return CLAUSES;
     }
 
 

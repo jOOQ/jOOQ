@@ -40,25 +40,6 @@ package org.jooq.impl;
 import static java.lang.Boolean.TRUE;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
-import static org.jooq.Clause.TABLE;
-import static org.jooq.Clause.TABLE_JOIN;
-import static org.jooq.Clause.TABLE_JOIN_ANTI_LEFT;
-import static org.jooq.Clause.TABLE_JOIN_CROSS;
-import static org.jooq.Clause.TABLE_JOIN_CROSS_APPLY;
-import static org.jooq.Clause.TABLE_JOIN_INNER;
-import static org.jooq.Clause.TABLE_JOIN_NATURAL;
-import static org.jooq.Clause.TABLE_JOIN_NATURAL_OUTER_FULL;
-import static org.jooq.Clause.TABLE_JOIN_NATURAL_OUTER_LEFT;
-import static org.jooq.Clause.TABLE_JOIN_NATURAL_OUTER_RIGHT;
-import static org.jooq.Clause.TABLE_JOIN_ON;
-import static org.jooq.Clause.TABLE_JOIN_OUTER_APPLY;
-import static org.jooq.Clause.TABLE_JOIN_OUTER_FULL;
-import static org.jooq.Clause.TABLE_JOIN_OUTER_LEFT;
-import static org.jooq.Clause.TABLE_JOIN_OUTER_RIGHT;
-import static org.jooq.Clause.TABLE_JOIN_PARTITION_BY;
-import static org.jooq.Clause.TABLE_JOIN_SEMI_LEFT;
-import static org.jooq.Clause.TABLE_JOIN_STRAIGHT;
-import static org.jooq.Clause.TABLE_JOIN_USING;
 import static org.jooq.JoinType.CROSS_JOIN;
 import static org.jooq.JoinType.FULL_OUTER_JOIN;
 import static org.jooq.JoinType.JOIN;
@@ -135,7 +116,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.Field;
@@ -168,7 +148,6 @@ import org.jooq.impl.QOM.UnmodifiableList;
  */
 abstract class JoinTable<J extends JoinTable<J>> extends AbstractJoinTable<J> {
 
-    static final Clause[]         CLAUSES                    = { TABLE, TABLE_JOIN };
 
 
 
@@ -283,12 +262,9 @@ abstract class JoinTable<J extends JoinTable<J>> extends AbstractJoinTable<J> {
 
     private final void accept0(Context<?> ctx) {
         JoinType translatedType = translateType(ctx);
-        Clause translatedClause = translateClause(translatedType);
         Keyword keyword = translateKeyword(ctx, translatedType);
 
         toSQLTable(ctx, lhs);
-
-
 
 
 
@@ -331,13 +307,10 @@ abstract class JoinTable<J extends JoinTable<J>> extends AbstractJoinTable<J> {
 
         ctx.formatIndentStart()
            .formatSeparator()
-           .start(translatedClause)
            .visit(keyword)
            .sql(' ');
 
         toSQLTable(ctx, rhs);
-
-
 
 
 
@@ -356,8 +329,7 @@ abstract class JoinTable<J extends JoinTable<J>> extends AbstractJoinTable<J> {
             toSQLJoinCondition(ctx);
             ctx.formatIndentEnd();
         }
-        ctx.end(translatedClause)
-           .formatIndentEnd();
+        ctx.formatIndentEnd();
     }
 
 
@@ -571,29 +543,6 @@ abstract class JoinTable<J extends JoinTable<J>> extends AbstractJoinTable<J> {
     }
 
     /**
-     * Translate the join type into a join clause
-     */
-    final Clause translateClause(JoinType translatedType) {
-        switch (translatedType) {
-            case JOIN:                     return TABLE_JOIN_INNER;
-            case CROSS_JOIN:               return TABLE_JOIN_CROSS;
-            case NATURAL_JOIN:             return TABLE_JOIN_NATURAL;
-            case LEFT_OUTER_JOIN:          return TABLE_JOIN_OUTER_LEFT;
-            case RIGHT_OUTER_JOIN:         return TABLE_JOIN_OUTER_RIGHT;
-            case FULL_OUTER_JOIN:          return TABLE_JOIN_OUTER_FULL;
-            case NATURAL_LEFT_OUTER_JOIN:  return TABLE_JOIN_NATURAL_OUTER_LEFT;
-            case NATURAL_RIGHT_OUTER_JOIN: return TABLE_JOIN_NATURAL_OUTER_RIGHT;
-            case NATURAL_FULL_OUTER_JOIN:  return TABLE_JOIN_NATURAL_OUTER_FULL;
-            case CROSS_APPLY:              return TABLE_JOIN_CROSS_APPLY;
-            case OUTER_APPLY:              return TABLE_JOIN_OUTER_APPLY;
-            case LEFT_SEMI_JOIN:           return TABLE_JOIN_SEMI_LEFT;
-            case LEFT_ANTI_JOIN:           return TABLE_JOIN_ANTI_LEFT;
-            case STRAIGHT_JOIN:            return TABLE_JOIN_STRAIGHT;
-            default: throw new IllegalArgumentException("Bad join type: " + translatedType);
-        }
-    }
-
-    /**
      * Translate the join type for SQL rendering
      */
     final JoinType translateType(Context<?> ctx) {
@@ -646,10 +595,8 @@ abstract class JoinTable<J extends JoinTable<J>> extends AbstractJoinTable<J> {
             // Native supporters of JOIN .. USING
             else
                 ctx.formatSeparator()
-                   .start(TABLE_JOIN_USING)
                    .visit(K_USING)
-                   .sql(" (").visit(wrap(using).qualify(false)).sql(')')
-                   .end(TABLE_JOIN_USING);
+                   .sql(" (").visit(wrap(using).qualify(false)).sql(')');
         }
 
         // [#577] If any NATURAL JOIN syntax needs to be emulated, find out
@@ -722,16 +669,9 @@ abstract class JoinTable<J extends JoinTable<J>> extends AbstractJoinTable<J> {
 
     private final void toSQLJoinCondition(Context<?> context, Condition c) {
         context.formatSeparator()
-               .start(TABLE_JOIN_ON)
                .visit(K_ON)
                .sql(' ')
-               .visit(c)
-               .end(TABLE_JOIN_ON);
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return CLAUSES;
+               .visit(c);
     }
 
     @Override

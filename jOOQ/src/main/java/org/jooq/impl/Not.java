@@ -91,8 +91,6 @@ implements
 
 
 
-    private static final Clause[] CLAUSES = { Clause.CONDITION, Clause.CONDITION_NOT };
-
     @Override
     boolean isNullable() {
         return !(condition instanceof AbstractCondition) || ((AbstractCondition) condition).isNullable();
@@ -115,11 +113,6 @@ implements
 
                 break;
         }
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return CLAUSES;
     }
 
 

@@ -37,10 +37,41 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.CONDITION;
-import static org.jooq.Clause.CONDITION_COMPARISON;
-import static org.jooq.Comparator.*;
-import static org.jooq.SQLDialect.*;
+import static org.jooq.Comparator.EQUALS;
+import static org.jooq.Comparator.GREATER;
+import static org.jooq.Comparator.GREATER_OR_EQUAL;
+import static org.jooq.Comparator.IN;
+import static org.jooq.Comparator.IS_DISTINCT_FROM;
+import static org.jooq.Comparator.IS_NOT_DISTINCT_FROM;
+import static org.jooq.Comparator.LESS;
+import static org.jooq.Comparator.LESS_OR_EQUAL;
+import static org.jooq.Comparator.NOT_EQUALS;
+import static org.jooq.Comparator.NOT_IN;
+// ...
+// ...
+// ...
+import static org.jooq.SQLDialect.CUBRID;
+// ...
+// ...
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.DUCKDB;
+// ...
+import static org.jooq.SQLDialect.FIREBIRD;
+// ...
+// ...
+// ...
+import static org.jooq.SQLDialect.MARIADB;
+// ...
+import static org.jooq.SQLDialect.MYSQL;
+// ...
+// ...
+// ...
+// ...
+// ...
+import static org.jooq.SQLDialect.SQLITE;
+// ...
+// ...
+// ...
 import static org.jooq.impl.DSL.asterisk;
 import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.name;
@@ -56,12 +87,10 @@ import static org.jooq.impl.Tools.fieldNames;
 import static org.jooq.impl.Tools.fieldsByName;
 import static org.jooq.impl.Tools.quantify;
 import static org.jooq.impl.Tools.visitSubquery;
-import static org.jooq.impl.Transformations.transformInConditionSubqueryWithLimitToDerivedTable;
 import static org.jooq.impl.Transformations.subqueryWithLimit;
 
 import java.util.Set;
 
-import org.jooq.Clause;
 import org.jooq.Comparator;
 import org.jooq.Context;
 import org.jooq.Name;
@@ -82,8 +111,13 @@ import org.jooq.impl.Tools.BooleanDataKey;
 /**
  * @author Lukas Eder
  */
-final class RowSubqueryCondition extends AbstractCondition implements UNotYetImplemented {
-    private static final Clause[]        CLAUSES                                    = { CONDITION, CONDITION_COMPARISON };
+final class RowSubqueryCondition
+extends
+    AbstractCondition
+implements
+    UNotYetImplemented
+{
+
     private static final Set<SQLDialect> NO_SUPPORT_NATIVE                          = SQLDialect.supportedBy(CUBRID, DERBY, DUCKDB, FIREBIRD);
     private static final Set<SQLDialect> NO_SUPPORT_QUANTIFIED                      = SQLDialect.supportedBy(DERBY, DUCKDB, FIREBIRD, SQLITE);
     // See https://bugs.mysql.com/bug.php?id=103494
@@ -116,11 +150,6 @@ final class RowSubqueryCondition extends AbstractCondition implements UNotYetImp
     @Override
     public final void accept(Context<?> ctx) {
         ctx.visit(delegate(ctx));
-    }
-
-    @Override // Avoid AbstractCondition implementation
-    public final Clause[] clauses(Context<?> ctx) {
-        return null;
     }
 
     private static final boolean inOrNotIn(Comparator comparator, Quantifier quantifier) {
@@ -272,11 +301,6 @@ final class RowSubqueryCondition extends AbstractCondition implements UNotYetImp
 
                     break;
             }
-        }
-
-        @Override
-        public final Clause[] clauses(Context<?> ctx) {
-            return CLAUSES;
         }
     }
 }

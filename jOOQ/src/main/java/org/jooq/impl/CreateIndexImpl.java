@@ -254,7 +254,6 @@ implements
 
 
 
-    private static final Clause[]        CLAUSES                  = { Clause.CREATE_INDEX };
     private static final Set<SQLDialect> NO_SUPPORT_IF_NOT_EXISTS = SQLDialect.supportedUntil(DERBY, FIREBIRD, MYSQL);
     private static final Set<SQLDialect> NO_SUPPORT_SORT_SPEC     = SQLDialect.supportedBy(FIREBIRD);
     private static final Set<SQLDialect> SUPPORT_UNNAMED_INDEX    = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
@@ -427,11 +426,6 @@ implements
             return t.qualifier().append(sb.toString());
         else
             return name(sb.toString());
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return CLAUSES;
     }
 
 

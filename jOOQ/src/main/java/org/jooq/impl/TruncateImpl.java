@@ -145,8 +145,6 @@ implements
 
 
 
-    private static final Clause[] CLAUSES = { Clause.TRUNCATE };
-
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
@@ -177,8 +175,7 @@ implements
     }
 
     final void accept0(Context<?> ctx) {
-        ctx.start(Clause.TRUNCATE_TRUNCATE)
-           .visit(K_TRUNCATE).sql(' ').visit(K_TABLE).sql(' ')
+        ctx.visit(K_TRUNCATE).sql(' ').visit(K_TABLE).sql(' ')
            .visit(table);
 
 
@@ -202,13 +199,6 @@ implements
 
                 ctx.formatSeparator()
                    .visit(cascade == Cascade.CASCADE ? K_CASCADE : K_RESTRICT);
-
-        ctx.end(Clause.TRUNCATE_TRUNCATE);
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return CLAUSES;
     }
 
 

@@ -37,9 +37,8 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.FIELD;
-import static org.jooq.Clause.FIELD_VALUE;
-import static org.jooq.SQLDialect.*;
+// ...
+import static org.jooq.SQLDialect.TRINO;
 import static org.jooq.conf.ParamType.INDEXED;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.ParamType.NAMED;
@@ -49,9 +48,6 @@ import java.util.Arrays;
 import java.util.Set;
 
 // ...
-// ...
-// ...
-import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Data;
 import org.jooq.DataType;
@@ -75,7 +71,6 @@ abstract class AbstractParam<T> extends AbstractParamX<T> implements SimpleQuery
 
     private static Set<SQLDialect> NO_SUPPORT_ARRAY_BINDS    = SQLDialect.supportedBy(TRINO);
     private static Set<SQLDialect> NO_SUPPORT_INTERVAL_BINDS = SQLDialect.supportedBy(TRINO);
-    private static final Clause[]  CLAUSES                   = { FIELD, FIELD_VALUE };
 
     private final String           paramName;
     T                              value;
@@ -161,12 +156,6 @@ abstract class AbstractParam<T> extends AbstractParamX<T> implements SimpleQuery
     private static boolean positive(Object value) {
         return value instanceof Number n ? n.doubleValue() >= 0 : false;
     }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return CLAUSES;
-    }
-
 
     // ------------------------------------------------------------------------
     // XXX: Param API

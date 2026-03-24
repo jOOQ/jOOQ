@@ -43,11 +43,6 @@ import static java.util.Arrays.asList;
 import static java.util.Collections.nCopies;
 import static java.util.Collections.singletonList;
 import static java.util.stream.Collectors.toList;
-import static org.jooq.Clause.INSERT;
-import static org.jooq.Clause.INSERT_INSERT_INTO;
-import static org.jooq.Clause.INSERT_ON_DUPLICATE_KEY_UPDATE;
-import static org.jooq.Clause.INSERT_ON_DUPLICATE_KEY_UPDATE_ASSIGNMENT;
-import static org.jooq.Clause.INSERT_RETURNING;
 // ...
 // ...
 // ...
@@ -82,7 +77,6 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectFrom;
-import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.Default.NO_SUPPORT_DEFAULT_EXPRESSION_INSERT;
 import static org.jooq.impl.FieldMapsForInsert.toSQLInsertSelect;
 import static org.jooq.impl.Keywords.K_AS;
@@ -131,7 +125,6 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.function.Consumer;
 
-import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Constraint;
@@ -180,7 +173,6 @@ implements
     QOM.Insert<R>
 {
 
-    static final Clause[]        CLAUSES                                       = { INSERT };
     static final Set<SQLDialect> SUPPORT_INSERT_IGNORE                         = SQLDialect.supportedBy(MARIADB, MYSQL);
     static final Set<SQLDialect> SUPPORTS_OPTIONAL_DO_UPDATE_CONFLICT_TARGETS  = SQLDialect.supportedBy(SQLITE);
     static final Set<SQLDialect> NO_SUPPORT_DERIVED_COLUMN_LIST_IN_MERGE_USING = SQLDialect.supportedBy(DERBY, H2);
@@ -206,7 +198,7 @@ implements
 
         this.insertMaps = new FieldMapsForInsert(into);
         this.onConflictWhere = new ConditionProviderImpl();
-        this.updateMap = new FieldMapForUpdate(into, SetClause.INSERT, INSERT_ON_DUPLICATE_KEY_UPDATE_ASSIGNMENT);
+        this.updateMap = new FieldMapForUpdate(into, SetClause.INSERT);
         this.updateWhere = new ConditionProviderImpl();
     }
 
@@ -498,7 +490,6 @@ implements
                         ctx.data(DATA_MANDATORY_WHERE_CLAUSE, ctx.family() == SQLITE, c -> toSQLInsert(c, false));
 
                         ctx.formatSeparator()
-                           .start(INSERT_ON_DUPLICATE_KEY_UPDATE)
                            .visit(K_ON_CONFLICT)
                            .sql(' ');
 
@@ -549,8 +540,6 @@ implements
                                .visit(K_WHERE)
                                .sql(' ')
                                .visit(updateWhere);
-
-                        ctx.end(INSERT_ON_DUPLICATE_KEY_UPDATE);
                     }
 
                     break;
@@ -597,7 +586,6 @@ implements
                            .visit(K_AS).sql(' ').visit(N_EXCLUDED);
 
                     ctx.formatSeparator()
-                       .start(INSERT_ON_DUPLICATE_KEY_UPDATE)
                        .visit(K_ON_DUPLICATE_KEY_UPDATE)
                        .formatIndentStart()
                        .formatSeparator()
@@ -623,8 +611,7 @@ implements
                         ctx.data().remove(DATA_ON_DUPLICATE_KEY_WHERE);
 
                     ctx.qualify(oldQualify)
-                       .formatIndentEnd()
-                       .end(INSERT_ON_DUPLICATE_KEY_UPDATE);
+                       .formatIndentEnd();
 
                     break;
                 }
@@ -681,7 +668,6 @@ implements
                     ctx.data(DATA_MANDATORY_WHERE_CLAUSE, ctx.family() == SQLITE, c -> toSQLInsert(c, false));
 
                     ctx.formatSeparator()
-                       .start(INSERT_ON_DUPLICATE_KEY_UPDATE)
                        .visit(K_ON_CONFLICT);
 
                     if (onConstraint != null && !NO_SUPPORT_ON_CONSTRAINT_ON_CONFLICT.contains(ctx.dialect())) {
@@ -707,24 +693,21 @@ implements
                     }
 
                     ctx.formatSeparator()
-                       .visit(K_DO_NOTHING)
-                       .end(INSERT_ON_DUPLICATE_KEY_UPDATE);
+                       .visit(K_DO_NOTHING);
                     break;
                 }
 
                 // CUBRID can emulate this using ON DUPLICATE KEY UPDATE
                 case CUBRID: {
-                    FieldMapForUpdate update = new FieldMapForUpdate(table(), SetClause.INSERT, INSERT_ON_DUPLICATE_KEY_UPDATE_ASSIGNMENT);
+                    FieldMapForUpdate update = new FieldMapForUpdate(table(), SetClause.INSERT);
                     Field<?> field = table().field(0);
                     update.put(field, field);
 
                     toSQLInsert(ctx, false);
                     ctx.formatSeparator()
-                       .start(INSERT_ON_DUPLICATE_KEY_UPDATE)
                        .visit(K_ON_DUPLICATE_KEY_UPDATE)
                        .sql(' ')
-                       .visit(update)
-                       .end(INSERT_ON_DUPLICATE_KEY_UPDATE);
+                       .visit(update);
 
                     break;
                 }
@@ -759,8 +742,6 @@ implements
                 // MySQL has a nice, native syntax for this
                 default: {
                     toSQLInsert(ctx, false);
-                    ctx.start(INSERT_ON_DUPLICATE_KEY_UPDATE)
-                       .end(INSERT_ON_DUPLICATE_KEY_UPDATE);
                     break;
                 }
             }
@@ -770,13 +751,9 @@ implements
         // ------------
         else {
             toSQLInsert(ctx, false);
-            ctx.start(INSERT_ON_DUPLICATE_KEY_UPDATE)
-               .end(INSERT_ON_DUPLICATE_KEY_UPDATE);
         }
 
-        ctx.start(INSERT_RETURNING);
         toSQLReturning(ctx);
-        ctx.end(INSERT_RETURNING);
     }
 
     private final void acceptOnConflictWhere(Context<?> ctx) {
@@ -796,14 +773,8 @@ implements
             );
     }
 
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return CLAUSES;
-    }
-
     private final Set<Field<?>> toSQLInsert(Context<?> ctx, boolean requireNewMySQLExcludedEmulation) {
-        ctx.start(INSERT_INSERT_INTO)
-           .visit(K_INSERT)
+        ctx.visit(K_INSERT)
            .sql(' ');
 
         // [#1295] MySQL dialects have native syntax for INSERT IGNORE
@@ -838,7 +809,6 @@ implements
            });
 
         Set<Field<?>> fields = insertMaps.toSQLReferenceKeys(ctx);
-        ctx.end(INSERT_INSERT_INTO);
 
 
 

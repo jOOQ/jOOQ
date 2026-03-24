@@ -40,7 +40,6 @@ package org.jooq.impl;
 
 import java.util.Objects;
 
-import org.jooq.Clause;
 import org.jooq.Comment;
 import org.jooq.Context;
 import org.jooq.Field;
@@ -83,11 +82,6 @@ implements
     @Override
     public final void accept(Context<?> ctx) {
         ctx.visit(alias);
-    }
-
-    @Override // Avoid AbstractField implementation
-    public final Clause[] clauses(Context<?> ctx) {
-        return null;
     }
 
     @Override

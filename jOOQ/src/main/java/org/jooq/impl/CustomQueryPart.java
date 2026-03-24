@@ -37,15 +37,11 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.CUSTOM;
-
 import java.util.function.Consumer;
 
-import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.QueryPart;
-import org.jooq.impl.QOM.UEmpty;
 import org.jooq.impl.QOM.UOpaque;
 
 /**
@@ -74,8 +70,6 @@ import org.jooq.impl.QOM.UOpaque;
  * @author Lukas Eder
  */
 public abstract class CustomQueryPart extends AbstractQueryPart implements UOpaque {
-
-    private static final Clause[] CLAUSES = { CUSTOM };
 
     protected CustomQueryPart() {
     }
@@ -107,11 +101,6 @@ public abstract class CustomQueryPart extends AbstractQueryPart implements UOpaq
     // -------------------------------------------------------------------------
     // No further overrides allowed
     // -------------------------------------------------------------------------
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return CLAUSES;
-    }
 
     @Override
     public final boolean declaresFields() {

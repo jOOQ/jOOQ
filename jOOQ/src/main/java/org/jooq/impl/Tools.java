@@ -308,7 +308,6 @@ import org.jooq.BindContext;
 import org.jooq.BindingScope;
 import org.jooq.Catalog;
 import org.jooq.Check;
-import org.jooq.Clause;
 import org.jooq.CommonTableExpression;
 import org.jooq.Condition;
 import org.jooq.Configuration;
@@ -439,7 +438,6 @@ final class Tools {
     static final Catalog[]                  EMPTY_CATALOG                 = {};
     static final Check<?>[]                 EMPTY_CHECK                   = {};
     static final Class<?>[]                 EMPTY_CLASS                   = {};
-    static final Clause[]                   EMPTY_CLAUSE                  = {};
     static final Collection<?>[]            EMPTY_COLLECTION              = {};
     static final CommonTableExpression<?>[] EMPTY_COMMON_TABLE_EXPRESSION = {};
     static final ExecuteListener[]          EMPTY_EXECUTE_LISTENER        = {};

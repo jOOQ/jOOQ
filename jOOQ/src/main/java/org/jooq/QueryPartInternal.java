@@ -38,8 +38,6 @@
 
 package org.jooq;
 
-import org.jooq.exception.DataAccessException;
-
 import org.jetbrains.annotations.ApiStatus.Internal;
 
 /**
@@ -71,23 +69,6 @@ public interface QueryPartInternal extends QueryPart {
      */
     @Deprecated
     void accept(Context<?> ctx);
-
-    /**
-     * The {@link Clause}s that are represented by this query part.
-     * <p>
-     * {@link QueryPart}s can specify several <code>Clause</code>s for which an
-     * event will be emitted {@link Context#start(Clause) before} (in forward
-     * order) and {@link Context#end(Clause) after} (in reverse order) visiting
-     * the query part through {@link Context#visit(QueryPart)}
-     * <p>
-     * This method is for JOOQ INTERNAL USE only. Do not reference directly
-     *
-     * @return The <code>Clause</code>s represented by this query part or
-     *         <code>null</code> or an empty array if this query part does not
-     *         represent a clause.
-     */
-    @SuppressWarnings("javadoc")
-    Clause[] clauses(Context<?> ctx);
 
     /**
      * Check whether this {@link QueryPart} is able to declare fields in a

@@ -37,15 +37,9 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.ROLE;
 import static org.jooq.impl.CommentImpl.NO_COMMENT;
 
-import java.util.function.BiFunction;
-import java.util.function.Predicate;
-
-import org.jooq.Clause;
 import org.jooq.Context;
-import org.jooq.Function1;
 import org.jooq.Name;
 import org.jooq.QueryPart;
 // ...
@@ -59,8 +53,6 @@ import org.jooq.Role;
  */
 final class RoleImpl extends AbstractNamed implements Role {
 
-    private static final Clause[] CLAUSES = { ROLE };
-
     RoleImpl(Name name) {
         super(name, NO_COMMENT);
     }
@@ -72,11 +64,6 @@ final class RoleImpl extends AbstractNamed implements Role {
     @Override
     public final void accept(Context<?> ctx) {
         ctx.visit(getQualifiedName());
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return CLAUSES;
     }
 
 

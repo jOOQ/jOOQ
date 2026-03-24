@@ -41,9 +41,6 @@ import static java.lang.Boolean.TRUE;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptySet;
 import static java.util.Collections.nCopies;
-import static org.jooq.Clause.FIELD_ROW;
-import static org.jooq.Clause.INSERT_SELECT;
-import static org.jooq.Clause.INSERT_VALUES;
 // ...
 // ...
 // ...
@@ -175,12 +172,8 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
     public final void accept(Context<?> ctx) {
         if (!isExecutable()) {
             ctx.formatSeparator()
-               .start(INSERT_VALUES)
-               .visit(K_DEFAULT_VALUES)
-               .end(INSERT_VALUES);
+               .visit(K_DEFAULT_VALUES);
         }
-
-
 
 
 
@@ -342,18 +335,14 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
 
     private final void toSQLValues(Context<?> ctx) {
         ctx.formatSeparator()
-           .start(INSERT_VALUES)
            .visit(K_VALUES)
            .sql(' ');
         toSQL92Values(ctx);
-        ctx.end(INSERT_VALUES);
     }
 
     static final void toSQLInsertSelect(Context<?> ctx, Select<?> select) {
         ctx.formatSeparator()
-           .start(INSERT_SELECT)
-           .visit(patchSelectWithUnions(ctx, select))
-           .end(INSERT_SELECT);
+           .visit(patchSelectWithUnions(ctx, select));
     }
 
     private static final Select<?> patchSelectWithUnions(Context<?> ctx, Select<?> select) {
@@ -589,8 +578,7 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
             if (row > 0)
                 ctx.sql(", ");
 
-            ctx.start(FIELD_ROW)
-               .sql('(');
+            ctx.sql('(');
 
             if (indent)
                 ctx.formatIndentStart();
@@ -624,15 +612,12 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
                 ctx.formatIndentEnd()
                    .formatNewLine();
 
-            ctx.sql(')')
-               .end(FIELD_ROW);
+            ctx.sql(')');
         }
 
         if (!CASTS_NEEDED.contains(ctx.dialect()))
             ctx.castMode(previous);
     }
-
-
 
 
 

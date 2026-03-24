@@ -44,17 +44,13 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.Collection;
 
-import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Field;
-import org.jooq.QueryPart;
-import org.jooq.QueryPartInternal;
 import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.SQL;
 import org.jooq.Table;
-import org.jooq.impl.QOM.UEmpty;
 import org.jooq.impl.QOM.UEmptyQuery;
 
 /**
@@ -89,14 +85,6 @@ final class SQLResultQuery extends AbstractResultQuery<Record> implements UEmpty
                 ctx.visit(delegate);
                 break;
         }
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        if (delegate instanceof QueryPartInternal q)
-            return q.clauses(ctx);
-
-        return null;
     }
 
     @Override

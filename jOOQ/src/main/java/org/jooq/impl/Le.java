@@ -106,11 +106,6 @@ implements
         Eq.acceptCompareCondition(ctx, this, arg1, org.jooq.Comparator.LESS_OR_EQUAL, arg2, RowN::le, RowN::le, (c, a1, a2) -> c.visit(a1).sql(" <= ").visit(a2));
     }
 
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return Eq.CLAUSES;
-    }
-
 
 
 

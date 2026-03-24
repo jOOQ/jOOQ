@@ -85,7 +85,6 @@ import static org.jooq.impl.Tools.visitSubquery;
 
 import java.util.Set;
 
-import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Record;
 import org.jooq.Row;
@@ -216,10 +215,5 @@ implements
                 : new RowSubqueryCondition(lhs, rhsSelect, not ? IS_NOT_DISTINCT_FROM : IS_DISTINCT_FROM)
             );
         }
-    }
-
-    @Override // Avoid AbstractCondition implementation
-    public final Clause[] clauses(Context<?> ctx) {
-        return null;
     }
 }

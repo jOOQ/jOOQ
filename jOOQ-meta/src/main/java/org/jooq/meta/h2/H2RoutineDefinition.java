@@ -53,7 +53,7 @@ import java.sql.SQLException;
 
 import org.jooq.Record;
 import org.jooq.Result;
-import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
 import org.jooq.meta.AbstractRoutineDefinition;
 import org.jooq.meta.DataTypeDefinition;
 import org.jooq.meta.DefaultDataTypeDefinition;
@@ -62,7 +62,6 @@ import org.jooq.meta.InOutDefinition;
 import org.jooq.meta.ParameterDefinition;
 import org.jooq.meta.SchemaDefinition;
 import org.jooq.tools.StringUtils;
-import org.jooq.util.h2.H2DataType;
 
 /**
  * H2 implementation of {@link AbstractRoutineDefinition}
@@ -182,7 +181,7 @@ public class H2RoutineDefinition extends AbstractRoutineDefinition {
             // VERY special case for H2 alias/function parameters. The first parameter
             // may be a java.sql.Connection object and in such cases it should NEVER be used.
             // It is only used internally by H2 to provide a connection to the current database.
-            if (position == 0 && H2DataType.OTHER.getTypeName().equalsIgnoreCase(typeName)) {
+            if (position == 0 && SQLDataType.OTHER.getTypeName(create().configuration()).equalsIgnoreCase(typeName)) {
                 continue;
             }
 

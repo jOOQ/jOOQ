@@ -110,7 +110,7 @@ public class DbAttribute extends org.jooq.impl.TableImpl<org.jooq.Record> {
 	}
 
 	private DbAttribute(java.lang.String alias, org.jooq.Table<org.jooq.Record> aliased, org.jooq.Field<?>[] parameters) {
-		super(DSL.name(alias), org.jooq.meta.cubrid.dba.DefaultSchema.DEFAULT_SCHEMA, aliased, parameters, "");
+		super(DSL.name(alias), org.jooq.meta.cubrid.dba.DefaultSchema.DEFAULT_SCHEMA, aliased, parameters);
 	}
 
 	/**

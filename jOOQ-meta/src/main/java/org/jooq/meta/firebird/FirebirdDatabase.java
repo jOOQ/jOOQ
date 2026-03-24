@@ -112,6 +112,7 @@ import org.jooq.impl.DSL;
 import org.jooq.impl.QOM.ForeignKeyRule;
 import org.jooq.impl.QOM.GenerationMode;
 import org.jooq.impl.QOM.GenerationOption;
+import org.jooq.impl.SQLDataType;
 import org.jooq.meta.AbstractDatabase;
 import org.jooq.meta.AbstractIndexDefinition;
 import org.jooq.meta.ArrayDefinition;
@@ -148,7 +149,6 @@ import org.jooq.meta.firebird.rdb.tables.Rdb$relationFields;
 import org.jooq.meta.firebird.rdb.tables.Rdb$triggers;
 import org.jooq.meta.jaxb.SchemaMappingType;
 import org.jooq.tools.StringUtils;
-import org.jooq.util.firebird.FirebirdDataType;
 
 /**
  * @author Sugiharto Lim - Initial contribution
@@ -511,7 +511,7 @@ public class FirebirdDatabase extends AbstractDatabase implements ResultQueryDat
         for (Record record : sequences(getInputSchemata())) {
             SchemaDefinition schema = getSchemata().get(0);
             DataTypeDefinition type = new DefaultDataTypeDefinition(
-                this, schema, FirebirdDataType.BIGINT.getTypeName()
+                this, schema, SQLDataType.BIGINT.getTypeName(create().configuration())
             );
 
             result.add(new DefaultSequenceDefinition(

@@ -55,13 +55,13 @@ import org.jooq.SQLDialect;
 import org.jooq.impl.QOM.GenerationLocation;
 import org.jooq.impl.QOM.GenerationMode;
 import org.jooq.impl.QOM.GenerationOption;
+import org.jooq.impl.SQLDataType;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 import org.jooq.types.UByte;
 import org.jooq.types.UInteger;
 import org.jooq.types.ULong;
 import org.jooq.types.UShort;
-// ...
 
 
 /**

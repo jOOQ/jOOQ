@@ -115,8 +115,8 @@ implements
                     power = DSL.power(inline(java.math.BigDecimal.TEN), decimals);
 
                 ctx.visit(DSL.decode()
-                    .when(value.sign().greaterOrEqual(zero()), idiv(imul(value, power).floor(), power))
-                    .otherwise(idiv(imul(value, power).ceil(), power)));
+                    .when(sign(value).greaterOrEqual(zero()), idiv(floor(imul(value, power)), power))
+                    .otherwise(idiv(ceil(imul(value, power)), power)));
                 break;
             }
 

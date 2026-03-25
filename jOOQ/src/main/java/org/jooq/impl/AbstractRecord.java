@@ -1098,10 +1098,10 @@ implements
         try {
             switch (format.recordFormat()) {
                 case ARRAY:
-                    AbstractResult.formatJSONArray0(this, fields, format, 0, writer);
+                    AbstractResult.formatJSONArray0(this, fields, format, 0, writer, converterContext(this));
                     break;
                 case OBJECT:
-                    AbstractResult.formatJSONMap0(this, fields, format, 0, writer);
+                    AbstractResult.formatJSONMap0(this, fields, format, 0, writer, converterContext(this));
                     break;
                 default:
                     throw new IllegalArgumentException("Format not supported: " + format);
@@ -1119,7 +1119,7 @@ implements
         format = format.mutable(true);
 
         try {
-            AbstractResult.formatXMLRecord(writer, format, 0, this, fields);
+            AbstractResult.formatXMLRecord(writer, format, 0, this, fields, converterContext(this));
             writer.flush();
         }
         catch (java.io.IOException e) {

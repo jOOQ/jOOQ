@@ -43,6 +43,8 @@ import java.util.Arrays;
 import java.util.Base64;
 import java.util.HexFormat;
 
+import org.jooq.XMLFormat.ValueFormat;
+
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -69,6 +71,7 @@ public final class XMLFormat {
     int                           indent;
     String[]                      indented;
     boolean                       header;
+    ValueFormat                   valueFormat;
     RecordFormat                  recordFormat;
     boolean                       quoteNested;
     NullFormat                    nullFormat;
@@ -88,6 +91,7 @@ public final class XMLFormat {
             2,
             null,
             true,
+            ValueFormat.TO_TYPE,
             RecordFormat.VALUE_ELEMENTS_WITH_FIELD_ATTRIBUTE,
             false,
             NullFormat.EMPTY_ELEMENT,
@@ -108,6 +112,7 @@ public final class XMLFormat {
         int indent,
         String[] indented,
         boolean header,
+        ValueFormat valueFormat,
         RecordFormat recordFormat,
         boolean quoteNested,
         NullFormat nullFormat,
@@ -130,6 +135,7 @@ public final class XMLFormat {
             format ? rightPad("", indent * 3) : ""
         };
         this.header = header;
+        this.valueFormat = valueFormat;
         this.recordFormat = recordFormat;
         this.quoteNested = quoteNested;
         this.nullFormat = nullFormat;
@@ -162,6 +168,7 @@ public final class XMLFormat {
                 indent,
                 indented,
                 header,
+                valueFormat,
                 recordFormat,
                 quoteNested,
                 nullFormat,
@@ -171,6 +178,7 @@ public final class XMLFormat {
         else
             return this;
     }
+
 
 
 
@@ -235,6 +243,7 @@ public final class XMLFormat {
                 indent,
                 indented,
                 header,
+                valueFormat,
                 recordFormat,
                 quoteNested,
                 nullFormat,
@@ -272,6 +281,7 @@ public final class XMLFormat {
                 indent,
                 null,
                 header,
+                valueFormat,
                 recordFormat,
                 quoteNested,
                 nullFormat,
@@ -309,6 +319,7 @@ public final class XMLFormat {
                 indent,
                 indented,
                 header,
+                valueFormat,
                 recordFormat,
                 quoteNested,
                 nullFormat,
@@ -347,6 +358,7 @@ public final class XMLFormat {
                 indent,
                 null,
                 header,
+                valueFormat,
                 recordFormat,
                 quoteNested,
                 nullFormat,
@@ -384,6 +396,7 @@ public final class XMLFormat {
                 newIndent,
                 null,
                 header,
+                valueFormat,
                 recordFormat,
                 quoteNested,
                 nullFormat,
@@ -442,6 +455,7 @@ public final class XMLFormat {
                 indent,
                 indented,
                 newHeader,
+                valueFormat,
                 recordFormat,
                 quoteNested,
                 nullFormat,
@@ -455,6 +469,46 @@ public final class XMLFormat {
      */
     public final boolean header() {
         return header;
+    }
+
+    /**
+     * The value format to be applied, defaulting to
+     * {@link ValueFormat#TO_TYPE}.
+     */
+    public final XMLFormat valueFormat(ValueFormat newValueFormat) {
+        if (mutable) {
+            valueFormat = newValueFormat;
+            return this;
+        }
+        else
+            return new XMLFormat(
+                mutable,
+
+
+
+                xmlns,
+                format,
+                newline,
+                globalIndent,
+                indent,
+                indented,
+                header,
+                newValueFormat,
+                recordFormat,
+                quoteNested,
+                nullFormat,
+                arrayFormat,
+                binaryFormat
+            );
+    }
+
+    /**
+     * The value format to be applied, defaulting to
+     * {@link ValueFormat#TO_TYPE}.
+     */
+    @NotNull
+    public final ValueFormat valueFormat() {
+        return valueFormat;
     }
 
     /**
@@ -480,6 +534,7 @@ public final class XMLFormat {
                 indent,
                 indented,
                 header,
+                valueFormat,
                 newRecordFormat,
                 quoteNested,
                 nullFormat,
@@ -520,6 +575,7 @@ public final class XMLFormat {
                 indent,
                 indented,
                 header,
+                valueFormat,
                 recordFormat,
                 newQuoteNested,
                 nullFormat,
@@ -559,6 +615,7 @@ public final class XMLFormat {
                 indent,
                 indented,
                 header,
+                valueFormat,
                 recordFormat,
                 quoteNested,
                 newNullFormat,
@@ -597,6 +654,7 @@ public final class XMLFormat {
                 indent,
                 indented,
                 header,
+                valueFormat,
                 recordFormat,
                 quoteNested,
                 nullFormat,
@@ -634,6 +692,7 @@ public final class XMLFormat {
                 indent,
                 indented,
                 header,
+                valueFormat,
                 recordFormat,
                 quoteNested,
                 nullFormat,
@@ -710,6 +769,22 @@ public final class XMLFormat {
          * <code>&lt;element/&gt;</code> elements.
          */
         ELEMENTS
+    }
+
+    /**
+     * The format of values, in case a {@link Converter} is present.
+     */
+    public enum ValueFormat {
+
+        /**
+         * The database type is used, as in {@link Converter#fromType()}.
+         */
+        FROM_TYPE,
+
+        /**
+         * The user type is used, as in {@link Converter#toType()}.
+         */
+        TO_TYPE
     }
 
     /**

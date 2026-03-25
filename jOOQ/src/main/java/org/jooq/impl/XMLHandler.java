@@ -494,7 +494,10 @@ implements
     }
 
     private final boolean isArrayOfRecords(Field<?> f) {
-        return f.getDataType().isArray() && f.getDataType().getArrayComponentDataType().isQualifiedRecord();
+        DataType<?> ct;
+        return f.getDataType().isArray()
+            && (ct = f.getDataType().getArrayComponentDataType()) != null
+            && ct.isQualifiedRecord();
     }
 
     private final boolean isNil(Attributes attributes) {

@@ -59,7 +59,11 @@ final class ArrayComponentConverter<T, U> extends AbstractContextConverter<T, U>
     static final Class<?> componentType(Class<?> type) {
         return type == UnknownType.class
              ? UnknownType.class
-             : type.getComponentType();
+
+             // [#19795] U type isn't guaranteed to be an array
+             : type.isArray()
+             ? type.getComponentType()
+             : UnknownType.class;
     }
 
     @Override

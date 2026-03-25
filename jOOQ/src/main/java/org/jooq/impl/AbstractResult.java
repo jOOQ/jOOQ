@@ -40,6 +40,7 @@ package org.jooq.impl;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 import static java.util.stream.Collectors.joining;
+import static org.jooq.ContextConverter.scoped;
 import static org.jooq.JSONFormat.NullFormat.ABSENT_ON_NULL;
 import static org.jooq.XMLFormat.NullFormat.ABSENT_ELEMENT;
 import static org.jooq.XMLFormat.NullFormat.XSI_NIL;
@@ -50,6 +51,7 @@ import static org.jooq.impl.DSL.insertInto;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.Internal.toJSONString;
+import static org.jooq.impl.Tools.converterContext;
 import static org.jooq.impl.Tools.recordDirtyTrackingPredicate;
 import static org.jooq.tools.StringUtils.abbreviate;
 import static org.jooq.tools.StringUtils.leftPad;
@@ -78,6 +80,8 @@ import org.jooq.ChartFormat;
 import org.jooq.ChartFormat.Display;
 import org.jooq.Configuration;
 import org.jooq.Constants;
+import org.jooq.ContextConverter;
+import org.jooq.ConverterContext;
 import org.jooq.Cursor;
 import org.jooq.DSLContext;
 import org.jooq.Data;
@@ -104,7 +108,6 @@ import org.jooq.XMLFormat.ArrayFormat;
 import org.jooq.conf.Redact;
 import org.jooq.exception.IOException;
 import org.jooq.tools.StringUtils;
-import org.jooq.tools.json.JSONValue;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.DocumentFragment;
@@ -510,6 +513,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
             String separator;
             int recordLevel = format.header() ? 2 : 1;
             boolean hasRecords = false;
+            ConverterContext cc = converterContext(this);
 
             if (format.header()) {
                 if (format.format())
@@ -613,7 +617,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
                         if (format.format())
                             writer.append(format.newline()).append(format.indentString(recordLevel));
 
-                        formatJSONArray0(record, fields, format, recordLevel, writer);
+                        formatJSONArray0(record, fields, format, recordLevel, writer, cc);
                         separator = ",";
                     }
 
@@ -629,7 +633,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
                         if (format.format())
                             writer.append(format.newline()).append(format.indentString(recordLevel));
 
-                        formatJSONMap0(record, fields, format, recordLevel, writer);
+                        formatJSONMap0(record, fields, format, recordLevel, writer, cc);
                         separator = ",";
                     }
 
@@ -710,12 +714,14 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
             toJSONString(value, writer, format.nanAsString(), format.infinityAsString());
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     static final void formatJSONMap0(
         Record record,
         AbstractRow<?> fields,
         JSONFormat format,
         int recordLevel,
-        Writer writer
+        Writer writer,
+        ConverterContext cc
     ) throws java.io.IOException {
         if (record == null) {
             writer.append("null");
@@ -735,6 +741,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
 
         for (int index = 0; index < size; index++) {
             Object value;
+            Field<?> field = record.field(index);
 
 
 
@@ -744,6 +751,9 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
 
             {
                 value = record.get(index);
+
+                if (format.valueFormat() == JSONFormat.ValueFormat.FROM_TYPE)
+                    value = ((ContextConverter) scoped(field.getConverter())).to(value, cc);
 
                 if (value == null && format.objectNulls() == ABSENT_ON_NULL)
                     continue;
@@ -758,7 +768,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
                     writer.append(' ');
 
             if (wrapRecords) {
-                toJSONString(record.field(index).getName(), writer);
+                toJSONString(field.getName(), writer);
                 writer.append(':');
 
                 if (format.format())
@@ -782,12 +792,14 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
                 writer.append('}');
     }
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     static final void formatJSONArray0(
         Record record,
         AbstractRow<?> fields,
         JSONFormat format,
         int recordLevel,
-        Writer writer
+        Writer writer,
+        ConverterContext cc
     ) throws java.io.IOException {
         if (record == null) {
             writer.append("null");
@@ -807,6 +819,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
 
         for (int index = 0; index < size; index++) {
             Object value;
+            Field<?> field = record.field(index);
 
 
 
@@ -816,6 +829,9 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
 
             {
                 value = record.get(index);
+
+                if (format.valueFormat() == JSONFormat.ValueFormat.FROM_TYPE)
+                    value = ((ContextConverter) scoped(field.getConverter())).to(value, cc);
 
                 if (value == null && format.arrayNulls() == ABSENT_ON_NULL)
                     continue;
@@ -857,6 +873,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
 
         String newline = format.newline();
         int recordLevel = format.header() ? 2 : 1;
+        ConverterContext cc = converterContext(this);
 
         try {
             writer.append("<result");
@@ -913,7 +930,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
 
             for (Record record : this) {
                 writer.append(newline).append(format.indentString(recordLevel));
-                formatXMLRecord(writer, format, recordLevel, record, fields);
+                formatXMLRecord(writer, format, recordLevel, record, fields, cc);
             }
 
             if (format.header())
@@ -927,12 +944,14 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
         }
     }
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     static final void formatXMLRecord(
         Writer writer,
         XMLFormat format,
         int recordLevel,
         Record record,
-        AbstractRow<?> fields
+        AbstractRow<?> fields,
+        ConverterContext cc
     )
     throws java.io.IOException {
         String newline = format.newline();
@@ -967,7 +986,13 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
 
 
 
-            value = record.get(index);
+
+            {
+                value = record.get(index);
+
+                if (format.valueFormat() == XMLFormat.ValueFormat.FROM_TYPE)
+                    value = ((ContextConverter) scoped(field.getConverter())).to(value, cc);
+            }
 
             if (value != null || format.nullFormat() != ABSENT_ELEMENT) {
                 writer.append(newline).append(format.indentString(recordLevel + 1));
@@ -1316,6 +1341,8 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
 
     @Override
     public final Document intoXML(XMLFormat format) {
+        ConverterContext cc = converterContext(this);
+
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
@@ -1376,6 +1403,9 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
                 for (int index = 0; index < size; index++) {
                     Field<?> field = fields.field(index);
                     Object value = record.get(index);
+
+                    if (format.valueFormat() == XMLFormat.ValueFormat.FROM_TYPE)
+                        value = ((ContextConverter) scoped(field.getConverter())).to(value, cc);
 
                     if (value != null || format.nullFormat() != ABSENT_ELEMENT) {
                         String tag = format.recordFormat() == COLUMN_NAME_ELEMENTS
@@ -1521,6 +1551,7 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
 
     @Override
     public final <H extends ContentHandler> H intoXML(H handler, XMLFormat format) throws SAXException {
+        ConverterContext cc = converterContext(this);
         Attributes empty = new AttributesImpl();
 
         handler.startDocument();
@@ -1573,6 +1604,9 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
             for (int index = 0; index < size; index++) {
                 Field<?> field = fields.field(index);
                 Object value = record.get(index);
+
+                if (format.valueFormat() == XMLFormat.ValueFormat.FROM_TYPE)
+                    value = ((ContextConverter) scoped(field.getConverter())).to(value, cc);
 
                 String tag = format.recordFormat() == COLUMN_NAME_ELEMENTS
                     ? escapeXML(field.getName())

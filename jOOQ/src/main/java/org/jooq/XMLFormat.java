@@ -475,6 +475,7 @@ public final class XMLFormat {
      * The value format to be applied, defaulting to
      * {@link ValueFormat#TO_TYPE}.
      */
+    @NotNull
     public final XMLFormat valueFormat(ValueFormat newValueFormat) {
         if (mutable) {
             valueFormat = newValueFormat;

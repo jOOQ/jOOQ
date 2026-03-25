@@ -86,6 +86,7 @@ public final class JSONFormat {
     int                            indent;
     String[]                       indented;
     boolean                        header;
+    ValueFormat                    valueFormat;
     RecordFormat                   recordFormat;
     NullFormat                     objectNulls;
     NullFormat                     arrayNulls;
@@ -107,6 +108,7 @@ public final class JSONFormat {
             2,
             null,
             true,
+            ValueFormat.TO_TYPE,
             RecordFormat.ARRAY,
             NullFormat.NULL_ON_NULL,
             NullFormat.NULL_ON_NULL,
@@ -129,6 +131,7 @@ public final class JSONFormat {
         int indent,
         String[] indented,
         boolean header,
+        ValueFormat valueFormat,
         RecordFormat recordFormat,
         NullFormat objectNulls,
         NullFormat arrayNulls,
@@ -153,6 +156,7 @@ public final class JSONFormat {
             format ? rightPad("", indent * 3) : ""
         };
         this.header = header;
+        this.valueFormat = valueFormat;
         this.recordFormat = recordFormat;
         this.objectNulls = objectNulls;
         this.arrayNulls = arrayNulls;
@@ -187,6 +191,7 @@ public final class JSONFormat {
                 indent,
                 null,
                 header,
+                valueFormat,
                 recordFormat,
                 objectNulls,
                 arrayNulls,
@@ -199,6 +204,7 @@ public final class JSONFormat {
         else
             return this;
     }
+
 
 
 
@@ -264,6 +270,7 @@ public final class JSONFormat {
                 indent,
                 null,
                 header,
+                valueFormat,
                 recordFormat,
                 objectNulls,
                 arrayNulls,
@@ -303,6 +310,7 @@ public final class JSONFormat {
                 indent,
                 indented,
                 header,
+                valueFormat,
                 recordFormat,
                 objectNulls,
                 arrayNulls,
@@ -343,6 +351,7 @@ public final class JSONFormat {
                 indent,
                 null,
                 header,
+                valueFormat,
                 recordFormat,
                 objectNulls,
                 arrayNulls,
@@ -382,6 +391,7 @@ public final class JSONFormat {
                 newIndent,
                 null,
                 header,
+                valueFormat,
                 recordFormat,
                 objectNulls,
                 arrayNulls,
@@ -437,6 +447,7 @@ public final class JSONFormat {
                 indent,
                 indented,
                 newHeader,
+                valueFormat,
                 recordFormat,
                 objectNulls,
                 arrayNulls,
@@ -454,6 +465,49 @@ public final class JSONFormat {
      */
     public final boolean header() {
         return header;
+    }
+
+    /**
+     * The value format to be applied, defaulting to
+     * {@link ValueFormat#TO_TYPE}.
+     */
+    @NotNull
+    public final JSONFormat valueFormat(ValueFormat newValueFormat) {
+        if (mutable) {
+            valueFormat = newValueFormat;
+            return this;
+        }
+        else
+            return new JSONFormat(
+                mutable,
+
+
+
+                format,
+                newline,
+                globalIndent,
+                indent,
+                indented,
+                header,
+                newValueFormat,
+                recordFormat,
+                objectNulls,
+                arrayNulls,
+                wrapSingleColumnRecords,
+                quoteNested,
+                nanAsString,
+                infinityAsString,
+                binaryFormat
+            );
+    }
+
+    /**
+     * The value format to be applied, defaulting to
+     * {@link ValueFormat#TO_TYPE}.
+     */
+    @NotNull
+    public final ValueFormat valueFormat() {
+        return valueFormat;
     }
 
     /**
@@ -478,6 +532,7 @@ public final class JSONFormat {
                 indent,
                 indented,
                 header,
+                valueFormat,
                 newRecordFormat,
                 objectNulls,
                 arrayNulls,
@@ -520,6 +575,7 @@ public final class JSONFormat {
                 indent,
                 indented,
                 header,
+                valueFormat,
                 recordFormat,
                 newObjectNulls,
                 arrayNulls,
@@ -562,6 +618,7 @@ public final class JSONFormat {
                 indent,
                 indented,
                 header,
+                valueFormat,
                 recordFormat,
                 objectNulls,
                 newArrayNulls,
@@ -603,6 +660,7 @@ public final class JSONFormat {
                 indent,
                 indented,
                 header,
+                valueFormat,
                 recordFormat,
                 objectNulls,
                 arrayNulls,
@@ -643,6 +701,7 @@ public final class JSONFormat {
                 indent,
                 indented,
                 header,
+                valueFormat,
                 recordFormat,
                 objectNulls,
                 arrayNulls,
@@ -685,6 +744,7 @@ public final class JSONFormat {
                 indent,
                 indented,
                 header,
+                valueFormat,
                 recordFormat,
                 objectNulls,
                 arrayNulls,
@@ -731,6 +791,7 @@ public final class JSONFormat {
                 indent,
                 indented,
                 header,
+                valueFormat,
                 recordFormat,
                 objectNulls,
                 arrayNulls,
@@ -775,6 +836,7 @@ public final class JSONFormat {
                 indent,
                 indented,
                 header,
+                valueFormat,
                 recordFormat,
                 objectNulls,
                 arrayNulls,
@@ -850,5 +912,21 @@ public final class JSONFormat {
          * Binary values are formatted as {@link HexFormat} encoded strings.
          */
         HEX
+    }
+
+    /**
+     * The format of values, in case a {@link Converter} is present.
+     */
+    public enum ValueFormat {
+
+        /**
+         * The database type is used, as in {@link Converter#fromType()}.
+         */
+        FROM_TYPE,
+
+        /**
+         * The user type is used, as in {@link Converter#toType()}.
+         */
+        TO_TYPE
     }
 }

@@ -59,7 +59,6 @@ import static org.jooq.JSONB.jsonb;
 // ...
 // ...
 // ...
-// ...
 import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
 import static org.jooq.SQLDialect.CUBRID;
@@ -100,7 +99,6 @@ import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.Array.NO_SUPPORT_SQUARE_BRACKETS;
 import static org.jooq.impl.BlobBinding.readBlob;
 import static org.jooq.impl.Convert.convert;
-import static org.jooq.impl.Convert.patchIso8601Timestamp;
 import static org.jooq.impl.DSL.array;
 import static org.jooq.impl.DSL.cast;
 import static org.jooq.impl.DSL.field;
@@ -158,7 +156,6 @@ import static org.jooq.impl.Names.N_BYTEA;
 import static org.jooq.impl.Names.N_CAST;
 import static org.jooq.impl.Names.N_CREATEXML;
 import static org.jooq.impl.Names.N_HEX;
-import static org.jooq.impl.Names.N_JSON;
 import static org.jooq.impl.Names.N_JSON_EXTRACT;
 import static org.jooq.impl.Names.N_JSON_PARSE;
 import static org.jooq.impl.Names.N_NUMERIC;
@@ -257,7 +254,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -339,10 +335,6 @@ import org.jooq.tools.StringUtils;
 import org.jooq.tools.jdbc.JDBCUtils;
 import org.jooq.tools.jdbc.MockArray;
 import org.jooq.tools.jdbc.MockResultSet;
-import org.jooq.tools.json.JSONArray;
-import org.jooq.tools.json.JSONObject;
-import org.jooq.tools.json.JSONParser;
-import org.jooq.tools.json.JSONValue;
 import org.jooq.types.DayToSecond;
 import org.jooq.types.UByte;
 import org.jooq.types.UInteger;
@@ -5020,9 +5012,9 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
     static final class DefaultResultBinding<U> extends InternalBinding<org.jooq.Result<?>, U> {
 
-        static final JSONFormat          JSON_FORMAT_BASE64 = JSONFormat.DEFAULT_FOR_RECORDS.recordFormat(JSONFormat.RecordFormat.ARRAY).nanAsString(true).infinityAsString(true);
+        static final JSONFormat          JSON_FORMAT_BASE64 = JSONFormat.DEFAULT_FOR_RECORDS.recordFormat(JSONFormat.RecordFormat.ARRAY).valueFormat(JSONFormat.ValueFormat.FROM_TYPE).nanAsString(true).infinityAsString(true);
         static final JSONFormat          JSON_FORMAT_HEX    = JSON_FORMAT_BASE64.binaryFormat(JSONFormat.BinaryFormat.HEX);
-        static final XMLFormat           XML_FORMAT_BASE64  = XMLFormat.DEFAULT_FOR_RECORDS.recordFormat(XMLFormat.RecordFormat.COLUMN_NAME_ELEMENTS).nullFormat(NullFormat.XSI_NIL).arrayFormat(ArrayFormat.ELEMENTS);
+        static final XMLFormat           XML_FORMAT_BASE64  = XMLFormat.DEFAULT_FOR_RECORDS.recordFormat(XMLFormat.RecordFormat.COLUMN_NAME_ELEMENTS).nullFormat(NullFormat.XSI_NIL).arrayFormat(ArrayFormat.ELEMENTS).valueFormat(XMLFormat.ValueFormat.FROM_TYPE);
         static final XMLFormat           XML_FORMAT_HEX     = XML_FORMAT_BASE64.binaryFormat(XMLFormat.BinaryFormat.HEX);
 
         final DefaultXMLBinding<XML>     xmlBinding;

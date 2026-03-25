@@ -157,12 +157,15 @@ final class ConvertedDataType<T, U> extends AbstractDataTypeX<U> {
     @Override
     public final DataType<?> getArrayComponentDataType() {
         DataType<?> d = delegate.getArrayComponentDataType();
+        if (d == null)
+            return null;
 
-        return d == null
-             ? null
-             : binding.arrayComponentBinding() != null
-             ? d.asConvertedDataType((Binding) binding.arrayComponentBinding())
-             : d.asConvertedDataType(Converters.forArrayComponents((Converter) binding.converter()));
+        Binding b = binding.arrayComponentBinding();
+        if (b != null)
+            return d.asConvertedDataType(b);
+
+        Converter c = binding.converter();
+        return d.asConvertedDataType(Converters.forArrayComponents(c));
     }
 
     @Override

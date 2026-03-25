@@ -5057,7 +5057,12 @@ public class JavaGenerator extends AbstractGenerator {
             else
                 out.println("%sclass %s {", visibility(), referencesClassName);
 
+            TableDefinition t;
             for (RoutineDefinition routine : database.getRoutines(schema))
+                if (!generateTableValuedFunctionsAsTables()
+                    || (t = database.getTable(schema, routine.getInputName())) == null
+                    || !t.isTableValuedFunction()
+                )
                 printRoutine(out, routine);
 
             for (TableDefinition table : database.getTables(schema))

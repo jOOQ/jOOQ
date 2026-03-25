@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema xmlns="http://www.w3.org/2001/XMLSchema"
-  xmlns:tns="http://www.jooq.org/xsd/jooq-codegen-3.21.0.xsd"
+  xmlns:tns="http://www.jooq.org/xsd/jooq-codegen-3.22.0.xsd"
   xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
   xmlns:annox="http://annox.dev.java.net"
-  targetNamespace="http://www.jooq.org/xsd/jooq-codegen-3.21.0.xsd"
+  targetNamespace="http://www.jooq.org/xsd/jooq-codegen-3.22.0.xsd"
   elementFormDefault="qualified"
   jxb:extensionBindingPrefixes="annox"
   jxb:version="2.1">
@@ -2378,7 +2378,7 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
         </annotation>
       </element>
 
-      <element name="jsonConverterImplementation" type="tns:JSONConverterImplementation" minOccurs="0" maxOccurs="1" fixed="true">
+      <element name="jsonConverterImplementation" type="tns:JSONConverterImplementation" minOccurs="0" maxOccurs="1" fixed="DEFAULT">
         <annotation>
           <appinfo>
             <jxb:property>

@@ -774,13 +774,19 @@ implements
     }
 
     @Override
-    public /* non-final */ Class<?> getArrayBaseType() {
-        return getType();
+    public final Class<?> getArrayBaseType() {
+        return getArrayBaseDataType().getType();
     }
 
     @Override
-    public /* non-final */ DataType<?> getArrayBaseDataType() {
-        return this;
+    public final DataType<?> getArrayBaseDataType() {
+        DataType<?> result = this;
+        DataType<?> t;
+
+        while ((t = result.getArrayComponentDataType()) != null)
+            result = t;
+
+        return result;
     }
 
     @Override

@@ -855,9 +855,10 @@ public class GenerationTool {
             if (g.getGenerate().isEnumsAsScalaSealedTraits() != null) {
                 generator.setGenerateEnumsAsScalaSealedTraits(g.getGenerate().isEnumsAsScalaSealedTraits());
 
-                log(configuration.getOnDeprecated(),
-                    () -> "The <generateEnumsAsScalaSealedTraits/> flag is deprecated and will be removed in the future."
-                );
+                if (g.getGenerate().isEnumsAsScalaSealedTraits())
+                    log(configuration.getOnDeprecated(),
+                        () -> "The <generateEnumsAsScalaSealedTraits/> flag is deprecated and will be removed in the future."
+                    );
             }
             if (g.getGenerate().isEnumsAsScalaEnums() != null)
                 generator.setGenerateEnumsAsScalaEnums(g.getGenerate().isEnumsAsScalaEnums());

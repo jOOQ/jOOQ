@@ -80,6 +80,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
@@ -5991,6 +5992,17 @@ final class Tools {
             }
         }
     }
+
+
+
+
+
+
+
+
+
+
+
 
 
 

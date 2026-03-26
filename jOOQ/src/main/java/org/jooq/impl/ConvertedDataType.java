@@ -62,6 +62,8 @@ import org.jooq.impl.QOM.GenerationLocation;
 import org.jooq.impl.QOM.GenerationMode;
 import org.jooq.impl.QOM.GenerationOption;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * A <code>DataType</code> used for converted types using {@link Converter}
  *

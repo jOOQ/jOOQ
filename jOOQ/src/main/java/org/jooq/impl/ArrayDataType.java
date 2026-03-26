@@ -155,22 +155,6 @@ final class ArrayDataType<T> extends DefaultDataType<T[]> {
         return elementType;
     }
 
-    @Override
-    public final Class<?> getArrayBaseType() {
-        return getArrayBaseDataType().getType();
-    }
-
-    @Override
-    public final DataType<?> getArrayBaseDataType() {
-        DataType<?> result = this;
-        DataType<?> t;
-
-        while ((t = result.getArrayComponentDataType()) != null)
-            result = t;
-
-        return result;
-    }
-
     private static String getArrayType(Configuration configuration, String dataType) {
         switch (configuration.family()) {
 

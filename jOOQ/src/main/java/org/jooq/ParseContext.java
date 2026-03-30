@@ -127,6 +127,37 @@ public interface ParseContext extends Scope {
      */
     boolean position(int newPosition);
 
+    /**
+     * The resulting {@link QueryPart} at the end of a parse call, as available
+     * to {@link ParseListener#parseEnd(ParseContext)}.
+     */
+    @Nullable
+    QueryPart parseResult();
+
+    /**
+     * Specify the new resulting {@link QueryPart} at the end of a parse call.
+     * <p>
+     * The type of the argument {@link QueryPart} must correspond to the type of
+     * the existing {@link #parseResult()}, for example
+     * <ul>
+     * <li>{@link Condition}</li>
+     * <li>{@link Field}</li>
+     * <li>{@link Name}</li>
+     * <li>{@link Query}</li>
+     * <li>{@link ResultQuery}</li>
+     * <li>{@link Row}</li>
+     * <li>{@link Select}</li>
+     * <li>{@link Statement}</li>
+     * <li>{@link Table}</li>
+     * </ul>
+     * <p>
+     * If this is called prior to the
+     * {@link ParseListener#parseEnd(ParseContext)} event, it has no effect on
+     * the parsing outcome.
+     */
+    @NotNull
+    ParseContext parseResult(QueryPart part);
+
     // -------------------------------------------------------------------------
     // Parse actions
     // -------------------------------------------------------------------------

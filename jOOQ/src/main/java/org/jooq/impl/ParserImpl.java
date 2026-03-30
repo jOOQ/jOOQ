@@ -812,6 +812,9 @@ import org.jooq.types.Interval;
 import org.jooq.types.YearToMonth;
 import org.jooq.types.YearToSecond;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 /**
  * @author Lukas Eder
  */
@@ -16457,7 +16460,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         return p;
     }
 
-    private boolean peekTemplateComment(int i) {
+    private final boolean peekTemplateComment(int i) {
         return peekIgnoreComment(false, icTemplate, false, i)
             || peekIgnoreComment(false, icRaw, false, i);
     }
@@ -16737,6 +16740,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
     private final Object[]              bindings;
     private int                         bindIndex              = 0;
     private final Map<String, Param<?>> bindParams             = new LinkedHashMap<>();
+    private QueryPart                   parseResult;
     private String                      delimiter              = ";";
     private boolean                     delimiterRequired      = false;
     private LanguageContext             languageContext        = LanguageContext.QUERY;
@@ -16906,6 +16910,17 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         return this;
     }
 
+    @Override
+    public final QueryPart parseResult() {
+        return parseResult;
+    }
+
+    @Override
+    public final ParseContext parseResult(QueryPart part) {
+        parseResult = part;
+        return this;
+    }
+
     private final String delimiter() {
         return delimiter;
     }
@@ -16999,7 +17014,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         ParserException suppressed = null;
 
         try {
-            return supplier.get();
+            Q q = supplier.get();
+            parseResult(q);
         }
         catch (ParserException e) {
             throw suppressed = e;
@@ -17017,6 +17033,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
 
         }
+
+        return (Q) parseResult();
     }
 
     private final <Q extends QueryPart> Q notify(Q result) {

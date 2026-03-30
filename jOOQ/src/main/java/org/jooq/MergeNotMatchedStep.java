@@ -369,7 +369,7 @@ public interface MergeNotMatchedStep<R extends Record> extends MergeFinalStep<R>
      * <code>MERGE</code> statement
      */
     @NotNull @CheckReturnValue
-    @Support({ POSTGRES })
+    @Support({ FIREBIRD, POSTGRES })
     MergeMatchedThenStep<R> whenNotMatchedBySource();
 
     /**
@@ -377,7 +377,7 @@ public interface MergeNotMatchedStep<R extends Record> extends MergeFinalStep<R>
      * <code>MERGE</code> statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ POSTGRES })
+    @Support({ FIREBIRD, POSTGRES })
     MergeMatchedThenStep<R> whenNotMatchedBySourceAnd(Condition condition);
 
     /**
@@ -385,7 +385,7 @@ public interface MergeNotMatchedStep<R extends Record> extends MergeFinalStep<R>
      * <code>MERGE</code> statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ POSTGRES })
+    @Support({ FIREBIRD, POSTGRES })
     MergeMatchedThenStep<R> whenNotMatchedBySourceAnd(Field<Boolean> condition);
 
     /**
@@ -402,7 +402,7 @@ public interface MergeNotMatchedStep<R extends Record> extends MergeFinalStep<R>
      */
     @PlainSQL
     @NotNull @CheckReturnValue
-    @Support({ POSTGRES })
+    @Support({ FIREBIRD, POSTGRES })
     MergeMatchedThenStep<R> whenNotMatchedBySourceAnd(SQL sql);
 
     /**
@@ -419,7 +419,7 @@ public interface MergeNotMatchedStep<R extends Record> extends MergeFinalStep<R>
      */
     @PlainSQL
     @NotNull @CheckReturnValue
-    @Support({ POSTGRES })
+    @Support({ FIREBIRD, POSTGRES })
     MergeMatchedThenStep<R> whenNotMatchedBySourceAnd(@Stringly.SQL String sql);
 
     /**
@@ -437,7 +437,7 @@ public interface MergeNotMatchedStep<R extends Record> extends MergeFinalStep<R>
      */
     @PlainSQL
     @NotNull @CheckReturnValue
-    @Support({ POSTGRES })
+    @Support({ FIREBIRD, POSTGRES })
     MergeMatchedThenStep<R> whenNotMatchedBySourceAnd(@Stringly.SQL String sql, Object... bindings);
 
     /**
@@ -455,7 +455,7 @@ public interface MergeNotMatchedStep<R extends Record> extends MergeFinalStep<R>
      */
     @PlainSQL
     @NotNull @CheckReturnValue
-    @Support({ POSTGRES })
+    @Support({ FIREBIRD, POSTGRES })
     MergeMatchedThenStep<R> whenNotMatchedBySourceAnd(@Stringly.SQL String sql, QueryPart... parts);
 
     /**

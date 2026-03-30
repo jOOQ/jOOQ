@@ -81,6 +81,7 @@ import org.jooq.Field;
 import org.jooq.Keyword;
 import org.jooq.QueryPart;
 // ...
+import org.jooq.SQLDialect;
 // ...
 
 /**
@@ -456,6 +457,20 @@ final class Extract<T> extends AbstractField<T> implements QOM.Extract<T> {
                         ctx.visit(keyword("iso_week")).sql('(').visit(field).sql(')');
                         return;
                 }
+                break;
+
+            case FIREBIRD:
+                switch (datePart) {
+                    case QUARTER:
+
+
+
+
+
+                        acceptNativeFunction(ctx);
+                        return;
+                }
+
                 break;
         }
 

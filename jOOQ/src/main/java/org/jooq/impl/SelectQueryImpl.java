@@ -63,6 +63,8 @@ import static org.jooq.SQLDialect.DERBY;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
 // ...
+// ...
+// ...
 import static org.jooq.SQLDialect.H2;
 // ...
 import static org.jooq.SQLDialect.HSQLDB;
@@ -379,7 +381,7 @@ implements
     static final Set<SQLDialect>         REQUIRES_ORDER_BY_ALIAS_OVERRIDE        = SQLDialect.supportedUntil(CLICKHOUSE, MARIADB, MYSQL, TRINO);
     static final Set<SQLDialect>         WRAP_EXP_BODY_IN_DERIVED_TABLE_LIMIT    = SQLDialect.supportedUntil(CLICKHOUSE);
     static final Set<SQLDialect>         WRAP_EXP_BODY_IN_DERIVED_TABLE_ORDER_BY = SQLDialect.supportedBy(CLICKHOUSE);
-    static final Set<SQLDialect>         WRAP_UNION_SUBQ_IN_DERIVED_TABLE_LIMIT  = SQLDialect.supportedBy(FIREBIRD);
+    static final Set<SQLDialect>         WRAP_UNION_SUBQ_IN_DERIVED_TABLE_LIMIT  = SQLDialect.supportedUntil();
 
 
 
@@ -3852,18 +3854,19 @@ implements
             }
         }
 
-        // [#3579] ... but don't use derived tables to emulate nested set operators for Firebird, as that
-        // only causes many more issues in various contexts where they are not allowed:
-        // - Recursive CTE
-        // - INSERT SELECT
-        // - Derived tables with undefined column names (see also [#3679])
-
         switch (ctx.family()) {
-            case FIREBIRD:
-                if (derivedTableRequired)
-                    ctx.sql(parenthesis);
 
-                break;
+
+
+
+
+
+
+
+
+
+
+
 
             default:
                 if (parensRequired)

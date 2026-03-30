@@ -158,9 +158,17 @@ public enum SQLDialect {
     /**
      * The Firebird dialect family.
      * <p>
-     * This family behaves like the versioned dialect {@link #FIREBIRD_3_0}.
+     * This family behaves like the versioned dialect {@link #FIREBIRD_5_0}.
      */
-    FIREBIRD("Firebird", false, true, new RequiredVersion(4, null, null)),
+    FIREBIRD("Firebird", false, true, new RequiredVersion(5, null, null)),
+
+
+
+
+
+
+
+
 
 
 

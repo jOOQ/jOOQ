@@ -67,6 +67,7 @@ import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.inline;
 // ...
+import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.one;
 // ...
 import static org.jooq.impl.DSL.select;
@@ -117,6 +118,8 @@ implements
     private static final Set<SQLDialect> EMULATE_WITH_RECURSIVE = SQLDialect.supportedUntil(FIREBIRD, HSQLDB, MARIADB, MYSQL, SQLITE, TRINO);
     private static final Set<SQLDialect> EMULATE_SYSTEM_RANGE   = SQLDialect.supportedBy(H2);
     private static final Set<SQLDialect> EMULATE_NUMBERS        = SQLDialect.supportedBy(CLICKHOUSE);
+
+
 
 
 
@@ -257,6 +260,8 @@ implements
 
 
 
+
+
         else {
             if (step == null)
                 ctx.visit(N_GENERATE_SERIES).sql('(').visit(from).sql(", ").visit(to).sql(')');
@@ -284,6 +289,8 @@ implements
             return t.as(name, name);
         else if (EMULATE_NUMBERS.contains(ctx.dialect()))
             return t.as(name, name);
+
+
 
 
 

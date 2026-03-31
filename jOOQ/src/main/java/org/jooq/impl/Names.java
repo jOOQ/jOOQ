@@ -143,6 +143,7 @@ final class Names {
     static final Name N_GENERATE_ARRAY              = systemName("generate_array");
     static final Name N_GENERATE_SERIES             = systemName("generate_series");
     static final Name N_GENERATE_UNIQUE             = systemName("generate_unique");
+    static final Name N_GENERATED_PERIOD_END        = systemName("generated_period_end");
     static final Name N_GENERATOR                   = systemName("generator");
     static final Name N_GEN_ID                      = systemName("gen_id");
     static final Name N_GEN_UUID                    = systemName("gen_uuid");

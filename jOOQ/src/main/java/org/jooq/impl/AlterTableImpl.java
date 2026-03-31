@@ -1237,25 +1237,29 @@ implements
         }
         else if (renameColumn != null) {
             ctx.start(ALTER_TABLE_RENAME_COLUMN);
+            Field<?> renameColumnQualified =
+                omitAlterTable && !renameColumn.getQualifiedName().qualified()
+                ? DSL.field(table.getQualifiedName().append(renameColumn.getUnqualifiedName()), renameColumn.getDataType())
+                : renameColumn;
 
             switch (ctx.family()) {
 
 
                 case DERBY:
-                    ctx.visit(K_RENAME_COLUMN).sql(' ').visit(renameColumn).sql(' ')
+                    ctx.visit(K_RENAME_COLUMN).sql(' ').visit(renameColumnQualified).sql(' ')
                        .visit(K_TO).sql(' ').qualify(false, c -> c.visit(renameColumnTo));
 
                     break;
 
                 case H2:
                 case HSQLDB:
-                    ctx.visit(K_ALTER_COLUMN).sql(' ').qualify(false, c -> c.visit(renameColumn)).sql(' ')
+                    ctx.visit(K_ALTER_COLUMN).sql(' ').qualify(false, c -> c.visit(renameColumnQualified)).sql(' ')
                        .visit(K_RENAME_TO).sql(' ').qualify(false, c -> c.visit(renameColumnTo));
 
                     break;
 
                 case FIREBIRD:
-                    ctx.visit(K_ALTER_COLUMN).sql(' ').qualify(false, c -> c.visit(renameColumn)).sql(' ')
+                    ctx.visit(K_ALTER_COLUMN).sql(' ').qualify(false, c -> c.visit(renameColumnQualified)).sql(' ')
                        .visit(K_TO).sql(' ').qualify(false, c -> c.visit(renameColumnTo));
 
                     break;
@@ -1276,7 +1280,7 @@ implements
 
 
                 default:
-                    ctx.visit(K_RENAME_COLUMN).sql(' ').qualify(false, c -> c.visit(renameColumn)).sql(' ')
+                    ctx.visit(K_RENAME_COLUMN).sql(' ').qualify(false, c -> c.visit(renameColumnQualified)).sql(' ')
                        .visit(K_TO).sql(' ').qualify(false, c -> c.visit(renameColumnTo));
 
                     break;

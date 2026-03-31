@@ -46,6 +46,7 @@ import static org.jooq.SQLDialect.CUBRID;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
+// ...
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
 // ...
@@ -83,6 +84,7 @@ import static org.jooq.impl.Names.N_GENERATE_SERIES;
 import static org.jooq.impl.Names.N_GENERATOR;
 import static org.jooq.impl.Names.N_NUMBERS;
 import static org.jooq.impl.Names.N_SEQUENCE;
+import static org.jooq.impl.Names.N_SERIES_GENERATE_INTEGER;
 import static org.jooq.impl.Names.N_SYSTEM_RANGE;
 import static org.jooq.impl.Names.N_UNNEST;
 import static org.jooq.impl.SQLDataType.INTEGER;
@@ -195,6 +197,12 @@ implements
                 DERIVED_TABLE
             );
         }
+
+
+
+
+
+
 
 
 

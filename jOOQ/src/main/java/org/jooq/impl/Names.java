@@ -278,6 +278,7 @@ final class Names {
     static final Name N_SAFE_CAST                   = systemName("safe_cast");
     static final Name N_SAFE_ORDINAL                = systemName("safe_ordinal");
     static final Name N_SECONDS_BETWEEN             = systemName("seconds_between");
+    static final Name N_SERIES_GENERATE_INTEGER     = systemName("series_generate_integer");
     static final Name N_SEQ4                        = systemName("seq4");
     static final Name N_SEQ8                        = systemName("seq8");
     static final Name N_SEQUENCE                    = systemName("sequence");

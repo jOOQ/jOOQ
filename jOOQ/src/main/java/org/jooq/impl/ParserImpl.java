@@ -7921,6 +7921,22 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                 ? generateSeries(from, to)
                 : generateSeries(from, to, step);
         }
+        else if (parseFunctionNameIf(
+            "SERIES_GENERATE_TINYINT",
+            "SERIES_GENERATE_SMALLINT",
+            "SERIES_GENERATE_INTEGER",
+            "SERIES_GENERATE_BIGINT"
+        )) {
+            parse('(');
+            Field step = toField(parseConcat());
+            parse(',');
+            Field from = toField(parseConcat());
+            parse(',');
+            Field to = toField(parseConcat());
+            parse(')');
+
+            result = generateSeries(from, to, step);
+        }
         else if (parseFunctionNameIf("NUMBERS")) {
             parse('(');
             Field f1 = toField(parseConcat());

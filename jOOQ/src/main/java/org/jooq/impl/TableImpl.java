@@ -42,6 +42,7 @@ import static java.util.stream.Collectors.joining;
 // ...
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
+// ...
 import static org.jooq.SQLDialect.HSQLDB;
 // ...
 // ...
@@ -76,6 +77,7 @@ import org.jooq.Identity;
 import org.jooq.InverseForeignKey;
 import org.jooq.JoinType;
 import org.jooq.Name;
+// ...
 import org.jooq.Record;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
@@ -111,6 +113,10 @@ implements
 
     private static final Set<SQLDialect> NO_SUPPORT_QUALIFIED_TVF_CALLS    = SQLDialect.supportedBy(HSQLDB, POSTGRES, YUGABYTEDB);
     private static final Set<SQLDialect> REQUIRES_TVF_TABLE_CONSTRUCTOR    = SQLDialect.supportedBy(HSQLDB);
+
+
+
+
 
     final FieldsImpl<R>                  fields;
     final Alias<Table<R>>                alias;
@@ -408,6 +414,16 @@ implements
                     ctx.sql(' ')
                        .visit(getMappedTable(ctx, this).getUnqualifiedName());
             }
+
+
+
+
+
+
+
+
+
+
             else
                 accept0(ctx);
         }

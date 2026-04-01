@@ -38,6 +38,7 @@
 
 package org.jooq.meta.postgres;
 
+import static org.jooq.impl.DSL.arrayGet;
 import static org.jooq.impl.DSL.coalesce;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
@@ -68,6 +69,8 @@ import java.util.List;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.TableOptions.TableType;
+import org.jooq.conf.StatementType;
+import org.jooq.impl.DSL;
 import org.jooq.meta.AbstractTableDefinition;
 import org.jooq.meta.ColumnDefinition;
 import org.jooq.meta.DataTypeDefinition;
@@ -114,7 +117,7 @@ public class PostgresTableValuedFunction extends AbstractTableDefinition {
 
         Routines r = ROUTINES.as("r");
         Parameters p = PARAMETERS.as("p");
-        Columns c = COLUMNS.as("c");
+        Columns c = COLUMNS;
         Attributes a = ATTRIBUTES.as("a");
         Columns x = COLUMNS.as("x");
         PgClass pg_c = PG_CLASS.as("pgc");
@@ -141,7 +144,7 @@ public class PostgresTableValuedFunction extends AbstractTableDefinition {
                 .select(
                     p.PARAMETER_NAME,
                     rowNumber().over(partitionBy(p.SPECIFIC_NAME).orderBy(p.ORDINAL_POSITION)).as(p.ORDINAL_POSITION),
-                    when(p.DATA_TYPE.eq(inline("ARRAY")), substring(p.UDT_NAME, inline(2)).concat(" ARRAY"))
+                    when(p.DATA_TYPE.eq(inline("ARRAY")), substring(p.UDT_NAME, inline(2)).concat(inline(" ARRAY")))
                         .else_(p.DATA_TYPE)
                         .as(p.DATA_TYPE),
                     p.CHARACTER_MAXIMUM_LENGTH,
@@ -159,10 +162,13 @@ public class PostgresTableValuedFunction extends AbstractTableDefinition {
                 .from(r)
                 .join(p).on(row(r.SPECIFIC_CATALOG, r.SPECIFIC_SCHEMA, r.SPECIFIC_NAME)
                             .eq(p.SPECIFIC_CATALOG, p.SPECIFIC_SCHEMA, p.SPECIFIC_NAME))
-                .join(pg_p).on(pg_p.PRONAME.concat("_").concat(pg_p.OID).eq(r.SPECIFIC_NAME))
+                .join(pg_p).on(pg_p.PRONAME.concat(inline("_")).concat(pg_p.OID).eq(r.SPECIFIC_NAME))
                            .and(pg_p.pgNamespace().NSPNAME.eq(r.SPECIFIC_SCHEMA))
                 .where(r.SPECIFIC_NAME.eq(specificName))
-                .and(p.PARAMETER_MODE.ne("IN"))
+
+                // [#19843] There appears to be a hard to isolate bug in how CockroachDB computes
+                //          PARAMETERS.PARAMETER_MODE, so lets avoid it
+                .and(arrayGet(pg_p.PROARGMODES, p.ORDINAL_POSITION).ne(inline("i")))
                 .and(pg_p.PRORETSET)
 
                 .unionAll(
@@ -189,7 +195,7 @@ public class PostgresTableValuedFunction extends AbstractTableDefinition {
                 // entries in INFORMATION_SCHEMA.COLUMNS or INFORMATION_SCHEMA.ATTRIBUTES.
                 // Their single result table column type is contained in ROUTINES
                 .join(pg_p)
-                    .on(pg_p.PRONAME.concat("_").concat(pg_p.OID).eq(r.SPECIFIC_NAME))
+                    .on(pg_p.PRONAME.concat(inline("_")).concat(pg_p.OID).eq(r.SPECIFIC_NAME))
                     .and(pg_p.pgNamespace().NSPNAME.eq(r.SPECIFIC_SCHEMA))
 
                 // [#7406] COLUMNS and ATTRIBUTES are mutually exclusive, hence no cross product here

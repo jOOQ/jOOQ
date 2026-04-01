@@ -64,9 +64,9 @@ import org.jetbrains.annotations.NotNull;
  */
 final class RowImplN
 extends
-    AbstractRow<Record>
+    AbstractRow<org.jooq.Record>
 implements
-    RowN {
+    org.jooq.RowN {
 
     RowImplN(SelectField<?>... fields) {
         super(fields);

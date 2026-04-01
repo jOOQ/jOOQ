@@ -67,9 +67,9 @@ import org.jetbrains.annotations.NotNull;
 @SuppressWarnings({ "rawtypes", "unchecked" })
 final class RowImpl7<T1, T2, T3, T4, T5, T6, T7>
 extends
-    AbstractRow<Record7<T1, T2, T3, T4, T5, T6, T7>>
+    AbstractRow<org.jooq.Record7<T1, T2, T3, T4, T5, T6, T7>>
 implements
-    Row7<T1, T2, T3, T4, T5, T6, T7> {
+    org.jooq.Row7<T1, T2, T3, T4, T5, T6, T7> {
 
     RowImpl7(SelectField<T1> field1, SelectField<T2> field2, SelectField<T3> field3, SelectField<T4> field4, SelectField<T5> field5, SelectField<T6> field6, SelectField<T7> field7) {
         super(field1, field2, field3, field4, field5, field6, field7);

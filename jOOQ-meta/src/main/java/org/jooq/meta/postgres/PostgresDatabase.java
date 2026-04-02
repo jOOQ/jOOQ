@@ -81,6 +81,7 @@ import static org.jooq.impl.DSL.values;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.SQLDataType.BIGINT;
 import static org.jooq.impl.SQLDataType.BOOLEAN;
+import static org.jooq.impl.SQLDataType.CLOB;
 import static org.jooq.impl.SQLDataType.DECIMAL_INTEGER;
 import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.NUMERIC;
@@ -135,7 +136,7 @@ import org.jooq.Record15;
 import org.jooq.Record4;
 import org.jooq.Record5;
 import org.jooq.Record6;
-import org.jooq.Record7;
+import org.jooq.Record8;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
 import org.jooq.SQLDialect;
@@ -543,8 +544,8 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
         List<TableDefinition> result = new ArrayList<>();
         Map<Name, PostgresTableDefinition> map = new HashMap<>();
 
-        Select<Record7<String, String, String, String, String, String, String>> empty =
-            select(inline(""), inline(""), inline(""), inline(""), inline(""), inline(""), inline(""))
+        Select<Record8<String, String, String, String, String, String, String, String>> empty =
+            select(inline(""), inline(""), inline(""), inline(""), inline(""), inline(""), inline(""), inline(""))
             .where(falseCondition());
 
         for (Record record : create()
@@ -554,6 +555,7 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                         TABLES.TABLE_SCHEMA,
                         TABLES.TABLE_NAME,
                         TABLES.TABLE_NAME.as("specific_name"),
+                        inline(null, CLOB).as("argtypes"),
                         PG_DESCRIPTION.DESCRIPTION,
                         when(TABLES.TABLE_TYPE.eq(inline("VIEW")), inline(TableType.VIEW.name()))
                             .else_(inline(TableType.TABLE.name())).as("table_type"),
@@ -593,6 +595,7 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                         field("{0}::varchar", PG_CLASS.pgNamespace().NSPNAME.getDataType(), PG_CLASS.pgNamespace().NSPNAME),
                         field("{0}::varchar", PG_CLASS.RELNAME.getDataType(), PG_CLASS.RELNAME),
                         field("{0}::varchar", PG_CLASS.RELNAME.getDataType(), PG_CLASS.RELNAME),
+                        inline(null, CLOB),
                         PG_DESCRIPTION.DESCRIPTION,
                         inline(TableType.MATERIALIZED_VIEW.name()).as("table_type"),
                         inline(""),
@@ -613,6 +616,7 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                             ROUTINES.ROUTINE_SCHEMA,
                             ROUTINES.ROUTINE_NAME,
                             ROUTINES.SPECIFIC_NAME,
+                            field("pg_get_function_arguments({0})", CLOB, PG_PROC.OID),
                             PG_DESCRIPTION.DESCRIPTION,
                             inline(TableType.FUNCTION.name()).as("table_type"),
                             ROUTINES.TYPE_UDT_SCHEMA,
@@ -629,7 +633,7 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
 
                     :   empty)
                 .asTable("tables"))
-                .orderBy(1, 2)
+                .orderBy(1, 2, 4)
                 .fetch()) {
 
             SchemaDefinition schema = getSchema(record.get(TABLES.TABLE_SCHEMA));

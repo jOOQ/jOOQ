@@ -2163,8 +2163,8 @@ final class Interpreter {
 
             case WHEN_QUOTED:
                 InterpreterQuotedNames q = configuration.settings().getInterpreterQuotedNames();
-                return normaliseNameCase(configuration, n1.last(), UnqualifiedName.quoted(q, n1.quoted()), locale).equals(
-                       normaliseNameCase(configuration, n2.last(), UnqualifiedName.quoted(q, n2.quoted()), locale));
+                return normaliseNameCase(configuration, n1.last(), UnqualifiedName.quoted(configuration, n1.last(), q, n1.quoted()), locale).equals(
+                       normaliseNameCase(configuration, n2.last(), UnqualifiedName.quoted(configuration, n2.last(), q, n2.quoted()), locale));
 
             case NEVER:
                 return n1Upper.equalsIgnoreCase(n2.last().toUpperCase(locale));

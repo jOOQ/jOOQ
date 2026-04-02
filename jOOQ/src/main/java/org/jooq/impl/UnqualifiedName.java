@@ -47,6 +47,7 @@ import static org.jooq.impl.Tools.EMPTY_STRING;
 import static org.jooq.impl.Tools.stringLiteral;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 
+import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Name;
 import org.jooq.Scope;
@@ -100,23 +101,37 @@ final class UnqualifiedName extends AbstractName {
     }
 
     final boolean quoted(Scope ctx) {
-        return quoted(SettingsTools.getRenderQuotedNames(ctx.settings()), quoted);
+        return quoted(ctx.configuration(), name, SettingsTools.getRenderQuotedNames(ctx.settings()), quoted);
     }
 
-    static final boolean quoted(RenderQuotedNames q, Quoted quoted) {
-        return quoted != SYSTEM && (
-              q == RenderQuotedNames.ALWAYS
-           || q == RenderQuotedNames.EXPLICIT_DEFAULT_QUOTED && (quoted == DEFAULT || quoted == QUOTED)
-           || q == RenderQuotedNames.EXPLICIT_DEFAULT_UNQUOTED && quoted == QUOTED
+    static final boolean quoted(Configuration configuration, String name, RenderQuotedNames q, Quoted quoted) {
+        return quoted == SYSTEM && systemQuoted(configuration, name)
+            || quoted != SYSTEM && (
+               q == RenderQuotedNames.ALWAYS
+            || q == RenderQuotedNames.EXPLICIT_DEFAULT_QUOTED && (quoted == DEFAULT || quoted == QUOTED)
+            || q == RenderQuotedNames.EXPLICIT_DEFAULT_UNQUOTED && quoted == QUOTED
         );
     }
 
-    static final boolean quoted(InterpreterQuotedNames q, Quoted quoted) {
-        return quoted != SYSTEM && (
-              q == InterpreterQuotedNames.ALWAYS
-           || q == InterpreterQuotedNames.EXPLICIT_DEFAULT_QUOTED && (quoted == DEFAULT || quoted == QUOTED)
-           || q == InterpreterQuotedNames.EXPLICIT_DEFAULT_UNQUOTED && quoted == QUOTED
+    static final boolean quoted(Configuration configuration, String name, InterpreterQuotedNames q, Quoted quoted) {
+        return quoted == SYSTEM && systemQuoted(configuration, name)
+            || quoted != SYSTEM && (
+               q == InterpreterQuotedNames.ALWAYS
+            || q == InterpreterQuotedNames.EXPLICIT_DEFAULT_QUOTED && (quoted == DEFAULT || quoted == QUOTED)
+            || q == InterpreterQuotedNames.EXPLICIT_DEFAULT_UNQUOTED && quoted == QUOTED
         );
+    }
+
+    static final boolean systemQuoted(Configuration configuration, String name) {
+
+
+
+
+
+
+
+
+        return false;
     }
 
     @Override

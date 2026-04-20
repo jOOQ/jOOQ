@@ -43,6 +43,7 @@ import static org.jooq.SQLDialect.CLICKHOUSE;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
+import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.select;
@@ -82,7 +83,7 @@ import org.jooq.impl.Tools.SimpleDataKey;
  */
 final class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R> implements CommonTableExpression<R> {
 
-    static final Set<SQLDialect> SUPPORT_MATERIALIZED      = SQLDialect.supportedBy(POSTGRES, SQLITE);
+    static final Set<SQLDialect> SUPPORT_MATERIALIZED      = SQLDialect.supportedBy(POSTGRES, SQLITE, YUGABYTEDB);
     static final Set<SQLDialect> NO_SUPPORT_COLUMN_LIST    = SQLDialect.supportedBy(CLICKHOUSE);
     static final Set<SQLDialect> REQUIRE_EXPLICIT_ALIASING = SQLDialect.supportedBy(CLICKHOUSE);
 

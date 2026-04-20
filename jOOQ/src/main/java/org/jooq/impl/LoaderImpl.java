@@ -870,7 +870,13 @@ final class LoaderImpl<R extends Record> implements
                             if (bind == null)
                                 bind = ctx.batch(insert);
 
-                            bind.bind(insert.getBindValues().toArray());
+                            // [#19856] In STATIC_STATEMENT mode, AbstractContext sets forcedParamType
+                            // = INLINED, which causes getBindValues() (ParamCollector with
+                            // includeInlinedParams=false) to skip every param. Collect with
+                            // includeInlinedParams=true so values are captured regardless.
+                            ParamCollector collector = new ParamCollector(ctx.configuration(), true);
+                            collector.visit(insert);
+                            bind.bind(Tools.map(collector.resultList, e -> e.getValue().getValue()).toArray());
                             insert = null;
 
                             if (batch == BATCH_ALL || processed % (bulkAfter * batchAfter) != 0)

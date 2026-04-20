@@ -43,6 +43,7 @@ Authors and contributors of jOOQ or parts of jOOQ in alphabetical order:
 - Per Lundberg
 - Peter Ertl
 - Richard Bradley
+- Robbie Morton
 - Robin Stocker
 - Roland Weisleder
 - Samy Deghou

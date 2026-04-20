@@ -868,7 +868,11 @@ final class LoaderImpl<R extends Record> implements
                             if (bind == null)
                                 bind = ctx.batch(insert);
 
-                            bind.bind(insert.getBindValues().toArray());
+                            // [#19856] Cannot use AttachableQueryPart::getBindValues as this
+                            //          skips inlined values when working with STATIC_STATEMENT.
+                            ParamCollector collector = new ParamCollector(ctx.configuration(), true);
+                            collector.visit(insert);
+                            bind.bind(Tools.map(collector.resultList, e -> e.getValue().getValue()).toArray());
                             insert = null;
 
                             if (batch == BATCH_ALL || processed % (bulkAfter * batchAfter) != 0)

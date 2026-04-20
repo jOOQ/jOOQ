@@ -42,6 +42,7 @@ package org.jooq.impl;
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
+import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.Keywords.K_AS;
 import static org.jooq.impl.Keywords.K_MATERIALIZED;
@@ -74,7 +75,7 @@ import org.jooq.impl.Tools.SimpleDataKey;
  */
 final class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R> implements CommonTableExpression<R> {
 
-    private static final Set<SQLDialect> SUPPORT_MATERIALIZED = SQLDialect.supportedBy(POSTGRES, SQLITE);
+    private static final Set<SQLDialect> SUPPORT_MATERIALIZED = SQLDialect.supportedBy(POSTGRES, SQLITE, YUGABYTEDB);
 
 
 

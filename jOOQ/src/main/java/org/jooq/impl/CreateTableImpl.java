@@ -860,11 +860,13 @@ implements
 
 
 
+
             case CLICKHOUSE:
 
             case DUCKDB:
             case MARIADB:
             case MYSQL:
+            case POSTGRES:
 
 
             case YUGABYTEDB:
@@ -872,9 +874,7 @@ implements
                 break;
 
 
-
             case FIREBIRD:
-            case POSTGRES:
 
                 ctx.visit(K_GLOBAL).sql(' ').visit(K_TEMPORARY).sql(' ');
                 break;

@@ -870,10 +870,8 @@ final class LoaderImpl<R extends Record> implements
                             if (bind == null)
                                 bind = ctx.batch(insert);
 
-                            // [#19856] In STATIC_STATEMENT mode, AbstractContext sets forcedParamType
-                            // = INLINED, which causes getBindValues() (ParamCollector with
-                            // includeInlinedParams=false) to skip every param. Collect with
-                            // includeInlinedParams=true so values are captured regardless.
+                            // [#19856] Cannot use AttachableQueryPart::getBindValues as this
+                            //          skips inlined values when working with STATIC_STATEMENT.
                             ParamCollector collector = new ParamCollector(ctx.configuration(), true);
                             collector.visit(insert);
                             bind.bind(Tools.map(collector.resultList, e -> e.getValue().getValue()).toArray());

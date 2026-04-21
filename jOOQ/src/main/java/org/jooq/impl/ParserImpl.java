@@ -799,6 +799,7 @@ import org.jooq.impl.QOM.JSONOnNull;
 import org.jooq.impl.QOM.JSONQueryBehavior;
 import org.jooq.impl.QOM.JSONValueBehavior;
 import org.jooq.impl.QOM.JoinHint;
+import org.jooq.impl.QOM.LengthUnit;
 import org.jooq.impl.QOM.PrimaryKey;
 // ...
 import org.jooq.impl.QOM.TableScope;
@@ -14882,20 +14883,26 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
     private final DataType<?> parseDataTypeLength(DataType<?> in, DataType<?> alternative, BooleanSupplier alternativeIfTrue) {
         Integer length = null;
+        LengthUnit lengthUnit = null;
 
         if (parseIf('(')) {
             if (!parseKeywordIf("MAX"))
                 length = asInt(parseUnsignedIntegerLiteral());
 
-            if (in == VARCHAR || in == CHAR)
-                if (!parseKeywordIf("BYTE"))
-                    parseKeywordIf("CHAR");
+            if (in.isString()) {
+                if (parseKeywordIf("BYTE", "OCTETS"))
+                    lengthUnit = LengthUnit.OCTETS;
+                else if (parseKeywordIf("CHARACTERS", "CHAR"))
+                    lengthUnit = LengthUnit.CHARACTERS;
+            }
 
             parse(')');
         }
 
         DataType<?> result = alternativeIfTrue.getAsBoolean() ? alternative : in;
-        return length == null ? result : result.length(length);
+        return length == null
+             ? result
+             : result.length(length, lengthUnit);
     }
 
     private final DataType<?> parseDataTypeCollation(DataType<?> result) {

@@ -10915,6 +10915,24 @@ public final class QOM {
 
 
     /**
+     * The <code>LengthUnit</code> type.
+     * <p>
+     * The character length unit, if supported.
+     */
+    public enum LengthUnit {
+        CHARACTERS(keyword("characters")),
+        OCTETS(keyword("octets")),
+        DEFAULT(keyword("default")),
+        ;
+
+        final Keyword keyword;
+
+        private LengthUnit(Keyword keyword) {
+            this.keyword = keyword;
+        }
+    }
+
+    /**
      * The <code>NullOrdering</code> type.
      * <p>
      * The explicit ordering of NULL values in ORDER BY clauses. If unspecified, the behaviour

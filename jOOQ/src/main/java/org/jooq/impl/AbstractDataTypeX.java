@@ -51,6 +51,7 @@ import org.jooq.Nullability;
 import org.jooq.impl.QOM.GenerationLocation;
 import org.jooq.impl.QOM.GenerationMode;
 import org.jooq.impl.QOM.GenerationOption;
+import org.jooq.impl.QOM.LengthUnit;
 import org.jooq.tools.JooqLogger;
 
 
@@ -70,6 +71,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
         Integer newPrecision,
         Integer newScale,
         Integer newLength,
+        LengthUnit newLengthUnit,
         Nullability newNullability,
         boolean newHidden,
         boolean newRedacted,
@@ -92,6 +94,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
                 precision0(),
                 scale0(),
                 length0(),
+                lengthUnit0(),
                 n,
                 hidden(),
                 redacted(),
@@ -115,6 +118,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             precision0(),
             scale0(),
             length0(),
+            lengthUnit0(),
             nullability(),
             h,
             redacted(),
@@ -138,6 +142,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             precision0(),
             scale0(),
             length0(),
+            lengthUnit0(),
             nullability(),
             hidden(),
             r,
@@ -161,6 +166,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             precision0(),
             scale0(),
             length0(),
+            lengthUnit0(),
             nullability(),
             hidden(),
             redacted(),
@@ -186,6 +192,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             precision0(),
             scale0(),
             length0(),
+            lengthUnit0(),
             nullability(),
             hidden(),
             redacted(),
@@ -209,6 +216,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             precision0(),
             scale0(),
             length0(),
+            lengthUnit0(),
             nullability(),
             hidden(),
             redacted(),
@@ -232,6 +240,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             precision0(),
             scale0(),
             length0(),
+            lengthUnit0(),
             nullability(),
             hidden(),
             redacted(),
@@ -252,6 +261,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             precision0(),
             scale0(),
             length0(),
+            lengthUnit0(),
             nullability(),
             hidden(),
             redacted(),
@@ -272,6 +282,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             precision0(),
             scale0(),
             length0(),
+            lengthUnit0(),
             nullability(),
             hidden(),
             redacted(),
@@ -297,6 +308,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             precision0(),
             scale0(),
             length0(),
+            lengthUnit0(),
             i != null ? NOT_NULL : nullability(),
             hidden(),
             redacted(),
@@ -317,6 +329,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             precision0(),
             scale0(),
             length0(),
+            lengthUnit0(),
             nullability(),
             hidden(),
             redacted(),
@@ -337,6 +350,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             p,
             s,
             length0(),
+            lengthUnit0(),
             nullability(),
             hidden(),
             redacted(),
@@ -357,6 +371,7 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             precision0(),
             s,
             length0(),
+            lengthUnit0(),
             nullability(),
             hidden(),
             redacted(),
@@ -377,6 +392,28 @@ abstract class AbstractDataTypeX<T> extends AbstractDataType<T> {
             precision0(),
             scale0(),
             l,
+            lengthUnit0(),
+            nullability(),
+            hidden(),
+            redacted(),
+            readonly(),
+            generatedAlwaysAsGenerator(),
+            generationOption(),
+            generationLocation(),
+            collation(),
+            characterSet(),
+            identityMode(),
+            defaultValue()
+        );
+    }
+
+    @Override
+    final AbstractDataTypeX<T> lengthUnit0(LengthUnit unit) {
+        return construct(
+            precision0(),
+            scale0(),
+            length0(),
+            unit,
             nullability(),
             hidden(),
             redacted(),

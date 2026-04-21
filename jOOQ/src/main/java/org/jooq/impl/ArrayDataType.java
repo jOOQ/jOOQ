@@ -56,6 +56,7 @@ import org.jooq.SQLDialect;
 import org.jooq.impl.QOM.GenerationLocation;
 import org.jooq.impl.QOM.GenerationMode;
 import org.jooq.impl.QOM.GenerationOption;
+import org.jooq.impl.QOM.LengthUnit;
 
 /**
  * A wrapper for anonymous array data types
@@ -88,6 +89,7 @@ final class ArrayDataType<T> extends DefaultDataType<T[]> {
         Integer precision,
         Integer scale,
         Integer length,
+        LengthUnit lengthUnit,
         Nullability nullability,
         boolean hidden,
         boolean redacted,
@@ -100,7 +102,7 @@ final class ArrayDataType<T> extends DefaultDataType<T[]> {
         GenerationMode identity,
         Field<T[]> defaultValue
     ) {
-        super(t, precision, scale, length, nullability, hidden, redacted, readonly, generatedAlwaysAs, generationOption, generationLocation, collation, characterSet, identity, defaultValue);
+        super(t, precision, scale, length, lengthUnit, nullability, hidden, redacted, readonly, generatedAlwaysAs, generationOption, generationLocation, collation, characterSet, identity, defaultValue);
 
         this.elementType = elementType;
     }
@@ -111,6 +113,7 @@ final class ArrayDataType<T> extends DefaultDataType<T[]> {
         Integer newPrecision,
         Integer newScale,
         Integer newLength,
+        LengthUnit newLengthUnit,
         Nullability newNullability,
         boolean newHidden,
         boolean newRedacted,
@@ -129,6 +132,7 @@ final class ArrayDataType<T> extends DefaultDataType<T[]> {
             newPrecision,
             newScale,
             newLength,
+            newLengthUnit,
             newNullability,
             newHidden,
             newRedacted,

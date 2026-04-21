@@ -403,6 +403,7 @@ import org.jooq.exception.TooManyRowsException;
 import org.jooq.impl.DefaultRecordMapper.MappedMember;
 import org.jooq.impl.DefaultRecordMapper.MappedMethod;
 import org.jooq.impl.QOM.GenerationMode;
+import org.jooq.impl.QOM.LengthUnit;
 import org.jooq.impl.QOM.Quantifier;
 import org.jooq.impl.ResultsImpl.ResultOrRowsImpl;
 import org.jooq.tools.Ints;
@@ -6398,7 +6399,10 @@ final class Tools {
 
 
             else if (type.length() > 0)
-                ctx.sql(typeName).sql('(').sql(type.length()).sql(')');
+                if (type.lengthUnit() != LengthUnit.DEFAULT)
+                    ctx.sql(typeName).sql('(').sql(type.length()).sql(' ').visit(DefaultDataType.lengthUnitKeyword(ctx, type)).sql(')');
+                else
+                    ctx.sql(typeName).sql('(').sql(type.length()).sql(')');
 
             // [#6745] [#9473] The DataType.getDDLTypeName() cannot be used in some dialects, for DDL
             else if (NO_SUPPORT_CAST_TYPE_IN_DDL.contains(ctx.dialect()))

@@ -91,6 +91,7 @@ import org.jooq.impl.DSL;
 import org.jooq.impl.QOM.GenerationLocation;
 import org.jooq.impl.QOM.GenerationMode;
 import org.jooq.impl.QOM.GenerationOption;
+import org.jooq.impl.QOM.LengthUnit;
 import org.jooq.impl.SQLDataType;
 import org.jooq.types.DayToSecond;
 import org.jooq.types.YearToMonth;
@@ -1377,7 +1378,8 @@ public interface DataType<T> extends Named {
     boolean scaleDefined();
 
     /**
-     * Return a new data type like this, with a new length value.
+     * Return a new data type like this, with a new length value with
+     * {@link LengthUnit#DEFAULT}.
      * <p>
      * This will have no effect if {@link #hasLength()} is <code>false</code>
      *
@@ -1389,11 +1391,44 @@ public interface DataType<T> extends Named {
     DataType<T> length(int length);
 
     /**
+     * Return a new data type like this, with a new length value and updated
+     * {@link LengthUnit}.
+     * <p>
+     * This will have no effect if {@link #hasLength()} is <code>false</code>
+     *
+     * @param length The new length value
+     * @param unit The new length unit value
+     * @return The new data type
+     */
+    @NotNull
+    @Support
+    DataType<T> length(int length, LengthUnit unit);
+
+    /**
      * Get the length of this data type.
      *
      * @return The length of this data type
      */
     int length();
+
+    /**
+     * Return a new data type like this, with an updated {@link LengthUnit}.
+     * <p>
+     * This will have no effect if {@link #hasLength()} is <code>false</code>
+     *
+     * @param unit The new length unit value
+     * @return The new data type
+     */
+    @Support
+    DataType<T> lengthUnit(LengthUnit unit);
+
+    /**
+     * Get the length unit of this data type.
+     *
+     * @return The length of this data type
+     */
+    @NotNull
+    LengthUnit lengthUnit();
 
     /**
      * Whether this data type has a length.

@@ -51,6 +51,7 @@ import org.jooq.Nullability;
 import org.jooq.impl.QOM.GenerationLocation;
 import org.jooq.impl.QOM.GenerationMode;
 import org.jooq.impl.QOM.GenerationOption;
+import org.jooq.impl.QOM.LengthUnit;
 
 /**
  * @author Lukas Eder
@@ -63,6 +64,7 @@ final class LegacyConvertedDataType<T, U> extends DefaultDataType<U> {
 
     private final AbstractDataTypeX<T> delegate;
 
+    @Deprecated
     @SuppressWarnings("unchecked")
     LegacyConvertedDataType(AbstractDataTypeX<T> delegate, Binding<? super T, U> binding) {
         super(
@@ -76,6 +78,7 @@ final class LegacyConvertedDataType<T, U> extends DefaultDataType<U> {
             delegate.precisionDefined() ? delegate.precision() : null,
             delegate.scaleDefined() ? delegate.scale() : null,
             delegate.lengthDefined() ? delegate.length() : null,
+            delegate.lengthDefined() ? delegate.lengthUnit() : null,
             delegate.nullability(),
             (Field<U>) delegate.defaultValue()
         );
@@ -83,12 +86,14 @@ final class LegacyConvertedDataType<T, U> extends DefaultDataType<U> {
         this.delegate = delegate;
     }
 
+    @Deprecated
     @SuppressWarnings("unchecked")
     @Override
     DefaultDataType<U> construct(
         Integer newPrecision,
         Integer newScale,
         Integer newLength,
+        LengthUnit newLengthUnit,
         Nullability newNullability,
         boolean newHidden,
         boolean newRedacted,
@@ -106,6 +111,7 @@ final class LegacyConvertedDataType<T, U> extends DefaultDataType<U> {
                 newPrecision,
                 newScale,
                 newLength,
+                newLengthUnit,
                 newNullability,
                 newHidden,
                 newRedacted,
@@ -122,26 +128,31 @@ final class LegacyConvertedDataType<T, U> extends DefaultDataType<U> {
         );
     }
 
+    @Deprecated
     @Override
     public int getSQLType() {
         return delegate.getSQLType();
     }
 
+    @Deprecated
     @Override
     public String getTypeName(Configuration configuration) {
         return delegate.getTypeName(configuration);
     }
 
+    @Deprecated
     @Override
     public String getCastTypeName(Configuration configuration) {
         return delegate.getCastTypeName(configuration);
     }
 
+    @Deprecated
     @Override
     public String getDDLTypeName(Configuration configuration) {
         return delegate.getDDLTypeName(configuration);
     }
 
+    @Deprecated
     @SuppressWarnings("unchecked")
     @Override
     final U convert(Object object, ConverterContext cc) {
@@ -153,12 +164,14 @@ final class LegacyConvertedDataType<T, U> extends DefaultDataType<U> {
             return ((ContextConverter<T, U>) getConverter()).from(delegate.convert(object, cc), cc);
     }
 
+    @Deprecated
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public <X> DataType<X> asConvertedDataType(Converter<? super U, X> converter) {
         return super.asConvertedDataType(new ChainedConverterBinding(getBinding(), converter));
     }
 
+    @Deprecated
     static final boolean isInstance(DataType<?> t) {
         return t instanceof LegacyConvertedDataType
             || t instanceof ArrayDataType && isInstance(((ArrayDataType<?>) t).getArrayComponentDataType())

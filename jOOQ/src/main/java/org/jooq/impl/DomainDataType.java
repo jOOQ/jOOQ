@@ -49,6 +49,7 @@ import org.jooq.Nullability;
 import org.jooq.impl.QOM.GenerationLocation;
 import org.jooq.impl.QOM.GenerationMode;
 import org.jooq.impl.QOM.GenerationOption;
+import org.jooq.impl.QOM.LengthUnit;
 
 /**
  * A <code>DataType</code> used for {@link Domain} types.
@@ -73,6 +74,7 @@ final class DomainDataType<T> extends DefaultDataType<T> {
             baseType.precisionDefined() ? baseType.precision() : null,
             baseType.scaleDefined() ? baseType.scale() : null,
             baseType.lengthDefined() ? baseType.length() : null,
+            baseType.lengthDefined() ? baseType.lengthUnit() : null,
             baseType.nullability(),
             baseType.hidden(),
             baseType.redacted(),
@@ -95,6 +97,7 @@ final class DomainDataType<T> extends DefaultDataType<T> {
         Integer newPrecision,
         Integer newScale,
         Integer newLength,
+        LengthUnit newLengthUnit,
         Nullability newNullability,
         boolean newHidden,
         boolean newRedacted,
@@ -113,6 +116,7 @@ final class DomainDataType<T> extends DefaultDataType<T> {
                 newPrecision,
                 newScale,
                 newLength,
+                newLengthUnit,
                 newNullability,
                 newHidden,
                 newRedacted,

@@ -61,6 +61,7 @@ import org.jooq.Row;
 import org.jooq.impl.QOM.GenerationLocation;
 import org.jooq.impl.QOM.GenerationMode;
 import org.jooq.impl.QOM.GenerationOption;
+import org.jooq.impl.QOM.LengthUnit;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -100,6 +101,7 @@ final class RecordDataType<R extends Record> extends DefaultDataType<R> {
         Integer precision,
         Integer scale,
         Integer length,
+        LengthUnit lengthUnit,
         Nullability nullability,
         boolean hidden,
         boolean redacted,
@@ -112,7 +114,7 @@ final class RecordDataType<R extends Record> extends DefaultDataType<R> {
         GenerationMode identity,
         Field<R> defaultValue
     ) {
-        super(t, precision, scale, length, nullability, hidden, redacted, readonly, generatedAlwaysAs, generationOption, generationLocation, collation, characterSet, identity, defaultValue);
+        super(t, precision, scale, length, lengthUnit, nullability, hidden, redacted, readonly, generatedAlwaysAs, generationOption, generationLocation, collation, characterSet, identity, defaultValue);
 
         this.row = row;
     }
@@ -123,6 +125,7 @@ final class RecordDataType<R extends Record> extends DefaultDataType<R> {
         Integer newPrecision,
         Integer newScale,
         Integer newLength,
+        LengthUnit newLengthUnit,
         Nullability newNullability,
         boolean newHidden,
         boolean newRedacted,
@@ -141,6 +144,7 @@ final class RecordDataType<R extends Record> extends DefaultDataType<R> {
             newPrecision,
             newScale,
             newLength,
+            newLengthUnit,
             newNullability,
             newHidden,
             newRedacted,

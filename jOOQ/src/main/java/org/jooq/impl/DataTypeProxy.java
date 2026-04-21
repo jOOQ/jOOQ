@@ -54,6 +54,7 @@ import org.jooq.SQLDialect;
 import org.jooq.impl.QOM.GenerationLocation;
 import org.jooq.impl.QOM.GenerationMode;
 import org.jooq.impl.QOM.GenerationOption;
+import org.jooq.impl.QOM.LengthUnit;
 
 /**
  * A mutable proxy for a temporary {@link DataType}, which can be replaced by a
@@ -67,6 +68,7 @@ final class DataTypeProxy<T> extends AbstractDataType<T> {
     private final Integer            overridePrecision;
     private final Integer            overrideScale;
     private final Integer            overrideLength;
+    private final LengthUnit         overrideLengthUnit;
     private final Nullability        overrideNullability;
     private final Boolean            overrideHidden;
     private final Boolean            overrideRedacted;
@@ -80,7 +82,7 @@ final class DataTypeProxy<T> extends AbstractDataType<T> {
     private final Field<T>           overrideDefaultValue;
 
     DataTypeProxy(AbstractDataType<T> type) {
-        this(type, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+        this(type, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     }
 
     private DataTypeProxy(
@@ -88,6 +90,7 @@ final class DataTypeProxy<T> extends AbstractDataType<T> {
         Integer overridePrecision,
         Integer overrideScale,
         Integer overrideLength,
+        LengthUnit overrideLengthUnit,
         Nullability overrideNullability,
         Boolean overrideHidden,
         Boolean overrideRedacted,
@@ -106,6 +109,7 @@ final class DataTypeProxy<T> extends AbstractDataType<T> {
         this.overridePrecision = overridePrecision;
         this.overrideScale = overrideScale;
         this.overrideLength = overrideLength;
+        this.overrideLengthUnit = overrideLengthUnit;
         this.overrideNullability = overrideNullability;
         this.overrideHidden = overrideHidden;
         this.overrideRedacted = overrideRedacted;
@@ -185,6 +189,7 @@ final class DataTypeProxy<T> extends AbstractDataType<T> {
             overridePrecision,
             overrideScale,
             overrideLength,
+            overrideLengthUnit,
             n,
             overrideHidden,
             overrideRedacted,
@@ -211,6 +216,7 @@ final class DataTypeProxy<T> extends AbstractDataType<T> {
             overridePrecision,
             overrideScale,
             overrideLength,
+            overrideLengthUnit,
             overrideNullability,
             h,
             overrideRedacted,
@@ -237,6 +243,7 @@ final class DataTypeProxy<T> extends AbstractDataType<T> {
             overridePrecision,
             overrideScale,
             overrideLength,
+            overrideLengthUnit,
             overrideNullability,
             overrideHidden,
             r,
@@ -263,6 +270,7 @@ final class DataTypeProxy<T> extends AbstractDataType<T> {
             overridePrecision,
             overrideScale,
             overrideLength,
+            overrideLengthUnit,
             overrideNullability,
             overrideHidden,
             overrideRedacted,
@@ -289,6 +297,7 @@ final class DataTypeProxy<T> extends AbstractDataType<T> {
             overridePrecision,
             overrideScale,
             overrideLength,
+            overrideLengthUnit,
             overrideNullability,
             overrideHidden,
             overrideRedacted,
@@ -315,6 +324,7 @@ final class DataTypeProxy<T> extends AbstractDataType<T> {
             overridePrecision,
             overrideScale,
             overrideLength,
+            overrideLengthUnit,
             overrideNullability,
             overrideHidden,
             overrideRedacted,
@@ -341,6 +351,7 @@ final class DataTypeProxy<T> extends AbstractDataType<T> {
             overridePrecision,
             overrideScale,
             overrideLength,
+            overrideLengthUnit,
             overrideNullability,
             overrideHidden,
             overrideRedacted,
@@ -367,6 +378,7 @@ final class DataTypeProxy<T> extends AbstractDataType<T> {
             overridePrecision,
             overrideScale,
             overrideLength,
+            overrideLengthUnit,
             overrideNullability,
             overrideHidden,
             overrideRedacted,
@@ -393,6 +405,7 @@ final class DataTypeProxy<T> extends AbstractDataType<T> {
             overridePrecision,
             overrideScale,
             overrideLength,
+            overrideLengthUnit,
             overrideNullability,
             overrideHidden,
             overrideRedacted,
@@ -429,6 +442,7 @@ final class DataTypeProxy<T> extends AbstractDataType<T> {
             overridePrecision,
             overrideScale,
             overrideLength,
+            overrideLengthUnit,
             overrideNullability,
             overrideHidden,
             overrideRedacted,
@@ -455,6 +469,7 @@ final class DataTypeProxy<T> extends AbstractDataType<T> {
             overridePrecision,
             overrideScale,
             overrideLength,
+            overrideLengthUnit,
             overrideNullability,
             overrideHidden,
             overrideRedacted,
@@ -516,6 +531,7 @@ final class DataTypeProxy<T> extends AbstractDataType<T> {
             p,
             s,
             overrideLength,
+            overrideLengthUnit,
             overrideNullability,
             overrideHidden,
             overrideRedacted,
@@ -542,6 +558,7 @@ final class DataTypeProxy<T> extends AbstractDataType<T> {
             overridePrecision,
             s,
             overrideLength,
+            overrideLengthUnit,
             overrideNullability,
             overrideHidden,
             overrideRedacted,
@@ -568,6 +585,34 @@ final class DataTypeProxy<T> extends AbstractDataType<T> {
             overridePrecision,
             overrideScale,
             l,
+            overrideLengthUnit,
+            overrideNullability,
+            overrideHidden,
+            overrideRedacted,
+            overrideReadonly,
+            overrideGeneratedAlwaysAs,
+            overrideGenerationOption,
+            overrideGenerationLocation,
+            overrideCollation,
+            overrideCharacterSet,
+            overrideIdentity,
+            overrideDefaultValue
+        );
+    }
+
+    @Override
+    final LengthUnit lengthUnit0() {
+        return defaultIfNull(overrideLengthUnit, type.lengthUnit0());
+    }
+
+    @Override
+    final AbstractDataType<T> lengthUnit0(LengthUnit u) {
+        return new DataTypeProxy<>(
+            this,
+            overridePrecision,
+            overrideScale,
+            overrideLength,
+            u,
             overrideNullability,
             overrideHidden,
             overrideRedacted,

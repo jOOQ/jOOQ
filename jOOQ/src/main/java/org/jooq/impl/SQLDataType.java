@@ -104,6 +104,7 @@ import org.jooq.RowId;
 import org.jooq.SQLDialect;
 import org.jooq.SQLDialectCategory;
 import org.jooq.XML;
+import org.jooq.impl.QOM.LengthUnit;
 import org.jooq.impl.SQLDataTypes.CUBRIDDataType;
 import org.jooq.impl.SQLDataTypes.ClickHouseDataType;
 import org.jooq.impl.SQLDataTypes.DerbyDataType;
@@ -158,6 +159,13 @@ public final class SQLDataType {
     }
 
     /**
+     * The {@link Types#VARCHAR} type.
+     */
+    public static final DataType<String> VARCHAR(int length, LengthUnit unit) {
+        return VARCHAR.length(length, unit);
+    }
+
+    /**
      * The {@link Types#CHAR} type.
      */
     public static final DataType<String> CHAR = new BuiltInDataType<>(String.class, "char(l)");
@@ -167,6 +175,13 @@ public final class SQLDataType {
      */
     public static final DataType<String> CHAR(int length) {
         return CHAR.length(length);
+    }
+
+    /**
+     * The {@link Types#CHAR} type.
+     */
+    public static final DataType<String> CHAR(int length, LengthUnit unit) {
+        return CHAR.length(length, unit);
     }
 
     /**
@@ -182,6 +197,13 @@ public final class SQLDataType {
     }
 
     /**
+     * The {@link Types#LONGVARCHAR} type.
+     */
+    public static final DataType<String> LONGVARCHAR(int length, LengthUnit unit) {
+        return LONGVARCHAR.length(length, unit);
+    }
+
+    /**
      * The {@link Types#CLOB} type.
      */
     public static final DataType<String> CLOB = new BuiltInDataType<>(String.class, "clob");
@@ -191,6 +213,13 @@ public final class SQLDataType {
      */
     public static final DataType<String> CLOB(int length) {
         return CLOB.length(length);
+    }
+
+    /**
+     * The {@link Types#CLOB} type.
+     */
+    public static final DataType<String> CLOB(int length, LengthUnit unit) {
+        return CLOB.length(length, unit);
     }
 
     /**
@@ -206,6 +235,13 @@ public final class SQLDataType {
     }
 
     /**
+     * The {@link Types#NVARCHAR} type.
+     */
+    public static final DataType<String> NVARCHAR(int length, LengthUnit unit) {
+        return NVARCHAR.length(length, unit);
+    }
+
+    /**
      * The {@link Types#NCHAR} type.
      */
     public static final DataType<String> NCHAR = new BuiltInDataType<>(String.class, "nchar(l)");
@@ -215,6 +251,13 @@ public final class SQLDataType {
      */
     public static final DataType<String> NCHAR(int length) {
         return NCHAR.length(length);
+    }
+
+    /**
+     * The {@link Types#NCHAR} type.
+     */
+    public static final DataType<String> NCHAR(int length, LengthUnit unit) {
+        return NCHAR.length(length, unit);
     }
 
     /**
@@ -230,6 +273,13 @@ public final class SQLDataType {
     }
 
     /**
+     * The {@link Types#LONGNVARCHAR} type.
+     */
+    public static final DataType<String> LONGNVARCHAR(int length, LengthUnit unit) {
+        return LONGNVARCHAR.length(length, unit);
+    }
+
+    /**
      * The {@link Types#NCLOB} type.
      */
     public static final DataType<String> NCLOB = new BuiltInDataType<>(String.class, "nclob");
@@ -239,6 +289,13 @@ public final class SQLDataType {
      */
     public static final DataType<String> NCLOB(int length) {
         return NCLOB.length(length);
+    }
+
+    /**
+     * The {@link Types#NCLOB} type.
+     */
+    public static final DataType<String> NCLOB(int length, LengthUnit unit) {
+        return NCLOB.length(length, unit);
     }
 
     // -------------------------------------------------------------------------

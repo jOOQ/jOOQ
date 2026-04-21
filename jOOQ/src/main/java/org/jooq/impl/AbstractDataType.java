@@ -105,6 +105,7 @@ import java.time.OffsetDateTime;
 import java.time.OffsetTime;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 import java.util.function.Supplier;
@@ -148,6 +149,7 @@ import org.jooq.XML;
 import org.jooq.impl.QOM.GenerationLocation;
 import org.jooq.impl.QOM.GenerationMode;
 import org.jooq.impl.QOM.GenerationOption;
+import org.jooq.impl.QOM.LengthUnit;
 import org.jooq.impl.QOM.UEmpty;
 import org.jooq.types.Interval;
 import org.jooq.types.UNumber;
@@ -489,6 +491,11 @@ implements
         return length0(l);
     }
 
+    @Override
+    public final DataType<T> length(int l, LengthUnit u) {
+        return length0(l).lengthUnit0(u);
+    }
+
     final AbstractDataType<T> length0(Integer l) {
 
         // [#18742] There are no zero length strings or binary strings in SQL
@@ -514,6 +521,23 @@ implements
         Class<?> tType = tType0();
         return (tType == byte[].class || tType == String.class);
     }
+
+    @Override
+    public final DataType<T> lengthUnit(LengthUnit u) {
+        if (Objects.equals(lengthUnit0(), u))
+            return this;
+        else
+            return lengthUnit0(u);
+    }
+
+    @Override
+    public final LengthUnit lengthUnit() {
+        LengthUnit length = lengthUnit0();
+        return length == null ? LengthUnit.DEFAULT : length;
+    }
+
+    abstract AbstractDataType<T> lengthUnit0(LengthUnit unit);
+    abstract LengthUnit lengthUnit0();
 
     @Override
     public final boolean hasFixedLength() {
@@ -945,6 +969,7 @@ implements
             precision0(),
             scale0(),
             length0(),
+            lengthUnit0(),
             nullability(),
             hidden(),
             redacted(),

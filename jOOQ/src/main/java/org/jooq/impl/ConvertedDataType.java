@@ -61,6 +61,7 @@ import org.jooq.impl.DefaultBinding.InternalBinding;
 import org.jooq.impl.QOM.GenerationLocation;
 import org.jooq.impl.QOM.GenerationMode;
 import org.jooq.impl.QOM.GenerationOption;
+import org.jooq.impl.QOM.LengthUnit;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -91,6 +92,7 @@ final class ConvertedDataType<T, U> extends AbstractDataTypeX<U> {
         Integer newPrecision,
         Integer newScale,
         Integer newLength,
+        LengthUnit newLengthUnit,
         Nullability newNullability,
         boolean newHidden,
         boolean newRedacted,
@@ -107,6 +109,7 @@ final class ConvertedDataType<T, U> extends AbstractDataTypeX<U> {
             newPrecision,
             newScale,
             newLength,
+            newLengthUnit,
             newNullability,
             newHidden,
             newRedacted,
@@ -335,6 +338,11 @@ final class ConvertedDataType<T, U> extends AbstractDataTypeX<U> {
     @Override
     final Integer length0() {
         return delegate.length0();
+    }
+
+    @Override
+    final LengthUnit lengthUnit0() {
+        return delegate.lengthUnit0();
     }
 
     @Override

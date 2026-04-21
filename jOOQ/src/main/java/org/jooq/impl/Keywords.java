@@ -87,6 +87,7 @@ final class Keywords {
     static final Keyword K_BREAK                    = keyword("break");
     static final Keyword K_BULK_COLLECT_INTO        = keyword("bulk collect into");
     static final Keyword K_BY                       = keyword("by");
+    static final Keyword K_BYTE                     = keyword("byte");
     static final Keyword K_CACHE                    = keyword("cache");
     static final Keyword K_CALL                     = keyword("call");
     static final Keyword K_CASCADE                  = keyword("cascade");
@@ -94,6 +95,7 @@ final class Keywords {
     static final Keyword K_CATALOG                  = keyword("catalog");
     static final Keyword K_CHANGE                   = keyword("change");
     static final Keyword K_CHANGE_COLUMN            = keyword("change column");
+    static final Keyword K_CHAR                     = keyword("char");
     static final Keyword K_CHARACTER_SET            = keyword("character set");
     static final Keyword K_CHECK                    = keyword("check");
     static final Keyword K_CHECKED                  = keyword("checked");

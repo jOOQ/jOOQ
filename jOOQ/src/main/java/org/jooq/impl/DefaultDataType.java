@@ -38,7 +38,6 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
-import static java.util.Collections.unmodifiableCollection;
 // ...
 // ...
 import static org.jooq.SQLDialect.CLICKHOUSE;
@@ -59,6 +58,8 @@ import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.impl.CommentImpl.NO_COMMENT;
 import static org.jooq.impl.DSL.systemName;
 import static org.jooq.impl.DefaultBinding.binding;
+import static org.jooq.impl.Keywords.K_BYTE;
+import static org.jooq.impl.Keywords.K_CHAR;
 import static org.jooq.impl.SQLDataType.BIGINT;
 import static org.jooq.impl.SQLDataType.BINARY;
 import static org.jooq.impl.SQLDataType.BIT;
@@ -102,8 +103,6 @@ import java.sql.SQLType;
 import java.sql.Types;
 import java.time.LocalTime;
 import java.time.OffsetTime;
-import java.util.Collection;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -115,18 +114,19 @@ import org.jooq.Binding;
 import org.jooq.CharacterSet;
 import org.jooq.Collation;
 import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.EnumType;
 import org.jooq.Field;
 import org.jooq.Generator;
+import org.jooq.Keyword;
 import org.jooq.Name;
 import org.jooq.Nullability;
 // ...
 import org.jooq.QualifiedRecord;
 import org.jooq.QueryPart;
 import org.jooq.SQLDialect;
-import org.jooq.Scope;
 import org.jooq.exception.DataTypeException;
 import org.jooq.exception.MappingException;
 import org.jooq.exception.SQLDialectNotSupportedException;
@@ -134,6 +134,7 @@ import org.jooq.impl.DefaultBinding.InternalBinding;
 import org.jooq.impl.QOM.GenerationLocation;
 import org.jooq.impl.QOM.GenerationMode;
 import org.jooq.impl.QOM.GenerationOption;
+import org.jooq.impl.QOM.LengthUnit;
 import org.jooq.tools.JooqLogger;
 import org.jooq.types.UByte;
 import org.jooq.types.UInteger;
@@ -312,6 +313,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
     private final Integer                                       precision;
     private final Integer                                       scale;
     private final Integer                                       length;
+    private final LengthUnit                                    lengthUnit;
 
     static {
         TYPES_BY_SQL_DATATYPE = new Map[SQLDialect.values().length];
@@ -353,52 +355,53 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
             sqlDataType.precisionDefined() ? sqlDataType.precision() : null,
             sqlDataType.scaleDefined() ? sqlDataType.scale() : null,
             sqlDataType.lengthDefined() ? sqlDataType.length() : null,
+            sqlDataType.lengthDefined() ? sqlDataType.lengthUnit() : null,
             sqlDataType.nullability(),
             sqlDataType.defaultValue()
         );
     }
 
     public DefaultDataType(SQLDialect dialect, Class<T> type, String typeName) {
-        this(dialect, null, type, systemName(typeName), typeName, null, null, null, null, null, Nullability.DEFAULT, null);
+        this(dialect, null, type, systemName(typeName), typeName, null, null, null, null, null, null, Nullability.DEFAULT, null);
     }
 
     public DefaultDataType(SQLDialect dialect, Class<T> type, String typeName, String castTypeName) {
-        this(dialect, null, type, systemName(typeName), typeName, castTypeName, null, null, null, null, Nullability.DEFAULT, null);
+        this(dialect, null, type, systemName(typeName), typeName, castTypeName, null, null, null, null, null, Nullability.DEFAULT, null);
     }
 
     DefaultDataType(SQLDialect dialect, Class<T> type, Binding<?, T> binding, String typeName, String castTypeName) {
-        this(dialect, null, type, binding, systemName(typeName), typeName, castTypeName, null, null, null, null, Nullability.DEFAULT, null);
+        this(dialect, null, type, binding, systemName(typeName), typeName, castTypeName, null, null, null, null, null, Nullability.DEFAULT, null);
     }
 
     DefaultDataType(SQLDialect dialect, Class<T> type, Binding<?, T> binding, String typeName, String castTypeName, String ddlTypeName) {
-        this(dialect, null, type, binding, systemName(typeName), typeName, castTypeName, ddlTypeName, null, null, null, Nullability.DEFAULT, null);
+        this(dialect, null, type, binding, systemName(typeName), typeName, castTypeName, ddlTypeName, null, null, null, null, Nullability.DEFAULT, null);
     }
 
     DefaultDataType(SQLDialect dialect, Class<T> type, String typeName, Nullability nullability) {
-        this(dialect, null, type, systemName(typeName), typeName, typeName, typeName, null, null, null, nullability, null);
+        this(dialect, null, type, systemName(typeName), typeName, typeName, typeName, null, null, null, null, nullability, null);
     }
 
     DefaultDataType(SQLDialect dialect, Class<T> type, Name qualifiedTypeName) {
-        this(dialect, null, type, qualifiedTypeName, null, null, null, null, null, null, Nullability.DEFAULT, null);
+        this(dialect, null, type, qualifiedTypeName, null, null, null, null, null, null, null, Nullability.DEFAULT, null);
     }
 
     DefaultDataType(SQLDialect dialect, DataType<T> type, Name qualifiedTypeName) {
-        this(dialect, type, type.getType(), qualifiedTypeName, null, null, null, null, null, null, Nullability.DEFAULT, null);
+        this(dialect, type, type.getType(), qualifiedTypeName, null, null, null, null, null, null, null, Nullability.DEFAULT, null);
     }
 
-    DefaultDataType(SQLDialect dialect, Class<T> type, Binding<?, T> binding, Name qualifiedTypeName, String typeName, String castTypeName, String ddlTypeName, Integer precision, Integer scale, Integer length, Nullability nullability, Field<T> defaultValue) {
-        this(dialect, null, type, binding, qualifiedTypeName, typeName, castTypeName, ddlTypeName, precision, scale, length, nullability, defaultValue);
+    DefaultDataType(SQLDialect dialect, Class<T> type, Binding<?, T> binding, Name qualifiedTypeName, String typeName, String castTypeName, String ddlTypeName, Integer precision, Integer scale, Integer length, LengthUnit lengthUnit, Nullability nullability, Field<T> defaultValue) {
+        this(dialect, null, type, binding, qualifiedTypeName, typeName, castTypeName, ddlTypeName, precision, scale, length, lengthUnit, nullability, defaultValue);
     }
 
-    DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, Class<T> type, Name qualifiedTypeName, String typeName, String castTypeName, String ddlTypeName, Integer precision, Integer scale, Integer length, Nullability nullability, Field<T> defaultValue) {
-        this(dialect, sqlDataType, type, null, qualifiedTypeName, typeName, castTypeName, ddlTypeName, precision, scale, length, nullability, defaultValue);
+    DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, Class<T> type, Name qualifiedTypeName, String typeName, String castTypeName, String ddlTypeName, Integer precision, Integer scale, Integer length, LengthUnit lengthUnit, Nullability nullability, Field<T> defaultValue) {
+        this(dialect, sqlDataType, type, null, qualifiedTypeName, typeName, castTypeName, ddlTypeName, precision, scale, length, lengthUnit, nullability, defaultValue);
     }
 
-    DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, Class<T> type, Binding<?, T> binding, Name qualifiedTypeName, String typeName, String castTypeName, String ddlTypeName, Integer precision, Integer scale, Integer length, Nullability nullability, Field<T> defaultValue) {
-        this(dialect, sqlDataType, type, binding, qualifiedTypeName, typeName, castTypeName, ddlTypeName, precision, scale, length, nullability, false, false, false, null, GenerationOption.DEFAULT, GenerationLocation.SERVER, null, null, null, defaultValue);
+    DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, Class<T> type, Binding<?, T> binding, Name qualifiedTypeName, String typeName, String castTypeName, String ddlTypeName, Integer precision, Integer scale, Integer length, LengthUnit lengthUnit, Nullability nullability, Field<T> defaultValue) {
+        this(dialect, sqlDataType, type, binding, qualifiedTypeName, typeName, castTypeName, ddlTypeName, precision, scale, length, lengthUnit, nullability, false, false, false, null, GenerationOption.DEFAULT, GenerationLocation.SERVER, null, null, null, defaultValue);
     }
 
-    DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, Class<T> type, Binding<?, T> binding, Name qualifiedTypeName, String typeName, String castTypeName, String ddlTypeName, Integer precision, Integer scale, Integer length, Nullability nullability, boolean hidden, boolean redacted, boolean readonly, Generator<?, ?, T> generatedAlwaysAs, GenerationOption generationOption, GenerationLocation generationLocation, Collation collation, CharacterSet characterSet, GenerationMode identity, Field<T> defaultValue) {
+    DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, Class<T> type, Binding<?, T> binding, Name qualifiedTypeName, String typeName, String castTypeName, String ddlTypeName, Integer precision, Integer scale, Integer length, LengthUnit lengthUnit, Nullability nullability, boolean hidden, boolean redacted, boolean readonly, Generator<?, ?, T> generatedAlwaysAs, GenerationOption generationOption, GenerationLocation generationLocation, Collation collation, CharacterSet characterSet, GenerationMode identity, Field<T> defaultValue) {
         super(qualifiedTypeName, NO_COMMENT);
 
         // [#13934] Patch parameters
@@ -435,6 +438,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
         this.precision = integerPrecision(type, precision);
         this.scale = scale;
         this.length = length;
+        this.lengthUnit = lengthUnit == null ? LengthUnit.DEFAULT : lengthUnit;
 
         // Register data type in static caches
         // -----------------------------------
@@ -482,6 +486,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
         Integer newPrecision,
         Integer newScale,
         Integer newLength,
+        LengthUnit newLengthUnit,
         Nullability newNullability,
         boolean newHidden,
         boolean newRedacted,
@@ -499,6 +504,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
             newPrecision,
             newScale,
             newLength,
+            newLengthUnit,
             newNullability,
             newHidden,
             newRedacted,
@@ -521,6 +527,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
         Integer precision,
         Integer scale,
         Integer length,
+        LengthUnit lengthUnit,
         Nullability nullability,
         boolean hidden,
         boolean redacted,
@@ -559,6 +566,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
         this.precision = integerPrecision(uType, precision);
         this.scale = scale;
         this.length = length;
+        this.lengthUnit = lengthUnit;
 
         // [#10362] User bindings and/or converters need to be retained
         this.binding =
@@ -661,6 +669,11 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
     }
 
     @Override
+    final LengthUnit lengthUnit0() {
+        return lengthUnit;
+    }
+
+    @Override
     public final DataType<T> getSQLDataType() {
         return sqlDataType;
     }
@@ -681,7 +694,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
 
                 // ... and then, set them back to the original value
                 // [#2710] TODO: Remove this logic along with cached data types
-                return dataType.construct(precision, scale, length, nullability, hidden, redacted, readonly, generatedAlwaysAs, generationOption, generationLocation, collation, characterSet, identity, defaultValue);
+                return dataType.construct(precision, scale, length, lengthUnit, nullability, hidden, redacted, readonly, generatedAlwaysAs, generationOption, generationLocation, collation, characterSet, identity, defaultValue);
         }
 
         // If this is already the dialect's specific data type, return this
@@ -1286,5 +1299,71 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
             return 3;
         else
             return 0;
+    }
+
+    static final Keyword lengthUnitKeyword(Context<?> ctx, DataType<?> type) {
+        LengthUnit u = type.lengthUnit();
+
+        switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            case CLICKHOUSE:
+            case DERBY:
+            case DUCKDB:
+            case FIREBIRD:
+            case HSQLDB:
+            case MARIADB:
+            case MYSQL:
+            case POSTGRES:
+            case SQLITE:
+            case TRINO:
+            case YUGABYTEDB:
+                return null;
+
+            default:
+                switch (u) {
+                    case CHARACTERS:
+                    case OCTETS:
+                        return u.keyword;
+                    default:
+                        return null;
+                }
+        }
     }
 }

@@ -75,9 +75,8 @@ final class ProviderEnabledConnection extends DefaultConnection {
     public final void close() throws SQLException {
         Connection connection = getDelegate();
 
-        if (connection != null) {
+        if (connection != null && connectionProvider != null)
             connectionProvider.release(connection);
-        }
     }
 
     // ------------------------------------------------------------------------

@@ -1033,7 +1033,7 @@ abstract class AbstractDMLQuery<R extends Record> extends AbstractRowCountQuery 
     }
 
     private final void prepare0(ExecuteContext ctx) throws SQLException {
-        Connection connection = ctx.connection();
+        Connection connection = DefaultExecuteContext.connection(ctx);
 
         // Normal statement preparing if no values should be returned
         if (returning.isEmpty())

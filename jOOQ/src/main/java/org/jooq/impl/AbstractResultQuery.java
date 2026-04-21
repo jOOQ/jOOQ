@@ -179,14 +179,14 @@ implements
 
                 // Sybase doesn't support holdability. Avoid setting it!
                 if (resultSetHoldability == 0)
-                    ctx.statement(ctx.connection().prepareStatement(ctx.sql(), type, concurrency));
+                    ctx.statement(DefaultExecuteContext.connection(ctx).prepareStatement(ctx.sql(), type, concurrency));
                 else
-                    ctx.statement(ctx.connection().prepareStatement(ctx.sql(), type, concurrency, resultSetHoldability));
+                    ctx.statement(DefaultExecuteContext.connection(ctx).prepareStatement(ctx.sql(), type, concurrency, resultSetHoldability));
             }
 
             // Regular behaviour
             else
-                ctx.statement(ctx.connection().prepareStatement(ctx.sql()));
+                ctx.statement(DefaultExecuteContext.connection(ctx).prepareStatement(ctx.sql()));
         }
 
         Tools.setFetchSize(ctx, fetchSize);
@@ -203,8 +203,8 @@ implements
 
         // [#4511] [#4753] PostgreSQL doesn't like fetchSize with autoCommit == true
         int f = SettingsTools.getFetchSize(fetchSize, ctx.settings());
-        if (REPORT_FETCH_SIZE_WITH_AUTOCOMMIT.contains(ctx.dialect()) && f != 0 && ctx.connection().getAutoCommit())
-            log.info("Fetch Size", "A fetch size of " + f + " was set on a auto-commit PostgreSQL connection, which is not recommended. See https://jdbc.postgresql.org/documentation/query/#getting-results-based-on-a-cursor");
+        if (REPORT_FETCH_SIZE_WITH_AUTOCOMMIT.contains(ctx.dialect()) && f != 0 && DefaultExecuteContext.connection(ctx).getAutoCommit())
+            log.info("Fetch Size", "A fetch size of " + f + " was set on an auto-commit PostgreSQL connection, which is not recommended. See https://jdbc.postgresql.org/documentation/query/#getting-results-based-on-a-cursor");
 
         SQLException e = executeStatementAndGetFirstResultSet(ctx, rendered.skipUpdateCounts);
         listener.executeEnd(ctx);

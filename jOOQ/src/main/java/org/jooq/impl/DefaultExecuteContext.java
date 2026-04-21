@@ -89,6 +89,7 @@ import org.jooq.Update;
 import org.jooq.conf.DiagnosticsConnection;
 import org.jooq.conf.Settings;
 import org.jooq.tools.JooqLogger;
+import org.jooq.tools.jdbc.DefaultConnection;
 import org.jooq.tools.jdbc.JDBCUtils;
 import org.jooq.tools.reflect.Reflect;
 
@@ -685,6 +686,18 @@ class DefaultExecuteContext implements ExecuteContext {
 
     @Override
     public final Connection connection() {
+        return wrap(null, unwrap(connection0()));
+    }
+
+    static final Connection connection(ExecuteContext ctx) {
+        if (ctx instanceof DefaultExecuteContext c)
+            return c.connection0();
+        else
+            return ctx.connection();
+    }
+
+    final Connection connection0() {
+
         // All jOOQ internals are expected to get a connection through this
         // single method. It can thus be guaranteed, that every connection is
         // wrapped by a ConnectionProxy, transparently, in order to implement
@@ -766,6 +779,15 @@ class DefaultExecuteContext implements ExecuteContext {
 
 
         return dialect().name();
+    }
+
+    private final Connection unwrap(Connection c) {
+        if (c instanceof SettingsEnabledConnection w)
+            return unwrap(w.getDelegate());
+        else if (c instanceof ProviderEnabledConnection w)
+            return unwrap(w.getDelegate());
+        else
+            return c;
     }
 
     private final Connection wrap(ConnectionProvider provider, Connection c) {
@@ -925,7 +947,7 @@ class DefaultExecuteContext implements ExecuteContext {
             //         may well need a Connection earlier than the parent, in case of which acquisition is
             //         forced in the parent as well.
             if (connection == null)
-                DefaultExecuteContext.this.connection();
+                DefaultExecuteContext.connection(DefaultExecuteContext.this);
 
             return wrap(this, connection);
         }

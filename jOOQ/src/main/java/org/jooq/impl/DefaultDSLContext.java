@@ -670,7 +670,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     private final <T> T connectionResult0(ConnectionCallable<T> callable) {
         DefaultExecuteContext ctx = new DefaultExecuteContext(configuration());
-        Connection connection = ctx.connection();
+        Connection connection = ctx.connection0();
 
         if (connection == null)
             throw new DetachedException("No JDBC Connection provided by ConnectionProvider");

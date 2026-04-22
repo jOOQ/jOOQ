@@ -1419,6 +1419,7 @@ public interface DataType<T> extends Named {
      * @param unit The new length unit value
      * @return The new data type
      */
+    @NotNull
     @Support
     DataType<T> lengthUnit(LengthUnit unit);
 

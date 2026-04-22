@@ -29,6 +29,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *         &lt;element name="column_name" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *         &lt;element name="data_type" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *         &lt;element name="character_maximum_length" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/&gt;
+ *         &lt;element name="character_length_unit" type="{http://www.jooq.org/xsd/jooq-meta-3.22.0.xsd}LengthUnit" minOccurs="0"/&gt;
  *         &lt;element name="numeric_precision" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/&gt;
  *         &lt;element name="numeric_scale" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/&gt;
  *         &lt;element name="domain_catalog" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
@@ -39,7 +40,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *         &lt;element name="udt_name" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="ordinal_position" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/&gt;
  *         &lt;element name="is_identity" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
- *         &lt;element name="identity_generation" type="{http://www.jooq.org/xsd/jooq-meta-3.21.0.xsd}IdentityGeneration" minOccurs="0"/&gt;
+ *         &lt;element name="identity_generation" type="{http://www.jooq.org/xsd/jooq-meta-3.22.0.xsd}IdentityGeneration" minOccurs="0"/&gt;
  *         &lt;element name="is_nullable" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
  *         &lt;element name="column_default" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="comment" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
@@ -66,7 +67,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class Column implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 32100L;
+    private final static long serialVersionUID = 32200L;
     @XmlElement(name = "table_catalog")
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String tableCatalog;
@@ -84,6 +85,9 @@ public class Column implements Serializable, XMLAppendable
     protected String dataType;
     @XmlElement(name = "character_maximum_length")
     protected Integer characterMaximumLength;
+    @XmlElement(name = "character_length_unit")
+    @XmlSchemaType(name = "string")
+    protected LengthUnit characterLengthUnit;
     @XmlElement(name = "numeric_precision")
     protected Integer numericPrecision;
     @XmlElement(name = "numeric_scale")
@@ -177,6 +181,14 @@ public class Column implements Serializable, XMLAppendable
 
     public void setCharacterMaximumLength(Integer value) {
         this.characterMaximumLength = value;
+    }
+
+    public LengthUnit getCharacterLengthUnit() {
+        return characterLengthUnit;
+    }
+
+    public void setCharacterLengthUnit(LengthUnit value) {
+        this.characterLengthUnit = value;
     }
 
     public Integer getNumericPrecision() {
@@ -441,6 +453,11 @@ public class Column implements Serializable, XMLAppendable
         return this;
     }
 
+    public Column withCharacterLengthUnit(LengthUnit value) {
+        setCharacterLengthUnit(value);
+        return this;
+    }
+
     public Column withNumericPrecision(Integer value) {
         setNumericPrecision(value);
         return this;
@@ -544,6 +561,7 @@ public class Column implements Serializable, XMLAppendable
         builder.append("column_name", columnName);
         builder.append("data_type", dataType);
         builder.append("character_maximum_length", characterMaximumLength);
+        builder.append("character_length_unit", characterLengthUnit);
         builder.append("numeric_precision", numericPrecision);
         builder.append("numeric_scale", numericScale);
         builder.append("domain_catalog", domainCatalog);
@@ -635,6 +653,15 @@ public class Column implements Serializable, XMLAppendable
             }
         } else {
             if (!characterMaximumLength.equals(other.characterMaximumLength)) {
+                return false;
+            }
+        }
+        if (characterLengthUnit == null) {
+            if (other.characterLengthUnit!= null) {
+                return false;
+            }
+        } else {
+            if (!characterLengthUnit.equals(other.characterLengthUnit)) {
                 return false;
             }
         }
@@ -822,6 +849,7 @@ public class Column implements Serializable, XMLAppendable
         result = ((prime*result)+((columnName == null)? 0 :columnName.hashCode()));
         result = ((prime*result)+((dataType == null)? 0 :dataType.hashCode()));
         result = ((prime*result)+((characterMaximumLength == null)? 0 :characterMaximumLength.hashCode()));
+        result = ((prime*result)+((characterLengthUnit == null)? 0 :characterLengthUnit.hashCode()));
         result = ((prime*result)+((numericPrecision == null)? 0 :numericPrecision.hashCode()));
         result = ((prime*result)+((numericScale == null)? 0 :numericScale.hashCode()));
         result = ((prime*result)+((domainCatalog == null)? 0 :domainCatalog.hashCode()));

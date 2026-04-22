@@ -56,6 +56,7 @@ import org.jooq.SortOrder;
 // ...
 // ...
 import org.jooq.impl.QOM.GenerationMode;
+import org.jooq.impl.QOM.LengthUnit;
 import org.jooq.meta.AttributeDefinition;
 import org.jooq.meta.CatalogDefinition;
 import org.jooq.meta.CheckConstraintDefinition;
@@ -206,6 +207,10 @@ public class XMLGenerator extends AbstractGenerator {
                             attribute.setComment(a.getComment());
 
                         attribute.setCharacterMaximumLength(type.getLength());
+
+                        if (type.getLengthUnit() != LengthUnit.DEFAULT)
+                            attribute.setCharacterLengthUnit(lengthUnit(type.getLengthUnit()));
+
                         attribute.setAttributeDefault(type.getDefaultValue());
                         attribute.setDataType(type.getType());
                         setUdtName(type,
@@ -271,6 +276,10 @@ public class XMLGenerator extends AbstractGenerator {
                             column.setComment(co.getComment());
 
                         column.setCharacterMaximumLength(type.getLength());
+
+                        if (type.getLengthUnit() != LengthUnit.DEFAULT)
+                            column.setCharacterLengthUnit(lengthUnit(type.getLengthUnit()));
+
                         column.setColumnDefault(type.getDefaultValue());
                         column.setDataType(type.getType());
                         setUdtName(type,
@@ -475,6 +484,10 @@ public class XMLGenerator extends AbstractGenerator {
                         sequence.setComment(se.getComment());
 
                     sequence.setCharacterMaximumLength(type.getLength());
+
+                    if (type.getLengthUnit() != LengthUnit.DEFAULT)
+                        sequence.setCharacterLengthUnit(lengthUnit(type.getLengthUnit()));
+
                     sequence.setDataType(type.getType());
                     sequence.setNumericPrecision(type.getPrecision());
                     sequence.setNumericScale(type.getScale());
@@ -546,6 +559,15 @@ public class XMLGenerator extends AbstractGenerator {
         out.close();
     }
 
+    private static final org.jooq.util.xml.jaxb.LengthUnit lengthUnit(LengthUnit lengthUnit) {
+        if (lengthUnit == LengthUnit.CHARACTERS)
+            return org.jooq.util.xml.jaxb.LengthUnit.CHARACTERS;
+        else if (lengthUnit == LengthUnit.OCTETS)
+            return org.jooq.util.xml.jaxb.LengthUnit.OCTETS;
+        else
+            return null;
+    }
+
     private void exportRoutine(InformationSchema is, RoutineDefinition r, String catalogName, String schemaName) {
         String specificName = r.getName() + (isBlank(r.getOverload()) ? "" : "_" + r.getOverload());
 
@@ -578,6 +600,10 @@ public class XMLGenerator extends AbstractGenerator {
                 Routine::setUdtSchema,
                 Routine::setUdtName);
             routine.setCharacterMaximumLength(r.getReturnType().getLength());
+
+            if (r.getReturnType().getLengthUnit() != LengthUnit.DEFAULT)
+                routine.setCharacterLengthUnit(lengthUnit(r.getReturnType().getLengthUnit()));
+
             routine.setNumericPrecision(r.getReturnType().getPrecision());
             routine.setNumericScale(r.getReturnType().getScale());
         }
@@ -619,6 +645,10 @@ public class XMLGenerator extends AbstractGenerator {
                     Parameter::setUdtSchema,
                     Parameter::setUdtName);
                 parameter.setCharacterMaximumLength(p.getType().getLength());
+
+                if (p.getType().getLengthUnit() != LengthUnit.DEFAULT)
+                    parameter.setCharacterLengthUnit(lengthUnit(p.getType().getLengthUnit()));
+
                 parameter.setNumericPrecision(p.getType().getPrecision());
                 parameter.setNumericScale(p.getType().getScale());
                 parameter.setParameterDefault(p.getType().getDefaultValue());

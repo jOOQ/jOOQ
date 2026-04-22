@@ -104,6 +104,7 @@ import org.jooq.util.xml.jaxb.IdentityGeneration;
 import org.jooq.util.xml.jaxb.IndexColumnUsage;
 import org.jooq.util.xml.jaxb.InformationSchema;
 import org.jooq.util.xml.jaxb.KeyColumnUsage;
+import org.jooq.util.xml.jaxb.LengthUnit;
 import org.jooq.util.xml.jaxb.ReferentialConstraint;
 import org.jooq.util.xml.jaxb.TableConstraint;
 import org.jooq.util.xml.jaxb.TriggerActionOrientation;
@@ -272,6 +273,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
         for (Attribute xa : attributes) {
             String typeName = xa.getDataType();
             int length = xa.getCharacterMaximumLength() == null ? 0 : xa.getCharacterMaximumLength();
+            QOM.LengthUnit lengthUnit = lengthUnit(xa.getCharacterLengthUnit());
             int precision = xa.getNumericPrecision() == null ? 0 : xa.getNumericPrecision();
             int scale = xa.getNumericScale() == null ? 0 : xa.getNumericScale();
 
@@ -286,7 +288,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
 
             UDTImpl.createField(
                 name(xa.getAttributeName()),
-                type(typeName, length, precision, scale, null, null, null, null, null, null),
+                type(typeName, length, lengthUnit, precision, scale, null, null, null, null, null, null),
                 udt,
                 xa.getComment()
             );
@@ -306,6 +308,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
 
             Name domainName = name(d.getDomainCatalog(), d.getDomainSchema(), d.getDomainName());
             int length = d.getCharacterMaximumLength() == null ? 0 : d.getCharacterMaximumLength();
+            QOM.LengthUnit lengthUnit = lengthUnit(d.getCharacterLengthUnit());
             int precision = d.getNumericPrecision() == null ? 0 : d.getNumericPrecision();
             int scale = d.getNumericScale() == null ? 0 : d.getNumericScale();
 
@@ -327,7 +330,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
                 schema,
                 name(d.getDomainName()),
                 comment(d.getComment()),
-                (DataType) type(d.getDataType(), length, precision, scale, nullable, false, false, null, null, null),
+                (DataType) type(d.getDataType(), length, lengthUnit, precision, scale, nullable, false, false, null, null, null),
                 checks.toArray(EMPTY_CHECK)
             );
             domains.add(id);
@@ -398,6 +401,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
         for (Column xc : columns) {
             String typeName = xc.getDataType();
             int length = xc.getCharacterMaximumLength() == null ? 0 : xc.getCharacterMaximumLength();
+            QOM.LengthUnit lengthUnit = lengthUnit(xc.getCharacterLengthUnit());
             int precision = xc.getNumericPrecision() == null ? 0 : xc.getNumericPrecision();
             int scale = xc.getNumericScale() == null ? 0 : xc.getNumericScale();
             boolean nullable = !FALSE.equals(xc.isIsNullable());
@@ -430,7 +434,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
 
             AbstractTable.createField(
                 name(xc.getColumnName()),
-                type(typeName, length, precision, scale, nullable, hidden, readonly, identity, generatedAlwaysAs, generationOption),
+                type(typeName, length, lengthUnit, precision, scale, nullable, hidden, readonly, identity, generatedAlwaysAs, generationOption),
                 table,
                 xc.getComment()
             );
@@ -651,6 +655,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
 
             String typeName = xs.getDataType();
             int length = xs.getCharacterMaximumLength() == null ? 0 : xs.getCharacterMaximumLength();
+            QOM.LengthUnit lengthUnit = lengthUnit(xs.getCharacterLengthUnit());
             int precision = xs.getNumericPrecision() == null ? 0 : xs.getNumericPrecision();
             int scale = xs.getNumericScale() == null ? 0 : xs.getNumericScale();
             boolean nullable = true;
@@ -665,7 +670,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
                 xs.getSequenceName(),
                 schema,
                 comment(xs.getComment()),
-                type(typeName, length, precision, scale, nullable, false, false, null, null, null),
+                type(typeName, length, lengthUnit, precision, scale, nullable, false, false, null, null, null),
                 startWith,
                 incrementBy,
                 minvalue,
@@ -799,6 +804,14 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
             throw new IllegalArgumentException(errors.toString());
     }
 
+    private final org.jooq.impl.QOM.LengthUnit lengthUnit(LengthUnit lengthUnit) {
+        return lengthUnit == LengthUnit.CHARACTERS
+            ? QOM.LengthUnit.CHARACTERS
+            : lengthUnit == LengthUnit.OCTETS
+            ? QOM.LengthUnit.OCTETS
+            : null;
+    }
+
     private final <K, V> void initLookup(Map<K, List<V>> lookup, K key, V value) {
         lookup.computeIfAbsent(key, k -> new ArrayList<>()).add(value);
     }
@@ -807,6 +820,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
     private final DataType<?> type(
         String typeName,
         int length,
+        QOM.LengthUnit lengthUnit,
         int precision,
         int scale,
         Boolean nullable,
@@ -837,7 +851,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
                 type = type.identityMode(identity);
 
             if (length != 0)
-                type = type.length(length);
+                type = type.length(length, lengthUnit);
             else if (precision != 0 || scale != 0)
                 type = type.precision(precision, scale);
 

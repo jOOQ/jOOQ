@@ -5,6 +5,7 @@ import java.io.Serializable;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlSchemaType;
 import jakarta.xml.bind.annotation.XmlType;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.jooq.util.jaxb.tools.StringAdapter;
@@ -27,6 +28,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *         &lt;element name="domain_name" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *         &lt;element name="data_type" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *         &lt;element name="character_maximum_length" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/&gt;
+ *         &lt;element name="character_length_unit" type="{http://www.jooq.org/xsd/jooq-meta-3.22.0.xsd}LengthUnit" minOccurs="0"/&gt;
  *         &lt;element name="numeric_precision" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/&gt;
  *         &lt;element name="numeric_scale" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/&gt;
  *         &lt;element name="domain_default" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
@@ -49,7 +51,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class Domain implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 32100L;
+    private final static long serialVersionUID = 32200L;
     @XmlElement(name = "domain_catalog")
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String domainCatalog;
@@ -64,6 +66,9 @@ public class Domain implements Serializable, XMLAppendable
     protected String dataType;
     @XmlElement(name = "character_maximum_length")
     protected Integer characterMaximumLength;
+    @XmlElement(name = "character_length_unit")
+    @XmlSchemaType(name = "string")
+    protected LengthUnit characterLengthUnit;
     @XmlElement(name = "numeric_precision")
     protected Integer numericPrecision;
     @XmlElement(name = "numeric_scale")
@@ -112,6 +117,14 @@ public class Domain implements Serializable, XMLAppendable
 
     public void setCharacterMaximumLength(Integer value) {
         this.characterMaximumLength = value;
+    }
+
+    public LengthUnit getCharacterLengthUnit() {
+        return characterLengthUnit;
+    }
+
+    public void setCharacterLengthUnit(LengthUnit value) {
+        this.characterLengthUnit = value;
     }
 
     public Integer getNumericPrecision() {
@@ -171,6 +184,11 @@ public class Domain implements Serializable, XMLAppendable
         return this;
     }
 
+    public Domain withCharacterLengthUnit(LengthUnit value) {
+        setCharacterLengthUnit(value);
+        return this;
+    }
+
     public Domain withNumericPrecision(Integer value) {
         setNumericPrecision(value);
         return this;
@@ -198,6 +216,7 @@ public class Domain implements Serializable, XMLAppendable
         builder.append("domain_name", domainName);
         builder.append("data_type", dataType);
         builder.append("character_maximum_length", characterMaximumLength);
+        builder.append("character_length_unit", characterLengthUnit);
         builder.append("numeric_precision", numericPrecision);
         builder.append("numeric_scale", numericScale);
         builder.append("domain_default", domainDefault);
@@ -268,6 +287,15 @@ public class Domain implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (characterLengthUnit == null) {
+            if (other.characterLengthUnit!= null) {
+                return false;
+            }
+        } else {
+            if (!characterLengthUnit.equals(other.characterLengthUnit)) {
+                return false;
+            }
+        }
         if (numericPrecision == null) {
             if (other.numericPrecision!= null) {
                 return false;
@@ -316,6 +344,7 @@ public class Domain implements Serializable, XMLAppendable
         result = ((prime*result)+((domainName == null)? 0 :domainName.hashCode()));
         result = ((prime*result)+((dataType == null)? 0 :dataType.hashCode()));
         result = ((prime*result)+((characterMaximumLength == null)? 0 :characterMaximumLength.hashCode()));
+        result = ((prime*result)+((characterLengthUnit == null)? 0 :characterLengthUnit.hashCode()));
         result = ((prime*result)+((numericPrecision == null)? 0 :numericPrecision.hashCode()));
         result = ((prime*result)+((numericScale == null)? 0 :numericScale.hashCode()));
         result = ((prime*result)+((domainDefault == null)? 0 :domainDefault.hashCode()));

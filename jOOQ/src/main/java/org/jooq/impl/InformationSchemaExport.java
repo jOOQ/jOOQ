@@ -72,6 +72,7 @@ import org.jooq.Table;
 import org.jooq.UDT;
 import org.jooq.UniqueKey;
 import org.jooq.impl.QOM.GenerationMode;
+import org.jooq.impl.QOM.LengthUnit;
 import org.jooq.util.xml.XmlUtils;
 import org.jooq.util.xml.jaxb.Attribute;
 import org.jooq.util.xml.jaxb.CheckConstraint;
@@ -85,6 +86,8 @@ import org.jooq.util.xml.jaxb.TableConstraint;
 import org.jooq.util.xml.jaxb.TableConstraintType;
 import org.jooq.util.xml.jaxb.TableType;
 import org.jooq.util.xml.jaxb.UserDefinedTypeCategory;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
@@ -231,8 +234,12 @@ final class InformationSchemaExport {
             ia.setComment(f.getComment());
             ia.setDataType(type.getTypeName(configuration));
 
-            if (type.lengthDefined())
+            if (type.lengthDefined()) {
                 ia.setCharacterMaximumLength(type.length());
+
+                if (type.lengthUnit() != LengthUnit.DEFAULT)
+                    ia.setCharacterLengthUnit(lengthUnit(type.lengthUnit()));
+            }
 
             if (type.precisionDefined())
                 ia.setNumericPrecision(type.precision());
@@ -264,8 +271,12 @@ final class InformationSchemaExport {
         id.setComment(d.getComment());
         id.setDataType(d.getDataType().getTypeName(configuration));
 
-        if (d.getDataType().lengthDefined())
+        if (d.getDataType().lengthDefined()) {
             id.setCharacterMaximumLength(d.getDataType().length());
+
+            if (d.getDataType().lengthUnit() != LengthUnit.DEFAULT)
+                id.setCharacterLengthUnit(lengthUnit(d.getDataType().lengthUnit()));
+        }
 
         if (d.getDataType().precisionDefined())
             id.setNumericPrecision(d.getDataType().precision());
@@ -317,8 +328,12 @@ final class InformationSchemaExport {
         iq.setComment(q.getComment());
         iq.setDataType(q.getDataType().getTypeName(configuration));
 
-        if (q.getDataType().lengthDefined())
+        if (q.getDataType().lengthDefined()) {
             iq.setCharacterMaximumLength(q.getDataType().length());
+
+            if (q.getDataType().lengthUnit() != LengthUnit.DEFAULT)
+                iq.setCharacterLengthUnit(lengthUnit(q.getDataType().lengthUnit()));
+        }
 
         if (q.getDataType().precisionDefined())
             iq.setNumericPrecision(q.getDataType().precision());
@@ -463,8 +478,12 @@ final class InformationSchemaExport {
             ic.setComment(f.getComment());
             ic.setDataType(type.getTypeName(configuration));
 
-            if (type.lengthDefined())
+            if (type.lengthDefined()) {
                 ic.setCharacterMaximumLength(type.length());
+
+                if (type.lengthUnit() != LengthUnit.DEFAULT)
+                    ic.setCharacterLengthUnit(lengthUnit(type.lengthUnit()));
+            }
 
             if (type.precisionDefined())
                 ic.setNumericPrecision(type.precision());
@@ -508,6 +527,15 @@ final class InformationSchemaExport {
 
         for (Index index : t.getIndexes())
             exportIndex0(result, t, index);
+    }
+
+    private static final org.jooq.util.xml.jaxb.LengthUnit lengthUnit(LengthUnit lengthUnit) {
+        if (lengthUnit == LengthUnit.CHARACTERS)
+            return org.jooq.util.xml.jaxb.LengthUnit.CHARACTERS;
+        else if (lengthUnit == LengthUnit.OCTETS)
+            return org.jooq.util.xml.jaxb.LengthUnit.OCTETS;
+        else
+            return null;
     }
 
     private static final void exportCheck0(Configuration configuration, InformationSchema result, Table<?> t, Check<?> chk) {

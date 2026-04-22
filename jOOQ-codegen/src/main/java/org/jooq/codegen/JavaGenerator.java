@@ -178,6 +178,7 @@ import org.jooq.impl.LazySupplier;
 import org.jooq.impl.PackageImpl;
 import org.jooq.impl.QOM.GenerationMode;
 import org.jooq.impl.QOM.GenerationOption;
+import org.jooq.impl.QOM.LengthUnit;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.SchemaImpl;
 import org.jooq.impl.TableImpl;
@@ -11904,6 +11905,7 @@ public class JavaGenerator extends AbstractGenerator {
             type.getPrecision(),
             type.getScale(),
             type.getLength(),
+            type.getLengthUnit(),
             type.isNullable(),
             type.getIdentityMode(),
             type.isHidden(),
@@ -12359,6 +12361,7 @@ public class JavaGenerator extends AbstractGenerator {
             p,
             s,
             l,
+            LengthUnit.DEFAULT,
             n,
             i ? GenerationMode.BY_DEFAULT : null,
             h,
@@ -12381,6 +12384,7 @@ public class JavaGenerator extends AbstractGenerator {
         int precision,
         int scale,
         int length,
+        LengthUnit lengthUnit,
         boolean nullable,
         GenerationMode identity,
         boolean hidden,
@@ -12436,7 +12440,7 @@ public class JavaGenerator extends AbstractGenerator {
                 db,
                 schema,
                 DefaultDataType.getDataType(db.getDialect(), String.class).getTypeName(),
-                length, precision, scale, nullable, hidden, redacted, readonly, generator, defaultValue, identity, (Name) null, ge, null, null, null
+                length, lengthUnit, precision, scale, nullable, hidden, redacted, readonly, generator, defaultValue, identity, (Name) null, ge, null, null, null
             ), out));
             sb.append(".asEnumDataType(");
             sb.append(classOf(out.ref(getStrategy().getFullJavaClassName(db.getEnum(schema, u), Mode.ENUM))));
@@ -12513,13 +12517,18 @@ public class JavaGenerator extends AbstractGenerator {
                     sb.append(')');
                 }
 
-                if (dataType.hasLength() && length > 0)
+                if (dataType.hasLength() && length > 0) {
+                    String l = "" + length;
+
+                    if (dataType.isString() && lengthUnit != LengthUnit.DEFAULT)
+                        l += ", " + out.ref(LengthUnit.class) + "." + lengthUnit;
 
                     // [#6411] Call static method if available, rather than instance method
                     if (SQLDATATYPE_WITH_LENGTH.contains(literal))
-                        sb.append("(").append(length).append(")");
+                        sb.append("(").append(l).append(")");
                     else
-                        sb.append(".length(").append(length).append(")");
+                        sb.append(".length(").append(l).append(")");
+                }
             }
             else {
                 sqlDataTypeRef = SQLDataType.class.getCanonicalName() + ".OTHER";

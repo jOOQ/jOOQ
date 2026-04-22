@@ -50,6 +50,7 @@ import java.util.List;
 
 import org.jooq.TableOptions.TableType;
 import org.jooq.impl.DSL;
+import org.jooq.impl.QOM;
 import org.jooq.impl.QOM.GenerationMode;
 import org.jooq.meta.AbstractTableDefinition;
 import org.jooq.meta.ColumnDefinition;
@@ -60,6 +61,7 @@ import org.jooq.tools.StringUtils;
 import org.jooq.util.xml.jaxb.Column;
 import org.jooq.util.xml.jaxb.IdentityGeneration;
 import org.jooq.util.xml.jaxb.InformationSchema;
+import org.jooq.util.xml.jaxb.LengthUnit;
 import org.jooq.util.xml.jaxb.Table;
 
 /**
@@ -99,6 +101,11 @@ public class XMLTableDefinition extends AbstractTableDefinition {
                 schema,
                 column.getDataType(),
                 unbox(column.getCharacterMaximumLength()),
+                column.getCharacterLengthUnit() == LengthUnit.CHARACTERS
+                    ? QOM.LengthUnit.CHARACTERS
+                    : column.getCharacterLengthUnit() == LengthUnit.OCTETS
+                    ? QOM.LengthUnit.OCTETS
+                    : null,
                 unbox(column.getNumericPrecision()),
                 unbox(column.getNumericScale()),
                 column.isIsNullable(),

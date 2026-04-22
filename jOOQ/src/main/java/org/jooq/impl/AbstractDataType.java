@@ -1342,6 +1342,8 @@ implements
             return false;
         if (!eq(length0(), other.length0()))
             return false;
+        if (!Objects.equals(lengthUnit0(), other.lengthUnit0()))
+            return false;
         if (!eq(precision0(), other.precision0()))
             return false;
         if (!eq(scale0(), other.scale0()))

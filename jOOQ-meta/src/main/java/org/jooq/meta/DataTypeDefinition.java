@@ -41,12 +41,13 @@ import java.util.List;
 
 // ...
 import org.jooq.Name;
-// ...
 import org.jooq.impl.QOM.GenerationLocation;
 import org.jooq.impl.QOM.GenerationMode;
 import org.jooq.impl.QOM.GenerationOption;
+import org.jooq.impl.QOM.LengthUnit;
 import org.jooq.meta.jaxb.ForcedType;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -86,6 +87,12 @@ public interface DataTypeDefinition {
      * The type's length.
      */
     int getLength();
+
+    /**
+     * The type's length unit.
+     */
+    @NotNull
+    LengthUnit getLengthUnit();
 
     /**
      * The type's precision.

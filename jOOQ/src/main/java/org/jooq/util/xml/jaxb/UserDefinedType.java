@@ -26,7 +26,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *         &lt;element name="user_defined_type_catalog" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="user_defined_type_schema" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="user_defined_type_name" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *         &lt;element name="user_defined_type_category" type="{http://www.jooq.org/xsd/jooq-meta-3.21.0.xsd}UserDefinedTypeCategory" minOccurs="0"/&gt;
+ *         &lt;element name="user_defined_type_category" type="{http://www.jooq.org/xsd/jooq-meta-3.22.0.xsd}UserDefinedTypeCategory" minOccurs="0"/&gt;
  *         &lt;element name="is_instantiable" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
  *         &lt;element name="is_final" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
  *         &lt;element name="comment" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
@@ -48,7 +48,7 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
 public class UserDefinedType implements Serializable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 32100L;
+    private final static long serialVersionUID = 32200L;
     @XmlElement(name = "user_defined_type_catalog")
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String userDefinedTypeCatalog;

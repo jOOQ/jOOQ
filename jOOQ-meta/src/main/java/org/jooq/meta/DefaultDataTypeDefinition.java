@@ -55,6 +55,7 @@ import org.jooq.SQLDialect;
 import org.jooq.impl.QOM.GenerationLocation;
 import org.jooq.impl.QOM.GenerationMode;
 import org.jooq.impl.QOM.GenerationOption;
+import org.jooq.impl.QOM.LengthUnit;
 import org.jooq.impl.SQLDataType;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
@@ -89,6 +90,7 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
     private GenerationMode         identity;
     private String                 defaultValue;
     private final int              length;
+    private final LengthUnit       lengthUnit;
     private final int              precision;
     private final int              scale;
 
@@ -104,16 +106,32 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
         this(database, schema, typeName, length, precision, scale, nullable, defaultValue, userType, null);
     }
 
+    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, LengthUnit unit, Number precision, Number scale, Boolean nullable, String defaultValue, Name userType) {
+        this(database, schema, typeName, length, unit, precision, scale, nullable, defaultValue, userType, null);
+    }
+
     public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, String defaultValue, Name userType, String converter) {
         this(database, schema, typeName, length, precision, scale, nullable, defaultValue, userType, converter, null);
+    }
+
+    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, LengthUnit unit, Number precision, Number scale, Boolean nullable, String defaultValue, Name userType, String converter) {
+        this(database, schema, typeName, length, unit, precision, scale, nullable, defaultValue, userType, converter, null);
     }
 
     public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, String defaultValue, Name userType, String converter, String binding) {
         this(database, schema, typeName, length, precision, scale, nullable, defaultValue, userType, converter, binding, null);
     }
 
+    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, LengthUnit unit, Number precision, Number scale, Boolean nullable, String defaultValue, Name userType, String converter, String binding) {
+        this(database, schema, typeName, length, unit, precision, scale, nullable, defaultValue, userType, converter, binding, null);
+    }
+
     public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, String defaultValue, Name userType, String converter, String binding, String javaType) {
         this(database, schema, typeName, length, precision, scale, nullable, defaultValue, false, userType, converter, binding, javaType);
+    }
+
+    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, LengthUnit unit, Number precision, Number scale, Boolean nullable, String defaultValue, Name userType, String converter, String binding, String javaType) {
+        this(database, schema, typeName, length, unit, precision, scale, nullable, defaultValue, null, userType, converter, binding, javaType);
     }
 
     /**
@@ -126,8 +144,18 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
         this(database, schema, typeName, length, precision, scale, nullable, false, null, defaultValue, identity, userType, converter, binding, javaType);
     }
 
+    /**
+     * @deprecated - 3.22.0 – [#2288] - Use
+     *             {@link #DefaultDataTypeDefinition(Database, SchemaDefinition, String, Number, LengthUnit, Number, Number, Boolean, String, GenerationMode, Name, String, String, String)}
+     *             instead.
+     */
+    @Deprecated
     public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, String defaultValue, GenerationMode identity, Name userType, String converter, String binding, String javaType) {
         this(database, schema, typeName, length, precision, scale, nullable, false, null, defaultValue, identity, userType, converter, binding, javaType);
+    }
+
+    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, LengthUnit unit, Number precision, Number scale, Boolean nullable, String defaultValue, GenerationMode identity, Name userType, String converter, String binding, String javaType) {
+        this(database, schema, typeName, length, unit, precision, scale, nullable, false, null, defaultValue, identity, userType, converter, binding, javaType);
     }
 
     /**
@@ -140,8 +168,18 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
         this(database, schema, typeName, length, precision, scale, nullable, readonly, generatedAlwaysAs, defaultValue, identity, userType, null, converter, binding, javaType);
     }
 
+    /**
+     * @deprecated - 3.22.0 – [#2288] - Use
+     *             {@link #DefaultDataTypeDefinition(Database, SchemaDefinition, String, Number, LengthUnit, Number, Number, Boolean, boolean, String, String, GenerationMode, Name, String, String, String)}
+     *             instead.
+     */
+    @Deprecated
     public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, boolean readonly, String generatedAlwaysAs, String defaultValue, GenerationMode identity, Name userType, String converter, String binding, String javaType) {
         this(database, schema, typeName, length, precision, scale, nullable, readonly, generatedAlwaysAs, defaultValue, identity, userType, null, converter, binding, javaType);
+    }
+
+    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, LengthUnit unit, Number precision, Number scale, Boolean nullable, boolean readonly, String generatedAlwaysAs, String defaultValue, GenerationMode identity, Name userType, String converter, String binding, String javaType) {
+        this(database, schema, typeName, length, unit, precision, scale, nullable, readonly, generatedAlwaysAs, defaultValue, identity, userType, null, converter, binding, javaType);
     }
 
     /**
@@ -154,8 +192,18 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
         this(database, schema, typeName, length, precision, scale, nullable, false, readonly, generatedAlwaysAs, defaultValue, identity, userType, generator, converter, binding, javaType);
     }
 
+    /**
+     * @deprecated - 3.22.0 – [#2288] - Use
+     *             {@link #DefaultDataTypeDefinition(Database, SchemaDefinition, String, Number, LengthUnit, Number, Number, Boolean, boolean, String, String, GenerationMode, Name, String, String, String, String)}
+     *             instead.
+     */
+    @Deprecated
     public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, boolean readonly, String generatedAlwaysAs, String defaultValue, GenerationMode identity, Name userType, String generator, String converter, String binding, String javaType) {
-        this(database, schema, typeName, length, precision, scale, nullable, false, readonly, generatedAlwaysAs, defaultValue, identity, userType, generator, converter, binding, javaType);
+        this(database, schema, typeName, length, null, precision, scale, nullable, false, readonly, generatedAlwaysAs, defaultValue, identity, userType, generator, converter, binding, javaType);
+    }
+
+    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, LengthUnit unit, Number precision, Number scale, Boolean nullable, boolean readonly, String generatedAlwaysAs, String defaultValue, GenerationMode identity, Name userType, String generator, String converter, String binding, String javaType) {
+        this(database, schema, typeName, length, unit, precision, scale, nullable, false, readonly, generatedAlwaysAs, defaultValue, identity, userType, generator, converter, binding, javaType);
     }
 
     /**
@@ -168,8 +216,18 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
         this(database, schema, typeName, length, precision, scale, nullable, hidden, false, readonly, generatedAlwaysAs, defaultValue, identity, userType, generator, converter, binding, javaType);
     }
 
+    /**
+     * @deprecated - 3.22.0 – [#2288] - Use
+     *             {@link #DefaultDataTypeDefinition(Database, SchemaDefinition, String, Number, LengthUnit, Number, Number, Boolean, boolean, boolean, String, String, GenerationMode, Name, String, String, String, String)}
+     *             instead.
+     */
+    @Deprecated
     public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, boolean hidden, boolean readonly, String generatedAlwaysAs, String defaultValue, GenerationMode identity, Name userType, String generator, String converter, String binding, String javaType) {
         this(database, schema, typeName, length, precision, scale, nullable, hidden, false, readonly, generatedAlwaysAs, defaultValue, identity, userType, generator, converter, binding, javaType);
+    }
+
+    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, LengthUnit unit, Number precision, Number scale, Boolean nullable, boolean hidden, boolean readonly, String generatedAlwaysAs, String defaultValue, GenerationMode identity, Name userType, String generator, String converter, String binding, String javaType) {
+        this(database, schema, typeName, length, unit, precision, scale, nullable, hidden, false, readonly, generatedAlwaysAs, defaultValue, identity, userType, generator, converter, binding, javaType);
     }
 
     /**
@@ -182,8 +240,17 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
         this(database, schema, typeName, length, precision, scale, nullable, hidden, redacted, readonly, generatedAlwaysAs, defaultValue, identity ? GenerationMode.BY_DEFAULT : null, userType, generator, converter, binding, javaType);
     }
 
+    /**
+     * @deprecated - 3.22.0 – [#2288] - Use
+     *             {@link #DefaultDataTypeDefinition(Database, SchemaDefinition, String, Number, LengthUnit, Number, Number, Boolean, boolean, boolean, boolean, String, String, GenerationMode, Name, String, String, String, String)}
+     *             instead.
+     */
+    @Deprecated
     public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, boolean hidden, boolean redacted, boolean readonly, String generatedAlwaysAs, String defaultValue, GenerationMode identity, Name userType, String generator, String converter, String binding, String javaType) {
+        this(database, schema, typeName, length, null, precision, scale, nullable, hidden, redacted, readonly, generatedAlwaysAs, defaultValue, identity, userType, generator, converter, binding, javaType);
+    }
 
+    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, LengthUnit unit, Number precision, Number scale, Boolean nullable, boolean hidden, boolean redacted, boolean readonly, String generatedAlwaysAs, String defaultValue, GenerationMode identity, Name userType, String generator, String converter, String binding, String javaType) {
         this.database = database;
         this.schema = schema;
 
@@ -214,6 +281,7 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
         }
 
         this.length = length == null ? 0 : length.intValue();
+        this.lengthUnit = unit == null ? LengthUnit.DEFAULT : unit;
         this.precision = precision == null ? 0 : precision.intValue();
         this.scale = scale == null ? 0 : scale.intValue();
         this.nullable = nullable == null ? true : nullable.booleanValue();
@@ -435,6 +503,11 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
     @Override
     public final int getLength() {
         return length;
+    }
+
+    @Override
+    public final LengthUnit getLengthUnit() {
+        return lengthUnit;
     }
 
     @Override

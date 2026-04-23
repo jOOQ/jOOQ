@@ -40,11 +40,11 @@ package org.jooq.meta.xml;
 
 import static java.lang.Boolean.FALSE;
 import static java.util.Arrays.asList;
+import static java.util.Collections.emptyList;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.tools.StringUtils.defaultIfBlank;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 import static org.jooq.tools.StringUtils.isBlank;
-import static org.jooq.tools.StringUtils.isEmpty;
 import static org.jooq.util.xml.XmlUtils.foreignKeyRule;
 import static org.jooq.util.xml.jaxb.TableConstraintType.PRIMARY_KEY;
 import static org.jooq.util.xml.jaxb.TableConstraintType.UNIQUE;
@@ -58,6 +58,7 @@ import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -717,10 +718,10 @@ public class XMLDatabase extends AbstractDatabase {
                 SchemaDefinition schema = getSchema(udt.getUserDefinedTypeSchema());
                 List<UserDefinedType> supertypes = getSupertypesByUDTName(name(udt.getUserDefinedTypeCatalog(), udt.getUserDefinedTypeSchema(), udt.getUserDefinedTypeName()));
 
-                SchemaDefinition supertypeSchema = supertypes == null || supertypes.isEmpty()
+                SchemaDefinition supertypeSchema = supertypes.isEmpty()
                     ? null
                     : getSchema(supertypes.get(0).getUserDefinedTypeSchema());
-                String supertypeName = supertypes == null || supertypes.isEmpty()
+                String supertypeName = supertypes.isEmpty()
                     ? null
                     : supertypes.get(0).getUserDefinedTypeName();
 
@@ -805,7 +806,7 @@ public class XMLDatabase extends AbstractDatabase {
             }
         }
 
-        return columnsByTableName.get(tableName);
+        return columnsByTableName.getOrDefault(tableName, emptyList());
     }
 
     final List<Attribute> getAttributesByUDTName(Name udtName) {
@@ -820,7 +821,7 @@ public class XMLDatabase extends AbstractDatabase {
             }
         }
 
-        return attributesByUDTName.get(udtName);
+        return attributesByUDTName.getOrDefault(udtName, emptyList());
     }
 
     final UserDefinedType getUserDefinedTypeByUDTName(Name udtName) {
@@ -850,7 +851,7 @@ public class XMLDatabase extends AbstractDatabase {
             }
         }
 
-        return supertypesByUDTName.get(udtName);
+        return supertypesByUDTName.getOrDefault(udtName, emptyList());
     }
 
     final List<Parameter> getParametersByRoutineName(Name specificName) {
@@ -865,6 +866,6 @@ public class XMLDatabase extends AbstractDatabase {
             }
         }
 
-        return parametersByRoutineName.get(specificName);
+        return parametersByRoutineName.getOrDefault(specificName, emptyList());
     }
 }

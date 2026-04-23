@@ -40,6 +40,7 @@ package org.jooq.meta.xml;
 
 import static java.lang.Boolean.FALSE;
 import static java.util.Arrays.asList;
+import static java.util.Collections.emptyList;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.tools.StringUtils.defaultIfBlank;
 import static org.jooq.tools.StringUtils.defaultIfNull;
@@ -56,6 +57,7 @@ import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -728,7 +730,7 @@ public class XMLDatabase extends AbstractDatabase {
             }
         }
 
-        return columnsByTableName.get(tableName);
+        return columnsByTableName.getOrDefault(tableName, emptyList());
     }
 
     List<Parameter> getParametersByRoutineName(Name specificName) {
@@ -743,6 +745,6 @@ public class XMLDatabase extends AbstractDatabase {
             }
         }
 
-        return parametersByRoutineName.get(specificName);
+        return parametersByRoutineName.getOrDefault(specificName, emptyList());
     }
 }

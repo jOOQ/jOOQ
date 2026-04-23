@@ -438,7 +438,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
         this.precision = integerPrecision(type, precision);
         this.scale = scale;
         this.length = length;
-        this.lengthUnit = lengthUnit == null ? LengthUnit.DEFAULT : lengthUnit;
+        this.lengthUnit = lengthUnitDefault(lengthUnit);
 
         // Register data type in static caches
         // -----------------------------------
@@ -464,6 +464,10 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
         // [#13107] Eagerly register array types of built-in types in type registry
         if (this instanceof BuiltInDataType && !tType.isArray())
             getArrayDataType();
+    }
+
+    static final LengthUnit lengthUnitDefault(LengthUnit lengthUnit) {
+        return lengthUnit == null ? LengthUnit.DEFAULT : lengthUnit;
     }
 
     static final Nullability nullabilityDefault(Nullability nullability) {
@@ -566,7 +570,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
         this.precision = integerPrecision(uType, precision);
         this.scale = scale;
         this.length = length;
-        this.lengthUnit = lengthUnit;
+        this.lengthUnit = lengthUnitDefault(lengthUnit);
 
         // [#10362] User bindings and/or converters need to be retained
         this.binding =

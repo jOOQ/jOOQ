@@ -44,7 +44,7 @@ import org.jooq.DataType;
 import org.jooq.Meta;
 import org.jooq.Record12;
 import org.jooq.Record14;
-import org.jooq.Record15;
+import org.jooq.Record16;
 import org.jooq.Record4;
 import org.jooq.Record5;
 import org.jooq.Record6;
@@ -198,6 +198,7 @@ public interface ResultQueryDatabase extends Database {
      * <li>Data type name</li>
      * <li>Data type precision</li>
      * <li>Data type scale</li>
+     * <li>Data type length units</li>
      * <li>Data type nullability</li>
      * <li>Data type default</li>
      * <li>UDT catalog name</li>
@@ -210,7 +211,7 @@ public interface ResultQueryDatabase extends Database {
      */
     @Internal
     @Nullable
-    ResultQuery<Record15<String, String, String, String, String, Integer, String, Integer, Integer, Boolean, String, String, String, String, String>> attributes(List<String> schemas);
+    ResultQuery<Record16<String, String, String, String, String, Integer, String, Integer, Integer, Boolean, String, String, String, String, String, String>> attributes(List<String> schemas);
 
 
 

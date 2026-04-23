@@ -757,6 +757,8 @@ implements
 
 
 
+            else if (isString() && lengthUnit() != LengthUnit.DEFAULT)
+                return castTypePrefix0() + "(" + length() + " " + DefaultDataType.lengthUnitKeyword(configuration.dsl(), this) + ")" + castTypeSuffix0();
             else
                 return castTypePrefix0() + "(" + length() + ")" + castTypeSuffix0();
         }

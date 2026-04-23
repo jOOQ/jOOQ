@@ -127,6 +127,7 @@ import org.jooq.Nullability;
 import org.jooq.QualifiedRecord;
 import org.jooq.QueryPart;
 import org.jooq.SQLDialect;
+import org.jooq.Scope;
 import org.jooq.exception.DataTypeException;
 import org.jooq.exception.MappingException;
 import org.jooq.exception.SQLDialectNotSupportedException;
@@ -1305,7 +1306,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
             return 0;
     }
 
-    static final Keyword lengthUnitKeyword(Context<?> ctx, DataType<?> type) {
+    static final Keyword lengthUnitKeyword(Scope ctx, DataType<?> type) {
         LengthUnit u = type.lengthUnit();
 
         switch (ctx.family()) {

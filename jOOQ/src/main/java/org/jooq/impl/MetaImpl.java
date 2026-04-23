@@ -161,6 +161,7 @@ import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.QOM.ForeignKeyRule;
 import org.jooq.impl.QOM.GenerationMode;
 import org.jooq.impl.QOM.GenerationOption;
+import org.jooq.impl.QOM.LengthUnit;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.jdbc.JDBCUtils;
@@ -1887,6 +1888,7 @@ final class MetaImpl extends AbstractMeta {
                 int nullable = column.get(10, int.class);                // NULLABLE
                 String remarks = column.get(11, String.class);           // REMARKS
                 String defaultValue = column.get(12, String.class);      // COLUMN_DEF
+                int charOctetLength = column.get(15, int.class);         // CHAR_OCTET_LENGTH
 
                 // [#10817] Some dialects may produce NULL (the expression) rather than NULL (the value)
                 if ("null".equalsIgnoreCase(defaultValue))
@@ -1999,6 +2001,18 @@ final class MetaImpl extends AbstractMeta {
                 Generator g = schema.generator(getName(), columnName);
                 if (isGenerated && g == null && MYSQL == family())
                     isGenerated = false;
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

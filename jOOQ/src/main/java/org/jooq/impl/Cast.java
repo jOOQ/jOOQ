@@ -491,7 +491,7 @@ final class Cast<T> extends AbstractField<T> implements QOM.Cast<T> {
             ctx.sqlIndentEnd(')');
     }
 
-    static <E extends Throwable> void renderCastIf(
+    static final <E extends Throwable> void renderCastIf(
         Context<?> ctx,
         ThrowingConsumer<? super Context<?>, E> expression,
         ThrowingConsumer<? super Context<?>, E> type,
@@ -500,7 +500,7 @@ final class Cast<T> extends AbstractField<T> implements QOM.Cast<T> {
         renderCastIf(ctx, expression, type, true, test);
     }
 
-    static <E extends Throwable> void renderCastIf(
+    static final <E extends Throwable> void renderCastIf(
         Context<?> ctx,
         ThrowingConsumer<? super Context<?>, E> expression,
         ThrowingConsumer<? super Context<?>, E> type,

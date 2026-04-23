@@ -132,7 +132,7 @@ import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Record12;
 import org.jooq.Record14;
-import org.jooq.Record15;
+import org.jooq.Record16;
 import org.jooq.Record4;
 import org.jooq.Record5;
 import org.jooq.Record6;
@@ -817,6 +817,7 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
      * <li>Data type name</li>
      * <li>Data type precision</li>
      * <li>Data type scale</li>
+     * <li>Data type length units</li>
      * <li>Data type nullability</li>
      * <li>Data type default</li>
      * <li>UDT catalog name</li>
@@ -828,7 +829,7 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
      * @return The query or <code>null</code> if this implementation doesn't support the query.
      */
     @Override
-    public ResultQuery<Record15<String, String, String, String, String, Integer, String, Integer, Integer, Boolean, String, String, String, String, String>> attributes(List<String> schemas) {
+    public ResultQuery<Record16<String, String, String, String, String, Integer, String, Integer, Integer, Boolean, String, String, String, String, String, String>> attributes(List<String> schemas) {
         switch (create().family()) {
 
 
@@ -864,7 +865,8 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                             d.DATA_TYPE,
                             when(a.DATA_TYPE.eq(inline("USER-DEFINED")), a.ATTRIBUTE_UDT_NAME)
                             .else_(arrayDataType(a.DATA_TYPE, a.ATTRIBUTE_UDT_NAME, pg_a.ATTNDIMS))
-                        ).as(a.DATA_TYPE))
+                        ).as(a.DATA_TYPE),
+                        inline(null, VARCHAR).as("string_length_unit"))
                     .from(PG_CLASS)
                     .join(pg_a).on(pg_a.ATTRELID.eq(PG_CLASS.OID))
                     .join(a)

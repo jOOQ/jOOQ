@@ -95,7 +95,7 @@ import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Record12;
 import org.jooq.Record14;
-import org.jooq.Record15;
+import org.jooq.Record16;
 import org.jooq.Record4;
 import org.jooq.Record5;
 import org.jooq.Record6;
@@ -465,7 +465,7 @@ public class FirebirdDatabase extends AbstractDatabase implements ResultQueryDat
     }
 
     @Override
-    public ResultQuery<Record15<String, String, String, String, String, Integer, String, Integer, Integer, Boolean, String, String, String, String, String>> attributes(List<String> schemas) {
+    public ResultQuery<Record16<String, String, String, String, String, Integer, String, Integer, Integer, Boolean, String, String, String, String, String, String>> attributes(List<String> schemas) {
         return null;
     }
 

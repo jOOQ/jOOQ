@@ -120,6 +120,7 @@ import org.jooq.Queries;
 import org.jooq.Query;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
+import org.jooq.Scope;
 import org.jooq.Sequence;
 // ...
 import org.jooq.Table;
@@ -129,6 +130,7 @@ import org.jooq.UniqueKey;
 import org.jooq.conf.ParseUnknownFunctions;
 import org.jooq.conf.Settings;
 import org.jooq.impl.QOM.GenerationMode;
+import org.jooq.impl.QOM.LengthUnit;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 
@@ -696,7 +698,7 @@ final class Diff extends AbstractScope {
                     if ((type1.hasLength() && type2.hasLength() && (
                                 type1.lengthDefined() != type2.lengthDefined()
                              || type1.length() != type2.length()
-                             || type1.lengthUnit() != type2.lengthUnit()
+                             || incompatibleLengthUnit(type1, type2)
                          ))
                         || (type1.hasPrecision() && type2.hasPrecision() && precisionDifference(type1, type2))
                         || (type1.hasScale() && type2.hasScale() && scaleDifference(type1, type2)))
@@ -704,6 +706,18 @@ final class Diff extends AbstractScope {
 
                     // [#9656] TODO: Change collation
                     // [#9656] TODO: Change character set
+                }
+
+                private final boolean incompatibleLengthUnit(DataType<?> type1, DataType<?> type2) {
+                    switch (ctx.family()) {
+
+
+
+
+
+                        default:
+                            return type1.lengthUnit() != type2.lengthUnit();
+                    }
                 }
 
                 private final boolean equivalent(Field<?> d2, Field<?> d1) {

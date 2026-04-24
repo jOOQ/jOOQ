@@ -68,8 +68,6 @@ import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.TRINO;
 // ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
-import static org.jooq.impl.DefaultDataType.requiredTimePrecision;
-import static org.jooq.impl.DefaultDataType.requiresTimePrecision;
 import static org.jooq.impl.DefaultDataType.unsupportedDatetimePrecision;
 import static org.jooq.impl.Internal.arrayType;
 import static org.jooq.impl.Internal.converterContext;
@@ -133,6 +131,7 @@ import org.jooq.Geography;
 import org.jooq.Geometry;
 import org.jooq.JSON;
 import org.jooq.JSONB;
+import org.jooq.Keyword;
 import org.jooq.Name;
 import org.jooq.Nullability;
 // ...
@@ -746,6 +745,8 @@ implements
         //         a null value, historically, so removing this check would
         //         introduce a lot of regressions!
         else if (lengthDefined() && length() > 0) {
+            Keyword k;
+
             if (isLob())
                 return castTypeName0();
 
@@ -757,8 +758,8 @@ implements
 
 
 
-            else if (isString() && lengthUnit() != LengthUnit.DEFAULT)
-                return castTypePrefix0() + "(" + length() + " " + DefaultDataType.lengthUnitKeyword(configuration.dsl(), this) + ")" + castTypeSuffix0();
+            else if (isString() && lengthUnit() != LengthUnit.DEFAULT && (k = DefaultDataType.lengthUnitKeyword(configuration.dsl(), this)) != null)
+                return castTypePrefix0() + "(" + length() + " " + configuration.dsl().render(k) + ")" + castTypeSuffix0();
             else
                 return castTypePrefix0() + "(" + length() + ")" + castTypeSuffix0();
         }

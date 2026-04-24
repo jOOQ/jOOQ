@@ -339,6 +339,7 @@ import org.jooq.JSON;
 import org.jooq.JSONB;
 import org.jooq.JSONEntry;
 import org.jooq.JoinType;
+import org.jooq.Keyword;
 import org.jooq.Name;
 import org.jooq.OrderField;
 import org.jooq.Param;
@@ -6382,6 +6383,7 @@ final class Tools {
 
         // [#8070] Make sure VARCHAR(n) ARRAY types are generated as such in HSQLDB
         if (type.hasLength() || elementType.hasLength()) {
+            Keyword k;
 
             // [#4120] [#18742] LOB types can have length, but usually don't declare it
             if (type.isLob()) {
@@ -6399,8 +6401,8 @@ final class Tools {
 
 
             else if (type.length() > 0)
-                if (type.lengthUnit() != LengthUnit.DEFAULT)
-                    ctx.sql(typeName).sql('(').sql(type.length()).sql(' ').visit(DefaultDataType.lengthUnitKeyword(ctx, type)).sql(')');
+                if (type.isString() && type.lengthUnit() != LengthUnit.DEFAULT && (k = DefaultDataType.lengthUnitKeyword(ctx, type)) != null)
+                    ctx.sql(typeName).sql('(').sql(type.length()).sql(' ').visit(k).sql(')');
                 else
                     ctx.sql(typeName).sql('(').sql(type.length()).sql(')');
 

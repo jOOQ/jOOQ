@@ -693,7 +693,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
 
                 // Be sure to reset length, precision, and scale, as those
                 // values were not registered in the below cache
-                .get(length0(null).precision0((Integer) null, null));
+                .get(length0(null).lengthUnit0(null).precision0((Integer) null, null));
 
             if (dataType != null)
 

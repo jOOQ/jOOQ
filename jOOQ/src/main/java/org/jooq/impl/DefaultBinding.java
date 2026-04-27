@@ -152,6 +152,7 @@ import static org.jooq.impl.Keywords.K_TIME_WITH_TIME_ZONE;
 import static org.jooq.impl.Keywords.K_TRUE;
 import static org.jooq.impl.Keywords.K_YEAR_TO_DAY;
 import static org.jooq.impl.Keywords.K_YEAR_TO_FRACTION;
+import static org.jooq.impl.Names.N_BIGNUMERIC;
 import static org.jooq.impl.Names.N_BYTEA;
 import static org.jooq.impl.Names.N_CAST;
 import static org.jooq.impl.Names.N_CREATEXML;
@@ -2116,6 +2117,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         @Override
         final void sqlInline0(BindingSQLContext<U> ctx, BigDecimal value) {
             switch (ctx.family()) {
+
+
+
+
 
 
 

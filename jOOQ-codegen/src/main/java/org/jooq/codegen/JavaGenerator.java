@@ -6404,7 +6404,8 @@ public class JavaGenerator extends AbstractGenerator {
         else {
 
             // [#1363] [#7055] [#17232] copy constructor
-            generatePojoCopyConstructor(tableUdtOrEmbeddable, out);
+            if (generatePojosCopyConstructor())
+                generatePojoCopyConstructor(tableUdtOrEmbeddable, out);
 
             // [#17232] Multi-constructor should only be generated on non-records, or if it's different from the
             //          record's canonical constructor (with interfaces)

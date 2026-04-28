@@ -1020,6 +1020,8 @@ public class GenerationTool {
                 generator.setGeneratePojosEqualsAndHashCodeColumnExcludeExpression(g.getGenerate().getPojosEqualsAndHashCodeColumnExcludeExpression());
             if (g.getGenerate().isPojosToString() != null)
                 generator.setGeneratePojosToString(g.getGenerate().isPojosToString());
+            if (g.getGenerate().isPojosCopyConstructor() != null)
+                generator.setGeneratePojosCopyConstructor(g.getGenerate().isPojosCopyConstructor());
             if (g.getGenerate().getFullyQualifiedTypes() != null)
                 generator.setGenerateFullyQualifiedTypes(g.getGenerate().getFullyQualifiedTypes());
             if (g.getGenerate().isJavaTimeTypes() != null)

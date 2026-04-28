@@ -127,6 +127,7 @@ abstract class AbstractGenerator implements Generator {
     String                             generatePojosEqualsAndHashCodeColumnIncludeExpression = null;
     String                             generatePojosEqualsAndHashCodeColumnExcludeExpression = null;
     boolean                            generatePojosToString                                 = true;
+    boolean                            generatePojosCopyConstructor                          = true;
     boolean                            generateImmutablePojos                                = false;
     boolean                            generateSerializablePojos                             = true;
 
@@ -1627,6 +1628,16 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGeneratePojosToString(boolean generatePojosToString) {
         this.generatePojosToString = generatePojosToString;
+    }
+
+    @Override
+    public boolean generatePojosCopyConstructor() {
+        return generatePojosCopyConstructor;
+    }
+
+    @Override
+    public void setGeneratePojosCopyConstructor(boolean generatePojosCopyConstructor) {
+        this.generatePojosCopyConstructor = generatePojosCopyConstructor;
     }
 
     @Override

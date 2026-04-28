@@ -3007,6 +3007,10 @@ Whitespace is ignored and comments are possible unless overridden in {@link #get
       <element name="pojosToString" type="boolean" default="true" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate basic toString() methods in POJOs.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+      
+      <element name="pojosCopyConstructor" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether to generate the copy constructor on POJOs.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
             
       <element name="pojosAsJavaRecordClasses" type="boolean" default="false" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate POJOs as records, when using the JavaGenerator.]]></jxb:javadoc></jxb:property></appinfo></annotation>

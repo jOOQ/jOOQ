@@ -140,6 +140,8 @@ public class Generate implements Serializable, XMLAppendable
     protected String pojosEqualsAndHashCodeColumnExcludeExpression = "";
     @XmlElement(defaultValue = "true")
     protected Boolean pojosToString = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean pojosCopyConstructor = true;
     @XmlElement(defaultValue = "false")
     protected Boolean pojosAsJavaRecordClasses = false;
     @XmlElement(defaultValue = "true")
@@ -1605,6 +1607,30 @@ public class Generate implements Serializable, XMLAppendable
      */
     public void setPojosToString(Boolean value) {
         this.pojosToString = value;
+    }
+
+    /**
+     * Whether to generate the copy constructor on POJOs.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isPojosCopyConstructor() {
+        return pojosCopyConstructor;
+    }
+
+    /**
+     * Whether to generate the copy constructor on POJOs.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setPojosCopyConstructor(Boolean value) {
+        this.pojosCopyConstructor = value;
     }
 
     /**
@@ -4174,6 +4200,15 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
+     * Whether to generate the copy constructor on POJOs.
+     * 
+     */
+    public Generate withPojosCopyConstructor(Boolean value) {
+        setPojosCopyConstructor(value);
+        return this;
+    }
+
+    /**
      * Generate POJOs as records, when using the JavaGenerator.
      * 
      */
@@ -5036,6 +5071,7 @@ public class Generate implements Serializable, XMLAppendable
         builder.append("pojosEqualsAndHashCodeColumnIncludeExpression", pojosEqualsAndHashCodeColumnIncludeExpression);
         builder.append("pojosEqualsAndHashCodeColumnExcludeExpression", pojosEqualsAndHashCodeColumnExcludeExpression);
         builder.append("pojosToString", pojosToString);
+        builder.append("pojosCopyConstructor", pojosCopyConstructor);
         builder.append("pojosAsJavaRecordClasses", pojosAsJavaRecordClasses);
         builder.append("pojosAsScalaCaseClasses", pojosAsScalaCaseClasses);
         builder.append("pojosAsKotlinDataClasses", pojosAsKotlinDataClasses);
@@ -5615,6 +5651,15 @@ public class Generate implements Serializable, XMLAppendable
             }
         } else {
             if (!pojosToString.equals(other.pojosToString)) {
+                return false;
+            }
+        }
+        if (pojosCopyConstructor == null) {
+            if (other.pojosCopyConstructor!= null) {
+                return false;
+            }
+        } else {
+            if (!pojosCopyConstructor.equals(other.pojosCopyConstructor)) {
                 return false;
             }
         }
@@ -6434,6 +6479,7 @@ public class Generate implements Serializable, XMLAppendable
         result = ((prime*result)+((pojosEqualsAndHashCodeColumnIncludeExpression == null)? 0 :pojosEqualsAndHashCodeColumnIncludeExpression.hashCode()));
         result = ((prime*result)+((pojosEqualsAndHashCodeColumnExcludeExpression == null)? 0 :pojosEqualsAndHashCodeColumnExcludeExpression.hashCode()));
         result = ((prime*result)+((pojosToString == null)? 0 :pojosToString.hashCode()));
+        result = ((prime*result)+((pojosCopyConstructor == null)? 0 :pojosCopyConstructor.hashCode()));
         result = ((prime*result)+((pojosAsJavaRecordClasses == null)? 0 :pojosAsJavaRecordClasses.hashCode()));
         result = ((prime*result)+((pojosAsScalaCaseClasses == null)? 0 :pojosAsScalaCaseClasses.hashCode()));
         result = ((prime*result)+((pojosAsKotlinDataClasses == null)? 0 :pojosAsKotlinDataClasses.hashCode()));

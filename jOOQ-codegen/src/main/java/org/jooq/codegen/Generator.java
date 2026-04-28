@@ -1519,6 +1519,16 @@ public interface Generator {
     void setGeneratePojosToString(boolean generatePojosToString);
 
     /**
+     * Whether to generate the copy constructor on POJOs.
+     */
+    boolean generatePojosCopyConstructor();
+
+    /**
+     * Whether to generate the copy constructor on POJOs.
+     */
+    void setGeneratePojosCopyConstructor(boolean generatePojosCopyConstructor);
+
+    /**
      * A regular expression matching all the types in generated code that should
      * be fully qualified.
      *

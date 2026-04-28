@@ -19,48 +19,39 @@ final class MetaSQL {
     private static final EnumMap<SQLDialect, String> M_SYNONYMS = new EnumMap<>(SQLDialect.class);
 
     static final String M_UNIQUE_KEYS(SQLDialect dialect) {
-        String result = M_UNIQUE_KEYS.get(dialect);
-        return result != null ? result : M_UNIQUE_KEYS.get(dialect.family());
+        return M_UNIQUE_KEYS.get(dialect);
     }
 
     static final String M_SEQUENCES(SQLDialect dialect) {
-        String result = M_SEQUENCES.get(dialect);
-        return result != null ? result : M_SEQUENCES.get(dialect.family());
+        return M_SEQUENCES.get(dialect);
     }
 
     static final String M_SEQUENCES_INCLUDING_SYSTEM_SEQUENCES(SQLDialect dialect) {
-        String result = M_SEQUENCES_INCLUDING_SYSTEM_SEQUENCES.get(dialect);
-        return result != null ? result : M_SEQUENCES_INCLUDING_SYSTEM_SEQUENCES.get(dialect.family());
+        return M_SEQUENCES_INCLUDING_SYSTEM_SEQUENCES.get(dialect);
     }
 
     static final String M_ENUMS(SQLDialect dialect) {
-        String result = M_ENUMS.get(dialect);
-        return result != null ? result : M_ENUMS.get(dialect.family());
+        return M_ENUMS.get(dialect);
     }
 
     static final String M_SOURCES(SQLDialect dialect) {
-        String result = M_SOURCES.get(dialect);
-        return result != null ? result : M_SOURCES.get(dialect.family());
+        return M_SOURCES.get(dialect);
     }
 
     static final String M_COMMENTS(SQLDialect dialect) {
-        String result = M_COMMENTS.get(dialect);
-        return result != null ? result : M_COMMENTS.get(dialect.family());
+        return M_COMMENTS.get(dialect);
     }
 
     static final String M_GENERATORS(SQLDialect dialect) {
-        String result = M_GENERATORS.get(dialect);
-        return result != null ? result : M_GENERATORS.get(dialect.family());
+        return M_GENERATORS.get(dialect);
     }
 
     static final String M_TRIGGERS(SQLDialect dialect) {
-        String result = M_TRIGGERS.get(dialect);
-        return result != null ? result : M_TRIGGERS.get(dialect.family());
+        return M_TRIGGERS.get(dialect);
     }
 
     static final String M_SYNONYMS(SQLDialect dialect) {
-        String result = M_SYNONYMS.get(dialect);
-        return result != null ? result : M_SYNONYMS.get(dialect.family());
+        return M_SYNONYMS.get(dialect);
     }
 
     static {

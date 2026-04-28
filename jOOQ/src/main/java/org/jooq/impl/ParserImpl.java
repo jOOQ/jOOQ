@@ -14510,7 +14510,11 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                     return parseUnsigned(parseAndIgnoreDataTypeLength(BIGINT));
                 }
                 else if (!parseNumericOnly) {
-                    if (parseKeywordOrIdentifierIf("BIGSERIAL"))
+                    if (parseKeywordOrIdentifierIf("BIGDECIMAL"))
+                        return parseDataTypePrecisionScaleIf(DECIMAL);
+                    else if (parseKeywordOrIdentifierIf("BIGNUMERIC"))
+                        return parseDataTypePrecisionScaleIf(NUMERIC);
+                    else if (parseKeywordOrIdentifierIf("BIGSERIAL"))
                         return BIGINT.identity(true);
                     else if (parseKeywordOrIdentifierIf("BINARY"))
                         if (parseKeywordIf("VARYING"))

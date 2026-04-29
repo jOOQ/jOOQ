@@ -1901,6 +1901,10 @@ final class MetaImpl extends AbstractMeta {
                     ? column.get(23, boolean.class)
                     : false;
 
+                // [#16973] Some JDBC drivers cannot be trusted to produce a type name here
+                if (typeName == null)
+                    typeName = SQLDataType.OTHER.getName();
+
                 switch (family()) {
 
 

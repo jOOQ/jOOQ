@@ -237,7 +237,7 @@ implements
 
                         default:
                             ctx.visit(alias(ctx, alias, xmlelement(N_RECORD,
-                                map(row.fields(), (f, i) -> wrapXmlelement(ctx, fieldName(i), castForXML(ctx, f)))
+                                map(row.fields(), (f, i) -> wrapXmlelement(ctx, fieldName(i), castForXML(ctx, f), f))
                             )));
 
                             break;

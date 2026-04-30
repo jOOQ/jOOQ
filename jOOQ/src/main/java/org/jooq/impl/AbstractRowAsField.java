@@ -46,6 +46,8 @@ import static org.jooq.impl.DSL.jsonbObject;
 import static org.jooq.impl.DSL.quotedName;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.xmlelement;
+import static org.jooq.impl.Multiset.castForJSON;
+import static org.jooq.impl.Multiset.castForXML;
 import static org.jooq.impl.Multiset.returningClob;
 import static org.jooq.impl.Multiset.wrapXmlelement;
 import static org.jooq.impl.Names.N_RECORD;
@@ -186,7 +188,7 @@ implements
 
 
                         default:
-                            ctx.visit(alias(ctx, alias, returningClob(ctx, jsonArray(row.fields()).nullOnNull())));
+                            ctx.visit(alias(ctx, alias, returningClob(ctx, jsonArray(map(row.fields(), f -> castForJSON(ctx, f))).nullOnNull())));
                             break;
                     }
 
@@ -211,7 +213,7 @@ implements
 
 
                         default:
-                            ctx.visit(alias(ctx, alias, returningClob(ctx, jsonbArray(row.fields()).nullOnNull())));
+                            ctx.visit(alias(ctx, alias, returningClob(ctx, jsonbArray(map(row.fields(), f -> castForJSON(ctx, f))).nullOnNull())));
                             break;
                     }
 
@@ -230,7 +232,7 @@ implements
 
                         default:
                             ctx.visit(alias(ctx, alias, xmlelement(N_RECORD,
-                                map(row.fields(), (f, i) -> wrapXmlelement(ctx, f, fieldNameString(i)))
+                                map(row.fields(), (f, i) -> wrapXmlelement(ctx, castForXML(ctx, f), fieldNameString(i)))
                             )));
 
                             break;

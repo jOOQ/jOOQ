@@ -132,6 +132,23 @@ public class Plugin extends AbstractMojo {
     private org.jooq.meta.jaxb.Logging   logging;
 
     /**
+     * Whether to add generation output to the compile source root.
+     */
+    @Parameter(
+        property = "jooq.codegen.addCompileSourceRoot",
+        defaultValue = "true"
+    )
+    private boolean                      addCompileSourceRoot;
+
+    /**
+     * Whether to add generation output to the test compile source root.
+     */
+    @Parameter(
+        property = "jooq.codegen.addTestCompileSourceRoot"
+    )
+    private boolean                      addTestCompileSourceRoot;
+
+    /**
      * The on-error behavior, see {@link Configuration#getOnDeprecated()}.
      */
     @Parameter(
@@ -320,7 +337,11 @@ public class Plugin extends AbstractMojo {
             }
         }
 
-        project.addCompileSourceRoot(generator.getTarget().getDirectory());
+        if (addCompileSourceRoot)
+            project.addCompileSourceRoot(generator.getTarget().getDirectory());
+
+        if (addTestCompileSourceRoot)
+            project.addTestCompileSourceRoot(generator.getTarget().getDirectory());
     }
 
     private void read(String file) {

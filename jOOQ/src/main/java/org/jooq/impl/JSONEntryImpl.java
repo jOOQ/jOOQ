@@ -63,7 +63,6 @@ import static org.jooq.impl.Names.N_JSON_EXTRACT;
 import static org.jooq.impl.Names.N_JSON_MERGE;
 import static org.jooq.impl.Names.N_JSON_MERGE_PRESERVE;
 import static org.jooq.impl.Names.N_JSON_OBJECT;
-import static org.jooq.impl.Names.N_JSON_QUERY;
 import static org.jooq.impl.Names.N_PARSE_JSON;
 import static org.jooq.impl.Names.N_RAWTOHEX;
 import static org.jooq.impl.Names.N_TO_HEX;
@@ -269,7 +268,7 @@ implements
                     if (ctx.family() == MYSQL)
                         return field.cast(field.getDataType());
                     else
-                        return function(N_JSON_EXTRACT, field.getDataType(), field, inline("$"));
+                        return new JSONFromText<>(field);
 
                 break;
 
@@ -426,19 +425,10 @@ implements
 
 
 
-
-
-
-
                 case MARIADB:
                 case MYSQL:
                 case SQLITE:
-                    return function(
-                        N_JSON_EXTRACT,
-                        value.getDataType(),
-                        value,
-                        inline("$")
-                    );
+                    return new JSONFromText<>(value);
             }
         }
 

@@ -373,7 +373,7 @@ final class Extract extends AbstractField<Integer> implements QOM.Extract {
                         ctx.visit(keyword("unix_timestamp")).sql('(').visit(field).sql(')');
                         return;
                     case ISO_DAY_OF_WEEK:
-                        ctx.visit(N_WEEKDAY).sql('(').visit(field).sql(") + 1");
+                        ctx.sql('(').visit(N_WEEKDAY).sql('(').visit(field).sql(") + 1)");
                         return;
                     case QUARTER:
                         ctx.visit(datePart.toName()).sql('(').visit(field).sql(')');

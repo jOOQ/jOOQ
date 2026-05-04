@@ -6851,8 +6851,36 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
     static final class DefaultJSONBinding<U> extends InternalBinding<org.jooq.JSON, U> {
 
+        static final Formatter FORMATTER = new Formatter() {
+
+            @Override
+            public void formatJSON(FormatterContext ctx) {
+                switch (ctx.family()) {
+                    case SQLITE:
+                        if (ctx.type().isJSON())
+                            ctx.field(new JSONFromText<>(ctx.field()));
+
+                        break;
+                }
+            }
+
+            @Override
+            public void formatJSONB(FormatterContext ctx) {
+                formatJSON(ctx);
+            }
+
+            @Override
+            public void formatXML(FormatterContext ctx) {
+            }
+        };
+
         DefaultJSONBinding(DataType<JSON> dataType, Converter<JSON, U> converter) {
             super(dataType, converter);
+        }
+
+        @Override
+        public final Formatter formatter() {
+            return FORMATTER;
         }
 
         @Override
@@ -7042,6 +7070,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         DefaultJSONBBinding(DataType<JSONB> dataType, Converter<JSONB, U> converter) {
             super(dataType, converter);
+        }
+
+        @Override
+        public final Formatter formatter() {
+            return DefaultJSONBinding.FORMATTER;
         }
 
         @Override

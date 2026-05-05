@@ -630,6 +630,46 @@ public class MetaExtensions {
             action.execute(o);
             setPojoClass(o);
         }
+
+        public Boolean getTableMemberOverride() {
+            return isTableMemberOverride();
+        }
+
+        public Boolean getRecordSetterOverride() {
+            return isRecordSetterOverride();
+        }
+
+        public Boolean getRecordGetterOverride() {
+            return isRecordGetterOverride();
+        }
+
+        public Boolean getRecordMemberOverride() {
+            return isRecordMemberOverride();
+        }
+
+        public Boolean getInterfaceSetterOverride() {
+            return isInterfaceSetterOverride();
+        }
+
+        public Boolean getInterfaceGetterOverride() {
+            return isInterfaceGetterOverride();
+        }
+
+        public Boolean getInterfaceMemberOverride() {
+            return isInterfaceMemberOverride();
+        }
+
+        public Boolean getPojoSetterOverride() {
+            return isPojoSetterOverride();
+        }
+
+        public Boolean getPojoGetterOverride() {
+            return isPojoGetterOverride();
+        }
+
+        public Boolean getPojoMemberOverride() {
+            return isPojoMemberOverride();
+        }
     }
 
     public static class MatchersUDTTypeExtension extends MatchersUDTType {
@@ -1725,6 +1765,10 @@ public class MetaExtensions {
 
         public Boolean getPojosToString() {
             return isPojosToString();
+        }
+
+        public Boolean getPojosCopyConstructor() {
+            return isPojosCopyConstructor();
         }
 
         public Boolean getPojosAsJavaRecordClasses() {

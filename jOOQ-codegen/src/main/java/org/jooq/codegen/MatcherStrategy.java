@@ -413,24 +413,28 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
             case RECORD:
                 return getJavaOverride0(definition,
                     MatchersFieldType::isRecordSetterOverride,
+                    embeddable -> false,
                     MatchersAttributeType::isRecordSetterOverride,
                     () -> super.getJavaMemberOverride(definition, mode)
                 );
             case RECORD_TYPE:
                 return getJavaOverride0(definition,
                     field -> false,
+                    embeddable -> false,
                     MatchersAttributeType::isRecordTypeSetterOverride,
                     () -> super.getJavaMemberOverride(definition, mode)
                 );
             case INTERFACE:
                 return getJavaOverride0(definition,
                     MatchersFieldType::isInterfaceSetterOverride,
+                    embeddable -> false,
                     MatchersAttributeType::isInterfaceSetterOverride,
                     () -> super.getJavaMemberOverride(definition, mode)
                 );
             case POJO:
                 return getJavaOverride0(definition,
                     MatchersFieldType::isPojoSetterOverride,
+                    embeddable -> false,
                     MatchersAttributeType::isPojoSetterOverride,
                     () -> super.getJavaMemberOverride(definition, mode)
                 );
@@ -463,24 +467,28 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
             case RECORD:
                 return getJavaOverride0(definition,
                     MatchersFieldType::isRecordGetterOverride,
+                    embeddable -> false,
                     MatchersAttributeType::isRecordGetterOverride,
                     () -> super.getJavaMemberOverride(definition, mode)
                 );
             case RECORD_TYPE:
                 return getJavaOverride0(definition,
                     field -> false,
+                    embeddable -> false,
                     MatchersAttributeType::isRecordTypeGetterOverride,
                     () -> super.getJavaMemberOverride(definition, mode)
                 );
             case INTERFACE:
                 return getJavaOverride0(definition,
                     MatchersFieldType::isInterfaceGetterOverride,
+                    embeddable -> false,
                     MatchersAttributeType::isInterfaceGetterOverride,
                     () -> super.getJavaMemberOverride(definition, mode)
                 );
             case POJO:
                 return getJavaOverride0(definition,
                     MatchersFieldType::isPojoGetterOverride,
+                    embeddable -> false,
                     MatchersAttributeType::isPojoGetterOverride,
                     () -> super.getJavaMemberOverride(definition, mode)
                 );
@@ -816,11 +824,16 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
     private boolean getJavaOverride0(
         Definition definition,
         Function<? super MatchersFieldType, ? extends Boolean> isFieldOverride,
+        Function<? super MatchersEmbeddableType, ? extends Boolean> isEmbeddableOverride,
         Function<? super MatchersAttributeType, ? extends Boolean> isAttributeOverride,
         Supplier<? extends Boolean> defaultOverride
     ) {
         for (MatchersFieldType field : fields(definition))
             if (match(definition, field.getExpression()) && TRUE.equals(isFieldOverride.apply(field)))
+                return true;
+
+        for (MatchersEmbeddableType embeddable : embeddables(definition))
+            if (match(definition, embeddable.getExpression()) && TRUE.equals(isEmbeddableOverride.apply(embeddable)))
                 return true;
 
         for (MatchersAttributeType attribute : attributes(definition))
@@ -837,30 +850,35 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
             case DEFAULT:
                 return getJavaOverride0(definition,
                     MatchersFieldType::isTableMemberOverride,
+                    MatchersEmbeddableType::isTableMemberOverride,
                     MatchersAttributeType::isUdtMemberOverride,
                     () -> super.getJavaMemberOverride(definition, mode)
                 );
             case RECORD:
                 return getJavaOverride0(definition,
                     MatchersFieldType::isRecordMemberOverride,
+                    MatchersEmbeddableType::isRecordMemberOverride,
                     MatchersAttributeType::isRecordMemberOverride,
                     () -> super.getJavaMemberOverride(definition, mode)
                 );
             case RECORD_TYPE:
                 return getJavaOverride0(definition,
                     field -> false,
+                    embeddable -> false,
                     MatchersAttributeType::isRecordTypeMemberOverride,
                     () -> super.getJavaMemberOverride(definition, mode)
                 );
             case INTERFACE:
                 return getJavaOverride0(definition,
                     MatchersFieldType::isInterfaceMemberOverride,
+                    MatchersEmbeddableType::isInterfaceMemberOverride,
                     MatchersAttributeType::isInterfaceMemberOverride,
                     () -> super.getJavaMemberOverride(definition, mode)
                 );
             case POJO:
                 return getJavaOverride0(definition,
                     MatchersFieldType::isPojoMemberOverride,
+                    MatchersEmbeddableType::isPojoMemberOverride,
                     MatchersAttributeType::isPojoMemberOverride,
                     () -> super.getJavaMemberOverride(definition, mode)
                 );

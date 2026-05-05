@@ -6851,7 +6851,7 @@ public class JavaGenerator extends AbstractGenerator {
                 // [#14853] The POJO property hasn't been generated in the setter, if the POJO
                 //          is immutable, as there are no setters.
                 if (generateImmutablePojos())
-                    generateEmbeddablePojoProperty(out, generateImmutableInterfaces(), override, columnTypeDeclared, columnMember);
+                    generateEmbeddablePojoProperty(out, true, override, columnTypeDeclared, columnMember);
 
                 out.tab(1).println("get(): %s = %s(", columnTypeDeclared, columnType);
             }

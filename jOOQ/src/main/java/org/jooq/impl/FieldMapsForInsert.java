@@ -259,7 +259,7 @@ final class FieldMapsForInsert extends AbstractQueryPart implements UNotYetImple
         }
     }
 
-    private final Name alias(Context<?> ctx) {
+    final Name alias(Context<?> ctx) {
         if (ctx.topLevel() instanceof QOM.Insert<?> i) {
             if (i.$onDuplicateKeyUpdate())
                 return N_EXCLUDED;

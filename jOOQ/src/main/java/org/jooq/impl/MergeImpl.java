@@ -91,6 +91,7 @@ import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.notExists;
+import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.DSL.trueCondition;
@@ -113,9 +114,12 @@ import static org.jooq.impl.Keywords.K_USING;
 import static org.jooq.impl.Keywords.K_VALUES;
 import static org.jooq.impl.Keywords.K_WHEN;
 import static org.jooq.impl.Keywords.K_WHERE;
+import static org.jooq.impl.Names.N_T;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.concat;
+import static org.jooq.impl.Tools.fieldName;
+import static org.jooq.impl.Tools.fieldNames;
 import static org.jooq.impl.Tools.isEmpty;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.nullSafe;
@@ -2025,6 +2029,16 @@ implements
         ctx.formatSeparator()
            .start(MERGE_VALUES)
            .visit(K_VALUES).sql(' ');
+
+
+
+
+
+
+
+
+
+
         m.insertMap.toSQL92Values(ctx);
         ctx.end(MERGE_VALUES);
 

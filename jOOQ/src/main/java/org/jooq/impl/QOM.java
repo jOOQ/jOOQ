@@ -1548,6 +1548,17 @@ public final class QOM {
             RowNumber*/
     {}
 
+    public /*sealed*/ interface IsFirst
+        extends
+            WindowFunction<Boolean, IsFirst>
+        /*permits
+            IsFirst*/
+    {
+        @NotNull Field<Integer> $count();
+        @CheckReturnValue
+        @NotNull IsFirst $count(Field<Integer> count);
+    }
+
     public /*sealed*/ interface Rank
         extends
             WindowFunction<Integer, Rank>

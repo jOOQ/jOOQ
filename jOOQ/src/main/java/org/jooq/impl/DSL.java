@@ -35295,6 +35295,24 @@ public class DSL {
     }
 
     /**
+     * The <code>is_first() over ([analytic clause])</code> function.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    public static WindowOverStep<Boolean> isFirst(int count) {
+        return isFirst(val(count));
+    }
+
+    /**
+     * The <code>is_first() over ([analytic clause])</code> function.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    public static WindowOverStep<Boolean> isFirst(Field<Integer> count) {
+        return new IsFirst(count);
+    }
+
+    /**
      * The <code>rank() over ([analytic clause])</code> function.
      */
     @NotNull

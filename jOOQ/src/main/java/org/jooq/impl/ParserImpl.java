@@ -222,6 +222,7 @@ import static org.jooq.impl.DSL.iif;
 import static org.jooq.impl.DSL.in;
 import static org.jooq.impl.DSL.inOut;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.isFirst;
 import static org.jooq.impl.DSL.isnull;
 import static org.jooq.impl.DSL.isoDayOfWeek;
 import static org.jooq.impl.DSL.jsonArray;
@@ -9932,6 +9933,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                     return parseFunctionArgs1(f -> case_(f.isJson()).when(trueCondition(), one()).when(falseCondition(), zero()));
                 else if (parseFunctionNameIf("ISNULL"))
                     return parseFunctionArgs2(f -> f.isNull(), (f1, f2) -> isnull((Field<?>) f1, (Field<?>) f2));
+                else if ((field = parseFieldIsFirstIf()) != null)
+                    return field;
                 else if ((field = parseFieldIfIf()) != null)
                     return field;
                 else if ((field = parseTypedLiteralIf("INTEGER", INTEGER)) != null)
@@ -13522,6 +13525,17 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
             int number = asInt(parseUnsignedIntegerLiteral());
             parse(')');
             return parseWindowFunction(null, null, ntile(number));
+        }
+
+        return null;
+    }
+
+    private final Field<?> parseFieldIsFirstIf() {
+        if (parseFunctionNameIf("IS_FIRST")) {
+            parse('(');
+            int number = asInt(parseUnsignedIntegerLiteral());
+            parse(')');
+            return parseWindowFunction(null, null, isFirst(number));
         }
 
         return null;

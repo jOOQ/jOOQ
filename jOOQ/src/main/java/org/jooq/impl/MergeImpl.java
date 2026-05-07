@@ -1965,9 +1965,23 @@ implements
         if (update != null) {
             ctx.sql(' ').visit(K_UPDATE).sql(' ').visit(K_SET)
                .formatIndentStart()
-               .formatSeparator()
-               .visit(update.updateMap)
-               .formatIndentEnd();
+               .formatSeparator();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            ctx.visit(update.updateMap);
+            ctx.formatIndentEnd();
 
 
 
@@ -2003,6 +2017,11 @@ implements
         m.insertMap.toSQLReferenceKeys(ctx);
         ctx.formatSeparator()
            .visit(K_VALUES).sql(' ');
+
+
+
+
+
 
 
 

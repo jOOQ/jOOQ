@@ -1897,9 +1897,23 @@ implements
         if (update != null) {
             ctx.sql(' ').visit(K_UPDATE).sql(' ').visit(K_SET)
                .formatIndentStart()
-               .formatSeparator()
-               .visit(update.updateMap)
-               .formatIndentEnd();
+               .formatSeparator();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            ctx.visit(update.updateMap);
+            ctx.formatIndentEnd();
 
 
 
@@ -1936,6 +1950,11 @@ implements
         ctx.formatSeparator()
            .start(MERGE_VALUES)
            .visit(K_VALUES).sql(' ');
+
+
+
+
+
 
 
 

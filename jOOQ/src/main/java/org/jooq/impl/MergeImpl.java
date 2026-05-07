@@ -124,6 +124,7 @@ import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.FieldOrRow;
 import org.jooq.FieldOrRowOrSelect;
+import org.jooq.Merge;
 import org.jooq.MergeKeyStep1;
 import org.jooq.MergeKeyStep10;
 import org.jooq.MergeKeyStep11;

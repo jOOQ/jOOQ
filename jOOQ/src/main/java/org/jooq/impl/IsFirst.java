@@ -107,7 +107,7 @@ implements
             case SQLITE:
             case TRINO:
             case YUGABYTEDB:
-                ctx.visit(o(rowNumber()).le(count));
+                ctx.visit(DSL.field(o(rowNumber()).le(count)));
                 break;
 
             default:

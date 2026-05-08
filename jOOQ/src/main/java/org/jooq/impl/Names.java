@@ -169,6 +169,7 @@ final class Names {
     static final Name N_IIF                         = systemName("iif");
     static final Name N_INSERT                      = systemName("insert");
     static final Name N_INSERTED                    = systemName("inserted");
+    static final Name N_IS_FIRST                    = systemName("is_first");
     static final Name N_JOIN                        = systemName("join");
     static final Name N_JSON                        = systemName("json");
     static final Name N_JSONB_AGG                   = systemName("jsonb_agg");
@@ -524,7 +525,6 @@ final class Names {
     static final Name N_INSERTING                   = systemName("inserting");
     static final Name N_INSTR                       = systemName("instr");
     static final Name N_ISJSON                      = systemName("isjson");
-    static final Name N_IS_FIRST                    = systemName("is_first");
     static final Name N_JSONArrayLength             = systemName("JSONArrayLength");
     static final Name N_JSONB_ARRAY                 = systemName("jsonb_array");
     static final Name N_JSONB_ARRAY_LENGTH          = systemName("jsonb_array_length");

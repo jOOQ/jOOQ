@@ -66,6 +66,7 @@ import java.util.Set;
 
 import org.jooq.Context;
 import org.jooq.DataType;
+import org.jooq.Field;
 import org.jooq.GroupField;
 import org.jooq.Name;
 import org.jooq.OrderField;
@@ -73,6 +74,7 @@ import org.jooq.OrderField;
 import org.jooq.QueryPart;
 import org.jooq.SQLDialect;
 // ...
+import org.jooq.WindowBeforeOverStep;
 import org.jooq.WindowDefinition;
 import org.jooq.WindowExcludeStep;
 import org.jooq.WindowFinalStep;
@@ -120,6 +122,22 @@ implements
     // -------------------------------------------------------------------------
     // XXX QueryPart API
     // -------------------------------------------------------------------------
+
+    /**
+     * Apply this window function's <code>OVER</code> clauses to an argument window function.
+     */
+    final <U> Field<U> o(WindowOverStep<U> function) {
+        if (windowSpecification != null)
+            return function.over(windowSpecification);
+        else if (windowDefinition != null)
+            return function.over(windowDefinition);
+        else if (windowName != null)
+            return function.over(windowName);
+        else if (function instanceof WindowBeforeOverStep<U> f)
+            return f;
+        else
+            throw new IllegalArgumentException("Bad argument: " + function);
+    }
 
 
 

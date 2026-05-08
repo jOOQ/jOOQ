@@ -125,10 +125,7 @@ implements
                         break;
                 }
 
-                ctx.visit(castIfNeeded(field, cast))
-                   .sql(" / ")
-                   .visit(DSL.sum(field));
-                acceptOverClause(ctx);
+                ctx.visit(castIfNeeded(field, cast).div(o(DSL.sum(field))));
                 break;
 
             default:

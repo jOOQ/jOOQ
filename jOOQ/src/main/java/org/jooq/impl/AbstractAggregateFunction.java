@@ -576,21 +576,6 @@ implements
     }
 
     /**
-     * Apply this aggregate function's <code>FILTER</code> and <code>OVER</code>
-     * clauses to an argument aggregate function.
-     */
-    final <U> Field<U> o(WindowBeforeOverStep<U> function) {
-        if (windowSpecification != null)
-            return function.over(windowSpecification);
-        else if (windowDefinition != null)
-            return function.over(windowDefinition);
-        else if (windowName != null)
-            return function.over(windowName);
-        else
-            return function;
-    }
-
-    /**
      * Type safe <code>NVL2(y, x, null)</code> for statistical function
      * emulations.
      */

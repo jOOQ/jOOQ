@@ -173,8 +173,8 @@ final class Val<T> extends AbstractParam<T> implements UEmpty {
         //          like DSL.any(T...). This is different from the above parser case.
         else if (getDataType().isArray()
             && type.isArray()
-            && OTHER.equals(getDataType().getArrayComponentDataType())
-            && !OTHER.equals(type.getArrayComponentDataType()))
+            && OTHER.equals(getDataType().getArrayBaseDataType())
+            && !OTHER.equals(type.getArrayBaseDataType()))
             return convertTo0(type);
         else
             return (Val) this;
@@ -243,6 +243,11 @@ final class Val<T> extends AbstractParam<T> implements UEmpty {
     private void acceptDefaultEmbeddable(Context<?> ctx) {
         ctx.data(DATA_LIST_ALREADY_INDENTED, true, c -> c.visit(wrap(embeddedFields(this))));
     }
+
+
+
+
+
 
 
 

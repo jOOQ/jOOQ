@@ -37,10 +37,23 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.DSL.systemName;
+import static org.jooq.impl.DSL.val;
+import static org.jooq.impl.Keywords.K_AS;
+import static org.jooq.impl.Keywords.K_EXPLODE;
+import static org.jooq.impl.Keywords.K_FROM;
+import static org.jooq.impl.Keywords.K_LATERAL;
+import static org.jooq.impl.Keywords.K_SELECT;
 import static org.jooq.impl.Keywords.K_TABLE;
 import static org.jooq.impl.Keywords.K_UNNEST;
 import static org.jooq.impl.Names.N_ARRAY_TABLE;
 import static org.jooq.impl.Names.N_COLUMN_VALUE;
+import static org.jooq.impl.Names.N_T;
+import static org.jooq.impl.Names.N_U;
+import static org.jooq.impl.SubqueryCharacteristics.DERIVED_TABLE;
+import static org.jooq.impl.Tools.EMPTY_FIELD;
+import static org.jooq.impl.Tools.embeddedFields;
 import static org.jooq.impl.Tools.getRecordQualifier;
 import static org.jooq.impl.Tools.isEmpty;
 import static org.jooq.impl.Tools.map;
@@ -48,6 +61,7 @@ import static org.jooq.impl.Tools.map;
 // ...
 import org.jooq.Configuration;
 import org.jooq.Context;
+import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Param;
@@ -86,7 +100,7 @@ implements
     }
 
     ArrayTable(Field<?> array, Name alias, Name[] fieldAliases) {
-        this(array, alias, init(arrayType(array), alias, fieldAliases(fieldAliases)[0]));
+        this(array, alias, init(arrayComponentDataType(array), alias, fieldAliases(fieldAliases)[0]));
     }
 
     private ArrayTable(Field<?> array, Name alias, FieldsImpl<Record> fields) {
@@ -96,13 +110,11 @@ implements
         this.field = fields;
     }
 
-    private static final Class<?> arrayType(Field<?> array) {
-        Class<?> arrayType;
+    private static final DataType<?> arrayComponentDataType(Field<?> array) {
+        DataType<?> result;
 
         if (array.getDataType().getType().isArray())
-            arrayType = array.getDataType().getArrayComponentType();
-
-
+            result = array.getDataType().getArrayComponentDataType();
 
 
 
@@ -118,33 +130,44 @@ implements
 
         // Is this case possible?
         else
-            arrayType = Object.class;
+            result = SQLDataType.OTHER;
 
-        return arrayType;
+        return result;
     }
 
     static final Name[] fieldAliases(Name[] fieldAliases) {
         return isEmpty(fieldAliases) ? new Name[] { N_COLUMN_VALUE } : fieldAliases;
     }
 
-    static final FieldsImpl<Record> init(Class<?> arrayType, Name alias, Name fieldAlias) {
+    static final FieldsImpl<Record> init(
+        DataType<?> arrayComponentDataType,
+        Name alias,
+        Name fieldAlias
+    ) {
+
+        if (arrayComponentDataType.isEmbeddable()) {
+            return new FieldsImpl<>(map(
+                embeddedFields(val(null, arrayComponentDataType)),
+                f -> DSL.field(alias.append(f.getUnqualifiedName()), f.getDataType())
+            ));
+        }
 
         // [#1114] [#7863] VARRAY/TABLE of OBJECT have more than one field
-        if (Record.class.isAssignableFrom(arrayType)) {
+        else if (arrayComponentDataType.isQualifiedRecord()) {
             try {
                 return new FieldsImpl<>(map(
-                    getRecordQualifier(arrayType).fields(),
+                    getRecordQualifier(arrayComponentDataType).fields(),
                     f -> DSL.field(alias.append(f.getUnqualifiedName()), f.getDataType())
                 ));
             }
             catch (Exception e) {
-                throw new DataTypeException("Bad UDT Type : " + arrayType, e);
+                throw new DataTypeException("Bad UDT Type : " + arrayComponentDataType, e);
             }
         }
 
         // Simple array types have a synthetic field called "COLUMN_VALUE"
         else
-            return new FieldsImpl<>(DSL.field(alias.unqualifiedName().append(fieldAlias.unqualifiedName()), DSL.getDataType(arrayType)));
+            return new FieldsImpl<>(DSL.field(alias.unqualifiedName().append(fieldAlias.unqualifiedName()), arrayComponentDataType));
     }
 
     @Override

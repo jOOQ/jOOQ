@@ -4496,8 +4496,10 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 c -> {
                     if (ctx.family().category() == SQLDialectCategory.POSTGRES)
                         ctx.render().visit(inline(PostgresUtils.toPGString(value)));
+                    else if (value instanceof QualifiedRecord qr)
+                        ctx.render().visit(new QualifiedRecordConstant(qr, getRecordQualifier(dataType)));
                     else
-                        ctx.render().visit(new QualifiedRecordConstant((QualifiedRecord) value, getRecordQualifier(dataType)));
+                        ctx.render().visit(value.valuesRow());
                 },
                 c -> pgRenderRecordCast(ctx.render()),
                 false,

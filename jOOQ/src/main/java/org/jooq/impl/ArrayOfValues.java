@@ -47,6 +47,7 @@ import static org.jooq.impl.Names.N_COLUMN_VALUE;
 import static org.jooq.impl.Tools.isEmpty;
 
 import org.jooq.Context;
+import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Name;
 import org.jooq.Record;
@@ -80,10 +81,10 @@ implements
     ArrayOfValues(Field<?>[] array, Name alias, Name[] fieldAliases) {
         super(alias, ArrayTable.fieldAliases(fieldAliases));
 
-        Class<?> arrayType = !isEmpty(array) ? array[0].getType() : Object.class;
+        DataType<?> arrayComponentType = !isEmpty(array) ? array[0].getDataType() : SQLDataType.OTHER;
 
         this.array = array;
-        this.field = ArrayTable.init(arrayType, this.alias, this.fieldAliases[0]);
+        this.field = ArrayTable.init(arrayComponentType, this.alias, this.fieldAliases[0]);
     }
 
     @Override

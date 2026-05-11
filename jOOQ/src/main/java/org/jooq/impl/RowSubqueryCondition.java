@@ -132,13 +132,18 @@ final class RowSubqueryCondition extends AbstractCondition implements UNotYetImp
 
         // [#3505] TODO: Emulate this where it is not supported
         if (rightQuantified != null) {
+            boolean inOrNotIn;
 
-            // TODO: Handle all cases, not just the query one
-            QuantifiedSelectImpl<?> q = (QuantifiedSelectImpl<?>) rightQuantified;
-            boolean inOrNotIn = inOrNotIn(comparator, q.quantifier);
+            if (rightQuantified instanceof QuantifiedArray<?> a)
+                inOrNotIn = inOrNotIn(comparator, a.quantifier);
+            else
+                inOrNotIn = inOrNotIn(comparator, ((QuantifiedSelectImpl<?>) rightQuantified).quantifier);
 
             if (NO_SUPPORT_QUANTIFIED.contains(ctx.dialect()) ||
                 NO_SUPPORT_QUANTIFIED_OTHER_THAN_IN_NOT_IN.contains(ctx.dialect()) && !inOrNotIn) {
+
+                // [#19777] TODO: Handle emulations of QuantifiedArray
+                QuantifiedSelectImpl<?> q = (QuantifiedSelectImpl<?>) rightQuantified;
 
                 switch (comparator) {
                     case EQUALS:

@@ -139,13 +139,19 @@ implements
 
                 case POSTGRES:
                 case YUGABYTEDB:
-                    return array;
+                    if (array instanceof Param && array.getDataType().getArrayBaseDataType().isEmbeddable())
+                        return paramToSelect((Param<? extends Object[]>) array);
+                    else
+                        return array;
 
                 // [#869] H2 and HSQLDB can emulate this syntax by unnesting
                 // the array in a subselect
                 case H2:
                 case HSQLDB:
-                    return select().from(table(array));
+                    if (array instanceof Param && array.getDataType().getArrayBaseDataType().isEmbeddable())
+                        return paramToSelect((Param<? extends Object[]>) array);
+                    else
+                        return select().from(table(array));
 
                 // [#1048] All other dialects emulate unnesting of arrays using
                 // UNION ALL-connected subselects
@@ -153,24 +159,28 @@ implements
 
                     // The Informix database has an interesting bug when quantified comparison predicates
                     // use nested derived tables with UNION ALL
-                    if (array instanceof Param) {
-                        Object[] values0 = ((Param<? extends Object[]>) array).getValue();
-                        DataType<Object> type = (DataType<Object>) array.getDataType().getArrayComponentDataType();
-                        Select<Record1<Object>> select = null;
-
-                        for (Object value : values0)
-                            if (select == null)
-                                select = select(val(value, type));
-                            else
-                                select = select.unionAll(select(val(value, type)));
-
-                        return select;
-                    }
+                    if (array instanceof Param)
+                        return paramToSelect((Param<? extends Object[]>) array);
                     else
                         return select().from(table(array));
                 }
             }
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    static final QueryPart paramToSelect(Param<? extends Object[]> array) {
+        Object[] values0 = array.getValue();
+        DataType<Object> type = (DataType<Object>) array.getDataType().getArrayComponentDataType();
+        Select<Record1<Object>> select = null;
+
+        for (Object value : values0)
+            if (select == null)
+                select = select(val(value, type));
+            else
+                select = select.unionAll(select(val(value, type)));
+
+        return select;
     }
 
     // -------------------------------------------------------------------------

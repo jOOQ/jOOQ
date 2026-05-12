@@ -149,7 +149,7 @@ implements
 
         if (arrayComponentDataType.isEmbeddable()) {
             return new FieldsImpl<>(map(
-                embeddedFields(val(null, arrayComponentDataType)),
+                arrayComponentDataType.getRow().fields(),
                 f -> DSL.field(alias.append(f.getUnqualifiedName()), f.getDataType())
             ));
         }

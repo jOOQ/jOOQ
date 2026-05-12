@@ -5012,6 +5012,9 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         if (!fields.isEmpty())
             elementListStep = elementListStep.columns(fields);
 
+        if (parseKeywordIf("PRIMARY KEY"))
+            constraints.add(parsePrimaryKeySpecification(null, false).constraint());
+
         CreateTableElementListStep constraintStep = constraints.isEmpty()
             ? elementListStep
             : elementListStep.constraints(constraints);

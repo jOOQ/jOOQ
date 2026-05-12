@@ -40,8 +40,10 @@ package org.jooq.impl;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.one;
+import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.Names.N_COLUMN_VALUE;
 import static org.jooq.impl.Tools.componentDataType;
+import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.visitSubquery;
 
 import org.jooq.Context;
@@ -67,17 +69,15 @@ implements
 
     private final Object[]      array;
     private final DataType<?>   type;
-    private final Name          fieldAlias;
+    private final Name[]        fieldAliases;
 
     private transient Select<?> table;
 
     ArrayTableEmulation(Object[] array, Name[] fieldAliases) {
         if (Tools.isEmpty(fieldAliases))
-            this.fieldAlias = N_COLUMN_VALUE;
-        else if (fieldAliases.length == 1)
-            this.fieldAlias = fieldAliases[0];
+            this.fieldAliases = new Name[] { N_COLUMN_VALUE };
         else
-            throw new IllegalArgumentException("Array table simulations can only have a single field alias");
+            this.fieldAliases = fieldAliases;
 
         this.array = array;
         this.type = componentDataType(array);
@@ -97,10 +97,14 @@ implements
             Select<Record> select = null;
 
             for (Object element : array) {
+                Select<Record> subselect;
 
-                // [#1081] Be sure to get the correct cast type also for null
-                Field<?> val = DSL.val(element, type);
-                Select<Record> subselect = DSL.select(val.as(fieldAlias)).select();
+                // [#1081]  Be sure to get the correct cast type also for null
+                // [#19978] Arrays could contain embeddable records
+                if (element instanceof Record r)
+                    subselect = DSL.select(map(r.valuesRow().fields(), (f, i) -> f.as(fieldAliases[i]))).select();
+                else
+                    subselect = DSL.select(val(element, type).as(fieldAliases[0])).select();
 
                 if (select == null)
                     select = subselect;
@@ -110,7 +114,7 @@ implements
 
             // Empty arrays should result in empty tables
             if (select == null)
-                select = DSL.select(one().as(fieldAlias)).select().where(falseCondition());
+                select = DSL.select(one().as(fieldAliases[0])).select().where(falseCondition());
 
             table = select;
         }

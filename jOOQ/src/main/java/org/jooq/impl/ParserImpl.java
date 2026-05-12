@@ -5703,12 +5703,23 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
             || (!initially && (initially = parseConstraintInitiallyIf())))
             ;
 
-        if ((parseKeywordIf("ENABLE", "ENFORCED")))
+        if (parseConstraintEnforcedIf())
             return e.enforced();
-        else if ((parseKeywordIf("DISABLE", "NOT ENFORCED")))
+        else if (parseConstraintNotEnforcedIf())
             return e.notEnforced();
         else
             return e;
+    }
+
+    private final boolean parseConstraintEnforcedIf() {
+        return parseKeywordIf("ENFORCED")
+            || parseKeywordIf("VALIDATE")
+            || parseKeywordIf("ENABLE") && (parseKeywordIf("VALIDATE") || true);
+    }
+
+    private final boolean parseConstraintNotEnforcedIf() {
+        return parseKeywordIf("NOT ENFORCED")
+            || parseKeywordIf("DISABLE") && (parseKeywordIf("NOVALIDATE") || true);
     }
 
     private final boolean parseConstraintDeferrableIf() {
@@ -6345,7 +6356,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
 
 
-        throw expected("ENABLE", "ENFORCED", "DISABLE", "NOT ENFORCED");
+        throw expected("ENABLE", "ENFORCED", "VALIDATE", "DISABLE", "NOT ENFORCED");
     }
 
     private final DDLQuery parseAlterType() {

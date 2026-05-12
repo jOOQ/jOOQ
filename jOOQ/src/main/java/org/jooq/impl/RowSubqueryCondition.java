@@ -79,6 +79,8 @@ import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.DSL.selectFrom;
+import static org.jooq.impl.DSL.unnest;
 import static org.jooq.impl.QOM.Quantifier.ALL;
 import static org.jooq.impl.QOM.Quantifier.ANY;
 import static org.jooq.impl.SubqueryCharacteristics.PREDICAND;
@@ -162,25 +164,29 @@ implements
         // [#3505] TODO: Emulate this where it is not supported
         if (rightQuantified != null) {
             boolean inOrNotIn;
+            Quantifier quantifier;
 
             if (rightQuantified instanceof QuantifiedArray<?> a)
-                inOrNotIn = inOrNotIn(comparator, a.quantifier);
+                inOrNotIn = inOrNotIn(comparator, quantifier = a.quantifier);
             else
-                inOrNotIn = inOrNotIn(comparator, ((QuantifiedSelectImpl<?>) rightQuantified).quantifier);
+                inOrNotIn = inOrNotIn(comparator, quantifier = ((QuantifiedSelectImpl<?>) rightQuantified).quantifier);
 
             if (NO_SUPPORT_QUANTIFIED.contains(ctx.dialect()) ||
                 NO_SUPPORT_QUANTIFIED_OTHER_THAN_IN_NOT_IN.contains(ctx.dialect()) && !inOrNotIn) {
 
-                // [#19777] TODO: Handle emulations of QuantifiedArray
-                QuantifiedSelectImpl<?> q = (QuantifiedSelectImpl<?>) rightQuantified;
+                Select<?> select;
+                if (rightQuantified instanceof QuantifiedArray<?> a)
+                    select = selectFrom(unnest(a.array));
+                else
+                    select = ((QuantifiedSelectImpl<?>) rightQuantified).query;
 
                 switch (comparator) {
                     case EQUALS:
                     case NOT_EQUALS: {
                         if (inOrNotIn)
-                            return new RowSubqueryCondition(left, q.query, comparator == EQUALS ? IN : NOT_IN);
+                            return new RowSubqueryCondition(left, select, comparator == EQUALS ? IN : NOT_IN);
                         else
-                            return emulationUsingExists(ctx, left, q.query, comparator == EQUALS ? NOT_EQUALS : EQUALS, comparator == EQUALS);
+                            return emulationUsingExists(ctx, left, select, comparator == EQUALS ? NOT_EQUALS : EQUALS, comparator == EQUALS);
                     }
 
                     case GREATER:
@@ -188,7 +194,7 @@ implements
                     case LESS:
                     case LESS_OR_EQUAL:
                     default:
-                        return emulationUsingExists(ctx, left, q.query, q.quantifier == ALL ? comparator.inverse() : comparator, q.quantifier == ALL);
+                        return emulationUsingExists(ctx, left, select, quantifier == ALL ? comparator.inverse() : comparator, quantifier == ALL);
                 }
             }
             else

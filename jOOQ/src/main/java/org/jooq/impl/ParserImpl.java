@@ -11637,6 +11637,16 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
     private final Lambda1<?, ?> parseLambdaIf(Function<? super ParseContext, ? extends Field<?>> field) {
         int p = position();
+
+        if (parseKeywordIf("LAMBDA")) {
+            Name e = parseIdentifierIf();
+
+            if (e != null && parseIf(':'))
+                return lambda(field(e), (Field<?>) field.apply(this));
+            else
+                position(p);
+        }
+
         Name e = parseIdentifierIf();
 
         if (e != null && parseIf("->"))

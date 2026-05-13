@@ -37,10 +37,14 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.SQLDialect.DUCKDB;
+import static org.jooq.impl.Keywords.K_LAMBDA;
+
 import org.jooq.Context;
 import org.jooq.Lambda1;
 import org.jooq.QueryPart;
 // ...
+import org.jooq.SQLDialect;
 // ...
 
 /**
@@ -67,6 +71,22 @@ implements
 
     @Override
     public final void accept(Context<?> ctx) {
+        switch (ctx.family()) {
+            case DUCKDB:
+
+
+
+
+
+                ctx.visit(K_LAMBDA).sql(' ').visit(arg1).sql(": ").visit(result);
+                break;
+            default:
+                acceptDefault(ctx);
+                break;
+        }
+    }
+
+    private final void acceptDefault(Context<?> ctx) {
         ctx.visit(arg1).sql(" -> ").visit(result);
     }
 

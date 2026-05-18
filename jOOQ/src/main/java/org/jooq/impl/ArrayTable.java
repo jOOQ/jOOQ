@@ -212,6 +212,17 @@ implements
 
 
 
+            case DUCKDB:
+
+                // [#19978] We cannot unnest array of embeddables in DuckDB
+                if (isArray && array.getDataType().getArrayComponentDataType().isEmbeddable())
+                    if (array instanceof Param)
+                        return emulateParam();
+                    else
+                        return emulateArray();
+                else
+                    return new StandardUnnest();
+
             // Most dialects can simulate unnested arrays using UNION ALL
 
 

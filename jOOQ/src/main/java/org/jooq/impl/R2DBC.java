@@ -1121,6 +1121,14 @@ final class R2DBC {
 
 
 
+                    case POSTGRES:
+                        if (type == byte[][].class)
+                            s.bindNull(parameterIndex - 1, String.class);
+                        else
+                            s.bindNull(parameterIndex - 1, type);
+
+                        break;
+
                     default:
                         s.bindNull(parameterIndex - 1, type);
                         break;
@@ -1467,6 +1475,9 @@ final class R2DBC {
         @Override
         public final Array getArray(int columnIndex) throws SQLException {
             Object o = nullable(columnIndex, Object.class);
+
+            if (o == null)
+                return null;
 
             switch (c.family()) {
                 case POSTGRES: {

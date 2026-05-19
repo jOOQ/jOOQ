@@ -237,6 +237,7 @@ import static org.jooq.impl.ScalarSubquery.NO_SUPPORT_CORRELATED_SUBQUERY;
 import static org.jooq.impl.SubqueryCharacteristics.DERIVED_TABLE;
 import static org.jooq.impl.SubqueryCharacteristics.PREDICAND;
 import static org.jooq.impl.SubqueryCharacteristics.SET_OPERATION;
+import static org.jooq.impl.Tools.allMatch;
 import static org.jooq.impl.Tools.ExtendedDataKey.DATA_OMIT_DATETIME_LITERAL_PREFIX;
 import static org.jooq.impl.Tools.SimpleDataKey.DATA_BLOCK_NESTING;
 import static org.jooq.tools.StringUtils.defaultIfNull;
@@ -2869,28 +2870,11 @@ final class Tools {
         return array == null ? emptyList() : asList(array);
     }
 
-    /**
-     * Turn a {@link Record} into a {@link Map}
-     */
-    static final Map<Field<?>, Object> mapOfTouchedValues(Attachable attachable, Record record) {
-        Map<Field<?>, Object> result = new LinkedHashMap<>();
-        int size = record.size();
-        ObjIntPredicate<Record> dirty = recordDirtyTrackingPredicate(attachable);
-
-        for (int i = 0; i < size; i++)
-            if (dirty.test(record, i))
-                result.put(record.field(i), record.get(i));
-
-        return result;
-    }
-
     static final ObjIntPredicate<Record> recordDirtyTrackingPredicate(Attachable attachable) {
         return RecordDirtyTracking.MODIFIED.equals(configuration(attachable).settings().getRecordDirtyTracking())
             ? Record::modified
             : Record::touched;
     }
-
-
 
     /**
      * Extract the first item from an iterable or <code>null</code>, if there is

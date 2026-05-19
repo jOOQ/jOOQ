@@ -178,7 +178,8 @@ implements
 
     @Override
     public final UpdateImpl<R> set(Record record) {
-        return set(Tools.mapOfTouchedValues(this, record));
+        getDelegate().setRecord((R) record);
+        return this;
     }
 
 

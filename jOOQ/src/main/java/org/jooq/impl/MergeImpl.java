@@ -107,6 +107,8 @@ import static org.jooq.impl.Keywords.K_VALUES;
 import static org.jooq.impl.Keywords.K_WHEN;
 import static org.jooq.impl.Keywords.K_WHERE;
 import static org.jooq.impl.Names.N_T;
+import static org.jooq.impl.TableRecordImpl.withNaturalKeys;
+import static org.jooq.impl.TableRecordImpl.writable;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.concat;
@@ -115,11 +117,13 @@ import static org.jooq.impl.Tools.fieldNames;
 import static org.jooq.impl.Tools.isEmpty;
 import static org.jooq.impl.Tools.map;
 import static org.jooq.impl.Tools.nullSafe;
+import static org.jooq.impl.Tools.recordDirtyTrackingPredicate;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -1001,7 +1005,23 @@ implements
 
     @Override
     public final MergeImpl set(Record record) {
-        return set(Tools.mapOfTouchedValues(this, record));
+        Map<Field<?>, Object> result = new LinkedHashMap<>();
+        int size = record.size();
+        ObjIntPredicate<Record> dirty = recordDirtyTrackingPredicate(record);
+
+        for (int i = 0; i < size; i++)
+            if (dirty.test(record, i))
+                result.put(record.field(i), record.get(i));
+
+        if (notMatchedClause && table().getPrimaryKey() != null) {
+            withNaturalKeys(record, table().getPrimaryKey().getFieldsArray(),
+                f -> true,
+                f -> result.put(f, record.get(f))
+            );
+        }
+
+        set(result);
+        return this;
     }
 
     @Override

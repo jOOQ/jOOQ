@@ -107,6 +107,15 @@
             <groupId>com.google.auto.service</groupId>
             <artifactId>auto-service</artifactId>
         </dependency>
+        
+        <!-- [#19996]
+             Explicit upgrade of transitive dependency due to CVE-2026-0994
+             TODO: Remove again when https://github.com/jOOQ/jOOQ/issues/19996  -->
+        <dependency>
+            <groupId>com.google.protobuf</groupId>
+            <artifactId>protobuf-java</artifactId>
+            <version>4.34.1</version>
+        </dependency>
 
 
 

@@ -40,7 +40,6 @@ package org.jooq.impl;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static java.util.Arrays.asList;
-// ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.H2;
 // ...
@@ -54,14 +53,12 @@ import static org.jooq.conf.SettingsTools.returnAnyNonIdentityOnUpdatableRecord;
 import static org.jooq.conf.SettingsTools.returnAnyOnUpdatableRecord;
 import static org.jooq.conf.SettingsTools.updatablePrimaryKeys;
 import static org.jooq.conf.WriteIfReadonly.IGNORE;
-import static org.jooq.conf.WriteIfReadonly.THROW;
-import static org.jooq.conf.WriteIfReadonly.WRITE;
 import static org.jooq.impl.RecordDelegate.delegate;
 import static org.jooq.impl.RecordDelegate.RecordLifecycleType.INSERT;
+import static org.jooq.impl.TableRecordImpl.writable;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
+import static org.jooq.impl.Tools.allMatch;
 import static org.jooq.impl.Tools.anyMatch;
-import static org.jooq.impl.Tools.collect;
-import static org.jooq.impl.Tools.filter;
 import static org.jooq.impl.Tools.indexOrFail;
 import static org.jooq.impl.Tools.isEmpty;
 import static org.jooq.impl.Tools.let;
@@ -72,11 +69,12 @@ import static org.jooq.tools.StringUtils.defaultIfNull;
 import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 import org.jooq.Configuration;
@@ -85,10 +83,7 @@ import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
-import org.jooq.Identity;
-import org.jooq.Insert;
 import org.jooq.InsertQuery;
-// ...
 import org.jooq.Record;
 import org.jooq.Row;
 import org.jooq.SQLDialect;
@@ -100,7 +95,6 @@ import org.jooq.UniqueKey;
 import org.jooq.UpdatableRecord;
 import org.jooq.Update;
 import org.jooq.conf.Settings;
-import org.jooq.conf.SettingsTools;
 import org.jooq.conf.WriteIfReadonly;
 import org.jooq.exception.DataTypeException;
 import org.jooq.impl.BatchCRUD.QueryCollectorSignal;
@@ -182,22 +176,34 @@ implements
         return insert(storeFields.toArray(EMPTY_FIELD));
     }
 
+    @Override
+    final UniqueKey<R> getPrimaryKey() {
+        if (getTable() instanceof AbstractTable<R> t)
+            return t.getPrimaryKeyWithEmbeddables();
+        else
+            return getTable().getPrimaryKey();
+    }
+
+    @SuppressWarnings("unchecked")
     final int storeInsert(final Field<?>[] storeFields) {
         final int[] result = new int[1];
 
         delegate(configuration(), (Record) this, INSERT)
         .operate(record -> {
-            result[0] = storeInsert0(storeFields);
+            result[0] = storeInsert0(storeFields, getPrimaryKey() != null ? getPrimaryKey().getFieldsArray() : (TableField<R, ?>[]) Tools.EMPTY_TABLE_FIELD);
             return record;
         });
 
         return result[0];
     }
 
-    final int storeInsert0(Field<?>[] storeFields) {
+    final int storeInsert0(
+        Field<?>[] storeFields,
+        TableField<R, ?>[] keys
+    ) {
         DSLContext create = create();
         InsertQuery<R> insert = create.insertQuery(getTable());
-        List<Field<?>> changedFields = addTouchedValues(storeFields, insert, false);
+        List<Field<?>> changedFields = addTouchedValues(storeFields, keys, insert, false);
 
         // [#1596] Set timestamp and/or version columns to appropriate values
         BigInteger version = addRecordVersion(insert, false);
@@ -323,22 +329,59 @@ implements
     /**
      * Set all touched values of this record to a store query.
      */
-    final List<Field<?>> addTouchedValues(Field<?>[] storeFields, StoreQuery<R> query, boolean forUpdate) {
-        FieldsImpl<Record> f = new FieldsImpl<>(storeFields);
+    final List<Field<?>> addTouchedValues(
+        Field<?>[] storeFields,
+        TableField<R, ?>[] keys,
+        StoreQuery<R> query,
+        boolean merge
+    ) {
+        FieldsImpl<Record> sf = new FieldsImpl<>(storeFields);
         List<Field<?>> result = new ArrayList<>();
         ObjIntPredicate<Record> dirty = recordDirtyTrackingPredicate(query);
 
         for (Field<?> field : fields.fields.fields) {
-            if (dirty.test(this, indexOf(field)) && f.field(field) != null && writable(field, forUpdate)) {
-                addValue(query, field, forUpdate);
+            if (dirty.test(this, indexOf(field)) && sf.field(field) != null && writable(this, field, merge)) {
+                addValue(query, field, merge);
                 result.add(field);
             }
         }
 
+        // [#19982] Include natural keys (non-generated, non-surrogate keys) in INSERT part of MERGE
+        if (merge && !result.isEmpty())
+            withNaturalKeys(this, keys,
+                f -> sf.field(f) != null,
+                f -> {
+                    addValue(query, f, false);
+                    result.add(f);
+                }
+            );
+
         return result;
     }
 
-    final boolean writable(Field<?> field, boolean forUpdate) {
+    static final void withNaturalKeys(
+        Record record,
+        Field<?>[] keys,
+        Predicate<? super Field<?>> check,
+        Consumer<? super Field<?>> action
+    ) {
+
+        // [#19982] Include natural keys (non-generated, non-surrogate keys) in INSERT part of MERGE
+        if (!Tools.isEmpty(keys)
+            && allMatch(keys, f ->
+                    !f.getDataType().identity()
+                 && !f.getDataType().defaulted()
+                 && !f.getDataType().computed()
+                 && (f.getDataType().nullable() || record.get(f) != null)
+            )
+        ) {
+            for (Field<?> field : keys)
+                if (writable(record, field, false) && check.test(field))
+                    action.accept(field);
+        }
+    }
+
+    static final boolean writable(Record record, Field<?> field, boolean forUpdate) {
 
 
 

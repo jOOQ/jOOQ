@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.TableRecordImpl.withNaturalKeys;
+import static org.jooq.impl.TableRecordImpl.writable;
 import static org.jooq.impl.Tools.recordDirtyTrackingPredicate;
 
 import java.util.Map;
@@ -79,6 +81,13 @@ implements
         for (int i = 0; i < record.size(); i++)
             if (dirty.test(record, i))
                 addValue((Field) record.field(i), record.get(i));
+
+        if (this instanceof InsertQueryImpl && table().getPrimaryKey() != null) {
+            withNaturalKeys(record, table().getPrimaryKey().getFieldsArray(),
+                f -> true,
+                f -> addValue((Field) f, record.get(f))
+            );
+        }
     }
 
     @Override

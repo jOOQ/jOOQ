@@ -147,14 +147,6 @@ implements
     }
 
     @Override
-    final UniqueKey<R> getPrimaryKey() {
-        if (getTable() instanceof AbstractTable<R> t)
-            return t.getPrimaryKeyWithEmbeddables();
-        else
-            return getTable().getPrimaryKey();
-    }
-
-    @Override
     public final int store() {
         return store(fields.fields.fields);
     }
@@ -280,7 +272,7 @@ implements
             if (lockValuePresent())
                 return storeUpdate0(storeFields, keys);
             else
-                return storeInsert0(storeFields);
+                return storeInsert0(storeFields, keys);
         }
         else {
             InsertQuery<R> merge = create().insertQuery(getTable());
@@ -308,7 +300,7 @@ implements
         Q query,
         boolean merge
     ) {
-        List<Field<?>> touchedFields = addTouchedValues(storeFields, query, merge);
+        List<Field<?>> touchedFields = addTouchedValues(storeFields, keys, query, merge);
 
         // [#11552] These conditions should be omitted in the MERGE case
         if (!merge)
@@ -342,7 +334,7 @@ implements
                         if (!asList(keys).contains(field))
                             touched(field, true);
 
-                    addTouchedValues(storeFields, query, merge);
+                    addTouchedValues(storeFields, keys, query, merge);
                     break;
             }
         }

@@ -4096,6 +4096,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         final OffsetDateTime get0(BindingGetSQLInputContext<U> ctx) throws SQLException {
+            String s;
 
             if (!FALSE.equals(ctx.settings().isBindOffsetDateTimeType()))
                 return ctx.input().readObject(OffsetDateTime.class);
@@ -4115,7 +4116,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
             else
-                throw new UnsupportedOperationException("Type " + dataType + " is not supported");
+                return Tools.converter(ctx.configuration(), s = ctx.input().readString(), String.class, OffsetDateTime.class).from(s, ctx.converterContext());
         }
 
         @Override

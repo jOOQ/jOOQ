@@ -633,18 +633,6 @@ public final class SQLDataType {
     // -------------------------------------------------------------------------
 
     /**
-     * The {@link Types#BINARY} type.
-     */
-    public static final DataType<byte[]> BINARY = new BuiltInDataType<>(byte[].class, "binary(l)");
-
-    /**
-     * The {@link Types#BINARY} type.
-     */
-    public static final DataType<byte[]> BINARY(int length) {
-        return BINARY.length(length);
-    }
-
-    /**
      * The {@link Types#VARBINARY} type.
      */
     public static final DataType<byte[]> VARBINARY = new BuiltInDataType<>(byte[].class, "varbinary(l)");
@@ -654,6 +642,18 @@ public final class SQLDataType {
      */
     public static final DataType<byte[]> VARBINARY(int length) {
         return VARBINARY.length(length);
+    }
+
+    /**
+     * The {@link Types#BINARY} type.
+     */
+    public static final DataType<byte[]> BINARY = new BuiltInDataType<>(byte[].class, "binary(l)");
+
+    /**
+     * The {@link Types#BINARY} type.
+     */
+    public static final DataType<byte[]> BINARY(int length) {
+        return BINARY.length(length);
     }
 
     /**

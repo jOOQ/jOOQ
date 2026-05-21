@@ -104,12 +104,7 @@ implements
 
 
 
-
-
-
-
-
-
+            case CLICKHOUSE:
             case DERBY:
             case FIREBIRD:
             case HSQLDB:
@@ -119,9 +114,6 @@ implements
 
             case SQLITE:
                 return false;
-
-            case CLICKHOUSE:
-                return true;
 
             default:
                 return true;

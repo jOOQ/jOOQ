@@ -104,14 +104,12 @@ implements
 
 
 
+            case FIREBIRD:
             case HSQLDB:
             case MARIADB:
             case MYSQL:
             case SQLITE:
             case YUGABYTEDB:
-                return true;
-
-            case FIREBIRD:
                 return true;
 
 

@@ -102,9 +102,6 @@ implements
 
 
 
-            case YUGABYTEDB:
-                return false;
-
 
 
 
@@ -114,6 +111,7 @@ implements
             case DUCKDB:
             case POSTGRES:
             case SQLITE:
+            case YUGABYTEDB:
                 return false;
 
             default:

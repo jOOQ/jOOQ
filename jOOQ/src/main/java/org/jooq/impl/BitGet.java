@@ -100,21 +100,10 @@ implements
     final boolean parenthesised(Context<?> ctx) {
         switch (ctx.family()) {
 
-
-
-
-
-
-
-
-
-
-
             case CLICKHOUSE:
                 return true;
 
-            case H2:
-                return false;
+
 
 
 
@@ -135,6 +124,7 @@ implements
             case CUBRID:
             case DUCKDB:
             case FIREBIRD:
+            case H2:
             case HSQLDB:
             case MARIADB:
             case MYSQL:

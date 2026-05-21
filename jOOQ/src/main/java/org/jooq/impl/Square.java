@@ -96,9 +96,6 @@ implements
     @Override
     final boolean parenthesised(Context<?> ctx) {
         switch (ctx.family()) {
-            case SQLITE:
-                return false;
-
 
 
 
@@ -129,6 +126,7 @@ implements
             case MARIADB:
             case MYSQL:
             case POSTGRES:
+            case SQLITE:
             case TRINO:
             case YUGABYTEDB:
                 return false;

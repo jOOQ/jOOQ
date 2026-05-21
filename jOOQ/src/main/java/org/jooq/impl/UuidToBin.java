@@ -97,25 +97,17 @@ implements
     @Override
     final boolean parenthesised(Context<?> ctx) {
         switch (ctx.family()) {
+
+
+
+
+
             case CLICKHOUSE:
-                return false;
-
-
-
             case H2:
             case HSQLDB:
-                return false;
-
-
             case POSTGRES:
             case YUGABYTEDB:
                 return false;
-
-
-
-
-
-
 
             default:
                 return true;

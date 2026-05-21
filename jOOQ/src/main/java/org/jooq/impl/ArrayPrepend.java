@@ -101,17 +101,11 @@ implements
         switch (ctx.family()) {
 
 
+
+            case CLICKHOUSE:
             case H2:
             case HSQLDB:
             case TRINO:
-                return false;
-
-
-
-
-
-
-            case CLICKHOUSE:
                 return false;
 
             default:

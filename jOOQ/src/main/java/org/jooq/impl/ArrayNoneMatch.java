@@ -95,6 +95,10 @@ implements
     @Override
     final boolean parenthesised(Context<?> ctx) {
         switch (ctx.family()) {
+            case TRINO:
+                return true;
+
+
 
 
 
@@ -106,14 +110,6 @@ implements
             case POSTGRES:
             case YUGABYTEDB:
                 return false;
-
-
-
-
-
-
-            case TRINO:
-                return true;
 
             default:
                 return true;

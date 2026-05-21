@@ -107,39 +107,31 @@ implements
 
 
 
-            case DERBY:
-                return false;
 
 
 
-
-
-
-
-
-
-
-
-
-
-            case CUBRID:
-            case DUCKDB:
-            case FIREBIRD:
-            case IGNITE:
-            case POSTGRES:
-            case TRINO:
-            case YUGABYTEDB:
-                return true;
 
 
 
 
 
             case CLICKHOUSE:
+            case CUBRID:
+            case DUCKDB:
+            case FIREBIRD:
+            case IGNITE:
             case MARIADB:
             case MYSQL:
+            case POSTGRES:
             case SQLITE:
+            case TRINO:
+            case YUGABYTEDB:
                 return true;
+
+
+
+            case DERBY:
+                return false;
 
             default:
                 return true;

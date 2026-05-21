@@ -101,17 +101,15 @@ implements
 
 
 
+
+
             case CLICKHOUSE:
             case DUCKDB:
             case MARIADB:
             case MYSQL:
+            case POSTGRES:
             case SQLITE:
             case TRINO:
-                return false;
-
-
-
-            case POSTGRES:
             case YUGABYTEDB:
                 return false;
 

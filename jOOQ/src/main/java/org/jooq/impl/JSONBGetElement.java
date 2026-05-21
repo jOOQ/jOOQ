@@ -110,20 +110,10 @@ implements
 
 
 
-
-
-
-
-
-
-
-
+            case CLICKHOUSE:
             case MARIADB:
             case MYSQL:
             case TRINO:
-                return false;
-
-            case CLICKHOUSE:
                 return false;
 
             default:

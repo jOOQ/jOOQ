@@ -105,19 +105,17 @@ implements
 
 
 
+
+
+
+
+
+
+
             case FIREBIRD:
+            case SQLITE:
             case TRINO:
                 return false;
-
-            case SQLITE:
-                return false;
-
-
-
-
-
-
-
 
             default:
                 return true;

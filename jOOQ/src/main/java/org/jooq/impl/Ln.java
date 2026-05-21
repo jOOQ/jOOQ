@@ -107,10 +107,6 @@ implements
 
 
 
-
-
-
-
             case SQLITE:
                 return false;
 

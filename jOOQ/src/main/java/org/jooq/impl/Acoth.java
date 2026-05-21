@@ -106,34 +106,32 @@ implements
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
             case CLICKHOUSE:
-            case FIREBIRD:
-            case POSTGRES:
-            case SQLITE:
-            case TRINO:
-                return false;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             case CUBRID:
             case DERBY:
             case DUCKDB:
+            case FIREBIRD:
             case H2:
             case HSQLDB:
             case IGNITE:
             case MARIADB:
             case MYSQL:
+            case POSTGRES:
+            case SQLITE:
+            case TRINO:
             case YUGABYTEDB:
                 return false;
 

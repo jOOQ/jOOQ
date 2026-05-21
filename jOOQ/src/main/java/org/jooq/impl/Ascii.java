@@ -97,10 +97,6 @@ implements
     final boolean parenthesised(Context<?> ctx) {
         switch (ctx.family()) {
 
-
-
-
-
             case FIREBIRD:
                 return true;
 

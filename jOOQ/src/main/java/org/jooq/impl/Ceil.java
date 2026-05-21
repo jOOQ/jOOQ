@@ -99,16 +99,12 @@ implements
 
 
 
+            case H2:
+                return true;
 
 
             case SQLITE:
                 return false;
-
-
-
-
-            case H2:
-                return true;
 
             default:
                 return true;

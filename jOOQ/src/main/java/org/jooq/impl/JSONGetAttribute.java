@@ -100,17 +100,8 @@ implements
     final boolean parenthesised(Context<?> ctx) {
         switch (ctx.family()) {
 
-
-
-
-
-
-
-
-
-
-
-
+            case CLICKHOUSE:
+                return true;
 
 
 
@@ -122,9 +113,6 @@ implements
             case MYSQL:
             case TRINO:
                 return false;
-
-            case CLICKHOUSE:
-                return true;
 
             default:
                 return false;

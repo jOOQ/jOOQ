@@ -102,17 +102,9 @@ implements
                 return true;
 
 
+
             case H2:
-                return false;
-
             case SQLITE:
-                return false;
-
-
-
-
-
-
             case TRINO:
                 return false;
 

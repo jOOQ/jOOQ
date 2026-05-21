@@ -99,11 +99,9 @@ implements
     @Override
     final boolean parenthesised(Context<?> ctx) {
         switch (ctx.family()) {
+
+
             case DERBY:
-                return false;
-
-
-
             case SQLITE:
             case TRINO:
                 return false;

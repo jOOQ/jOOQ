@@ -123,6 +123,7 @@ implements
             case CUBRID:
             case DUCKDB:
             case FIREBIRD:
+            case H2:
             case HSQLDB:
             case MARIADB:
             case MYSQL:
@@ -130,9 +131,6 @@ implements
             case SQLITE:
             case TRINO:
             case YUGABYTEDB:
-                return false;
-
-            case H2:
                 return false;
 
             default:

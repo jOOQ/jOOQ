@@ -112,14 +112,8 @@ implements
 
 
 
-
-
-
             case DERBY:
             case FIREBIRD:
-                return false;
-
-
             case H2:
             case HSQLDB:
                 return false;

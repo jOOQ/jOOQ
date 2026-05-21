@@ -97,29 +97,21 @@ implements
 
 
 
-
-
-
-
-
-
-
-
-
-            case DUCKDB:
-                return true;
-
-
-
-
-
-
-
             case DERBY:
+            case DUCKDB:
             case POSTGRES:
             case SQLITE:
             case YUGABYTEDB:
                 return true;
+
+
+
+
+
+
+
+
+
 
             default:
                 return true;

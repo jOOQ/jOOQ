@@ -98,30 +98,20 @@ implements
         switch (ctx.family()) {
 
 
-            case HSQLDB:
-                return false;
-
-
-
-
-
-
-            case H2:
-                return true;
-
-
 
 
 
 
             case CLICKHOUSE:
-                return true;
-
             case FIREBIRD:
-                return true;
-
+            case H2:
             case TRINO:
                 return true;
+
+
+
+            case HSQLDB:
+                return false;
 
             default:
                 return false;

@@ -112,6 +112,7 @@ implements
 
 
 
+
             case CUBRID:
             case DERBY:
             case FIREBIRD:
@@ -122,11 +123,6 @@ implements
             case MYSQL:
             case SQLITE:
                 return false;
-
-
-
-
-
 
             default:
                 return true;

@@ -113,7 +113,12 @@ implements
 
 
 
+
+
+
+            case CLICKHOUSE:
             case CUBRID:
+            case DERBY:
             case FIREBIRD:
             case H2:
             case HSQLDB:
@@ -123,19 +128,6 @@ implements
             case POSTGRES:
             case SQLITE:
             case YUGABYTEDB:
-                return false;
-
-
-
-            case DERBY:
-                return false;
-
-
-
-
-
-
-            case CLICKHOUSE:
                 return false;
 
             default:

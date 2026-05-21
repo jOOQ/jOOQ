@@ -102,11 +102,6 @@ implements
 
 
 
-            case FIREBIRD:
-            case SQLITE:
-            case TRINO:
-                return false;
-
 
 
 
@@ -114,8 +109,11 @@ implements
 
             case DERBY:
             case DUCKDB:
+            case FIREBIRD:
             case HSQLDB:
             case POSTGRES:
+            case SQLITE:
+            case TRINO:
             case YUGABYTEDB:
                 return false;
 

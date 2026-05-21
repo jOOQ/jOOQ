@@ -102,14 +102,10 @@ implements
     @Override
     final boolean parenthesised(Context<?> ctx) {
         switch (ctx.family()) {
-
-
-
-
-
-
             case CLICKHOUSE:
                 return true;
+
+
 
 
 

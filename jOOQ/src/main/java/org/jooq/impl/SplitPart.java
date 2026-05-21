@@ -110,27 +110,11 @@ implements
 
 
 
-
-
-
-
-
             case DUCKDB:
-                return false;
-
-
-
+            case HSQLDB:
             case MARIADB:
             case MYSQL:
                 return false;
-
-            case HSQLDB:
-                return false;
-
-
-
-
-
 
             default:
                 return true;

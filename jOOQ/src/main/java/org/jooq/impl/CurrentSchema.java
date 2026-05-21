@@ -99,36 +99,20 @@ implements
 
 
 
-
-
-
-            case CUBRID:
-            case FIREBIRD:
-            case SQLITE:
-                return false;
-
-            case DERBY:
-                return false;
-
+            case CLICKHOUSE:
             case H2:
-                return true;
-
-
-
+            case HSQLDB:
             case MARIADB:
             case MYSQL:
-                return true;
-
-            case CLICKHOUSE:
-                return true;
-
-
-
-
-            case HSQLDB:
             case POSTGRES:
             case YUGABYTEDB:
                 return true;
+
+            case CUBRID:
+            case DERBY:
+            case FIREBIRD:
+            case SQLITE:
+                return false;
 
             default:
                 return true;

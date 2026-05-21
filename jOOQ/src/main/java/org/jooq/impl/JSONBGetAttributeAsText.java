@@ -99,39 +99,21 @@ implements
     @Override
     final boolean parenthesised(Context<?> ctx) {
         switch (ctx.family()) {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            case MYSQL:
-                return false;
-
-            case MARIADB:
-                return false;
-
-            case SQLITE:
-                return false;
-
-            case TRINO:
-                return false;
-
             case CLICKHOUSE:
                 return true;
+
+
+
+
+
+
+
+
+            case MARIADB:
+            case MYSQL:
+            case SQLITE:
+            case TRINO:
+                return false;
 
             default:
                 return false;

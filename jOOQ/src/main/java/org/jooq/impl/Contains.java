@@ -97,9 +97,8 @@ implements
         switch (ctx.family()) {
 
 
-            case POSTGRES:
-            case YUGABYTEDB:
-                return false;
+
+
 
 
 
@@ -119,20 +118,17 @@ implements
 
             case CLICKHOUSE:
             case CUBRID:
+            case DERBY:
             case FIREBIRD:
             case H2:
             case HSQLDB:
             case IGNITE:
             case MARIADB:
             case MYSQL:
+            case POSTGRES:
             case SQLITE:
             case TRINO:
-                return false;
-
-
-
-
-            case DERBY:
+            case YUGABYTEDB:
                 return false;
 
             default:

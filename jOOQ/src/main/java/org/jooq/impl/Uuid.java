@@ -98,39 +98,14 @@ implements
 
 
 
-
-
-
-
-
-
-            case POSTGRES:
-                return true;
-
-
-
-
-
-
             case CLICKHOUSE:
-                return true;
-
-            case FIREBIRD:
-                return false;
-
-
-
-
-
-
-            case H2:
-                return true;
-
             case DUCKDB:
+            case H2:
             case HSQLDB:
             case IGNITE:
             case MARIADB:
             case MYSQL:
+            case POSTGRES:
             case TRINO:
                 return true;
 
@@ -138,20 +113,9 @@ implements
 
 
 
-
-
-
-
+            case FIREBIRD:
             case SQLITE:
                 return false;
-
-
-
-
-
-
-
-
 
             default:
                 return true;

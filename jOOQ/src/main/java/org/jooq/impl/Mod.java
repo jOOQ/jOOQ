@@ -106,10 +106,6 @@ implements
 
 
 
-
-
-
-
             case DUCKDB:
             case SQLITE:
                 return false;

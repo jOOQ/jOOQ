@@ -103,13 +103,7 @@ implements
 
 
 
-
-
-
-
             case FIREBIRD:
-                return false;
-
             case SQLITE:
                 return false;
 

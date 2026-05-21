@@ -101,23 +101,19 @@ implements
         switch (ctx.family()) {
 
 
+            case DUCKDB:
+            case TRINO:
+                return true;
 
+
+
+
+            case CLICKHOUSE:
             case H2:
             case HSQLDB:
             case POSTGRES:
             case YUGABYTEDB:
                 return false;
-
-
-            case DUCKDB:
-                return true;
-
-            case CLICKHOUSE:
-                return false;
-
-
-            case TRINO:
-                return true;
 
             default:
                 return true;

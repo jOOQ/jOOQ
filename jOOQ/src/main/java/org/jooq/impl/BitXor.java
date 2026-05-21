@@ -104,25 +104,13 @@ implements
 
 
 
-            case H2:
-            case HSQLDB:
-                return true;
-
-
-
-
-
 
             case CLICKHOUSE:
-                return true;
-
-            case FIREBIRD:
-                return true;
-
-            case TRINO:
-                return true;
-
             case DUCKDB:
+            case FIREBIRD:
+            case H2:
+            case HSQLDB:
+            case TRINO:
                 return true;
 
 

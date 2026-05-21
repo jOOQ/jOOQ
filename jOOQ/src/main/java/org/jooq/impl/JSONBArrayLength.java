@@ -97,27 +97,19 @@ implements
     final boolean parenthesised(Context<?> ctx) {
         switch (ctx.family()) {
 
-
-
-
-
-
-
-
-
-
-
+            case CLICKHOUSE:
+            case DUCKDB:
             case MARIADB:
             case MYSQL:
-                return true;
-
-
-            case DUCKDB:
             case SQLITE:
                 return true;
 
-            case CLICKHOUSE:
-                return true;
+
+
+
+
+
+
 
             default:
                 return true;

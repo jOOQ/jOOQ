@@ -100,33 +100,19 @@ implements
         switch (ctx.family()) {
 
 
-            case POSTGRES:
-            case YUGABYTEDB:
-                return false;
 
 
 
 
 
 
-
-
-
-            case SQLITE:
-                return false;
-
-
-
-
-
-
-            case DUCKDB:
-                return false;
 
             case CLICKHOUSE:
-                return false;
-
+            case DUCKDB:
+            case POSTGRES:
+            case SQLITE:
             case TRINO:
+            case YUGABYTEDB:
                 return false;
 
             default:

@@ -72,6 +72,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 // ...
+import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 import static org.jooq.SQLDialect.TRINO;
@@ -172,14 +173,14 @@ public interface AlterTableAlterStep<T> {
      * Make the column <code>NOT NULL</code>.
      */
     @NotNull @CheckReturnValue
-    @Support({ DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     AlterTableFinalStep setNotNull();
 
     /**
      * Make the column nullable.
      */
     @NotNull @CheckReturnValue
-    @Support({ DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
+    @Support({ DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, YUGABYTEDB })
     AlterTableFinalStep dropNotNull();
 
     /**

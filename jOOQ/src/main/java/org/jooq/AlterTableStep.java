@@ -270,7 +270,7 @@ public interface AlterTableStep {
      * This is an alias for {@link #alterColumn(Field)}.
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     <T> AlterTableAlterStep<T> alter(Field<T> field);
 
     /**
@@ -284,7 +284,7 @@ public interface AlterTableStep {
      * This is an alias for {@link #alterColumn(Name)}
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     AlterTableAlterStep<Object> alter(Name field);
 
     /**
@@ -298,7 +298,7 @@ public interface AlterTableStep {
      * This is an alias for {@link #alterColumn(String)}
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     AlterTableAlterStep<Object> alter(String field);
 
     /**
@@ -344,7 +344,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     <T> AlterTableAlterStep<T> alterColumn(Field<T> field);
 
     /**
@@ -356,7 +356,7 @@ public interface AlterTableStep {
      * {@link #alterColumn(Field)}.
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     AlterTableAlterStep<Object> alterColumn(Name field);
 
     /**
@@ -368,7 +368,7 @@ public interface AlterTableStep {
      * {@link #alterColumn(Field)}.
      */
     @NotNull @CheckReturnValue
-    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    @Support({ CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
     AlterTableAlterStep<Object> alterColumn(String field);
 
     /**

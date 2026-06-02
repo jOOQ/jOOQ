@@ -55,7 +55,14 @@ import org.jetbrains.annotations.NotNull;
 /**
  * @author Lukas Eder
  */
-final class FieldAlias<T> extends AbstractField<T> implements QOM.FieldAlias<T>, SimpleCheckQueryPart {
+final class FieldAlias<T>
+extends
+    AbstractField<T>
+implements
+    QOM.FieldAlias<T>,
+    SimpleCheckQueryPart,
+    ScopeMappable
+{
 
     private final Alias<Field<T>> alias;
 

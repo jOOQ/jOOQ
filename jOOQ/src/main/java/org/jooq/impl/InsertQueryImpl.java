@@ -150,6 +150,7 @@ import org.jooq.Record;
 // ...
 import org.jooq.Row;
 import org.jooq.SQLDialect;
+import org.jooq.SQLDialectCategory;
 import org.jooq.Scope;
 import org.jooq.Select;
 import org.jooq.Table;
@@ -165,6 +166,8 @@ import org.jooq.impl.QOM.UnmodifiableMap;
 import org.jooq.impl.Tools.BooleanDataKey;
 import org.jooq.impl.Tools.ExtendedDataKey;
 import org.jooq.tools.StringUtils;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
@@ -850,11 +853,21 @@ implements
 
 
 
-            if (requireNewMySQLExcludedEmulation)
-                s = selectFrom(s.asTable(DSL.table(N_EXCLUDED), keysFlattened));
+            if (requireNewMySQLExcludedEmulation || ctx.family().category() == SQLDialectCategory.POSTGRES) {
+                Table<?> t = s.asTable(DSL.table(N_EXCLUDED), keysFlattened);
 
-            // [#8353] TODO: Support overlapping embeddables
-            toSQLInsertSelect(ctx, s);
+                if (requireNewMySQLExcludedEmulation)
+                    toSQLInsertSelect(ctx, selectFrom(t));
+                else
+                    toSQLInsertSelect(ctx, s);
+
+                // [#19700] Map all original field expressions to their generated EXCLUDED alias
+                scopeRegisterExcludedColumnMapping(ctx, s, t);
+            }
+
+            else
+                // [#8353] TODO: Support overlapping embeddables
+                toSQLInsertSelect(ctx, s);
 
             ctx.data().remove(DATA_INSERT_SELECT_WITHOUT_INSERT_COLUMN_LIST);
             ctx.data().remove(DATA_INSERT_SELECT);
@@ -914,6 +927,18 @@ implements
             ctx.visit(insertMaps);
 
         return fields;
+    }
+
+    private final void scopeRegisterExcludedColumnMapping(Context<?> ctx, Select<?> s, Table<?> t) {
+        List<Field<?>> f1 = s.getSelect();
+        Field<?>[] f2 = t.fields();
+
+        for (int i = 0; i < f1.size() && i < f2.length; i++) {
+            Field<?> f = f1.get(i);
+
+            if (f instanceof NamedField)
+                ctx.scopeRegister(f, false, f2[i]);
+        }
     }
 
     private final void acceptDefaultValuesEmulation(Context<?> ctx, int length) {

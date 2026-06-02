@@ -59,6 +59,7 @@ extends
 implements
     QOM.FieldAlias<T>,
     SimpleCheckQueryPart,
+    ScopeMappable,
     NamedField<T>
 {
 

@@ -988,7 +988,7 @@ implements
         for (int i = 0; i < f1.size() && i < f2.length; i++) {
             Field<?> f = f1.get(i);
 
-            if (f instanceof NamedField)
+            if (Tools.hasName(ctx, f))
                 ctx.scopeRegister(f, false, f2[i]);
         }
     }

@@ -54,6 +54,8 @@ import static org.jooq.Clause.INSERT_RETURNING;
 // ...
 // ...
 // ...
+// ...
+// ...
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.DUCKDB;
 // ...
@@ -69,11 +71,13 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
 // ...
 import static org.jooq.SQLDialect.TRINO;
+import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.ConditionProviderImpl.extractCondition;
 import static org.jooq.impl.DSL.constraint;
@@ -170,8 +174,6 @@ import org.jooq.impl.Tools.BooleanDataKey;
 import org.jooq.impl.Tools.ExtendedDataKey;
 import org.jooq.tools.StringUtils;
 
-import org.jetbrains.annotations.NotNull;
-
 /**
  * @author Lukas Eder
  */
@@ -189,6 +191,7 @@ implements
     static final Set<SQLDialect> NO_SUPPORT_DERIVED_COLUMN_LIST_IN_MERGE_USING = SQLDialect.supportedBy(DERBY, H2);
     static final Set<SQLDialect> NO_SUPPORT_SUBQUERY_IN_MERGE_USING            = SQLDialect.supportedBy(DERBY);
     static final Set<SQLDialect> REQUIRE_NEW_MYSQL_EXCLUDED_EMULATION          = SQLDialect.supportedBy(MYSQL);
+    static final Set<SQLDialect> SUPPORT_NATIVE_EXCLUDED                       = SQLDialect.supportedBy(POSTGRES, SQLITE, YUGABYTEDB);
     static final Set<SQLDialect> NO_SUPPORT_INSERT_ALIASED_TABLE               = SQLDialect.supportedBy(DERBY, DUCKDB, FIREBIRD, H2, MARIADB, MYSQL, TRINO);
     static final Set<SQLDialect> NO_SUPPORT_ON_CONSTRAINT_ON_CONFLICT          = SQLDialect.supportedUntil(DUCKDB);
 
@@ -888,7 +891,7 @@ implements
 
 
 
-            if (requireNewMySQLExcludedEmulation || ctx.family().category() == SQLDialectCategory.POSTGRES) {
+            if (requireNewMySQLExcludedEmulation || SUPPORT_NATIVE_EXCLUDED.contains(ctx.dialect())) {
                 Table<?> t = s.asTable(DSL.table(N_EXCLUDED), keysFlattened);
 
                 if (requireNewMySQLExcludedEmulation)

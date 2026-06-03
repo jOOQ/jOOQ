@@ -37,45 +37,17 @@
  */
 package org.jooq.impl;
 
-import org.jooq.Context;
-import org.jooq.DataType;
-import org.jooq.QueryPart;
-import org.jooq.SQL;
-import org.jooq.impl.QOM.UEmptyField;
+import org.jooq.Field;
 
-final class SQLField<T>
-extends
-    AbstractField<T>
-implements
-    UEmptyField<T>,
-    TypedReference<T>,
-    NamedField<T>
-{
-
-    final SQLImpl delegate;
-
-    SQLField(DataType<T> type, SQL delegate) {
-        super(DSL.unquotedName(delegate.toString()), type);
-
-        this.delegate = (SQLImpl) delegate;
-    }
-
-    // ------------------------------------------------------------------------
-    // Field API
-    // ------------------------------------------------------------------------
-
-    @Override
-    public final void accept(Context<?> ctx) {
-        switch (ctx.family()) {
-
-
-
-
-
-
-            default:
-                ctx.visit(delegate);
-                break;
-        }
-    }
-}
+/**
+ * A marker interface for fields whose name is defined.
+ * <p>
+ * While all {@link Field} implementations are {@link Named}, not all of them
+ * produce a name known to the underlying dialect's SQL engine. E.g.
+ * <code>'a' || 'b'</code> has a name called "concat", but this may not be the
+ * name the SQL engine uses for this expression. In some cases, jOOQ needs to
+ * explicitly produce the name for unnamed fields.
+ *
+ * @author Lukas Eder
+ */
+interface NamedField<T> extends Field<T> {}

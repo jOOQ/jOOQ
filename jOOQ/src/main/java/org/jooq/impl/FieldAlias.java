@@ -61,7 +61,8 @@ extends
 implements
     QOM.FieldAlias<T>,
     SimpleCheckQueryPart,
-    ScopeMappable
+    ScopeMappable,
+    NamedField<T>
 {
 
     private final Alias<Field<T>> alias;

@@ -641,12 +641,15 @@ final class ParsingStatement implements CallableStatement {
 
 
             // Legacy Java 8 implementation
-            ByteArrayOutputStream out = new ByteArrayOutputStream(length);
+            // [#20026] MAX_VALUE means we don't actually know the length
+            ByteArrayOutputStream out = length == Integer.MAX_VALUE
+                ? new ByteArrayOutputStream()
+                : new ByteArrayOutputStream(length);
 
             long total = 0;
             byte[] buffer = new byte[8192];
             int delta;
-            while ((delta = x.read(buffer, 0, (int) Math.min(length - total, 8192L))) >= 0) {
+            while ((delta = x.read(buffer, 0, (int) Math.min(length - total, 8192L))) > 0) {
                 out.write(buffer, 0, delta);
                 total += delta;
             }

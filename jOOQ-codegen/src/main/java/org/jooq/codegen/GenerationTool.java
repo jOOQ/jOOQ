@@ -1389,11 +1389,13 @@ public class GenerationTool {
                       Your configured database type was not found: {className}. This can have several reasons:
                       - You want to use a commercial jOOQ Edition, but you pulled the Open Source Edition from Maven Central. Maven groupIds are:
                         - org.jooq                for the Open Source Edition
-                        - org.jooq.pro            for commercial editions with Java 21 support,
+                        - org.jooq.pro            for commercial editions with Java 25 support,
+                        - org.jooq.pro-java-21    for commercial editions with Java 21 support,
                         - org.jooq.pro-java-17    for commercial editions with Java 17 support,
                         - org.jooq.pro-java-11    for commercial editions with Java 11 support,
                         - org.jooq.pro-java-8     for commercial editions with Java 8 support,
-                        - org.jooq.trial          for the free trial edition with Java 21 support,
+                        - org.jooq.trial          for the free trial edition with Java 25 support,
+                        - org.jooq.trial-java-21  for the free trial edition with Java 21 support,
                         - org.jooq.trial-java-17  for the free trial edition with Java 17 support,
                         - org.jooq.trial-java-11  for the free trial edition with Java 11 support,
                         - org.jooq.trial-java-8   for the free trial edition with Java 8 support

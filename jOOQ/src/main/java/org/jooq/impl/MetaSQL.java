@@ -423,6 +423,7 @@ final class MetaSQL {
 
 
 
+
         M_COMMENTS.put(CLICKHOUSE, "select c.catalog, c.database, c.table, c.name, c.comment from (select system.tables.database as catalog, system.tables.database, system.tables.name as table, null as name, system.tables.comment as comment from system.tables where system.tables.comment <> '' union all select system.columns.database as catalog, system.columns.database, system.columns.table, system.columns.name, system.columns.comment from system.columns where system.columns.comment <> '') c where c.database in (?) order by 1, 2, 3, 4");
         M_COMMENTS.put(DUCKDB, "select duckdb_tables.database_name, duckdb_tables.schema_name, duckdb_tables.table_name, duckdb_tables.column_name, duckdb_tables.comment from (select duckdb_tables.database_name, duckdb_tables.schema_name, duckdb_tables.table_name, null column_name, duckdb_tables.comment from duckdb_tables() union all select duckdb_views.database_name, duckdb_views.schema_name, duckdb_views.view_name, null column_name, duckdb_views.comment from duckdb_views() union all select duckdb_columns.database_name, duckdb_columns.schema_name, duckdb_columns.table_name, duckdb_columns.column_name, duckdb_columns.comment from duckdb_columns()) duckdb_tables where duckdb_tables.schema_name in (cast(? as varchar))");
         M_COMMENTS.put(FIREBIRD, "select c.catalog, c.schema, c.RDB$RELATION_NAME, c.RDB$FIELD_NAME, c.RDB$DESCRIPTION from (select null catalog, null schema, trim(RDB$RELATIONS.RDB$RELATION_NAME) RDB$RELATION_NAME, null RDB$FIELD_NAME, trim(RDB$RELATIONS.RDB$DESCRIPTION) RDB$DESCRIPTION from RDB$RELATIONS where RDB$RELATIONS.RDB$DESCRIPTION is not null union all select null, null, RDB$RELATION_FIELDS.RDB$RELATION_NAME, RDB$RELATION_FIELDS.RDB$FIELD_NAME, RDB$RELATION_FIELDS.RDB$DESCRIPTION from RDB$RELATION_FIELDS where RDB$RELATION_FIELDS.RDB$DESCRIPTION is not null) c order by 1, 2, 3");
@@ -578,6 +579,16 @@ final class MetaSQL {
         M_GENERATORS.put(MYSQL, "select null as table_catalog, information_schema.COLUMNS.TABLE_SCHEMA, information_schema.COLUMNS.TABLE_NAME, information_schema.COLUMNS.COLUMN_NAME, information_schema.COLUMNS.GENERATION_EXPRESSION, case when information_schema.COLUMNS.EXTRA in ('VIRTUAL', 'VIRTUAL GENERATED') then 'VIRTUAL' when information_schema.COLUMNS.EXTRA in ('PERSISTENT', 'STORED GENERATED') then 'STORED' end as generationOption from information_schema.COLUMNS where (information_schema.COLUMNS.TABLE_SCHEMA in (?) and information_schema.COLUMNS.EXTRA in ('VIRTUAL', 'VIRTUAL GENERATED', 'PERSISTENT', 'STORED GENERATED')) order by information_schema.COLUMNS.ORDINAL_POSITION");
         M_GENERATORS.put(POSTGRES, "select information_schema.columns.table_catalog, information_schema.columns.table_schema, information_schema.columns.table_name, information_schema.columns.column_name, information_schema.columns.generation_expression as generation_expression, case when pg_catalog.pg_attribute.attgenerated = 's' then 'STORED' when pg_catalog.pg_attribute.attgenerated = 'v' then 'VIRTUAL' end from information_schema.columns join (pg_catalog.pg_attribute join (pg_catalog.pg_class as alias_100646588 join pg_catalog.pg_namespace as alias_117804412 on alias_100646588.relnamespace = alias_117804412.oid) on pg_catalog.pg_attribute.attrelid = alias_100646588.oid) on (pg_catalog.pg_attribute.attname = information_schema.columns.column_name and alias_100646588.relname = information_schema.columns.table_name and alias_117804412.nspname = information_schema.columns.table_schema) where (information_schema.columns.table_schema in (?) and pg_catalog.pg_attribute.attgenerated in ('s', 'v')) order by information_schema.columns.ordinal_position");
         M_GENERATORS.put(YUGABYTEDB, "select information_schema.columns.table_catalog, information_schema.columns.table_schema, information_schema.columns.table_name, information_schema.columns.column_name, information_schema.columns.generation_expression as generation_expression, case when 's' = 's' then 'STORED' when 's' = 'v' then 'VIRTUAL' end from information_schema.columns join (pg_catalog.pg_attribute join (pg_catalog.pg_class as alias_100646588 join pg_catalog.pg_namespace as alias_117804412 on alias_100646588.relnamespace = alias_117804412.oid) on pg_catalog.pg_attribute.attrelid = alias_100646588.oid) on (pg_catalog.pg_attribute.attname = information_schema.columns.column_name and alias_100646588.relname = information_schema.columns.table_name and alias_117804412.nspname = information_schema.columns.table_schema) where (information_schema.columns.table_schema in (?) and 's' in ('s', 'v')) order by information_schema.columns.ordinal_position");
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -581,6 +581,7 @@ import org.jooq.AlterSchemaStep;
 import org.jooq.AlterSequenceFlagsStep;
 import org.jooq.AlterSequenceStep;
 import org.jooq.AlterTableAddStep;
+import org.jooq.AlterTableAlterConstraintStep;
 import org.jooq.AlterTableDropStep;
 import org.jooq.AlterTableStep;
 import org.jooq.AlterTypeStep;
@@ -5700,18 +5701,28 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         boolean onConflict = false;
         boolean deferrable = false;
         boolean initially = false;
+        boolean enforced = false;
 
-        while ((!onConflict && (onConflict = parseConstraintConflictClauseIf()))
-            || (!deferrable && (deferrable = parseConstraintDeferrableIf()))
-            || (!initially && (initially = parseConstraintInitiallyIf())))
-            ;
+        for (;;) {
+            if (!onConflict && (onConflict = parseConstraintConflictClauseIf()))
+                continue;
+            else if (!enforced && (enforced = parseConstraintEnforcedIf()))
+                e = e.enforced();
+            else if (!enforced && (enforced = parseConstraintNotEnforcedIf()))
+                e = e.notEnforced();
+            else if (!deferrable && (deferrable = parseKeywordIf("DEFERRABLE")))
+                e = e.deferrable();
+            else if (!deferrable && (deferrable = parseKeywordIf("NOT DEFERRABLE")))
+                e = e.notDeferrable();
+            else if (!initially && (initially = parseKeywordIf("INITIALLY DEFERRED")))
+                e = e.initiallyDeferred();
+            else if (!initially && (initially = parseKeywordIf("INITIALLY IMMEDIATE")))
+                e = e.initiallyImmediate();
+            else
+                break;
+        }
 
-        if (parseConstraintEnforcedIf())
-            return e.enforced();
-        else if (parseConstraintNotEnforcedIf())
-            return e.notEnforced();
-        else
-            return e;
+        return e;
     }
 
     private final boolean parseConstraintEnforcedIf() {
@@ -5723,14 +5734,6 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
     private final boolean parseConstraintNotEnforcedIf() {
         return parseKeywordIf("NOT ENFORCED")
             || parseKeywordIf("DISABLE") && (parseKeywordIf("NOVALIDATE") || true);
-    }
-
-    private final boolean parseConstraintDeferrableIf() {
-        return parseKeywordIf("DEFERRABLE", "NOT DEFERRABLE");
-    }
-
-    private final boolean parseConstraintInitiallyIf() {
-        return parseKeywordIf("INITIALLY") && parseKeyword("DEFERRED", "IMMEDIATE");
     }
 
     private static final record PrimaryKeySpecification(Constraint constraint, GenerationMode identity) {}
@@ -6354,16 +6357,43 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
     private final DDLQuery parseAlterTableAlterConstraint(AlterTableStep s1) {
         requireProEdition();
 
+        AlterTableAlterConstraintStep s2 = s1.alterConstraint(constraint(parseIdentifier()));
 
+        boolean enforced = false;
+        boolean deferrable = false;
+        boolean initially = false;
 
+        for (;;) {
+            if (!enforced && (enforced = parseConstraintEnforcedIf()))
+                s2 = s2.enforced();
+            else if (!enforced && (enforced = parseConstraintNotEnforcedIf()))
+                s2 = s2.notEnforced();
+            else if (!deferrable && (deferrable = parseKeywordIf("DEFERRABLE")))
+                s2 = s2.deferrable();
+            else if (!deferrable && (deferrable = parseKeywordIf("NOT DEFERRABLE")))
+                s2 = s2.notDeferrable();
+            else if (!initially && (initially = parseKeywordIf("INITIALLY DEFERRED")))
+                s2 = s2.initiallyDeferred();
+            else if (!initially && (initially = parseKeywordIf("INITIALLY IMMEDIATE")))
+                s2 = s2.initiallyImmediate();
+            else
+                break;
+        }
 
-
-
-
-
-
-
-        throw expected("ENABLE", "ENFORCED", "VALIDATE", "DISABLE", "NOT ENFORCED");
+        if (enforced || deferrable || initially)
+            return (DDLQuery) s2;
+        else
+            throw expected(
+                "DEFERRABLE",
+                "DISABLE",
+                "ENABLE",
+                "ENFORCED",
+                "INITIALLY DEFERRED",
+                "INITIALLY IMMEDIATE",
+                "NOT DEFERRABLE",
+                "NOT ENFORCED",
+                "VALIDATE"
+            );
     }
 
     private final DDLQuery parseAlterType() {

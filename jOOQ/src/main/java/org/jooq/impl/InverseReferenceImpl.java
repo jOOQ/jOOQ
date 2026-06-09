@@ -60,7 +60,14 @@ implements
     private final ForeignKey<O, R> foreignKey;
 
     InverseReferenceImpl(ForeignKey<O, R> foreignKey) {
-        super(foreignKey.getKey().getTable(), foreignKey.getQualifiedName(), foreignKey.getKeyFieldsArray(), foreignKey.enforced());
+        super(
+            foreignKey.getKey().getTable(),
+            foreignKey.getQualifiedName(),
+            foreignKey.getKeyFieldsArray(),
+            foreignKey.enforced(),
+            foreignKey.characteristic(),
+            foreignKey.checkTime()
+        );
 
         this.foreignKey = foreignKey;
     }

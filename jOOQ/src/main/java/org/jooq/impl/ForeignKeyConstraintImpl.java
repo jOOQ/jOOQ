@@ -98,6 +98,8 @@ import org.jooq.QueryPart;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
 // ...
+import org.jooq.impl.QOM.ConstraintCharacteristic;
+import org.jooq.impl.QOM.ConstraintCheckTime;
 import org.jooq.impl.QOM.ForeignKey;
 import org.jooq.impl.QOM.ForeignKeyRule;
 import org.jooq.impl.QOM.UnmodifiableList;
@@ -163,7 +165,9 @@ implements
             null,
             null,
             null,
-            true
+            true,
+            null,
+            null
         );
     }
 
@@ -174,9 +178,11 @@ implements
         Collection<? extends Field<?>> referencesFields,
         ForeignKeyRule deleteRule,
         ForeignKeyRule updateRule,
-        boolean enforced
+        boolean enforced,
+        ConstraintCharacteristic characteristic,
+        ConstraintCheckTime checkTime
     ) {
-        super(name, enforced);
+        super(name, enforced, characteristic, checkTime);
 
         this.fields = new QueryPartList<>(fields);
         this.referencesTable = referencesTable;
@@ -687,7 +693,9 @@ implements
             referencesFields,
             deleteRule,
             updateRule,
-            enforced
+            enforced,
+            characteristic,
+            checkTime
         );
     }
 
@@ -699,7 +707,37 @@ implements
             referencesFields,
             deleteRule,
             updateRule,
-            newEnforced
+            newEnforced,
+            characteristic,
+            checkTime
+        );
+    }
+
+    @Override
+    public final ForeignKey $characteristic(ConstraintCharacteristic newCharacteristic) {
+        return new ForeignKeyConstraintImpl($name(),
+            fields,
+            referencesTable,
+            referencesFields,
+            deleteRule,
+            updateRule,
+            enforced,
+            newCharacteristic,
+            checkTime
+        );
+    }
+
+    @Override
+    public final ForeignKey $checkTime(ConstraintCheckTime newCheckTime) {
+        return new ForeignKeyConstraintImpl($name(),
+            fields,
+            referencesTable,
+            referencesFields,
+            deleteRule,
+            updateRule,
+            enforced,
+            characteristic,
+            newCheckTime
         );
     }
 
@@ -716,7 +754,9 @@ implements
             referencesFields,
             deleteRule,
             updateRule,
-            enforced
+            enforced,
+            characteristic,
+            checkTime
         );
     }
 
@@ -733,7 +773,9 @@ implements
             referencesFields,
             deleteRule,
             updateRule,
-            enforced
+            enforced,
+            characteristic,
+            checkTime
         );
     }
 
@@ -750,7 +792,9 @@ implements
             newReferencesFields,
             deleteRule,
             updateRule,
-            enforced
+            enforced,
+            characteristic,
+            checkTime
         );
     }
 
@@ -767,7 +811,9 @@ implements
             referencesFields,
             newDeleteRule,
             updateRule,
-            enforced
+            enforced,
+            characteristic,
+            checkTime
         );
     }
 
@@ -784,7 +830,9 @@ implements
             referencesFields,
             deleteRule,
             newUpdateRule,
-            enforced
+            enforced,
+            characteristic,
+            checkTime
         );
     }
 

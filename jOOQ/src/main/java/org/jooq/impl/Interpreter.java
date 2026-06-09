@@ -125,6 +125,8 @@ import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataDefinitionException;
 import org.jooq.impl.DefaultParseContext.IgnoreQuery;
 import org.jooq.impl.QOM.Cascade;
+import org.jooq.impl.QOM.ConstraintCharacteristic;
+import org.jooq.impl.QOM.ConstraintCheckTime;
 import org.jooq.impl.QOM.CycleOption;
 import org.jooq.impl.QOM.ForeignKeyRule;
 import org.jooq.impl.QOM.GenerationMode;
@@ -471,7 +473,8 @@ final class Interpreter {
                 return;
 
         mt.foreignKeys.add(new MutableForeignKey(
-            (UnqualifiedName) key.getUnqualifiedName(), mt, mfs, mu, mrfs, key.$deleteRule(), key.$updateRule(), key.$enforced()
+            (UnqualifiedName) key.getUnqualifiedName(), mt, mfs, mu, mrfs, key.$deleteRule(), key.$updateRule(),
+            key.$enforced(), key.$characteristic(), key.$checkTime()
         ));
     }
 
@@ -759,7 +762,19 @@ final class Interpreter {
                 mc.name((UnqualifiedName) query.$renameConstraintTo().getUnqualifiedName());
         }
         else if (query.$alterConstraint() != null) {
-            existing.constraint(query.$alterConstraint(), true).enforced = query.$alterConstraintEnforced();
+            MutableConstraint c = existing.constraint(query.$alterConstraint(), true);
+
+            if (query.$alterConstraintEnforced() != null)
+                c.enforced = query.$alterConstraintEnforced();
+
+            if (query.$alterConstraintCharacteristic() == ConstraintCharacteristic.NOT_DEFERRABLE) {
+                c.characteristic = query.$alterConstraintCharacteristic();
+                c.checkTime = null;
+            }
+            else if (query.$alterConstraintCharacteristic() == ConstraintCharacteristic.DEFERRABLE) {
+                c.characteristic = query.$alterConstraintCharacteristic();
+                c.checkTime = query.$alterConstraintCheckTime();
+            }
         }
         else if (query.$dropColumns() != null) {
             List<MutableField> fields = existing.fields(query.$dropColumns(), false);
@@ -943,14 +958,23 @@ final class Interpreter {
                     return;
             }
             else
-                existing.primaryKey = new MutableUniqueKey((UnqualifiedName) constraint.getUnqualifiedName(), existing, existing.fields(p.$fields(), true), p.$enforced());
+                existing.primaryKey = new MutableUniqueKey(
+                    (UnqualifiedName) constraint.getUnqualifiedName(), existing, existing.fields(p.$fields(), true),
+                    p.$enforced(), p.$characteristic(), p.$checkTime()
+                );
         }
         else if (constraint instanceof QOM.UniqueKey u)
-            existing.uniqueKeys.add(new MutableUniqueKey((UnqualifiedName) constraint.getUnqualifiedName(), existing, existing.fields(u.$fields(), true), u.$enforced()));
+            existing.uniqueKeys.add(new MutableUniqueKey(
+                (UnqualifiedName) constraint.getUnqualifiedName(), existing, existing.fields(u.$fields(), true),
+                u.$enforced(), u.$characteristic(), u.$checkTime()
+            ));
         else if (constraint instanceof QOM.ForeignKey f)
             addForeignKey(existing, f);
         else if (constraint instanceof QOM.Check c)
-            existing.checks.add(new MutableCheck((UnqualifiedName) constraint.getUnqualifiedName(), existing, c.$condition(), c.$enforced()));
+            existing.checks.add(new MutableCheck(
+                (UnqualifiedName) constraint.getUnqualifiedName(), existing, c.$condition(),
+                c.$enforced(), c.$characteristic(), c.$checkTime()
+            ));
         else
             throw unsupportedQuery(query);
     }
@@ -2546,7 +2570,7 @@ final class Interpreter {
 
             @Override
             public List<Check<Record>> getChecks() {
-                return map(MutableTable.this.checks, c -> new CheckImpl<>(this, c.name(), c.condition, c.enforced));
+                return map(MutableTable.this.checks, c -> new CheckImpl<>(this, c.name(), c.condition, c.enforced, c.characteristic, c.checkTime));
             }
 
             @Override
@@ -2653,7 +2677,7 @@ final class Interpreter {
         }
 
         final Check<?>[] interpretedChecks() {
-            return map(checks, c -> new CheckImpl<>(null, c.name(), c.condition, c.enforced), Check[]::new);
+            return map(checks, c -> new CheckImpl<>(null, c.name(), c.condition, c.enforced, c.characteristic, c.checkTime), Check[]::new);
         }
 
         private final class InterpretedDomain extends DomainImpl {
@@ -2803,14 +2827,24 @@ final class Interpreter {
 
 
     private abstract class MutableConstraint extends MutableNamed {
-        MutableTable table;
-        boolean      enforced;
+        MutableTable             table;
+        boolean                  enforced;
+        ConstraintCharacteristic characteristic;
+        ConstraintCheckTime      checkTime;
 
-        MutableConstraint(UnqualifiedName name, MutableTable table, boolean enforced) {
+        MutableConstraint(
+            UnqualifiedName name,
+            MutableTable table,
+            boolean enforced,
+            ConstraintCharacteristic characteristic,
+            ConstraintCheckTime checkTime
+        ) {
             super(name);
 
             this.table = table;
             this.enforced = enforced;
+            this.characteristic = characteristic;
+            this.checkTime = checkTime;
         }
 
         @Override
@@ -2822,8 +2856,15 @@ final class Interpreter {
     private abstract class MutableKey extends MutableConstraint {
         List<MutableField> fields;
 
-        MutableKey(UnqualifiedName name, MutableTable table, List<MutableField> fields, boolean enforced) {
-            super(name, table, enforced);
+        MutableKey(
+            UnqualifiedName name,
+            MutableTable table,
+            List<MutableField> fields,
+            boolean enforced,
+            ConstraintCharacteristic characteristic,
+            ConstraintCheckTime checkTime
+        ) {
+            super(name, table, enforced, characteristic, checkTime);
 
             this.fields = fields;
         }
@@ -2844,12 +2885,21 @@ final class Interpreter {
                 (UnqualifiedName) check.getUnqualifiedName(),
                 null,
                 check.$condition(),
-                check.$enforced()
+                check.$enforced(),
+                check.$characteristic(),
+                check.$checkTime()
             );
         }
 
-        MutableCheck(UnqualifiedName name, MutableTable table, Condition condition, boolean enforced) {
-            super(name, table, enforced);
+        MutableCheck(
+            UnqualifiedName name,
+            MutableTable table,
+            Condition condition,
+            boolean enforced,
+            ConstraintCharacteristic characteristic,
+            ConstraintCheckTime checkTime
+        ) {
+            super(name, table, enforced, characteristic, checkTime);
 
             this.condition = condition;
         }
@@ -2871,8 +2921,15 @@ final class Interpreter {
     private final class MutableUniqueKey extends MutableKey {
         List<MutableForeignKey> referencingKeys = new MutableNamedList<>();
 
-        MutableUniqueKey(UnqualifiedName name, MutableTable table, List<MutableField> fields, boolean enforced) {
-            super(name, table, fields, enforced);
+        MutableUniqueKey(
+            UnqualifiedName name,
+            MutableTable table,
+            List<MutableField> fields,
+            boolean enforced,
+            ConstraintCharacteristic characteristic,
+            ConstraintCheckTime checkTime
+        ) {
+            super(name, table, fields, enforced, characteristic, checkTime);
         }
 
         @Override
@@ -2903,7 +2960,9 @@ final class Interpreter {
                     t,
                     name(),
                     map(fields, f -> (TableField<Record, ?>) t.field(f.name()), TableField[]::new),
-                    enforced
+                    enforced,
+                    characteristic,
+                    checkTime
                 ));
 
                 for (MutableForeignKey referencingKey : referencingKeys)
@@ -2929,9 +2988,11 @@ final class Interpreter {
             List<MutableField> referencedFields,
             ForeignKeyRule onDelete,
             ForeignKeyRule onUpdate,
-            boolean enforced
+            boolean enforced,
+            ConstraintCharacteristic characteristic,
+            ConstraintCheckTime checkTime
         ) {
-            super(name, table, fields, enforced);
+            super(name, table, fields, enforced, characteristic, checkTime);
 
             this.referencedKey = referencedKey;
             this.referencedKey.referencingKeys.add(this);
@@ -2969,9 +3030,11 @@ final class Interpreter {
                     map(fields, f -> (TableField<Record, ?>) t.field(f.name()), TableField[]::new),
                     uk,
                     map(referencedFields, f -> (TableField<Record, ?>) uk.getTable().field(f.name()), TableField[]::new),
-                    enforced,
                     onDelete,
-                    onUpdate
+                    onUpdate,
+                    enforced,
+                    characteristic,
+                    checkTime
                 ));
             }
 

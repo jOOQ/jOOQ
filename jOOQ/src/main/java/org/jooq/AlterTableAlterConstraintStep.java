@@ -73,13 +73,41 @@ public interface AlterTableAlterConstraintStep {
      */
     @NotNull @CheckReturnValue
     @Support({ MYSQL })
-    AlterTableFinalStep enforced();
+    AlterTableAlterConstraintMoreStep enforced();
 
     /**
      * Add the <code>NOT ENFORCED</code> clause to the constraint.
      */
     @NotNull @CheckReturnValue
     @Support({ MYSQL })
-    AlterTableFinalStep notEnforced();
+    AlterTableAlterConstraintMoreStep notEnforced();
+
+    /**
+     * Add the <code>DEFERRABLE</code> clause to the constraint.
+     */
+    @NotNull
+    @Support({ HSQLDB, POSTGRES, SQLITE, YUGABYTEDB })
+    AlterTableAlterConstraintMoreStep deferrable();
+
+    /**
+     * Add the <code>NOT DEFERRABLE</code> clause to the constraint.
+     */
+    @NotNull
+    @Support({ HSQLDB, POSTGRES, SQLITE, YUGABYTEDB })
+    AlterTableAlterConstraintMoreStep notDeferrable();
+
+    /**
+     * Add the <code>INITIALLY DEFERRED</code> clause to the constraint.
+     */
+    @NotNull
+    @Support({ HSQLDB, POSTGRES, SQLITE, YUGABYTEDB })
+    AlterTableAlterConstraintMoreStep initiallyDeferred();
+
+    /**
+     * Add the <code>INITIALLY IMMEDIATE</code> clause to the constraint.
+     */
+    @NotNull
+    @Support({ HSQLDB, POSTGRES, SQLITE, YUGABYTEDB })
+    AlterTableAlterConstraintMoreStep initiallyImmediate();
 }
 

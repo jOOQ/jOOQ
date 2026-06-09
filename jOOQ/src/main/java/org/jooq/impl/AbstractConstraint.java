@@ -46,11 +46,15 @@ import static org.jooq.SQLDialect.IGNITE;
 // ...
 import static org.jooq.SQLDialect.TRINO;
 import static org.jooq.impl.Keywords.K_CONSTRAINT;
+import static org.jooq.impl.Keywords.K_DEFERRABLE;
+import static org.jooq.impl.Keywords.K_DEFERRED;
 import static org.jooq.impl.Keywords.K_DISABLE;
 import static org.jooq.impl.Keywords.K_DISABLED;
 import static org.jooq.impl.Keywords.K_ENABLE;
 import static org.jooq.impl.Keywords.K_ENABLED;
 import static org.jooq.impl.Keywords.K_ENFORCED;
+import static org.jooq.impl.Keywords.K_IMMEDIATE;
+import static org.jooq.impl.Keywords.K_INITIALLY;
 import static org.jooq.impl.Keywords.K_NOT;
 import static org.jooq.impl.Keywords.K_VALID;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_CONSTRAINT_REFERENCE;
@@ -63,6 +67,8 @@ import org.jooq.Name;
 // ...
 import org.jooq.SQLDialect;
 import org.jooq.Table;
+import org.jooq.impl.QOM.ConstraintCharacteristic;
+import org.jooq.impl.QOM.ConstraintCheckTime;
 
 /**
  * @author Lukas Eder
@@ -73,8 +79,8 @@ extends
 implements
     ConstraintEnforcementStep
 {
-    static final Set<SQLDialect>  NO_SUPPORT_NAMED          = SQLDialect.supportedBy();
-    static final Set<SQLDialect>  NO_SUPPORT_NAMED_PK       = SQLDialect.supportedBy(CLICKHOUSE);
+    static final Set<SQLDialect> NO_SUPPORT_NAMED          = SQLDialect.supportedBy();
+    static final Set<SQLDialect> NO_SUPPORT_NAMED_PK       = SQLDialect.supportedBy(CLICKHOUSE);
 
 
 
@@ -85,20 +91,24 @@ implements
 
 
 
-    boolean                       enforced            = true;
+    boolean                      enforced                  = true;
+    ConstraintCharacteristic     characteristic;
+    ConstraintCheckTime          checkTime;
 
     AbstractConstraint() {
         this(null);
     }
 
     AbstractConstraint(Name name) {
-        this(name, false);
+        this(name, false, null, null);
     }
 
-    AbstractConstraint(Name name, boolean enforced) {
+    AbstractConstraint(Name name, boolean enforced, ConstraintCharacteristic characteristic, ConstraintCheckTime checkTime) {
         super(name, null);
 
         this.enforced = enforced;
+        this.characteristic = characteristic;
+        this.checkTime = checkTime;
     }
 
     // ------------------------------------------------------------------------
@@ -131,6 +141,9 @@ implements
 
             if (!enforced)
                 acceptEnforced(ctx, enforced);
+
+
+
 
 
 
@@ -182,6 +195,30 @@ implements
         }
     }
 
+    static void acceptCharacteristic(Context<?> ctx, ConstraintCharacteristic characteristic, ConstraintCheckTime checkTime) {
+        if (characteristic != null) {
+            switch (characteristic) {
+                case DEFERRABLE:
+                    ctx.sql(' ').visit(K_DEFERRABLE);
+                    break;
+                case NOT_DEFERRABLE:
+                    ctx.sql(' ').visit(K_NOT).sql(' ').visit(K_DEFERRABLE);
+                    break;
+            }
+        }
+
+        if (checkTime != null) {
+            switch (checkTime) {
+                case INITIALLY_DEFERRED:
+                    ctx.sql(' ').visit(K_INITIALLY).sql(' ').visit(K_DEFERRED);
+                    break;
+                case INITIALLY_IMMEDIATE:
+                    ctx.sql(' ').visit(K_INITIALLY).sql(' ').visit(K_IMMEDIATE);
+                    break;
+            }
+        }
+    }
+
     abstract boolean supported(Context<?> ctx, Table<?> onTable);
 
     // ------------------------------------------------------------------------
@@ -200,11 +237,43 @@ implements
         return this;
     }
 
+    @Override
+    public final AbstractConstraint deferrable() {
+        this.characteristic = ConstraintCharacteristic.DEFERRABLE;
+        return this;
+    }
+
+    @Override
+    public final AbstractConstraint notDeferrable() {
+        this.characteristic = ConstraintCharacteristic.NOT_DEFERRABLE;
+        return this;
+    }
+
+    @Override
+    public final AbstractConstraint initiallyDeferred() {
+        this.checkTime = ConstraintCheckTime.INITIALLY_DEFERRED;
+        return this;
+    }
+
+    @Override
+    public final AbstractConstraint initiallyImmediate() {
+        this.checkTime = ConstraintCheckTime.INITIALLY_IMMEDIATE;
+        return this;
+    }
+
     // -------------------------------------------------------------------------
     // XXX: Query Object Model
     // -------------------------------------------------------------------------
 
     public final boolean $enforced() {
         return enforced;
+    }
+
+    public final ConstraintCharacteristic $characteristic() {
+        return characteristic;
+    }
+
+    public final ConstraintCheckTime $checkTime() {
+        return checkTime;
     }
 }

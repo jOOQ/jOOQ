@@ -48,6 +48,8 @@ import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
+import org.jooq.impl.QOM.ConstraintCharacteristic;
+import org.jooq.impl.QOM.ConstraintCheckTime;
 
 /**
  * @author Lukas Eder
@@ -56,12 +58,25 @@ final class UniqueKeyImpl<R extends Record> extends AbstractKey<R> implements Un
 
     final List<ForeignKey<?, R>> references;
 
-    UniqueKeyImpl(Table<R> table, TableField<R, ?>[] fields, boolean enforced) {
-        this(table, null, fields, enforced);
+    UniqueKeyImpl(
+        Table<R> table,
+        TableField<R, ?>[] fields,
+        boolean enforced,
+        ConstraintCharacteristic characteristic,
+        ConstraintCheckTime checkTime
+    ) {
+        this(table, null, fields, enforced, characteristic, checkTime);
     }
 
-    UniqueKeyImpl(Table<R> table, Name name, TableField<R, ?>[] fields, boolean enforced) {
-        super(table, name, fields, enforced);
+    UniqueKeyImpl(
+        Table<R> table,
+        Name name,
+        TableField<R, ?>[] fields,
+        boolean enforced,
+        ConstraintCharacteristic characteristic,
+        ConstraintCheckTime checkTime
+    ) {
+        super(table, name, fields, enforced, characteristic, checkTime);
 
         this.references = new ArrayList<>();
     }

@@ -615,9 +615,11 @@ final class FilteredMeta extends AbstractMeta {
         private final UniqueKey<R> key(UniqueKey<R> key) {
             return Internal.createUniqueKey(
                 this,
-                key.getName(),
+                key.getUnqualifiedName(),
                 map(key.getFieldsArray(), f -> (TableField) field(f), TableField[]::new),
-                key.enforced()
+                key.enforced(),
+                key.characteristic(),
+                key.checkTime()
             );
         }
 

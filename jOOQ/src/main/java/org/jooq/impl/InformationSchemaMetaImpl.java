@@ -322,7 +322,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
 
                     for (org.jooq.util.xml.jaxb.CheckConstraint cc : meta.getCheckConstraints())
                         if (constraintName.equals(name(cc.getConstraintCatalog(), cc.getConstraintSchema(), cc.getConstraintName())))
-                            checks.add(new CheckImpl<>(null, constraintName, DSL.condition(cc.getCheckClause()), true));
+                            checks.add(new CheckImpl<>(null, constraintName, DSL.condition(cc.getCheckClause()), true, null, null));
                 }
             }
 
@@ -630,7 +630,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
 
                     for (CheckConstraint cc : meta.getCheckConstraints()) {
                         if (constraintName.equals(name(cc.getConstraintCatalog(), cc.getConstraintSchema(), cc.getConstraintName()))) {
-                            table.checks.add(new CheckImpl<>(table, constraintName, DSL.condition(cc.getCheckClause()), true));
+                            table.checks.add(new CheckImpl<>(table, constraintName, DSL.condition(cc.getCheckClause()), true, null, null));
                             continue tableConstraintLoop;
                         }
                     }

@@ -60,6 +60,8 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
 import org.jooq.exception.DetachedException;
+import org.jooq.impl.QOM.ConstraintCharacteristic;
+import org.jooq.impl.QOM.ConstraintCheckTime;
 import org.jooq.impl.QOM.ForeignKeyRule;
 import org.jooq.impl.QOM.UEmpty;
 
@@ -85,11 +87,13 @@ implements
         TableField<CHILD, ?>[] fkFields,
         UniqueKey<PARENT> uk,
         TableField<PARENT, ?>[] ukFields,
-        boolean enforced,
         ForeignKeyRule deleteRule,
-        ForeignKeyRule updateRule
+        ForeignKeyRule updateRule,
+        boolean enforced,
+        ConstraintCharacteristic characteristic,
+        ConstraintCheckTime checkTime
     ) {
-        super(table, name, fkFields, enforced);
+        super(table, name, fkFields, enforced, characteristic, checkTime);
 
         this.uk = uk;
         this.ukFields = ukFields;

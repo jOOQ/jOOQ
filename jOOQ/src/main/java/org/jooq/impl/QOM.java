@@ -770,6 +770,12 @@ public final class QOM {
         boolean $enforced();
         @CheckReturnValue
         @NotNull Constraint $enforced(boolean newEnforced);
+        @Nullable ConstraintCharacteristic $characteristic();
+        @CheckReturnValue
+        @NotNull Constraint $characteristic(ConstraintCharacteristic newCharacteristic);
+        @Nullable ConstraintCheckTime $checkTime();
+        @CheckReturnValue
+        @NotNull Constraint $checkTime(ConstraintCheckTime newCheckTime);
         @NotNull UnmodifiableList<? extends Field<?>> $fields();
         @CheckReturnValue
         @NotNull PrimaryKey $fields(UnmodifiableList<? extends Field<?>> newFields);
@@ -789,6 +795,12 @@ public final class QOM {
         boolean $enforced();
         @CheckReturnValue
         @NotNull Constraint $enforced(boolean newEnforced);
+        @Nullable ConstraintCharacteristic $characteristic();
+        @CheckReturnValue
+        @NotNull Constraint $characteristic(ConstraintCharacteristic newCharacteristic);
+        @Nullable ConstraintCheckTime $checkTime();
+        @CheckReturnValue
+        @NotNull Constraint $checkTime(ConstraintCheckTime newCheckTime);
         @NotNull UnmodifiableList<? extends Field<?>> $fields();
         @CheckReturnValue
         @NotNull UniqueKey $fields(UnmodifiableList<? extends Field<?>> newFields);
@@ -808,6 +820,12 @@ public final class QOM {
         boolean $enforced();
         @CheckReturnValue
         @NotNull Constraint $enforced(boolean newEnforced);
+        @Nullable ConstraintCharacteristic $characteristic();
+        @CheckReturnValue
+        @NotNull Constraint $characteristic(ConstraintCharacteristic newCharacteristic);
+        @Nullable ConstraintCheckTime $checkTime();
+        @CheckReturnValue
+        @NotNull Constraint $checkTime(ConstraintCheckTime newCheckTime);
         @NotNull UnmodifiableList<? extends Field<?>> $fields();
         @CheckReturnValue
         @NotNull ForeignKey $fields(UnmodifiableList<? extends Field<?>> newFields);
@@ -839,6 +857,12 @@ public final class QOM {
         boolean $enforced();
         @CheckReturnValue
         @NotNull Constraint $enforced(boolean newEnforced);
+        @Nullable ConstraintCharacteristic $characteristic();
+        @CheckReturnValue
+        @NotNull Constraint $characteristic(ConstraintCharacteristic newCharacteristic);
+        @Nullable ConstraintCheckTime $checkTime();
+        @CheckReturnValue
+        @NotNull Constraint $checkTime(ConstraintCheckTime newCheckTime);
         @NotNull Condition $condition();
         @CheckReturnValue
         @NotNull Check $condition(Condition newCondition);
@@ -10663,6 +10687,40 @@ public final class QOM {
 
 
 
+
+    /**
+     * The <code>ConstraintCharacteristic</code> type.
+     * <p>
+     * Whether the constraint check time can be deferred.
+     */
+    public enum ConstraintCharacteristic {
+        DEFERRABLE(keyword("deferrable")),
+        NOT_DEFERRABLE(keyword("not deferrable")),
+        ;
+
+        final Keyword keyword;
+
+        private ConstraintCharacteristic(Keyword keyword) {
+            this.keyword = keyword;
+        }
+    }
+
+    /**
+     * The <code>ConstraintCheckTime</code> type.
+     * <p>
+     * When the constraint is being checked by default.
+     */
+    public enum ConstraintCheckTime {
+        INITIALLY_DEFERRED(keyword("initially deferred")),
+        INITIALLY_IMMEDIATE(keyword("initially immediate")),
+        ;
+
+        final Keyword keyword;
+
+        private ConstraintCheckTime(Keyword keyword) {
+            this.keyword = keyword;
+        }
+    }
 
     /**
      * The <code>Cascade</code> type.

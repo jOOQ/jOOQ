@@ -56,6 +56,8 @@ import org.jooq.QueryPart;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
 // ...
+import org.jooq.impl.QOM.ConstraintCharacteristic;
+import org.jooq.impl.QOM.ConstraintCheckTime;
 import org.jooq.impl.QOM.UniqueKey;
 import org.jooq.impl.QOM.UnmodifiableList;
 
@@ -68,15 +70,21 @@ extends
 implements
     QOM.UniqueKey
 {
-    static final Set<SQLDialect> NO_SUPPORT_UK = SQLDialect.supportedBy(CLICKHOUSE, IGNITE, TRINO);
+    static final Set<SQLDialect>  NO_SUPPORT_UK = SQLDialect.supportedBy(CLICKHOUSE, IGNITE, TRINO);
     final QueryPartList<Field<?>> fields;
 
     UniqueConstraintImpl(Name name, Collection<? extends Field<?>> fields) {
-        this(name, fields, true);
+        this(name, fields, true, null, null);
     }
 
-    private UniqueConstraintImpl(Name name, Collection<? extends Field<?>> fields, boolean enforced) {
-        super(name, enforced);
+    private UniqueConstraintImpl(
+        Name name,
+        Collection<? extends Field<?>> fields,
+        boolean enforced,
+        ConstraintCharacteristic characteristic,
+        ConstraintCheckTime checkTime
+    ) {
+        super(name, enforced, characteristic, checkTime);
 
         this.fields = new QueryPartList<>(fields);
     }
@@ -107,17 +115,27 @@ implements
 
     @Override
     public final UniqueKey $fields(UnmodifiableList<? extends Field<?>> newFields) {
-        return new UniqueConstraintImpl($name(), newFields);
+        return new UniqueConstraintImpl($name(), newFields, $enforced(), $characteristic(), $checkTime());
     }
 
     @Override
     public final UniqueKey $name(Name newName) {
-        return new UniqueConstraintImpl(newName, fields, $enforced());
+        return new UniqueConstraintImpl(newName, fields, $enforced(), $characteristic(), $checkTime());
     }
 
     @Override
     public final UniqueKey $enforced(boolean newEnforced) {
-        return new UniqueConstraintImpl($name(), fields, newEnforced);
+        return new UniqueConstraintImpl($name(), fields, newEnforced, $characteristic(), $checkTime());
+    }
+
+    @Override
+    public final UniqueKey $characteristic(ConstraintCharacteristic newCharacteristic) {
+        return new UniqueConstraintImpl($name(), fields, $enforced(), newCharacteristic, $checkTime());
+    }
+
+    @Override
+    public final UniqueKey $checkTime(ConstraintCheckTime newCheckTime) {
+        return new UniqueConstraintImpl($name(), fields, $enforced(), $characteristic(), newCheckTime);
     }
 
 

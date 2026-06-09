@@ -1662,9 +1662,11 @@ final class MetaImpl extends AbstractMeta {
                             fkFields,
                             new MetaUniqueKey(pkTable, pkName, pkFields, true), // TODO: Can we know whether it is a PK or UK?
                             pkFields,
-                            true,
                             foreignKeyRule(k.get(4, Integer.class)),
-                            foreignKeyRule(k.get(3, Integer.class))
+                            foreignKeyRule(k.get(3, Integer.class)),
+                            true,
+                            null,
+                            null
                         ));
                     }
                 }
@@ -1794,7 +1796,9 @@ final class MetaImpl extends AbstractMeta {
                 this,
                 name(r.get(3, String.class)),
                 DSL.condition(r.get(4, String.class)),
-                true
+                true,
+                null,
+                null
             );
         }
 
@@ -2118,7 +2122,14 @@ final class MetaImpl extends AbstractMeta {
         private final boolean     isPrimary;
 
         MetaUniqueKey(Table<Record> table, String name, TableField<Record, ?>[] fields, boolean isPrimary) {
-            super(table, name == null ? null : name(name), fields, true);
+            super(
+                table,
+                name == null ? null : name(name),
+                fields,
+                true,
+                null,
+                null
+            );
 
             this.isPrimary = isPrimary;
         }
@@ -2185,9 +2196,11 @@ final class MetaImpl extends AbstractMeta {
                     map(v, f -> (TableField<Record, ?>) fkTable.field(f.get(7, String.class)), TableField[]::new),
                     this,
                     map(v, f -> (TableField<Record, ?>) getTable().field(f.get(3, String.class)), TableField[]::new),
-                    true,
                     foreignKeyRule(k.get(4, Integer.class)),
-                    foreignKeyRule(k.get(3, Integer.class))
+                    foreignKeyRule(k.get(3, Integer.class)),
+                    true,
+                    null,
+                    null
                 ));
             });
 

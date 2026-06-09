@@ -137,6 +137,7 @@ final class Keywords {
     static final Keyword K_DECLARE                  = keyword("declare");
     static final Keyword K_DEFAULT                  = keyword("default");
     static final Keyword K_DEFAULT_VALUES           = keyword("default values");
+    static final Keyword K_DEFERRABLE               = keyword("deferrable");
     static final Keyword K_DEFERRED                 = keyword("deferred");
     static final Keyword K_DEFINE                   = keyword("define");
     static final Keyword K_DELETE                   = keyword("delete");

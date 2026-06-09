@@ -39,6 +39,9 @@ package org.jooq;
 
 import java.util.List;
 
+import org.jooq.impl.QOM.ConstraintCharacteristic;
+import org.jooq.impl.QOM.ConstraintCheckTime;
+
 import org.jetbrains.annotations.NotNull;
 
 
@@ -84,6 +87,16 @@ public interface Key<R extends Record> extends Named {
      * Whether this key is being enforced.
      */
     boolean enforced();
+
+    /**
+     * The constraint characteristic.
+     */
+    ConstraintCharacteristic characteristic();
+
+    /**
+     * The constraint check time.
+     */
+    ConstraintCheckTime checkTime();
 
     /**
      * Whether this key is (partially) nullable.

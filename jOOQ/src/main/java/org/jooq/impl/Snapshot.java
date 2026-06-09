@@ -234,11 +234,25 @@ final class Snapshot extends AbstractMeta {
                 index.getUnique()
             ));
 
-            uniqueKeys = map(table.getUniqueKeys(), uk -> Internal.createUniqueKey(this, uk.getQualifiedName(), fields(uk.getFieldsArray()), uk.enforced()));
+            uniqueKeys = map(table.getUniqueKeys(), uk -> Internal.createUniqueKey(
+                this,
+                uk.getQualifiedName(),
+                fields(uk.getFieldsArray()),
+                uk.enforced(),
+                uk.characteristic(),
+                uk.checkTime()
+            ));
 
             UniqueKey<R> pk = table.getPrimaryKey();
             if (pk != null)
-                primaryKey = Internal.createUniqueKey(this, pk.getQualifiedName(), fields(pk.getFieldsArray()), pk.enforced());
+                primaryKey = Internal.createUniqueKey(
+                    this,
+                    pk.getQualifiedName(),
+                    fields(pk.getFieldsArray()),
+                    pk.enforced(),
+                    pk.characteristic(),
+                    pk.checkTime()
+                );
 
             foreignKeys = new ArrayList<>(table.getReferences());
             checks = new ArrayList<>(table.getChecks());

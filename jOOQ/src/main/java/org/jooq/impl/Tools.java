@@ -1905,9 +1905,11 @@ final class Tools {
             Tools.fieldsByName(child, key.getFieldsArray()),
             key.getKey(),
             Tools.fieldsByName(parent, key.getKeyFieldsArray()),
-            key.enforced(),
             key.getDeleteRule(),
-            key.getUpdateRule()
+            key.getUpdateRule(),
+            key.enforced(),
+            key.characteristic(),
+            key.checkTime()
         );
     }
 

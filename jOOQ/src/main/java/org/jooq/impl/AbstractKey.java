@@ -52,6 +52,8 @@ import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
+import org.jooq.impl.QOM.ConstraintCharacteristic;
+import org.jooq.impl.QOM.ConstraintCheckTime;
 import org.jooq.impl.QOM.UEmpty;
 
 /**
@@ -61,20 +63,37 @@ import org.jooq.impl.QOM.UEmpty;
  */
 abstract class AbstractKey<R extends Record> extends AbstractNamed implements Key<R>, UEmpty {
 
-    private final Table<R>           table;
-    private final TableField<R, ?>[] fields;
-    private final boolean            enforced;
+    final Table<R>                 table;
+    final TableField<R, ?>[]       fields;
+    final boolean                  enforced;
+    final ConstraintCharacteristic characteristic;
+    final ConstraintCheckTime      checkTime;
 
-    AbstractKey(Table<R> table, TableField<R, ?>[] fields, boolean enforced) {
-        this(table, null, fields, enforced);
+    AbstractKey(
+        Table<R> table,
+        TableField<R, ?>[] fields,
+        boolean enforced,
+        ConstraintCharacteristic characteristic,
+        ConstraintCheckTime checkTime
+    ) {
+        this(table, null, fields, enforced, characteristic, checkTime);
     }
 
-    AbstractKey(Table<R> table, Name name, TableField<R, ?>[] fields, boolean enforced) {
+    AbstractKey(
+        Table<R> table,
+        Name name,
+        TableField<R, ?>[] fields,
+        boolean enforced,
+        ConstraintCharacteristic characteristic,
+        ConstraintCheckTime checkTime
+    ) {
         super(qualify(table, name), null);
 
         this.table = table;
         this.fields = fields;
         this.enforced = enforced;
+        this.characteristic = characteristic;
+        this.checkTime = checkTime;
     }
 
     @Override
@@ -102,8 +121,31 @@ abstract class AbstractKey<R extends Record> extends AbstractNamed implements Ke
         return enforced;
     }
 
+    @Override
+    public final ConstraintCharacteristic characteristic() {
+        return characteristic;
+    }
+
+    @Override
+    public final ConstraintCheckTime checkTime() {
+        return checkTime;
+    }
+
     private final Constraint enforced(ConstraintEnforcementStep key) {
-        return enforced() ? key : key.notEnforced();
+        if (!enforced())
+            key = key.notEnforced();
+
+        if (characteristic() == ConstraintCharacteristic.DEFERRABLE)
+            key = key.deferrable();
+        else if (characteristic() == ConstraintCharacteristic.NOT_DEFERRABLE)
+            key = key.notDeferrable();
+
+        if (checkTime() == ConstraintCheckTime.INITIALLY_DEFERRED)
+            key = key.initiallyDeferred();
+        else if (checkTime() == ConstraintCheckTime.INITIALLY_IMMEDIATE)
+            key = key.initiallyImmediate();
+
+        return key;
     }
 
     @Override

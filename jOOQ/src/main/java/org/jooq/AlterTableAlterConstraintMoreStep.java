@@ -37,27 +37,14 @@
  */
 package org.jooq;
 
-// ...
-// ...
-// ...
-// ...
-import static org.jooq.SQLDialect.HSQLDB;
-// ...
-import static org.jooq.SQLDialect.MYSQL;
-// ...
-import static org.jooq.SQLDialect.POSTGRES;
-// ...
-// ...
-import static org.jooq.SQLDialect.SQLITE;
-// ...
-import static org.jooq.SQLDialect.YUGABYTEDB;
+import org.jetbrains.annotations.*;
 
-import org.jetbrains.annotations.NotNull;
+
+import static org.jooq.SQLDialect.*;
 
 /**
- * The step in the {@link Constraint} construction DSL API that allows for
- * adding <code>ENFORCED</code> and <code>NOT ENFORCED</code> clauses.
- * <p>
+ * The step in the <code>ALTER TABLE</code> DSL used to <code>ALTER</code>
+ * constraints.
  * <p>
  * <h3>Referencing <code>XYZ*Step</code> types directly from client code</h3>
  * <p>
@@ -79,47 +66,10 @@ import org.jetbrains.annotations.NotNull;
  *
  * @author Lukas Eder
  */
-public interface ConstraintEnforcementStep extends ConstraintFinalStep {
-
-    /**
-     * Add the <code>ENFORCED</code> clause to the constraint.
-     */
-    @NotNull
-    @Support({ MYSQL })
-    ConstraintEnforcementStep enforced();
-
-    /**
-     * Add the <code>NOT ENFORCED</code> clause to the constraint.
-     */
-    @NotNull
-    @Support({ MYSQL })
-    ConstraintEnforcementStep notEnforced();
-
-    /**
-     * Add the <code>DEFERRABLE</code> clause to the constraint.
-     */
-    @NotNull
-    @Support({ HSQLDB, POSTGRES, SQLITE, YUGABYTEDB })
-    ConstraintEnforcementStep deferrable();
-
-    /**
-     * Add the <code>NOT DEFERRABLE</code> clause to the constraint.
-     */
-    @NotNull
-    @Support({ HSQLDB, POSTGRES, SQLITE, YUGABYTEDB })
-    ConstraintEnforcementStep notDeferrable();
-
-    /**
-     * Add the <code>INITIALLY DEFERRED</code> clause to the constraint.
-     */
-    @NotNull
-    @Support({ HSQLDB, POSTGRES, SQLITE, YUGABYTEDB })
-    ConstraintEnforcementStep initiallyDeferred();
-
-    /**
-     * Add the <code>INITIALLY IMMEDIATE</code> clause to the constraint.
-     */
-    @NotNull
-    @Support({ HSQLDB, POSTGRES, SQLITE, YUGABYTEDB })
-    ConstraintEnforcementStep initiallyImmediate();
+public interface AlterTableAlterConstraintMoreStep
+extends
+    AlterTableAlterConstraintStep,
+    AlterTableFinalStep
+{
 }
+

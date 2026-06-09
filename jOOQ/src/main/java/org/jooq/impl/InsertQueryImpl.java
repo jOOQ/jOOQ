@@ -991,8 +991,13 @@ implements
         for (int i = 0; i < f1.size() && i < f2.length; i++) {
             Field<?> f = f1.get(i);
 
-            if (Tools.hasName(ctx, f))
-                ctx.scopeRegister(f, false, f2[i]);
+            if (Tools.hasName(ctx, f)) {
+                Table<?> t1 = f instanceof TableField ? ((TableField<?, ?>) f).getTable() : null;
+
+                // [#20032] Don't map source fields from source tables that match the target table
+                if (!table(ctx).equals(t1))
+                    ctx.scopeRegister(f, false, f2[i]);
+            }
         }
     }
 

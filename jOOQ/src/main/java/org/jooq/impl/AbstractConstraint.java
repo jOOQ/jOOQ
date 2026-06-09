@@ -47,9 +47,12 @@ import static org.jooq.SQLDialect.IGNITE;
 import static org.jooq.SQLDialect.TRINO;
 import static org.jooq.impl.Keywords.K_CONSTRAINT;
 import static org.jooq.impl.Keywords.K_DISABLE;
+import static org.jooq.impl.Keywords.K_DISABLED;
 import static org.jooq.impl.Keywords.K_ENABLE;
+import static org.jooq.impl.Keywords.K_ENABLED;
 import static org.jooq.impl.Keywords.K_ENFORCED;
 import static org.jooq.impl.Keywords.K_NOT;
+import static org.jooq.impl.Keywords.K_VALID;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_CONSTRAINT_REFERENCE;
 
 import java.util.Set;
@@ -118,14 +121,16 @@ implements
 
             accept0(ctx);
 
+
+
+
+
+
+
+
+
             if (!enforced)
                 acceptEnforced(ctx, enforced);
-
-
-
-
-
-
 
 
 
@@ -140,6 +145,22 @@ implements
 
     static void acceptEnforced(Context<?> ctx, boolean enforced) {
         switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

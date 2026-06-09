@@ -143,6 +143,7 @@ final class Keywords {
     static final Keyword K_DENSE_RANK               = keyword("dense_rank");
     static final Keyword K_DESCRIPTION              = keyword("description");
     static final Keyword K_DISABLE                  = keyword("disable");
+    static final Keyword K_DISABLED                 = keyword("disabled");
     static final Keyword K_DISTINCT                 = keyword("distinct");
     static final Keyword K_DISTINCT_ON              = keyword("distinct on");
     static final Keyword K_DO                       = keyword("do");
@@ -164,6 +165,7 @@ final class Keywords {
     static final Keyword K_ELSIF                    = keyword("elsif");
     static final Keyword K_EMPTY                    = keyword("empty");
     static final Keyword K_ENABLE                   = keyword("enable");
+    static final Keyword K_ENABLED                  = keyword("enabled");
     static final Keyword K_END                      = keyword("end");
     static final Keyword K_END_CATCH                = keyword("end catch");
     static final Keyword K_END_IF                   = keyword("end if");
@@ -481,6 +483,7 @@ final class Keywords {
     static final Keyword K_USERS                    = keyword("users");
     static final Keyword K_USING                    = keyword("using");
     static final Keyword K_USING_INDEX              = keyword("using index");
+    static final Keyword K_VALID                    = keyword("valid");
     static final Keyword K_VALUE                    = keyword("value");
     static final Keyword K_VALUES                   = keyword("values");
     static final Keyword K_VARCHAR                  = keyword("varchar");

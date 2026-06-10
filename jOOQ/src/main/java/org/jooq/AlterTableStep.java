@@ -261,7 +261,7 @@ public interface AlterTableStep {
      * This is an alias for {@link #alterConstraint(Constraint)}.
      */
     @NotNull @CheckReturnValue
-    @Support({ MYSQL })
+    @Support({ MYSQL, POSTGRES })
     AlterTableAlterConstraintStep alter(Constraint constraint);
 
     /**

@@ -63,6 +63,16 @@ public class DefaultInverseForeignKeyDefinition extends AbstractDefinition imple
     }
 
     @Override
+    public boolean deferrable() {
+        return foreignKey.deferrable();
+    }
+
+    @Override
+    public boolean initiallyDeferred() {
+        return foreignKey.initiallyDeferred();
+    }
+
+    @Override
     public List<ColumnDefinition> getKeyColumns() {
         return foreignKey.getReferencedColumns();
     }

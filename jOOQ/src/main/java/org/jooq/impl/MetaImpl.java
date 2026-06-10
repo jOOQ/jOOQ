@@ -83,6 +83,7 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.MetaSQL.M_ATTRIBUTES;
 import static org.jooq.impl.MetaSQL.M_COMMENTS;
+import static org.jooq.impl.MetaSQL.M_CONSTRAINT_FLAGS;
 import static org.jooq.impl.MetaSQL.M_SEQUENCES;
 import static org.jooq.impl.MetaSQL.M_SEQUENCES_INCLUDING_SYSTEM_SEQUENCES;
 import static org.jooq.impl.MetaSQL.M_SOURCES;
@@ -474,12 +475,14 @@ final class MetaImpl extends AbstractMeta {
     }
 
     static final record Generator(String expression, GenerationOption option) {}
+    static final record ConstraintFlag(boolean enforced, boolean deferrable, boolean initiallyDeferred) {}
 
     private final class MetaSchema extends SchemaImpl {
         private final boolean                                empty;
         private transient volatile Map<Name, Result<Record>> columnCache;
         private transient volatile Map<Name, Result<Record>> ukCache;
         private transient volatile Map<Name, Result<Record>> sequenceCache;
+        private transient volatile Map<Name, ConstraintFlag> constraintFlagCache;
         private transient volatile Map<Name, String>         sourceCache;
         private transient volatile Map<Name, String>         commentCache;
         private transient volatile Map<Name, Result<Record>> attributeCache;
@@ -1062,6 +1065,67 @@ final class MetaImpl extends AbstractMeta {
                 return attributeCache.get(name(MetaSchema.this.getCatalog().getName(), MetaSchema.this.getName()));
             else
                 return null;
+        }
+
+        final boolean enforced(String tableName, String constraintName) {
+            return flag(tableName, constraintName, ConstraintFlag::enforced, true);
+        }
+
+        final boolean deferrable(String tableName, String constraintName) {
+            return flag(tableName, constraintName, ConstraintFlag::deferrable, false);
+        }
+
+        final boolean initiallyDeferred(String tableName, String constraintName) {
+            return flag(tableName, constraintName, ConstraintFlag::initiallyDeferred, false);
+        }
+
+        private final boolean flag(
+            String tableName,
+            String constraintName,
+            Function<? super ConstraintFlag, ? extends Boolean> function,
+            boolean defaultValue
+        ) {
+            if (constraintFlagCache == null)
+                initConstraintFlagCache();
+
+            if (constraintFlagCache != null) {
+                ConstraintFlag flag = constraintFlagCache.get(name(MetaSchema.this.getName(), tableName, constraintName));
+
+                if (flag != null)
+                    return function.apply(flag);
+            }
+
+            return defaultValue;
+        }
+
+        private final void initConstraintFlagCache() {
+            String sql = M_CONSTRAINT_FLAGS(dialect());
+
+            if (sql != null) {
+                Result<Record> result = meta(() -> "Error while fetching constraint flags for schema " + this, meta ->
+                    withCatalog(getCatalog(), ctx(meta), ctx ->
+                        ctx.resultQuery(patchSchema(sql), MetaSchema.this.getName()).fetch()
+                    )
+                );
+
+                // TODO Support catalogs as well
+                Map<Record, Result<Record>> groups = result.intoGroups(new Field[] {
+                    result.field(0),
+                    result.field(1),
+                    result.field(2),
+                    result.field(3)
+                });
+
+                constraintFlagCache = new LinkedHashMap<>();
+                groups.forEach((k, v) -> constraintFlagCache.put(
+                    name(k.get(1, String.class), k.get(2, String.class), k.get(3, String.class)),
+                    new ConstraintFlag(
+                        v.get(0).get(4, boolean.class),
+                        v.get(0).get(5, boolean.class),
+                        v.get(0).get(6, boolean.class)
+                    )
+                ));
+            }
         }
 
         final String source(TableType type, String tableName) {
@@ -1660,13 +1724,23 @@ final class MetaImpl extends AbstractMeta {
                             this,
                             name(fkName),
                             fkFields,
-                            new MetaUniqueKey(pkTable, pkName, pkFields, true), // TODO: Can we know whether it is a PK or UK?
+
+                            // TODO: Can we know whether it is a PK or UK?
+                            new MetaUniqueKey(
+                                pkTable,
+                                pkName,
+                                pkFields,
+                                true,
+                                schema.enforced(getName(), pkName),
+                                schema.deferrable(getName(), pkName),
+                                schema.initiallyDeferred(getName(), pkName)
+                            ),
                             pkFields,
                             foreignKeyRule(k.get(4, Integer.class)),
                             foreignKeyRule(k.get(3, Integer.class)),
-                            true,
-                            false,
-                            false
+                            schema.enforced(getName(), fkName),
+                            schema.deferrable(getName(), fkName),
+                            schema.initiallyDeferred(getName(), fkName)
                         ));
                     }
                 }
@@ -1792,13 +1866,15 @@ final class MetaImpl extends AbstractMeta {
         }
 
         private final Check<Record> createCheck(Record r) {
+            String checkName = r.get(3, String.class);
+
             return new CheckImpl<>(
                 this,
-                name(r.get(3, String.class)),
+                name(checkName),
                 DSL.condition(r.get(4, String.class)),
-                true,
-                false,
-                false
+                schema.enforced(getName(), checkName),
+                schema.deferrable(getName(), checkName),
+                schema.initiallyDeferred(getName(), checkName)
             );
         }
 
@@ -1828,7 +1904,15 @@ final class MetaImpl extends AbstractMeta {
                 }
 
                 String indexName = result.get(0).get(keyName, String.class);
-                return new MetaUniqueKey(this, indexName, f, isPrimary);
+                return new MetaUniqueKey(
+                    this,
+                    indexName,
+                    f,
+                    isPrimary,
+                    schema.enforced(getName(), indexName),
+                    schema.deferrable(getName(), indexName),
+                    schema.initiallyDeferred(getName(), indexName)
+                );
             }
             else {
                 return null;
@@ -2121,14 +2205,22 @@ final class MetaImpl extends AbstractMeta {
     private final class MetaUniqueKey extends AbstractKey<Record> implements UniqueKey<Record> {
         private final boolean     isPrimary;
 
-        MetaUniqueKey(Table<Record> table, String name, TableField<Record, ?>[] fields, boolean isPrimary) {
+        MetaUniqueKey(
+            Table<Record> table,
+            String name,
+            TableField<Record, ?>[] fields,
+            boolean isPrimary,
+            boolean enforced,
+            boolean deferrable,
+            boolean initiallyDeferred
+        ) {
             super(
                 table,
                 name == null ? null : name(name),
                 fields,
-                true,
-                false,
-                false
+                enforced,
+                deferrable,
+                initiallyDeferred
             );
 
             this.isPrimary = isPrimary;

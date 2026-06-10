@@ -740,8 +740,13 @@ final class MetaSQL {
 
 
 
+        M_CONSTRAINT_FLAGS.put(MYSQL, "select information_schema.TABLE_CONSTRAINTS.CONSTRAINT_CATALOG, information_schema.TABLE_CONSTRAINTS.CONSTRAINT_SCHEMA, information_schema.TABLE_CONSTRAINTS.TABLE_NAME, information_schema.TABLE_CONSTRAINTS.CONSTRAINT_NAME, (information_schema.TABLE_CONSTRAINTS.ENFORCED = 'YES'), false, false from information_schema.TABLE_CONSTRAINTS where information_schema.TABLE_CONSTRAINTS.CONSTRAINT_SCHEMA in (?) order by information_schema.TABLE_CONSTRAINTS.CONSTRAINT_CATALOG, information_schema.TABLE_CONSTRAINTS.CONSTRAINT_SCHEMA, information_schema.TABLE_CONSTRAINTS.TABLE_NAME, information_schema.TABLE_CONSTRAINTS.CONSTRAINT_NAME");
         M_CONSTRAINT_FLAGS.put(POSTGRES, "select current_database(), alias_80150877.nspname, alias_48315360.relname, pg_catalog.pg_constraint.conname, pg_catalog.pg_constraint.conenforced, pg_catalog.pg_constraint.condeferrable, pg_catalog.pg_constraint.condeferred from (pg_catalog.pg_constraint join pg_catalog.pg_namespace as alias_80150877 on pg_catalog.pg_constraint.connamespace = alias_80150877.oid join pg_catalog.pg_class as alias_48315360 on pg_catalog.pg_constraint.conrelid = alias_48315360.oid) where alias_80150877.nspname in (?) order by alias_80150877.nspname, alias_48315360.relname, pg_catalog.pg_constraint.conname");
         M_CONSTRAINT_FLAGS.put(YUGABYTEDB, "select current_database(), alias_80150877.nspname, alias_48315360.relname, pg_catalog.pg_constraint.conname, true as conenforced, pg_catalog.pg_constraint.condeferrable, pg_catalog.pg_constraint.condeferred from (pg_catalog.pg_constraint join pg_catalog.pg_namespace as alias_80150877 on pg_catalog.pg_constraint.connamespace = alias_80150877.oid join pg_catalog.pg_class as alias_48315360 on pg_catalog.pg_constraint.conrelid = alias_48315360.oid) where alias_80150877.nspname in (?) order by alias_80150877.nspname, alias_48315360.relname, pg_catalog.pg_constraint.conname");
+
+
+
+
 
 
 

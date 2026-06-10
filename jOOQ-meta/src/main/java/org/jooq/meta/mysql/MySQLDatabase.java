@@ -43,6 +43,7 @@ import static java.util.stream.Collectors.mapping;
 import static java.util.stream.Collectors.toList;
 import static org.jooq.Records.mapping;
 import static org.jooq.SQLDialect.MARIADB;
+// ...
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
@@ -510,7 +511,29 @@ public class MySQLDatabase extends AbstractDatabase implements ResultQueryDataba
 
     @Override
     public ResultQuery<Record7<String, String, String, String, Boolean, Boolean, Boolean>> constraintFlags(List<String> schemas) {
-        return null;
+
+        // [#9663] The TABLE_CONSTRAINTS.ENFORCED column was added in 8.0.16
+        // https://dev.mysql.com/doc/refman/8.0/en/information-schema-table-constraints-table.html
+        if (is8_0_16() && create().family() != MARIADB) {
+            return create()
+                .select(
+                    TABLE_CONSTRAINTS.CONSTRAINT_CATALOG,
+                    TABLE_CONSTRAINTS.CONSTRAINT_SCHEMA,
+                    TABLE_CONSTRAINTS.TABLE_NAME,
+                    TABLE_CONSTRAINTS.CONSTRAINT_NAME,
+                    TABLE_CONSTRAINTS.ENFORCED.eq(inline("YES")),
+                    inline(false),
+                    inline(false))
+                .from(TABLE_CONSTRAINTS)
+                .where(TABLE_CONSTRAINTS.CONSTRAINT_SCHEMA.in(schemas))
+                .orderBy(
+                    TABLE_CONSTRAINTS.CONSTRAINT_CATALOG,
+                    TABLE_CONSTRAINTS.CONSTRAINT_SCHEMA,
+                    TABLE_CONSTRAINTS.TABLE_NAME,
+                    TABLE_CONSTRAINTS.CONSTRAINT_NAME);
+        }
+        else
+            return null;
     }
 
     @Override

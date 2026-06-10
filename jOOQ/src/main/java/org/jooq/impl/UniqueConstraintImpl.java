@@ -56,8 +56,6 @@ import org.jooq.QueryPart;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
 // ...
-import org.jooq.impl.QOM.ConstraintCharacteristic;
-import org.jooq.impl.QOM.ConstraintCheckTime;
 import org.jooq.impl.QOM.UniqueKey;
 import org.jooq.impl.QOM.UnmodifiableList;
 
@@ -74,17 +72,17 @@ implements
     final QueryPartList<Field<?>> fields;
 
     UniqueConstraintImpl(Name name, Collection<? extends Field<?>> fields) {
-        this(name, fields, true, null, null);
+        this(name, fields, true, false, false);
     }
 
     private UniqueConstraintImpl(
         Name name,
         Collection<? extends Field<?>> fields,
         boolean enforced,
-        ConstraintCharacteristic characteristic,
-        ConstraintCheckTime checkTime
+        boolean deferrable,
+        boolean initiallyDeferred
     ) {
-        super(name, enforced, characteristic, checkTime);
+        super(name, enforced, deferrable, initiallyDeferred);
 
         this.fields = new QueryPartList<>(fields);
     }
@@ -115,27 +113,27 @@ implements
 
     @Override
     public final UniqueKey $fields(UnmodifiableList<? extends Field<?>> newFields) {
-        return new UniqueConstraintImpl($name(), newFields, $enforced(), $characteristic(), $checkTime());
+        return new UniqueConstraintImpl($name(), newFields, $enforced(), $deferrable(), $initiallyDeferred());
     }
 
     @Override
     public final UniqueKey $name(Name newName) {
-        return new UniqueConstraintImpl(newName, fields, $enforced(), $characteristic(), $checkTime());
+        return new UniqueConstraintImpl(newName, fields, $enforced(), $deferrable(), $initiallyDeferred());
     }
 
     @Override
     public final UniqueKey $enforced(boolean newEnforced) {
-        return new UniqueConstraintImpl($name(), fields, newEnforced, $characteristic(), $checkTime());
+        return new UniqueConstraintImpl($name(), fields, newEnforced, $deferrable(), $initiallyDeferred());
     }
 
     @Override
-    public final UniqueKey $characteristic(ConstraintCharacteristic newCharacteristic) {
-        return new UniqueConstraintImpl($name(), fields, $enforced(), newCharacteristic, $checkTime());
+    public final UniqueKey $deferrable(boolean newDeferrable) {
+        return new UniqueConstraintImpl($name(), fields, $enforced(), newDeferrable, $initiallyDeferred());
     }
 
     @Override
-    public final UniqueKey $checkTime(ConstraintCheckTime newCheckTime) {
-        return new UniqueConstraintImpl($name(), fields, $enforced(), $characteristic(), newCheckTime);
+    public final UniqueKey $initiallyDeferred(boolean newInitiallyDeferred) {
+        return new UniqueConstraintImpl($name(), fields, $enforced(), $deferrable(), newInitiallyDeferred);
     }
 
 

@@ -120,7 +120,6 @@ import org.jooq.Queries;
 import org.jooq.Query;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
-import org.jooq.Scope;
 import org.jooq.Sequence;
 // ...
 import org.jooq.Table;
@@ -129,8 +128,6 @@ import org.jooq.TableOptions.TableType;
 import org.jooq.UniqueKey;
 import org.jooq.conf.ParseUnknownFunctions;
 import org.jooq.conf.Settings;
-import org.jooq.impl.QOM.ConstraintCharacteristic;
-import org.jooq.impl.QOM.ConstraintCheckTime;
 import org.jooq.impl.QOM.GenerationMode;
 import org.jooq.impl.QOM.LengthUnit;
 import org.jooq.tools.JooqLogger;
@@ -926,30 +923,26 @@ final class Diff extends AbstractScope {
             else if (!e1 && e2)
                 r.queries.add(ctx.alterTable(t1).alterConstraint(n1).enforced());
 
-            ConstraintCharacteristic cc1 = k1 instanceof Check<?> c1 ? c1.characteristic() : ((Key<?>) k1).characteristic();
-            ConstraintCharacteristic cc2 = k2 instanceof Check<?> c2 ? c2.characteristic() : ((Key<?>) k2).characteristic();
-            ConstraintCheckTime ct1 = k1 instanceof Check<?> c1 ? c1.checkTime() : ((Key<?>) k1).checkTime();
-            ConstraintCheckTime ct2 = k2 instanceof Check<?> c2 ? c2.checkTime() : ((Key<?>) k2).checkTime();
+            boolean d1 = k1 instanceof Check<?> c1 ? c1.deferrable() : ((Key<?>) k1).deferrable();
+            boolean d2 = k2 instanceof Check<?> c2 ? c2.deferrable() : ((Key<?>) k2).deferrable();
+            boolean id1 = k1 instanceof Check<?> c1 ? c1.initiallyDeferred() : ((Key<?>) k1).initiallyDeferred();
+            boolean id2 = k2 instanceof Check<?> c2 ? c2.initiallyDeferred() : ((Key<?>) k2).initiallyDeferred();
 
-            if (cc1 != cc2) {
-                if (cc2 == ConstraintCharacteristic.DEFERRABLE) {
-                    if (ct2 == ConstraintCheckTime.INITIALLY_DEFERRED)
+            if (d1 != d2) {
+                if (d2) {
+                    if (id2)
                         r.queries.add(ctx.alterTable(t1).alterConstraint(n1).deferrable().initiallyDeferred());
-                    else if (ct2 == ConstraintCheckTime.INITIALLY_IMMEDIATE)
-                        r.queries.add(ctx.alterTable(t1).alterConstraint(n1).deferrable().initiallyImmediate());
                     else
-                        r.queries.add(ctx.alterTable(t1).alterConstraint(n1).deferrable());
+                        r.queries.add(ctx.alterTable(t1).alterConstraint(n1).deferrable().initiallyImmediate());
                 }
                 else
                     r.queries.add(ctx.alterTable(t1).alterConstraint(n1).notDeferrable());
             }
-            else if (ct1 != ct2 && cc1 == ConstraintCharacteristic.DEFERRABLE) {
-                if (ct2 == ConstraintCheckTime.INITIALLY_DEFERRED)
+            else if (id1 != id2 && d1) {
+                if (id2)
                     r.queries.add(ctx.alterTable(t1).alterConstraint(n1).deferrable().initiallyDeferred());
-                else if (ct2 == ConstraintCheckTime.INITIALLY_IMMEDIATE)
-                    r.queries.add(ctx.alterTable(t1).alterConstraint(n1).deferrable().initiallyImmediate());
                 else
-                    r.queries.add(ctx.alterTable(t1).alterConstraint(n1).deferrable());
+                    r.queries.add(ctx.alterTable(t1).alterConstraint(n1).deferrable().initiallyImmediate());
             }
         };
     }

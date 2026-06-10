@@ -47,16 +47,24 @@ public class AbstractConstraintDefinition extends AbstractDefinition implements 
 
     private final TableDefinition table;
     private final boolean         enforced;
+    private final boolean         deferrable;
+    private final boolean         initiallyDeferred;
 
     public AbstractConstraintDefinition(SchemaDefinition schema, TableDefinition table, String name, boolean enforced) {
         this(schema, table, name, enforced, null, null);
     }
 
     public AbstractConstraintDefinition(SchemaDefinition schema, TableDefinition table, String name, boolean enforced, String comment, String source) {
+        this(schema, table, name, enforced, false, false, comment, source);
+    }
+
+    public AbstractConstraintDefinition(SchemaDefinition schema, TableDefinition table, String name, boolean enforced, boolean deferrable, boolean initiallyDeferred, String comment, String source) {
         super(schema.getDatabase(), schema, null, name, comment, null, source);
 
         this.table = table;
         this.enforced = enforced;
+        this.deferrable = deferrable;
+        this.initiallyDeferred = initiallyDeferred;
     }
 
     @Override
@@ -77,5 +85,15 @@ public class AbstractConstraintDefinition extends AbstractDefinition implements 
     @Override
     public boolean enforced() {
         return enforced;
+    }
+
+    @Override
+    public boolean deferrable() {
+        return deferrable;
+    }
+
+    @Override
+    public boolean initiallyDeferred() {
+        return initiallyDeferred;
     }
 }

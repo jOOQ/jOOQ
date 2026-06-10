@@ -39,9 +39,6 @@ package org.jooq;
 
 import java.util.List;
 
-import org.jooq.impl.QOM.ConstraintCharacteristic;
-import org.jooq.impl.QOM.ConstraintCheckTime;
-
 import org.jetbrains.annotations.NotNull;
 
 
@@ -89,14 +86,14 @@ public interface Key<R extends Record> extends Named {
     boolean enforced();
 
     /**
-     * The constraint characteristic.
+     * Whether this key is deferrable.
      */
-    ConstraintCharacteristic characteristic();
+    boolean deferrable();
 
     /**
-     * The constraint check time.
+     * Whether this key is initially deferred.
      */
-    ConstraintCheckTime checkTime();
+    boolean initiallyDeferred();
 
     /**
      * Whether this key is (partially) nullable.

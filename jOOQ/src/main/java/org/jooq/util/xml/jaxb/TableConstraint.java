@@ -32,6 +32,8 @@ import org.jooq.util.jaxb.tools.XMLBuilder;
  *         &lt;element name="table_name" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *         &lt;element name="comment" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="enforced" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
+ *         &lt;element name="deferrable" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
+ *         &lt;element name="initially_deferred" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
  *       &lt;/all&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -75,6 +77,9 @@ public class TableConstraint implements Serializable, XMLAppendable
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String comment;
     protected Boolean enforced;
+    protected Boolean deferrable;
+    @XmlElement(name = "initially_deferred")
+    protected Boolean initiallyDeferred;
 
     public String getConstraintCatalog() {
         return constraintCatalog;
@@ -164,6 +169,54 @@ public class TableConstraint implements Serializable, XMLAppendable
         this.enforced = value;
     }
 
+    /**
+     * Gets the value of the deferrable property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isDeferrable() {
+        return deferrable;
+    }
+
+    /**
+     * Sets the value of the deferrable property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setDeferrable(Boolean value) {
+        this.deferrable = value;
+    }
+
+    /**
+     * Gets the value of the initiallyDeferred property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isInitiallyDeferred() {
+        return initiallyDeferred;
+    }
+
+    /**
+     * Sets the value of the initiallyDeferred property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setInitiallyDeferred(Boolean value) {
+        this.initiallyDeferred = value;
+    }
+
     public TableConstraint withConstraintCatalog(String value) {
         setConstraintCatalog(value);
         return this;
@@ -209,6 +262,16 @@ public class TableConstraint implements Serializable, XMLAppendable
         return this;
     }
 
+    public TableConstraint withDeferrable(Boolean value) {
+        setDeferrable(value);
+        return this;
+    }
+
+    public TableConstraint withInitiallyDeferred(Boolean value) {
+        setInitiallyDeferred(value);
+        return this;
+    }
+
     @Override
     public final void appendTo(XMLBuilder builder) {
         builder.append("constraint_catalog", constraintCatalog);
@@ -220,6 +283,8 @@ public class TableConstraint implements Serializable, XMLAppendable
         builder.append("table_name", tableName);
         builder.append("comment", comment);
         builder.append("enforced", enforced);
+        builder.append("deferrable", deferrable);
+        builder.append("initially_deferred", initiallyDeferred);
     }
 
     @Override
@@ -322,6 +387,24 @@ public class TableConstraint implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (deferrable == null) {
+            if (other.deferrable!= null) {
+                return false;
+            }
+        } else {
+            if (!deferrable.equals(other.deferrable)) {
+                return false;
+            }
+        }
+        if (initiallyDeferred == null) {
+            if (other.initiallyDeferred!= null) {
+                return false;
+            }
+        } else {
+            if (!initiallyDeferred.equals(other.initiallyDeferred)) {
+                return false;
+            }
+        }
         return true;
     }
 
@@ -338,6 +421,8 @@ public class TableConstraint implements Serializable, XMLAppendable
         result = ((prime*result)+((tableName == null)? 0 :tableName.hashCode()));
         result = ((prime*result)+((comment == null)? 0 :comment.hashCode()));
         result = ((prime*result)+((enforced == null)? 0 :enforced.hashCode()));
+        result = ((prime*result)+((deferrable == null)? 0 :deferrable.hashCode()));
+        result = ((prime*result)+((initiallyDeferred == null)? 0 :initiallyDeferred.hashCode()));
         return result;
     }
 

@@ -77,10 +77,36 @@ public class DefaultForeignKeyDefinition extends AbstractConstraintDefinition im
         TableDefinition table,
         UniqueKeyDefinition uk,
         boolean enforced,
+        boolean deferrable,
+        boolean initiallyDeferred
+    ) {
+        this(schema, name, table, uk, enforced, deferrable, initiallyDeferred, null, null);
+    }
+
+    public DefaultForeignKeyDefinition(
+        SchemaDefinition schema,
+        String name,
+        TableDefinition table,
+        UniqueKeyDefinition uk,
+        boolean enforced,
         ForeignKeyRule deleteRule,
         ForeignKeyRule updateRule
     ) {
-        super(schema, table, name, enforced);
+        this(schema, name, table, uk, enforced, false, false, deleteRule, updateRule);
+    }
+
+    public DefaultForeignKeyDefinition(
+        SchemaDefinition schema,
+        String name,
+        TableDefinition table,
+        UniqueKeyDefinition uk,
+        boolean enforced,
+        boolean deferrable,
+        boolean initiallyDeferred,
+        ForeignKeyRule deleteRule,
+        ForeignKeyRule updateRule
+    ) {
+        super(schema, table, name, enforced, deferrable, initiallyDeferred, null, null);
 
         this.fkColumns = new ArrayList<>();
         this.ukColumns = new ArrayList<>();

@@ -116,8 +116,6 @@ import org.jooq.UniqueKey;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataTypeException;
 import org.jooq.exception.MappingException;
-import org.jooq.impl.QOM.ConstraintCharacteristic;
-import org.jooq.impl.QOM.ConstraintCheckTime;
 import org.jooq.impl.QOM.CreateTable;
 import org.jooq.impl.QOM.ForeignKeyRule;
 import org.jooq.impl.QOM.GenerationLocation;
@@ -416,15 +414,15 @@ public final class Internal {
      */
     @NotNull
     public static final <R extends Record> UniqueKey<R> createUniqueKey(Table<R> table, Name name, TableField<R, ?>[] fields, boolean enforced) {
-        return createUniqueKey(table, name, fields, enforced, null, null);
+        return createUniqueKey(table, name, fields, enforced, false, false);
     }
 
     /**
      * Factory method for unique keys.
      */
     @NotNull
-    public static final <R extends Record> UniqueKey<R> createUniqueKey(Table<R> table, Name name, TableField<R, ?>[] fields, boolean enforced, ConstraintCharacteristic characteristic, ConstraintCheckTime checkTime) {
-        return new UniqueKeyImpl<>(table, name, fields, enforced, characteristic, checkTime);
+    public static final <R extends Record> UniqueKey<R> createUniqueKey(Table<R> table, Name name, TableField<R, ?>[] fields, boolean enforced, boolean deferrable, boolean initiallyDeferred) {
+        return new UniqueKeyImpl<>(table, name, fields, enforced, deferrable, initiallyDeferred);
     }
 
     /**
@@ -439,8 +437,8 @@ public final class Internal {
      * Factory method for unique keys.
      */
     @NotNull
-    public static final <R extends Record, ER extends EmbeddableRecord<ER>> UniqueKey<R> createUniqueKey(Table<R> table, Name name, TableField<R, ER> embeddableField, boolean enforced, ConstraintCharacteristic characteristic, ConstraintCheckTime checkTime) {
-        return createUniqueKey(table, name, fields(embeddableField), enforced, characteristic, checkTime);
+    public static final <R extends Record, ER extends EmbeddableRecord<ER>> UniqueKey<R> createUniqueKey(Table<R> table, Name name, TableField<R, ER> embeddableField, boolean enforced, boolean deferrable, boolean initiallyDeferred) {
+        return createUniqueKey(table, name, fields(embeddableField), enforced, deferrable, initiallyDeferred);
     }
 
     /**
@@ -476,6 +474,24 @@ public final class Internal {
      */
     @NotNull
     public static final <R extends Record, U extends Record> ForeignKey<R, U> createForeignKey(
+        UniqueKey<U> key,
+        Table<R> table,
+        String name,
+        TableField<R, ?>[] fields,
+        boolean enforced,
+        boolean deferrable,
+        boolean initiallyDeferred,
+        ForeignKeyRule deleteRule,
+        ForeignKeyRule updateRule
+    ) {
+        return createForeignKey(table, DSL.name(name), fields, key, key.getFieldsArray(), enforced, deferrable, initiallyDeferred, deleteRule, updateRule);
+    }
+
+    /**
+     * Factory method for foreign keys.
+     */
+    @NotNull
+    public static final <R extends Record, U extends Record> ForeignKey<R, U> createForeignKey(
         Table<R> table,
         Name name,
         TableField<R, ?>[] fkFields,
@@ -492,8 +508,8 @@ public final class Internal {
             uk,
             ukFields,
             enforced,
-            null,
-            null,
+            false,
+            false,
             deleteRule,
             updateRule
         );
@@ -510,8 +526,8 @@ public final class Internal {
         UniqueKey<U> uk,
         TableField<U, ?>[] ukFields,
         boolean enforced,
-        ConstraintCharacteristic characteristic,
-        ConstraintCheckTime checkTime,
+        boolean deferrable,
+        boolean initiallyDeferred,
         ForeignKeyRule deleteRule,
         ForeignKeyRule updateRule
     ) {
@@ -524,8 +540,8 @@ public final class Internal {
             deleteRule,
             updateRule,
             enforced,
-            characteristic,
-            checkTime
+            deferrable,
+            initiallyDeferred
         );
 
         if (uk instanceof UniqueKeyImpl<U> u)
@@ -562,12 +578,12 @@ public final class Internal {
         UniqueKey<U> uk,
         TableField<U, ER> ukEmbeddableField,
         boolean enforced,
-        ConstraintCharacteristic characteristic,
-        ConstraintCheckTime checkTime,
+        boolean deferrable,
+        boolean initiallyDeferred,
         ForeignKeyRule deleteRule,
         ForeignKeyRule updateRule
     ) {
-        return createForeignKey(table, name, fields(fkEmbeddableField), uk, fields(ukEmbeddableField), enforced, characteristic, checkTime, deleteRule, updateRule);
+        return createForeignKey(table, name, fields(fkEmbeddableField), uk, fields(ukEmbeddableField), enforced, deferrable, initiallyDeferred, deleteRule, updateRule);
     }
 
     /**
@@ -668,15 +684,15 @@ public final class Internal {
      */
     @NotNull
     public static final <R extends Record> Check<R> createCheck(Table<R> table, Name name, String condition, boolean enforced) {
-        return createCheck(table, name, condition, enforced, null, null);
+        return createCheck(table, name, condition, enforced, false, false);
     }
 
     /**
      * Factory method for check constraints.
      */
     @NotNull
-    public static final <R extends Record> Check<R> createCheck(Table<R> table, Name name, String condition, boolean enforced, ConstraintCharacteristic characteristic, ConstraintCheckTime checkTime) {
-        return new CheckImpl<>(table, name, DSL.condition(condition), enforced, characteristic, checkTime);
+    public static final <R extends Record> Check<R> createCheck(Table<R> table, Name name, String condition, boolean enforced, boolean deferrable, boolean initiallyDeferred) {
+        return new CheckImpl<>(table, name, DSL.condition(condition), enforced, deferrable, initiallyDeferred);
     }
 
     /**

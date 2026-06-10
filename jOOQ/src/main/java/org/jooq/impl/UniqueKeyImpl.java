@@ -48,8 +48,6 @@ import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
-import org.jooq.impl.QOM.ConstraintCharacteristic;
-import org.jooq.impl.QOM.ConstraintCheckTime;
 
 /**
  * @author Lukas Eder
@@ -62,10 +60,10 @@ final class UniqueKeyImpl<R extends Record> extends AbstractKey<R> implements Un
         Table<R> table,
         TableField<R, ?>[] fields,
         boolean enforced,
-        ConstraintCharacteristic characteristic,
-        ConstraintCheckTime checkTime
+        boolean deferrable,
+        boolean initiallyDeferred
     ) {
-        this(table, null, fields, enforced, characteristic, checkTime);
+        this(table, null, fields, enforced, deferrable, initiallyDeferred);
     }
 
     UniqueKeyImpl(
@@ -73,10 +71,10 @@ final class UniqueKeyImpl<R extends Record> extends AbstractKey<R> implements Un
         Name name,
         TableField<R, ?>[] fields,
         boolean enforced,
-        ConstraintCharacteristic characteristic,
-        ConstraintCheckTime checkTime
+        boolean deferrable,
+        boolean initiallyDeferred
     ) {
-        super(table, name, fields, enforced, characteristic, checkTime);
+        super(table, name, fields, enforced, deferrable, initiallyDeferred);
 
         this.references = new ArrayList<>();
     }

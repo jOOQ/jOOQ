@@ -416,6 +416,8 @@
             <element name="table_name" type="string" minOccurs="1" maxOccurs="1" />
             <element name="comment" type="string" minOccurs="0" maxOccurs="1" />
             <element name="enforced" type="boolean" minOccurs="0" maxOccurs="1" />
+            <element name="deferrable" type="boolean" minOccurs="0" maxOccurs="1" />
+            <element name="initially_deferred" type="boolean" minOccurs="0" maxOccurs="1" />
         </all>
     </complexType>
 

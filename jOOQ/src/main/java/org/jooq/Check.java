@@ -37,9 +37,6 @@
  */
 package org.jooq;
 
-import org.jooq.impl.QOM.ConstraintCharacteristic;
-import org.jooq.impl.QOM.ConstraintCheckTime;
-
 /**
  * A check constraint.
  * <p>
@@ -72,12 +69,13 @@ public interface Check<R extends Record> extends Named {
     boolean enforced();
 
     /**
-     * The constraint characteristic.
+     * Whether this check is deferrable.
      */
-    ConstraintCharacteristic characteristic();
+    boolean deferrable();
 
     /**
-     * The constraint check time.
+     * Whether this check is initially deferred.
      */
-    ConstraintCheckTime checkTime();
+    boolean initiallyDeferred();
+
 }

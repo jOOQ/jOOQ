@@ -45,8 +45,6 @@ import org.jooq.Context;
 import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Table;
-import org.jooq.impl.QOM.ConstraintCharacteristic;
-import org.jooq.impl.QOM.ConstraintCheckTime;
 import org.jooq.impl.QOM.UNotYetImplemented;
 
 /**
@@ -54,20 +52,20 @@ import org.jooq.impl.QOM.UNotYetImplemented;
  */
 final class CheckImpl<R extends Record> extends AbstractNamed implements Check<R>, UNotYetImplemented {
 
-    final Table<R>                 table;
-    final Condition                condition;
-    final boolean                  enforced;
-    final ConstraintCharacteristic characteristic;
-    final ConstraintCheckTime      checkTime;
+    final Table<R>  table;
+    final Condition condition;
+    final boolean   enforced;
+    final boolean   deferrable;
+    final boolean   initiallyDeferred;
 
     CheckImpl(
         Table<R> table,
         Condition condition,
         boolean enforced,
-        ConstraintCharacteristic characteristic,
-        ConstraintCheckTime checkTime
+        boolean deferrable,
+        boolean initiallyDeferred
     ) {
-        this(table, null, condition, enforced, characteristic, checkTime);
+        this(table, null, condition, enforced, deferrable, initiallyDeferred);
     }
 
     CheckImpl(
@@ -75,16 +73,16 @@ final class CheckImpl<R extends Record> extends AbstractNamed implements Check<R
         Name name,
         Condition condition,
         boolean enforced,
-        ConstraintCharacteristic characteristic,
-        ConstraintCheckTime checkTime
+        boolean deferrable,
+        boolean initiallyDeferred
     ) {
         super(name, null);
 
         this.table = table;
         this.condition = condition;
         this.enforced = enforced;
-        this.characteristic = characteristic;
-        this.checkTime = checkTime;
+        this.deferrable = deferrable;
+        this.initiallyDeferred = initiallyDeferred;
     }
 
     @Override
@@ -103,13 +101,13 @@ final class CheckImpl<R extends Record> extends AbstractNamed implements Check<R
     }
 
     @Override
-    public final ConstraintCharacteristic characteristic() {
-        return characteristic;
+    public final boolean deferrable() {
+        return deferrable;
     }
 
     @Override
-    public final ConstraintCheckTime checkTime() {
-        return checkTime;
+    public final boolean initiallyDeferred() {
+        return initiallyDeferred;
     }
 
     private final Constraint enforced(ConstraintEnforcementStep key) {

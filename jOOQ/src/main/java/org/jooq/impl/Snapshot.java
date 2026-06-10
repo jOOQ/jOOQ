@@ -239,8 +239,8 @@ final class Snapshot extends AbstractMeta {
                 uk.getQualifiedName(),
                 fields(uk.getFieldsArray()),
                 uk.enforced(),
-                uk.characteristic(),
-                uk.checkTime()
+                uk.deferrable(),
+                uk.initiallyDeferred()
             ));
 
             UniqueKey<R> pk = table.getPrimaryKey();
@@ -250,8 +250,8 @@ final class Snapshot extends AbstractMeta {
                     pk.getQualifiedName(),
                     fields(pk.getFieldsArray()),
                     pk.enforced(),
-                    pk.characteristic(),
-                    pk.checkTime()
+                    pk.deferrable(),
+                    pk.initiallyDeferred()
                 );
 
             foreignKeys = new ArrayList<>(table.getReferences());

@@ -618,8 +618,8 @@ final class FilteredMeta extends AbstractMeta {
                 key.getUnqualifiedName(),
                 map(key.getFieldsArray(), f -> (TableField) field(f), TableField[]::new),
                 key.enforced(),
-                key.characteristic(),
-                key.checkTime()
+                key.deferrable(),
+                key.initiallyDeferred()
             );
         }
 

@@ -119,8 +119,6 @@ import org.jooq.TableOptions.TableType;
 // ...
 import org.jooq.UDT;
 import org.jooq.UniqueKey;
-import org.jooq.impl.QOM.ConstraintCharacteristic;
-import org.jooq.impl.QOM.ConstraintCheckTime;
 import org.jooq.impl.QOM.ForeignKeyRule;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
@@ -526,8 +524,8 @@ final class DDL {
                     result.add(enforced(
                         constraint(key.getUnqualifiedName()).primaryKey(key.getFieldsArray()),
                         key.enforced(),
-                        key.characteristic(),
-                        key.checkTime()
+                        key.deferrable(),
+                        key.initiallyDeferred()
                     ));
 
         return result;
@@ -542,8 +540,8 @@ final class DDL {
                     result.add(enforced(
                         constraint(key.getUnqualifiedName()).unique(key.getFieldsArray()),
                         key.enforced(),
-                        key.characteristic(),
-                        key.checkTime()
+                        key.deferrable(),
+                        key.initiallyDeferred()
                     ));
 
         return result;
@@ -562,8 +560,8 @@ final class DDL {
                         key.getUpdateRule()
                     ),
                     key.enforced(),
-                    key.characteristic(),
-                    key.checkTime()
+                    key.deferrable(),
+                    key.initiallyDeferred()
                 ));
 
         return result;
@@ -577,8 +575,8 @@ final class DDL {
                 result.add(enforced(
                     constraint(check.getUnqualifiedName()).check(check.condition()),
                     check.enforced(),
-                    check.characteristic(),
-                    check.checkTime()
+                    check.deferrable(),
+                    check.initiallyDeferred()
                 ));
 
         return result;
@@ -811,21 +809,18 @@ final class DDL {
     private final Constraint enforced(
         ConstraintEnforcementStep constraint,
         boolean enforced,
-        ConstraintCharacteristic characteristic,
-        ConstraintCheckTime checkTime
+        boolean deferrable,
+        boolean initiallyDeferred
     ) {
         if (!enforced)
             constraint = constraint.notEnforced();
 
-        if (characteristic == ConstraintCharacteristic.DEFERRABLE)
+        if (deferrable) {
             constraint = constraint.deferrable();
-        else if (characteristic == ConstraintCharacteristic.NOT_DEFERRABLE)
-            constraint = constraint.notDeferrable();
 
-        if (checkTime == ConstraintCheckTime.INITIALLY_DEFERRED)
-            constraint = constraint.initiallyDeferred();
-        else if (checkTime == ConstraintCheckTime.INITIALLY_IMMEDIATE)
-            constraint = constraint.initiallyImmediate();
+            if (initiallyDeferred)
+                constraint = constraint.initiallyDeferred();
+        }
 
         return constraint;
     }

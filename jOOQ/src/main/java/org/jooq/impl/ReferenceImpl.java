@@ -60,8 +60,6 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
 import org.jooq.exception.DetachedException;
-import org.jooq.impl.QOM.ConstraintCharacteristic;
-import org.jooq.impl.QOM.ConstraintCheckTime;
 import org.jooq.impl.QOM.ForeignKeyRule;
 import org.jooq.impl.QOM.UEmpty;
 
@@ -90,10 +88,10 @@ implements
         ForeignKeyRule deleteRule,
         ForeignKeyRule updateRule,
         boolean enforced,
-        ConstraintCharacteristic characteristic,
-        ConstraintCheckTime checkTime
+        boolean deferrable,
+        boolean initiallyDeferred
     ) {
-        super(table, name, fkFields, enforced, characteristic, checkTime);
+        super(table, name, fkFields, enforced, deferrable, initiallyDeferred);
 
         this.uk = uk;
         this.ukFields = ukFields;

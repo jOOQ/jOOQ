@@ -1665,8 +1665,8 @@ final class MetaImpl extends AbstractMeta {
                             foreignKeyRule(k.get(4, Integer.class)),
                             foreignKeyRule(k.get(3, Integer.class)),
                             true,
-                            null,
-                            null
+                            false,
+                            false
                         ));
                     }
                 }
@@ -1797,8 +1797,8 @@ final class MetaImpl extends AbstractMeta {
                 name(r.get(3, String.class)),
                 DSL.condition(r.get(4, String.class)),
                 true,
-                null,
-                null
+                false,
+                false
             );
         }
 
@@ -2127,8 +2127,8 @@ final class MetaImpl extends AbstractMeta {
                 name == null ? null : name(name),
                 fields,
                 true,
-                null,
-                null
+                false,
+                false
             );
 
             this.isPrimary = isPrimary;
@@ -2199,8 +2199,8 @@ final class MetaImpl extends AbstractMeta {
                     foreignKeyRule(k.get(4, Integer.class)),
                     foreignKeyRule(k.get(3, Integer.class)),
                     true,
-                    null,
-                    null
+                    false,
+                    false
                 ));
             });
 

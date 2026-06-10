@@ -54,10 +54,7 @@ import org.jooq.QueryPart;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
 // ...
-import org.jooq.impl.QOM.ConstraintCharacteristic;
-import org.jooq.impl.QOM.ConstraintCheckTime;
 import org.jooq.impl.QOM.PrimaryKey;
-import org.jooq.impl.QOM.UniqueKey;
 import org.jooq.impl.QOM.UnmodifiableList;
 
 /**
@@ -73,17 +70,17 @@ implements
     final QueryPartList<Field<?>> fields;
 
     PrimaryKeyConstraintImpl(Name name, Collection<? extends Field<?>> fields) {
-        this(name, fields, true, null, null);
+        this(name, fields, true, false, false);
     }
 
     private PrimaryKeyConstraintImpl(
         Name name,
         Collection<? extends Field<?>> fields,
         boolean enforced,
-        ConstraintCharacteristic characteristic,
-        ConstraintCheckTime checkTime
+        boolean deferrable,
+        boolean initiallyDeferred
     ) {
-        super(name, enforced, characteristic, checkTime);
+        super(name, enforced, deferrable, initiallyDeferred);
 
         this.fields = new QueryPartList<>(fields);
     }
@@ -124,27 +121,27 @@ implements
 
     @Override
     public final PrimaryKey $fields(UnmodifiableList<? extends Field<?>> newFields) {
-        return new PrimaryKeyConstraintImpl($name(), newFields, $enforced(), $characteristic(), $checkTime());
+        return new PrimaryKeyConstraintImpl($name(), newFields, $enforced(), $deferrable(), $initiallyDeferred());
     }
 
     @Override
     public final PrimaryKey $name(Name newName) {
-        return new PrimaryKeyConstraintImpl(newName, fields, $enforced(), $characteristic(), $checkTime());
+        return new PrimaryKeyConstraintImpl(newName, fields, $enforced(), $deferrable(), $initiallyDeferred());
     }
 
     @Override
     public final PrimaryKey $enforced(boolean newEnforced) {
-        return new PrimaryKeyConstraintImpl($name(), fields, newEnforced, $characteristic(), $checkTime());
+        return new PrimaryKeyConstraintImpl($name(), fields, newEnforced, $deferrable(), $initiallyDeferred());
     }
 
     @Override
-    public final PrimaryKey $characteristic(ConstraintCharacteristic newCharacteristic) {
-        return new PrimaryKeyConstraintImpl($name(), fields, $enforced(), newCharacteristic, $checkTime());
+    public final PrimaryKey $deferrable(boolean newDeferrable) {
+        return new PrimaryKeyConstraintImpl($name(), fields, $enforced(), newDeferrable, $initiallyDeferred());
     }
 
     @Override
-    public final PrimaryKey $checkTime(ConstraintCheckTime newCheckTime) {
-        return new PrimaryKeyConstraintImpl($name(), fields, $enforced(), $characteristic(), newCheckTime);
+    public final PrimaryKey $initiallyDeferred(boolean newInitiallyDeferred) {
+        return new PrimaryKeyConstraintImpl($name(), fields, $enforced(), $deferrable(), newInitiallyDeferred);
     }
 
 

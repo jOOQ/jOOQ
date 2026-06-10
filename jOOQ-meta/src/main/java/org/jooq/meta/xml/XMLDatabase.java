@@ -39,6 +39,7 @@
 package org.jooq.meta.xml;
 
 import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static org.jooq.impl.DSL.name;
@@ -379,7 +380,14 @@ public class XMLDatabase extends AbstractDatabase {
             TableConstraint tc = tableConstraint(usage.getConstraintCatalog(), usage.getConstraintSchema(), usage.getConstraintName());
             TableDefinition table = getTable(schema, tableName);
             if (table != null)
-                relations.addPrimaryKey(key, table, table.getColumn(columnName), tc != null && !FALSE.equals(tc.isEnforced()));
+                relations.addPrimaryKey(
+                    key,
+                    table,
+                    table.getColumn(columnName),
+                    tc != null && !FALSE.equals(tc.isEnforced()),
+                    tc != null && TRUE.equals(tc.isDeferrable()),
+                    tc != null && TRUE.equals(tc.isInitiallyDeferred())
+                );
         }
     }
 
@@ -394,7 +402,14 @@ public class XMLDatabase extends AbstractDatabase {
             TableConstraint tc = tableConstraint(usage.getConstraintCatalog(), usage.getConstraintSchema(), usage.getConstraintName());
             TableDefinition table = getTable(schema, tableName);
             if (table != null)
-                relations.addUniqueKey(key, table, table.getColumn(columnName), tc != null && !FALSE.equals(tc.isEnforced()));
+                relations.addUniqueKey(
+                    key,
+                    table,
+                    table.getColumn(columnName),
+                    tc != null && !FALSE.equals(tc.isEnforced()),
+                    tc != null && TRUE.equals(tc.isDeferrable()),
+                    tc != null && TRUE.equals(tc.isInitiallyDeferred())
+                );
         }
     }
 
@@ -464,6 +479,8 @@ public class XMLDatabase extends AbstractDatabase {
                                     uniqueKeyTable,
                                     usage.getPositionInUniqueConstraint(),
                                     !FALSE.equals(fktc.isEnforced()),
+                                    TRUE.equals(fktc.isDeferrable()),
+                                    TRUE.equals(fktc.isInitiallyDeferred()),
                                     foreignKeyRule(fk.getDeleteRule()),
                                     foreignKeyRule(fk.getUpdateRule())
                                 );
@@ -509,7 +526,9 @@ public class XMLDatabase extends AbstractDatabase {
                 table,
                 check.getConstraintName(),
                 check.getCheckClause(),
-                !FALSE.equals(tc.isEnforced())
+                !FALSE.equals(tc.isEnforced()),
+                TRUE.equals(tc.isDeferrable()),
+                TRUE.equals(tc.isInitiallyDeferred())
             ));
         }
     }

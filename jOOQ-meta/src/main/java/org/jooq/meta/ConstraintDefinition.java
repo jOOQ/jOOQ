@@ -53,4 +53,14 @@ public interface ConstraintDefinition extends Definition {
      * Whether this constraint is enforced.
      */
     boolean enforced();
+
+    /**
+     * Whether this constraint is deferrable.
+     */
+    boolean deferrable();
+
+    /**
+     * Whether this constraint is initially deferred.
+     */
+    boolean initiallyDeferred();
 }

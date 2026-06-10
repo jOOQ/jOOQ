@@ -370,6 +370,8 @@ public class XMLGenerator extends AbstractGenerator {
                     tc.setTableSchema(table.getSchema().getOutputName());
                     tc.setTableName(table.getOutputName());
                     tc.setEnforced(u.enforced());
+                    tc.setDeferrable(u.deferrable());
+                    tc.setInitiallyDeferred(u.initiallyDeferred());
 
                     is.getTableConstraints().add(tc);
 
@@ -410,6 +412,8 @@ public class XMLGenerator extends AbstractGenerator {
                     tc.setTableSchema(table.getSchema().getOutputName());
                     tc.setTableName(table.getOutputName());
                     tc.setEnforced(f.enforced());
+                    tc.setDeferrable(f.deferrable());
+                    tc.setInitiallyDeferred(f.initiallyDeferred());
 
                     ReferentialConstraint rc = new ReferentialConstraint();
                     rc.setConstraintCatalog(catalogName);
@@ -459,6 +463,8 @@ public class XMLGenerator extends AbstractGenerator {
                     tc.setTableSchema(table.getSchema().getOutputName());
                     tc.setTableName(table.getOutputName());
                     tc.setEnforced(ch.enforced());
+                    tc.setDeferrable(ch.deferrable());
+                    tc.setInitiallyDeferred(ch.initiallyDeferred());
 
                     is.getTableConstraints().add(tc);
 

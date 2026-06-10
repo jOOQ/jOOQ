@@ -125,8 +125,6 @@ import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataDefinitionException;
 import org.jooq.impl.DefaultParseContext.IgnoreQuery;
 import org.jooq.impl.QOM.Cascade;
-import org.jooq.impl.QOM.ConstraintCharacteristic;
-import org.jooq.impl.QOM.ConstraintCheckTime;
 import org.jooq.impl.QOM.CycleOption;
 import org.jooq.impl.QOM.ForeignKeyRule;
 import org.jooq.impl.QOM.GenerationMode;
@@ -474,7 +472,7 @@ final class Interpreter {
 
         mt.foreignKeys.add(new MutableForeignKey(
             (UnqualifiedName) key.getUnqualifiedName(), mt, mfs, mu, mrfs, key.$deleteRule(), key.$updateRule(),
-            key.$enforced(), key.$characteristic(), key.$checkTime()
+            key.$enforced(), key.$deferrable(), key.$initiallyDeferred()
         ));
     }
 
@@ -767,13 +765,15 @@ final class Interpreter {
             if (query.$alterConstraintEnforced() != null)
                 c.enforced = query.$alterConstraintEnforced();
 
-            if (query.$alterConstraintCharacteristic() == ConstraintCharacteristic.NOT_DEFERRABLE) {
-                c.characteristic = query.$alterConstraintCharacteristic();
-                c.checkTime = null;
-            }
-            else if (query.$alterConstraintCharacteristic() == ConstraintCharacteristic.DEFERRABLE) {
-                c.characteristic = query.$alterConstraintCharacteristic();
-                c.checkTime = query.$alterConstraintCheckTime();
+            if (query.$alterConstraintDeferrable() != null) {
+                if (query.$alterConstraintDeferrable()) {
+                    c.deferrable = query.$alterConstraintDeferrable();
+                    c.initiallyDeferred = TRUE.equals(query.$alterConstraintInitiallyDeferred());
+                }
+                else {
+                    c.deferrable = query.$alterConstraintDeferrable();
+                    c.initiallyDeferred = false;
+                }
             }
         }
         else if (query.$dropColumns() != null) {
@@ -960,20 +960,20 @@ final class Interpreter {
             else
                 existing.primaryKey = new MutableUniqueKey(
                     (UnqualifiedName) constraint.getUnqualifiedName(), existing, existing.fields(p.$fields(), true),
-                    p.$enforced(), p.$characteristic(), p.$checkTime()
+                    p.$enforced(), p.$deferrable(), p.$initiallyDeferred()
                 );
         }
         else if (constraint instanceof QOM.UniqueKey u)
             existing.uniqueKeys.add(new MutableUniqueKey(
                 (UnqualifiedName) constraint.getUnqualifiedName(), existing, existing.fields(u.$fields(), true),
-                u.$enforced(), u.$characteristic(), u.$checkTime()
+                u.$enforced(), u.$deferrable(), u.$initiallyDeferred()
             ));
         else if (constraint instanceof QOM.ForeignKey f)
             addForeignKey(existing, f);
         else if (constraint instanceof QOM.Check c)
             existing.checks.add(new MutableCheck(
                 (UnqualifiedName) constraint.getUnqualifiedName(), existing, c.$condition(),
-                c.$enforced(), c.$characteristic(), c.$checkTime()
+                c.$enforced(), c.$deferrable(), c.$initiallyDeferred()
             ));
         else
             throw unsupportedQuery(query);
@@ -2570,7 +2570,7 @@ final class Interpreter {
 
             @Override
             public List<Check<Record>> getChecks() {
-                return map(MutableTable.this.checks, c -> new CheckImpl<>(this, c.name(), c.condition, c.enforced, c.characteristic, c.checkTime));
+                return map(MutableTable.this.checks, c -> new CheckImpl<>(this, c.name(), c.condition, c.enforced, c.deferrable, c.initiallyDeferred));
             }
 
             @Override
@@ -2677,7 +2677,7 @@ final class Interpreter {
         }
 
         final Check<?>[] interpretedChecks() {
-            return map(checks, c -> new CheckImpl<>(null, c.name(), c.condition, c.enforced, c.characteristic, c.checkTime), Check[]::new);
+            return map(checks, c -> new CheckImpl<>(null, c.name(), c.condition, c.enforced, c.deferrable, c.initiallyDeferred), Check[]::new);
         }
 
         private final class InterpretedDomain extends DomainImpl {
@@ -2827,24 +2827,24 @@ final class Interpreter {
 
 
     private abstract class MutableConstraint extends MutableNamed {
-        MutableTable             table;
-        boolean                  enforced;
-        ConstraintCharacteristic characteristic;
-        ConstraintCheckTime      checkTime;
+        MutableTable table;
+        boolean      enforced;
+        boolean      deferrable;
+        boolean      initiallyDeferred;
 
         MutableConstraint(
             UnqualifiedName name,
             MutableTable table,
             boolean enforced,
-            ConstraintCharacteristic characteristic,
-            ConstraintCheckTime checkTime
+            boolean deferrable,
+            boolean initiallyDeferred
         ) {
             super(name);
 
             this.table = table;
             this.enforced = enforced;
-            this.characteristic = characteristic;
-            this.checkTime = checkTime;
+            this.deferrable = deferrable;
+            this.initiallyDeferred = initiallyDeferred;
         }
 
         @Override
@@ -2861,10 +2861,10 @@ final class Interpreter {
             MutableTable table,
             List<MutableField> fields,
             boolean enforced,
-            ConstraintCharacteristic characteristic,
-            ConstraintCheckTime checkTime
+            boolean deferrable,
+            boolean initiallyDeferred
         ) {
-            super(name, table, enforced, characteristic, checkTime);
+            super(name, table, enforced, deferrable, initiallyDeferred);
 
             this.fields = fields;
         }
@@ -2886,8 +2886,8 @@ final class Interpreter {
                 null,
                 check.$condition(),
                 check.$enforced(),
-                check.$characteristic(),
-                check.$checkTime()
+                check.$deferrable(),
+                check.$initiallyDeferred()
             );
         }
 
@@ -2896,10 +2896,10 @@ final class Interpreter {
             MutableTable table,
             Condition condition,
             boolean enforced,
-            ConstraintCharacteristic characteristic,
-            ConstraintCheckTime checkTime
+            boolean deferrable,
+            boolean initiallyDeferred
         ) {
-            super(name, table, enforced, characteristic, checkTime);
+            super(name, table, enforced, deferrable, initiallyDeferred);
 
             this.condition = condition;
         }
@@ -2926,10 +2926,10 @@ final class Interpreter {
             MutableTable table,
             List<MutableField> fields,
             boolean enforced,
-            ConstraintCharacteristic characteristic,
-            ConstraintCheckTime checkTime
+            boolean deferrable,
+            boolean initiallyDeferred
         ) {
-            super(name, table, fields, enforced, characteristic, checkTime);
+            super(name, table, fields, enforced, deferrable, initiallyDeferred);
         }
 
         @Override
@@ -2961,8 +2961,8 @@ final class Interpreter {
                     name(),
                     map(fields, f -> (TableField<Record, ?>) t.field(f.name()), TableField[]::new),
                     enforced,
-                    characteristic,
-                    checkTime
+                    deferrable,
+                    initiallyDeferred
                 ));
 
                 for (MutableForeignKey referencingKey : referencingKeys)
@@ -2989,10 +2989,10 @@ final class Interpreter {
             ForeignKeyRule onDelete,
             ForeignKeyRule onUpdate,
             boolean enforced,
-            ConstraintCharacteristic characteristic,
-            ConstraintCheckTime checkTime
+            boolean deferrable,
+            boolean initiallyDeferred
         ) {
-            super(name, table, fields, enforced, characteristic, checkTime);
+            super(name, table, fields, enforced, deferrable, initiallyDeferred);
 
             this.referencedKey = referencedKey;
             this.referencedKey.referencingKeys.add(this);
@@ -3033,8 +3033,8 @@ final class Interpreter {
                     onDelete,
                     onUpdate,
                     enforced,
-                    characteristic,
-                    checkTime
+                    deferrable,
+                    initiallyDeferred
                 ));
             }
 

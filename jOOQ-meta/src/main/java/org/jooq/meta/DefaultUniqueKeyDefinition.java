@@ -51,12 +51,35 @@ public class DefaultUniqueKeyDefinition extends AbstractConstraintDefinition imp
     private transient boolean                resolvedUKCalculated;
     private transient UniqueKeyDefinition    resolvedUK;
 
-    public DefaultUniqueKeyDefinition(SchemaDefinition schema, String name, TableDefinition table, boolean isPrimaryKey) {
+    public DefaultUniqueKeyDefinition(
+        SchemaDefinition schema,
+        String name,
+        TableDefinition table,
+        boolean isPrimaryKey
+    ) {
         this(schema, name, table, isPrimaryKey, true);
     }
 
-    public DefaultUniqueKeyDefinition(SchemaDefinition schema, String name, TableDefinition table, boolean isPrimaryKey, boolean enforced) {
-        super(schema, table, name, enforced);
+    public DefaultUniqueKeyDefinition(
+        SchemaDefinition schema,
+        String name,
+        TableDefinition table,
+        boolean isPrimaryKey,
+        boolean enforced
+    ) {
+        this(schema, name, table, isPrimaryKey, enforced, false, false);
+    }
+
+    public DefaultUniqueKeyDefinition(
+        SchemaDefinition schema,
+        String name,
+        TableDefinition table,
+        boolean isPrimaryKey,
+        boolean enforced,
+        boolean deferrable,
+        boolean initiallyDeferred
+    ) {
+        super(schema, table, name, enforced, deferrable, initiallyDeferred, null, null);
 
         this.foreignKeys = new ArrayList<>();
         this.keyColumns = new ArrayList<>();

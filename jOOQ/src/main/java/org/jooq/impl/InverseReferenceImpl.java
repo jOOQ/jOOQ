@@ -65,8 +65,8 @@ implements
             foreignKey.getQualifiedName(),
             foreignKey.getKeyFieldsArray(),
             foreignKey.enforced(),
-            foreignKey.characteristic(),
-            foreignKey.checkTime()
+            foreignKey.deferrable(),
+            foreignKey.initiallyDeferred()
         );
 
         this.foreignKey = foreignKey;

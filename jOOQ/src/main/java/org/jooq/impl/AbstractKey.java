@@ -52,8 +52,6 @@ import org.jooq.Record;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
-import org.jooq.impl.QOM.ConstraintCharacteristic;
-import org.jooq.impl.QOM.ConstraintCheckTime;
 import org.jooq.impl.QOM.UEmpty;
 
 /**
@@ -63,20 +61,20 @@ import org.jooq.impl.QOM.UEmpty;
  */
 abstract class AbstractKey<R extends Record> extends AbstractNamed implements Key<R>, UEmpty {
 
-    final Table<R>                 table;
-    final TableField<R, ?>[]       fields;
-    final boolean                  enforced;
-    final ConstraintCharacteristic characteristic;
-    final ConstraintCheckTime      checkTime;
+    final Table<R>           table;
+    final TableField<R, ?>[] fields;
+    final boolean            enforced;
+    final boolean            deferrable;
+    final boolean            initiallyDeferred;
 
     AbstractKey(
         Table<R> table,
         TableField<R, ?>[] fields,
         boolean enforced,
-        ConstraintCharacteristic characteristic,
-        ConstraintCheckTime checkTime
+        boolean deferrable,
+        boolean initiallyDeferred
     ) {
-        this(table, null, fields, enforced, characteristic, checkTime);
+        this(table, null, fields, enforced, deferrable, initiallyDeferred);
     }
 
     AbstractKey(
@@ -84,16 +82,16 @@ abstract class AbstractKey<R extends Record> extends AbstractNamed implements Ke
         Name name,
         TableField<R, ?>[] fields,
         boolean enforced,
-        ConstraintCharacteristic characteristic,
-        ConstraintCheckTime checkTime
+        boolean deferrable,
+        boolean initiallyDeferred
     ) {
         super(qualify(table, name), null);
 
         this.table = table;
         this.fields = fields;
         this.enforced = enforced;
-        this.characteristic = characteristic;
-        this.checkTime = checkTime;
+        this.deferrable = deferrable;
+        this.initiallyDeferred = initiallyDeferred;
     }
 
     @Override
@@ -122,28 +120,24 @@ abstract class AbstractKey<R extends Record> extends AbstractNamed implements Ke
     }
 
     @Override
-    public final ConstraintCharacteristic characteristic() {
-        return characteristic;
+    public final boolean deferrable() {
+        return deferrable;
     }
 
     @Override
-    public final ConstraintCheckTime checkTime() {
-        return checkTime;
+    public final boolean initiallyDeferred() {
+        return initiallyDeferred;
     }
 
     private final Constraint enforced(ConstraintEnforcementStep key) {
         if (!enforced())
             key = key.notEnforced();
 
-        if (characteristic() == ConstraintCharacteristic.DEFERRABLE)
+        if (deferrable())
             key = key.deferrable();
-        else if (characteristic() == ConstraintCharacteristic.NOT_DEFERRABLE)
-            key = key.notDeferrable();
 
-        if (checkTime() == ConstraintCheckTime.INITIALLY_DEFERRED)
+        if (initiallyDeferred())
             key = key.initiallyDeferred();
-        else if (checkTime() == ConstraintCheckTime.INITIALLY_IMMEDIATE)
-            key = key.initiallyImmediate();
 
         return key;
     }

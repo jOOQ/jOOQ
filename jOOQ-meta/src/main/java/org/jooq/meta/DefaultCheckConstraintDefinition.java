@@ -47,6 +47,10 @@ public class DefaultCheckConstraintDefinition extends AbstractConstraintDefiniti
         super(schema, table, name, enforced, null, checkClause);
     }
 
+    public DefaultCheckConstraintDefinition(SchemaDefinition schema, TableDefinition table, String name, String checkClause, boolean enforced, boolean deferrable, boolean initiallyDeferred) {
+        super(schema, table, name, enforced, deferrable, initiallyDeferred, null, checkClause);
+    }
+
     @Override
     public String getCheckClause() {
         return getSource();

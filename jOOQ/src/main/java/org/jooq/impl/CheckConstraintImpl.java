@@ -45,8 +45,6 @@ import static org.jooq.impl.Keywords.K_CHECK;
 import java.util.Set;
 
 import org.jooq.Condition;
-import org.jooq.Constraint;
-import org.jooq.ConstraintEnforcementStep;
 import org.jooq.Context;
 import org.jooq.Name;
 import org.jooq.QueryPart;
@@ -55,10 +53,6 @@ import org.jooq.SQLDialect;
 import org.jooq.Table;
 // ...
 import org.jooq.impl.QOM.Check;
-import org.jooq.impl.QOM.ConstraintCharacteristic;
-import org.jooq.impl.QOM.ConstraintCheckTime;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Lukas Eder
@@ -74,11 +68,17 @@ implements
     final Condition              condition;
 
     CheckConstraintImpl(Name name, Condition condition) {
-        this(name, condition, true, null, null);
+        this(name, condition, true, false, false);
     }
 
-    private CheckConstraintImpl(Name name, Condition condition, boolean enforced, ConstraintCharacteristic characteristic, ConstraintCheckTime checkTime) {
-        super(name, enforced, characteristic, checkTime);
+    private CheckConstraintImpl(
+        Name name,
+        Condition condition,
+        boolean enforced,
+        boolean deferrable,
+        boolean initiallyDeferred
+    ) {
+        super(name, enforced, deferrable, initiallyDeferred);
 
         this.condition = condition;
     }
@@ -109,27 +109,27 @@ implements
 
     @Override
     public final Check $condition(Condition newCondition) {
-        return new CheckConstraintImpl($name(), newCondition, $enforced(), $characteristic(), $checkTime());
+        return new CheckConstraintImpl($name(), newCondition, $enforced(), $deferrable(), $initiallyDeferred());
     }
 
     @Override
     public final Check $name(Name newName) {
-        return new CheckConstraintImpl(newName, $condition(), $enforced(), $characteristic(), $checkTime());
+        return new CheckConstraintImpl(newName, $condition(), $enforced(), $deferrable(), $initiallyDeferred());
     }
 
     @Override
     public final Check $enforced(boolean newEnforced) {
-        return new CheckConstraintImpl($name(), $condition(), newEnforced, $characteristic(), $checkTime());
+        return new CheckConstraintImpl($name(), $condition(), newEnforced, $deferrable(), $initiallyDeferred());
     }
 
     @Override
-    public final Check $characteristic(ConstraintCharacteristic newCharacteristic) {
-        return new CheckConstraintImpl($name(), $condition(), $enforced(), newCharacteristic, $checkTime());
+    public final Check $deferrable(boolean newDeferrable) {
+        return new CheckConstraintImpl($name(), $condition(), $enforced(), newDeferrable, $initiallyDeferred());
     }
 
     @Override
-    public final Check $checkTime(ConstraintCheckTime newCheckTime) {
-        return new CheckConstraintImpl($name(), $condition(), $enforced(), $characteristic(), newCheckTime);
+    public final Check $initiallyDeferred(boolean newInitiallyDeferred) {
+        return new CheckConstraintImpl($name(), $condition(), $enforced(), $deferrable(), newInitiallyDeferred);
     }
 
 

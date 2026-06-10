@@ -67,8 +67,6 @@ import org.jooq.Name;
 // ...
 import org.jooq.SQLDialect;
 import org.jooq.Table;
-import org.jooq.impl.QOM.ConstraintCharacteristic;
-import org.jooq.impl.QOM.ConstraintCheckTime;
 
 /**
  * @author Lukas Eder
@@ -92,23 +90,23 @@ implements
 
 
     boolean                      enforced                  = true;
-    ConstraintCharacteristic     characteristic;
-    ConstraintCheckTime          checkTime;
+    boolean                      deferrable;
+    boolean                      initiallyDeferred;
 
     AbstractConstraint() {
         this(null);
     }
 
     AbstractConstraint(Name name) {
-        this(name, false, null, null);
+        this(name, false, false, false);
     }
 
-    AbstractConstraint(Name name, boolean enforced, ConstraintCharacteristic characteristic, ConstraintCheckTime checkTime) {
+    AbstractConstraint(Name name, boolean enforced, boolean deferrable, boolean initiallyDeferred) {
         super(name, null);
 
         this.enforced = enforced;
-        this.characteristic = characteristic;
-        this.checkTime = checkTime;
+        this.deferrable = deferrable;
+        this.initiallyDeferred = initiallyDeferred;
     }
 
     // ------------------------------------------------------------------------
@@ -195,26 +193,18 @@ implements
         }
     }
 
-    static void acceptCharacteristic(Context<?> ctx, ConstraintCharacteristic characteristic, ConstraintCheckTime checkTime) {
-        if (characteristic != null) {
-            switch (characteristic) {
-                case DEFERRABLE:
-                    ctx.sql(' ').visit(K_DEFERRABLE);
-                    break;
-                case NOT_DEFERRABLE:
-                    ctx.sql(' ').visit(K_NOT).sql(' ').visit(K_DEFERRABLE);
-                    break;
-            }
-        }
+    static void acceptCharacteristic(Context<?> ctx, Boolean deferrable, Boolean initiallyDeferred) {
+        if (deferrable != null) {
+            if (deferrable)
+                ctx.sql(' ').visit(K_DEFERRABLE);
+            else
+                ctx.sql(' ').visit(K_NOT).sql(' ').visit(K_DEFERRABLE);
 
-        if (checkTime != null) {
-            switch (checkTime) {
-                case INITIALLY_DEFERRED:
+            if (initiallyDeferred != null) {
+                if (initiallyDeferred)
                     ctx.sql(' ').visit(K_INITIALLY).sql(' ').visit(K_DEFERRED);
-                    break;
-                case INITIALLY_IMMEDIATE:
+                else
                     ctx.sql(' ').visit(K_INITIALLY).sql(' ').visit(K_IMMEDIATE);
-                    break;
             }
         }
     }
@@ -239,25 +229,25 @@ implements
 
     @Override
     public final AbstractConstraint deferrable() {
-        this.characteristic = ConstraintCharacteristic.DEFERRABLE;
+        this.deferrable = true;
         return this;
     }
 
     @Override
     public final AbstractConstraint notDeferrable() {
-        this.characteristic = ConstraintCharacteristic.NOT_DEFERRABLE;
+        this.deferrable = false;
         return this;
     }
 
     @Override
     public final AbstractConstraint initiallyDeferred() {
-        this.checkTime = ConstraintCheckTime.INITIALLY_DEFERRED;
+        this.initiallyDeferred = true;
         return this;
     }
 
     @Override
     public final AbstractConstraint initiallyImmediate() {
-        this.checkTime = ConstraintCheckTime.INITIALLY_IMMEDIATE;
+        this.initiallyDeferred = false;
         return this;
     }
 
@@ -269,11 +259,11 @@ implements
         return enforced;
     }
 
-    public final ConstraintCharacteristic $characteristic() {
-        return characteristic;
+    public final boolean $deferrable() {
+        return deferrable;
     }
 
-    public final ConstraintCheckTime $checkTime() {
-        return checkTime;
+    public final boolean $initiallyDeferred() {
+        return initiallyDeferred;
     }
 }

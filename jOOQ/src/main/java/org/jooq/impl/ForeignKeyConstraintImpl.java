@@ -98,8 +98,6 @@ import org.jooq.QueryPart;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
 // ...
-import org.jooq.impl.QOM.ConstraintCharacteristic;
-import org.jooq.impl.QOM.ConstraintCheckTime;
 import org.jooq.impl.QOM.ForeignKey;
 import org.jooq.impl.QOM.ForeignKeyRule;
 import org.jooq.impl.QOM.UnmodifiableList;
@@ -166,8 +164,8 @@ implements
             null,
             null,
             true,
-            null,
-            null
+            false,
+            false
         );
     }
 
@@ -179,10 +177,10 @@ implements
         ForeignKeyRule deleteRule,
         ForeignKeyRule updateRule,
         boolean enforced,
-        ConstraintCharacteristic characteristic,
-        ConstraintCheckTime checkTime
+        boolean deferrable,
+        boolean initiallyDeferred
     ) {
-        super(name, enforced, characteristic, checkTime);
+        super(name, enforced, deferrable, initiallyDeferred);
 
         this.fields = new QueryPartList<>(fields);
         this.referencesTable = referencesTable;
@@ -694,8 +692,8 @@ implements
             deleteRule,
             updateRule,
             enforced,
-            characteristic,
-            checkTime
+            deferrable,
+            initiallyDeferred
         );
     }
 
@@ -708,13 +706,13 @@ implements
             deleteRule,
             updateRule,
             newEnforced,
-            characteristic,
-            checkTime
+            deferrable,
+            initiallyDeferred
         );
     }
 
     @Override
-    public final ForeignKey $characteristic(ConstraintCharacteristic newCharacteristic) {
+    public final ForeignKey $deferrable(boolean newDeferrable) {
         return new ForeignKeyConstraintImpl($name(),
             fields,
             referencesTable,
@@ -722,13 +720,13 @@ implements
             deleteRule,
             updateRule,
             enforced,
-            newCharacteristic,
-            checkTime
+            newDeferrable,
+            initiallyDeferred
         );
     }
 
     @Override
-    public final ForeignKey $checkTime(ConstraintCheckTime newCheckTime) {
+    public final ForeignKey $initiallyDeferred(boolean newInitiallyDeferred) {
         return new ForeignKeyConstraintImpl($name(),
             fields,
             referencesTable,
@@ -736,8 +734,8 @@ implements
             deleteRule,
             updateRule,
             enforced,
-            characteristic,
-            newCheckTime
+            deferrable,
+            newInitiallyDeferred
         );
     }
 
@@ -755,8 +753,8 @@ implements
             deleteRule,
             updateRule,
             enforced,
-            characteristic,
-            checkTime
+            deferrable,
+            initiallyDeferred
         );
     }
 
@@ -774,8 +772,8 @@ implements
             deleteRule,
             updateRule,
             enforced,
-            characteristic,
-            checkTime
+            deferrable,
+            initiallyDeferred
         );
     }
 
@@ -793,8 +791,8 @@ implements
             deleteRule,
             updateRule,
             enforced,
-            characteristic,
-            checkTime
+            deferrable,
+            initiallyDeferred
         );
     }
 
@@ -812,8 +810,8 @@ implements
             newDeleteRule,
             updateRule,
             enforced,
-            characteristic,
-            checkTime
+            deferrable,
+            initiallyDeferred
         );
     }
 
@@ -831,8 +829,8 @@ implements
             deleteRule,
             newUpdateRule,
             enforced,
-            characteristic,
-            checkTime
+            deferrable,
+            initiallyDeferred
         );
     }
 

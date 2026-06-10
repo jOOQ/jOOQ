@@ -78,6 +78,17 @@ public class DefaultRelations implements Relations {
     }
 
     public void addPrimaryKey(String keyName, TableDefinition table, ColumnDefinition column, boolean enforced) {
+        addPrimaryKey(keyName, table, column, enforced, false, false);
+    }
+
+    public void addPrimaryKey(
+        String keyName,
+        TableDefinition table,
+        ColumnDefinition column,
+        boolean enforced,
+        boolean deferrable,
+        boolean initiallyDeferred
+    ) {
         Key key = key(table, keyName);
 
         // [#2718] Column exclusions may hit primary key references. Ignore
@@ -102,7 +113,7 @@ public class DefaultRelations implements Relations {
 	    if (log.isDebugEnabled())
 	        log.debug("Adding primary key", keyName + " (" + column + ")");
 
-	    UniqueKeyDefinition result = getUniqueKey(keyName, table, column, true, enforced);
+	    UniqueKeyDefinition result = getUniqueKey(keyName, table, column, true, enforced, deferrable, initiallyDeferred);
         result.getKeyColumns().add(column);
 	}
 
@@ -111,6 +122,10 @@ public class DefaultRelations implements Relations {
     }
 
     public void addUniqueKey(String keyName, TableDefinition table, ColumnDefinition column, boolean enforced) {
+        addUniqueKey(keyName, table, column, enforced, false, false);
+    }
+
+    public void addUniqueKey(String keyName, TableDefinition table, ColumnDefinition column, boolean enforced, boolean deferrable, boolean initiallyDeferred) {
         Key key = key(table, keyName);
 
         // [#2718] Column exclusions may hit unique key references. Ignore
@@ -135,7 +150,7 @@ public class DefaultRelations implements Relations {
         if (log.isDebugEnabled())
             log.debug("Adding unique key", keyName + " (" + column + ")");
 
-        UniqueKeyDefinition result = getUniqueKey(keyName, table, column, false, enforced);
+        UniqueKeyDefinition result = getUniqueKey(keyName, table, column, false, enforced, deferrable, initiallyDeferred);
         result.getKeyColumns().add(column);
     }
 
@@ -181,12 +196,29 @@ public class DefaultRelations implements Relations {
                      ", new key : " + key.getName());
     }
 
-    private UniqueKeyDefinition getUniqueKey(String keyName, TableDefinition table, ColumnDefinition column, boolean isPK, boolean enforced) {
+    private UniqueKeyDefinition getUniqueKey(
+        String keyName,
+        TableDefinition table,
+        ColumnDefinition column,
+        boolean isPK,
+        boolean enforced,
+        boolean deferrable,
+        boolean initiallyDeferred
+    ) {
         Key key = key(table, keyName);
         UniqueKeyDefinition result = keys.get(key);
 
         if (result == null) {
-            result = new DefaultUniqueKeyDefinition(column.getSchema(), keyName, table, isPK, enforced);
+            result = new DefaultUniqueKeyDefinition(
+                column.getSchema(),
+                keyName,
+                table,
+                isPK,
+                enforced,
+                deferrable,
+                initiallyDeferred
+            );
+
             keys.put(key, result);
 
             if (isPK)
@@ -235,6 +267,56 @@ public class DefaultRelations implements Relations {
         String uniqueKeyName,
         TableDefinition uniqueKeyTable,
         boolean enforced,
+        boolean deferrable,
+        boolean initiallyDeferred
+    ) {
+        addForeignKey(
+            foreignKeyName,
+            foreignKeyTable,
+            foreignKeyColumn,
+            uniqueKeyName,
+            uniqueKeyTable,
+            enforced,
+            deferrable,
+            initiallyDeferred,
+            null,
+            null
+        );
+    }
+
+    public void addForeignKey(
+        String foreignKeyName,
+        TableDefinition foreignKeyTable,
+        ColumnDefinition foreignKeyColumn,
+        String uniqueKeyName,
+        TableDefinition uniqueKeyTable,
+        boolean enforced,
+        ForeignKeyRule deleteRule,
+        ForeignKeyRule updateRule
+    ) {
+        addForeignKey(
+            foreignKeyName,
+            foreignKeyTable,
+            foreignKeyColumn,
+            uniqueKeyName,
+            uniqueKeyTable,
+            enforced,
+            false,
+            false,
+            deleteRule,
+            updateRule
+        );
+    }
+
+    public void addForeignKey(
+        String foreignKeyName,
+        TableDefinition foreignKeyTable,
+        ColumnDefinition foreignKeyColumn,
+        String uniqueKeyName,
+        TableDefinition uniqueKeyTable,
+        boolean enforced,
+        boolean deferrable,
+        boolean initiallyDeferred,
         ForeignKeyRule deleteRule,
         ForeignKeyRule updateRule
     ) {
@@ -263,6 +345,8 @@ public class DefaultRelations implements Relations {
             uniqueKeyTable,
             getNextUkColumn(key, uk),
             enforced,
+            deferrable,
+            initiallyDeferred,
             deleteRule,
             updateRule
         );
@@ -311,9 +395,64 @@ public class DefaultRelations implements Relations {
         TableDefinition uniqueKeyTable,
         Integer positionInUniqueKey,
         boolean enforced,
+        boolean deferrable,
+        boolean initiallyDeferred
+    ) {
+        addForeignKey(
+            foreignKeyName,
+            foreignKeyTable,
+            foreignKeyColumn,
+            uniqueKeyName,
+            uniqueKeyTable,
+            positionInUniqueKey,
+            enforced,
+            deferrable,
+            initiallyDeferred,
+            null,
+            null
+        );
+    }
+
+    public void addForeignKey(
+        String foreignKeyName,
+        TableDefinition foreignKeyTable,
+        ColumnDefinition foreignKeyColumn,
+        String uniqueKeyName,
+        TableDefinition uniqueKeyTable,
+        Integer positionInUniqueKey,
+        boolean enforced,
         ForeignKeyRule deleteRule,
         ForeignKeyRule updateRule
     ) {
+        addForeignKey(
+            foreignKeyName,
+            foreignKeyTable,
+            foreignKeyColumn,
+            uniqueKeyName,
+            uniqueKeyTable,
+            positionInUniqueKey,
+            enforced,
+            false,
+            false,
+            deleteRule,
+            updateRule
+        );
+    }
+
+    public void addForeignKey(
+        String foreignKeyName,
+        TableDefinition foreignKeyTable,
+        ColumnDefinition foreignKeyColumn,
+        String uniqueKeyName,
+        TableDefinition uniqueKeyTable,
+        Integer positionInUniqueKey,
+        boolean enforced,
+        boolean deferrable,
+        boolean initiallyDeferred,
+        ForeignKeyRule deleteRule,
+        ForeignKeyRule updateRule
+    ) {
+
         if (positionInUniqueKey == null) {
             addForeignKey(
                 foreignKeyName,
@@ -322,6 +461,8 @@ public class DefaultRelations implements Relations {
                 uniqueKeyName,
                 uniqueKeyTable,
                 enforced,
+                deferrable,
+                initiallyDeferred,
                 deleteRule,
                 updateRule
             );
@@ -338,6 +479,8 @@ public class DefaultRelations implements Relations {
                     uniqueKeyTable,
                     uniqueKey.getKeyColumns().get(positionInUniqueKey - 1),
                     enforced,
+                    deferrable,
+                    initiallyDeferred,
                     deleteRule,
                     updateRule
                 );
@@ -375,9 +518,64 @@ public class DefaultRelations implements Relations {
         TableDefinition uniqueKeyTable,
         ColumnDefinition uniqueKeyColumn,
         boolean enforced,
+        boolean deferrable,
+        boolean initiallyDeferred
+    ) {
+        addForeignKey(
+            foreignKeyName,
+            foreignKeyTable,
+            foreignKeyColumn,
+            uniqueKeyName,
+            uniqueKeyTable,
+            uniqueKeyColumn,
+            enforced,
+            deferrable,
+            initiallyDeferred,
+            null,
+            null
+        );
+    }
+
+    public void addForeignKey(
+        String foreignKeyName,
+        TableDefinition foreignKeyTable,
+        ColumnDefinition foreignKeyColumn,
+        String uniqueKeyName,
+        TableDefinition uniqueKeyTable,
+        ColumnDefinition uniqueKeyColumn,
+        boolean enforced,
         ForeignKeyRule deleteRule,
         ForeignKeyRule updateRule
     ) {
+        addForeignKey(
+            foreignKeyName,
+            foreignKeyTable,
+            foreignKeyColumn,
+            uniqueKeyName,
+            uniqueKeyTable,
+            uniqueKeyColumn,
+            enforced,
+            false,
+            false,
+            deleteRule,
+            updateRule
+        );
+    }
+
+    public void addForeignKey(
+        String foreignKeyName,
+        TableDefinition foreignKeyTable,
+        ColumnDefinition foreignKeyColumn,
+        String uniqueKeyName,
+        TableDefinition uniqueKeyTable,
+        ColumnDefinition uniqueKeyColumn,
+        boolean enforced,
+        boolean deferrable,
+        boolean initiallyDeferred,
+        ForeignKeyRule deleteRule,
+        ForeignKeyRule updateRule
+    ) {
+
         // [#2718] Column exclusions may hit foreign key references. Ignore
         // such foreign keys
         Key key = key(foreignKeyTable, foreignKeyName);
@@ -422,6 +620,8 @@ public class DefaultRelations implements Relations {
                     foreignKeyColumn.getContainer(),
                     uniqueKey,
                     enforced,
+                    deferrable,
+                    initiallyDeferred,
                     deleteRule,
                     updateRule
                 );

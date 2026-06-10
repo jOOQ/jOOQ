@@ -235,8 +235,6 @@ import org.jooq.TableElement;
 // ...
 import org.jooq.conf.RenderQuotedNames;
 import org.jooq.impl.QOM.Cascade;
-import org.jooq.impl.QOM.ConstraintCharacteristic;
-import org.jooq.impl.QOM.ConstraintCheckTime;
 import org.jooq.impl.QOM.GenerationMode;
 import org.jooq.impl.QOM.UNotYetImplemented;
 
@@ -320,8 +318,8 @@ implements
 
     private Constraint                   alterConstraint;
     private Boolean                      alterConstraintEnforced;
-    private ConstraintCharacteristic     alterConstraintCharacteristic;
-    private ConstraintCheckTime          alterConstraintCheckTime;
+    private Boolean                      alterConstraintDeferrable;
+    private Boolean                      alterConstraintInitiallyDeferred;
     private Field<?>                     alterColumn;
     private Nullability                  alterColumnNullability;
     private DataType<?>                  alterColumnType;
@@ -350,43 +348,43 @@ implements
         this.ifExists = ifExists;
     }
 
-    final Table<?>                 $table()                         { return table; }
-    final boolean                  $ifExists()                      { return ifExists; }
-    final boolean                  $ifExistsColumn()                { return ifExistsColumn; }
-    final boolean                  $ifExistsConstraint()            { return ifExistsConstraint; }
-    final boolean                  $ifNotExistsColumn()             { return ifNotExistsColumn; }
-    final List<TableElement>       $add()                           { return add; }
-    final Field<?>                 $addColumn()                     { return addColumn; }
-    final DataType<?>              $addColumnType()                 { return addColumnType; }
-    final Constraint               $addConstraint()                 { return addConstraint; }
-    final boolean                  $addFirst()                      { return addFirst; }
-    final Field<?>                 $addBefore()                     { return addBefore; }
-    final Field<?>                 $addAfter()                      { return addAfter; }
-    final Field<?>                 $alterColumn()                   { return alterColumn; }
-    final Nullability              $alterColumnNullability()        { return alterColumnNullability; }
-    final DataType<?>              $alterColumnType()               { return alterColumnType; }
-    final Field<?>                 $alterColumnDefault()            { return alterColumnDefault; }
-    final boolean                  $alterColumnDropDefault()        { return alterColumnDropDefault; }
-    final GenerationMode           $alterColumnSetIdentity()        { return alterColumnSetIdentity; }
-    final boolean                  $alterColumnDropIdentity()       { return alterColumnDropIdentity; }
-    final Field<?>                 $alterColumnSetGenerated()       { return alterColumnSetGenerated; }
-    final boolean                  $alterColumnDropGenerated()      { return alterColumnDropGenerated; }
-    final Constraint               $alterConstraint()               { return alterConstraint; }
-    final Boolean                  $alterConstraintEnforced()       { return alterConstraintEnforced; }
-    final ConstraintCharacteristic $alterConstraintCharacteristic() { return alterConstraintCharacteristic; }
-    final ConstraintCheckTime      $alterConstraintCheckTime()      { return alterConstraintCheckTime; }
-    final Field<?>                 $changeColumnFrom()              { return changeColumnFrom; }
-    final Field<?>                 $changeColumnTo()                { return changeColumnTo; }
-    final DataType<?>              $changeColumnType()              { return changeColumnType; }
-    final Table<?>                 $renameTo()                      { return renameTo; }
-    final Field<?>                 $renameColumn()                  { return renameColumn; }
-    final Field<?>                 $renameColumnTo()                { return renameColumnTo; }
-    final Constraint               $renameConstraint()              { return renameConstraint; }
-    final Constraint               $renameConstraintTo()            { return renameConstraintTo; }
-    final List<Field<?>>           $dropColumns()                   { return dropColumns; }
-    final Cascade                  $dropCascade()                   { return dropCascade; }
-    final Constraint               $dropConstraint()                { return dropConstraint; }
-    final ConstraintType           $dropConstraintType()            { return dropConstraintType; }
+    final Table<?>                 $table()                            { return table; }
+    final boolean                  $ifExists()                         { return ifExists; }
+    final boolean                  $ifExistsColumn()                   { return ifExistsColumn; }
+    final boolean                  $ifExistsConstraint()               { return ifExistsConstraint; }
+    final boolean                  $ifNotExistsColumn()                { return ifNotExistsColumn; }
+    final List<TableElement>       $add()                              { return add; }
+    final Field<?>                 $addColumn()                        { return addColumn; }
+    final DataType<?>              $addColumnType()                    { return addColumnType; }
+    final Constraint               $addConstraint()                    { return addConstraint; }
+    final boolean                  $addFirst()                         { return addFirst; }
+    final Field<?>                 $addBefore()                        { return addBefore; }
+    final Field<?>                 $addAfter()                         { return addAfter; }
+    final Field<?>                 $alterColumn()                      { return alterColumn; }
+    final Nullability              $alterColumnNullability()           { return alterColumnNullability; }
+    final DataType<?>              $alterColumnType()                  { return alterColumnType; }
+    final Field<?>                 $alterColumnDefault()               { return alterColumnDefault; }
+    final boolean                  $alterColumnDropDefault()           { return alterColumnDropDefault; }
+    final GenerationMode           $alterColumnSetIdentity()           { return alterColumnSetIdentity; }
+    final boolean                  $alterColumnDropIdentity()          { return alterColumnDropIdentity; }
+    final Field<?>                 $alterColumnSetGenerated()          { return alterColumnSetGenerated; }
+    final boolean                  $alterColumnDropGenerated()         { return alterColumnDropGenerated; }
+    final Constraint               $alterConstraint()                  { return alterConstraint; }
+    final Boolean                  $alterConstraintEnforced()          { return alterConstraintEnforced; }
+    final Boolean                  $alterConstraintDeferrable()        { return alterConstraintDeferrable; }
+    final Boolean                  $alterConstraintInitiallyDeferred() { return alterConstraintInitiallyDeferred; }
+    final Field<?>                 $changeColumnFrom()                 { return changeColumnFrom; }
+    final Field<?>                 $changeColumnTo()                   { return changeColumnTo; }
+    final DataType<?>              $changeColumnType()                 { return changeColumnType; }
+    final Table<?>                 $renameTo()                         { return renameTo; }
+    final Field<?>                 $renameColumn()                     { return renameColumn; }
+    final Field<?>                 $renameColumnTo()                   { return renameColumnTo; }
+    final Constraint               $renameConstraint()                 { return renameConstraint; }
+    final Constraint               $renameConstraintTo()               { return renameConstraintTo; }
+    final List<Field<?>>           $dropColumns()                      { return dropColumns; }
+    final Cascade                  $dropCascade()                      { return dropCascade; }
+    final Constraint               $dropConstraint()                   { return dropConstraint; }
+    final ConstraintType           $dropConstraintType()               { return dropConstraintType; }
 
     // ------------------------------------------------------------------------
     // XXX: DSL API
@@ -868,25 +866,27 @@ implements
 
     @Override
     public final AlterTableImpl deferrable() {
-        alterConstraintCharacteristic = ConstraintCharacteristic.DEFERRABLE;
+        alterConstraintDeferrable = true;
         return this;
     }
 
     @Override
     public final AlterTableImpl notDeferrable() {
-        alterConstraintCharacteristic = ConstraintCharacteristic.NOT_DEFERRABLE;
+        alterConstraintDeferrable = false;
         return this;
     }
 
     @Override
     public final AlterTableImpl initiallyDeferred() {
-        alterConstraintCheckTime = ConstraintCheckTime.INITIALLY_DEFERRED;
+        alterConstraintDeferrable = true;
+        alterConstraintInitiallyDeferred = true;
         return this;
     }
 
     @Override
     public final AlterTableImpl initiallyImmediate() {
-        alterConstraintCheckTime = ConstraintCheckTime.INITIALLY_IMMEDIATE;
+        alterConstraintDeferrable = true;
+        alterConstraintInitiallyDeferred = false;
         return this;
     }
 
@@ -1731,8 +1731,8 @@ implements
 
                 if (alterConstraintEnforced != null)
                     AbstractConstraint.acceptEnforced(ctx, alterConstraintEnforced);
-                else if (alterConstraintCharacteristic != null || alterConstraintCheckTime != null)
-                    AbstractConstraint.acceptCharacteristic(ctx, alterConstraintCharacteristic, alterConstraintCheckTime);
+                else if (alterConstraintDeferrable != null || alterConstraintInitiallyDeferred != null)
+                    AbstractConstraint.acceptCharacteristic(ctx, alterConstraintDeferrable, alterConstraintInitiallyDeferred);
             });
         }
 

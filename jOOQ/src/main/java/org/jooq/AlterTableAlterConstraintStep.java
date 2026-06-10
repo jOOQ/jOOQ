@@ -86,28 +86,28 @@ public interface AlterTableAlterConstraintStep {
      * Add the <code>DEFERRABLE</code> clause to the constraint.
      */
     @NotNull
-    @Support({ HSQLDB, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ POSTGRES, SQLITE, YUGABYTEDB })
     AlterTableAlterConstraintMoreStep deferrable();
 
     /**
      * Add the <code>NOT DEFERRABLE</code> clause to the constraint.
      */
     @NotNull
-    @Support({ HSQLDB, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ POSTGRES, SQLITE, YUGABYTEDB })
     AlterTableAlterConstraintMoreStep notDeferrable();
 
     /**
      * Add the <code>INITIALLY DEFERRED</code> clause to the constraint.
      */
     @NotNull
-    @Support({ HSQLDB, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ POSTGRES, SQLITE, YUGABYTEDB })
     AlterTableAlterConstraintMoreStep initiallyDeferred();
 
     /**
      * Add the <code>INITIALLY IMMEDIATE</code> clause to the constraint.
      */
     @NotNull
-    @Support({ HSQLDB, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ POSTGRES, SQLITE, YUGABYTEDB })
     AlterTableAlterConstraintMoreStep initiallyImmediate();
 }
 

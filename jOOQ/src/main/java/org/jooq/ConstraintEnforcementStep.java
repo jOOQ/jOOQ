@@ -100,27 +100,27 @@ public interface ConstraintEnforcementStep extends ConstraintFinalStep {
      * Add the <code>DEFERRABLE</code> clause to the constraint.
      */
     @NotNull
-    @Support({ HSQLDB, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ POSTGRES, SQLITE, YUGABYTEDB })
     ConstraintEnforcementStep deferrable();
 
     /**
      * Add the <code>NOT DEFERRABLE</code> clause to the constraint.
      */
     @NotNull
-    @Support({ HSQLDB, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ POSTGRES, SQLITE, YUGABYTEDB })
     ConstraintEnforcementStep notDeferrable();
 
     /**
      * Add the <code>INITIALLY DEFERRED</code> clause to the constraint.
      */
     @NotNull
-    @Support({ HSQLDB, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ POSTGRES, SQLITE, YUGABYTEDB })
     ConstraintEnforcementStep initiallyDeferred();
 
     /**
      * Add the <code>INITIALLY IMMEDIATE</code> clause to the constraint.
      */
     @NotNull
-    @Support({ HSQLDB, POSTGRES, SQLITE, YUGABYTEDB })
+    @Support({ POSTGRES, SQLITE, YUGABYTEDB })
     ConstraintEnforcementStep initiallyImmediate();
 }

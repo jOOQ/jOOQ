@@ -36,7 +36,7 @@ public class Settings
     implements Serializable, Cloneable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 32100L;
+    private final static long serialVersionUID = 32200L;
     @XmlElement(defaultValue = "true")
     protected Boolean forceIntegerTypesOnZeroScaleDecimals = true;
     @XmlElement(defaultValue = "true")
@@ -491,6 +491,9 @@ public class Settings
     @XmlElement(defaultValue = "THROW_ON_FAILURE")
     @XmlSchemaType(name = "string")
     protected InterpreterWithMetaLookups interpreterWithMetaLookups = InterpreterWithMetaLookups.THROW_ON_FAILURE;
+    @XmlElement(defaultValue = "FAIL")
+    @XmlSchemaType(name = "string")
+    protected OnError metaSqlOnError = OnError.FAIL;
     @XmlElement(defaultValue = "false")
     protected Boolean metaIncludeSystemIndexes = false;
     @XmlElement(defaultValue = "false")
@@ -6343,6 +6346,22 @@ public class Settings
     }
 
     /**
+     * [#18500] Whether the JDBC {@link java.sql.DatabaseMetaData} backed MetaImpl implementation should fail when there's an error caused by the SQL run to query meta data.
+     * 
+     */
+    public OnError getMetaSqlOnError() {
+        return metaSqlOnError;
+    }
+
+    /**
+     * [#18500] Whether the JDBC {@link java.sql.DatabaseMetaData} backed MetaImpl implementation should fail when there's an error caused by the SQL run to query meta data.
+     * 
+     */
+    public void setMetaSqlOnError(OnError value) {
+        this.metaSqlOnError = value;
+    }
+
+    /**
      * The {@link org.jooq.Meta} implementation that is backed by {@link java.sql.DatabaseMetaData} does not produce system generated indexes on constraints, by default.
      * 
      * @return
@@ -9997,6 +10016,15 @@ public class Settings
     }
 
     /**
+     * [#18500] Whether the JDBC {@link java.sql.DatabaseMetaData} backed MetaImpl implementation should fail when there's an error caused by the SQL run to query meta data.
+     * 
+     */
+    public Settings withMetaSqlOnError(OnError value) {
+        setMetaSqlOnError(value);
+        return this;
+    }
+
+    /**
      * The {@link org.jooq.Meta} implementation that is backed by {@link java.sql.DatabaseMetaData} does not produce system generated indexes on constraints, by default.
      * 
      */
@@ -10754,6 +10782,7 @@ public class Settings
         builder.append("interpreterLocale", interpreterLocale);
         builder.append("interpreterDelayForeignKeyDeclarations", interpreterDelayForeignKeyDeclarations);
         builder.append("interpreterWithMetaLookups", interpreterWithMetaLookups);
+        builder.append("metaSqlOnError", metaSqlOnError);
         builder.append("metaIncludeSystemIndexes", metaIncludeSystemIndexes);
         builder.append("metaIncludeSystemSequences", metaIncludeSystemSequences);
         builder.append("migrationHistorySchema", migrationHistorySchema);
@@ -12648,6 +12677,15 @@ public class Settings
                 return false;
             }
         }
+        if (metaSqlOnError == null) {
+            if (other.metaSqlOnError!= null) {
+                return false;
+            }
+        } else {
+            if (!metaSqlOnError.equals(other.metaSqlOnError)) {
+                return false;
+            }
+        }
         if (metaIncludeSystemIndexes == null) {
             if (other.metaIncludeSystemIndexes!= null) {
                 return false;
@@ -13352,6 +13390,7 @@ public class Settings
         result = ((prime*result)+((interpreterLocale == null)? 0 :interpreterLocale.hashCode()));
         result = ((prime*result)+((interpreterDelayForeignKeyDeclarations == null)? 0 :interpreterDelayForeignKeyDeclarations.hashCode()));
         result = ((prime*result)+((interpreterWithMetaLookups == null)? 0 :interpreterWithMetaLookups.hashCode()));
+        result = ((prime*result)+((metaSqlOnError == null)? 0 :metaSqlOnError.hashCode()));
         result = ((prime*result)+((metaIncludeSystemIndexes == null)? 0 :metaIncludeSystemIndexes.hashCode()));
         result = ((prime*result)+((metaIncludeSystemSequences == null)? 0 :metaIncludeSystemSequences.hashCode()));
         result = ((prime*result)+((migrationHistorySchema == null)? 0 :migrationHistorySchema.hashCode()));

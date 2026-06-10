@@ -153,6 +153,7 @@ import org.jooq.UDT;
 import org.jooq.UDTRecord;
 import org.jooq.UniqueKey;
 import org.jooq.conf.InterpreterWithMetaLookups;
+import org.jooq.conf.OnError;
 import org.jooq.conf.ParseUnknownFunctions;
 import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
@@ -275,6 +276,28 @@ final class MetaImpl extends AbstractMeta {
                 throw new DataAccessException("Error querying DatabaseMetaData", e);
             else
                 throw new DataAccessException("Error querying DatabaseMetaData: " + m, e);
+        }
+    }
+
+    private final <T, E extends Exception> void handleExceptions(ThrowingRunnable<E> runnable) throws E {
+        OnError e = settings().getMetaSqlOnError();
+
+        switch (e) {
+            case FAIL:
+                runnable.run();
+                break;
+
+            case LOG:
+            case SILENT:
+                try {
+                    runnable.run();
+                }
+                catch (Exception exception) {
+                    if (e == OnError.LOG)
+                        log.error("Error while running MetaSQL", exception);
+                }
+
+                break;
         }
     }
 
@@ -745,33 +768,35 @@ final class MetaImpl extends AbstractMeta {
             String sql = sqlF.apply(dialect());
 
             if (sql != null) {
-                Result<Record> result = meta(() -> "", meta ->
-                    withCatalog(DSL.catalog(catalog), ctx(meta), ctx ->
-                        ctx.resultQuery(
-                            sql,
-                            NO_SUPPORT_SCHEMAS.contains(dialect())
-                                ? EMPTY_OBJECT
-                                : inverseSchemaCatalog
-                                ? new Object[] { catalog }
-                                : new Object[] { schema }
-                        ).fetch()
-                    )
-                );
+                handleExceptions(() -> {
+                    Result<Record> result = meta(() -> "", meta ->
+                        withCatalog(DSL.catalog(catalog), ctx(meta), ctx ->
+                            ctx.resultQuery(
+                                sql,
+                                NO_SUPPORT_SCHEMAS.contains(dialect())
+                                    ? EMPTY_OBJECT
+                                    : inverseSchemaCatalog
+                                    ? new Object[] { catalog }
+                                    : new Object[] { schema }
+                            ).fetch()
+                        )
+                    );
 
-                // TODO Support catalogs as well
-                Map<Record, Result<Record>> groups = result.intoGroups(new Field<?>[] {
-                    objectCatalog.apply(result),
-                    objectSchema.apply(result),
-                    objectName.apply(result)
-                });
+                    // TODO Support catalogs as well
+                    Map<Record, Result<Record>> groups = result.intoGroups(new Field<?>[] {
+                        objectCatalog.apply(result),
+                        objectSchema.apply(result),
+                        objectName.apply(result)
+                    });
 
-                cacheInit.accept(new LinkedHashMap<>());
-                groups.forEach((k, v) -> {
-                    cache.get().put(name(
-                        catalog == null ? null : k.get(0, String.class),
-                        k.get(1, String.class),
-                        k.get(2, String.class)
-                    ), v);
+                    cacheInit.accept(new LinkedHashMap<>());
+                    groups.forEach((k, v) -> {
+                        cache.get().put(name(
+                            catalog == null ? null : k.get(0, String.class),
+                            k.get(1, String.class),
+                            k.get(2, String.class)
+                        ), v);
+                    });
                 });
             }
         }
@@ -992,18 +1017,20 @@ final class MetaImpl extends AbstractMeta {
                     : M_SEQUENCES(dialect());
 
                 if (sql != null) {
-                    Result<Record> result = meta(() -> "Error while fetching sequences for schema: " + this, meta ->
-                        withCatalog(getCatalog(), ctx(meta), ctx ->
-                            ctx.resultQuery(sql, MetaSchema.this.getName()).fetch()
-                        )
-                    );
+                    handleExceptions(() -> {
+                        Result<Record> result = meta(() -> "Error while fetching sequences for schema: " + this, meta ->
+                            withCatalog(getCatalog(), ctx(meta), ctx ->
+                                ctx.resultQuery(sql, MetaSchema.this.getName()).fetch()
+                            )
+                        );
 
-                    Map<Record, Result<Record>> groups = result.intoGroups(new Field[] { result.field(0), result.field(1) });
-                    sequenceCache = new LinkedHashMap<>();
+                        Map<Record, Result<Record>> groups = result.intoGroups(new Field[] { result.field(0), result.field(1) });
 
-                    groups.forEach((k, v) -> sequenceCache.put(
-                        name(k.get(0, String.class), k.get(1, String.class)), v
-                    ));
+                        sequenceCache = new LinkedHashMap<>();
+                        groups.forEach((k, v) -> sequenceCache.put(
+                            name(k.get(0, String.class), k.get(1, String.class)), v
+                        ));
+                    });
                 }
             }
 
@@ -1045,18 +1072,20 @@ final class MetaImpl extends AbstractMeta {
                 final String sql = M_ATTRIBUTES(dialect());
 
                 if (sql != null) {
-                    Result<Record> result = meta(() -> "Error while fetching attributes for schema: " + this, meta ->
-                        withCatalog(getCatalog(), ctx(meta), ctx ->
-                            ctx.resultQuery(sql, MetaSchema.this.getName()).fetch()
-                        )
-                    );
+                    handleExceptions(() -> {
+                        Result<Record> result = meta(() -> "Error while fetching attributes for schema: " + this, meta ->
+                            withCatalog(getCatalog(), ctx(meta), ctx ->
+                                ctx.resultQuery(sql, MetaSchema.this.getName()).fetch()
+                            )
+                        );
 
-                    Map<Record, Result<Record>> groups = result.intoGroups(new Field[] { result.field(0), result.field(1) });
-                    attributeCache = new LinkedHashMap<>();
+                        Map<Record, Result<Record>> groups = result.intoGroups(new Field[] { result.field(0), result.field(1) });
 
-                    groups.forEach((k, v) -> attributeCache.put(
-                        name(k.get(0, String.class), k.get(1, String.class)), v
-                    ));
+                        attributeCache = new LinkedHashMap<>();
+                        groups.forEach((k, v) -> attributeCache.put(
+                            name(k.get(0, String.class), k.get(1, String.class)), v
+                        ));
+                    });
                 }
             }
 
@@ -1102,29 +1131,31 @@ final class MetaImpl extends AbstractMeta {
             String sql = M_CONSTRAINT_FLAGS(dialect());
 
             if (sql != null) {
-                Result<Record> result = meta(() -> "Error while fetching constraint flags for schema " + this, meta ->
-                    withCatalog(getCatalog(), ctx(meta), ctx ->
-                        ctx.resultQuery(patchSchema(sql), MetaSchema.this.getName()).fetch()
-                    )
-                );
+                handleExceptions(() -> {
+                    Result<Record> result = meta(() -> "Error while fetching constraint flags for schema " + this, meta ->
+                        withCatalog(getCatalog(), ctx(meta), ctx ->
+                            ctx.resultQuery(patchSchema(sql), MetaSchema.this.getName()).fetch()
+                        )
+                    );
 
-                // TODO Support catalogs as well
-                Map<Record, Result<Record>> groups = result.intoGroups(new Field[] {
-                    result.field(0),
-                    result.field(1),
-                    result.field(2),
-                    result.field(3)
+                    // TODO Support catalogs as well
+                    Map<Record, Result<Record>> groups = result.intoGroups(new Field[] {
+                        result.field(0),
+                        result.field(1),
+                        result.field(2),
+                        result.field(3)
+                    });
+
+                    constraintFlagCache = new LinkedHashMap<>();
+                    groups.forEach((k, v) -> constraintFlagCache.put(
+                        name(k.get(1, String.class), k.get(2, String.class), k.get(3, String.class)),
+                        new ConstraintFlag(
+                            v.get(0).get(4, boolean.class),
+                            v.get(0).get(5, boolean.class),
+                            v.get(0).get(6, boolean.class)
+                        )
+                    ));
                 });
-
-                constraintFlagCache = new LinkedHashMap<>();
-                groups.forEach((k, v) -> constraintFlagCache.put(
-                    name(k.get(1, String.class), k.get(2, String.class), k.get(3, String.class)),
-                    new ConstraintFlag(
-                        v.get(0).get(4, boolean.class),
-                        v.get(0).get(5, boolean.class),
-                        v.get(0).get(6, boolean.class)
-                    )
-                ));
             }
         }
 
@@ -1133,25 +1164,27 @@ final class MetaImpl extends AbstractMeta {
                 String sql = M_SOURCES(dialect());
 
                 if (sql != null) {
-                    Result<Record> result = meta(() -> "Error while fetching sources for schema " + this, meta ->
-                        withCatalog(getCatalog(), ctx(meta), ctx ->
-                            ctx.resultQuery(patchSchema(sql), MetaSchema.this.getName()).fetch()
-                        )
-                    );
+                    handleExceptions(() -> {
+                        Result<Record> result = meta(() -> "Error while fetching sources for schema " + this, meta ->
+                            withCatalog(getCatalog(), ctx(meta), ctx ->
+                                ctx.resultQuery(patchSchema(sql), MetaSchema.this.getName()).fetch()
+                            )
+                        );
 
-                    // TODO Support catalogs as well
-                    Map<Record, Result<Record>> groups = result.intoGroups(new Field[] { result.field(0), result.field(1), result.field(2) });
-                    sourceCache = new LinkedHashMap<>();
+                        // TODO Support catalogs as well
+                        Map<Record, Result<Record>> groups = result.intoGroups(new Field[] { result.field(0), result.field(1), result.field(2) });
 
-                    groups.forEach((k, v) -> sourceCache.put(
-                        name(k.get(1, String.class), k.get(2, String.class)),
-                        Tools.apply(v.get(0).get(3, String.class), s ->
-                              s.toLowerCase().startsWith("create")
-                            ? s
-                            : (type == VIEW ? "create view " : "create materialized view ")
-                                + dsl().render(name(k.get(2, String.class))) + " as " + s
-                        )
-                    ));
+                        sourceCache = new LinkedHashMap<>();
+                        groups.forEach((k, v) -> sourceCache.put(
+                            name(k.get(1, String.class), k.get(2, String.class)),
+                            Tools.apply(v.get(0).get(3, String.class), s ->
+                                  s.toLowerCase().startsWith("create")
+                                ? s
+                                : (type == VIEW ? "create view " : "create materialized view ")
+                                    + dsl().render(name(k.get(2, String.class))) + " as " + s
+                            )
+                        ));
+                    });
                 }
             }
 
@@ -1166,24 +1199,26 @@ final class MetaImpl extends AbstractMeta {
                 String sql = MetaSQL.M_IDENTITIES(dialect());
 
                 if (sql != null) {
-                    Result<Record> result = meta(() -> "Error while fetching identities for schema " + this, meta ->
-                        withCatalog(getCatalog(), ctx(meta), ctx ->
-                            ctx.resultQuery(patchSchema(sql), MetaSchema.this.getName()).fetch()
-                        )
-                    );
+                    handleExceptions(() -> {
+                        Result<Record> result = meta(() -> "Error while fetching identities for schema " + this, meta ->
+                            withCatalog(getCatalog(), ctx(meta), ctx ->
+                                ctx.resultQuery(patchSchema(sql), MetaSchema.this.getName()).fetch()
+                            )
+                        );
 
-                    // TODO Support catalogs as well
-                    identityCache = new LinkedHashMap<>();
-                    for (Record r : result) {
-                        String e = r.get(4, String.class);
+                        // TODO Support catalogs as well
+                        identityCache = new LinkedHashMap<>();
+                        for (Record r : result) {
+                            String e = r.get(4, String.class);
 
-                        if (e != null) {
-                            identityCache.put(
-                                name(r.get(1, String.class), r.get(2, String.class), r.get(3, String.class)),
-                                r.get(4, GenerationMode.class)
-                            );
+                            if (e != null) {
+                                identityCache.put(
+                                    name(r.get(1, String.class), r.get(2, String.class), r.get(3, String.class)),
+                                    r.get(4, GenerationMode.class)
+                                );
+                            }
                         }
-                    }
+                    });
                 }
             }
 
@@ -1198,24 +1233,26 @@ final class MetaImpl extends AbstractMeta {
                 String sql = MetaSQL.M_GENERATORS(dialect());
 
                 if (sql != null) {
-                    Result<Record> result = meta(() -> "Error while fetching generators for schema " + this, meta ->
-                        withCatalog(getCatalog(), ctx(meta), ctx ->
-                            ctx.resultQuery(patchSchema(sql), MetaSchema.this.getName()).fetch()
-                        )
-                    );
+                    handleExceptions(() -> {
+                        Result<Record> result = meta(() -> "Error while fetching generators for schema " + this, meta ->
+                            withCatalog(getCatalog(), ctx(meta), ctx ->
+                                ctx.resultQuery(patchSchema(sql), MetaSchema.this.getName()).fetch()
+                            )
+                        );
 
-                    // TODO Support catalogs as well
-                    generatorCache = new LinkedHashMap<>();
-                    for (Record r : result) {
-                        String e = r.get(4, String.class);
+                        // TODO Support catalogs as well
+                        generatorCache = new LinkedHashMap<>();
+                        for (Record r : result) {
+                            String e = r.get(4, String.class);
 
-                        if (e != null) {
-                            generatorCache.put(
-                                name(r.get(1, String.class), r.get(2, String.class), r.get(3, String.class)),
-                                new Generator(r.get(4, String.class), r.get(5, GenerationOption.class))
-                            );
+                            if (e != null) {
+                                generatorCache.put(
+                                    name(r.get(1, String.class), r.get(2, String.class), r.get(3, String.class)),
+                                    new Generator(r.get(4, String.class), r.get(5, GenerationOption.class))
+                                );
+                            }
                         }
-                    }
+                    });
                 }
             }
 
@@ -1234,20 +1271,22 @@ final class MetaImpl extends AbstractMeta {
                 String sql = M_COMMENTS(dialect());
 
                 if (sql != null) {
-                    Result<Record> result = meta(() -> "Error while fetching comments for schema: " + this, meta ->
-                        withCatalog(getCatalog(), ctx(meta), ctx ->
-                            ctx.resultQuery(sql, MetaSchema.this.getName()).fetch()
-                        )
-                    );
+                    handleExceptions(() -> {
+                        Result<Record> result = meta(() -> "Error while fetching comments for schema: " + this, meta ->
+                            withCatalog(getCatalog(), ctx(meta), ctx ->
+                                ctx.resultQuery(sql, MetaSchema.this.getName()).fetch()
+                            )
+                        );
 
-                    // TODO Support catalogs as well
-                    Map<Record, Result<Record>> groups = result.intoGroups(new Field[] { result.field(0), result.field(1), result.field(2), result.field(3) });
-                    commentCache = new LinkedHashMap<>();
+                        // TODO Support catalogs as well
+                        commentCache = new LinkedHashMap<>();
+                        Map<Record, Result<Record>> groups = result.intoGroups(new Field[] { result.field(0), result.field(1), result.field(2), result.field(3) });
 
-                    groups.forEach((k, v) -> commentCache.put(
-                        name(k.get(1, String.class), k.get(2, String.class), k.get(3, String.class)),
-                        v.get(0).get(4, String.class)
-                    ));
+                        groups.forEach((k, v) -> commentCache.put(
+                            name(k.get(1, String.class), k.get(2, String.class), k.get(3, String.class)),
+                            v.get(0).get(4, String.class)
+                        ));
+                    });
                 }
             }
 

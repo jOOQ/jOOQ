@@ -28,7 +28,7 @@ public class InterpreterSearchSchema
     implements Serializable, Cloneable, XMLAppendable
 {
 
-    private final static long serialVersionUID = 32100L;
+    private final static long serialVersionUID = 32200L;
     protected String catalog;
     @XmlElement(required = true)
     protected String schema;

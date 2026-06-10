@@ -69,6 +69,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
@@ -578,7 +579,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ MYSQL })
+    @Support({ MYSQL, POSTGRES })
     AlterTableAlterConstraintStep alterConstraint(Constraint constraint);
 
     /**
@@ -586,7 +587,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ MYSQL })
+    @Support({ MYSQL, POSTGRES })
     AlterTableAlterConstraintStep alterConstraint(Name constraint);
 
     /**
@@ -594,7 +595,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ MYSQL })
+    @Support({ MYSQL, POSTGRES })
     AlterTableAlterConstraintStep alterConstraint(String constraint);
 
     /**

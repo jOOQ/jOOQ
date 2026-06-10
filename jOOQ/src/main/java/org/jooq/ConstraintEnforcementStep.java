@@ -48,6 +48,7 @@ import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
@@ -85,14 +86,14 @@ public interface ConstraintEnforcementStep extends ConstraintFinalStep {
      * Add the <code>ENFORCED</code> clause to the constraint.
      */
     @NotNull
-    @Support({ MYSQL })
+    @Support({ MYSQL, POSTGRES })
     ConstraintEnforcementStep enforced();
 
     /**
      * Add the <code>NOT ENFORCED</code> clause to the constraint.
      */
     @NotNull
-    @Support({ MYSQL })
+    @Support({ MYSQL, POSTGRES })
     ConstraintEnforcementStep notEnforced();
 
     /**

@@ -72,11 +72,6 @@ public class PgAttribute extends TableImpl<Record> {
     public final TableField<Record, Short> ATTNUM = createField(DSL.name("attnum"), SQLDataType.SMALLINT.nullable(false), this, "");
 
     /**
-     * The column <code>pg_catalog.pg_attribute.attcacheoff</code>.
-     */
-    public final TableField<Record, Integer> ATTCACHEOFF = createField(DSL.name("attcacheoff"), SQLDataType.INTEGER.nullable(false), this, "");
-
-    /**
      * The column <code>pg_catalog.pg_attribute.atttypmod</code>.
      */
     public final TableField<Record, Integer> ATTTYPMOD = createField(DSL.name("atttypmod"), SQLDataType.INTEGER.nullable(false), this, "");

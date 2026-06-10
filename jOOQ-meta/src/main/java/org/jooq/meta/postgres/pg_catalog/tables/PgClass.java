@@ -108,6 +108,11 @@ public class PgClass extends TableImpl<Record> {
     public final TableField<Record, Integer> RELALLVISIBLE = createField(DSL.name("relallvisible"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
+     * The column <code>pg_catalog.pg_class.relallfrozen</code>.
+     */
+    public final TableField<Record, Integer> RELALLFROZEN = createField(DSL.name("relallfrozen"), SQLDataType.INTEGER.nullable(false), this, "");
+
+    /**
      * The column <code>pg_catalog.pg_class.reltoastrelid</code>.
      */
     public final TableField<Record, Long> RELTOASTRELID = createField(DSL.name("reltoastrelid"), SQLDataType.BIGINT.nullable(false), this, "");

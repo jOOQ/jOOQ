@@ -49,6 +49,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.impl.DSL.array;
 import static org.jooq.impl.DSL.case_;
 import static org.jooq.impl.DSL.cast;
@@ -90,7 +91,7 @@ import static org.jooq.meta.postgres.information_schema.Tables.ATTRIBUTES;
 import static org.jooq.meta.postgres.information_schema.Tables.CHECK_CONSTRAINTS;
 import static org.jooq.meta.postgres.information_schema.Tables.COLUMNS;
 import static org.jooq.meta.postgres.information_schema.Tables.DOMAINS;
-import static org.jooq.meta.postgres.information_schema.Tables.KEY_COLUMN_USAGE;
+import static org.jooq.meta.postgres.information_schema.Tables.*;
 import static org.jooq.meta.postgres.information_schema.Tables.PARAMETERS;
 import static org.jooq.meta.postgres.information_schema.Tables.ROUTINES;
 import static org.jooq.meta.postgres.information_schema.Tables.SEQUENCES;
@@ -104,7 +105,7 @@ import static org.jooq.meta.postgres.pg_catalog.Tables.PG_DEPEND;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_DESCRIPTION;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_ENUM;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_INDEX;
-import static org.jooq.meta.postgres.pg_catalog.Tables.PG_INHERITS;
+import static org.jooq.meta.postgres.pg_catalog.Tables.*;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_NAMESPACE;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_PROC;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_SEQUENCE;
@@ -136,6 +137,7 @@ import org.jooq.Record16;
 import org.jooq.Record4;
 import org.jooq.Record5;
 import org.jooq.Record6;
+import org.jooq.Record7;
 import org.jooq.Record8;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
@@ -212,6 +214,7 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
     private Boolean                 is10;
     private Boolean                 is11;
     private Boolean                 is12;
+    private Boolean                 is18;
     private Boolean                 canUseRoutines;
     private Boolean                 canCastToEnumType;
     private Boolean                 canCombineArrays;
@@ -537,6 +540,45 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
                 ));
             }
         }
+    }
+
+    /**
+     * A query that produces table constraint flags for relevant tables for a
+     * set of input schemas.
+     * <p>
+     * The resulting columns are:
+     * <ol>
+     * <li>Catalog name</li>
+     * <li>Schema name</li>
+     * <li>Table name</li>
+     * <li>Constraint name</li>
+     * <li>Enforced</li>
+     * <li>Deferrable</li>
+     * <li>Initially deferred</li>
+     * </ol>
+     *
+     * @return The query or <code>null</code> if this implementation doesn't
+     *         support the query.
+     */
+    @Override
+    public ResultQuery<Record7<String, String, String, String, Boolean, Boolean, Boolean>> constraintFlags(List<String> schemas) {
+        return create()
+            .select(
+                currentCatalog(),
+                PG_CONSTRAINT.pgNamespace().NSPNAME,
+                PG_CONSTRAINT.pgClass().RELNAME,
+                PG_CONSTRAINT.CONNAME,
+                is18()
+                    ? PG_CONSTRAINT.CONENFORCED
+                    : inline(true).as(PG_CONSTRAINT.CONENFORCED),
+                PG_CONSTRAINT.CONDEFERRABLE,
+                PG_CONSTRAINT.CONDEFERRED)
+            .from(PG_CONSTRAINT)
+            .where(PG_CONSTRAINT.pgNamespace().NSPNAME.in(schemas))
+            .orderBy(
+                PG_CONSTRAINT.pgNamespace().NSPNAME,
+                PG_CONSTRAINT.pgClass().RELNAME,
+                PG_CONSTRAINT.CONNAME);
     }
 
     @Override
@@ -1461,6 +1503,15 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
             is12 = configuredDialectIsNotFamilyAndSupports(asList(POSTGRES), () -> exists(table("column_column_usage")));
 
         return is12;
+    }
+
+    boolean is18() {
+
+        // [#20048] pg_cosntraint.conenforced was added in PostgreSQL 18 only
+        if (is18 == null)
+            is18 = configuredDialectIsNotFamilyAndSupports(asList(POSTGRES), () -> exists(PG_CONSTRAINT.CONENFORCED));
+
+        return is18;
     }
 
     @Override

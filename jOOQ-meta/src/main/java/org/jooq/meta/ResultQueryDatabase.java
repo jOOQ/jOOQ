@@ -48,6 +48,7 @@ import org.jooq.Record16;
 import org.jooq.Record4;
 import org.jooq.Record5;
 import org.jooq.Record6;
+import org.jooq.Record7;
 import org.jooq.ResultQuery;
 
 import org.jetbrains.annotations.ApiStatus.Internal;
@@ -323,5 +324,27 @@ public interface ResultQueryDatabase extends Database {
     @Internal
     @Nullable
     ResultQuery<Record5<String, String, String, String, String>> checks(List<String> schemas);
+
+    /**
+     * A query that produces table constraint flags for relevant tables for a
+     * set of input schemas.
+     * <p>
+     * The resulting columns are:
+     * <ol>
+     * <li>Catalog name</li>
+     * <li>Schema name</li>
+     * <li>Table name</li>
+     * <li>Constraint name</li>
+     * <li>Enforced</li>
+     * <li>Deferrable</li>
+     * <li>Initially deferred</li>
+     * </ol>
+     *
+     * @return The query or <code>null</code> if this implementation doesn't
+     *         support the query.
+     */
+    @Internal
+    @Nullable
+    ResultQuery<Record7<String, String, String, String, Boolean, Boolean, Boolean>> constraintFlags(List<String> schemas);
 
 }

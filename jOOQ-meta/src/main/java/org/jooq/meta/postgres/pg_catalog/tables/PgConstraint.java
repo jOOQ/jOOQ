@@ -78,6 +78,11 @@ public class PgConstraint extends TableImpl<Record> {
     public final TableField<Record, Boolean> CONDEFERRED = createField(DSL.name("condeferred"), SQLDataType.BOOLEAN.nullable(false), this, "");
 
     /**
+     * The column <code>pg_catalog.pg_constraint.conenforced</code>.
+     */
+    public final TableField<Record, Boolean> CONENFORCED = createField(DSL.name("conenforced"), SQLDataType.BOOLEAN.nullable(false), this, "");
+
+    /**
      * The column <code>pg_catalog.pg_constraint.convalidated</code>.
      */
     public final TableField<Record, Boolean> CONVALIDATED = createField(DSL.name("convalidated"), SQLDataType.BOOLEAN.nullable(false), this, "");
@@ -136,6 +141,11 @@ public class PgConstraint extends TableImpl<Record> {
      * The column <code>pg_catalog.pg_constraint.connoinherit</code>.
      */
     public final TableField<Record, Boolean> CONNOINHERIT = createField(DSL.name("connoinherit"), SQLDataType.BOOLEAN.nullable(false), this, "");
+
+    /**
+     * The column <code>pg_catalog.pg_constraint.conperiod</code>.
+     */
+    public final TableField<Record, Boolean> CONPERIOD = createField(DSL.name("conperiod"), SQLDataType.BOOLEAN.nullable(false), this, "");
 
     /**
      * The column <code>pg_catalog.pg_constraint.conkey</code>.

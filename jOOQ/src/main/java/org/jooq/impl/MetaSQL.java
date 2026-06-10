@@ -18,6 +18,7 @@ final class MetaSQL {
     private static final EnumMap<SQLDialect, String> M_IDENTITIES = new EnumMap<>(SQLDialect.class);
     private static final EnumMap<SQLDialect, String> M_GENERATORS = new EnumMap<>(SQLDialect.class);
     private static final EnumMap<SQLDialect, String> M_CHECKS = new EnumMap<>(SQLDialect.class);
+    private static final EnumMap<SQLDialect, String> M_CONSTRAINT_FLAGS = new EnumMap<>(SQLDialect.class);
     private static final EnumMap<SQLDialect, String> M_TRIGGERS = new EnumMap<>(SQLDialect.class);
     private static final EnumMap<SQLDialect, String> M_SYNONYMS = new EnumMap<>(SQLDialect.class);
 
@@ -59,6 +60,10 @@ final class MetaSQL {
 
     static final String M_CHECKS(SQLDialect dialect) {
         return M_CHECKS.get(dialect);
+    }
+
+    static final String M_CONSTRAINT_FLAGS(SQLDialect dialect) {
+        return M_CONSTRAINT_FLAGS.get(dialect);
     }
 
     static final String M_TRIGGERS(SQLDialect dialect) {
@@ -712,6 +717,31 @@ final class MetaSQL {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        M_CONSTRAINT_FLAGS.put(POSTGRES, "select current_database(), alias_80150877.nspname, alias_48315360.relname, pg_catalog.pg_constraint.conname, pg_catalog.pg_constraint.conenforced, pg_catalog.pg_constraint.condeferrable, pg_catalog.pg_constraint.condeferred from (pg_catalog.pg_constraint join pg_catalog.pg_namespace as alias_80150877 on pg_catalog.pg_constraint.connamespace = alias_80150877.oid join pg_catalog.pg_class as alias_48315360 on pg_catalog.pg_constraint.conrelid = alias_48315360.oid) where alias_80150877.nspname in (?) order by alias_80150877.nspname, alias_48315360.relname, pg_catalog.pg_constraint.conname");
+        M_CONSTRAINT_FLAGS.put(YUGABYTEDB, "select current_database(), alias_80150877.nspname, alias_48315360.relname, pg_catalog.pg_constraint.conname, true as conenforced, pg_catalog.pg_constraint.condeferrable, pg_catalog.pg_constraint.condeferred from (pg_catalog.pg_constraint join pg_catalog.pg_namespace as alias_80150877 on pg_catalog.pg_constraint.connamespace = alias_80150877.oid join pg_catalog.pg_class as alias_48315360 on pg_catalog.pg_constraint.conrelid = alias_48315360.oid) where alias_80150877.nspname in (?) order by alias_80150877.nspname, alias_48315360.relname, pg_catalog.pg_constraint.conname");
 
 
 

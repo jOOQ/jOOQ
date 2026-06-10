@@ -80,6 +80,7 @@ import org.jooq.Record16;
 import org.jooq.Record4;
 import org.jooq.Record5;
 import org.jooq.Record6;
+import org.jooq.Record7;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
 import org.jooq.SQLDialect;
@@ -376,6 +377,11 @@ public class SQLiteDatabase extends AbstractDatabase implements ResultQueryDatab
                 }
             }
         }
+    }
+
+    @Override
+    public ResultQuery<Record7<String, String, String, String, Boolean, Boolean, Boolean>> constraintFlags(List<String> schemas) {
+        return null;
     }
 
     @Override

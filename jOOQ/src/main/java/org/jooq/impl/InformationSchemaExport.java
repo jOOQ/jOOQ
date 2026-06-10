@@ -539,7 +539,7 @@ final class InformationSchemaExport {
     }
 
     private static final void exportCheck0(Configuration configuration, InformationSchema result, Table<?> t, Check<?> chk) {
-        exportTableConstraint(result, t, chk.getName(), CHECK, chk.enforced());
+        exportTableConstraint(result, t, chk.getName(), CHECK, chk.enforced(), chk.deferrable(), chk.initiallyDeferred());
 
         CheckConstraint c = new CheckConstraint();
 
@@ -600,7 +600,7 @@ final class InformationSchemaExport {
     }
 
     private static final void exportKey0(InformationSchema result, Table<?> t, Key<?> key, TableConstraintType constraintType) {
-        exportTableConstraint(result, t, key.getName(), constraintType, key.enforced());
+        exportTableConstraint(result, t, key.getName(), constraintType, key.enforced(), key.deferrable(), key.initiallyDeferred());
 
         String catalogName = catalogName(t);
         String schemaName = schemaName(t);
@@ -659,7 +659,9 @@ final class InformationSchemaExport {
         Table<?> t,
         String constraintName,
         TableConstraintType constraintType,
-        boolean enforced
+        boolean enforced,
+        boolean deferrable,
+        boolean initiallyDeferred
     ) {
         TableConstraint tc = new TableConstraint();
 
@@ -679,6 +681,8 @@ final class InformationSchemaExport {
 
         tc.setTableName(t.getName());
         tc.setEnforced(enforced);
+        tc.setDeferrable(deferrable);
+        tc.setInitiallyDeferred(initiallyDeferred);
         result.getTableConstraints().add(tc);
     }
 

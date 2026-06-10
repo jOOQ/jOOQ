@@ -546,9 +546,11 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
 
                     UniqueKeyImpl<Record> key = (UniqueKeyImpl<Record>) Internal.createUniqueKey(
                         table,
-                        xc.getConstraintName(),
+                        name(xc.getConstraintName()),
                         c.toArray(new TableField[0]),
-                        !FALSE.equals(xc.isEnforced())
+                        !FALSE.equals(xc.isEnforced()),
+                        TRUE.equals(xc.isDeferrable()),
+                        TRUE.equals(xc.isInitiallyDeferred())
                     );
 
                     if (xc.getConstraintType() == PRIMARY_KEY) {
@@ -642,8 +644,8 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
                                 constraintName,
                                 DSL.condition(cc.getCheckClause()),
                                 !FALSE.equals(xc.isEnforced()),
-                                false,
-                                false
+                                TRUE.equals(xc.isDeferrable()),
+                                TRUE.equals(xc.isInitiallyDeferred())
                             ));
                             continue tableConstraintLoop;
                         }

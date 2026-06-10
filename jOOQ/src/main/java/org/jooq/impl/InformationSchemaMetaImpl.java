@@ -322,7 +322,7 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
 
                     for (org.jooq.util.xml.jaxb.CheckConstraint cc : meta.getCheckConstraints())
                         if (constraintName.equals(name(cc.getConstraintCatalog(), cc.getConstraintSchema(), cc.getConstraintName())))
-                            checks.add(new CheckImpl<>(null, constraintName, DSL.condition(cc.getCheckClause()), true, null, null));
+                            checks.add(new CheckImpl<>(null, constraintName, DSL.condition(cc.getCheckClause()), true, false, false));
                 }
             }
 
@@ -544,7 +544,12 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
                         continue tableConstraintLoop;
                     }
 
-                    UniqueKeyImpl<Record> key = (UniqueKeyImpl<Record>) Internal.createUniqueKey(table, xc.getConstraintName(), c.toArray(new TableField[0]));
+                    UniqueKeyImpl<Record> key = (UniqueKeyImpl<Record>) Internal.createUniqueKey(
+                        table,
+                        xc.getConstraintName(),
+                        c.toArray(new TableField[0]),
+                        !FALSE.equals(xc.isEnforced())
+                    );
 
                     if (xc.getConstraintType() == PRIMARY_KEY) {
                         table.primaryKey = key;
@@ -606,6 +611,8 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
                         xc.getConstraintName(),
                         c.toArray(new TableField[0]),
                         !FALSE.equals(xc.isEnforced()),
+                        TRUE.equals(xc.isDeferrable()),
+                        TRUE.equals(xc.isInitiallyDeferred()),
                         fk.deleteRule(),
                         fk.updateRule()
                     );
@@ -630,7 +637,14 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
 
                     for (CheckConstraint cc : meta.getCheckConstraints()) {
                         if (constraintName.equals(name(cc.getConstraintCatalog(), cc.getConstraintSchema(), cc.getConstraintName()))) {
-                            table.checks.add(new CheckImpl<>(table, constraintName, DSL.condition(cc.getCheckClause()), true, null, null));
+                            table.checks.add(new CheckImpl<>(
+                                table,
+                                constraintName,
+                                DSL.condition(cc.getCheckClause()),
+                                !FALSE.equals(xc.isEnforced()),
+                                false,
+                                false
+                            ));
                             continue tableConstraintLoop;
                         }
                     }

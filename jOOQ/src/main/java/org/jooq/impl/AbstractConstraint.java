@@ -37,6 +37,7 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 // ...
 import static org.jooq.SQLDialect.CLICKHOUSE;
@@ -195,16 +196,31 @@ implements
 
     static void acceptCharacteristic(Context<?> ctx, Boolean deferrable, Boolean initiallyDeferred) {
         if (deferrable != null) {
-            if (deferrable)
-                ctx.sql(' ').visit(K_DEFERRABLE);
-            else
-                ctx.sql(' ').visit(K_NOT).sql(' ').visit(K_DEFERRABLE);
+            switch (ctx.family()) {
 
-            if (initiallyDeferred != null) {
-                if (initiallyDeferred)
-                    ctx.sql(' ').visit(K_INITIALLY).sql(' ').visit(K_DEFERRED);
-                else
-                    ctx.sql(' ').visit(K_INITIALLY).sql(' ').visit(K_IMMEDIATE);
+
+
+
+
+
+
+
+
+
+                default:
+                    if (deferrable)
+                        ctx.sql(' ').visit(K_DEFERRABLE);
+                    else
+                        ctx.sql(' ').visit(K_NOT).sql(' ').visit(K_DEFERRABLE);
+
+                    if (initiallyDeferred != null) {
+                        if (initiallyDeferred)
+                            ctx.sql(' ').visit(K_INITIALLY).sql(' ').visit(K_DEFERRED);
+                        else
+                            ctx.sql(' ').visit(K_INITIALLY).sql(' ').visit(K_IMMEDIATE);
+                    }
+
+                    break;
             }
         }
     }

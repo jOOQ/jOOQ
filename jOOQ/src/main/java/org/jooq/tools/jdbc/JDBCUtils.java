@@ -303,7 +303,15 @@ public class JDBCUtils {
 
 
 
+
+
     private static final SQLDialect postgresDialect(int majorVersion, int minorVersion) {
+
+
+
+
+
+
 
 
 
@@ -334,6 +342,15 @@ public class JDBCUtils {
     }
 
     private static final SQLDialect mariadbDialect(int majorVersion, int minorVersion) {
+
+
+
+
+
+
+
+
+
 
 
 

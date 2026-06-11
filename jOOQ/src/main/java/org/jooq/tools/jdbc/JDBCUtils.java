@@ -328,10 +328,20 @@ public class JDBCUtils {
 
 
 
+
+
+
+
         return POSTGRES;
     }
 
     private static final SQLDialect mariadbDialect(int majorVersion, int minorVersion) {
+
+
+
+
+
+
 
 
 

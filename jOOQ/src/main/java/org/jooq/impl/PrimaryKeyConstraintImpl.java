@@ -116,7 +116,7 @@ implements
 
     @Override
     public final PrimaryKey $fields(UnmodifiableList<? extends Field<?>> newFields) {
-        return new PrimaryKeyConstraintImpl($name(), newFields.toArray(EMPTY_FIELD));
+        return new PrimaryKeyConstraintImpl($name(), newFields.toArray(EMPTY_FIELD), $enforced());
     }
 
     @Override

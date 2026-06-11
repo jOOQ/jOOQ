@@ -108,7 +108,7 @@ implements
 
     @Override
     public final UniqueKey $fields(UnmodifiableList<? extends Field<?>> newFields) {
-        return new UniqueConstraintImpl($name(), newFields.toArray(EMPTY_FIELD));
+        return new UniqueConstraintImpl($name(), newFields.toArray(EMPTY_FIELD), $enforced());
     }
 
     @Override

@@ -1,0 +1,195 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *  https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * Other licenses:
+ * -----------------------------------------------------------------------------
+ * Commercial licenses for this work are available. These replace the above
+ * Apache-2.0 license and offer limited warranties, support, maintenance, and
+ * commercial database integrations.
+ *
+ * For more information, please visit: https://www.jooq.org/legal/licensing
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ */
+package org.jooq.impl;
+
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.impl.Tools.ExtendedDataKey.*;
+import static org.jooq.impl.Tools.SimpleDataKey.*;
+import static org.jooq.SQLDialect.*;
+
+import org.jooq.*;
+import org.jooq.Function1;
+import org.jooq.Record;
+import org.jooq.conf.ParamType;
+import org.jooq.tools.StringUtils;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+
+
+
+/**
+ * The <code>SET CONSTRAINTS</code> statement.
+ */
+@SuppressWarnings({ "rawtypes", "unused" })
+final class SetConstraintsImpl
+extends
+    AbstractDDLQuery
+implements
+    QOM.SetConstraints,
+    SetConstraintsStep
+{
+
+    final QueryPartListView<? extends Constraint> constraints;
+          boolean                                 deferred;
+
+    SetConstraintsImpl(
+        Configuration configuration,
+        Collection<? extends Constraint> constraints
+    ) {
+        this(
+            configuration,
+            constraints,
+            false
+        );
+    }
+
+    SetConstraintsImpl(
+        Configuration configuration,
+        Collection<? extends Constraint> constraints,
+        boolean deferred
+    ) {
+        super(configuration);
+
+        this.constraints = new QueryPartList<>(constraints);
+        this.deferred = deferred;
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: DSL API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final SetConstraintsImpl deferred() {
+        this.deferred = true;
+        return this;
+    }
+
+    @Override
+    public final SetConstraintsImpl immediate() {
+        this.deferred = false;
+        return this;
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
+
+
+
+    @Override
+    public final void accept(Context<?> ctx) {
+        ctx.visit(K_SET).sql(' ').visit(K_CONSTRAINTS).sql(' ');
+
+        if (constraints.isEmpty())
+            ctx.visit(K_ALL);
+        else
+            ctx.visit(QueryPartListView.wrap(Tools.map(constraints, Constraint::getQualifiedName)));
+
+        ctx.sql(' ');
+
+        if (deferred)
+            ctx.visit(K_DEFERRED);
+        else
+            ctx.visit(K_IMMEDIATE);
+    }
+
+
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final QOM.UnmodifiableList<? extends Constraint> $constraints() {
+        return QOM.unmodifiable(constraints);
+    }
+
+    @Override
+    public final boolean $deferred() {
+        return deferred;
+    }
+
+    @Override
+    public final QOM.SetConstraints $constraints(Collection<? extends Constraint> newValue) {
+        return $constructor().apply(newValue, $deferred());
+    }
+
+    @Override
+    public final QOM.SetConstraints $deferred(boolean newValue) {
+        return $constructor().apply($constraints(), newValue);
+    }
+
+    public final Function2<? super Collection<? extends Constraint>, ? super Boolean, ? extends QOM.SetConstraints> $constructor() {
+        return (a1, a2) -> new SetConstraintsImpl(configuration(), (Collection<? extends Constraint>) a1, a2);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}

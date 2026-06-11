@@ -743,6 +743,7 @@ import org.jooq.SelectCorrelatedSubqueryStep;
 import org.jooq.SelectField;
 import org.jooq.SelectFieldOrAsterisk;
 import org.jooq.Sequence;
+import org.jooq.SetConstraintsStep;
 import org.jooq.SortField;
 import org.jooq.SortOrder;
 import org.jooq.Statement;
@@ -2826,6 +2827,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
         if (parseKeywordIf("CATALOG"))
             return parseSetCatalog();
+        else if (parseKeywordIf("CONSTRAINT", "CONSTRAINTS"))
+            return parseSetConstraints();
         else if (parseKeywordIf("CURRENT SCHEMA"))
             return parseSetSchema();
         else if (parseKeywordIf("CURRENT SQLID"))
@@ -2889,6 +2892,22 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         while (parseIf(','));
 
         return dsl.setSchema(schema);
+    }
+
+    private final Query parseSetConstraints() {
+        SetConstraintsStep s1;
+
+        if (parseKeywordIf("ALL"))
+            s1 = dsl.setConstraintsAll();
+        else
+            s1 = dsl.setConstraints(parseNames().toArray(EMPTY_NAME));
+
+        if (parseKeywordIf("DEFERRED"))
+            return s1.deferred();
+        else if (parseKeywordIf("IMMEDIATE"))
+            return s1.immediate();
+        else
+            throw expected("DEFERRED", "IMMEDIATE");
     }
 
     private final DDLQuery parseCommentOn() {

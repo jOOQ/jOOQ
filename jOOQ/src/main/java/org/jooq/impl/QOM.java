@@ -3107,6 +3107,25 @@ public final class QOM {
     }
 
     /**
+     * The <code>SET CONSTRAINTS</code> statement.
+     * <p>
+     * Set the deferrability on a set of constraints for the current transaction.
+     */
+    public /*sealed*/ interface SetConstraints
+        extends
+            DDLQuery
+        //permits
+        //    SetConstraintsImpl
+    {
+        @NotNull UnmodifiableList<? extends Constraint> $constraints();
+        boolean $deferred();
+        @CheckReturnValue
+        @NotNull SetConstraints $constraints(Collection<? extends Constraint> constraints);
+        @CheckReturnValue
+        @NotNull SetConstraints $deferred(boolean deferred);
+    }
+
+    /**
      * The <code>TRUNCATE</code> statement.
      */
     public /*sealed*/ interface Truncate<R extends Record>

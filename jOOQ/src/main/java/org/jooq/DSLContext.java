@@ -12737,6 +12737,61 @@ public interface DSLContext extends Scope {
     RowCountQuery setSchema(Schema schema);
 
     /**
+     * The <code>SET CONSTRAINTS</code> statement.
+     * <p>
+     * Set the deferrability on a set of constraints for the current transaction.
+     *
+     * @see DSL#setConstraints(String...)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    SetConstraintsStep setConstraints(@Stringly.Name String... constraints);
+
+    /**
+     * The <code>SET CONSTRAINTS</code> statement.
+     * <p>
+     * Set the deferrability on a set of constraints for the current transaction.
+     *
+     * @see DSL#setConstraints(Name...)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    SetConstraintsStep setConstraints(Name... constraints);
+
+    /**
+     * The <code>SET CONSTRAINTS</code> statement.
+     * <p>
+     * Set the deferrability on a set of constraints for the current transaction.
+     *
+     * @see DSL#setConstraints(Constraint...)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    SetConstraintsStep setConstraints(Constraint... constraints);
+
+    /**
+     * The <code>SET CONSTRAINTS</code> statement.
+     * <p>
+     * Set the deferrability on a set of constraints for the current transaction.
+     *
+     * @see DSL#setConstraints(Collection)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    SetConstraintsStep setConstraints(Collection<? extends Constraint> constraints);
+
+    /**
+     * The <code>SET CONSTRAINTS</code> statement.
+     * <p>
+     * Set the deferrability on a set of constraints for the current transaction.
+     *
+     * @see DSL#setConstraintsAll()
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    SetConstraintsStep setConstraintsAll();
+
+    /**
      * The <code>TRUNCATE</code> statement.
      *
      * @see DSL#truncate(String)

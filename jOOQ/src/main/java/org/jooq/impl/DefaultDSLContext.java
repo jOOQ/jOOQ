@@ -86,6 +86,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -114,6 +115,7 @@ import org.jooq.Configuration;
 import org.jooq.ConnectionCallable;
 import org.jooq.ConnectionProvider;
 import org.jooq.ConnectionRunnable;
+import org.jooq.Constraint;
 import org.jooq.ContextTransactionalCallable;
 import org.jooq.ContextTransactionalRunnable;
 import org.jooq.CreateViewAsStep;
@@ -4670,6 +4672,31 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
     @Override
     public org.jooq.RowCountQuery setSchema(Schema schema) {
         return new SetSchema(configuration(), schema);
+    }
+
+    @Override
+    public org.jooq.SetConstraintsStep setConstraints(@Stringly.Name String... constraints) {
+        return new SetConstraintsImpl(configuration(), Tools.map(constraints, e -> DSL.constraint(e)));
+    }
+
+    @Override
+    public org.jooq.SetConstraintsStep setConstraints(Name... constraints) {
+        return new SetConstraintsImpl(configuration(), Tools.map(constraints, e -> DSL.constraint(e)));
+    }
+
+    @Override
+    public org.jooq.SetConstraintsStep setConstraints(Constraint... constraints) {
+        return new SetConstraintsImpl(configuration(), Arrays.asList(constraints));
+    }
+
+    @Override
+    public org.jooq.SetConstraintsStep setConstraints(Collection<? extends Constraint> constraints) {
+        return new SetConstraintsImpl(configuration(), new QueryPartList<>(constraints));
+    }
+
+    @Override
+    public org.jooq.SetConstraintsStep setConstraintsAll() {
+        return new SetConstraintsImpl(configuration(), Collections.emptyList());
     }
 
     @Override

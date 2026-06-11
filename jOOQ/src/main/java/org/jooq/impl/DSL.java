@@ -190,6 +190,7 @@ import org.jooq.CommonTableExpression;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.ConnectionProvider;
+import org.jooq.Constraint;
 import org.jooq.ConstraintEnforcementStep;
 import org.jooq.ConstraintForeignKeyReferencesStep1;
 import org.jooq.ConstraintForeignKeyReferencesStep10;
@@ -12260,6 +12261,91 @@ public class DSL {
     @Support({ CLICKHOUSE, DERBY, DUCKDB, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, YUGABYTEDB })
     public static org.jooq.RowCountQuery setSchema(Schema schema) {
         return dsl().setSchema(schema);
+    }
+
+    /**
+     * The <code>SET CONSTRAINTS</code> statement.
+     * <p>
+     * Set the deferrability on a set of constraints for the current transaction.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#setConstraints(String...)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static org.jooq.SetConstraintsStep setConstraints(@Stringly.Name String... constraints) {
+        return dsl().setConstraints(constraints);
+    }
+
+    /**
+     * The <code>SET CONSTRAINTS</code> statement.
+     * <p>
+     * Set the deferrability on a set of constraints for the current transaction.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#setConstraints(Name...)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static org.jooq.SetConstraintsStep setConstraints(Name... constraints) {
+        return dsl().setConstraints(constraints);
+    }
+
+    /**
+     * The <code>SET CONSTRAINTS</code> statement.
+     * <p>
+     * Set the deferrability on a set of constraints for the current transaction.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#setConstraints(Constraint...)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static org.jooq.SetConstraintsStep setConstraints(Constraint... constraints) {
+        return dsl().setConstraints(constraints);
+    }
+
+    /**
+     * The <code>SET CONSTRAINTS</code> statement.
+     * <p>
+     * Set the deferrability on a set of constraints for the current transaction.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#setConstraints(Collection)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static org.jooq.SetConstraintsStep setConstraints(Collection<? extends Constraint> constraints) {
+        return dsl().setConstraints(constraints);
+    }
+
+    /**
+     * The <code>SET CONSTRAINTS</code> statement.
+     * <p>
+     * Set the deferrability on a set of constraints for the current transaction.
+     * <p>
+     * Unlike statement construction methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * statement. It can be used as a subquery or nested in procedural logic.
+     *
+     * @see DSLContext#setConstraintsAll()
+     */
+    @NotNull @CheckReturnValue
+    @Support({ POSTGRES, YUGABYTEDB })
+    public static org.jooq.SetConstraintsStep setConstraintsAll() {
+        return dsl().setConstraintsAll();
     }
 
     /**

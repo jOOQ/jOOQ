@@ -6176,6 +6176,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
             return step.before(parseFieldName());
         else if (parseKeywordIf("AFTER"))
             return step.after(parseFieldName());
+        else if (parseKeywordIf("LAST"))
+            return step;
         else
             return step;
     }

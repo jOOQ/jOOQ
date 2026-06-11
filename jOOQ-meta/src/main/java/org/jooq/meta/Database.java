@@ -94,6 +94,21 @@ public interface Database extends AutoCloseable {
     Map<Definition, String> getComments();
 
     /**
+     * Get the constraint enforcement flag for all constraints.
+     */
+    Map<ConstraintDefinition, Boolean> getEnforced();
+
+    /**
+     * Get the constraint deferrability flag for all constraints.
+     */
+    Map<ConstraintDefinition, Boolean> getDeferrable();
+
+    /**
+     * Get the constraint deferred flag for all constraints.
+     */
+    Map<ConstraintDefinition, Boolean> getInitiallyDeferred();
+
+    /**
      * The catalogs generated from this database.
      */
     List<CatalogDefinition> getCatalogs();

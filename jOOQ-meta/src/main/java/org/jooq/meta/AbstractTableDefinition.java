@@ -237,6 +237,16 @@ implements
         return getDatabase().getRelations().getCheckConstraints(this);
     }
 
+    @Override
+    public final List<ConstraintDefinition> getConstraints() {
+        return getDatabase().getRelations().getConstraints(this);
+    }
+
+    @Override
+    public final ConstraintDefinition getConstraint(String name) {
+        return getDatabase().getRelations().getConstraint(this, name);
+    }
+
 
 
 

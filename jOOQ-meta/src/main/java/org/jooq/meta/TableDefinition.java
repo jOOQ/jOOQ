@@ -161,6 +161,16 @@ public interface TableDefinition extends Definition {
      */
     List<CheckConstraintDefinition> getCheckConstraints();
 
+    /**
+     * Get all the constraints for this table.
+     */
+    List<ConstraintDefinition> getConstraints();
+
+    /**
+     * Get a constraint for this table by name.
+     */
+    ConstraintDefinition getConstraint(String name);
+
 
 
 

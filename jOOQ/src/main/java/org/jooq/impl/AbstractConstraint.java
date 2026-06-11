@@ -40,9 +40,11 @@ package org.jooq.impl;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 // ...
+// ...
 import static org.jooq.SQLDialect.CLICKHOUSE;
 import static org.jooq.SQLDialect.IGNITE;
 // ...
+import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 import static org.jooq.SQLDialect.TRINO;
@@ -65,7 +67,6 @@ import java.util.Set;
 import org.jooq.ConstraintEnforcementStep;
 import org.jooq.Context;
 import org.jooq.Name;
-// ...
 import org.jooq.SQLDialect;
 import org.jooq.Table;
 
@@ -80,15 +81,9 @@ implements
 {
     static final Set<SQLDialect> NO_SUPPORT_NAMED          = SQLDialect.supportedBy();
     static final Set<SQLDialect> NO_SUPPORT_NAMED_PK       = SQLDialect.supportedBy(CLICKHOUSE);
-
-
-
-
-
-
-
-
-
+    static final Set<SQLDialect> NO_SUPPORT_PK_ENFORCEMENT = SQLDialect.supportedBy(TRINO);
+    static final Set<SQLDialect> NO_SUPPORT_UK_ENFORCEMENT = SQLDialect.supportedBy();
+    static final Set<SQLDialect> NO_SUPPORT_FK_ENFORCEMENT = SQLDialect.supportedBy(CLICKHOUSE, IGNITE, TRINO);
 
     boolean                      enforced                  = true;
     boolean                      deferrable;
@@ -141,15 +136,13 @@ implements
             if (!enforced)
                 acceptEnforced(ctx, enforced);
 
+            else if (this instanceof PrimaryKeyConstraintImpl && NO_SUPPORT_PK_ENFORCEMENT.contains(ctx.dialect())
+                ||   this instanceof UniqueConstraintImpl && NO_SUPPORT_UK_ENFORCEMENT.contains(ctx.dialect())
+                ||   this instanceof ForeignKeyConstraintImpl && NO_SUPPORT_FK_ENFORCEMENT.contains(ctx.dialect()))
+                acceptEnforced(ctx, false);
 
-
-
-
-
-
-
-
-
+            if (deferrable)
+                acceptCharacteristic(ctx, deferrable, initiallyDeferred);
         }
     }
 

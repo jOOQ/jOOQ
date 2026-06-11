@@ -1516,7 +1516,7 @@ public class JavaGenerator extends AbstractGenerator {
 
 
         if (scala)
-            out.print("%s.createUniqueKey(%s, %s.name(\"%s\"), Array([[%s]]).asInstanceOf[Array[%s[%s, %s] ] ], %s)",
+            out.print("%s.createUniqueKey(%s, %s.name(\"%s\"), Array([[%s]]).asInstanceOf[Array[%s[%s, %s] ] ], %s, %s, %s)",
                 Internal.class,
                 out.ref(getStrategy().getFullJavaIdentifier(uniqueKey.getTable()), 2),
                 DSL.class,
@@ -1525,24 +1525,33 @@ public class JavaGenerator extends AbstractGenerator {
                 TableField.class,
                 out.ref(getStrategy().getFullJavaClassName(uniqueKey.getTable(), Mode.RECORD)),
                 wildcard(),
-                uniqueKey.enforced());
+                uniqueKey.enforced(),
+                uniqueKey.deferrable(),
+                uniqueKey.initiallyDeferred()
+            );
         else if (kotlin)
-            out.print("%s.createUniqueKey(%s, %s.name(\"%s\"), arrayOf([[%s]]), %s)",
+            out.print("%s.createUniqueKey(%s, %s.name(\"%s\"), arrayOf([[%s]]), %s, %s, %s)",
                 Internal.class,
                 out.ref(getStrategy().getFullJavaIdentifier(uniqueKey.getTable()), 2),
                 DSL.class,
                 escapeString(uniqueKey.getOutputName()),
                 castToTableFieldIfNecessary(out, uniqueKey.getTable(), out.ref(getStrategy().getFullJavaIdentifiers(keyColumns), colRefSegments(null))),
-                uniqueKey.enforced());
+                uniqueKey.enforced(),
+                uniqueKey.deferrable(),
+                uniqueKey.initiallyDeferred()
+            );
         else
-            out.print("%s.createUniqueKey(%s, %s.name(\"%s\"), new %s[] { [[%s]] }, %s)",
+            out.print("%s.createUniqueKey(%s, %s.name(\"%s\"), new %s[] { [[%s]] }, %s, %s, %s)",
                 Internal.class,
                 out.ref(getStrategy().getFullJavaIdentifier(uniqueKey.getTable()), 2),
                 DSL.class,
                 escapeString(uniqueKey.getOutputName()),
                 TableField.class,
                 castToTableFieldIfNecessary(out, uniqueKey.getTable(), out.ref(getStrategy().getFullJavaIdentifiers(keyColumns), colRefSegments(null))),
-                uniqueKey.enforced());
+                uniqueKey.enforced(),
+                uniqueKey.deferrable(),
+                uniqueKey.initiallyDeferred()
+            );
     }
 
     private List<String> castToTableFieldIfNecessary(
@@ -1560,6 +1569,9 @@ public class JavaGenerator extends AbstractGenerator {
                 : r)
             .collect(toList());
     }
+
+
+
 
 
 
@@ -1636,7 +1648,7 @@ public class JavaGenerator extends AbstractGenerator {
 
     private void printCreateNonEmbeddableForeignKey(JavaWriter out, ForeignKeyDefinition foreignKey) {
         if (scala)
-            out.print("%s.createForeignKey(%s, %s.name(\"%s\"), Array([[%s]]).asInstanceOf[Array[%s[%s, %s] ] ], %s, Array([[%s]]).asInstanceOf[Array[%s[%s, %s] ] ], %s, %s, %s)",
+            out.print("%s.createForeignKey(%s, %s.name(\"%s\"), Array([[%s]]).asInstanceOf[Array[%s[%s, %s] ] ], %s, Array([[%s]]).asInstanceOf[Array[%s[%s, %s] ] ], %s, %s, %s, %s, %s)",
                 Internal.class,
                 out.ref(getStrategy().getFullJavaIdentifier(foreignKey.getKeyTable()), 2),
                 DSL.class,
@@ -1651,11 +1663,13 @@ public class JavaGenerator extends AbstractGenerator {
                 out.ref(getStrategy().getFullJavaClassName(foreignKey.getReferencedTable(), Mode.RECORD)),
                 wildcard(),
                 foreignKey.enforced(),
+                foreignKey.deferrable(),
+                foreignKey.initiallyDeferred(),
                 out.ref(foreignKey.getDeleteRule()),
                 out.ref(foreignKey.getUpdateRule())
             );
         else if (kotlin)
-            out.print("%s.createForeignKey(%s, %s.name(\"%s\"), arrayOf([[%s]]), %s, arrayOf([[%s]]), %s, %s, %s)",
+            out.print("%s.createForeignKey(%s, %s.name(\"%s\"), arrayOf([[%s]]), %s, arrayOf([[%s]]), %s, %s, %s, %s, %s)",
                 Internal.class,
                 out.ref(getStrategy().getFullJavaIdentifier(foreignKey.getKeyTable()), 2),
                 DSL.class,
@@ -1664,11 +1678,13 @@ public class JavaGenerator extends AbstractGenerator {
                 out.ref(getStrategy().getFullJavaIdentifier(foreignKey.getReferencedKey())),
                 out.ref(getStrategy().getFullJavaIdentifiers(foreignKey.getReferencedColumns()), colRefSegments(null)),
                 foreignKey.enforced(),
+                foreignKey.deferrable(),
+                foreignKey.initiallyDeferred(),
                 out.ref(foreignKey.getDeleteRule()),
                 out.ref(foreignKey.getUpdateRule())
             );
         else
-            out.print("%s.createForeignKey(%s, %s.name(\"%s\"), new %s[] { [[%s]] }, %s, new %s[] { [[%s]] }, %s, %s, %s)",
+            out.print("%s.createForeignKey(%s, %s.name(\"%s\"), new %s[] { [[%s]] }, %s, new %s[] { [[%s]] }, %s, %s, %s, %s, %s)",
                 Internal.class,
                 out.ref(getStrategy().getFullJavaIdentifier(foreignKey.getKeyTable()), 2),
                 DSL.class,
@@ -1679,10 +1695,14 @@ public class JavaGenerator extends AbstractGenerator {
                 TableField.class,
                 out.ref(getStrategy().getFullJavaIdentifiers(foreignKey.getReferencedColumns()), colRefSegments(null)),
                 foreignKey.enforced(),
+                foreignKey.deferrable(),
+                foreignKey.initiallyDeferred(),
                 out.ref(foreignKey.getDeleteRule()),
                 out.ref(foreignKey.getUpdateRule())
             );
     }
+
+
 
 
 
@@ -8562,7 +8582,16 @@ public class JavaGenerator extends AbstractGenerator {
             }
 
             forEach(cc, (c, separator) -> {
-                out.println("%s.createCheck(this, %s.name(\"%s\"), \"%s\", %s)%s", Internal.class, DSL.class, escapeString(c.getName()), escapeString(c.getCheckClause()), c.enforced(), separator);
+                out.println("%s.createCheck(this, %s.name(\"%s\"), \"%s\", %s, %s, %s)%s",
+                    Internal.class,
+                    DSL.class,
+                    escapeString(c.getName()),
+                    escapeString(c.getCheckClause()),
+                    c.enforced(),
+                    c.deferrable(),
+                    c.initiallyDeferred(),
+                    separator
+                );
             });
 
             if (scala || kotlin) {

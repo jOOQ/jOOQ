@@ -37,6 +37,9 @@
  */
 package org.jooq.meta;
 
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -84,16 +87,16 @@ public class AbstractConstraintDefinition extends AbstractDefinition implements 
 
     @Override
     public boolean enforced() {
-        return enforced;
+        return enforced && !FALSE.equals(getDatabase().getEnforced().get(this));
     }
 
     @Override
     public boolean deferrable() {
-        return deferrable;
+        return deferrable || TRUE.equals(getDatabase().getDeferrable().get(this));
     }
 
     @Override
     public boolean initiallyDeferred() {
-        return initiallyDeferred;
+        return initiallyDeferred || TRUE.equals(getDatabase().getInitiallyDeferred().get(this));
     }
 }

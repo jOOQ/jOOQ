@@ -117,4 +117,14 @@ public interface Relations {
      * an empty list if the given table has no <code>CHECK</code> constraints.
      */
     List<CheckConstraintDefinition> getCheckConstraints(TableDefinition table);
+
+    /**
+     * Get all the constraints for a table.
+     */
+    List<ConstraintDefinition> getConstraints(TableDefinition table);
+
+    /**
+     * Get a constraint for a table by name.
+     */
+    ConstraintDefinition getConstraint(TableDefinition table, String name);
 }

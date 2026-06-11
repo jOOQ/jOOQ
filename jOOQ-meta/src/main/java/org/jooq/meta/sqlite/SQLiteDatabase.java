@@ -364,7 +364,9 @@ public class SQLiteDatabase extends AbstractDatabase implements ResultQueryDatab
                                 table,
                                 check.getName(),
                                 ctx.renderInlined(check.condition()),
-                                check.enforced()
+                                check.enforced(),
+                                check.deferrable(),
+                                check.initiallyDeferred()
                             ));
                         }
                     }

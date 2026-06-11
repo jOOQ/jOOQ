@@ -307,6 +307,9 @@ public abstract class AbstractDatabase implements Database {
 
     private Map<Definition, String>                                              sources;
     private Map<Definition, String>                                              comments;
+    private Map<ConstraintDefinition, Boolean>                                   enforcement;
+    private Map<ConstraintDefinition, Boolean>                                   deferrable;
+    private Map<ConstraintDefinition, Boolean>                                   initiallyDeferred;
     private List<String>                                                         inputCatalogs;
     private List<String>                                                         inputSchemata;
     private Map<String, List<String>>                                            inputSchemataPerCatalog;
@@ -859,6 +862,63 @@ public abstract class AbstractDatabase implements Database {
         }
 
         return comments;
+    }
+
+    @Override
+    public final Map<ConstraintDefinition, Boolean> getEnforced() {
+        if (enforcement == null)
+            initConstraintFlags();
+
+        return enforcement;
+    }
+
+    @Override
+    public final Map<ConstraintDefinition, Boolean> getDeferrable() {
+        if (deferrable == null)
+            initConstraintFlags();
+
+        return deferrable;
+    }
+
+    @Override
+    public final Map<ConstraintDefinition, Boolean> getInitiallyDeferred() {
+        if (initiallyDeferred == null)
+            initConstraintFlags();
+
+        return initiallyDeferred;
+    }
+
+    final void initConstraintFlags() {
+        enforcement = new LinkedHashMap<>();
+        deferrable = new LinkedHashMap<>();
+        initiallyDeferred = new LinkedHashMap<>();
+
+        onError(ERROR, "Could not load constraint flags", () -> {
+            if (this instanceof ResultQueryDatabase d) {
+                Optional
+                    .ofNullable(d.constraintFlags(getInputSchemata()))
+                    .ifPresent(q -> q.forEach(r -> {
+                        SchemaDefinition schema = getSchema(r.value2());
+
+                        if (schema != null) {
+                            String name = r.value3();
+                            TableDefinition table = getTable(schema, name);
+
+                            if (table != null) {
+                                ConstraintDefinition constraint = table.getConstraint(r.value4());
+
+                                if (constraint != null) {
+                                    enforcement.put(constraint, r.value5());
+                                    deferrable.put(constraint, r.value6());
+                                    initiallyDeferred.put(constraint, r.value7());
+                                }
+                            }
+                        }
+                }));
+            }
+
+            log.info("Constraint flags fetched", fetchedSize(enforcement.values(), enforcement.values()));
+        });
     }
 
     @Override

@@ -72,6 +72,7 @@ public class DefaultRelations implements Relations {
     private transient Map<TableDefinition, List<UniqueKeyDefinition>>       keysByTable;
     private transient Map<TableDefinition, List<ForeignKeyDefinition>>      foreignKeysByTable;
     private transient Map<TableDefinition, List<CheckConstraintDefinition>> checkConstraintsByTable;
+    private transient Map<TableDefinition, List<ConstraintDefinition>>      constraintsByTable;
 
     public void addPrimaryKey(String keyName, TableDefinition table, ColumnDefinition column) {
         addPrimaryKey(keyName, table, column, true);
@@ -759,6 +760,26 @@ public class DefaultRelations implements Relations {
             checkConstraintsByTable = initByTable(checkConstraints);
 
         return nonNull(checkConstraintsByTable, table);
+    }
+
+    @Override
+    public List<ConstraintDefinition> getConstraints(TableDefinition table) {
+        if (constraintsByTable == null) {
+            Map<Key, ConstraintDefinition> map = new LinkedHashMap<>();
+            map.putAll(primaryKeys);
+            map.putAll(uniqueKeys);
+            map.putAll(foreignKeys);
+            map.putAll(checkConstraints);
+
+            constraintsByTable = initByTable(map);
+        }
+
+        return nonNull(constraintsByTable, table);
+    }
+
+    @Override
+    public ConstraintDefinition getConstraint(TableDefinition table, String name) {
+        return getConstraints(table).stream().filter(c -> c.getInputName().equals(name)).findFirst().orElse(null);
     }
 
     private static <D extends Definition> Map<TableDefinition, List<D>> initByTable(

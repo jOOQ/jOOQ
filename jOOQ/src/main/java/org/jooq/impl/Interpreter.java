@@ -128,6 +128,7 @@ import org.jooq.impl.QOM.Cascade;
 import org.jooq.impl.QOM.CycleOption;
 import org.jooq.impl.QOM.ForeignKeyRule;
 import org.jooq.impl.QOM.GenerationMode;
+import org.jooq.impl.QOM.SetConstraints;
 import org.jooq.impl.QOM.TableScope;
 import org.jooq.tools.JooqLogger;
 
@@ -297,6 +298,8 @@ final class Interpreter {
         else if (query instanceof Delete)
             ;
         else if (query instanceof Merge)
+            ;
+        else if (query instanceof SetConstraints)
             ;
 
         else if (query instanceof SetCommand q)

@@ -77,7 +77,7 @@ implements
     static final Set<SQLDialect> NO_SUPPORT_UK_ENFORCEMENT = SQLDialect.supportedBy();
     static final Set<SQLDialect> NO_SUPPORT_FK_ENFORCEMENT = SQLDialect.supportedBy(CLICKHOUSE, IGNITE, TRINO);
     static final Set<SQLDialect> NO_SUPPORT_PK_DEFERRING   = SQLDialect.supportedBy(SQLITE, YUGABYTEDB);
-    static final Set<SQLDialect> NO_SUPPORT_UK_DEFERRING   = SQLDialect.supportedBy(SQLITE, YUGABYTEDB);
+    static final Set<SQLDialect> NO_SUPPORT_UK_DEFERRING   = SQLDialect.supportedBy(SQLITE);
     static final Set<SQLDialect> NO_SUPPORT_CHK_DEFERRING  = SQLDialect.supportedBy(POSTGRES, SQLITE, YUGABYTEDB);
     static final Set<SQLDialect> NO_SUPPORT_ADD_FK         = SQLDialect.supportedBy(SQLITE);
 

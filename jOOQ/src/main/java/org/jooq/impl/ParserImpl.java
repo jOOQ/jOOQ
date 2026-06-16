@@ -6376,8 +6376,6 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
     }
 
     private final DDLQuery parseAlterTableAlterConstraint(AlterTableStep s1) {
-        requireProEdition();
-
         AlterTableAlterConstraintStep s2 = s1.alterConstraint(constraint(parseIdentifier()));
 
         boolean enforced = false;

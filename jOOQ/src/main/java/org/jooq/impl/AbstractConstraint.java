@@ -39,15 +39,7 @@ package org.jooq.impl;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
-// ...
-// ...
-import static org.jooq.SQLDialect.CLICKHOUSE;
-import static org.jooq.SQLDialect.IGNITE;
-// ...
-import static org.jooq.SQLDialect.POSTGRES;
-// ...
-// ...
-import static org.jooq.SQLDialect.TRINO;
+import static org.jooq.SQLDialect.*;
 import static org.jooq.impl.Keywords.K_CONSTRAINT;
 import static org.jooq.impl.Keywords.K_DEFERRABLE;
 import static org.jooq.impl.Keywords.K_DEFERRED;
@@ -84,6 +76,10 @@ implements
     static final Set<SQLDialect> NO_SUPPORT_PK_ENFORCEMENT = SQLDialect.supportedBy(TRINO);
     static final Set<SQLDialect> NO_SUPPORT_UK_ENFORCEMENT = SQLDialect.supportedBy();
     static final Set<SQLDialect> NO_SUPPORT_FK_ENFORCEMENT = SQLDialect.supportedBy(CLICKHOUSE, IGNITE, TRINO);
+    static final Set<SQLDialect> NO_SUPPORT_PK_DEFERRING   = SQLDialect.supportedBy(SQLITE, YUGABYTEDB);
+    static final Set<SQLDialect> NO_SUPPORT_UK_DEFERRING   = SQLDialect.supportedBy(SQLITE, YUGABYTEDB);
+    static final Set<SQLDialect> NO_SUPPORT_CHK_DEFERRING  = SQLDialect.supportedBy(POSTGRES, SQLITE, YUGABYTEDB);
+    static final Set<SQLDialect> NO_SUPPORT_ADD_FK         = SQLDialect.supportedBy(SQLITE);
 
     boolean                      enforced                  = true;
     boolean                      deferrable;

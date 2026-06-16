@@ -142,7 +142,15 @@ implements
 
     @Override
     public boolean isSimple(Context<?> ctx) {
-        return allMatch(this, e -> Tools.isSimple(ctx, e));
+
+        // [#13985] Non-trivial nested collections are never simple
+        return allMatch(this, e -> {
+            if (e instanceof QueryPartCollectionView<?> c) {
+                return c.size() == 0 || c.size() == 1 && Tools.isSimple(ctx, Tools.first(c));
+            }
+            else
+                return Tools.isSimple(ctx, e);
+        });
     }
 
     @Override

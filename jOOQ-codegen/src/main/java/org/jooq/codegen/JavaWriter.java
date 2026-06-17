@@ -359,8 +359,12 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
                         break checks;
 
                     // [#10561] Don't import a class that conflicts with a local identifier
-                    unqualifiedTypes.put(unqualifiedType, qualifiedType);
-                    qualifiedTypes.add(qualifiedType);
+                    // [#20062] Don't import nested classes in parent class
+                    if (isScala || !c.startsWith(packageName + "." + className + ".")) {
+                        unqualifiedTypes.put(unqualifiedType, qualifiedType);
+                        qualifiedTypes.add(qualifiedType);
+                    }
+
                     String generic = m.group(2);
 
                     // Consider importing generic type arguments, recursively

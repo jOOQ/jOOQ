@@ -131,7 +131,7 @@ implements
         if (constraints.isEmpty())
             ctx.visit(K_ALL);
         else
-            ctx.visit(QueryPartListView.wrap(Tools.map(constraints, Constraint::getQualifiedName)));
+            ctx.visit(QueryPartListView.wrap(Tools.map(constraints, c -> c.getQualifiedName())));
 
         ctx.sql(' ');
 

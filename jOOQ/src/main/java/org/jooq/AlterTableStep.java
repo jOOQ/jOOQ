@@ -261,7 +261,7 @@ public interface AlterTableStep {
      * This is an alias for {@link #alterConstraint(Constraint)}.
      */
     @NotNull @CheckReturnValue
-    @Support({ MYSQL, POSTGRES })
+    @Support({ MYSQL, POSTGRES, YUGABYTEDB })
     AlterTableAlterConstraintStep alter(Constraint constraint);
 
     /**
@@ -579,7 +579,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ MYSQL, POSTGRES })
+    @Support({ MYSQL, POSTGRES, YUGABYTEDB })
     AlterTableAlterConstraintStep alterConstraint(Constraint constraint);
 
     /**
@@ -587,7 +587,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ MYSQL, POSTGRES })
+    @Support({ MYSQL, POSTGRES, YUGABYTEDB })
     AlterTableAlterConstraintStep alterConstraint(Name constraint);
 
     /**
@@ -595,7 +595,7 @@ public interface AlterTableStep {
      * statement.
      */
     @NotNull @CheckReturnValue
-    @Support({ MYSQL, POSTGRES })
+    @Support({ MYSQL, POSTGRES, YUGABYTEDB })
     AlterTableAlterConstraintStep alterConstraint(String constraint);
 
     /**

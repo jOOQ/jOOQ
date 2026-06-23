@@ -83,7 +83,10 @@ import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.SQLDialectCategory;
 import org.jooq.Source;
+import org.jooq.tools.JooqLogger;
 import org.jooq.tools.json.JSONValue;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A very simple JSON reader based on Simple JSON.
@@ -93,6 +96,8 @@ import org.jooq.tools.json.JSONValue;
  */
 @SuppressWarnings({ "unchecked", "rawtypes" })
 final class JSONReader<R extends Record> {
+
+    static final JooqLogger          log = JooqLogger.getLogger(JSONReader.class);
 
     private final DSLContext         ctx;
     private final AbstractRow<R>     row;
@@ -111,12 +116,19 @@ final class JSONReader<R extends Record> {
     final Result<R> read(final Source source, boolean ms) {
         try {
             DefaultJSONContentHandler handler = new DefaultJSONContentHandler();
-            new JSONParser(ctx, source.readString(), handler).parse();
+            new JSONParser(ctx, log(source.readString()), handler).parse();
             return read(ctx, row, recordType, ms, handler.result());
         }
         catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private final String log(String string) {
+        if (log.isTraceEnabled())
+            log.trace("Reading JSON", string);
+
+        return string;
     }
 
     private static final <R extends Record> Result<R> read(

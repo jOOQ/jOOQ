@@ -340,7 +340,9 @@ implements
         this.s = new State<>(ctx, row, recordType);
     }
 
-    Result<R> read(String string) {
+    final Result<R> read(String string) {
+        log(string);
+
         try {
             SAXParserFactory factory = SAXParserFactory.newInstance();
 
@@ -384,6 +386,13 @@ implements
         catch (Exception e) {
             throw new DataAccessException("Could not read the XML string", e);
         }
+    }
+
+    private final String log(String string) {
+        if (log.isTraceEnabled())
+            log.trace("Reading XML", string);
+
+        return string;
     }
 
     @SuppressWarnings({ "unchecked" })

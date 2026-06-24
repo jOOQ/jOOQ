@@ -70,7 +70,7 @@
         <errorprone.version>2.49.0</errorprone.version>
         <testcontainers.version>1.20.6</testcontainers.version>
         <jackson.version>2.18.8</jackson.version>
-        <jackson.version.databind>2.18.8</jackson.version.databind>
+        <jackson.version.databind>2.22.0</jackson.version.databind>
         <jackson.version.kotlin>2.18.8</jackson.version.kotlin>
         <jackson3.version>3.1.4</jackson3.version>
         <jackson3.version.databind>3.1.4</jackson3.version.databind>

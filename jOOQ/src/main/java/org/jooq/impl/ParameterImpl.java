@@ -44,6 +44,7 @@ package org.jooq.impl;
 import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
+// ...
 import static org.jooq.impl.Keywords.K_DEFAULT;
 import static org.jooq.impl.Keywords.K_IN;
 import static org.jooq.impl.Keywords.K_INOUT;
@@ -66,8 +67,6 @@ import org.jooq.Statement;
 // ...
 import org.jooq.impl.QOM.UEmpty;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * A common base class for stored procedure parameters

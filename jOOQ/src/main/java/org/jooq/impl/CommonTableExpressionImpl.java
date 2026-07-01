@@ -84,9 +84,10 @@ import org.jooq.impl.Tools.SimpleDataKey;
  */
 final class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R> implements CommonTableExpression<R> {
 
-    static final Set<SQLDialect> SUPPORT_MATERIALIZED      = SQLDialect.supportedBy(POSTGRES, SQLITE, YUGABYTEDB);
-    static final Set<SQLDialect> NO_SUPPORT_COLUMN_LIST    = SQLDialect.supportedBy(CLICKHOUSE);
-    static final Set<SQLDialect> REQUIRE_EXPLICIT_ALIASING = SQLDialect.supportedBy(CLICKHOUSE);
+    static final Set<SQLDialect> SUPPORT_MATERIALIZED        = SQLDialect.supportedBy(CLICKHOUSE, POSTGRES, SQLITE, YUGABYTEDB);
+    static final Set<SQLDialect> NO_SUPPORT_NOT_MATERIALIZED = SQLDialect.supportedBy(CLICKHOUSE);
+    static final Set<SQLDialect> NO_SUPPORT_COLUMN_LIST      = SQLDialect.supportedBy(CLICKHOUSE);
+    static final Set<SQLDialect> REQUIRE_EXPLICIT_ALIASING   = SQLDialect.supportedBy(CLICKHOUSE);
 
 
 
@@ -168,7 +169,7 @@ final class CommonTableExpressionImpl<R extends Record> extends AbstractTable<R>
                 if (SUPPORT_MATERIALIZED.contains(ctx.dialect())) {
                     if (materialized == Materialized.MATERIALIZED)
                         ctx.visit(K_MATERIALIZED).sql(' ');
-                    else
+                    else if (!NO_SUPPORT_NOT_MATERIALIZED.contains(ctx.dialect()))
                         ctx.visit(K_NOT).sql(' ').visit(K_MATERIALIZED).sql(' ');
                 }
 

@@ -103,6 +103,14 @@ implements
 
 
 
+
+
+
+
+
+
+
+
             case DUCKDB:
                 acceptNative(ctx);
                 break;

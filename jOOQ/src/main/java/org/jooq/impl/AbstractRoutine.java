@@ -56,6 +56,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.XMLFormat.RecordFormat.COLUMN_NAME_ELEMENTS;
 import static org.jooq.conf.ThrowExceptions.THROW_NONE;
+import static org.jooq.impl.DSL.cast;
 import static org.jooq.impl.DSL.default_;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.inline;
@@ -623,17 +624,20 @@ implements
             fields.add(DSL.field(DSL.name(p.getName()), p.getDataType()));
 
         Result<?> result;
+        DataType<?> t;
 
         // [#12659] Handle special case of single UDT OUT parameter, which cannot
         //          be referred to by its name, regrettably
         if (fields.size() == 1
-            && fields.get(0).getDataType().isUDT()
+            && (t = fields.get(0).getDataType()).isQualifiedRecord()
 
 
 
 
         ) {
-            result = create.select(field("row(t.*)", fields.get(0).getDataType())).from("{0} as t", asField()).fetch();
+
+            // [#20000] Cast the anonymous row type back to the qualified record type to help with SQLData deserialisation
+            result = create.select(cast(field("row(t.*)", t), t)).from("{0} as t", asField()).fetch();
         }
 
         // [#7503] Anonymous records have to be fetched from the projection

@@ -107,13 +107,12 @@ import org.jooq.Lambda1;
 // ...
 import org.jooq.Name;
 import org.jooq.Operator;
-import org.jooq.OptionallyOrderedAggregateFunction;
 import org.jooq.OrderField;
-import org.jooq.OrderedAggregateFunction;
 import org.jooq.Param;
 import org.jooq.Parameter;
 import org.jooq.Privilege;
 // ...
+import org.jooq.QualifiedRecord;
 import org.jooq.Query;
 import org.jooq.QueryPart;
 import org.jooq.Record;
@@ -149,7 +148,6 @@ import org.jooq.WindowSpecification;
 import org.jooq.XML;
 import org.jooq.XMLAttributes;
 import org.jooq.conf.Settings;
-import org.jooq.impl.QOM.UnmodifiableList;
 import org.jooq.types.DayToSecond;
 // ...
 
@@ -1737,6 +1735,21 @@ public final class QOM {
         @NotNull DataType<T> $dataType();
         @CheckReturnValue
         @NotNull <U> Cast<U> $dataType(DataType<U> type);
+    }
+
+    public /*sealed*/ interface RowCast<R extends QualifiedRecord<R>>
+        extends
+            org.jooq.Field<R>
+        /*permits
+            RowCast*/
+    {
+        @NotNull Row $row();
+        @CheckReturnValue
+        @NotNull RowCast<R> $row(Row row);
+        @Override
+        @NotNull DataType<R> $dataType();
+        @CheckReturnValue
+        @NotNull <U extends QualifiedRecord<U>> RowCast<U> $dataType(DataType<U> type);
     }
 
     public /*sealed*/ interface Coerce<T>

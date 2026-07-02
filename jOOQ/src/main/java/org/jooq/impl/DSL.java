@@ -409,9 +409,12 @@ import org.jooq.Support;
 // ...
 import org.jooq.Table;
 import org.jooq.TableLike;
+import org.jooq.TableRecord;
 // ...
 import org.jooq.True;
 import org.jooq.Type;
+import org.jooq.UDT;
+import org.jooq.UDTRecord;
 import org.jooq.Update;
 import org.jooq.UpdateSetFirstStep;
 import org.jooq.User;
@@ -18951,6 +18954,13 @@ public class DSL {
 
     /**
      * Cast null to a type.
+     * <p>
+     * <b>NOTE [#15286]</b>: It is strongly recommended to pass only
+     * {@link Class} references of types supported by jOOQ internally, i.e.
+     * types from {@link SQLDataType}. If you're using any custom data types by
+     * means of a {@link Converter} or {@link Binding}, it's better to pass that
+     * converted {@link DataType} reference explicitly to
+     * {@link #castNull(DataType)}.
      *
      * @param <T> The generic type of the cast field
      * @param type The type that is used for the cast
@@ -18958,7 +18968,7 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static <T> Field<T> castNull(DataType<T> type) {
+    public static <T> Field<T> castNull(Class<T> type) {
         return inline((Object) null).cast(type);
     }
 
@@ -19002,13 +19012,6 @@ public class DSL {
 
     /**
      * Cast null to a type.
-     * <p>
-     * <b>NOTE [#15286]</b>: It is strongly recommended to pass only
-     * {@link Class} references of types supported by jOOQ internally, i.e.
-     * types from {@link SQLDataType}. If you're using any custom data types by
-     * means of a {@link Converter} or {@link Binding}, it's better to pass that
-     * converted {@link DataType} reference explicitly to
-     * {@link #castNull(DataType)}.
      *
      * @param <T> The generic type of the cast field
      * @param type The type that is used for the cast
@@ -19016,8 +19019,50 @@ public class DSL {
      */
     @NotNull
     @Support
-    public static <T> Field<T> castNull(Class<T> type) {
+    public static <T> Field<T> castNull(DataType<T> type) {
         return inline((Object) null).cast(type);
+    }
+
+    /**
+     * Cast a row expression to a UDT type.
+     *
+     * @param <R> The generic type of the cast field
+     * @param row The value to cast
+     * @param type The type that is used for the cast
+     * @return The cast field
+     */
+    @NotNull
+    @Support
+    public static <R extends QualifiedRecord<R>> Field<R> cast(Row row, DataType<R> type) {
+        return new RowCast<>(row, type);
+    }
+
+    /**
+     * Cast a row expression to a UDT type.
+     *
+     * @param <R> The generic type of the cast field
+     * @param row The value to cast
+     * @param type The type that is used for the cast
+     * @return The cast field
+     */
+    @NotNull
+    @Support
+    public static <R extends UDTRecord<R>> Field<R> cast(Row row, UDT<R> type) {
+        return cast(row, type.getDataType());
+    }
+
+    /**
+     * Cast a row expression to a Table type.
+     *
+     * @param <R> The generic type of the cast field
+     * @param row The value to cast
+     * @param type The type that is used for the cast
+     * @return The cast field
+     */
+    @NotNull
+    @Support
+    public static <R extends TableRecord<R>> Field<R> cast(Row row, Table<R> type) {
+        return cast(row, type.getDataType());
     }
 
     /**

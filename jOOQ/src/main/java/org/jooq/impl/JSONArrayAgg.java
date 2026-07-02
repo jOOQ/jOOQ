@@ -44,6 +44,7 @@ import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
+// ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.impl.DSL.array;
 import static org.jooq.impl.DSL.arrayAgg;
@@ -160,6 +161,10 @@ implements
                 ctx.visit(jsonMerge(ctx, "[]", groupConcatEmulation(ctx)));
                 break;
             }
+
+
+
+
 
 
 
@@ -426,6 +431,20 @@ implements
             onNull == JSONOnNull.ABSENT_ON_NULL ? f(field.isNotNull()) : DSL.noCondition()
         );
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

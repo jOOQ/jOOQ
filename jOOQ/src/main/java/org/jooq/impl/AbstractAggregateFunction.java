@@ -348,10 +348,14 @@ implements
         if (!filter.hasWhere() || supportsFilter(ctx) || supportsHaving(ctx))
             ctx.visit(wrap(args).map(fun));
         else
-            ctx.visit(wrap(args).map((arg, i) -> applyFilterToArgument(ctx, arg, i) ? DSL.when(filter, arg == ASTERISK.get() ? one() : arg) : arg).map(fun));
+            ctx.visit(wrap(args).map((arg, i) -> applyFilterToArgument(ctx, arg, i) ? applyFilterMap(ctx, DSL.when(filter, arg == ASTERISK.get() ? one() : arg)) : arg).map(fun));
     }
 
     /* non-final */ Field<?> applyMap(Context<?> ctx, Field<?> arg) {
+        return arg;
+    }
+
+    /* non-final */ Field<?> applyFilterMap(Context<?> ctx, Field<?> arg) {
         return arg;
     }
 

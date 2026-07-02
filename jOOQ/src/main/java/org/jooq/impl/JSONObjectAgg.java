@@ -43,6 +43,7 @@ import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.jsonArray;
 import static org.jooq.impl.DSL.jsonObject;
 import static org.jooq.impl.DSL.key;
+import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.JSONEntryImpl.jsonCast;
 import static org.jooq.impl.Keywords.K_AS;
@@ -381,14 +382,35 @@ implements
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     private final void acceptStandard(Context<?> ctx) {
         acceptStandard(ctx, null, onNull);
     }
 
     private final void acceptStandard(Context<?> ctx, Function<? super Field<?>, ? extends Field<?>> mapper, JSONOnNull onNull0) {
-        JSONEntry<?> entry0 = mapper == null ? entry : key(entry.key()).value(mapper.apply(entry.value()));
+        JSONEntry<?> entry0 = mapper == null
+            ? !filter.hasWhere() || supportsFilter(ctx)
+                ? entry
+                : key(entry.key()).value(applyFilterMap(ctx, DSL.when(filter, entry.value())))
+            : key(entry.key()).value(mapper.apply(entry.value()));
 
         ctx.visit(N_JSON_OBJECTAGG).sql('(').visit(entry0);
+
+        if (filter.hasWhere() && !supportsFilter(ctx))
+            onNull0 = JSONOnNull.ABSENT_ON_NULL;
 
         JSONNull jsonNull = new JSONNull(onNull0);
         if (jsonNull.rendersContent(ctx))

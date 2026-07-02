@@ -371,6 +371,7 @@ final class Keywords {
     static final Keyword K_REFERENCING              = keyword("referencing");
     static final Keyword K_REFRESH                  = keyword("refresh");
     static final Keyword K_REGEXP                   = keyword("regexp");
+    static final Keyword K_REGEXP_LIKE              = keyword("regexp_like");
     static final Keyword K_RELEASE                  = keyword("release");
     static final Keyword K_REMOVE                   = keyword("remove");
     static final Keyword K_RENAME                   = keyword("rename");

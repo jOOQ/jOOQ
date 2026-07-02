@@ -13305,7 +13305,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
         if (cast || coerce || tryCast) {
             parse('(');
-            Field<?> field = parseField();
+            FieldOrRow f = cast ? parseFieldOrRow() : parseField();
             parseKeyword("AS");
             DataType<?> type = parseCastDataType(false);
 
@@ -13315,10 +13315,10 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
             parse(')');
 
             return tryCast
-                 ? tryCast(field, type)
+                 ? tryCast(f, type)
                  : cast
-                 ? cast(field, type)
-                 : coerce(field, type);
+                 ? cast(f, type)
+                 : coerce(f, type);
         }
 
         return null;

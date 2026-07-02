@@ -18988,7 +18988,9 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Field<T> cast(Object value, DataType<T> type) {
-        return Tools.field(value).cast(type);
+        return value instanceof Row
+             ? cast((Row) value, (DataType) type)
+             : Tools.field(value).cast(type);
     }
 
     /**

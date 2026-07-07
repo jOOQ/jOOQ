@@ -2531,11 +2531,16 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         // [#14985] [#15755] Add skipped join segments from path joins
         tablelist = prependPathJoins(context, where, tablelist);
 
-        if (with != null && transformInlineCTE(context.configuration())) {
+        if (with != null) {
+            if (transformInlineCTE(context.configuration())) {
 
 
 
 
+            }
+
+            // [#12579] Locally scoped CTE must not be mapped
+            context.scopeRegister(with.ctes);
         }
 
         for (Entry<QueryPart, QueryPart> entry : localQueryPartMapping.entrySet())

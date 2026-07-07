@@ -59,6 +59,7 @@ import static org.jooq.impl.QualifiedName.hashCode0;
 import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.SchemaImpl.DEFAULT_SCHEMA;
 import static org.jooq.impl.Tools.EMPTY_OBJECT;
+import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.getMappedTable;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_RENDER_IMPLICIT_JOIN;
 import static org.jooq.tools.StringUtils.defaultIfNull;
@@ -436,7 +437,13 @@ implements
         if (ctx.declareTables())
             ctx.scopeMarkStart(this);
 
-        boolean noSchemaMapping = !ctx.declareTables() && getSchema() == null && ctx.inScope(this);
+        // [#12579] Locally scoped CTE must not be mapped
+        boolean noSchemaMapping = getSchema() == null && (
+               !ctx.declareTables() && ctx.inScope(this)
+            || anyMatch(ctx.scopeParts(CommonTableExpressionList.class),
+                    l -> anyMatch(l, cte -> cte.$name().equals($name()))
+               )
+        );
 
         if (!noSchemaMapping && ctx.qualifySchema() && (ctx.declareTables()
             || (!NO_SUPPORT_QUALIFIED_TVF_CALLS.contains(ctx.dialect()) || parameters == null)

@@ -37,6 +37,8 @@
  */
 package org.jooq.impl;
 
+import java.util.Locale;
+
 import org.jooq.Context;
 import org.jooq.Keyword;
 import org.jooq.conf.RenderKeywordCase;
@@ -73,15 +75,15 @@ final class KeywordImpl extends AbstractQueryPart implements Keyword, UTransient
 
         switch (style) {
             case AS_IS:  return asIs;
-            case LOWER:  return lower == null  ? lower  = asIs.toLowerCase() : lower;
-            case UPPER:  return upper == null  ? upper  = asIs.toUpperCase() : upper;
-            case PASCAL: return pascal == null ? pascal = pascal(asIs)       : pascal;
+            case LOWER:  return lower == null  ? lower  = asIs.toLowerCase(SettingsTools.renderLocale(ctx.settings())) : lower;
+            case UPPER:  return upper == null  ? upper  = asIs.toUpperCase(SettingsTools.renderLocale(ctx.settings())) : upper;
+            case PASCAL: return pascal == null ? pascal = pascal(asIs, SettingsTools.renderLocale(ctx.settings()))     : pascal;
             default:
                 throw new UnsupportedOperationException("Unsupported style: " + style);
         }
     }
 
-    private static final String pascal(String keyword) {
+    private static final String pascal(String keyword, Locale locale) {
         if (keyword.isEmpty())
             return keyword;
         else if (keyword.indexOf(' ') >= 0) {
@@ -96,8 +98,8 @@ final class KeywordImpl extends AbstractQueryPart implements Keyword, UTransient
                 if (prev > 0)
                     sb.append(' ');
 
-                sb.append(Character.toUpperCase(keyword.charAt(prev)));
-                sb.append(keyword.substring(prev + 1, next == -1 ? keyword.length() : next).toLowerCase());
+                sb.append(String.valueOf(keyword.charAt(prev)).toUpperCase(locale));
+                sb.append(keyword.substring(prev + 1, next == -1 ? keyword.length() : next).toLowerCase(locale));
 
                 prev = next + 1;
             }
@@ -106,6 +108,6 @@ final class KeywordImpl extends AbstractQueryPart implements Keyword, UTransient
             return sb.toString();
         }
         else
-            return Character.toUpperCase(keyword.charAt(0)) + keyword.substring(1).toLowerCase();
+            return String.valueOf(keyword.charAt(0)).toUpperCase(locale) + keyword.substring(1).toLowerCase(locale);
     }
 }

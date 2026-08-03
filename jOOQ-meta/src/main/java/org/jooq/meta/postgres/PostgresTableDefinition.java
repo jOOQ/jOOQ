@@ -172,6 +172,7 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
         Field<String> identityGeneration =
               database.is10()
             ? when(COLUMNS.IDENTITY_GENERATION.eq(inline("BY DEFAULT")), inline(GenerationMode.BY_DEFAULT.name()))
+                .when(COLUMNS.IDENTITY_GENERATION.isNull().and(isIdentity), inline(GenerationMode.BY_DEFAULT.name()))
                 .else_(COLUMNS.IDENTITY_GENERATION)
             : when(isIdentity, inline(GenerationMode.BY_DEFAULT.name()));
 

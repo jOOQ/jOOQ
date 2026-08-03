@@ -572,7 +572,7 @@ final class Diff extends AbstractScope {
                     else if (type2.defaulted() && (!type1.defaulted() || !equivalent(d2, d1)))
                         r.queries.add(ctx.alterTable(t1).alter(f1).setDefault((Field) d2));
 
-                    if ((type1.hasLength() && type2.hasLength() && (type1.lengthDefined() != type2.lengthDefined() || type1.length() != type2.length()))
+                    if ((type1.hasLength() && type2.hasLength() && lengthDifference(type1, type2))
                         || (type1.hasPrecision() && type2.hasPrecision() && precisionDifference(type1, type2))
                         || (type1.hasScale() && type2.hasScale() && (type1.scaleDefined() != type2.scaleDefined() || type1.scale() != type2.scale())))
                         r.queries.add(ctx.alterTable(t1).alter(f1).set(type2));
@@ -612,6 +612,19 @@ final class Diff extends AbstractScope {
                         return type1.getType() != BigDecimal.class || type2.getType() != BigDecimal.class;
                 }
 
+                private final boolean lengthDifference(DataType<?> type1, DataType<?> type2) {
+
+                    // [#20049] Only one type has a default length defined
+                    boolean d1 = defaultLength(type1);
+                    boolean d2 = defaultLength(type2);
+
+                    if (d1 || d2)
+                        return d1 != d2;
+
+                    else
+                        return type1.length() != type2.length();
+                }
+
                 private final boolean precisionDifference(DataType<?> type1, DataType<?> type2) {
 
                     // [#10807] Only one type has a default precision defined
@@ -622,6 +635,14 @@ final class Diff extends AbstractScope {
                         return d1 != d2;
                     else
                         return type1.precision() != type2.precision();
+                }
+
+                private final boolean defaultLength(DataType<?> type) {
+                    if (!type.lengthDefined())
+                        return true;
+
+                    return type.length() == 0
+                        || type.length() == Integer.MAX_VALUE && type.isLob();
                 }
 
                 private final boolean defaultPrecision(DataType<?> type) {

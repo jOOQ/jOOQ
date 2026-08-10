@@ -266,6 +266,7 @@ final class JSONReader<R extends Record> {
             Field<?> field = result.field(i);
             Object value = record.get(i);
             DataType<?> t = field.getDataType();
+            DataType<?> u;
 
             // [#19606] String values need to be quoted
             if (t.isJSON() && value instanceof String s) {
@@ -280,6 +281,12 @@ final class JSONReader<R extends Record> {
 
 
                 record.set(i, JSONValue.toJSONString(s));
+            }
+
+            // [#20125] JSON content that is supposed to be converted has to be converted
+            //          back to JSON format eagerly, or the conversion might be skipped.
+            else if (t.isJSON() && (u = ConvertedDataType.delegate(t)) != null) {
+                record.set(i, AbstractDataType.convert0(u, value, cc));
             }
 
             // [#8829] LoaderImpl expects binary data to be encoded in base64,

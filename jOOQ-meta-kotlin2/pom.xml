@@ -66,13 +66,6 @@
             <version>${kotlin2.version}</version>
         </dependency>
 
-        <!-- Needed for mapping into Kotlin data classes -->
-        <dependency>
-            <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-reflect</artifactId>
-            <version>${kotlin2.version}</version>
-        </dependency>
-
 
 
 

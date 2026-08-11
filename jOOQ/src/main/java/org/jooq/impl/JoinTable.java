@@ -471,6 +471,21 @@ abstract class JoinTable<J extends JoinTable<J>> extends AbstractJoinTable<J> {
 
                 break;
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             default:
                 keyword = translatedType.toKeyword();
                 break;

@@ -15813,7 +15813,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
     private static final record Join(JoinType type, JoinHint hint) {}
 
     private final Join parseJoinTypeIf() {
-        JoinHint hint;
+        JoinHint hint = null;
+        boolean straight;
 
         if (parseKeywordIf("ANTI JOIN"))
             return new Join(JoinType.LEFT_ANTI_JOIN, null);
@@ -15823,8 +15824,11 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
             else if (parseKeywordIf("APPLY"))
                 return new Join(JoinType.CROSS_APPLY, null);
         }
-        else if (parseKeywordIf("INNER") && asTrue(hint = parseJoinHintIf()) && parseKeyword("JOIN"))
-            return new Join(JoinType.JOIN, hint);
+        else if (parseKeywordIf("INNER") && ((straight = parseKeywordIf("STRAIGHT")) || asTrue(hint = parseJoinHintIf())) && parseKeyword("JOIN"))
+            if (straight)
+                return new Join(JoinType.STRAIGHT_JOIN, null);
+            else
+                return new Join(JoinType.JOIN, hint);
         else if (parseKeywordIf("JOIN") && asTrue(hint = parseJoinHintIf()))
             return new Join(JoinType.JOIN, hint);
         else if (parseKeywordIf("LEFT")) {
@@ -16706,6 +16710,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         "FULL OUTER LOOKUP JOIN",
         "FULL OUTER MERGE JOIN",
         "INNER JOIN",
+        "INNER STRAIGHT JOIN",
         "INNER HASH JOIN",
         "INNER LOOP JOIN",
         "INNER LOOKUP JOIN",

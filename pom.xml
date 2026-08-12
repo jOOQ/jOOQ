@@ -67,7 +67,7 @@
         <liquibase.version>4.33.0</liquibase.version>
         <checkerframework.version>3.44.0</checkerframework.version>
         <spring.version>6.2.19</spring.version>
-        <errorprone.version>2.49.0</errorprone.version>
+        <errorprone.version>2.50.0</errorprone.version>
         <testcontainers.version>1.20.6</testcontainers.version>
         <jackson.version>2.22.1</jackson.version>
         <jackson.version.databind>2.22.1</jackson.version.databind>

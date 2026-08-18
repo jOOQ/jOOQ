@@ -1,0 +1,1 @@
+The `jOOQ-bom` module offers an automatically generated Maven BOM (Bill of Materials) file for all the [jOOQ modules](https://www.jooq.org/doc/latest/manual/reference/modules/).

@@ -1,0 +1,1 @@
+The `jOOQ-codegen-gradle` module exposes the [jOOQ-codegen module](https://www.jooq.org/doc/latest/manual/reference/modules/module-jooq-codegen/) and its code generation logic as a [Gradle plugin](https://www.jooq.org/doc/latest/manual/code-generation/codegen-execution/codegen-gradle/).

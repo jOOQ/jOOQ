@@ -1,0 +1,3 @@
+> As of jOOQ 3.21.0, this functionality has been deprecated, see https://github.com/jOOQ/jOOQ/issues/19353 for details. The recommended replacement is to use testcontainers or similar to emulate a Liquibase migration, similar to what is being recommended for Flyway: https://blog.jooq.org/using-testcontainers-to-generate-jooq-code/.
+
+The `jOOQ-meta-extensions-liquibase` module implements optional [Meta data querying capabilities](https://www.jooq.org/doc/latest/manual/reference/modules/module-jooq-meta/) to reverse engineer a [Liquibase migration](https://www.jooq.org/doc/latest/manual/code-generation/codegen-meta-sources/codegen-liquibase/) instead of a live database connection.

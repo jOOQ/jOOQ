@@ -1,0 +1,3 @@
+The `jOOQ-beans-extensions` module contains [`org.jooq.impl.DefaultRecordMapper`](https://www.jooq.org/javadoc/latest/org/jooq/impl/DefaultRecordMapper.html) logic depending on the `java.desktop` module's [`java.beans.ConstructorProperties`](https://docs.oracle.com/en/java/javase/25/docs/api/java.desktop/java/beans/ConstructorProperties.html) annotation.
+                                    
+This logic has been extracted from the [core library](https://www.jooq.org/doc/latest/manual/reference/modules/module-jooq/) in jOOQ 3.20 to allow for omitting a dependency on `java.desktop`, which is a very big JDK module adding no value to most jOOQ users.

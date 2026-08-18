@@ -1,0 +1,3 @@
+The `jOOQ-jpa-extensions` module offers a JPA-specific [Converter](https://www.jooq.org/doc/latest/manual/sql-building/data-types/converted-data-types/data-type-converter/) as well as JPA specific [`org.jooq.impl.DefaultRecordMapper`](https://www.jooq.org/javadoc/latest/org/jooq/impl/DefaultRecordMapper.html) extension logic.
+
+This logic has been extracted from the [core library](https://www.jooq.org/doc/latest/manual/reference/modules/module-jooq/) in jOOQ 3.20 to allow for omitting a dependency on `jakarta.persistence`, which most jOOQ users do not need.

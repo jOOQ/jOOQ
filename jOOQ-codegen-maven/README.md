@@ -1,0 +1,1 @@
+The `jOOQ-codegen-maven` module exposes the [jOOQ-codegen module](https://www.jooq.org/doc/latest/manual/reference/modules/module-jooq-codegen/) and its code generation logic as a [Maven plugin](https://www.jooq.org/doc/latest/manual/code-generation/codegen-execution/codegen-maven/).

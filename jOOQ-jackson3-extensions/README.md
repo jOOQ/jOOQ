@@ -1,0 +1,1 @@
+The `jOOQ-jackson3-extensions` module offers a few Jackson-specific [Converter](https://www.jooq.org/doc/latest/manual/sql-building/data-types/converted-data-types/data-type-converter/) implementations to convert between JSON formats and Jackson annotated classes.

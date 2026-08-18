@@ -1,0 +1,1 @@
+The `jOOQ-meta` module offers the dialect specific meta data querying capabilities required by the [jOOQ-codegen module](https://www.jooq.org/doc/latest/manual/reference/modules/module-jooq-codegen/) if the database schema should be reverse engineered from a live RDBMS.

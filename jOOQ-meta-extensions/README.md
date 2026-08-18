@@ -1,0 +1,1 @@
+The `jOOQ-meta-extensions` module implements optional [Meta data querying capabilities](https://www.jooq.org/doc/latest/manual/reference/modules/module-jooq-meta/) e.g. to reverse engineer a [DDL script](https://www.jooq.org/doc/latest/manual/code-generation/codegen-meta-sources/codegen-ddl/) instead of a live database connection.

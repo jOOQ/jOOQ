@@ -1,0 +1,1 @@
+The `jOOQ-kotlin2-coroutines` module offers a few Kotlin extension functions to allow for bridging between R2DBC and Kotlin coroutines.

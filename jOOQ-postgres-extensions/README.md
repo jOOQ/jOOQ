@@ -1,0 +1,1 @@
+The `jOOQ-postgres-extensions` module contains PostgreSQL specific [DataType bindings](https://www.jooq.org/doc/latest/manual/sql-building/data-types/converted-data-types/data-type-binding/), i.e. the ones listed as [extended data types](https://www.jooq.org/doc/latest/manual/sql-building/data-types/extended-data-types/).

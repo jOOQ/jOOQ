@@ -1,0 +1,1 @@
+The `jOOQ-xtend` module offers a few Xtend extension functions to provide a more idiomatic jOOQ experience to Xtend users.

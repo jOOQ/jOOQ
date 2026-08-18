@@ -1,0 +1,1 @@
+The `jOOQ-checker` module contains the logic using the [Checker Framework or ErrorProne libraries](https://www.jooq.org/doc/latest/manual/sql-building/checker-framework/) for additional compile time checks of jOOQ API usage.

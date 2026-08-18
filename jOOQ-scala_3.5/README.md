@@ -1,0 +1,1 @@
+The `jOOQ-scala_3.5` module offers a few Scala implicit methods and classes to provide a more idiomatic jOOQ experience to Scala users.

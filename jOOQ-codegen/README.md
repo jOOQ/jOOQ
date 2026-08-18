@@ -1,0 +1,1 @@
+The `jOOQ-codegen` module contains the [code generation logic](https://www.jooq.org/doc/latest/manual/code-generation/) used to generate table / column meta data, etc. from your database. It has its own dependencies and extensions that are listed in these sections.

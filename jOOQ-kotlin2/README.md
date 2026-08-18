@@ -1,0 +1,1 @@
+The `jOOQ-kotlin2` module offers a few Kotlin extension functions to provide a more idiomatic jOOQ experience to Kotlin users.

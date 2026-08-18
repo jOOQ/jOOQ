@@ -1,0 +1,1 @@
+The `jOOQ-meta-extensions-hibernate` module implements optional [Meta data querying capabilities](https://www.jooq.org/doc/latest/manual/reference/modules/module-jooq-meta/) to reverse engineer a [set of JPA annotated entities](https://www.jooq.org/doc/latest/manual/code-generation/codegen-meta-sources/codegen-jpa/) instead of a live database connection.

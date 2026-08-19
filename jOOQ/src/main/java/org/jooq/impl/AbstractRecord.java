@@ -68,6 +68,7 @@ import java.util.stream.Stream;
 import org.jooq.Attachable;
 import org.jooq.CSVFormat;
 import org.jooq.ChartFormat;
+import org.jooq.ContextConverter;
 import org.jooq.Converter;
 import org.jooq.ConverterContext;
 import org.jooq.DataType;
@@ -360,7 +361,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final <U> U get(int index, Converter<?, ? extends U> converter) {
-        return Convert.convert(get(index), converter);
+        return (U) ((ContextConverter) scoped(converter)).from(get(index), converterContext(this));
     }
 
     @Override

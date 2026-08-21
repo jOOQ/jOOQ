@@ -75,6 +75,7 @@ final class ExecuteListeners implements ExecuteListener {
     // an open Result
     private boolean                      resultStart;
     private boolean                      fetchEnd;
+    private Exception                    exception;
 
     /**
      * Initialise the provided {@link ExecuteListener} set and return a wrapper.
@@ -316,8 +317,14 @@ final class ExecuteListeners implements ExecuteListener {
 
     @Override
     public final void exception(ExecuteContext ctx) {
-        for (ExecuteListener listener : listeners[0])
-            listener.exception(ctx);
+
+        // [#15869] Ensure idempotency of ExecuteListener::exception calls
+        if (exception != ctx.exception()) {
+            for (ExecuteListener listener : listeners[0])
+                listener.exception(ctx);
+
+            exception = ctx.exception();
+        }
     }
 
     @Override

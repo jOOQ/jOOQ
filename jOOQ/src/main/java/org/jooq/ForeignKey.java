@@ -236,4 +236,9 @@ public interface ForeignKey<CHILD extends Record, PARENT extends Record> extends
      */
     @NotNull
     Table<CHILD> children(Collection<? extends PARENT> records);
+
+    /**
+     * Whether this {@link ForeignKey} is also a {@link UniqueKey}.
+     */
+    boolean unique();
 }

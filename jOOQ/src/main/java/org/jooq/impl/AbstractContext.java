@@ -1463,7 +1463,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
                 Table<?> t = e.getValue().joinTree();
 
                 result = result
-                    .join(t, joinType != null ? joinType : node.joinToManyType(t))
+                    .join(t, joinType != null ? joinType : node.joinToManyType(t, e.getKey()))
                     .on(onKey0(e.getKey().getForeignKey(), t, result));
             }
 
@@ -1513,7 +1513,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
             }
         }
 
-        private final JoinType joinToManyType(Table<?> t) {
+        private final JoinType joinToManyType(Table<?> t, InverseForeignKey<?, ?> fk) {
             RenderImplicitJoinType type = defaultIfNull(ctx.settings().getRenderImplicitJoinToManyType(), RenderImplicitJoinType.DEFAULT);
 
             switch (type) {
@@ -1529,7 +1529,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
                     // [#15755] Throw exceptions only if the to-many join is done to a table
                     //          that isn't in any explicit scope
-                    if (!allInScope(t))
+                    if (!allInScope(t) && !fk.getForeignKey().unique())
                         throw new DataAccessException("Implicit to-many JOIN of " + ctx.dsl().renderContext().declareTables(true).render(table) + " isn't supported with Settings.renderImplicitJoinToManyType = " + type + ". Either change Settings value, or use explicit path join, see https://www.jooq.org/doc/latest/manual/sql-building/sql-statements/select-statement/explicit-path-join/");
                     else
                         return LEFT_OUTER_JOIN;

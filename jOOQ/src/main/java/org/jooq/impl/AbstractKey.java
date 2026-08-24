@@ -61,9 +61,9 @@ import org.jooq.impl.QOM.UEmpty;
  */
 abstract class AbstractKey<R extends Record> extends AbstractNamed implements Key<R>, UEmpty {
 
-    private final Table<R>           table;
-    private final TableField<R, ?>[] fields;
-    private final boolean            enforced;
+    final Table<R>           table;
+    final TableField<R, ?>[] fields;
+    final boolean            enforced;
 
     AbstractKey(Table<R> table, TableField<R, ?>[] fields, boolean enforced) {
         this(table, null, fields, enforced);

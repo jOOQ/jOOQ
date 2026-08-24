@@ -42,10 +42,13 @@ import static org.jooq.impl.Tools.filterOne;
 import static org.jooq.impl.Tools.first;
 import static org.jooq.impl.Tools.list;
 import static org.jooq.impl.Tools.map;
+import static org.jooq.impl.Tools.unaliasedFields;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.jooq.ConstraintEnforcementStep;
 import org.jooq.DSLContext;
@@ -75,6 +78,7 @@ implements
 
     private final UniqueKey<PARENT>       uk;
     private final TableField<PARENT, ?>[] ukFields;
+    private transient Boolean             unique;
 
     ReferenceImpl(Table<CHILD> table, Name name, TableField<CHILD, ?>[] fkFields, UniqueKey<PARENT> uk, TableField<PARENT, ?>[] ukFields, boolean enforced) {
         super(table, name, fkFields, enforced);
@@ -235,5 +239,21 @@ implements
         return DSL.constraint(getName())
                   .foreignKey(getFieldsArray())
                   .references(uk.getTable(), getKeyFieldsArray());
+    }
+
+    @Override
+    public final boolean unique() {
+        if (unique == null) {
+            Set<Field<?>> fkf = new HashSet<>(Tools.map(getFields(), Tools::unqualified));
+            List<TableField<CHILD, ?>> ukf;
+
+            for (UniqueKey<CHILD> u : table.getKeys())
+                if (fkf.size() == (ukf = u.getFields()).size() && fkf.equals(new HashSet<>(Tools.map(ukf, Tools::unqualified))))
+                    return unique = true;
+
+            return unique = false;
+        }
+
+        return unique;
     }
 }

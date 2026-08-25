@@ -270,11 +270,11 @@ implements
     @Override
     public final boolean unique() {
         if (unique == null) {
-            Set<Field<?>> fkf = new HashSet<>(Tools.map(getFields(), Tools::unqualified));
+            Set<Field<?>> fkf = new HashSet<>(Tools.map(getFields(), t -> Tools.unqualified(t)));
             List<TableField<CHILD, ?>> ukf;
 
             for (UniqueKey<CHILD> u : table.getKeys())
-                if (fkf.size() == (ukf = u.getFields()).size() && fkf.equals(new HashSet<>(Tools.map(ukf, Tools::unqualified))))
+                if (fkf.size() == (ukf = u.getFields()).size() && fkf.equals(new HashSet<>(Tools.map(ukf, t -> Tools.unqualified(t)))))
                     return unique = true;
 
             return unique = false;

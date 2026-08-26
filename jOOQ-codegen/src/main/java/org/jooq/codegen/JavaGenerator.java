@@ -11022,6 +11022,9 @@ public class JavaGenerator extends AbstractGenerator {
             arrayAppender.accept(sb);
             appendTypeReferenceNullability(db, out, sb, n);
             appendTypeReferenceDefault(db, out, sb, d, sqlDataTypeRef, arrayAppender);
+
+
+
         }
         else if (db.getUDT(schema, u) != null) {
             sb.append(out.ref(getStrategy().getFullJavaIdentifier(db.getUDT(schema, u)), 2));
@@ -11135,21 +11138,6 @@ public class JavaGenerator extends AbstractGenerator {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             // [#5291] Some dialects report valid SQL expresions (e.g. PostgreSQL), others
             //         report actual values (e.g. MySQL).
             if (dataType.defaulted())
@@ -11174,6 +11162,37 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     private static final Pattern P_TS_EXPRESSION = Pattern.compile("^(?i:current_(date|timestamp).*)$");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private final void appendTypeReferenceDefault(
         Database db,

@@ -116,6 +116,14 @@ final class Tips {
         "By default, jOOQ's UpdatableRecords track \"touched\" dirty state. You can switch them to track \"modified\" dirty state instead: https://www.jooq.org/doc/latest/manual/sql-building/dsl-context/custom-settings/settings-dirty-tracking/",
         "Your schema may encode ENUM semantics into a column using a CHECK constraint. Turn that into a generated enum, easily: https://www.jooq.org/doc/latest/manual/code-generation/codegen-advanced/codegen-config-database/codegen-database-synthetic-objects/codegen-database-synthetic-enums/",
         "You don't have to alias your tables and columns in SQL in order to \"alias\" them in Java for better readability: https://www.jooq.org/doc/latest/manual/sql-building/table-expressions/aliased-tables/client-side-aliased-tables/",
+        "Testcontainers is a very useful tool not just for integration testing, but also for repeatable code generation: https://blog.jooq.org/using-testcontainers-to-generate-jooq-code/",
+        "A lot of SQL performance problems stem from unnecessary, mandatory work: https://blog.jooq.org/many-sql-performance-problems-stem-from-unnecessary-mandatory-work/",
+        "Avoid the NOT IN predicate when the predicate column is nullable, due to SQL's three-valued logic: https://www.jooq.org/doc/latest/manual/reference/dont-do-this/dont-do-this-sql-not-in/",
+        "Coming from ORMs it might be natural to interact procedurally with databases, when set based thinking is much more SQL idiomatic: https://www.jooq.org/doc/latest/manual/coming-from-jpa/from-jpa-set-based-thinking/",
+        "Embedded keys can be very useful for managing composite keys in your queries: https://www.jooq.org/doc/latest/manual/code-generation/codegen-embeddable-types/codegen-embedded-keys/",
+        "UpdatableRecords can optionally work with optimistic locking: https://www.jooq.org/doc/latest/manual/sql-execution/crud-with-updatablerecords/optimistic-locking/",
+        "Policies are jOOQ's out of the box implementation of row level security features: https://www.jooq.org/doc/latest/manual/sql-building/queryparts/policies/",
+        "A lot of SQL formatting options are available in jOOQ's Settings, e.g. for debugging purposes: https://www.jooq.org/doc/latest/manual/sql-building/dsl-context/custom-settings/settings-rendering/",
         ""
     };
 

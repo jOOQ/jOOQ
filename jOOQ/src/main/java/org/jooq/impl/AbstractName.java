@@ -37,7 +37,9 @@
  */
 package org.jooq.impl;
 
-import java.util.Arrays;
+import static org.jooq.tools.StringUtils.defaultIfEmpty;
+
+import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
@@ -49,6 +51,7 @@ import org.jooq.ResultQuery;
 import org.jooq.WindowDefinition;
 import org.jooq.WindowSpecification;
 import org.jooq.impl.QOM.UEmpty;
+import org.jooq.tools.StringUtils;
 
 /**
  * The default implementation for a qualified SQL identifier.
@@ -371,12 +374,34 @@ implements
         // [#1626] [#11126] NameImpl equality can be decided without executing the
         // rather expensive implementation of AbstractQueryPart.equals()
         if (that instanceof AbstractName n) {
+            Name q1 = this, q2 = n;
 
-            // [#11126] No need to access name arrays if not both names are equally qualified
-            if (qualified() != n.qualified())
-                return false;
-            else
-                return Arrays.equals(getName(), n.getName());
+            do {
+
+                // [#11126] No need to access name arrays if not both names are equally qualified
+                if (q1.qualified() != q2.qualified())
+                    return false;
+
+                if (!defaultIfEmpty(q1.last(), "").equals(defaultIfEmpty(q2.last(), "")))
+                    return false;
+
+                if (q1 instanceof QualifiedName n1) {
+                    if (q2 instanceof QualifiedName n2) {
+                        if (!n1.last().equals(n2.last()))
+                            return false;
+
+                        q1 = n1.qualifier;
+                        q2 = n2.qualifier;
+                    }
+                    else
+                        q1 = q2 = null;
+                }
+                else
+                    q1 = q2 = null;
+            }
+            while (q1 != null && q2 != null);
+
+            return true;
         }
 
         return super.equals(that);

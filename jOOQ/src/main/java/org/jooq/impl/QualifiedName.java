@@ -196,6 +196,18 @@ final class QualifiedName extends AbstractName {
         return parts;
     }
 
+    @Override
+    public final int partsCount() {
+        int i = 1;
+        Name q = qualifier;
+        while (q != null) {
+            q = q.qualifier();
+            i++;
+        }
+
+        return i;
+    }
+
     // ------------------------------------------------------------------------
     // XXX: Object API
     // ------------------------------------------------------------------------

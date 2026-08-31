@@ -1419,29 +1419,35 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
             for (Entry<ForeignKey<?, ?>, JoinNode> e : pathsToOne.entrySet()) {
                 Table<?> t = e.getValue().joinTree(joinType);
+                Condition c = onKey0(e.getKey(), result, t);
 
                 // [#14992] Eliminate to-one -> to-many hops if there are no projection references
                 if (skippable(e.getKey(), e.getValue()))
 
                     // [#14992] TODO: Currently, skippable JoinNodes have no outgoing to-one
                     //          relationships, but that might change in the future.
-                    result = appendToManyPaths(result, e.getValue(), joinType);
+                    result = appendToManyPaths(result, e.getValue(), joinType, c);
                 else
                     result = result
                         .join(t, joinType != null ? joinType : joinType(t, e.getKey().nullable() ? LEFT_OUTER_JOIN : JOIN))
-                        .on(onKey0(e.getKey(), result, t));
+                        .on(c);
             }
 
-            return appendToManyPaths(result, this, joinType);
+            return appendToManyPaths(result, this, joinType, null);
         }
 
-        private static final Table<?> appendToManyPaths(Table<?> result, JoinNode node, JoinType joinType) {
+        private static final Table<?> appendToManyPaths(
+            Table<?> result,
+            JoinNode node,
+            JoinType joinType,
+            Condition lookup
+        ) {
             for (Entry<InverseForeignKey<?, ?>, JoinNode> e : node.pathsToMany.entrySet()) {
                 Table<?> t = e.getValue().joinTree();
 
                 result = result
                     .join(t, joinType != null ? joinType : node.joinToManyType(t, e.getKey()))
-                    .on(onKey0(e.getKey().getForeignKey(), t, result));
+                    .on(onKey0(e.getKey().getForeignKey(), t, result, lookup));
             }
 
             return result;

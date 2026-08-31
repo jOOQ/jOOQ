@@ -218,12 +218,16 @@ public interface Name extends QueryPart, Comparable<Name> {
 
     /**
      * Get the individual, unqualified name parts of this name.
+     * <p>
+     * This returns an empty array when this name is {@link #empty()}.
      */
     @NotNull
     Name @NotNull [] parts();
 
     /**
      * Count the individual, unqualified name parts of this name.
+     * <p>
+     * This returns <code>0</code> when this name is {@link #empty()}.
      */
     int partsCount();
 
@@ -241,6 +245,8 @@ public interface Name extends QueryPart, Comparable<Name> {
 
     /**
      * The qualified name of this SQL identifier.
+     * <p>
+     * This returns an empty array when this name is {@link #empty()}.
      */
     @NotNull
     String @NotNull [] getName();

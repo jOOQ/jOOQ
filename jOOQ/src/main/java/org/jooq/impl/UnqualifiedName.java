@@ -179,6 +179,11 @@ final class UnqualifiedName extends AbstractName {
         return empty() ? EMPTY_NAME : new Name[] { this };
     }
 
+    @Override
+    public final int partsCount() {
+        return empty() ? 0 : 1;
+    }
+
     // ------------------------------------------------------------------------
     // XXX: Object API
     // ------------------------------------------------------------------------

@@ -133,6 +133,11 @@ final class LazyName extends AbstractName {
     }
 
     @Override
+    public final int partsCount() {
+        return name().partsCount();
+    }
+
+    @Override
     public final String[] getName() {
         return name().getName();
     }

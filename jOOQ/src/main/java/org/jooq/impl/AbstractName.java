@@ -379,7 +379,8 @@ implements
             do {
 
                 // [#11126] No need to access name arrays if not both names are equally qualified
-                if (q1.qualified() != q2.qualified())
+                // [#20158] partsCount() allows for faster false results than qualified()
+                if (q1.partsCount() != q2.partsCount())
                     return false;
 
                 if (!defaultIfEmpty(q1.last(), "").equals(defaultIfEmpty(q2.last(), "")))

@@ -223,6 +223,11 @@ public interface Name extends QueryPart, Comparable<Name> {
     Name @NotNull [] parts();
 
     /**
+     * Count the individual, unqualified name parts of this name.
+     */
+    int partsCount();
+
+    /**
      * Appends <code>name</code> to this name.
      */
     @NotNull

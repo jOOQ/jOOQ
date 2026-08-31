@@ -882,7 +882,20 @@ abstract class JoinTable<J extends JoinTable<J>> extends AbstractJoinTable<J> {
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    static final Condition onKey0(ForeignKey<?, ?> key, Table<?> fk, Table<?> pk) {
+    static final Condition onKey0(
+        ForeignKey<?, ?> key,
+        Table<?> fk,
+        Table<?> pk
+    ) {
+        return onKey0(key, fk, pk, null);
+    }
+
+    static final Condition onKey0(
+        ForeignKey<?, ?> key,
+        Table<?> fk,
+        Table<?> pk,
+        Condition lookup
+    ) {
         Condition result = noCondition();
 
         TableField<?, ?>[] references = key.getFieldsArray();
@@ -901,11 +914,43 @@ abstract class JoinTable<J extends JoinTable<J>> extends AbstractJoinTable<J> {
 
 
 
+            // [#19570] In case a path join has been eliminated, the JOIN condition can serve as a lookup
+            //          for fields that are not available, otherwise
+            if (lookup != null) {
+                if (f1 == null)
+                    f1 = onKey0Lookup(fk, references[i], lookup);
+                if (f2 == null)
+                    f2 = onKey0Lookup(pk, referenced[i], lookup);
+            }
+
             // [#2870] TODO: If lhs or rhs are aliased tables, extract the appropriate fields from them
-            result = result.and(f1.equal(f2));
+            result = result.and(f1.eq(f2));
         }
 
         return result;
+    }
+
+    private static final Field<?> onKey0Lookup(
+        Table<?> k,
+        TableField<?, ?> r,
+        Condition lookup
+    ) {
+        Field<?> result = null;
+
+        if (lookup instanceof QOM.And a) {
+            if ((result = onKey0Lookup(k, r, a.$arg1())) != null)
+                return result;
+            if ((result = onKey0Lookup(k, r, a.$arg2())) != null)
+                return result;
+        }
+        else if (lookup instanceof QOM.Eq<?> e) {
+            if (e.$arg1().equals(r))
+                return e.$arg2();
+            if (e.$arg2().equals(r))
+                return e.$arg1();
+        }
+
+        return null;
     }
 
 

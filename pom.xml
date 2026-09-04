@@ -68,7 +68,7 @@
         <checkerframework.version>3.44.0</checkerframework.version>
         <spring.version>6.2.19</spring.version>
         <errorprone.version>2.50.0</errorprone.version>
-        <testcontainers.version>1.20.6</testcontainers.version>
+        <testcontainers.version>1.21.4</testcontainers.version>
         <jackson.version>2.22.1</jackson.version>
         <jackson.version.databind>2.22.1</jackson.version.databind>
         <jackson.version.kotlin>2.22.1</jackson.version.kotlin>

@@ -324,13 +324,19 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
                     return getJavaMethodName(referencing, mode);
             }
             else if (definition instanceof ManyToManyKeyDefinition k) {
-                TableDefinition t1 = k.getForeignKey1().getReferencedTable();
-                TableDefinition t2 = k.getForeignKey2().getReferencedTable();
+                TableDefinition t1 = k.getParentTable1();
+                TableDefinition t2 = k.getParentTable2();
+                Definition path2;
+
+                if (k.getUniqueKey().getTable().equals(k.getForeignKey2().getReferencedTable()))
+                    path2 = k.getForeignKey2().getInverse();
+                else
+                    path2 = k.getForeignKey2();
 
                 if (t1.getManyToManyKeys(t2).size() == 1)
                     return getJavaMethodName(t2, mode);
                 else
-                    return getJavaClassName0LC(k.getForeignKey2(), Mode.DEFAULT);
+                    return getJavaClassName0LC(path2, Mode.DEFAULT);
             }
         }
 

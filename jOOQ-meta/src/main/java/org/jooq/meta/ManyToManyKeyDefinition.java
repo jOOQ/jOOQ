@@ -65,11 +65,27 @@ public interface ManyToManyKeyDefinition extends ConstraintDefinition {
 
     /**
      * Get the first foreign key in the relationship.
+     * <p>
+     * This key may point from the {@link #getParentTable1()} to the
+     * {@link #getUniqueKey()} table, or vice versa.
      */
     ForeignKeyDefinition getForeignKey1();
 
     /**
      * Get the second foreign key in the relationship.
+     * <p>
+     * This key may point from the {@link #getParentTable2()} to the
+     * {@link #getUniqueKey()} table, or vice versa.
      */
     ForeignKeyDefinition getForeignKey2();
+
+    /**
+     * Get the "parent" table of the first key, irrespective of key direction.
+     */
+    TableDefinition getParentTable1();
+
+    /**
+     * Get the "parent" table of the second key, irrespective of key direction.
+     */
+    TableDefinition getParentTable2();
 }

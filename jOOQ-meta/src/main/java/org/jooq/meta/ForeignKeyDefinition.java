@@ -93,4 +93,10 @@ public interface ForeignKeyDefinition extends ConstraintDefinition {
      * Get the inverse key.
      */
     InverseForeignKeyDefinition getInverse();
+
+    /**
+     * Whether this {@link ForeignKeyDefinition} is also a
+     * {@link UniqueKeyDefinition}.
+     */
+    boolean isUnique();
 }

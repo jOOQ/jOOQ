@@ -37,6 +37,8 @@
  */
 package org.jooq.meta;
 
+import static java.util.stream.Collectors.toSet;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -47,6 +49,7 @@ public class DefaultForeignKeyDefinition extends AbstractConstraintDefinition im
     private final List<ColumnDefinition>  fkColumns;
     private final List<ColumnDefinition>  ukColumns;
     private final UniqueKeyDefinition     uk;
+    private Boolean                       unique;
 
     public DefaultForeignKeyDefinition(SchemaDefinition schema, String name, TableDefinition table, UniqueKeyDefinition uniqueKey) {
         this(schema, name, table, uniqueKey, true);
@@ -104,5 +107,21 @@ public class DefaultForeignKeyDefinition extends AbstractConstraintDefinition im
     @Override
     public InverseForeignKeyDefinition getInverse() {
         return new DefaultInverseForeignKeyDefinition(this);
+    }
+
+    @Override
+    public final boolean isUnique() {
+        if (unique == null) {
+            Set<String> fkf = getKeyColumns().stream().map(ColumnDefinition::getName).collect(toSet());
+            List<ColumnDefinition> ukf;
+
+            for (UniqueKeyDefinition u : getTable().getKeys())
+                if (fkf.size() == (ukf = u.getKeyColumns()).size() && fkf.equals(ukf.stream().map(ColumnDefinition::getName).collect(toSet())))
+                    return unique = true;
+
+            return unique = false;
+        }
+
+        return unique;
     }
 }

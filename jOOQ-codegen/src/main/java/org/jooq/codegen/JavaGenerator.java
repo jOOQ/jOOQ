@@ -7130,6 +7130,7 @@ public class JavaGenerator extends AbstractGenerator {
 
             // Foreign keys
             List<ForeignKeyDefinition> outboundFKs = table.getForeignKeys();
+            List<ForeignKeyDefinition> outboundToOneFKs = outboundFKs.stream().filter(ForeignKeyDefinition::isUnique).collect(toList());
             List<InverseForeignKeyDefinition> inboundFKs = table.getInverseForeignKeys();
             Map<String, Definition> keyMethodNames = new HashMap<>();
 
@@ -7240,7 +7241,7 @@ public class JavaGenerator extends AbstractGenerator {
             }
 
             if (generateImplicitJoinPathsToMany() && generateGlobalKeyReferences()) {
-                if (inboundFKs.size() > 0) {
+                if (inboundFKs.size() > 0 || outboundToOneFKs.size() > 0) {
                     Map<TableDefinition, Long> pathCounts = inboundFKs.stream().collect(groupingBy(InverseForeignKeyDefinition::getReferencingTable, counting()));
 
                     inboundFKLoop:
@@ -7314,7 +7315,7 @@ public class JavaGenerator extends AbstractGenerator {
                     // [#17681] The to-one path of the ManyToManyKeyDefinition.foreignKey2 property must be available
                     if (generateImplicitJoinPathsToOne()) {
                         List<ManyToManyKeyDefinition> manyToManyKeys = table.getManyToManyKeys();
-                        Map<TableDefinition, Long> pathCountsManytoMany = manyToManyKeys.stream().collect(groupingBy(d -> d.getForeignKey2().getReferencedTable(), counting()));
+                        Map<TableDefinition, Long> pathCountsManytoMany = manyToManyKeys.stream().collect(groupingBy(d -> d.getParentTable2(), counting()));
 
                         manyToManyKeyLoop:
                         for (ManyToManyKeyDefinition manyToManyKey : manyToManyKeys) {
@@ -7334,9 +7335,22 @@ public class JavaGenerator extends AbstractGenerator {
                                 continue manyToManyKeyLoop;
                             }
 
-                            final String key1MethodName = out.ref(getStrategy().getJavaMethodName(manyToManyKey.getForeignKey1().getInverse()));
-                            final String key2MethodName = out.ref(getStrategy().getJavaMethodName(manyToManyKey.getForeignKey2()));
-                            final TableDefinition referencedTable = manyToManyKey.getForeignKey2().getReferencedTable();
+                            TableDefinition child = manyToManyKey.getUniqueKey().getTable();
+
+                            final String key1MethodName = out.ref(getStrategy().getJavaMethodName(
+                                child.equals(manyToManyKey.getForeignKey1().getTable())
+                                ? manyToManyKey.getForeignKey1().getInverse()
+                                : manyToManyKey.getForeignKey1()
+                            ));
+
+                            final String key2MethodName = out.ref(getStrategy().getJavaMethodName(
+                                child.equals(manyToManyKey.getForeignKey2().getTable())
+                                ? manyToManyKey.getForeignKey2()
+                                : manyToManyKey.getForeignKey2().getInverse()
+                            ));
+
+                            final TableDefinition referencedTable = manyToManyKey.getParentTable2();
+
                             final String referencedTableClassName = out.ref(
                                 getStrategy().getFullJavaClassName(referencedTable)
                                 + (generateImplicitJoinPathTableSubtypes() ? ("." + getStrategy().getJavaClassName(referencedTable, Mode.PATH)) : "")

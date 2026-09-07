@@ -105,4 +105,10 @@ public interface ForeignKeyDefinition extends ConstraintDefinition {
      * The <code>ON UPDATE</code> rule or <code>null</code>, if unspecified.
      */
     ForeignKeyRule getUpdateRule();
+
+    /**
+     * Whether this {@link ForeignKeyDefinition} is also a
+     * {@link UniqueKeyDefinition}.
+     */
+    boolean isUnique();
 }

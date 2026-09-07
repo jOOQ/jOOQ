@@ -197,6 +197,8 @@ implements
                 if (!uk.getKeyColumns().containsAll(k.getReferencingColumns()))
                     continue ukLoop;
 
+                Set<ColumnDefinition> ukc = new HashSet<>(uk.getKeyColumns());
+
                 fkLoop:
                 for (ForeignKeyDefinition fk : k.getReferencingTable().getForeignKeys()) {
                     if (!k.getForeignKey().equals(fk)) {
@@ -209,12 +211,69 @@ implements
                                 continue fkLoop;
 
                         // [#13639] Require UK = FK1 + FK2
-                        if (!columns.equals(new HashSet<>(uk.getKeyColumns())))
+                        if (!columns.equals(ukc))
                             continue fkLoop;
 
                         result.add(new DefaultManyToManyKeyDefinition(k.getForeignKey(), uk, fk));
                     }
                 }
+
+                // [#20177] FK2 is a one-to-one relationship
+                fkLoop:
+                for (InverseForeignKeyDefinition fk : k.getReferencingTable().getInverseForeignKeys()) {
+                    if (!fk.getForeignKey().isUnique())
+                        continue fkLoop;
+
+                    if (!k.getForeignKey().equals(fk.getForeignKey())) {
+                        Set<ColumnDefinition> columns = new HashSet<>();
+                        columns.addAll(k.getForeignKey().getKeyColumns());
+
+                        // [#13639] The two FKs must not overlap
+                        for (ColumnDefinition c : fk.getKeyColumns())
+                            if (!columns.add(c))
+                                continue fkLoop;
+
+                        // [#13639] Require UK = FK1 + FK2
+                        if (!columns.equals(ukc))
+                            continue fkLoop;
+
+                        result.add(new DefaultManyToManyKeyDefinition(k.getForeignKey(), uk, fk.getForeignKey()));
+                    }
+                }
+            }
+        }
+
+        // [#20177] FK1 is a one-to-one relationship
+        ukFkLoop:
+        for (ForeignKeyDefinition k : getForeignKeys()) {
+            if (!k.isUnique())
+                continue ukFkLoop;
+
+            ukLoop:
+            for (UniqueKeyDefinition uk : k.getReferencedTable().getKeys()) {
+                if (!uk.getKeyColumns().containsAll(k.getReferencedColumns()))
+                    continue ukLoop;
+
+                Set<ColumnDefinition> ukc = new HashSet<>(uk.getKeyColumns());
+
+                fkLoop:
+                for (ForeignKeyDefinition fk : k.getReferencedTable().getForeignKeys()) {
+                    Set<ColumnDefinition> columns = new HashSet<>();
+                    columns.addAll(k.getReferencedColumns());
+
+                    // [#13639] The two FKs must not overlap
+                    for (ColumnDefinition c : fk.getKeyColumns())
+                        if (!columns.add(c))
+                            continue fkLoop;
+
+                    // [#13639] Require UK = FK1 + FK2
+                    if (!columns.equals(ukc))
+                        continue fkLoop;
+
+                    result.add(new DefaultManyToManyKeyDefinition(k, uk, fk));
+                }
+
+                // [#20177] FK2 is a one-to-one relationship
             }
         }
 
@@ -226,7 +285,7 @@ implements
         List<ManyToManyKeyDefinition> result = new ArrayList<>();
 
         for (ManyToManyKeyDefinition key : getManyToManyKeys())
-            if (referencing.equals(key.getForeignKey2().getReferencedTable()))
+            if (referencing.equals(key.getParentTable2()))
                 result.add(key);
 
         return result;

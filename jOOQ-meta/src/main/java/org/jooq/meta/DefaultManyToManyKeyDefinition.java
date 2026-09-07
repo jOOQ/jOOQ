@@ -81,6 +81,20 @@ public class DefaultManyToManyKeyDefinition extends AbstractConstraintDefinition
     }
 
     @Override
+    public TableDefinition getParentTable1() {
+        return foreignKey1.getTable().equals(uniqueKey.getTable())
+             ? foreignKey1.getReferencedTable()
+             : foreignKey1.getTable();
+    }
+
+    @Override
+    public TableDefinition getParentTable2() {
+        return foreignKey2.getTable().equals(uniqueKey.getTable())
+             ? foreignKey2.getReferencedTable()
+             : foreignKey2.getTable();
+    }
+
+    @Override
     public String toString() {
         return "(" + foreignKey1.getQualifiedName() + ", " + foreignKey2.getQualifiedName() + ")";
     }

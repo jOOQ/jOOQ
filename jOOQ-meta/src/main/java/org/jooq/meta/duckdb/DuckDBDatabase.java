@@ -59,6 +59,7 @@ import static org.jooq.meta.duckdb.system.information_schema.Tables.TABLE_CONSTR
 import static org.jooq.meta.duckdb.system.main.Tables.DUCKDB_COLUMNS;
 import static org.jooq.meta.duckdb.system.main.Tables.DUCKDB_CONSTRAINTS;
 import static org.jooq.meta.duckdb.system.main.Tables.DUCKDB_DATABASES;
+import static org.jooq.meta.duckdb.system.main.Tables.DUCKDB_INDEXES;
 import static org.jooq.meta.duckdb.system.main.Tables.DUCKDB_SCHEMAS;
 import static org.jooq.meta.duckdb.system.main.Tables.DUCKDB_TABLES;
 import static org.jooq.meta.duckdb.system.main.Tables.DUCKDB_TYPES;
@@ -68,6 +69,7 @@ import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.jooq.DSLContext;
 import org.jooq.Field;
@@ -81,20 +83,25 @@ import org.jooq.Record6;
 import org.jooq.Record7;
 import org.jooq.ResultQuery;
 import org.jooq.SQLDialect;
+import org.jooq.SortOrder;
 import org.jooq.Table;
 import org.jooq.TableOptions.TableType;
 import org.jooq.conf.RenderMapping;
 import org.jooq.impl.DSL;
 import org.jooq.meta.AbstractDatabase;
+import org.jooq.meta.AbstractIndexDefinition;
 import org.jooq.meta.ArrayDefinition;
 import org.jooq.meta.CatalogDefinition;
+import org.jooq.meta.ColumnDefinition;
 import org.jooq.meta.DataTypeDefinition;
 import org.jooq.meta.DefaultCheckConstraintDefinition;
 import org.jooq.meta.DefaultDataTypeDefinition;
+import org.jooq.meta.DefaultIndexColumnDefinition;
 import org.jooq.meta.DefaultRelations;
 import org.jooq.meta.DefaultSequenceDefinition;
 import org.jooq.meta.DomainDefinition;
 import org.jooq.meta.EnumDefinition;
+import org.jooq.meta.IndexColumnDefinition;
 import org.jooq.meta.IndexDefinition;
 import org.jooq.meta.PackageDefinition;
 import org.jooq.meta.ResultQueryDatabase;
@@ -152,6 +159,78 @@ public class DuckDBDatabase extends AbstractDatabase implements ResultQueryDatab
     @Override
     protected List<IndexDefinition> getIndexes0() throws SQLException {
         List<IndexDefinition> result = new ArrayList<>();
+
+        indexLoop:
+        for (Record record : create()
+            .select(
+                DUCKDB_INDEXES.DATABASE_NAME,
+                DUCKDB_INDEXES.SCHEMA_NAME,
+                DUCKDB_INDEXES.TABLE_NAME,
+                DUCKDB_INDEXES.INDEX_NAME,
+                DUCKDB_INDEXES.IS_UNIQUE,
+                DUCKDB_INDEXES.EXPRESSIONS)
+            .from("{0}()", DUCKDB_INDEXES)
+            .where(row(DUCKDB_INDEXES.DATABASE_NAME, DUCKDB_INDEXES.SCHEMA_NAME).in(
+                getInputCatalogsAndSchemata().stream().map(e -> row(e.getKey(), e.getValue())).collect(toList())
+            ))
+            .orderBy(
+                DUCKDB_INDEXES.DATABASE_NAME,
+                DUCKDB_INDEXES.SCHEMA_NAME,
+                DUCKDB_INDEXES.TABLE_NAME,
+                DUCKDB_INDEXES.INDEX_NAME)
+        ) {
+
+            CatalogDefinition catalog = getCatalog(record.get(DUCKDB_INDEXES.DATABASE_NAME));
+            if (catalog == null)
+                continue indexLoop;
+
+            SchemaDefinition schema = catalog.getSchema(record.get(DUCKDB_INDEXES.SCHEMA_NAME));
+            if (schema == null)
+                continue indexLoop;
+
+            String indexName = record.get(DUCKDB_INDEXES.INDEX_NAME);
+            String tableName = record.get(DUCKDB_INDEXES.TABLE_NAME);
+
+            final TableDefinition table = getTable(schema, tableName);
+            if (table == null)
+                continue indexLoop;
+
+            final boolean unique = record.get(DUCKDB_INDEXES.IS_UNIQUE);
+            List<ColumnDefinition> cols = Stream.of(record
+                    .get(DUCKDB_INDEXES.EXPRESSIONS)
+                    .replaceFirst("^\\[(.*?)\\]$", "$1")
+                    .split(",")
+                )
+                .map(c -> table.getColumn(c.trim()))
+                .collect(toList());
+
+            // [#6310] [#6620] Function-based indexes are not yet supported
+            // [#16237]        Alternatively, the column could be hidden or excluded
+            if (cols.stream().anyMatch(c -> c == null))
+                continue indexLoop;
+
+            result.add(new AbstractIndexDefinition(schema, indexName, table, unique) {
+                List<IndexColumnDefinition> indexColumns = new ArrayList<>();
+
+                {
+                    int i = 1;
+                    for (ColumnDefinition column : cols) {
+                        indexColumns.add(new DefaultIndexColumnDefinition(
+                            this,
+                            column,
+                            SortOrder.ASC,
+                            i++
+                        ));
+                    }
+                }
+
+                @Override
+                protected List<IndexColumnDefinition> getIndexColumns0() {
+                    return indexColumns;
+                }
+            });
+        }
+
         return result;
     }
 

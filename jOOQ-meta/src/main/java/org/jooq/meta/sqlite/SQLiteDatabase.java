@@ -46,6 +46,7 @@ import static org.jooq.impl.DSL.lower;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.one;
+import static org.jooq.impl.DSL.quotedName;
 import static org.jooq.impl.DSL.replace;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectFrom;
@@ -118,8 +119,6 @@ import org.jooq.meta.jaxb.SchemaMappingType;
 import org.jooq.meta.sqlite.sqlite_master.SQLiteMaster;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
-
-import org.jetbrains.annotations.Nullable;
 
 /**
  * SQLite implementation of {@link AbstractDatabase}

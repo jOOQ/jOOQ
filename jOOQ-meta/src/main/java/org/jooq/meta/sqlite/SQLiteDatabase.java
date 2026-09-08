@@ -163,6 +163,7 @@ public class SQLiteDatabase extends AbstractDatabase implements ResultQueryDatab
         final Field<Boolean> fUnique = field("il.\"unique\"", boolean.class).as(quotedName("unique"));
         final Field<Integer> fSeqno = field("ii.seqno", int.class).add(one()).as("seqno");
         final Field<String> fColumnName = field("ii.name", String.class).as("column_name");
+        final Field<Boolean> fDesc = field("ii.desc", boolean.class).as(quotedName("desc"));
 
         Map<Record, Result<Record>> indexes = create()
             .select(
@@ -170,12 +171,14 @@ public class SQLiteDatabase extends AbstractDatabase implements ResultQueryDatab
                 fIndexName,
                 fUnique,
                 fSeqno,
-                fColumnName)
+                fColumnName,
+                fDesc)
             .from(
                 SQLITE_MASTER,
                 table("pragma_index_list({0})", SQLiteMaster.NAME).as("il"),
-                table("pragma_index_info(il.name)").as("ii"))
+                table("pragma_index_xinfo(il.name)").as("ii"))
             .where(SQLiteMaster.TYPE.eq(inline("table")))
+            .and(field("ii.name").isNotNull())
             .and(getIncludeSystemIndexes()
                 ? noCondition()
                 : field("il.origin", VARCHAR).notIn(inline("pk"), inline("u")))
@@ -188,7 +191,8 @@ public class SQLiteDatabase extends AbstractDatabase implements ResultQueryDatab
                 },
                 new Field[] {
                     fColumnName,
-                    fSeqno
+                    fSeqno,
+                    fDesc
                 });
 
         indexLoop:
@@ -222,7 +226,7 @@ public class SQLiteDatabase extends AbstractDatabase implements ResultQueryDatab
                         indexColumns.add(new DefaultIndexColumnDefinition(
                             this,
                             table.getColumn(column.get(fColumnName)),
-                            SortOrder.ASC,
+                            column.get(fDesc) ? SortOrder.DESC : SortOrder.ASC,
                             column.get(fSeqno, int.class)
                         ));
                     }

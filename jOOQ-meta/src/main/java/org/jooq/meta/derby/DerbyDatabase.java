@@ -130,8 +130,8 @@ public class DerbyDatabase extends AbstractDatabase implements ResultQueryDataba
 
             TableDefinition table = getTable(schema, tableName);
             if (table != null)
-                for (int index : decode(descriptor))
-                    relations.addPrimaryKey(key, table, table.getColumn(index));
+                for (ColumnIndex index : decode(descriptor))
+                    relations.addPrimaryKey(key, table, table.getColumn(index.index()));
         }
     }
 
@@ -148,8 +148,8 @@ public class DerbyDatabase extends AbstractDatabase implements ResultQueryDataba
 
             TableDefinition table = getTable(schema, tableName);
             if (table != null)
-                for (int index : decode(descriptor))
-                    relations.addUniqueKey(key, table, table.getColumn(index));
+                for (ColumnIndex index : decode(descriptor))
+                    relations.addUniqueKey(key, table, table.getColumn(index.index()));
         }
     }
 
@@ -217,7 +217,7 @@ public class DerbyDatabase extends AbstractDatabase implements ResultQueryDataba
 
             String foreignKeyName = record.get(fkName);
             String foreignKeyTableName = record.get(fkTable);
-            List<Integer> foreignKeyIndexes = decode(record.get(fkDescriptor, String.class));
+            List<ColumnIndex> foreignKeyIndexes = decode(record.get(fkDescriptor, String.class));
             String uniqueKeyName = record.get(ukName);
             String uniqueKeyTableName = record.get(ukTable);
 
@@ -229,7 +229,7 @@ public class DerbyDatabase extends AbstractDatabase implements ResultQueryDataba
                     relations.addForeignKey(
                         foreignKeyName,
                         foreignKeyTable,
-                        foreignKeyTable.getColumn(foreignKeyIndexes.get(i)),
+                        foreignKeyTable.getColumn(foreignKeyIndexes.get(i).index()),
                         uniqueKeyName,
                         uniqueKeyTable
                     );
@@ -241,8 +241,8 @@ public class DerbyDatabase extends AbstractDatabase implements ResultQueryDataba
      * toString() method is used and its results are parsed The results are
      * something like UNIQUE BTREE (index1, index2, ... indexN)
      */
-    private List<Integer> decode(String descriptor) {
-        List<Integer> result = new ArrayList<>();
+    private List<ColumnIndex> decode(String descriptor) {
+        List<ColumnIndex> result = new ArrayList<>();
 
         Pattern p = Pattern.compile(".*?\\((.*?)\\)");
         Matcher m = p.matcher(descriptor);
@@ -252,7 +252,10 @@ public class DerbyDatabase extends AbstractDatabase implements ResultQueryDataba
 
             if (split != null)
                 for (String index : split)
-                    result.add(Integer.parseInt(index.replace(" DESC", "").trim()) - 1);
+                    result.add(new ColumnIndex(
+                        Integer.parseInt(index.replace(" DESC", "").trim()) - 1,
+                        index.contains(" DESC") ? SortOrder.DESC : SortOrder.ASC
+                    ));
         }
 
         return result;
@@ -373,9 +376,9 @@ public class DerbyDatabase extends AbstractDatabase implements ResultQueryDataba
                     List<IndexColumnDefinition> indexColumns = new ArrayList<>();
 
                     {
-                        List<Integer> columnIndexes = decode(descriptor);
+                        List<ColumnIndex> columnIndexes = decode(descriptor);
                         for (int i = 0; i < columnIndexes.size(); i++) {
-                            ColumnDefinition column = lookupColumnByIndex(table, columnIndexes.get(i));
+                            ColumnDefinition column = lookupColumnByIndex(table, columnIndexes.get(i).index());
 
                             // [#16237] If column is hidden or excluded
                             if (column == null)
@@ -384,7 +387,7 @@ public class DerbyDatabase extends AbstractDatabase implements ResultQueryDataba
                             indexColumns.add(new DefaultIndexColumnDefinition(
                                 this,
                                 column,
-                                SortOrder.ASC,
+                                columnIndexes.get(i).order(),
                                 i + 1
                             ));
                         }
@@ -401,6 +404,8 @@ public class DerbyDatabase extends AbstractDatabase implements ResultQueryDataba
 
         return result;
     }
+
+    static record ColumnIndex(Integer index, SortOrder order) {}
 
     @Override
     protected List<CatalogDefinition> getCatalogs0() throws SQLException {

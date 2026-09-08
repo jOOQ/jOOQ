@@ -167,7 +167,8 @@ public class MySQLDatabase extends AbstractDatabase implements ResultQueryDataba
                 STATISTICS.INDEX_NAME,
                 STATISTICS.NON_UNIQUE,
                 STATISTICS.COLUMN_NAME,
-                STATISTICS.SEQ_IN_INDEX)
+                STATISTICS.SEQ_IN_INDEX,
+                STATISTICS.COLLATION)
             .from(STATISTICS)
             .where(STATISTICS.TABLE_SCHEMA.in(workaroundFor5213(getInputSchemata())))
             .and(getIncludeSystemIndexes()
@@ -191,7 +192,8 @@ public class MySQLDatabase extends AbstractDatabase implements ResultQueryDataba
                 },
                 new Field[] {
                     STATISTICS.COLUMN_NAME,
-                    STATISTICS.SEQ_IN_INDEX
+                    STATISTICS.SEQ_IN_INDEX,
+                    STATISTICS.COLLATION
                 });
 
         indexLoop:
@@ -225,7 +227,7 @@ public class MySQLDatabase extends AbstractDatabase implements ResultQueryDataba
                         indexColumns.add(new DefaultIndexColumnDefinition(
                             this,
                             table.getColumn(column.get(STATISTICS.COLUMN_NAME)),
-                            SortOrder.ASC,
+                            "D".equals(column.get(STATISTICS.COLLATION)) ? SortOrder.DESC : SortOrder.ASC,
                             column.get(STATISTICS.SEQ_IN_INDEX, int.class)
                         ));
                     }

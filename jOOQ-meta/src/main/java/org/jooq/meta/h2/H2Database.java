@@ -237,7 +237,8 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
                 },
                 new Field[] {
                     INDEXES.COLUMN_NAME,
-                    INDEXES.ORDINAL_POSITION
+                    INDEXES.ORDINAL_POSITION,
+                    INDEXES.ASC_OR_DESC
                 });
 
         indexLoop:
@@ -271,7 +272,7 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
                         indexColumns.add(new DefaultIndexColumnDefinition(
                             this,
                             table.getColumn(column.get(INDEXES.COLUMN_NAME)),
-                            SortOrder.ASC,
+                            "DESC".equals(column.get(INDEXES.ASC_OR_DESC)) ? SortOrder.DESC : SortOrder.ASC,
                             column.get(INDEXES.ORDINAL_POSITION, int.class)
                         ));
                     }

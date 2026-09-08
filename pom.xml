@@ -30,7 +30,7 @@
         <hsqldb.version>2.7.2</hsqldb.version>
 
         <h2.r2dbc.version>1.1.0.RELEASE</h2.r2dbc.version>
-        <postgres.r2dbc.version>1.1.1.RELEASE</postgres.r2dbc.version>
+        <postgres.r2dbc.version>1.1.2.RELEASE</postgres.r2dbc.version>
 
         <!-- JDBC drivers for jOOQ-xyz-extensions modules and vendor-specific API access -->
         <postgres.version>42.7.11</postgres.version>
@@ -68,7 +68,7 @@
         <checkerframework.version>3.44.0</checkerframework.version>
         <spring.version>6.2.19</spring.version>
         <errorprone.version>2.50.0</errorprone.version>
-        <testcontainers.version>1.21.4</testcontainers.version>
+        <testcontainers.version>2.0.5</testcontainers.version>
         <jackson.version>2.22.1</jackson.version>
         <jackson.version.databind>2.22.1</jackson.version.databind>
         <jackson.version.kotlin>2.22.1</jackson.version.kotlin>
@@ -246,12 +246,12 @@
             <dependency>
                 <groupId>io.projectreactor</groupId>
                 <artifactId>reactor-core</artifactId>
-                <version>3.7.4</version>
+                <version>3.8.7</version>
             </dependency>
             <dependency>
                 <groupId>io.projectreactor</groupId>
                 <artifactId>reactor-test</artifactId>
-                <version>3.7.4</version>
+                <version>3.8.7</version>
             </dependency>
 
             <!-- Data binding -->
@@ -476,32 +476,32 @@
             </dependency>
             <dependency>
                 <groupId>org.testcontainers</groupId>
-                <artifactId>clickhouse</artifactId>
+                <artifactId>testcontainers-clickhouse</artifactId>
                 <version>${testcontainers.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.testcontainers</groupId>
-                <artifactId>mariadb</artifactId>
+                <artifactId>testcontainers-mariadb</artifactId>
                 <version>${testcontainers.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.testcontainers</groupId>
-                <artifactId>mysql</artifactId>
+                <artifactId>testcontainers-mysql</artifactId>
                 <version>${testcontainers.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.testcontainers</groupId>
-                <artifactId>postgresql</artifactId>
+                <artifactId>testcontainers-postgresql</artifactId>
                 <version>${testcontainers.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.testcontainers</groupId>
-                <artifactId>trino</artifactId>
+                <artifactId>testcontainers-trino</artifactId>
                 <version>${testcontainers.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.testcontainers</groupId>
-                <artifactId>yugabytedb</artifactId>
+                <artifactId>testcontainers-yugabytedb</artifactId>
                 <version>${testcontainers.version}</version>
             </dependency>
             <dependency>

@@ -818,22 +818,42 @@ public interface DSLContext extends Scope {
 
     /**
      * Run a {@link TransactionalPublishable} reactively.
+     * <p>
+     * [#16401] Due to a historic implementation inconsistency, the behaviour of
+     * cancelling a transaction publisher is undefined and may either lead to
+     * rollback or delayed commits as well as inconsistent sequencing of
+     * downstream operations. It is recommended to always consume the entire
+     * publisher, e.g. by using <code>singleOrEmpty()</code> or semantically
+     * similar operations.
      *
      * @param transactional The transactional code
      * @return The transactional outcome
      * @throws ConfigurationException If this is run with a
      *             {@link ThreadLocalTransactionProvider}.
+     * @see <a href=
+     *      "https://github.com/jOOQ/jOOQ/issues/16401">https://github.com/jOOQ/jOOQ/issues/16401</a>
+     *      for details.
      */
     @NotNull
     <T> Publisher<T> transactionPublisher(TransactionalPublishable<T> transactional);
 
     /**
      * Run a {@link TransactionalPublishable} reactively.
+     * <p>
+     * [#16401] Due to a historic implementation inconsistency, the behaviour of
+     * cancelling a transaction publisher is undefined and may either lead to
+     * rollback or delayed commits as well as inconsistent sequencing of
+     * downstream operations. It is recommended to always consume the entire
+     * publisher, e.g. by using <code>singleOrEmpty()</code> or semantically
+     * similar operations.
      *
      * @param transactional The transactional code
      * @return The transactional outcome
      * @throws ConfigurationException If this is run with a
      *             {@link ThreadLocalTransactionProvider}.
+     * @see <a href=
+     *      "https://github.com/jOOQ/jOOQ/issues/16401">https://github.com/jOOQ/jOOQ/issues/16401</a>
+     *      for details.
      */
     @NotNull
     <T> Publisher<T> transactionPublisher(TransactionalPublishable<T> transactional, TransactionProperty... properties);

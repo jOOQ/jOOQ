@@ -8399,24 +8399,44 @@ public class JavaGenerator extends AbstractGenerator {
                         final Definition previousKey;
 
                         if ((previousKey = keyMethodNames.putIfAbsent(keyMethodName, foreignKey)) != null) {
-                            Logging.log(
-                                database.onMetadataProblem(), () ->
-                                """
-                                Ambiguous key name
+                            if (foreignKey.getTable().equals(foreignKey.getReferencingTable()))
+                                Logging.log(
+                                    database.onMetadataProblem(), () ->
+                                    """
+                                    Ambiguous key name
 
-                                The one-to-many key {foreignKey} generates an inbound key method name {keyMethodName}
-                                on table {table} which conflicts with the previously generated key method name for key
-                                {previousKey}. Use a custom generator strategy to disambiguate the method names for ForeignKeyDefinition,
-                                InverseForeignKeyDefinition, and/or ManyToManyKeyDefinition, or simply turn off the feature.
-                                More information here:
-                                - https://www.jooq.org/doc/latest/manual/code-generation/codegen-generatorstrategy
-                                - https://www.jooq.org/doc/latest/manual/code-generation/codegen-matcherstrategy
-                                - https://www.jooq.org/doc/latest/manual/code-generation/codegen-advanced/codegen-config-generate/codegen-implicit-join-paths
-                                """.replace("{foreignKey}", foreignKey.toString())
-                                   .replace("{keyMethodName}", keyMethodName)
-                                   .replace("{table}", table.toString())
-                                   .replace("{previousKey}", previousKey.toString())
-                            );
+                                    The self referencing key {foreignKey} generates an inbound key method name {keyMethodName}
+                                    on table {table} which conflicts with the previously generated key method name for key
+                                    {previousKey}. Use a custom generator strategy to disambiguate the method names for ForeignKeyDefinition,
+                                    InverseForeignKeyDefinition, and/or ManyToManyKeyDefinition, or simply turn off the feature.
+                                    More information here:
+                                    - https://www.jooq.org/doc/latest/manual/code-generation/codegen-generatorstrategy
+                                    - https://www.jooq.org/doc/latest/manual/code-generation/codegen-matcherstrategy
+                                    - https://www.jooq.org/doc/latest/manual/code-generation/codegen-advanced/codegen-config-generate/codegen-implicit-join-paths
+                                    """.replace("{foreignKey}", foreignKey.toString())
+                                       .replace("{keyMethodName}", keyMethodName)
+                                       .replace("{table}", table.toString())
+                                       .replace("{previousKey}", previousKey.toString())
+                                );
+                            else
+                                Logging.log(
+                                    database.onMetadataProblem(), () ->
+                                    """
+                                    Ambiguous key name
+
+                                    The one-to-many key {foreignKey} generates an inbound key method name {keyMethodName}
+                                    on table {table} which conflicts with the previously generated key method name for key
+                                    {previousKey}. Use a custom generator strategy to disambiguate the method names for ForeignKeyDefinition,
+                                    InverseForeignKeyDefinition, and/or ManyToManyKeyDefinition, or simply turn off the feature.
+                                    More information here:
+                                    - https://www.jooq.org/doc/latest/manual/code-generation/codegen-generatorstrategy
+                                    - https://www.jooq.org/doc/latest/manual/code-generation/codegen-matcherstrategy
+                                    - https://www.jooq.org/doc/latest/manual/code-generation/codegen-advanced/codegen-config-generate/codegen-implicit-join-paths
+                                    """.replace("{foreignKey}", foreignKey.toString())
+                                       .replace("{keyMethodName}", keyMethodName)
+                                       .replace("{table}", table.toString())
+                                       .replace("{previousKey}", previousKey.toString())
+                                );
 
                             continue inboundFKLoop;
                         }

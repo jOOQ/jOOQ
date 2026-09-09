@@ -242,7 +242,14 @@ final class R2DBC {
         @Override
         public final void onSubscribe(Subscription s) {
             subscription.set(s);
-            resultSubscriber.downstream.request2(s);
+
+            // [#20112] A query may be cancelled after the connection but before the result have been made available
+            if (resultSubscriber.downstream.completed.get()) {
+                complete(true, () -> {});
+                s.cancel();
+            }
+            else
+                resultSubscriber.downstream.request2(s);
         }
 
         @Override

@@ -76,10 +76,12 @@ import java.time.LocalTime;
 import java.time.Year;
 import java.util.LinkedHashSet;
 import java.util.Properties;
+import java.util.Queue;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -903,17 +905,31 @@ final class R2DBC {
                         // [#13502] Implement Savepoint logic for nested transactions
                         () -> {
                             try {
+
+                                // [#16401] Buffer transaction results, emit only on COMMIT
+                                Queue<T> q = new ConcurrentLinkedQueue<>();
+
                                 transactional.run(c instanceof NonClosingConnection
                                         ? configuration
                                         : configuration.derive(new DefaultConnectionFactory(configuration, c))).subscribe(subscriber(
                                     s1 -> s1.request(Long.MAX_VALUE),
-                                    subscriber::onNext,
+                                    q::offer,
                                     e -> rollback(subscriber, c, e),
                                     () -> c.commitTransaction().subscribe(subscriber(
                                         s2 -> s2.request(1),
                                         v -> {},
                                         t -> cancel0(true, () -> subscriber.onError(t)),
-                                        () -> cancel0(true, () -> subscriber.onComplete()),
+                                        () -> cancel0(true, () -> {
+                                            try {
+                                                while (!q.isEmpty())
+                                                    subscriber.onNext(q.poll());
+
+                                                subscriber.onComplete();
+                                            }
+                                            catch (Exception e) {
+                                                subscriber.onError(e);
+                                            }
+                                        }),
                                         configuration.subscriberProvider(),
                                         subscriber
                                     )),

@@ -818,6 +818,11 @@ public interface DSLContext extends Scope {
 
     /**
      * Run a {@link TransactionalPublishable} reactively.
+     * <p>
+     * In order to guarantee unit of work semantics, a transaction publisher
+     * buffers intermediary stream results and emits them all at once when the
+     * transaction completes and commits, instead of streaming the intermediary,
+     * uncommitted results.
      *
      * @param transactional The transactional code
      * @return The transactional outcome
@@ -829,6 +834,11 @@ public interface DSLContext extends Scope {
 
     /**
      * Run a {@link TransactionalPublishable} reactively.
+     * <p>
+     * In order to guarantee unit of work semantics, a transaction publisher
+     * buffers intermediary stream results and emits them all at once when the
+     * transaction completes and commits, instead of streaming the intermediary,
+     * uncommitted results.
      *
      * @param transactional The transactional code
      * @return The transactional outcome

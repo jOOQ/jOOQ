@@ -933,8 +933,8 @@ final class R2DBC {
 
                                                 subscriber.onComplete();
                                             }
-                                            catch (Exception e) {
-                                                subscriber.onError(e);
+                                            catch (Throwable t) {
+                                                subscriber.onError(t);
                                             }
                                         }),
                                         configuration.subscriberProvider(),
@@ -945,10 +945,10 @@ final class R2DBC {
                                 ));
                             }
 
-                            // [#15702] The TransactionalPublishable might throw exceptions
-                            //          while initialising a Publisher
-                            catch (Exception e) {
-                                rollback(subscriber, c, e);
+                            // [#15702] [#20206] The TransactionalPublishable might throw exceptions or errors
+                            //                   while initialising a Publisher
+                            catch (Throwable t) {
+                                rollback(subscriber, c, t);
                             }
                         },
                         configuration.subscriberProvider(),

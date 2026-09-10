@@ -5704,7 +5704,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     @Override
     public final Select<R> $limitWithTies(boolean newLimitWithTies) {
-        if ($limitPercent() == newLimitWithTies)
+        if ($limitWithTies() == newLimitWithTies)
             return this;
         else
             return copy(s -> s.getLimit().setWithTies(newLimitWithTies));
@@ -5717,7 +5717,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
     @Override
     public final Select<R> $offset(Field<? extends Number> newOffset) {
-        if ($limit() == newOffset)
+        if ($offset() == newOffset)
             return this;
 
         // [#5695] TODO: Support all types of Field!

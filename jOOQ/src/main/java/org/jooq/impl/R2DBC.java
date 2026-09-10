@@ -640,7 +640,7 @@ final class R2DBC {
                 for (int i = 0; i < batch.queries.length; i++)
                     b = b.add(DSL.using(batch.configuration).renderInlined(batch.queries[i]));
 
-                b.execute().subscribe(new RowCountSubscriber(downstream, null));
+                b.execute().subscribe(rowCountSubscriber(downstream, null));
             }
 
             // [#13343] Cancel the downstream in case of a rendering bug in jOOQ
@@ -694,7 +694,7 @@ final class R2DBC {
                             : fields(bindValues));
                 }
 
-                stmt.execute().subscribe(new RowCountSubscriber(downstream, s));
+                stmt.execute().subscribe(rowCountSubscriber(downstream, s));
             }
 
             // [#13343] Cancel the downstream in case of a rendering bug in jOOQ

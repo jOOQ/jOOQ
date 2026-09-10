@@ -836,7 +836,12 @@ final class R2DBC {
                     c.rollbackTransaction().subscribe(subscriber(
                         s2 -> s2.request(1),
                         v -> {},
-                        t -> cancel0(true, () -> s.onError(t)),
+                        t -> cancel0(true, () -> {
+
+                            // [#20215] If rollback fails, document original rollback cause
+                            t.addSuppressed(e);
+                            s.onError(t);
+                        }),
                         () -> cancel0(true, () -> s.onError(e))
                     ));
                 }

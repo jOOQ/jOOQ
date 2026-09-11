@@ -6793,7 +6793,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("%sconstructor(alias: %s): this(%s.name(alias))", visibility(), String.class, DSL.class);
 
             out.javadoc("Create an aliased <code>%s</code> table reference", table.getQualifiedOutputName());
-            out.println("%sconstructor(alias: %s): this(alias, null)", visibility(), Name.class, tableId);
+            out.println("%sconstructor(alias: %s): this(alias, %s)", visibility(), Name.class, tableId);
         }
 
         // [#117] With instance fields, it makes sense to create a

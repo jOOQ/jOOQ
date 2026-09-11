@@ -3112,8 +3112,8 @@ public class JavaGenerator extends AbstractGenerator {
         final String typeRecord = out.ref(typeFullRecord);
         final String name = embeddable.getQualifiedOutputName();
         final boolean override = generateInterfaces() && !generateImmutableInterfaces()
-            || !kotlin && getStrategy().getJavaMemberOverride(embeddable, Mode.RECORD)
-            ||  kotlin && getStrategy().getJavaSetterOverride(embeddable, Mode.RECORD);
+            || !kotlin && getStrategy().getJavaSetterOverride(embeddable, Mode.RECORD)
+            ||  kotlin && getStrategy().getJavaMemberOverride(embeddable, Mode.RECORD);
 
         if (!kotlin && !printDeprecationIfUnknownType(out, typeFull))
             out.javadoc("Setter for the embeddable <code>%s</code>.", name);

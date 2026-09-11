@@ -6756,12 +6756,12 @@ public class JavaGenerator extends AbstractGenerator {
                     final String componentTypeInterface = out.ref(getJavaType(array.getElementType(resolver(out, Mode.INTERFACE)), out, Mode.INTERFACE));
 
                     out.println("else {");
-                    out.println("%s r = new %s();", List.class, columnMember, ArrayList.class);
+                    out.println("%s r = new %s();", List.class, ArrayList.class);
                     out.println();
                     out.println("for (%s i : %s)", componentTypeInterface, columnMember);
                     out.println("r.add(i.into(new %s()));", componentType);
                     out.println();
-                    out.println("return r");
+                    out.println("return r;");
                     out.println("}");
                 }
 

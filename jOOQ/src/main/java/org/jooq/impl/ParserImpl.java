@@ -1269,6 +1269,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                     if (!parseSelect && peekKeyword("VALUES"))
                         return result = parseSelect();
 
+                    break;
+
                 case 'W':
                     if (peekKeyword("WITH"))
                         return result = parseWith(parseSelect);
@@ -9275,6 +9277,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
 
 
+                break;
+
             case 'R':
                 if (parseFunctionNameIf("REPLACE"))
                     return parseFunctionArgs3(DSL::replace, DSL::replace);
@@ -9593,6 +9597,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
             case 'V':
                 if (TRUE.equals(data(DATA_PARSE_ON_CONFLICT)) && (parseFunctionNameIf("VALUES") || parseFunctionNameIf("VALUE")))
                     return excluded(parseFieldParenthesised());
+
+                break;
 
             case 'W':
                 if (parseFunctionNameIf("WIDTH_BUCKET"))
@@ -11357,6 +11363,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                     parseKeywordIf("ISO_DAY_OF_WEEK"))
                     return DatePart.ISO_DAY_OF_WEEK;
 
+                break;
+
             case 'M':
                 if (parseKeywordIf("MINUTE") ||
                     parseKeywordIf("MINUTES") ||
@@ -12600,6 +12608,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
                     return operation == ComputationalOperation.MAX ? greatest(arg, fields.toArray(EMPTY_FIELD)) : least(arg, fields.toArray(EMPTY_FIELD));
                 }
+
+                break;
             }
         }
 
@@ -13798,15 +13808,11 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         for (int i = position(); i < chars.length; i++) {
             char c = character(i);
 
-            if (c == end)
-                if (character(i + 1) == '\'') {
-                    position(i + 2);
-                    parseWhitespaceIf();
-                    return sb.toString();
-                }
-                else {
-                    i++;
-                }
+            if (c == end && character(i + 1) == '\'') {
+                position(i + 2);
+                parseWhitespaceIf();
+                return sb.toString();
+            }
 
             sb.append(c);
         }

@@ -3432,7 +3432,7 @@ public class JavaGenerator extends AbstractGenerator {
         else {
             out.javadoc(NO_FURTHER_INSTANCES_ALLOWED);
             out.println("private %s() {", className);
-            out.println("super(%s.name(\"%s\"), null, %s, %s);", DSL.class, udt.getOutputName(), packageId, synthetic);
+            out.println("super(%s.name(\"%s\"), null, %s, %s);", DSL.class, escapeString(udt.getOutputName()), packageId, synthetic);
             out.println("}");
         }
 
@@ -3448,7 +3448,7 @@ public class JavaGenerator extends AbstractGenerator {
             else {
                 out.overrideInherit();
                 out.println("%s%s getSchema() {", visibilityPublic(), Schema.class);
-                out.println("return %s != null ? %s : new %s(%s.name(\"%s\"));", schemaId, schemaId, SchemaImpl.class, DSL.class, schema.getOutputName());
+                out.println("return %s != null ? %s : new %s(%s.name(\"%s\"));", schemaId, schemaId, SchemaImpl.class, DSL.class, escapeString(schema.getOutputName()));
                 out.println("}");
             }
         }

@@ -1360,6 +1360,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                     if (!parseSelect && peekKeyword("VALUES"))
                         return result = parseSelect();
 
+                    break;
+
                 case 'W':
                     if (peekKeyword("WITH"))
                         return result = parseWith(parseSelect);
@@ -10225,6 +10227,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
 
 
+                break;
+
             case 'R':
                 if (parseFunctionNameIf("REPLACE", "replaceAll"))
                     return parseFunctionArgs3(DSL::replace, DSL::replace);
@@ -10658,6 +10662,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                     return excluded(parseFieldParenthesised());
                 else if ((field = parseTypedLiteralIf("VARCHAR", VARCHAR)) != null)
                     return field;
+
+                break;
 
             case 'W':
                 if (parseFunctionNameIf("WIDTH_BUCKET", "widthBucket"))
@@ -12662,6 +12668,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                     parseKeywordIf("ISO_DAY_OF_WEEK"))
                     return DatePart.ISO_DAY_OF_WEEK;
 
+                break;
+
             case 'M':
                 if (parseKeywordIf("MINUTE") ||
                     parseKeywordIf("MINUTES") ||
@@ -14080,6 +14088,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
                     return operation == ComputationalOperation.MAX ? greatest(arg, fields.toArray(EMPTY_FIELD)) : least(arg, fields.toArray(EMPTY_FIELD));
                 }
+
+                break;
             }
 
             case PRODUCT: {
@@ -14089,6 +14099,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
                     return result;
                 }
+
+                break;
             }
 
             case ANY_VALUE: {
@@ -14105,6 +14117,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                     OptionallyOrderedAggregateFunction<?> s1 = min ? minBy(arg, f) : maxBy(arg, f);
                     return sort == null ? s1 : s1.orderBy(sort);
                 }
+
+                break;
             }
         }
 

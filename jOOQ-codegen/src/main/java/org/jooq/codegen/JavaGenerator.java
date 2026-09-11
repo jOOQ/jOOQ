@@ -2326,7 +2326,7 @@ public class JavaGenerator extends AbstractGenerator {
         final boolean override =
              generateInterfaces()
          ||  udtAttributeOverride(column)
-         || !kotlin && getStrategy().getJavaSetterOverride(column, Mode.RECORD)
+         || !kotlin && getStrategy().getJavaGetterOverride(column, Mode.RECORD)
          ||  kotlin && getStrategy().getJavaMemberOverride(column, Mode.RECORD);
 
         if (!kotlin && !printDeprecationIfUnknownType(out, typeFull))

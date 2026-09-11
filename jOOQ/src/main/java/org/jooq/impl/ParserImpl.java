@@ -16360,7 +16360,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                                 switch (chars[i]) {
                                     case '/':
                                         if (i + 1 < chars.length && chars[i + 1] == '*') {
-                                            i = i + 2;
+                                            i = i + 1;
                                             blockCommentNestLevel++;
                                         }
 

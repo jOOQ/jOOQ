@@ -14591,15 +14591,11 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         for (int i = position(); i < chars.length; i++) {
             char c = character(i);
 
-            if (c == end)
-                if (character(i + 1) == '\'') {
-                    position(i + 2);
-                    parseWhitespaceIf();
-                    return sb.toString();
-                }
-                else {
-                    i++;
-                }
+            if (c == end && character(i + 1) == '\'') {
+                position(i + 2);
+                parseWhitespaceIf();
+                return sb.toString();
+            }
 
             sb.append(c);
         }

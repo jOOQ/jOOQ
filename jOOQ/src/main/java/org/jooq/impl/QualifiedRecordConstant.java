@@ -39,6 +39,7 @@
 package org.jooq.impl;
 
 import static org.jooq.conf.ParamType.INLINED;
+import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.DefaultBinding.DefaultRecordBinding.REQUIRE_RECORD_CAST;
 import static org.jooq.impl.Keywords.K_NULL;
@@ -256,6 +257,10 @@ final class QualifiedRecordConstant<R extends QualifiedRecord<R>> extends Abstra
                 if (value != null)
                     for (Field<?> field : value.fields())
                         ctx.visit(val(value.get(field), field.getDataType()));
+
+                // [#18274] [#20214] Make sure NULL extraction via Query::getParams doesn't regress.
+                else
+                    ctx.visit(inline((Object) null));
 
                 break;
             }

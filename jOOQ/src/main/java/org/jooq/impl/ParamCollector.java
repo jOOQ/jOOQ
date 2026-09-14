@@ -79,23 +79,33 @@ final class ParamCollector extends AbstractBindContext {
 
             // [#3131] Inlined parameters should not be returned in some contexts
             if (includeInlinedParams || !param.isInline(this)) {
-                String i = String.valueOf(nextIndex());
-                String paramName = param.getParamName();
 
-                if (StringUtils.isBlank(paramName)) {
-                    resultFlat.put(i, param);
-                    resultList.add(new SimpleImmutableEntry<>(i, param));
-                    result(i).add(param);
-                }
-                else {
-                    resultFlat.put(param.getParamName(), param);
-                    resultList.add(new SimpleImmutableEntry<>(param.getParamName(), param));
-                    result(param.getParamName()).add(param);
-                }
+                // [#20214] Only Val should be emitted directly. For other types of Param, we should
+                //          recurse into their binding to ensure that if a UDT is flattened in rendered
+                //          SQL, it will also be flattened when extracting bind values.
+                if (param instanceof Val)
+                    collect(param);
+                else
+                    super.bindInternal(internal);
             }
         }
-        else {
+        else
             super.bindInternal(internal);
+    }
+
+    private final void collect(AbstractParam<?> param) {
+        String i = String.valueOf(nextIndex());
+        String paramName = param.getParamName();
+
+        if (StringUtils.isBlank(paramName)) {
+            resultFlat.put(i, param);
+            resultList.add(new SimpleImmutableEntry<>(i, param));
+            result(i).add(param);
+        }
+        else {
+            resultFlat.put(param.getParamName(), param);
+            resultList.add(new SimpleImmutableEntry<>(param.getParamName(), param));
+            result(param.getParamName()).add(param);
         }
     }
 
@@ -105,6 +115,13 @@ final class ParamCollector extends AbstractBindContext {
 
     @Override
     protected final BindContext bindValue0(Object value, Field<?> field) throws SQLException {
-        throw new UnsupportedOperationException();
+
+        // [#20214] In case dialects support binding a UDT record
+        if (field instanceof AbstractParam<?> param) {
+            collect(param);
+            return this;
+        }
+        else
+            throw new UnsupportedOperationException();
     }
 }

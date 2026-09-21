@@ -91,8 +91,11 @@ implements
 
             case MARIADB:
             case MYSQL:
-            case SQLITE:
                 ctx.visit(function(N_JSON_EXTRACT, getDataType(), content, inline("$")));
+                break;
+
+            case SQLITE:
+                ctx.visit(function(N_JSON, getDataType(), content));
                 break;
 
             default:

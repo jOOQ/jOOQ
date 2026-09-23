@@ -251,7 +251,10 @@ implements
 
     @Override
     public final Function3<? super Field<String>, ? super Field<String>, ? super Field<? extends Number>, ? extends QOM.Position> $constructor() {
-        return (a1, a2, a3) -> new Position(a1, a2, a3);
+        return (a1, a2, a3) ->
+              a3 == null
+            ? new Position(a1, a2)
+            : new Position(a1, a2, a3);
     }
 
     // -------------------------------------------------------------------------

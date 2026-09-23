@@ -462,7 +462,10 @@ implements
 
     @Override
     public final Function3<? super Field<T>, ? super Field<? extends Number>, ? super DatePart, ? extends QOM.DateAdd<T>> $constructor() {
-        return (a1, a2, a3) -> new DateAdd<>(a1, a2, a3);
+        return (a1, a2, a3) ->
+              a3 == null
+            ? new DateAdd<>(a1, a2)
+            : new DateAdd<>(a1, a2, a3);
     }
 
     // -------------------------------------------------------------------------

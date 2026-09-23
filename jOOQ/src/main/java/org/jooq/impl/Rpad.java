@@ -206,7 +206,10 @@ implements
 
     @Override
     public final Function3<? super Field<String>, ? super Field<? extends Number>, ? super Field<String>, ? extends QOM.Rpad> $constructor() {
-        return (a1, a2, a3) -> new Rpad(a1, a2, a3);
+        return (a1, a2, a3) ->
+              a3 == null
+            ? new Rpad(a1, a2)
+            : new Rpad(a1, a2, a3);
     }
 
     // -------------------------------------------------------------------------

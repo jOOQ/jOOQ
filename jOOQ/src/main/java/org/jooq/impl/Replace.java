@@ -229,7 +229,10 @@ implements
 
     @Override
     public final Function3<? super Field<String>, ? super Field<String>, ? super Field<String>, ? extends QOM.Replace> $constructor() {
-        return (a1, a2, a3) -> new Replace(a1, a2, a3);
+        return (a1, a2, a3) ->
+              a3 == null
+            ? new Replace(a1, a2)
+            : new Replace(a1, a2, a3);
     }
 
     // -------------------------------------------------------------------------

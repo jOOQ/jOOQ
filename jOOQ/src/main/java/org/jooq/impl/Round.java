@@ -226,7 +226,10 @@ implements
 
     @Override
     public final Function2<? super Field<T>, ? super Field<Integer>, ? extends QOM.Round<T>> $constructor() {
-        return (a1, a2) -> new Round<>(a1, a2);
+        return (a1, a2) ->
+              a2 == null
+            ? new Round<>(a1)
+            : new Round<>(a1, a2);
     }
 
     // -------------------------------------------------------------------------

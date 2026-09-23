@@ -284,7 +284,10 @@ implements
 
     @Override
     public final Function4<? super Field<String>, ? super Field<String>, ? super Field<? extends Number>, ? super Field<? extends Number>, ? extends QOM.Overlay> $constructor() {
-        return (a1, a2, a3, a4) -> new Overlay(a1, a2, a3, a4);
+        return (a1, a2, a3, a4) ->
+              a4 == null
+            ? new Overlay(a1, a2, a3)
+            : new Overlay(a1, a2, a3, a4);
     }
 
     // -------------------------------------------------------------------------

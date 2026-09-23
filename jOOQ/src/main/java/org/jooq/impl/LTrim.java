@@ -191,7 +191,10 @@ implements
 
     @Override
     public final Function2<? super Field<String>, ? super Field<String>, ? extends QOM.Ltrim> $constructor() {
-        return (a1, a2) -> new Ltrim(a1, a2);
+        return (a1, a2) ->
+              a2 == null
+            ? new Ltrim(a1)
+            : new Ltrim(a1, a2);
     }
 
     // -------------------------------------------------------------------------

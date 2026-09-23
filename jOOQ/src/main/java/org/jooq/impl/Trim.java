@@ -195,7 +195,10 @@ implements
 
     @Override
     public final Function2<? super Field<String>, ? super Field<String>, ? extends QOM.Trim> $constructor() {
-        return (a1, a2) -> new Trim(a1, a2);
+        return (a1, a2) ->
+              a2 == null
+            ? new Trim(a1)
+            : new Trim(a1, a2);
     }
 
     // -------------------------------------------------------------------------

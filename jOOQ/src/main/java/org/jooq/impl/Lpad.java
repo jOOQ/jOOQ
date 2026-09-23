@@ -210,7 +210,10 @@ implements
 
     @Override
     public final Function3<? super Field<String>, ? super Field<? extends Number>, ? super Field<String>, ? extends QOM.Lpad> $constructor() {
-        return (a1, a2, a3) -> new Lpad(a1, a2, a3);
+        return (a1, a2, a3) ->
+              a3 == null
+            ? new Lpad(a1, a2)
+            : new Lpad(a1, a2, a3);
     }
 
     // -------------------------------------------------------------------------

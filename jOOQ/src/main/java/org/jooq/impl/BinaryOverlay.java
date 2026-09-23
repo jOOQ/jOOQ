@@ -198,7 +198,10 @@ implements
 
     @Override
     public final Function4<? super Field<byte[]>, ? super Field<byte[]>, ? super Field<? extends Number>, ? super Field<? extends Number>, ? extends QOM.BinaryOverlay> $constructor() {
-        return (a1, a2, a3, a4) -> new BinaryOverlay(a1, a2, a3, a4);
+        return (a1, a2, a3, a4) ->
+              a4 == null
+            ? new BinaryOverlay(a1, a2, a3)
+            : new BinaryOverlay(a1, a2, a3, a4);
     }
 
     // -------------------------------------------------------------------------

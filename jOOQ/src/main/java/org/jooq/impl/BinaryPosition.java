@@ -179,7 +179,10 @@ implements
 
     @Override
     public final Function3<? super Field<byte[]>, ? super Field<byte[]>, ? super Field<? extends Number>, ? extends QOM.BinaryPosition> $constructor() {
-        return (a1, a2, a3) -> new BinaryPosition(a1, a2, a3);
+        return (a1, a2, a3) ->
+              a3 == null
+            ? new BinaryPosition(a1, a2)
+            : new BinaryPosition(a1, a2, a3);
     }
 
     // -------------------------------------------------------------------------

@@ -300,7 +300,10 @@ implements
 
     @Override
     public final Function3<? super Field<T>, ? super Field<? extends Number>, ? super Field<T>, ? extends QOM.BitSet<T>> $constructor() {
-        return (a1, a2, a3) -> new BitSet<>(a1, a2, a3);
+        return (a1, a2, a3) ->
+              a3 == null
+            ? new BitSet<>(a1, a2)
+            : new BitSet<>(a1, a2, a3);
     }
 
     // -------------------------------------------------------------------------

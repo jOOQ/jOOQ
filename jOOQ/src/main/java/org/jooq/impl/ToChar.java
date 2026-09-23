@@ -181,7 +181,10 @@ implements
 
     @Override
     public final Function2<? super Field<?>, ? super Field<String>, ? extends QOM.ToChar> $constructor() {
-        return (a1, a2) -> new ToChar(a1, a2);
+        return (a1, a2) ->
+              a2 == null
+            ? new ToChar(a1)
+            : new ToChar(a1, a2);
     }
 
     // -------------------------------------------------------------------------

@@ -189,7 +189,10 @@ implements
 
     @Override
     public final Function2<? super Field<String>, ? super Field<String>, ? extends QOM.Rtrim> $constructor() {
-        return (a1, a2) -> new Rtrim(a1, a2);
+        return (a1, a2) ->
+              a2 == null
+            ? new Rtrim(a1)
+            : new Rtrim(a1, a2);
     }
 
     // -------------------------------------------------------------------------

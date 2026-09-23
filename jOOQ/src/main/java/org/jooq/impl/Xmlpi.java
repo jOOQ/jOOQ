@@ -168,7 +168,10 @@ implements
 
     @Override
     public final Function2<? super Name, ? super Field<?>, ? extends QOM.XMLPi> $constructor() {
-        return (a1, a2) -> new XMLPi(a1, a2);
+        return (a1, a2) ->
+              a2 == null
+            ? new XMLPi(a1)
+            : new XMLPi(a1, a2);
     }
 
     // -------------------------------------------------------------------------

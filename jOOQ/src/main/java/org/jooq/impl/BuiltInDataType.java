@@ -164,6 +164,9 @@ public class BuiltInDataType<T> extends DefaultDataType<T> {
 
     @Override
     public final DataType<T> nullability(Nullability n) {
+        if (n == nullability())
+            return this;
+
         if (n == NULL) {
             DataType<T> result = cachedNull;
 

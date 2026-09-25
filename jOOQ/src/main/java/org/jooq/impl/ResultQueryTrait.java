@@ -1262,8 +1262,9 @@ extends
 
     @Override
     @Nullable
-    default Object @NotNull [] @NotNull [] fetchArrays() {
-        return collect(intoArray(new Object[0][], R::intoArray));
+    // ecj 2026-09 produces an internal error with these annotations
+    default Object /* @NotNull */ [] /* @NotNull */ [] fetchArrays() {
+        return collect(intoArray(new Object[0][], r -> r.intoArray()));
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })

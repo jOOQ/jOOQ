@@ -40,9 +40,16 @@ package org.jooq.impl;
 import static org.jooq.Nullability.NOT_NULL;
 import static org.jooq.Nullability.NULL;
 
+import org.jooq.CharacterSet;
+import org.jooq.Collation;
 import org.jooq.DataType;
+import org.jooq.Field;
+import org.jooq.Generator;
 import org.jooq.Nullability;
 import org.jooq.SQLDialect;
+import org.jooq.impl.QOM.GenerationLocation;
+import org.jooq.impl.QOM.GenerationMode;
+import org.jooq.impl.QOM.GenerationOption;
 import org.jooq.util.postgres.PostgresDataType;
 
 import org.jetbrains.annotations.ApiStatus.Internal;
@@ -85,22 +92,106 @@ public class BuiltInDataType<T> extends DefaultDataType<T> {
         super(dialect, sqlDataType, typeName, castTypeName, ddlTypeName);
     }
 
-    // [#11083] Nullability caches of built-in data types
-
-    final DataType<T> cachedNull;
-    final DataType<T> cachedNotNull;
-
-    {
-        cachedNull = super.nullability(NULL);
-        cachedNotNull = super.nullability(NOT_NULL);
+    private BuiltInDataType(
+        BuiltInDataType<T> t,
+        Integer precision,
+        Integer scale,
+        Integer length,
+        Nullability nullability,
+        boolean hidden,
+        boolean redacted,
+        boolean readonly,
+        Generator<?, ?, T> generatedAlwaysAs,
+        GenerationOption generationOption,
+        GenerationLocation generationLocation,
+        Collation collation,
+        CharacterSet characterSet,
+        GenerationMode identity,
+        Field<T> defaultValue
+    ) {
+        super(
+            t,
+            precision,
+            scale,
+            length,
+            nullability,
+            hidden,
+            redacted,
+            readonly,
+            generatedAlwaysAs,
+            generationOption,
+            generationLocation,
+            collation,
+            characterSet,
+            identity,
+            defaultValue
+        );
     }
+
+    /**
+     * [#17832] Types derived from built-in data types should still be
+     * built-in data types.
+     */
+    @Override
+    final BuiltInDataType<T> construct(
+        Integer newPrecision,
+        Integer newScale,
+        Integer newLength,
+        Nullability newNullability,
+        boolean newHidden,
+        boolean newRedacted,
+        boolean newReadonly,
+        Generator<?, ?, T> newGeneratedAlwaysAs,
+        GenerationOption newGenerationOption,
+        GenerationLocation newGenerationLocation,
+        Collation newCollation,
+        CharacterSet newCharacterSet,
+        GenerationMode newIdentity,
+        Field<T> newDefaultValue
+    ) {
+        return new BuiltInDataType<>(
+            this,
+            newPrecision,
+            newScale,
+            newLength,
+            newNullability,
+            newHidden,
+            newRedacted,
+            newReadonly,
+            newGeneratedAlwaysAs,
+            newGenerationOption,
+            newGenerationLocation,
+            newCollation,
+            newCharacterSet,
+            newIdentity,
+            newDefaultValue
+        );
+    }
+
+    // [#11083] Nullability caches of built-in data types
+    // [#17832] Lazy initialisation to prevent infinite recursion
+
+    private transient DataType<T> cachedNull;
+    private transient DataType<T> cachedNotNull;
 
     @Override
     public final DataType<T> nullability(Nullability n) {
-        if (n == NULL)
-            return cachedNull;
-        else if (n == NOT_NULL)
-            return cachedNotNull;
+        if (n == NULL) {
+            DataType<T> result = cachedNull;
+
+            if (result == null)
+                cachedNull = result = super.nullability(n);
+
+            return result;
+        }
+        else if (n == NOT_NULL) {
+            DataType<T> result = cachedNotNull;
+
+            if (result == null)
+                cachedNotNull = result = super.nullability(n);
+
+            return result;
+        }
         else
             return super.nullability(n);
     }

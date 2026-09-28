@@ -74,7 +74,7 @@
         <jackson.version.databind>2.22.1</jackson.version.databind>
         <jackson.version.kotlin>2.22.1</jackson.version.kotlin>
         <jackson3.version>3.2.1</jackson3.version>
-        <jackson3.version.databind>3.2.1</jackson3.version.databind>
+        <jackson3.version.databind>3.2.2</jackson3.version.databind>
         <jetbrains.annotations.version>26.0.2</jetbrains.annotations.version>
         
         <!-- Build plugin versions -->

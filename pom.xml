@@ -70,8 +70,8 @@
         <spring.version>6.2.19</spring.version>
         <errorprone.version>2.49.0</errorprone.version>
         <testcontainers.version>2.0.5</testcontainers.version>
-        <jackson.version>2.22.1</jackson.version>
-        <jackson.version.databind>2.22.1</jackson.version.databind>
+        <jackson.version>2.22.2</jackson.version>
+        <jackson.version.databind>2.22.2</jackson.version.databind>
         <jetbrains.annotations.version>24.1.0</jetbrains.annotations.version>
         
         <!-- Build plugin versions -->

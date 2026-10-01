@@ -70,9 +70,9 @@
         <spring.version>6.2.19</spring.version>
         <errorprone.version>2.50.0</errorprone.version>
         <testcontainers.version>2.0.5</testcontainers.version>
-        <jackson.version>2.22.2</jackson.version>
-        <jackson.version.databind>2.22.2</jackson.version.databind>
-        <jackson.version.kotlin>2.22.2</jackson.version.kotlin>
+        <jackson.version>2.22.3</jackson.version>
+        <jackson.version.databind>2.22.3</jackson.version.databind>
+        <jackson.version.kotlin>2.22.3</jackson.version.kotlin>
         <jackson3.version>3.2.1</jackson3.version>
         <jackson3.version.databind>3.2.1</jackson3.version.databind>
         <jetbrains.annotations.version>26.0.2</jetbrains.annotations.version>

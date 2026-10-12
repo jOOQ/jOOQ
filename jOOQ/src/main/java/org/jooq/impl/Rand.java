@@ -100,7 +100,6 @@ implements
             case DERBY:
             case DUCKDB:
             case POSTGRES:
-            case SQLITE:
             case YUGABYTEDB:
                 return true;
 
@@ -109,6 +108,7 @@ implements
 
 
 
+            case SQLITE:
                 return false;
 
             default:

@@ -4863,7 +4863,7 @@ public final class QOM {
     /**
      * The <code>RAND</code> function.
      * <p>
-     * Get a random numeric value.
+     * Get a random numeric value between 0 and 1.
      */
     public /*sealed*/ interface Rand
         extends

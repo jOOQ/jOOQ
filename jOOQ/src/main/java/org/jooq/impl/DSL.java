@@ -20291,7 +20291,7 @@ public class DSL {
     /**
      * The <code>RAND</code> function.
      * <p>
-     * Get a random numeric value.
+     * Get a random numeric value between 0 and 1.
      */
     @NotNull
     @Support

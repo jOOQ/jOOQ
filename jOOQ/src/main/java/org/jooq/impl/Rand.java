@@ -109,9 +109,7 @@ implements
 
 
 
-
-
-
+                return false;
 
             default:
                 return true;
@@ -144,6 +142,12 @@ implements
 
 
 
+            case SQLITE:
+                ctx.visit(DSL.abs(function(N_RANDOM, DECIMAL)).div(inline(new BigDecimal("9223372036854775808.0"))));
+                break;
+
+
+
 
 
 
@@ -162,7 +166,6 @@ implements
 
             case DERBY:
             case POSTGRES:
-            case SQLITE:
             case YUGABYTEDB:
                 ctx.visit(function(N_RANDOM, getDataType()));
                 break;

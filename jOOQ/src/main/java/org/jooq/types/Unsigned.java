@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2017, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) Data Geekery GmbH (http://www.datageekery.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -178,7 +178,7 @@ public final class Unsigned {
      * @see ULong#valueOf(BigInteger)
      */
     public static ULong ulong(BigInteger value) throws NumberFormatException {
-        return ULong.valueOf(value);
+        return value == null ? null : ULong.valueOf(value);
     }
 
     /**

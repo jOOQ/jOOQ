@@ -25,16 +25,6 @@ import javax.annotation.processing.Processor;
 /**
  * @author Lukas Eder
  */
-import java.util.Arrays;
-
-import java.util.Collections;
-import java.util.List;
-
-import javax.annotation.processing.Processor;
-
-/**
- * @author Lukas Eder
- */
 public final class CompileOptions {
 
     final List<? extends Processor> processors;

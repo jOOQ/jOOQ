@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2017, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) Data Geekery GmbH (http://www.datageekery.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
  */
 package org.jooq.types;
 
+import java.io.ObjectStreamException;
 import java.math.BigInteger;
 
 /**
@@ -115,6 +116,16 @@ public final class ULong extends UNumber implements Comparable<ULong> {
     }
 
     /**
+     * Replace version read through deserialization with cached version.
+     *
+     * @return cached instance of this object's value
+     * @throws ObjectStreamException
+     */
+    private Object readResolve() throws ObjectStreamException {
+        return valueOf(value);
+    }
+
+    /**
      * Create an <code>unsigned long</code> by masking it with
      * <code>0xFFFFFFFFFFFFFFFF</code> i.e. <code>(long) -1</code> becomes
      * <code>(uint) 18446744073709551615</code>
@@ -138,9 +149,14 @@ public final class ULong extends UNumber implements Comparable<ULong> {
         if (length == 0)
             throw new NumberFormatException("Empty input string");
 
-        if (value.charAt(0) == '-')
-            throw new NumberFormatException(
-                String.format("Illegal leading minus sign on unsigned string %s", value));
+        if (value.charAt(0) == '-') {
+            if (Long.parseLong(value, 10) != 0)
+                throw new NumberFormatException(
+                        String.format("Illegal leading minus sign on unsigned string %s", value));
+
+            this.value = 0;
+            return;
+        }
 
         if (length <= 18) {
             this.value = Long.parseLong(value, 10);
@@ -152,12 +168,12 @@ public final class ULong extends UNumber implements Comparable<ULong> {
         if (second < 0)
             throw new NumberFormatException("Bad digit at end of " + value);
 
-        long result = first * 10 + second;
-        if (compare(result, first) < 0)
+        // Check against (2^64 - 1) / 10 and its remainder before multiplying.
+        if (first > 1844674407370955161L || (first == 1844674407370955161L && second > 5))
             throw new NumberFormatException(
                 String.format("String value %s exceeds range of unsigned long", value));
 
-        this.value = result;
+        this.value = first * 10 + second;
     }
 
     @Override
@@ -188,6 +204,9 @@ public final class ULong extends UNumber implements Comparable<ULong> {
 
     @Override
     public int hashCode() {
+
+        if (true) return Long.hashCode(value);
+
         return Long.valueOf(value).hashCode();
     }
 
@@ -228,7 +247,9 @@ public final class ULong extends UNumber implements Comparable<ULong> {
     }
 
     public ULong add(long val) throws NumberFormatException {
-        if (val < 0)
+        if (val == Long.MIN_VALUE)
+            return subtract(valueOf(val));
+        else if (val < 0)
             return subtract(Math.abs(val));
 
         final long result = value + val;
@@ -242,11 +263,7 @@ public final class ULong extends UNumber implements Comparable<ULong> {
         if (this.compareTo(val) < 0)
             throw new NumberFormatException();
 
-        final long result = value - val.value;
-        if (value < 0 && result >= 0)
-            throw new NumberFormatException();
-
-        return valueOf(result);
+        return valueOf(value - val.value);
     }
 
     public ULong subtract(final int val) {
@@ -254,16 +271,14 @@ public final class ULong extends UNumber implements Comparable<ULong> {
     }
 
     public ULong subtract(final long val) {
-        if (val < 0)
+        if (val == Long.MIN_VALUE)
+            return add(valueOf(val));
+        else if (val < 0)
             return add(-val);
 
         if (compare(value, val) < 0)
             throw new NumberFormatException();
 
-        final long result = value - val;
-        if (value < 0 && result >= 0)
-            throw new NumberFormatException();
-
-        return valueOf(result);
+        return valueOf(value - val);
     }
 }

@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 
@@ -108,13 +109,13 @@ public class Reflect {
     }
 
     /**
-     * Annotation-process a class at runtime.
-     * <p>
-     * This works like {@link #compile(String, String)}, but adds the
-     * <code>-proc:only</code> {@link CompileOptions} and thus does not produce any
-     * compilation output.
-     * <p>
-     * For example:
+	 * Annotation-process a class at runtime.
+	 * <p>
+	 * This works like {@link #compile(String, String)}, but adds the
+	 * <code>-proc:only</code> {@link CompileOptions} and thus does not produce any
+	 * compilation output.
+	 * <p>
+	 * For example:
      * <pre><code>
      * Supplier&lt;String&gt; supplier = Reflect.compile("org.joor.Test", """
      *   package org.joor;
@@ -126,21 +127,21 @@ public class Reflect {
      *   }
      *   """).create().get();
      * </code></pre>
-     *
-     * @param name    The qualified class name
-     * @param content The source code for the class
-     * @throws ReflectException if anything went wrong compiling the class.
-     */
+	 *
+	 * @param name    The qualified class name
+	 * @param content The source code for the class
+	 * @throws ReflectException if anything went wrong compiling the class.
+	 */
     public static void process(String name, String content) throws ReflectException {
         process(name, content, new CompileOptions());
     }
 
     /**
-     * Annotation-process a class at runtime.
-     * <p>
-     * This works like {@link #compile(String, String)}, but adds the
-     * <code>-proc:only</code> {@link CompileOptions} and thus does not produce any
-     * compilation output.
+	 * Annotation-process a class at runtime.
+	 * <p>
+	 * This works like {@link #compile(String, String)}, but adds the
+	 * <code>-proc:only</code> {@link CompileOptions} and thus does not produce any
+	 * compilation output.
      * <p>
      * For example:
      * <pre><code>
@@ -162,11 +163,11 @@ public class Reflect {
      * @throws ReflectException if anything went wrong compiling the class.
      */
     public static void process(String name, String content, CompileOptions options) throws ReflectException {
-        if (!options.hasOption("-proc:only")) {
-            List<String> o = new ArrayList<>(options.options);
-            o.add("-proc:only");
-            options = options.options(o);
-        }
+    	if (!options.hasOption("-proc:only")) {
+    		List<String> o = new ArrayList<>(options.options);
+    		o.add("-proc:only");
+    		options = options.options(o);
+    	}
 
         Compile.compile(name, content, options, false);
     }
@@ -893,10 +894,10 @@ public class Reflect {
             return "";
         }
         else if (length == 1) {
-            return string.toLowerCase();
+            return string.toLowerCase(Locale.ROOT);
         }
         else {
-            return string.substring(0, 1).toLowerCase() + string.substring(1);
+            return string.substring(0, 1).toLowerCase(Locale.ROOT) + string.substring(1);
         }
     }
 
@@ -929,13 +930,14 @@ public class Reflect {
 
     @Override
     public int hashCode() {
-        return object.hashCode();
+        return object == null ? 0 : object.hashCode();
     }
 
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Reflect) {
-            return object.equals(((Reflect) obj).get());
+            Object other = ((Reflect) obj).get();
+            return object == null ? other == null : object.equals(other);
         }
 
         return false;
@@ -1079,4 +1081,3 @@ public class Reflect {
 
     private static class NULL {}
 }
-

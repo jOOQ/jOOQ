@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2017, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) Data Geekery GmbH (http://www.datageekery.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
  */
 package org.jooq.types;
 
+import java.io.ObjectStreamException;
 import java.math.BigInteger;
 
 /**
@@ -124,6 +125,16 @@ public final class UShort extends UNumber implements Comparable<UShort> {
             throw new NumberFormatException("Value is out of range : " + value);
     }
 
+    /**
+     * Replace version read through deserialization with cached version.
+     *
+     * @return cached instance of this object's value
+     * @throws ObjectStreamException
+     */
+    private Object readResolve() throws ObjectStreamException {
+        return valueOf(value);
+    }
+
     @Override
     public int intValue() {
         return value;
@@ -151,6 +162,9 @@ public final class UShort extends UNumber implements Comparable<UShort> {
 
     @Override
     public int hashCode() {
+
+        if (true) return Integer.hashCode(value);
+
         return Integer.valueOf(value).hashCode();
     }
 
@@ -164,7 +178,7 @@ public final class UShort extends UNumber implements Comparable<UShort> {
 
     @Override
     public String toString() {
-        return Integer.valueOf(value).toString();
+        return Integer.toString(value);
     }
 
     @Override

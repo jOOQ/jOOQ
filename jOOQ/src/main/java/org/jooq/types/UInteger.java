@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2017, Data Geekery GmbH (http://www.datageekery.com)
+ * Copyright (c) Data Geekery GmbH (http://www.datageekery.com)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -303,6 +303,9 @@ public final class UInteger extends UNumber implements Comparable<UInteger> {
 
     @Override
     public int hashCode() {
+
+        if (true) return Long.hashCode(value);
+
         return Long.valueOf(value).hashCode();
     }
 
@@ -318,7 +321,7 @@ public final class UInteger extends UNumber implements Comparable<UInteger> {
 
     @Override
     public String toString() {
-        return Long.valueOf(value).toString();
+        return Long.toString(value);
     }
 
     @Override

@@ -239,7 +239,10 @@ class Compile {
             FileObject sibling
         ) {
             JavaFileObject result = new JavaFileObject(className, kind);
-            fileObjectMap.put(className, result);
+
+            if (kind == JavaFileObject.Kind.CLASS)
+                fileObjectMap.put(className, result);
+
             return result;
         }
 

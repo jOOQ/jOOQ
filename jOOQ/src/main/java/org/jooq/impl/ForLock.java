@@ -122,6 +122,21 @@ final class ForLock extends AbstractQueryPart implements UNotYetImplemented {
     ForLockWaitMode                      forLockWaitMode;
     int                                  forLockWait;
 
+    final ForLock copy() {
+        ForLock result = new ForLock();
+
+        if (forLockOf != null)
+            result.forLockOf = new QueryPartList<>(forLockOf);
+        if (forLockOfTables != null)
+            result.forLockOfTables = new TableList(forLockOfTables);
+
+        result.forLockMode = forLockMode;
+        result.forLockWaitMode = forLockWaitMode;
+        result.forLockWait = forLockWait;
+
+        return result;
+    }
+
     @Override
     public final void accept(Context<?> ctx) {
 

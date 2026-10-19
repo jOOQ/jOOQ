@@ -616,7 +616,7 @@ implements
 
             result.seek.addAll(seek);
             result.limit.from(limit);
-            result.forLock = forLock;
+            result.forLock = forLock == null ? null : forLock.copy();
 
 
 

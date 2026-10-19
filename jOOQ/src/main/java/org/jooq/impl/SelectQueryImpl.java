@@ -631,7 +631,7 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
 
             result.seek.addAll(seek);
             result.limit.from(limit);
-            result.forLock = forLock;
+            result.forLock = forLock == null ? null : forLock.copy();
 
 
 

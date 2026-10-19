@@ -4701,9 +4701,12 @@ implements
 
         // [#2786] Redundant conditions don't make sense when enabling NULL ordering on the
         //         redundant condition's column.
+        // [#20302] Nor do they make sense when the redundant condition's column is skipped
+        //          using a NoField marker (see also [#14395])
         if (o.size() > 1
             && TRUE.equals(ctx.settings().isRenderRedundantConditionForSeekClause())
             && o.get(0).$nullOrdering() == null
+            && !(s.get(0) instanceof NoField)
         ) {
             if (o.get(0).getOrder() != DESC ^ seekBefore)
                 c = seekCondition(o.get(0), s.get(0), Field::ge).and(c);

@@ -91,6 +91,7 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -986,7 +987,7 @@ final class Convert {
                     }
                 }
                 else if (wrapperTo == Boolean.class) {
-                    String s = from.toString().toLowerCase().trim();
+                    String s = from.toString().toLowerCase(Locale.ROOT).trim();
 
                     if (TRUE_VALUES.contains(s))
                         return (U) Boolean.TRUE;

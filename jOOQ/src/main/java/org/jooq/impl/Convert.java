@@ -251,7 +251,7 @@ final class Convert {
                     jsonMapper = kotlin.getMethod("jacksonObjectMapper").invoke(kotlin);
                     log.debug("Jackson kotlin module is available");
                 }
-                catch (Exception e) {
+                catch (Throwable e) {
                     jsonMapper = klass.getDeclaredConstructor().newInstance();
                     log.debug("Jackson kotlin module is not available");
                 }
@@ -261,7 +261,7 @@ final class Convert {
                     Object jtm = jtmc.getDeclaredConstructor().newInstance();
                     Reflect.on(jsonMapper).call("registerModule", jtm);
                 }
-                catch (Exception e) {
+                catch (Throwable e) {
                     log.debug("JavaTimeModule is not available");
                 }
 
@@ -269,7 +269,7 @@ final class Convert {
                 jsonWriteMethod = klass.getMethod("writeValueAsString", Object.class);
                 log.debug("Jackson 2.x is available");
             }
-            catch (Exception e1) {
+            catch (Throwable e1) {
                 log.debug("Jackson 2.x not available", e1.getMessage());
 
                 try {
@@ -280,7 +280,7 @@ final class Convert {
                         jsonMapper = kotlin.getMethod("jacksonObjectMapper").invoke(kotlin);
                         log.debug("Jackson kotlin module is available");
                     }
-                    catch (Exception e) {
+                    catch (Throwable e) {
                         jsonMapper = klass.getDeclaredConstructor().newInstance();
                         log.debug("Jackson kotlin module is not available");
                     }
@@ -289,7 +289,7 @@ final class Convert {
                     jsonWriteMethod = klass.getMethod("writeValueAsString", Object.class);
                     log.debug("Jackson 3.x is available");
                 }
-                catch (Exception e2) {
+                catch (Throwable e2) {
                     log.debug("Jackson 3.x not available", e1.getMessage());
 
                     try {
@@ -300,7 +300,7 @@ final class Convert {
                         jsonWriteMethod = klass.getMethod("toJson", Object.class);
                         log.debug("Gson is available");
                     }
-                    catch (Exception e3) {
+                    catch (Throwable e3) {
                         log.debug("Gson not available", e2.getMessage());
                     }
                 }

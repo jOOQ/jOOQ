@@ -3597,7 +3597,7 @@ implements
                                 int mapped = s.mapping[x];
                                 Field<?> out = s.projectionSizes[x] == 1
                                     ? val.copy(mapped + 1)
-                                    : DSL.field("{0}", DSL.list(range(mapped, mapped + s.projectionSizes[mapped])
+                                    : DSL.field("{0}", DSL.list(range(mapped, mapped + s.projectionSizes[x])
                                         .mapToObj(i -> val.copy(i + 1))
                                         .toArray(SelectField<?>[]::new)
                                     ));

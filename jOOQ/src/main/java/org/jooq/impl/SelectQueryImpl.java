@@ -465,7 +465,10 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     private final QueryPartList<Field<?>>                unionSeek;
     private boolean                                      unionSeekBefore;      // [#3579] TODO
     private final Limit                                  unionLimit;
-    private final Map<QueryPart, QueryPart>              localQueryPartMapping;
+
+
+
+
 
     SelectQueryImpl(Configuration configuration, WithImpl with) {
         this(configuration, with, null);
@@ -507,7 +510,9 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
         if (from != null)
             this.from.add(from.asTable());
 
-        this.localQueryPartMapping = new LinkedHashMap<>();
+
+
+
     }
 
     private enum CopyClause {
@@ -2544,8 +2549,12 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
             context.scopeRegister(with.ctes);
         }
 
-        for (Entry<QueryPart, QueryPart> entry : localQueryPartMapping.entrySet())
-            context.scopeRegister(entry.getKey(), true, entry.getValue());
+
+
+
+
+
+
 
         // SELECT clause
         // -------------

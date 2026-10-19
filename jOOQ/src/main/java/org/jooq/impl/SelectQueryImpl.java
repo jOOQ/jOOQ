@@ -5640,8 +5640,8 @@ final class SelectQueryImpl<R extends Record> extends AbstractResultQuery<R> imp
     @Override
     public final Select<R> $window(Collection<? extends WindowDefinition> newWindow) {
         return copy(s -> {
-            s.window.clear();
-            s.window.addAll(newWindow);
+            s.window = null;
+            s.addWindow0(newWindow);
         });
     }
 

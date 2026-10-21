@@ -69,18 +69,21 @@ final class Lazy<T> implements Serializable {
         return new Lazy<>(supplier);
     }
 
-    private transient Supplier<? extends T> supplier;
-    private volatile T                      value;
+    private transient volatile Supplier<? extends T> supplier;
+    private volatile T                               value;
 
     private Lazy(Supplier<? extends T> supplier) {
         this.supplier = supplier;
     }
 
     T get() {
-        if (value == null) {
+        if (supplier != null) {
             synchronized (this) {
-                if (value == null) {
-                    value = supplier.get();
+                Supplier<? extends T> s = supplier;
+
+                if (s != null) {
+                    value = s.get();
+                    supplier = null;
                 }
             }
         }

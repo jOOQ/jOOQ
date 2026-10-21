@@ -53,14 +53,18 @@ import org.jooq.RenderContext;
 class DefaultBindingSQLContext<U> extends AbstractScope implements BindingSQLContext<U> {
 
     private final RenderContext render;
-    private final U value;
-    private final String variable;
+    private final Lazy<U>       value;
+    private final String        variable;
 
     DefaultBindingSQLContext(Configuration configuration, Map<Object, Object> data, RenderContext render, U value) {
         this(configuration, data, render, value, "?");
     }
 
     DefaultBindingSQLContext(Configuration configuration, Map<Object, Object> data, RenderContext render, U value, String variable) {
+        this(configuration, data, render, Lazy.of(() -> value), variable);
+    }
+
+    private DefaultBindingSQLContext(Configuration configuration, Map<Object, Object> data, RenderContext render, Lazy<U> value, String variable) {
         super(configuration, data);
 
         this.render = render;
@@ -80,7 +84,7 @@ class DefaultBindingSQLContext<U> extends AbstractScope implements BindingSQLCon
 
     @Override
     public final U value() {
-        return value;
+        return value.get();
     }
 
     @Override
@@ -90,7 +94,12 @@ class DefaultBindingSQLContext<U> extends AbstractScope implements BindingSQLCon
 
     @Override
     public <T> BindingSQLContext<T> convert(Converter<? extends T, ? super U> converter) {
-        return new DefaultBindingSQLContext<>(configuration, data, render, scoped(converter).to(value, converterContext()), variable);
+
+        // [#10464] Convert lazily. Bindings that only render a bind variable
+        //          placeholder never access the value, so they shouldn't
+        //          trigger a potentially expensive conversion that will be
+        //          repeated anyway when binding the value.
+        return new DefaultBindingSQLContext<>(configuration, data, render, Lazy.of(() -> scoped(converter).to(value.get(), converterContext())), variable);
     }
 
     @Override

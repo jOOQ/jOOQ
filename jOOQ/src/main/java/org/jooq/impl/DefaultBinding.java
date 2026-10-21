@@ -794,11 +794,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             return ctx.dsl();
         }
 
-        private final boolean shouldCast(BindingSQLContext<U> ctx, T converted) {
+        private final boolean shouldCast(BindingSQLContext<U> ctx, Lazy<T> converted) {
 
             // [#10662] A few dialects require casts for NULL literals
             if (ctx.render().paramType() == INLINED) {
-                if (converted == null) {
+                if (converted.get() == null) {
                     switch (ctx.family()) {
 
 
@@ -842,7 +842,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             else {
 
                 // Generated enums should not be cast...
-                if (!(converted instanceof EnumType)) {
+                if (!isEnumValue(converted)) {
                     switch (ctx.family()) {
 
                         // These dialects can hardly detect the type of a bound constant.
@@ -1024,18 +1024,29 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         /**
+         * [#10464] Check if a converted value is an {@link EnumType} without
+         * evaluating the conversion, if the type makes that impossible.
+         */
+        private final boolean isEnumValue(Lazy<T> converted) {
+            Class<?> type = converter().fromType();
+
+            return (EnumType.class.isAssignableFrom(type) || type.isAssignableFrom(EnumType.class))
+                && converted.get() instanceof EnumType;
+        }
+
+        /**
          * Render the bind variable including a cast, if necessary
          */
-        private final void sqlCast(BindingSQLContext<U> ctx, T converted) throws SQLException {
+        private final void sqlCast(BindingSQLContext<U> ctx, Lazy<T> converted) throws SQLException {
             DataType<T> sqlDataType = dataType.getSQLDataType();
             SQLDialect family = ctx.family();
 
             // [#822] Some RDBMS need precision / scale information on BigDecimals
-            if (converted != null && dataType.getType() == BigDecimal.class && NEEDS_PRECISION_SCALE_ON_BIGDECIMAL.contains(ctx.dialect())) {
+            if (dataType.getType() == BigDecimal.class && NEEDS_PRECISION_SCALE_ON_BIGDECIMAL.contains(ctx.dialect()) && converted.get() != null) {
 
                 // Add precision / scale on BigDecimals
-                int scale = ((BigDecimal) converted).scale();
-                int precision = ((BigDecimal) converted).precision();
+                int scale = ((BigDecimal) converted.get()).scale();
+                int precision = ((BigDecimal) converted.get()).precision();
 
                 // [#5323] BigDecimal precision is always 1 for BigDecimals smaller than 1.0
                 if (scale >= precision)
@@ -1052,8 +1063,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             else if (OTHER == sqlDataType)
 
                 // If the bind value is set, it can be used to derive the cast type
-                if (converted != null)
-                    sqlCast(ctx, converted, DefaultDataType.getDataType(family, converted.getClass()), null, null, null);
+                if (converted.get() != null)
+                    sqlCast(ctx, converted, DefaultDataType.getDataType(family, converted.get().getClass()), null, null, null);
 
                 // [#11511] Specifically when in a parser context, we must not
                 // blindly cast bind variables
@@ -1110,8 +1121,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 sqlCast(ctx, converted, dataType, null, null, null);
 
             // [#19772] Make precision explicit where there would be truncation, otherwise
-            else if (dataType.isTime() && requiresTimePrecision(ctx.configuration(), converted, dataType))
-                sqlCast(ctx, converted, dataType, null, requiredTimePrecision(converted), null);
+            else if (dataType.isTime() && requiresTimePrecision(ctx.configuration(), converted.get(), dataType))
+                sqlCast(ctx, converted, dataType, null, requiredTimePrecision(converted.get()), null);
 
             // In all other cases, the bind variable can be cast normally
             else
@@ -1143,7 +1154,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             }
         }
 
-        private final void sqlCast(BindingSQLContext<U> ctx, T converted, DataType<?> t, Integer length, Integer precision, Integer scale) throws SQLException {
+        private final void sqlCast(BindingSQLContext<U> ctx, Lazy<T> converted, DataType<?> t, Integer length, Integer precision, Integer scale) throws SQLException {
             switch (ctx.family()) {
 
 
@@ -1176,7 +1187,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
             }
         }
 
-        private final void sqlCast0(BindingSQLContext<U> ctx, T converted, DataType<?> t, Integer length, Integer precision, Integer scale) throws SQLException {
+        private final void sqlCast0(BindingSQLContext<U> ctx, Lazy<T> converted, DataType<?> t, Integer length, Integer precision, Integer scale) throws SQLException {
             ctx.render().visit(N_CAST).sql('(');
             sql(ctx, converted);
             ctx.render().sql(' ').visit(K_AS).sql(' ');
@@ -1186,7 +1197,11 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
         @Override
         public final void sql(BindingSQLContext<U> ctx) throws SQLException {
-            T converted = converter().to(ctx.value(), ctx.converterContext());
+
+            // [#10464] Convert lazily. In most cases, a bind variable placeholder
+            //          can be rendered without the value, which is converted
+            //          again when binding it, anyway.
+            Lazy<T> converted = Lazy.of(() -> converter().to(ctx.value(), ctx.converterContext()));
 
             // Casting can be enforced or prevented
             switch (ctx.render().castMode()) {
@@ -1208,12 +1223,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 sql(ctx, converted);
         }
 
-        private final void sql(BindingSQLContext<U> ctx, T value) throws SQLException {
+        private final void sql(BindingSQLContext<U> ctx, Lazy<T> value) throws SQLException {
             if (ctx.render().paramType() == INLINED)
-                if (value == null)
+                if (value.get() == null)
                     sqlInlineNull0(ctx);
                 else
-                    sqlInline0(ctx, value);
+                    sqlInline0(ctx, value.get());
             else
                 sqlBind0(ctx, value);
         }
@@ -1372,8 +1387,12 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 sqlInline0.accept(ctx, value);
         }
 
+        /**
+         * Render a bind variable placeholder. Implementations should call
+         * {@link Lazy#get()} only if they really need the value [#10464].
+         */
         @SuppressWarnings("unused")
-        /* non-final */ void sqlBind0(BindingSQLContext<U> ctx, T value) throws SQLException {
+        /* non-final */ void sqlBind0(BindingSQLContext<U> ctx, Lazy<T> value) throws SQLException {
             ctx.render().sql(ctx.variable());
         }
 
@@ -1418,8 +1437,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
-        final void sqlBind0(BindingSQLContext<U> ctx, X value) throws SQLException {
-            delegatingBinding.sqlBind0(ctx, delegatingConverter.to(value, ctx.converterContext()));
+        final void sqlBind0(BindingSQLContext<U> ctx, Lazy<X> value) throws SQLException {
+            delegatingBinding.sqlBind0(ctx, Lazy.of(() -> delegatingConverter.to(value.get(), ctx.converterContext())));
         }
 
         @Override
@@ -1535,7 +1554,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
-        final void sqlBind0(BindingSQLContext<U> ctx, Object[] value) throws SQLException {
+        final void sqlBind0(BindingSQLContext<U> ctx, Lazy<Object[]> value) throws SQLException {
             Cast.renderCastIf(ctx.render(),
                 c -> {
                     if (REQUIRES_JSON_CAST.contains(ctx.dialect())) {
@@ -2640,7 +2659,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
-        void sqlBind0(org.jooq.BindingSQLContext<U> ctx, byte[] value) throws SQLException {
+        void sqlBind0(org.jooq.BindingSQLContext<U> ctx, Lazy<byte[]> value) throws SQLException {
             switch (ctx.family()) {
 
 
@@ -2995,7 +3014,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
-        final void sqlBind0(BindingSQLContext<U> ctx, Date value) throws SQLException {
+        final void sqlBind0(BindingSQLContext<U> ctx, Lazy<Date> value) throws SQLException {
             switch (ctx.family()) {
 
 
@@ -3430,7 +3449,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
-        final void sqlBind0(BindingSQLContext<U> ctx, EnumType value) throws SQLException {
+        final void sqlBind0(BindingSQLContext<U> ctx, Lazy<EnumType> value) throws SQLException {
             EnumType enumValue = pgEnumValue(dataType.getType());
 
             Cast.renderCastIf(ctx.render(),
@@ -4005,7 +4024,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
-        final void sqlBind0(BindingSQLContext<U> ctx, OffsetDateTime value) throws SQLException {
+        final void sqlBind0(BindingSQLContext<U> ctx, Lazy<OffsetDateTime> value) throws SQLException {
             switch (ctx.family()) {
 
                 // [#17088] The R2DBC H2 driver binds strings as CLOB, which cannot be converted to TIMESTAMPTZ
@@ -4345,8 +4364,8 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
-        final void sqlBind0(BindingSQLContext<U> ctx, Instant value) throws SQLException {
-            delegate.sqlBind0(ctx, CONVERTER.to(value, ctx.converterContext()));
+        final void sqlBind0(BindingSQLContext<U> ctx, Lazy<Instant> value) throws SQLException {
+            delegate.sqlBind0(ctx, Lazy.of(() -> CONVERTER.to(value.get(), ctx.converterContext())));
         }
 
         @Override
@@ -4582,7 +4601,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
-        final void sqlBind0(BindingSQLContext<U> ctx, Record value) throws SQLException {
+        final void sqlBind0(BindingSQLContext<U> ctx, Lazy<Record> value) throws SQLException {
             Cast.renderCastIf(ctx.render(),
                 c -> super.sqlBind0(ctx, value),
                 c -> pgRenderRecordCast(ctx.render()),
@@ -5072,18 +5091,18 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
-        final void sqlBind0(BindingSQLContext<U> ctx, Result<?> value) throws SQLException {
+        final void sqlBind0(BindingSQLContext<U> ctx, Lazy<Result<?>> value) throws SQLException {
             switch (emulateMultiset(ctx.configuration())) {
                 case JSON:
-                    jsonBinding.sqlBind0((BindingSQLContext) ctx, json(value.formatJSON(jsonFormat(ctx))));
+                    jsonBinding.sqlBind0((BindingSQLContext) ctx, Lazy.of(() -> json(value.get().formatJSON(jsonFormat(ctx)))));
                     break;
 
                 case JSONB:
-                    jsonbBinding.sqlBind0((BindingSQLContext) ctx, jsonb(value.formatJSON(jsonFormat(ctx))));
+                    jsonbBinding.sqlBind0((BindingSQLContext) ctx, Lazy.of(() -> jsonb(value.get().formatJSON(jsonFormat(ctx)))));
                     break;
 
                 case XML:
-                    xmlBinding.sqlBind0((BindingSQLContext) ctx, xml(value.formatXML(xmlFormat(ctx))));
+                    xmlBinding.sqlBind0((BindingSQLContext) ctx, Lazy.of(() -> xml(value.get().formatXML(xmlFormat(ctx)))));
                     break;
 
                 default:
@@ -6906,7 +6925,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 case MARIADB:
                 case MYSQL:
                 case SQLITE:
-                    renderJSONWrapped(ctx, () -> super.sqlInline0(ctx, value), value, SQLDataType.JSON);
+                    renderJSONWrapped(ctx, () -> super.sqlInline0(ctx, value), () -> value, SQLDataType.JSON);
                     break;
 
                 default:
@@ -6916,7 +6935,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
-        final void sqlBind0(BindingSQLContext<U> ctx, JSON value) throws SQLException {
+        final void sqlBind0(BindingSQLContext<U> ctx, Lazy<JSON> value) throws SQLException {
             switch (ctx.family()) {
 
 
@@ -6925,7 +6944,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 case MARIADB:
                 case MYSQL:
                 case SQLITE:
-                    renderJSONWrapped(ctx, () -> super.sqlBind0(ctx, value), value, SQLDataType.JSON);
+                    renderJSONWrapped(ctx, () -> super.sqlBind0(ctx, value), value::get, SQLDataType.JSON);
                     break;
 
                 default:
@@ -6937,7 +6956,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         static final void renderJSONWrapped(
             BindingSQLContext<?> ctx,
             ThrowingRunnable<SQLException> runnable,
-            Object value,
+            Supplier<?> value,
             DataType<?> type
         ) throws SQLException {
             switch (ctx.family()) {
@@ -6966,7 +6985,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 case H2:
                     runnable.run();
 
-                    if (value != null)
+                    if (value.get() != null)
                         ctx.render().sql(' ').visit(K_FORMAT).sql(' ').visit(K_JSON);
 
                     break;
@@ -7104,7 +7123,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                     case MARIADB:
                     case MYSQL:
                     case SQLITE:
-                        DefaultJSONBinding.renderJSONWrapped(ctx, () -> super.sqlInline1(ctx, value.data()), value, SQLDataType.JSON);
+                        DefaultJSONBinding.renderJSONWrapped(ctx, () -> super.sqlInline1(ctx, value.data()), () -> value, SQLDataType.JSON);
                         break;
 
                     default:
@@ -7115,7 +7134,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
-        final void sqlBind0(BindingSQLContext<U> ctx, JSONB value) throws SQLException {
+        final void sqlBind0(BindingSQLContext<U> ctx, Lazy<JSONB> value) throws SQLException {
             switch (ctx.family()) {
 
 
@@ -7124,7 +7143,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
                 case MARIADB:
                 case MYSQL:
                 case SQLITE:
-                    DefaultJSONBinding.renderJSONWrapped(ctx, () -> super.sqlBind0(ctx, value), value, SQLDataType.JSON);
+                    DefaultJSONBinding.renderJSONWrapped(ctx, () -> super.sqlBind0(ctx, value), value::get, SQLDataType.JSON);
                     break;
 
                 default:
@@ -7283,7 +7302,7 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
         }
 
         @Override
-        final void sqlBind0(BindingSQLContext<U> ctx, XML value) throws SQLException {
+        final void sqlBind0(BindingSQLContext<U> ctx, Lazy<XML> value) throws SQLException {
             switch (ctx.family()) {
 
 

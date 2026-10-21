@@ -3262,10 +3262,6 @@ public final class QOM {
      * <p>
      * Create a condition to case-insensitively pattern-check this field against
      * a value.
-     * <p>
-     * This translates to <code>this ilike value</code> in
-     * {@link SQLDialect#POSTGRES}, or to
-     * <code>lower(this) like lower(value)</code> in all other dialects.
      */
     public /*sealed*/ interface LikeIgnoreCase
         extends
@@ -3494,10 +3490,6 @@ public final class QOM {
      * <p>
      * Create a condition to case-insensitively pattern-check this field against
      * a value.
-     * <p>
-     * This translates to <code>this not ilike value</code> in
-     * {@link SQLDialect#POSTGRES}, or to
-     * <code>lower(this) not like lower(value)</code> in all other dialects.
      */
     public /*sealed*/ interface NotLikeIgnoreCase
         extends
@@ -4957,10 +4949,7 @@ public final class QOM {
     /**
      * The <code>CONTAINS</code> operator.
      * <p>
-     * Convenience method for {@link Field#like(String, char)} including proper
-     * adding of wildcards and escaping.
-     * <p>
-     * SQL: <code>this like ('%' || escape(value, '\') || '%') escape '\'</code>
+     * Create a condition to check if a string value is contained in this field.
      * <p>
      * Note: This also works with numbers, for instance
      * <code>val(1133).contains(13)</code>
@@ -4996,14 +4985,7 @@ public final class QOM {
     /**
      * The <code>CONTAINS IGNORE CASE</code> operator.
      * <p>
-     * Convenience method for {@link Field#likeIgnoreCase(String, char)} including
-     * proper adding of wildcards and escaping.
-     * <p>
-     * This translates to
-     * <code>this ilike ('%' || escape(value, '\') || '%') escape '\'</code> in
-     * {@link SQLDialect#POSTGRES}, or to
-     * <code>lower(this) like lower(('%' || escape(value, '\') || '%') escape '\')</code>
-     * in all other dialects.
+     * Create a condition to check if a string value is contained in this field.
      */
     public /*sealed*/ interface ContainsIgnoreCase<T>
         extends
@@ -5040,13 +5022,7 @@ public final class QOM {
     /**
      * The <code>ENDS WITH</code> operator.
      * <p>
-     * Convenience method for {@link Field#like(String, char)} including proper
-     * adding of wildcards and escaping.
-     * <p>
-     * SQL: <code>this like ('%' || escape(value, '\')) escape '\'</code>
-     * <p>
-     * Note: This also works with numbers, for instance
-     * <code>val(1133).endsWith(33)</code>
+     * Create a condition to check if this field ends with a string value.
      */
     public /*sealed*/ interface EndsWith<T>
         extends
@@ -5067,13 +5043,7 @@ public final class QOM {
     /**
      * The <code>ENDS WITH IGNORE CASE</code> operator.
      * <p>
-     * Convenience method for {@link Field#like(String, char)} including proper
-     * adding of wildcards and escaping.
-     * <p>
-     * SQL: <code>lower(this) like ('%' || lower(escape(value, '\'))) escape '\'</code>
-     * <p>
-     * Note: This also works with numbers, for instance
-     * <code>val(1133).endsWithIgnoreCase(33)</code>
+     * Create a condition to check if this field ends with a string value.
      */
     public /*sealed*/ interface EndsWithIgnoreCase<T>
         extends
@@ -5676,13 +5646,7 @@ public final class QOM {
     /**
      * The <code>STARTS WITH</code> operator.
      * <p>
-     * Convenience method for {@link Field#like(String, char)} including proper
-     * adding of wildcards and escaping.
-     * <p>
-     * SQL: <code>this like (escape(value, '\') || '%') escape '\'</code>
-     * <p>
-     * Note: This also works with numbers, for instance
-     * <code>val(1133).startsWith(11)</code>
+     * Create a condition to check if this field starts with a string value.
      */
     public /*sealed*/ interface StartsWith<T>
         extends
@@ -5703,13 +5667,7 @@ public final class QOM {
     /**
      * The <code>STARTS WITH IGNORE CASE</code> operator.
      * <p>
-     * Convenience method for {@link Field#like(String, char)} including proper
-     * adding of wildcards and escaping.
-     * <p>
-     * SQL: <code>lower(this) like (lower(escape(value, '\')) || '%') escape '\'</code>
-     * <p>
-     * Note: This also works with numbers, for instance
-     * <code>val(1133).startsWithIgnoreCase(11)</code>
+     * Create a condition to check if this field starts with a string value.
      */
     public /*sealed*/ interface StartsWithIgnoreCase<T>
         extends

@@ -4443,7 +4443,7 @@ public class JavaGenerator extends AbstractGenerator {
                         out.println(")");
                     }
                     else {
-                        out.println("return %s.%s(", fullId, id);
+                        out.println("return %s.%s(", className, id);
                         forEach(udt.getAttributes(), (attribute, separator) -> out.println("%s%s", strategy.getJavaMemberName(attribute), separator));
                         out.println(");");
                     }

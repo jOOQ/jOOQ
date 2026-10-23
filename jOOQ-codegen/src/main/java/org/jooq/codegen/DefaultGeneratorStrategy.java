@@ -750,13 +750,15 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
     }
 
     String toPascalCase(String name) {
-        return StringUtils.toCamelCase(name);
+
+        // [#13100] Use the configured target locale, not the default locale
+        return StringUtils.toCamelCase(name, targetLocale);
     }
 
-    static Case getCase(String name) {
-        if (name.toUpperCase().equals(name))
+    static Case getCase(String name, Locale locale) {
+        if (name.toUpperCase(locale).equals(name))
             return Case.UPPER;
-        else if (name.toLowerCase().equals(name))
+        else if (name.toLowerCase(locale).equals(name))
             return Case.LOWER;
         else
             return Case.MIXED;

@@ -113,6 +113,10 @@ public final class DefaultConverterProvider implements ConverterProvider, Serial
             || Record.class.isAssignableFrom(tWrapper)
             || Struct.class.isAssignableFrom(tWrapper) && QualifiedRecord.class.isAssignableFrom(uWrapper)
 
+            // [#14608] Kotlin @JvmInline value classes can be converted if their underlying type can
+            || Tools.isKotlinValueClass(tWrapper) && provide(Tools.ktValueClassUnderlyingType(tWrapper), uType) != null
+            || Tools.isKotlinValueClass(uWrapper) && provide(tType, Tools.ktValueClassUnderlyingType(uWrapper)) != null
+
             // [#10229] Any type A can be converted into its wrapper B if a constructor B(A) exists.
             || Tools.findAny(uWrapper.getDeclaredConstructors(), c -> {
                 Class<?>[] types = c.getParameterTypes();

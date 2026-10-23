@@ -534,7 +534,22 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                         parameterNames.add(name);
                     }
 
-                    Constructor<E> javaConstructor = (Constructor<E>) accessible(this.type.getDeclaredConstructor(parameterTypes));
+                    // [#14533] Let Kotlin resolve the JVM constructor, which may differ from the parameter
+                    //          types derived above, e.g. for nullable value classes, which are boxed
+                    Constructor<E> javaConstructor = null;
+                    Reflect reflectJvmMapping = Tools.ktReflectJvmMapping();
+
+                    if (reflectJvmMapping != null) {
+                        try {
+                            javaConstructor = reflectJvmMapping.call("getJavaConstructor", (Object) primaryConstructor.get()).get();
+                        }
+                        catch (ReflectException ignore) {}
+                    }
+
+                    if (javaConstructor == null)
+                        javaConstructor = (Constructor<E>) this.type.getDeclaredConstructor(parameterTypes);
+
+                    javaConstructor = accessible(javaConstructor);
                     delegate = new ImmutablePOJOMapper(javaConstructor, javaConstructor.getParameterTypes(), parameterNames, true);
                     return;
                 }

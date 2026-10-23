@@ -117,7 +117,7 @@ public class PascalCaseGeneratorStrategy extends DefaultGeneratorStrategy {
 
     @Override
     String toPascalCase(String name) {
-        switch (getCase(name)) {
+        switch (getCase(name, targetLocale)) {
             case MIXED:
                 return StringUtils.toUC(name, targetLocale);
             case LOWER:

@@ -1364,8 +1364,26 @@ public final class StringUtils {
      * [#18412] For historic reasons, the method claims the result is in
      * <code>camelCase</code> because it is often used with a prefix making the
      * result camel case, e.g. "set" + "PascalCase" => "setPascalCase".
+     * <p>
+     * This uses {@link Locale#getDefault()} for case conversion. Prefer
+     * {@link #toCamelCase(String, Locale)} to avoid locale specific surprises
+     * such as the Turkish dotted / dotless <code>i</code>.
      */
     public static String toCamelCase(String string) {
+        return toCamelCase(string, Locale.getDefault());
+    }
+
+    /**
+     * Convert a string from <code>snake_case</code> to <code>PascalCase</code>
+     * using a specific {@link Locale} for case conversion.
+     * <p>
+     * [#13100] The locale matters e.g. in the Turkish locale, where
+     * <code>"i".toUpperCase()</code> produces <code>"İ"</code>, not
+     * <code>"I"</code>.
+     *
+     * @see #toCamelCase(String)
+     */
+    public static String toCamelCase(String string, Locale locale) {
         StringBuilder result = new StringBuilder();
 
         // [#2515] - Keep trailing underscores
@@ -1380,8 +1398,8 @@ public final class StringUtils {
                     result.append("_");
                 }
 
-                result.append(word.substring(0, 1).toUpperCase());
-                result.append(word.substring(1).toLowerCase());
+                result.append(word.substring(0, 1).toUpperCase(locale));
+                result.append(word.substring(1).toLowerCase(locale));
             }
 
             // If no letter exists, prevail the underscore (e.g. leading
@@ -1399,7 +1417,16 @@ public final class StringUtils {
      * (LC = lower-case first letter).
      */
     public static String toCamelCaseLC(String string) {
-        return toLC(toCamelCase(string));
+        return toCamelCaseLC(string, Locale.getDefault());
+    }
+
+    /**
+     * Convert a string from <code>snake_case</code> to <code>camelCase</code>
+     * (LC = lower-case first letter) using a specific {@link Locale} for case
+     * conversion.
+     */
+    public static String toCamelCaseLC(String string, Locale locale) {
+        return toLC(toCamelCase(string, locale), locale);
     }
 
     /**

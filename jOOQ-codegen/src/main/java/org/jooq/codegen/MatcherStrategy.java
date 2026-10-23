@@ -178,15 +178,15 @@ public class MatcherStrategy extends DefaultGeneratorStrategy {
             case LOWER:
                 return string.toLowerCase(getTargetLocale());
             case LOWER_FIRST_LETTER:
-                return StringUtils.toLC(string);
+                return StringUtils.toLC(string, getTargetLocale());
             case UPPER:
                 return string.toUpperCase(getTargetLocale());
             case UPPER_FIRST_LETTER:
-                return StringUtils.toUC(string);
+                return StringUtils.toUC(string, getTargetLocale());
             case CAMEL:
-                return StringUtils.toCamelCaseLC(string);
+                return StringUtils.toCamelCaseLC(string, getTargetLocale());
             case PASCAL:
-                return StringUtils.toCamelCase(string);
+                return StringUtils.toCamelCase(string, getTargetLocale());
 
             default:
                 throw new UnsupportedOperationException("Transform Type not supported : " + transform);

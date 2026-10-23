@@ -2978,7 +2978,7 @@ public class JavaGenerator extends AbstractGenerator {
                 // [#3082] TODO Handle <interfaces/> + ARRAY also for Scala
 
                 out.println("%sdef %s(%s: %s): %s = {", visibility(), setter, member, columnTypeInterface, setterReturnType);
-                out.println("set(%s, to%s(%s))", index, toUC(member), member);
+                out.println("set(%s, to%s(%s))", index, toUC(member, getStrategy().getTargetLocale()), member);
 
                 if (generateFluentSetters())
                     out.println("this");
@@ -2994,7 +2994,7 @@ public class JavaGenerator extends AbstractGenerator {
                 final String nullableAnnotation = nullableOrNonnullAnnotation(out, column);
 
                 out.println("%s%s %s([[before=@][after= ][%s]]%s %s) {", visibility(), setterReturnType, setter, list(nullableAnnotation), varargsIfArray(columnTypeInterface), member);
-                out.println("set(%s, to%s(%s));", index, toUC(member), member);
+                out.println("set(%s, to%s(%s));", index, toUC(member, getStrategy().getTargetLocale()), member);
 
                 if (generateFluentSetters())
                     out.println("return this;");
@@ -3021,7 +3021,7 @@ public class JavaGenerator extends AbstractGenerator {
             final UDTDefinition udt = column.getDatabase().getUDT(column.getType().getSchema(), column.getType().getUserType());
 
             if (scala) {
-                out.println("private def to%s(%s: %s): %s = {", toUC(member), scalaWhitespaceSuffix(member), typeInterface, type);
+                out.println("private def to%s(%s: %s): %s = {", toUC(member, getStrategy().getTargetLocale()), scalaWhitespaceSuffix(member), typeInterface, type);
                 out.println("if (%s == null)", member);
                 out.println("return null");
 
@@ -3050,7 +3050,7 @@ public class JavaGenerator extends AbstractGenerator {
             }
             else {
                 out.println();
-                out.println("private static %s to%s(%s %s) {", type, toUC(member), varargsIfArray(typeInterface), member);
+                out.println("private static %s to%s(%s %s) {", type, toUC(member, getStrategy().getTargetLocale()), varargsIfArray(typeInterface), member);
                 out.println("if (%s == null)", member);
                 out.println("return null;");
 
@@ -6650,9 +6650,9 @@ public class JavaGenerator extends AbstractGenerator {
                         String className = getStrategy().getJavaClassName(((TypedElementDefinition<?>) column).getContainer());
 
                         if (mode == Mode.POJO)
-                            return new Wrap(className + ".to" + toUC(memberName) + "(", ")");
+                            return new Wrap(className + ".to" + toUC(memberName, getStrategy().getTargetLocale()) + "(", ")");
                         else
-                            return new Wrap("to" + toUC(memberName) + "(", ")");
+                            return new Wrap("to" + toUC(memberName, getStrategy().getTargetLocale()) + "(", ")");
                     }
                     else
                         return new Wrap("new " + typeName + "(", ")");
@@ -6664,7 +6664,7 @@ public class JavaGenerator extends AbstractGenerator {
                 }
                 else {
                     if (definition instanceof UDTDefinition && generateInterfaces())
-                        return new Wrap("to" + toUC(memberName) + "(", ")");
+                        return new Wrap("to" + toUC(memberName, getStrategy().getTargetLocale()) + "(", ")");
                     else
                         return new Wrap("new " + typeName + "(", ")");
                 }
@@ -7045,7 +7045,7 @@ public class JavaGenerator extends AbstractGenerator {
 
             if (scala) {
                 out.println();
-                out.println("private def to%s(%s: %s): %s = {", toUC(columnMember), scalaWhitespaceSuffix(columnMember), columnTypeInterface, columnType);
+                out.println("private def to%s(%s: %s): %s = {", toUC(columnMember, getStrategy().getTargetLocale()), scalaWhitespaceSuffix(columnMember), columnTypeInterface, columnType);
                 out.println("if (%s == null)", columnMember);
                 out.println("return null");
 
@@ -7072,7 +7072,7 @@ public class JavaGenerator extends AbstractGenerator {
 
             else {
                 out.println();
-                out.println("private static %s to%s(%s %s) {", columnType, toUC(columnMember), varargsIfArray(columnTypeInterface), columnMember);
+                out.println("private static %s to%s(%s %s) {", columnType, toUC(columnMember, getStrategy().getTargetLocale()), varargsIfArray(columnTypeInterface), columnMember);
                 out.println("if (%s == null)", columnMember);
                 out.println("return null;");
 
@@ -7168,7 +7168,7 @@ public class JavaGenerator extends AbstractGenerator {
 
                 out.println();
                 out.println("%sdef %s(%s: %s): %s = {", visibility(), columnSetter, scalaWhitespaceSuffix(columnMember), columnTypeInterface, columnSetterReturnType);
-                out.println("this.%s = %s.to%s(%s)", columnMember, className, toUC(columnMember), columnMember);
+                out.println("this.%s = %s.to%s(%s)", columnMember, className, toUC(columnMember, getStrategy().getTargetLocale()), columnMember);
 
                 if (generateFluentSetters())
                     out.println("this");
@@ -7178,7 +7178,7 @@ public class JavaGenerator extends AbstractGenerator {
             else {
                 out.overrideIf(override);
                 out.println("%s%s %s(%s %s) {", visibility(), columnSetterReturnType, columnSetter, varargsIfArray(columnTypeInterface), columnMember);
-                out.println("this.%s = to%s(%s);", columnMember, toUC(columnMember), columnMember);
+                out.println("this.%s = to%s(%s);", columnMember, toUC(columnMember, getStrategy().getTargetLocale()), columnMember);
 
                 if (generateFluentSetters())
                     out.println("return this;");

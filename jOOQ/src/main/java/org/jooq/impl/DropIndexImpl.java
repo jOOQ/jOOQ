@@ -189,13 +189,18 @@ implements
 
 
 
-        ctx.visit(index);
 
-        if (REQUIRES_ON.contains(ctx.dialect()))
+        // [#20322] Schema-scoped index names need to be qualified with the ON table's schema
+        if (REQUIRES_ON.contains(ctx.dialect())) {
+            ctx.visit(index);
+
             if (on != null)
                 ctx.sql(' ').visit(K_ON).sql(' ').visit(on);
             else if (index.getTable() != null)
                 ctx.sql(' ').visit(K_ON).sql(' ').visit(index.getTable());
+        }
+        else
+            ctx.visit(IndexImpl.qualifyIndex(index, on));
 
         acceptCascade(ctx, cascade);
     }

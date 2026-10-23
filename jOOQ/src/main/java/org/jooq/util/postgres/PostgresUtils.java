@@ -267,16 +267,17 @@ public class PostgresUtils {
          || pgInterval.getMinutes() < 0
          || pgInterval.getSeconds() < 0;
 
-        if (negative)
-            pgInterval = negative(pgInterval);
-
-        Double seconds = pgInterval.getSeconds();
+        // [#13898] Avoid floating point arithmetic on seconds, which can lead
+        //          to rounding errors such as 3.001s becoming 3.000999999s.
+        //          PGInterval already stores whole seconds and microseconds
+        //          as exact integer values.
+        int sign = negative ? -1 : 1;
         DayToSecond result = new DayToSecond(
-            pgInterval.getDays(),
-            pgInterval.getHours(),
-            pgInterval.getMinutes(),
-            seconds.intValue(),
-            (int) (1000000000 * (seconds - seconds.intValue()))
+            sign * pgInterval.getDays(),
+            sign * pgInterval.getHours(),
+            sign * pgInterval.getMinutes(),
+            sign * pgInterval.getWholeSeconds(),
+            sign * pgInterval.getMicroSeconds() * 1000
         );
 
         if (negative)

@@ -1096,6 +1096,7 @@ final class Tools {
     private static volatile Reflect      ktKClasses;
     private static volatile Reflect      ktKClass;
     private static volatile Reflect      ktKTypeParameter;
+    private static volatile Reflect      ktReflectJvmMapping;
 
     /**
      * [#3696] The maximum number of consumed exceptions in
@@ -4468,6 +4469,101 @@ final class Tools {
         }
 
         return ktKTypeParameter;
+    }
+
+    static final Reflect ktReflectJvmMapping() {
+        if (ktReflectJvmMapping == null) {
+            synchronized (initLock) {
+                if (ktReflectJvmMapping == null) {
+                    try {
+                        ktReflectJvmMapping = Reflect.onClass("kotlin.reflect.jvm.ReflectJvmMapping");
+                    }
+                    catch (ReflectException ignore) {}
+                }
+            }
+        }
+
+        return ktReflectJvmMapping;
+    }
+
+    /**
+     * [#14533] [#14608] The <code>box-impl</code> and <code>unbox-impl</code>
+     * methods of a Kotlin <code>@JvmInline value class</code>, or
+     * <code>null</code> if a class isn't such a value class.
+     * <p>
+     * The Kotlin compiler generates these methods for every value class with
+     * names that cannot be produced by the Java language, so their presence
+     * reliably identifies a value class, without requiring
+     * <code>kotlin-reflect</code> on the classpath.
+     */
+    private static final ClassValue<Method[]> KT_VALUE_CLASS_METHODS = new ClassValue<Method[]>() {
+        @Override
+        protected Method[] computeValue(Class<?> type) {
+            if (type.isPrimitive()
+                || type.isArray()
+                || type.isInterface()
+                || !java.lang.reflect.Modifier.isFinal(type.getModifiers())
+                || type.getName().startsWith("java.")
+            )
+                return null;
+
+            try {
+                Method unbox = type.getDeclaredMethod("unbox-impl");
+                Method box = type.getDeclaredMethod("box-impl", unbox.getReturnType());
+
+                if (java.lang.reflect.Modifier.isStatic(box.getModifiers())
+                    && !java.lang.reflect.Modifier.isStatic(unbox.getModifiers())
+                    && box.getReturnType() == type
+                )
+                    return new Method[] { Reflect.accessible(box), Reflect.accessible(unbox) };
+            }
+            catch (NoSuchMethodException | SecurityException | ReflectException ignore) {}
+
+            return null;
+        }
+    };
+
+    /**
+     * [#14533] [#14608] Whether a class is a Kotlin <code>@JvmInline value class</code>.
+     */
+    static final boolean isKotlinValueClass(Class<?> type) {
+        return type != null && KT_VALUE_CLASS_METHODS.get(type) != null;
+    }
+
+    /**
+     * [#14533] [#14608] The JVM type wrapped by a Kotlin
+     * <code>@JvmInline value class</code>, e.g. <code>int</code> for
+     * <code>value class UserId(val id: Int)</code>.
+     */
+    static final Class<?> ktValueClassUnderlyingType(Class<?> type) {
+        return KT_VALUE_CLASS_METHODS.get(type)[1].getReturnType();
+    }
+
+    /**
+     * [#14533] [#14608] Unwrap a Kotlin <code>@JvmInline value class</code>
+     * instance.
+     */
+    static final Object ktValueClassUnbox(Object value) {
+        try {
+            return KT_VALUE_CLASS_METHODS.get(value.getClass())[1].invoke(value);
+        }
+        catch (ReflectiveOperationException e) {
+            throw new DataTypeException("Cannot unwrap Kotlin value class instance: " + value.getClass(), e);
+        }
+    }
+
+    /**
+     * [#14533] [#14608] Wrap a value in a Kotlin
+     * <code>@JvmInline value class</code>.
+     */
+    @SuppressWarnings("unchecked")
+    static final <T> T ktValueClassBox(Class<? extends T> type, Object value) {
+        try {
+            return (T) KT_VALUE_CLASS_METHODS.get(type)[0].invoke(null, value);
+        }
+        catch (ReflectiveOperationException e) {
+            throw new DataTypeException("Cannot wrap value in Kotlin value class: " + type, e);
+        }
     }
 
     /**

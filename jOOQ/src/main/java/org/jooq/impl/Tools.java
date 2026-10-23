@@ -4624,8 +4624,8 @@ final class Tools {
             List<java.lang.reflect.Field> result = new ArrayList<>();
 
             // [#1942] Caching these values before the field-loop significantly
-            // accerates POJO mapping
-            String camelCaseLC = StringUtils.toCamelCaseLC(field.getName());
+            // accelerates POJO mapping
+            String camelCaseLC = StringUtils.toCamelCaseLC(field.getName(), SettingsTools.locale(configuration.settings()));
 
             for (java.lang.reflect.Field member : getInstanceMembers(type))
                 if (field.getName().equals(member.getName()))
@@ -4690,9 +4690,11 @@ final class Tools {
             Set<SourceMethod> set = new LinkedHashSet<>();
 
             // [#1942] Caching these values before the method-loop significantly
-            // accerates POJO mapping
-            String camelCase = StringUtils.toCamelCase(field.getName());
-            String camelCaseLC = StringUtils.toLC(camelCase);
+            // accelerates POJO mapping
+            // [#13100] Use Settings.locale for case conversion, not the default locale
+            Locale locale = SettingsTools.locale(configuration.settings());
+            String camelCase = StringUtils.toCamelCase(field.getName(), locale);
+            String camelCaseLC = StringUtils.toLC(camelCase, locale);
 
             for (Method method : getInstanceMethods(type)) {
                 Class<?>[] parameterTypes = method.getParameterTypes();
@@ -4724,9 +4726,11 @@ final class Tools {
     ) {
         return Cache.run(configuration, () -> {
             // [#1942] Caching these values before the method-loop significantly
-            // accerates POJO mapping
-            String camelCase = StringUtils.toCamelCase(field.getName());
-            String camelCaseLC = StringUtils.toLC(camelCase);
+            // accelerates POJO mapping
+            // [#13100] Use Settings.locale for case conversion, not the default locale
+            Locale locale = SettingsTools.locale(configuration.settings());
+            String camelCase = StringUtils.toCamelCase(field.getName(), locale);
+            String camelCaseLC = StringUtils.toLC(camelCase, locale);
             Method result = null;
 
             for (Method method : getInstanceMethods(type)) {

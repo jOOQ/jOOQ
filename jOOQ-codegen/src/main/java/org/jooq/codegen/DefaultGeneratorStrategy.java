@@ -727,4 +727,25 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
     public String getOverloadSuffix(Definition definition, Mode mode, String overloadIndex) {
         return overloadIndex;
     }
+
+    String toPascalCase(String name) {
+
+        // [#13100] Use the configured target locale, not the default locale
+        return StringUtils.toCamelCase(name, targetLocale);
+    }
+
+    static Case getCase(String name, Locale locale) {
+        if (name.toUpperCase(locale).equals(name))
+            return Case.UPPER;
+        else if (name.toLowerCase(locale).equals(name))
+            return Case.LOWER;
+        else
+            return Case.MIXED;
+    }
+
+    enum Case {
+        UPPER,
+        LOWER,
+        MIXED
+    }
 }

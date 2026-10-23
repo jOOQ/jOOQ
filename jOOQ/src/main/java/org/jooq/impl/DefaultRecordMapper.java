@@ -110,6 +110,7 @@ import org.jooq.TableField;
 import org.jooq.TableRecord;
 import org.jooq.XML;
 import org.jooq.conf.Settings;
+import org.jooq.conf.SettingsTools;
 import org.jooq.exception.MappingException;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.reflect.Reflect;
@@ -1069,7 +1070,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                 for (int i = 0; i < fields.length; i++) {
                     Field<?> field = fields[i];
                     String name = field.getName();
-                    String nameLC = StringUtils.toCamelCaseLC(name);
+                    String nameLC = StringUtils.toCamelCaseLC(name, SettingsTools.locale(configuration.settings()));
 
                     // Annotations are available and present
                     if (useAnnotations) {

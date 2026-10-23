@@ -225,10 +225,9 @@ implements
 
                 ctx.sql(' ');
 
-                if (on != null)
-                    ctx.visit(on).sql('.').visit(index.getUnqualifiedName());
-                else
-                    ctx.visit(index);
+                // [#9869] Qualify the index with the ON table's schema, not
+                //         with the ON table itself
+                ctx.visit(IndexImpl.qualifyIndex(index, on));
 
                 ctx.end(Clause.ALTER_INDEX_INDEX).sql(' ');
 

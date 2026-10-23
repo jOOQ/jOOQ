@@ -1378,7 +1378,7 @@ implements
 
                 // [#5724] Most databases use schema-scoped index names: Ignore the table.
                 default:
-                    ctx.visit(DSL.alterIndex(renameIndex).renameTo(renameIndexTo));
+                    ctx.visit(DSL.alterIndex(IndexImpl.qualifyIndex(renameIndex, table)).renameTo(renameIndexTo));
                     return;
             }
         }

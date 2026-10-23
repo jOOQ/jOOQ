@@ -750,6 +750,15 @@ final class Convert {
                 else if (fromClass == Optional.class)
                     return from(((Optional) from).orElse(null), scope);
 
+                // [#14533] [#14608] Kotlin @JvmInline value classes are unwrapped,
+                //                   instead of being converted via their toString() value
+                else if (Tools.isKotlinValueClass(fromClass))
+                    return from(Tools.ktValueClassUnbox(from), scope);
+
+                // [#14533] [#14608] ... and wrapped, after converting to their underlying type
+                else if (Tools.isKotlinValueClass(toClass))
+                    return Tools.ktValueClassBox(toClass, convert(from, Tools.ktValueClassUnderlyingType(toClass)));
+
                 // Regular checks
                 else if (fromClass == byte[].class && !toClass.isArray()) {
 

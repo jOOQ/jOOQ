@@ -260,6 +260,7 @@ implements
     private static final Set<SQLDialect> SUPPORT_UNNAMED_INDEX    = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
     private static final Set<SQLDialect> SUPPORT_INCLUDE          = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
     private static final Set<SQLDialect> SUPPORT_UNIQUE_INCLUDE   = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
+    private static final Set<SQLDialect> NO_SUPPORT_QUALIFIED     = SQLDialect.supportedBy(DUCKDB, POSTGRES, YUGABYTEDB);
 
     private final boolean supportsIfNotExists(Context<?> ctx) {
         return !NO_SUPPORT_IF_NOT_EXISTS.contains(ctx.dialect());
@@ -299,9 +300,16 @@ implements
             ctx.visit(K_IF_NOT_EXISTS)
                .sql(' ');
 
+        // [#20322] Some dialects support qualified index names in DROP INDEX
+        //          or ALTER INDEX, but not in CREATE INDEX, where the index is
+        //          created in the table's schema.
         if (index != null)
-            ctx.visit(index)
-               .sql(' ');
+            if (NO_SUPPORT_QUALIFIED.contains(ctx.dialect()))
+                ctx.visit(index.getUnqualifiedName())
+                   .sql(' ');
+            else
+                ctx.visit(index)
+                   .sql(' ');
         else if (!SUPPORT_UNNAMED_INDEX.contains(ctx.dialect()))
             ctx.visit(generatedName())
                .sql(' ');

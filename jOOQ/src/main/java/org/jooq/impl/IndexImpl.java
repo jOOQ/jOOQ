@@ -38,17 +38,13 @@
 package org.jooq.impl;
 
 // ...
-// ...
-// ...
+import static org.jooq.SQLDialect.DUCKDB;
 import static org.jooq.SQLDialect.MARIADB;
 // ...
 import static org.jooq.SQLDialect.MYSQL;
-import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 // ...
-// ...
-import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.Tools.EMPTY_SORTFIELD;
 
@@ -70,7 +66,7 @@ import org.jooq.impl.QOM.UNotYetImplemented;
  * @author Lukas Eder
  */
 class IndexImpl extends AbstractNamed implements Index, UNotYetImplemented {
-    private static final Set<SQLDialect>     NO_SUPPORT_INDEX_QUALIFICATION = SQLDialect.supportedBy(MARIADB, MYSQL, POSTGRES, YUGABYTEDB);
+    private static final Set<SQLDialect>     NO_SUPPORT_INDEX_QUALIFICATION = SQLDialect.supportedBy(MARIADB, MYSQL);
 
     private final Table<?>                   table;
     private final SortField<?>[]             fields;
@@ -94,9 +90,31 @@ class IndexImpl extends AbstractNamed implements Index, UNotYetImplemented {
     final boolean        $unique() { return unique; }
     final Condition      $where()  { return where; }
 
+    /**
+     * [#20322] Index names are schema-scoped in most dialects, and indexes
+     * live in the same schema as their table. If an index is neither qualified
+     * nor associated with a table, qualify it with the given table's schema.
+     */
+    static final Index qualifyIndex(Index index, Table<?> table) {
+        if (index == null
+            || table == null
+            || index.getTable() != null
+            || index.getUnqualifiedName().empty()
+            || index.getQualifiedName().qualified())
+            return index;
+
+        Name t = table.getQualifiedName();
+        return t.qualified()
+            ? new IndexImpl(t.qualifier().append(index.getUnqualifiedName()))
+            : index;
+    }
+
     @Override
     public final void accept(Context<?> ctx) {
-        if (NO_SUPPORT_INDEX_QUALIFICATION.contains(ctx.dialect()))
+
+        // [#20322] Callers like ALTER INDEX .. RENAME TO request unqualified index names
+        // [#9869]  Context::qualifySchema implies Context::qualify
+        if (!ctx.qualifySchema() || NO_SUPPORT_INDEX_QUALIFICATION.contains(ctx.dialect()))
             ctx.visit(getUnqualifiedName());
         else if (getTable() == null)
             ctx.visit(new QualifiedImpl(getQualifiedName()));

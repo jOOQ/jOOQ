@@ -11451,50 +11451,80 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         int p = position();
 
         if (parseKeywordIf("INTERVAL")) {
+
+            // [#9510] The SQL standard allows for an optional sign before the
+            //         interval string: INTERVAL [ <sign> ] <interval string> <interval qualifier>
+            //         Some dialects also support a signed unquoted numeric literal,
+            //         e.g. INTERVAL -420 MINUTE
+            Sign sign = parseSign();
+
             if (peek('\'')) {
-                return inline(parseIntervalLiteral());
+
+                // [#9510] When a sign is present, require an explicit interval
+                //         qualifier, to disambiguate the literal from an
+                //         expression like interval - 'x', where interval is
+                //         an identifier
+                Interval interval = parseIntervalLiteral(sign != Sign.NONE);
+
+                if (interval != null)
+                    return inline(sign == Sign.MINUS ? interval.neg() : interval);
             }
             else {
                 Long interval = parseUnsignedIntegerLiteralIf();
 
                 if (interval != null) {
-                    DatePart part = parseIntervalDatePart();
-                    long l = interval;
-                    int i = asInt(l);
 
-                    switch (part) {
-                        case YEAR:
-                            return inline(new YearToMonth(i));
-                        case QUARTER:
-                            return inline(new YearToMonth(0, 3 * i));
-                        case MONTH:
-                            return inline(new YearToMonth(0, i));
-                        case WEEK:
-                            return inline(new DayToSecond(7 * i));
-                        case DAY:
-                            return inline(new DayToSecond(i));
-                        case HOUR:
-                            return inline(new DayToSecond(0, i));
-                        case MINUTE:
-                            return inline(new DayToSecond(0, 0, i));
-                        case SECOND:
-                            return inline(new DayToSecond(0, 0, 0, i));
-                        case MILLISECOND:
-                            return inline(new DayToSecond(0, 0, 0, asInt(l / 1000), (int) (l % 1000 * 1000000)));
-                        case MICROSECOND:
-                            return inline(new DayToSecond(0, 0, 0, asInt(l / 1000000), (int) (l % 1000000 * 1000)));
-                        case NANOSECOND:
-                            return inline(new DayToSecond(0, 0, 0, asInt(l / 1000000000), (int) (l % 1000000000)));
+                    // [#9510] Keep the historic error message for unsigned
+                    //         literals lacking a date part, but fall back to
+                    //         identifier parsing for signed ones, e.g. interval - 1
+                    DatePart part = sign == Sign.NONE
+                        ? parseIntervalDatePart()
+                        : parseIntervalDatePartIf();
+
+                    if (part != null) {
+                        Interval result = intervalLiteral(interval, part);
+
+                        if (result != null)
+                            return inline(sign == Sign.MINUS ? result.neg() : result);
                     }
                 }
-
-                else {
-                    position(p);
-
-                    if (parseUnknownSyntaxAsIdentifier)
-                        return field(parseIdentifier());
-                }
             }
+
+            position(p);
+
+            if (parseUnknownSyntaxAsIdentifier)
+                return field(parseIdentifier());
+        }
+
+        return null;
+    }
+
+    private final Interval intervalLiteral(long l, DatePart part) {
+        int i = asInt(l);
+
+        switch (part) {
+            case YEAR:
+                return new YearToMonth(i);
+            case QUARTER:
+                return new YearToMonth(0, 3 * i);
+            case MONTH:
+                return new YearToMonth(0, i);
+            case WEEK:
+                return new DayToSecond(7 * i);
+            case DAY:
+                return new DayToSecond(i);
+            case HOUR:
+                return new DayToSecond(0, i);
+            case MINUTE:
+                return new DayToSecond(0, 0, i);
+            case SECOND:
+                return new DayToSecond(0, 0, 0, i);
+            case MILLISECOND:
+                return new DayToSecond(0, 0, 0, asInt(l / 1000), (int) (l % 1000 * 1000000));
+            case MICROSECOND:
+                return new DayToSecond(0, 0, 0, asInt(l / 1000000), (int) (l % 1000000 * 1000));
+            case NANOSECOND:
+                return new DayToSecond(0, 0, 0, asInt(l / 1000000000), (int) (l % 1000000000));
         }
 
         return null;
@@ -11640,11 +11670,22 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         return false;
     }
 
-    private final Interval parseIntervalLiteral() {
-        Interval result = parsePostgresIntervalLiteralIf();
-        if (result != null)
-            return result;
+    /**
+     * Parse an interval literal.
+     *
+     * @param requireQualifier Whether an explicit interval qualifier (e.g.
+     *            <code>YEAR TO MONTH</code>) is required. If it is required
+     *            and absent, the parser position is reset and
+     *            <code>null</code> is returned.
+     */
+    private final Interval parseIntervalLiteral(boolean requireQualifier) {
+        if (!requireQualifier) {
+            Interval result = parsePostgresIntervalLiteralIf();
+            if (result != null)
+                return result;
+        }
 
+        int p = position();
         String string = parseStringLiteral();
         String message = "Illegal interval literal";
 
@@ -11698,6 +11739,11 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
             return requireNotNull(DayToSecond.minuteToSecond(string), message);
         else if (parseIntervalPrecisionKeywordIf("SECOND"))
             return requireNotNull(DayToSecond.second(string), message);
+
+        if (requireQualifier) {
+            position(p);
+            return null;
+        }
 
         DayToSecond ds = DayToSecond.valueOf(string);
         if (ds != null)
@@ -12078,6 +12124,15 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
     }
 
     private final DatePart parseIntervalDatePart() {
+        DatePart result = parseIntervalDatePartIf();
+
+        if (result == null)
+            throw expected("Interval DatePart");
+
+        return result;
+    }
+
+    private final DatePart parseIntervalDatePartIf() {
         char character = characterUpper();
 
         switch (character) {
@@ -12147,7 +12202,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                 break;
         }
 
-        throw expected("Interval DatePart");
+        return null;
     }
 
     private final Field<?> parseFieldConcatIf() {

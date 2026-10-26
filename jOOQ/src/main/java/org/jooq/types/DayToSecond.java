@@ -208,7 +208,13 @@ public final class DayToSecond extends Number implements Interval, Comparable<Da
      */
     public static DayToSecond day(String string) {
         try {
-            return string == null ? null : new DayToSecond(Integer.parseInt(string));
+            if (string == null)
+                return null;
+
+            // [#9510] Negative values must be represented with the negative
+            //         flag, not with negative components
+            int days = Integer.parseInt(string);
+            return days < 0 ? new DayToSecond(-days, 0, 0, 0, 0, true) : new DayToSecond(days);
         }
         catch (NumberFormatException ignore) {
             return null;
@@ -282,7 +288,13 @@ public final class DayToSecond extends Number implements Interval, Comparable<Da
      */
     public static DayToSecond hour(String string) {
         try {
-            return string == null ? null : new DayToSecond(0, Integer.parseInt(string));
+            if (string == null)
+                return null;
+
+            // [#9510] Negative values must be represented with the negative
+            //         flag, not with negative components
+            int hours = Integer.parseInt(string);
+            return hours < 0 ? new DayToSecond(0, -hours, 0, 0, 0, true) : new DayToSecond(0, hours);
         }
         catch (NumberFormatException ignore) {
             return null;
@@ -337,7 +349,13 @@ public final class DayToSecond extends Number implements Interval, Comparable<Da
      */
     public static DayToSecond minute(String string) {
         try {
-            return string == null ? null : new DayToSecond(0, 0, Integer.parseInt(string));
+            if (string == null)
+                return null;
+
+            // [#9510] Negative values must be represented with the negative
+            //         flag, not with negative components
+            int minutes = Integer.parseInt(string);
+            return minutes < 0 ? new DayToSecond(0, 0, -minutes, 0, 0, true) : new DayToSecond(0, 0, minutes);
         }
         catch (NumberFormatException ignore) {
             return null;

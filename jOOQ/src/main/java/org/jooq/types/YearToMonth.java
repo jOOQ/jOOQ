@@ -169,7 +169,13 @@ public final class YearToMonth extends Number implements Interval, Comparable<Ye
      */
     public static YearToMonth year(String string) {
         try {
-            return string == null ? null : new YearToMonth(Integer.parseInt(string));
+            if (string == null)
+                return null;
+
+            // [#9510] Negative values must be represented with the negative
+            //         flag, not with negative components
+            int years = Integer.parseInt(string);
+            return years < 0 ? new YearToMonth(-years, 0, true) : new YearToMonth(years);
         }
         catch (NumberFormatException ignore) {
             return null;
@@ -207,7 +213,13 @@ public final class YearToMonth extends Number implements Interval, Comparable<Ye
      */
     public static YearToMonth month(String string) {
         try {
-            return string == null ? null : new YearToMonth(0, Integer.parseInt(string));
+            if (string == null)
+                return null;
+
+            // [#9510] Negative values must be represented with the negative
+            //         flag, not with negative components
+            int months = Integer.parseInt(string);
+            return months < 0 ? new YearToMonth(0, -months, true) : new YearToMonth(0, months);
         }
         catch (NumberFormatException ignore) {
             return null;

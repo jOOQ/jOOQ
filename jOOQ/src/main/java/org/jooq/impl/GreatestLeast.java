@@ -38,7 +38,7 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.select;
-import static org.jooq.impl.DSL.values;
+import static org.jooq.impl.DSL.values0;
 
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -48,7 +48,7 @@ import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 // ...
-import org.jooq.Row1;
+import org.jooq.Row;
 
 /**
  * @author Lukas Eder

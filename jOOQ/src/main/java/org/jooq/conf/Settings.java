@@ -434,6 +434,10 @@ public class Settings
     protected Boolean mapConstructorParameterNames = false;
     @XmlElement(defaultValue = "true")
     protected Boolean mapConstructorParameterNamesInKotlin = true;
+    @XmlElement(defaultValue = "true")
+    protected Boolean mapConstructorParameterDefaultsInKotlin = true;
+    @XmlElement(defaultValue = "false")
+    protected Boolean mapNullToConstructorParameterDefaultsInKotlin = false;
     @XmlElement(defaultValue = "DEFAULT")
     @XmlSchemaType(name = "string")
     protected QueryPoolable queryPoolable = QueryPoolable.DEFAULT;
@@ -5878,6 +5882,54 @@ public class Settings
     }
 
     /**
+     * Whether Kotlin constructor parameter default values should be applied by the DefaultRecordMapper for parameters that cannot be mapped from any column of the record. This flag has no effect in Java.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isMapConstructorParameterDefaultsInKotlin() {
+        return mapConstructorParameterDefaultsInKotlin;
+    }
+
+    /**
+     * Whether Kotlin constructor parameter default values should be applied by the DefaultRecordMapper for parameters that cannot be mapped from any column of the record. This flag has no effect in Java.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setMapConstructorParameterDefaultsInKotlin(Boolean value) {
+        this.mapConstructorParameterDefaultsInKotlin = value;
+    }
+
+    /**
+     * Whether Kotlin constructor parameter default values should be applied by the DefaultRecordMapper for non-nullable parameters whose column value is NULL. Nullable parameters always receive NULL values, as explicit NULL values are semantically different from absent values. This flag has no effect in Java, or if mapConstructorParameterDefaultsInKotlin is disabled.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isMapNullToConstructorParameterDefaultsInKotlin() {
+        return mapNullToConstructorParameterDefaultsInKotlin;
+    }
+
+    /**
+     * Whether Kotlin constructor parameter default values should be applied by the DefaultRecordMapper for non-nullable parameters whose column value is NULL. Nullable parameters always receive NULL values, as explicit NULL values are semantically different from absent values. This flag has no effect in Java, or if mapConstructorParameterDefaultsInKotlin is disabled.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setMapNullToConstructorParameterDefaultsInKotlin(Boolean value) {
+        this.mapNullToConstructorParameterDefaultsInKotlin = value;
+    }
+
+    /**
      * The default JDBC poolable property that should be applied to all
      * jOOQ queries, for which no specific poolable flag was specified.
      * 
@@ -9790,6 +9842,24 @@ public class Settings
     }
 
     /**
+     * Whether Kotlin constructor parameter default values should be applied by the DefaultRecordMapper for parameters that cannot be mapped from any column of the record. This flag has no effect in Java.
+     * 
+     */
+    public Settings withMapConstructorParameterDefaultsInKotlin(Boolean value) {
+        setMapConstructorParameterDefaultsInKotlin(value);
+        return this;
+    }
+
+    /**
+     * Whether Kotlin constructor parameter default values should be applied by the DefaultRecordMapper for non-nullable parameters whose column value is NULL. Nullable parameters always receive NULL values, as explicit NULL values are semantically different from absent values. This flag has no effect in Java, or if mapConstructorParameterDefaultsInKotlin is disabled.
+     * 
+     */
+    public Settings withMapNullToConstructorParameterDefaultsInKotlin(Boolean value) {
+        setMapNullToConstructorParameterDefaultsInKotlin(value);
+        return this;
+    }
+
+    /**
      * The default JDBC poolable property that should be applied to all
      * jOOQ queries, for which no specific poolable flag was specified.
      * 
@@ -10758,6 +10828,8 @@ public class Settings
         builder.append("mapConstructorPropertiesParameterNames", mapConstructorPropertiesParameterNames);
         builder.append("mapConstructorParameterNames", mapConstructorParameterNames);
         builder.append("mapConstructorParameterNamesInKotlin", mapConstructorParameterNamesInKotlin);
+        builder.append("mapConstructorParameterDefaultsInKotlin", mapConstructorParameterDefaultsInKotlin);
+        builder.append("mapNullToConstructorParameterDefaultsInKotlin", mapNullToConstructorParameterDefaultsInKotlin);
         builder.append("queryPoolable", queryPoolable);
         builder.append("queryTimeout", queryTimeout);
         builder.append("maxRows", maxRows);
@@ -12461,6 +12533,24 @@ public class Settings
                 return false;
             }
         }
+        if (mapConstructorParameterDefaultsInKotlin == null) {
+            if (other.mapConstructorParameterDefaultsInKotlin!= null) {
+                return false;
+            }
+        } else {
+            if (!mapConstructorParameterDefaultsInKotlin.equals(other.mapConstructorParameterDefaultsInKotlin)) {
+                return false;
+            }
+        }
+        if (mapNullToConstructorParameterDefaultsInKotlin == null) {
+            if (other.mapNullToConstructorParameterDefaultsInKotlin!= null) {
+                return false;
+            }
+        } else {
+            if (!mapNullToConstructorParameterDefaultsInKotlin.equals(other.mapNullToConstructorParameterDefaultsInKotlin)) {
+                return false;
+            }
+        }
         if (queryPoolable == null) {
             if (other.queryPoolable!= null) {
                 return false;
@@ -13366,6 +13456,8 @@ public class Settings
         result = ((prime*result)+((mapConstructorPropertiesParameterNames == null)? 0 :mapConstructorPropertiesParameterNames.hashCode()));
         result = ((prime*result)+((mapConstructorParameterNames == null)? 0 :mapConstructorParameterNames.hashCode()));
         result = ((prime*result)+((mapConstructorParameterNamesInKotlin == null)? 0 :mapConstructorParameterNamesInKotlin.hashCode()));
+        result = ((prime*result)+((mapConstructorParameterDefaultsInKotlin == null)? 0 :mapConstructorParameterDefaultsInKotlin.hashCode()));
+        result = ((prime*result)+((mapNullToConstructorParameterDefaultsInKotlin == null)? 0 :mapNullToConstructorParameterDefaultsInKotlin.hashCode()));
         result = ((prime*result)+((queryPoolable == null)? 0 :queryPoolable.hashCode()));
         result = ((prime*result)+((queryTimeout == null)? 0 :queryTimeout.hashCode()));
         result = ((prime*result)+((maxRows == null)? 0 :maxRows.hashCode()));

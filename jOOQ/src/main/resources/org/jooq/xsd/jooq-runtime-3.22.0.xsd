@@ -1462,6 +1462,14 @@ IDENTITY values, and if {@link #returnAllOnUpdatableRecord} is active, also othe
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether constructor parameter names obtained via reflection in Kotlin should be considered by the DefaultRecordMapper. This flag has no effect in Java.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="mapConstructorParameterDefaultsInKotlin" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether Kotlin constructor parameter default values should be applied by the DefaultRecordMapper for parameters that cannot be mapped from any column of the record. This flag has no effect in Java.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
+      <element name="mapNullToConstructorParameterDefaultsInKotlin" type="boolean" minOccurs="0" maxOccurs="1" default="false">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether Kotlin constructor parameter default values should be applied by the DefaultRecordMapper for non-nullable parameters whose column value is NULL. Nullable parameters always receive NULL values, as explicit NULL values are semantically different from absent values. This flag has no effect in Java, or if mapConstructorParameterDefaultsInKotlin is disabled.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="queryPoolable" type="jooq-runtime:QueryPoolable" minOccurs="0" maxOccurs="1" default="DEFAULT">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[The default JDBC poolable property that should be applied to all
 jOOQ queries, for which no specific poolable flag was specified.]]></jxb:javadoc></jxb:property></appinfo></annotation>

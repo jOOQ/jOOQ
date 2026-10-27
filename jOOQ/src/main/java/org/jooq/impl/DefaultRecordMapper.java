@@ -254,6 +254,16 @@ import org.jooq.tools.reflect.ReflectException;
  * <ul>
  * <li>The Kotlin compiler adds meta data available for reflection using Kotlin
  * reflection APIs to derive parameter names.</li>
+ * <li>If {@link Settings#isMapConstructorParameterDefaultsInKotlin()} is turned
+ * on (the default), parameters with default values that cannot be mapped from
+ * any column of the record receive their default values, rather than
+ * <code>null</code> (or the primitive type's initialisation value).</li>
+ * <li>If, additionally,
+ * {@link Settings#isMapNullToConstructorParameterDefaultsInKotlin()} is turned
+ * on (not the default), non-nullable parameters with default values also
+ * receive their default values if the column value is <code>NULL</code>.
+ * Nullable parameters always receive <code>NULL</code> values, as an explicit
+ * <code>NULL</code> is semantically different from an absent value.</li>
  * </ul>
  * <p>
  * <h5>If no default constructor is available, but at least one "matching"
@@ -501,16 +511,31 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                     List<String> parameterNames = new ArrayList<>(parameters.size());
                     Class<?>[] parameterTypes = new Class[parameters.size()];
 
+                    // [#10236] Kotlin parameters with default values
+                    boolean[] optional = new boolean[parameters.size()];
+                    boolean[] nullable = new boolean[parameters.size()];
+                    List<Object>[] valueClassConstructors = new List[parameters.size()];
+                    boolean hasOptional = false;
+
                     for (int i = 0; i < parameterTypes.length; i++) {
                         Reflect parameter = Reflect.on(parameters.get(i));
                         Object typeClassifier = parameter.call("getType").call("getClassifier").get();
                         String name = parameter.call("getName").get();
 
+                        hasOptional |= optional[i] = parameter.call("isOptional").<Boolean>get();
+                        nullable[i] = parameter.call("getType").call("isMarkedNullable").<Boolean>get();
+
                         // [#14283] Unnest @JvmInline value classes
                         try {
                             while (Reflect.on(typeClassifier).call("isValue").<Boolean>get()) {
-                                typeClassifier = kClasses
-                                    .call("getPrimaryConstructor", typeClassifier)
+                                Reflect valueClassConstructor = kClasses.call("getPrimaryConstructor", typeClassifier);
+
+                                // [#10236] KFunction.callBy() expects wrapped value class arguments
+                                if (valueClassConstructors[i] == null)
+                                    valueClassConstructors[i] = new ArrayList<>();
+
+                                valueClassConstructors[i].add(valueClassConstructor.get());
+                                typeClassifier = valueClassConstructor
                                     .call("getParameters")
 
                                     // kotlin value classes are required to have exactly 1 parameter
@@ -559,7 +584,16 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                         javaConstructor = (Constructor<E>) this.type.getDeclaredConstructor(parameterTypes);
 
                     javaConstructor = accessible(javaConstructor);
-                    delegate = new ImmutablePOJOMapper(javaConstructor, javaConstructor.getParameterTypes(), parameterNames, true);
+                    ImmutablePOJOMapper m = new ImmutablePOJOMapper(javaConstructor, javaConstructor.getParameterTypes(), parameterNames, true);
+
+                    // [#10236] Use KCallable.callBy() to apply default values to absent parameters
+                    if (hasOptional && !FALSE.equals(configuration.settings().isMapConstructorParameterDefaultsInKotlin()))
+                        m.kotlinDefaults = KotlinDefaults.of(
+                            primaryConstructor.get(), parameters, valueClassConstructors, javaConstructor.getParameterTypes(), optional, nullable,
+                            TRUE.equals(configuration.settings().isMapNullToConstructorParameterDefaultsInKotlin())
+                        );
+
+                    delegate = m;
                     return;
                 }
             }
@@ -1066,6 +1100,9 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
         private final List<MappedMember>[] members;
         private final MappedMethod[]       methods;
 
+        // [#10236] Kotlin default parameter value support, if applicable
+        KotlinDefaults                     kotlinDefaults;
+
         ImmutablePOJOMapper(Constructor<E> constructor, Class<?>[] parameterTypes, List<String> propertyNames, boolean supportsNesting) {
             int size = prefixes().size();
 
@@ -1188,41 +1225,55 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
         @Override
         public final E map(R record) {
             try {
-                return constructor.newInstance(nested ? mapNested(record) : mapNonnested(record));
+                if (kotlinDefaults != null) {
+                    boolean[] assigned = new boolean[parameterTypes.length];
+                    boolean[] nulls = new boolean[parameterTypes.length];
+                    Object[] args = nested ? mapNested(record, assigned, nulls) : mapNonnested(record, assigned, nulls);
+                    E result = (E) kotlinDefaults.newInstance(args, assigned, nulls);
+
+                    return result != null ? result : constructor.newInstance(args);
+                }
+
+                return constructor.newInstance(nested ? mapNested(record, null, null) : mapNonnested(record, null, null));
             }
             catch (Exception e) {
                 throw new MappingException("An error occurred when mapping record to " + type, e);
             }
         }
 
-        private final Object[] mapNonnested(R record) {
+        private final Object[] mapNonnested(R record, boolean[] assigned, boolean[] nulls) {
 
             // [#10425] Initialise array to constructor parameter type init values
             Object[] converted = Tools.map(parameterTypes, c -> Reflect.initValue(c), Object[]::new);
             ConverterContext cc = Tools.converterContext(record);
 
             for (int i = 0; i < record.size(); i++)
-                set(record, cc, i, converted, propertyIndexes[i]);
+                set(record, cc, i, converted, propertyIndexes[i], assigned, nulls);
 
             return converted;
         }
 
-        final void set(Record from, ConverterContext cc, int fromIndex, Object[] to, Integer toIndex) {
+        final void set(Record from, ConverterContext cc, int fromIndex, Object[] to, Integer toIndex, boolean[] assigned, boolean[] nulls) {
 
             // TODO: This logic could be applicable to mapNested() as well?
             if (toIndex != null) {
                 to[toIndex] = parameterConverters[toIndex] != null
                     ? ((ContextConverter<Object, Object>) parameterConverters[toIndex]).from(from.get(fromIndex), cc)
                     : from.get(fromIndex, parameterTypes[toIndex]);
+
+                track(from, fromIndex, toIndex, assigned, nulls);
             }
             else {
                 for (MappedMember member : members[fromIndex]) {
                     int index = propertyNames.indexOf(member.member().getName());
 
-                    if (index >= 0)
+                    if (index >= 0) {
                         to[index] = member.converter() != null
                             ? ((ContextConverter<Object, Object>) member.converter()).from(from.get(fromIndex), cc)
                             : from.get(fromIndex, member.member().getType());
+
+                        track(from, fromIndex, index, assigned, nulls);
+                    }
                 }
 
                 MappedMethod m = methods[fromIndex];
@@ -1230,16 +1281,30 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                     String name = getPropertyName(m.method().getName());
                     int index = propertyNames.indexOf(name);
 
-                    if (index >= 0)
+                    if (index >= 0) {
                         to[index] = m.converter() != null
                             ? ((ContextConverter<Object, Object>) m.converter()).from(from.get(fromIndex), cc)
                             : from.get(fromIndex, m.method().getReturnType());
 
+                        track(from, fromIndex, index, assigned, nulls);
+                    }
                 }
             }
         }
 
-        private final Object[] mapNested(final R record) {
+        /**
+         * [#10236] Remember that a constructor parameter has been assigned a
+         * value from the record, and whether the record's value was
+         * <code>NULL</code>.
+         */
+        private static final void track(Record from, int fromIndex, int toIndex, boolean[] assigned, boolean[] nulls) {
+            if (assigned != null) {
+                assigned[toIndex] = true;
+                nulls[toIndex] = from.get(fromIndex) == null;
+            }
+        }
+
+        private final Object[] mapNested(final R record, boolean[] assigned, boolean[] nulls) {
             Object[] converted = new Object[parameterTypes.length];
 
             for (int i = 0; i < nestedMappingInfo.length; i++) {
@@ -1249,6 +1314,11 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                 Integer k = propertyIndexes[j];
 
                 if (k != null) {
+                    if (assigned != null) {
+                        assigned[k] = true;
+                        nulls[k] = info.row == null && record.get(j) == null;
+                    }
+
                     if (info.row == null)
                         converted[k] = record.get(j, parameterTypes[k]);
                     else
@@ -1293,6 +1363,190 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
         }
 
         return prefixes;
+    }
+
+    /**
+     * [#10236] Support for Kotlin default parameter values.
+     * <p>
+     * Kotlin applies default parameter values when a parameter is omitted from
+     * the argument map passed to <code>KCallable.callBy()</code>. Only public
+     * <code>kotlin-reflect</code> API is used, which is accessed reflectively,
+     * as jOOQ doesn't depend on Kotlin at compile time.
+     */
+    static final class KotlinDefaults {
+        final Object         kFunction;
+        final List<?>        kParameters;
+        final Object[][]     valueClassConstructors;
+        final Method         callBy;
+        final Method         call;
+        final Class<?>[]     parameterTypes;
+        final boolean[]      optional;
+        final boolean[]      nullable;
+        final boolean        mapNullToDefault;
+
+        private KotlinDefaults(
+            Object kFunction,
+            List<?> kParameters,
+            Object[][] valueClassConstructors,
+            Method callBy,
+            Method call,
+            Class<?>[] parameterTypes,
+            boolean[] optional,
+            boolean[] nullable,
+            boolean mapNullToDefault
+        ) {
+            this.kFunction = kFunction;
+            this.kParameters = kParameters;
+            this.valueClassConstructors = valueClassConstructors;
+            this.callBy = callBy;
+            this.call = call;
+            this.parameterTypes = parameterTypes;
+            this.optional = optional;
+            this.nullable = nullable;
+            this.mapNullToDefault = mapNullToDefault;
+        }
+
+        /**
+         * Prepare the <code>KFunction</code> for calls, or return
+         * <code>null</code> if that isn't possible.
+         *
+         * @param kFunction The class's primary constructor
+         *            <code>KFunction</code>.
+         * @param kParameters The primary constructor's
+         *            <code>KParameter</code> list.
+         * @param valueClassConstructors For each parameter, the primary
+         *            constructors of nested <code>@JvmInline</code> value
+         *            classes (outermost first), or <code>null</code>.
+         */
+        static final KotlinDefaults of(
+            Object kFunction,
+            List<?> kParameters,
+            List<Object>[] valueClassConstructors,
+            Class<?>[] parameterTypes,
+            boolean[] optional,
+            boolean[] nullable,
+            boolean mapNullToDefault
+        ) {
+            Reflect kCallable = Tools.ktKCallable();
+            Reflect kCallablesJvm = Tools.ktKCallablesJvm();
+
+            if (kCallable == null || kCallablesJvm == null)
+                return null;
+
+            try {
+                Object[][] vcc = new Object[valueClassConstructors.length][];
+
+                // Constructors may be private
+                kCallablesJvm.call("setAccessible", kFunction, true);
+
+                for (int i = 0; i < vcc.length; i++) {
+                    if (valueClassConstructors[i] != null) {
+                        vcc[i] = valueClassConstructors[i].toArray();
+
+                        for (Object c : vcc[i])
+                            kCallablesJvm.call("setAccessible", c, true);
+                    }
+                }
+
+                // The Method references are looked up only once, as they're invoked for every mapped record
+                return new KotlinDefaults(
+                    kFunction,
+                    kParameters,
+                    vcc,
+                    kCallable.type().getMethod("callBy", Map.class),
+                    kCallable.type().getMethod("call", Object[].class),
+                    parameterTypes,
+                    optional,
+                    nullable,
+                    mapNullToDefault
+                );
+            }
+            catch (ReflectException | NoSuchMethodException | SecurityException ignore) {
+                return null;
+            }
+        }
+
+        /**
+         * Whether parameter <code>i</code> should receive its default value.
+         */
+        final boolean useDefault(int i, Object[] args, boolean[] assigned, boolean[] nulls) {
+            if (!optional[i])
+                return false;
+
+            // The record doesn't provide any value for the parameter
+            if (!assigned[i])
+                return true;
+
+            // [#10236] An explicit NULL value is semantically different from
+            //          an absent value. Nullable parameters always receive the
+            //          NULL value, and non-nullable parameters receive the
+            //          default value only if explicitly requested.
+            return mapNullToDefault
+                && !nullable[i]
+                && (args[i] == null || nulls[i] && parameterTypes[i].isPrimitive());
+        }
+
+        /**
+         * Create a new instance using <code>KCallable.callBy()</code>, or
+         * return <code>null</code> if no default values need to be applied, in
+         * case of which the regular constructor should be called.
+         */
+        final Object newInstance(Object[] args, boolean[] assigned, boolean[] nulls) throws ReflectiveOperationException {
+
+            // [#14533] The JVM constructor may have additional synthetic parameters
+            //          (e.g. a trailing DefaultConstructorMarker for constructors with
+            //          value class parameters), so iterate the Kotlin parameters only
+            int n = kParameters.size();
+            boolean[] useDefault = null;
+
+            for (int i = 0; i < n; i++) {
+                if (useDefault(i, args, assigned, nulls)) {
+                    if (useDefault == null)
+                        useDefault = new boolean[n];
+
+                    useDefault[i] = true;
+                }
+            }
+
+            if (useDefault == null)
+                return null;
+
+            Map<Object, Object> callArgs = new HashMap<>();
+            for (int i = 0; i < n; i++)
+                if (!useDefault[i])
+                    callArgs.put(kParameters.get(i), wrap(i, args[i]));
+
+            try {
+                return callBy.invoke(kFunction, callArgs);
+            }
+
+            // Unwrap exceptions thrown by the constructor (e.g. NPE)
+            catch (InvocationTargetException e) {
+                if (e.getCause() instanceof InvocationTargetException t)
+                    throw t;
+                else
+                    throw e;
+            }
+        }
+
+        /**
+         * Wrap an argument in its <code>@JvmInline</code> value class(es), if
+         * applicable. Arguments of non-nullable value class parameters are
+         * unwrapped (as the JVM constructor expects the underlying type), but
+         * <code>KCallable.callBy()</code> expects the Kotlin-level value.
+         */
+        private final Object wrap(int i, Object arg) throws ReflectiveOperationException {
+
+            // [#14533] Nullable value class parameters are boxed by the JVM constructor,
+            //          so their arguments are already value class instances
+            if (arg == null || valueClassConstructors[i] == null || Tools.isKotlinValueClass(arg.getClass()))
+                return arg;
+
+            for (int j = valueClassConstructors[i].length - 1; j >= 0; j--)
+                arg = call.invoke(valueClassConstructors[i][j], new Object[] { new Object[] { arg } });
+
+            return arg;
+        }
     }
 
     static class NestedMappingInfo {

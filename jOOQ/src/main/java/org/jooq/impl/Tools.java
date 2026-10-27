@@ -1137,6 +1137,8 @@ final class Tools {
     private static volatile Reflect      ktKClass;
     private static volatile Reflect      ktKTypeParameter;
     private static volatile Reflect      ktReflectJvmMapping;
+    private static volatile Reflect      ktKCallable;
+    private static volatile Reflect      ktKCallablesJvm;
 
     /**
      * [#3696] The maximum number of consumed exceptions in
@@ -4501,6 +4503,36 @@ final class Tools {
         }
 
         return ktKTypeParameter;
+    }
+
+    static final Reflect ktKCallable() {
+        if (ktKCallable == null) {
+            synchronized (initLock) {
+                if (ktKCallable == null) {
+                    try {
+                        ktKCallable = Reflect.onClass("kotlin.reflect.KCallable");
+                    }
+                    catch (ReflectException ignore) {}
+                }
+            }
+        }
+
+        return ktKCallable;
+    }
+
+    static final Reflect ktKCallablesJvm() {
+        if (ktKCallablesJvm == null) {
+            synchronized (initLock) {
+                if (ktKCallablesJvm == null) {
+                    try {
+                        ktKCallablesJvm = Reflect.onClass("kotlin.reflect.jvm.KCallablesJvm");
+                    }
+                    catch (ReflectException ignore) {}
+                }
+            }
+        }
+
+        return ktKCallablesJvm;
     }
 
     static final Reflect ktReflectJvmMapping() {

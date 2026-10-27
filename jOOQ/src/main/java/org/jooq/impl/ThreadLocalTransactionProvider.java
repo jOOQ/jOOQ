@@ -123,7 +123,7 @@ public class ThreadLocalTransactionProvider implements TransactionProvider {
         // [#17517] In case of failure during commit(), avoid calling pop() here
         //          as it will be called in rollback()
         delegateTransactionProvider.commit(ctx);
-        configurations().pop();
+        pop(ctx);
     }
 
     @Override
@@ -131,13 +131,55 @@ public class ThreadLocalTransactionProvider implements TransactionProvider {
         if (delegateTransactionProvider.nestingLevel(ctx) == 1)
             localTxConnection.remove();
 
-        delegateTransactionProvider.rollback(ctx);
-        configurations().pop();
+        // [#20138] The delegate rollback may throw, e.g. when the connection
+        //          is broken. The thread local configuration must still be
+        //          popped, otherwise it leaks to all subsequent transactions
+        //          on this thread, along with its (possibly broken) connection.
+        try {
+            delegateTransactionProvider.rollback(ctx);
+        }
+        finally {
+            pop(ctx);
+        }
     }
 
     Configuration configuration(Configuration fallback) {
-        Deque<Configuration> configurations = configurations();
-        return configurations.isEmpty() ? fallback : configurations.peek();
+        Deque<Configuration> configurations = localConfigurations.get();
+        return configurations == null || configurations.isEmpty() ? fallback : configurations.peek();
+    }
+
+    /**
+     * [#20138] Pop the {@link Configuration} that was pushed by
+     * {@link #begin(TransactionContext)} for this {@link TransactionContext},
+     * if any.
+     * <p>
+     * If {@link #begin(TransactionContext)} failed before pushing, then nothing
+     * must be popped, as the top of the stack belongs to an enclosing
+     * transaction. If stale configurations have been left above this
+     * transaction's configuration, they're removed as well.
+     */
+    private void pop(TransactionContext ctx) {
+        Deque<Configuration> configurations = localConfigurations.get();
+
+        if (configurations == null)
+            return;
+
+        Configuration configuration = ctx.configuration();
+        boolean found = false;
+
+        for (Configuration c : configurations) {
+            if (c == configuration) {
+                found = true;
+                break;
+            }
+        }
+
+        if (found)
+            while (configurations.pop() != configuration);
+
+        // Don't retain empty deques in long-lived pool threads
+        if (configurations.isEmpty())
+            localConfigurations.remove();
     }
 
     private Deque<Configuration> configurations() {

@@ -139,6 +139,18 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
     int                                            index;
     int                                            scopeMarking;
     final ScopeStack<QueryPart, ScopeStackElement> scopeStack;
+
+    /**
+     * [#perf] The number of {@link ScopeMappable} elements in
+     * {@link #scopeStack} with a non-null {@link ScopeStackElement#mapped()}.
+     * <p>
+     * This is maintained exclusively by {@link ScopeStackElement}, never by
+     * callers, so it can't be forgotten when new code registers mappings. It
+     * may over count (elements removed from the stack aren't subtracted), but
+     * it never under counts, so <code>0</code> safely means that no
+     * {@link #scopeMapping(QueryPart)} lookup can produce a result.
+     */
+    private int                                    scopeMappings;
     int                                            skipUpdateCounts;
 
     // [#2665] VisitListener API
@@ -1014,6 +1026,14 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
         return part;
     }
 
+    /**
+     * [#perf] Whether {@link #scopeMapping(QueryPart)} may find any mapping
+     * at all, or whether the scope stack lookup can be skipped.
+     */
+    final boolean scopeMappingsPossible() {
+        return scopeMappings > 0;
+    }
+
     @Override
     public final C scopeRegisterAndMark(QueryPart part, boolean forceNew) {
         return scopeRegister(part, forceNew).scopeMarkStart(part).scopeMarkEnd(part);
@@ -1609,19 +1629,35 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
         }
     }
 
-    abstract static class ScopeStackElement {
-        final int       scopeLevel;
-        final QueryPart part;
-        QueryPart       mapped;
-        int[]           positions;
-        int             bindIndex;
-        int             indent;
-        JoinNode        joinNode;
+    abstract class ScopeStackElement {
+        final int         scopeLevel;
+        final QueryPart   part;
+        private QueryPart mapped;
+        int[]             positions;
+        int               bindIndex;
+        int               indent;
+        JoinNode          joinNode;
 
         ScopeStackElement(QueryPart part, int scopeLevel) {
             this.part = part;
-            this.mapped = part;
             this.scopeLevel = scopeLevel;
+
+            mapped(part);
+        }
+
+        final QueryPart mapped() {
+            return mapped;
+        }
+
+        final void mapped(QueryPart newMapped) {
+            if (part instanceof ScopeMappable) {
+                if (mapped == null && newMapped != null)
+                    AbstractContext.this.scopeMappings++;
+                else if (mapped != null && newMapped == null)
+                    AbstractContext.this.scopeMappings--;
+            }
+
+            mapped = newMapped;
         }
     }
 
@@ -1656,7 +1692,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
         private ScopeDefinerScopeStackPart() {}
     }
 
-    static final class DataKeyScopeStackElement extends ScopeStackElement {
+    final class DataKeyScopeStackElement extends ScopeStackElement {
         List<Object> restoreDataKeys;
 
         DataKeyScopeStackElement(QueryPart part, int scopeLevel) {
@@ -1669,7 +1705,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
         }
     }
 
-    static final class ScopeDefinerScopeStackElement extends ScopeStackElement {
+    final class ScopeDefinerScopeStackElement extends ScopeStackElement {
         QueryPart scopeDefiner;
 
         ScopeDefinerScopeStackElement(QueryPart part, int scopeLevel) {
@@ -1682,7 +1718,7 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
         }
     }
 
-    static final class DefaultScopeStackElement extends ScopeStackElement {
+    final class DefaultScopeStackElement extends ScopeStackElement {
         DefaultScopeStackElement(QueryPart part, int scopeLevel) {
             super(part, scopeLevel);
         }
@@ -1696,8 +1732,8 @@ abstract class AbstractContext<C extends Context<C>> extends AbstractScope imple
 
             sb.append(part);
 
-            if (mapped != null)
-                sb.append(" (" + mapped + ")");
+            if (mapped() != null)
+                sb.append(" (" + mapped() + ")");
 
             return sb.toString();
         }

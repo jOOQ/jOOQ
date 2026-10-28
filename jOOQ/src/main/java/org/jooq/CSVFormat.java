@@ -59,6 +59,7 @@ public final class CSVFormat {
     final String                  newline;
     final String                  quoteString;
     final Quote                   quote;
+    final boolean                 quoteBackslashes;
     final boolean                 header;
 
     public CSVFormat() {
@@ -69,6 +70,7 @@ public final class CSVFormat {
             "\n",
             "\"",
             SPECIAL_CHARACTERS,
+            true,
             true
         );
     }
@@ -80,6 +82,7 @@ public final class CSVFormat {
         String newline,
         String quoteString,
         Quote quote,
+        boolean quoteBackslashes,
         boolean header
     ) {
         this.delimiter = delimiter;
@@ -88,6 +91,7 @@ public final class CSVFormat {
         this.newline = newline;
         this.quoteString = quoteString;
         this.quote = quote;
+        this.quoteBackslashes = quoteBackslashes;
         this.header = header;
     }
 
@@ -115,6 +119,7 @@ public final class CSVFormat {
             newline,
             quoteString,
             quote,
+            quoteBackslashes,
             header
         );
     }
@@ -187,6 +192,7 @@ public final class CSVFormat {
             newline,
             quoteString,
             quote,
+            quoteBackslashes,
             header
         );
     }
@@ -239,6 +245,7 @@ public final class CSVFormat {
             newline,
             quoteString,
             quote,
+            quoteBackslashes,
             header
         );
     }
@@ -275,6 +282,7 @@ public final class CSVFormat {
             newNewline,
             quoteString,
             quote,
+            quoteBackslashes,
             header
         );
     }
@@ -300,6 +308,7 @@ public final class CSVFormat {
             newline,
             newQuoteString,
             quote,
+            quoteBackslashes,
             header
         );
     }
@@ -325,6 +334,7 @@ public final class CSVFormat {
             newline,
             quoteString,
             newQuote,
+            quoteBackslashes,
             header
         );
     }
@@ -350,6 +360,7 @@ public final class CSVFormat {
             newline,
             quoteString,
             quote,
+            quoteBackslashes,
             newHeader
         );
     }
@@ -360,6 +371,53 @@ public final class CSVFormat {
      */
     public boolean header() {
         return header;
+    }
+
+    /**
+     * Whether to escape backslashes as <code>\\</code> and treat them as
+     * special characters for {@link Quote#SPECIAL_CHARACTERS}, defaulting to
+     * <code>true</code>.
+     * <p>
+     * RFC 4180 does not specify the backslash as an escape character, so
+     * <code>false</code> produces RFC compliant output. The default of
+     * <code>true</code> retains the historic behaviour of jOOQ.
+     * <p>
+     * <table border="1">
+     * <tr>
+     * <td>Using <code>true</code></td>
+     * <td><code>"back\\slash"</code></td>
+     * </tr>
+     * <tr>
+     * <td>Using <code>false</code></td>
+     * <td><code>back\slash</code></td>
+     * </tr>
+     * </table>
+     */
+    @NotNull
+    public CSVFormat quoteBackslashes(boolean newQuoteBackslashes) {
+        return new CSVFormat(
+            delimiter,
+            nullString,
+            emptyString,
+            newline,
+            quoteString,
+            quote,
+            newQuoteBackslashes,
+            header
+        );
+    }
+
+    /**
+     * Whether to escape backslashes as <code>\\</code> and treat them as
+     * special characters for {@link Quote#SPECIAL_CHARACTERS}, defaulting to
+     * <code>true</code>.
+     * <p>
+     * RFC 4180 does not specify the backslash as an escape character, so
+     * <code>false</code> produces RFC compliant output. The default of
+     * <code>true</code> retains the historic behaviour of jOOQ.
+     */
+    public boolean quoteBackslashes() {
+        return quoteBackslashes;
     }
 
     /**
@@ -381,7 +439,8 @@ public final class CSVFormat {
          * <li><code>;</code>: The semi colon</li>
          * <li><code>"</code>: The double quote</li>
          * <li><code>'</code>: The apostrophe</li>
-         * <li><code>\</code>: The backslash</li>
+         * <li><code>\</code>: The backslash (only if
+         * {@link CSVFormat#quoteBackslashes()} is set)</li>
          * <li><code>\t</code>: The tab character</li>
          * <li><code>\n</code>: The line feed character</li>
          * <li><code>\r</code>: The carriage return character</li>

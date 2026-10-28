@@ -206,11 +206,13 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public QueryPart scopeMapping(QueryPart part) {
-        if (scopeStack.inScope() && part instanceof ScopeMappable) {
+        // [#perf] Most queries never register a mapping, in case of which the
+        //         (hash based) scope stack lookup can be skipped
+        if (scopeMappingsPossible() && scopeStack.inScope() && part instanceof ScopeMappable) {
             ScopeStackElement e = scopeStack.get(part);
 
-            if (e != null && e.mapped != null) {
-                QueryPart result = e.mapped;
+            if (e != null && e.mapped() != null) {
+                QueryPart result = e.mapped();
 
                 // [#13148] Prevent undesired unwrapping of scope mappables by re-wrapping them.
                 if (part instanceof ScopeMappableWrapper)
@@ -275,7 +277,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
             else
                 e = scopeStack.getOrCreate(part);
 
-            e.mapped = mapped;
+            e.mapped(mapped);
         }
 
         return this;
@@ -284,15 +286,16 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     @Override
     void scopeStart0() {
         for (ScopeStackElement e : scopeStack)
-            if (e.part != e.mapped && !(e.part instanceof ScopeNestable))
+            if (e.part != e.mapped() && !(e.part instanceof ScopeNestable))
                 scopeStack.set(e.part, null);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     void scopeEnd0() {
         ScopeMarker[] markers = ScopeMarker.values();
-        ScopeStackElement[] beforeFirst = new ScopeStackElement[markers.length];
-        ScopeStackElement[] afterLast = new ScopeStackElement[markers.length];
+        ScopeStackElement[] beforeFirst = (ScopeStackElement[]) new AbstractContext<?>.ScopeStackElement[markers.length];
+        ScopeStackElement[] afterLast = (ScopeStackElement[]) new AbstractContext<?>.ScopeStackElement[markers.length];
         ScopeContent[] content = new ScopeContent[markers.length];
 
         for (ScopeMarker marker : markers) {

@@ -56,6 +56,7 @@ import static org.jooq.impl.Tools.hasColumnAnnotations;
 import static org.jooq.impl.Tools.newRecord;
 import static org.jooq.impl.Tools.recordType;
 import static org.jooq.impl.Tools.row0;
+import static org.jooq.impl.Tools.scoped;
 import static org.jooq.tools.reflect.Reflect.accessible;
 
 import java.lang.reflect.Array;
@@ -1217,7 +1218,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
             if (!hasNestedFields)
                 for (int i = 0; i < fields.length; i++)
                     if (propertyIndexes[i] != null)
-                        parameterConverters[propertyIndexes[i]] = configuration.converterProvider().provide(fields[i].getType(), parameterTypes[propertyIndexes[i]]);
+                        parameterConverters[propertyIndexes[i]] = scoped(configuration.converterProvider().provide((Class) fields[i].getType(), (Class) parameterTypes[propertyIndexes[i]]));
 
             this.nested = hasNestedFields;
         }

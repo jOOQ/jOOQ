@@ -484,18 +484,23 @@ abstract class AbstractResult<R extends Record> extends AbstractFormattable impl
                 return result;
 
             case SPECIAL_CHARACTERS:
-                if (!StringUtils.containsAny(result, ',', ';', '\t', '"', '\n', '\r', '\'', '\\'))
+
+                // [#20349] Backslashes are special characters only if they're quoted
+                if (format.quoteBackslashes()
+                        ? !StringUtils.containsAny(result, ',', ';', '\t', '"', '\n', '\r', '\'', '\\')
+                        : !StringUtils.containsAny(result, ',', ';', '\t', '"', '\n', '\r', '\''))
                     return result;
 
                 // no break
             case ALWAYS:
             default:
+
+                // [#20349] RFC 4180 doesn't specify backslash escaping
+                if (format.quoteBackslashes())
+                    result = StringUtils.replace(result, "\\", "\\\\");
+
                 return format.quoteString()
-                     + StringUtils.replace(
-                           StringUtils.replace(
-                               result, "\\", "\\\\"
-                           ), format.quoteString(), format.quoteString() + format.quoteString()
-                       )
+                     + StringUtils.replace(result, format.quoteString(), format.quoteString() + format.quoteString())
                      + format.quoteString();
         }
     }

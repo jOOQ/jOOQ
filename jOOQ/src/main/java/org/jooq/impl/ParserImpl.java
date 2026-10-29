@@ -670,6 +670,7 @@ import org.jooq.Privilege;
 import org.jooq.QualifiedAsterisk;
 import org.jooq.Queries;
 import org.jooq.Query;
+import org.jooq.QuantifiedSelect;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.ResultQuery;
@@ -6835,7 +6836,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                 ? leftScalar != null
                     ? peekSelectOrWith(true)
                         ? leftScalar.compare(comp, DSL.all(parseWithOrSelect(1)))
-                        : leftScalar.compare(comp, DSL.all(parseList(',', c -> c.parseField()).toArray(EMPTY_FIELD)))
+                        : leftScalar.compare(comp, quantifiedAll(parseList(',', c -> c.parseField())))
 
                     // TODO: Support quantifiers also for rows
                     : new RowSubqueryCondition((Row) left, DSL.all(parseWithOrSelect(((Row) left).size())), comp)
@@ -6844,7 +6845,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                 ? leftScalar != null
                     ? peekSelectOrWith(true)
                         ? leftScalar.compare(comp, DSL.any(parseWithOrSelect(1)))
-                        : leftScalar.compare(comp, DSL.any(parseList(',', c -> c.parseField()).toArray(EMPTY_FIELD)))
+                        : leftScalar.compare(comp, quantifiedAny(parseList(',', c -> c.parseField())))
 
                     // TODO: Support quantifiers also for rows
                     : new RowSubqueryCondition((Row) left, DSL.any(parseWithOrSelect(((Row) left).size())), comp)
@@ -14074,6 +14075,20 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
     private final Field<Number> parseFieldUnsignedNumericLiteralIf(Sign sign) {
         Number r = parseUnsignedNumericLiteralIf(sign);
         return r == null ? null : inline(r);
+    }
+
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    private static final QuantifiedSelect quantifiedAny(List<Field<?>> list) {
+        return list.size() == 1 && list.get(0).getDataType().isArray()
+            ? DSL.any((Field) list.get(0))
+            : DSL.any(list.toArray(EMPTY_FIELD));
+    }
+
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    private static final QuantifiedSelect quantifiedAll(List<Field<?>> list) {
+        return list.size() == 1 && list.get(0).getDataType().isArray()
+            ? DSL.all((Field) list.get(0))
+            : DSL.all(list.toArray(EMPTY_FIELD));
     }
 
     private final Number parseUnsignedNumericLiteralIf(Sign sign) {

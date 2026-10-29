@@ -1298,7 +1298,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
          * value from the record, and whether the record's value was
          * <code>NULL</code>.
          */
-        private static final void track(Record from, int fromIndex, int toIndex, boolean[] assigned, boolean[] nulls) {
+        private final void track(Record from, int fromIndex, int toIndex, boolean[] assigned, boolean[] nulls) {
             if (assigned != null) {
                 assigned[toIndex] = true;
                 nulls[toIndex] = from.get(fromIndex) == null;

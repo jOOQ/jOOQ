@@ -9597,8 +9597,6 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                     return parseArrayLambdaFunction(DSL::arrayAnyMatch);
                 else if (parseFunctionNameIf("ARRAY_NONE_MATCH"))
                     return parseArrayLambdaFunction(DSL::arrayNoneMatch);
-                else if (parseFunctionNameIf("ARRAY_MAP", "arrayMap", "ARRAY_TRANSFORM"))
-                    return parseArrayLambdaFunction(DSL::arrayMap);
                 else if (parseFunctionNameIf("ARRAY_OVERLAP", "ARRAYS_OVERLAP"))
                     return parseFunctionArgs2((f1, f2) -> arrayOverlap((Field<Void[]>) f1, (Field<Void[]>) f2));
                 else if (parseFunctionNameIf("ARRAY_PREPEND"))

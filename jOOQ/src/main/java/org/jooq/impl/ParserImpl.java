@@ -14088,14 +14088,24 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
             return null;
 
         if (parseIf('e', false) || parseIf('E', false)) {
-            parseIf('-', false);
             int p0 = position();
+
+            // [#20365] Support explicitly signed exponents (e.g. 1e+3 or 1e-3)
+            if (!parseIf('-', false))
+                parseIf('+', false);
+
+            int p1 = position();
             parseDigits();
 
             // [#16330] Support implicit 0 exponents (e.g. 0e or 0.0e as supported by SQL Server)
-            String s = substring(p, position());
-            if (position() == p0)
-                s = s + "0";
+            // [#20365] A sign that isn't followed by digits doesn't belong to the exponent (e.g. 0e+x)
+            String s;
+            if (position() == p1) {
+                position(p0);
+                s = substring(p, p0) + "0";
+            }
+            else
+                s = substring(p, position());
 
             parseWhitespaceIf();
             return sign == Sign.MINUS ? -parseDouble(s) : parseDouble(s);

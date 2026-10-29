@@ -4840,16 +4840,29 @@ final class Tools {
      * Get a property name associated with a getter/setter method name.
      */
     static final String getPropertyName(String methodName) {
-        String name = methodName;
+        if (methodName.startsWith("is") && methodName.length() > 2)
+            return decapitalizeAt(methodName, 2);
+        else if (methodName.startsWith("get") && methodName.length() > 3)
+            return decapitalizeAt(methodName, 3);
+        else if (methodName.startsWith("set") && methodName.length() > 3)
+            return decapitalizeAt(methodName, 3);
+        else
+            return methodName;
+    }
 
-        if (name.startsWith("is") && name.length() > 2)
-            name = name.substring(2, 3).toLowerCase() + name.substring(3);
-        else if (name.startsWith("get") && name.length() > 3)
-            name = name.substring(3, 4).toLowerCase() + name.substring(4);
-        else if (name.startsWith("set") && name.length() > 3)
-            name = name.substring(3, 4).toLowerCase() + name.substring(4);
-
-        return name;
+    /**
+     * Lower case the character at <code>index</code> and return the remainder
+     * of the string from there.
+     * <p>
+     * This deliberately uses the locale independent
+     * {@link Character#toLowerCase(char)} (like
+     * <code>java.beans.Introspector.decapitalize(String)</code>), as Java
+     * identifiers mustn't depend on the default locale. With
+     * {@link String#toLowerCase()} in e.g. a Turkish locale, <code>getId</code>
+     * would produce <code>ıd</code> (dotless i).
+     */
+    private static final String decapitalizeAt(String string, int index) {
+        return Character.toLowerCase(string.charAt(index)) + string.substring(index + 1);
     }
 
     // ------------------------------------------------------------------------

@@ -158,6 +158,18 @@ public interface Generator {
     void setGenerateUDTConstructors(boolean generateUDTConstructors);
 
     /**
+     * Whether to generate embeddable path expressions on tables and
+     * embeddables.
+     */
+    boolean generateEmbeddablePaths();
+
+    /**
+     * Whether to generate embeddable path expressions on tables and
+     * embeddables.
+     */
+    void setGenerateEmbeddablePaths(boolean generateEmbeddablePaths);
+
+    /**
      * Whether implicit join path constructors on generated tables for outgoing
      * foreign key relationships (to-one relationships) should be generated.
      */

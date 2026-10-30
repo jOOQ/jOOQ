@@ -1615,6 +1615,10 @@ public class MetaExtensions {
             return isUdtConstructors();
         }
 
+        public Boolean getEmbeddablePaths() {
+            return isEmbeddablePaths();
+        }
+
         public Boolean getImplicitJoinPathsToOne() {
             return isImplicitJoinPathsToOne();
         }

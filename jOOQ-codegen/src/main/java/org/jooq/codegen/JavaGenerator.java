@@ -7853,15 +7853,31 @@ public class JavaGenerator extends AbstractGenerator {
 
             out.javadoc("The embeddable type <code>%s</code>.[[before= ][%s]]", embeddable.getOutputName(), list(escapeEntities(referencingComment(embeddable))));
 
-            if (scala)
-                out.println("%s%sval %s: %s[%s, %s] = %s.createEmbeddable(%s.name(\"%s\"), classOf[%s], %s, this, [[%s]])",
-                    visibility(override), override ? "override " : "", scalaWhitespaceSuffix(columnId), TableField.class, recordType, columnType, Internal.class, DSL.class, escapeString(embeddable.getName()), columnType, embeddable.replacesFields(), columnIds);
-            else if (kotlin)
-                out.println("%s%sval %s: %s<%s, %s> = %s.createEmbeddable(%s.name(\"%s\"), %s::class.java, %s, this, [[%s]])",
-                    visibility(override), override ? "override " : "", columnId, TableField.class, recordType, columnType, Internal.class, DSL.class, escapeString(embeddable.getName()), columnType, embeddable.replacesFields(), columnIds);
-            else
-                out.println("%sfinal %s<%s, %s> %s = %s.createEmbeddable(%s.name(\"%s\"), %s.class, %s, this, [[%s]]);",
-                    visibility(), TableField.class, recordType, columnType, columnId, Internal.class, DSL.class, escapeString(embeddable.getName()), columnType, embeddable.replacesFields(), columnIds);
+            // [#17177] Embeddable paths provide access to the embeddable's component fields
+            if (generateEmbeddablePaths()) {
+                final String columnPathType = out.ref(getStrategy().getFullJavaClassName(embeddable, Mode.PATH));
+
+                if (scala)
+                    out.println("%s%sval %s: %s[%s] = %s.createEmbeddable(%s.name(\"%s\"), classOf[%s], %s, this, classOf[ %s[%s] ], [[%s]])",
+                        visibility(override), override ? "override " : "", scalaWhitespaceSuffix(columnId), columnPathType, recordType, Internal.class, DSL.class, escapeString(embeddable.getName()), columnType, embeddable.replacesFields(), columnPathType, recordType, columnIds);
+                else if (kotlin)
+                    out.println("%s%sval %s: %s<%s> = %s.createEmbeddable(%s.name(\"%s\"), %s::class.java, %s, this, %s::class.java as %s<%s<%s>>, [[%s]])",
+                        visibility(override), override ? "override " : "", columnId, columnPathType, recordType, Internal.class, DSL.class, escapeString(embeddable.getName()), columnType, embeddable.replacesFields(), columnPathType, Class.class, columnPathType, recordType, columnIds);
+                else
+                    out.println("%sfinal %s<%s> %s = %s.createEmbeddable(%s.name(\"%s\"), %s.class, %s, this, %s.class, [[%s]]);",
+                        visibility(), columnPathType, recordType, columnId, Internal.class, DSL.class, escapeString(embeddable.getName()), columnType, embeddable.replacesFields(), columnPathType, columnIds);
+            }
+            else {
+                if (scala)
+                    out.println("%s%sval %s: %s[%s, %s] = %s.createEmbeddable(%s.name(\"%s\"), classOf[%s], %s, this, [[%s]])",
+                        visibility(override), override ? "override " : "", scalaWhitespaceSuffix(columnId), TableField.class, recordType, columnType, Internal.class, DSL.class, escapeString(embeddable.getName()), columnType, embeddable.replacesFields(), columnIds);
+                else if (kotlin)
+                    out.println("%s%sval %s: %s<%s, %s> = %s.createEmbeddable(%s.name(\"%s\"), %s::class.java, %s, this, [[%s]])",
+                        visibility(override), override ? "override " : "", columnId, TableField.class, recordType, columnType, Internal.class, DSL.class, escapeString(embeddable.getName()), columnType, embeddable.replacesFields(), columnIds);
+                else
+                    out.println("%sfinal %s<%s, %s> %s = %s.createEmbeddable(%s.name(\"%s\"), %s.class, %s, this, [[%s]]);",
+                        visibility(), TableField.class, recordType, columnType, columnId, Internal.class, DSL.class, escapeString(embeddable.getName()), columnType, embeddable.replacesFields(), columnIds);
+            }
         }
 
         out.println();
@@ -9240,8 +9256,13 @@ public class JavaGenerator extends AbstractGenerator {
                     // [#6124] [#10481] <embeddableKeys/> map to the same embeddable for PKs/FKs.
                     //                  The FKs are always listed after the PKs, so we can simply skip
                     //                  unnecessary re-generations
-                    if (duplicates.add(getFile(embeddable, Mode.RECORD)))
+                    if (duplicates.add(getFile(embeddable, Mode.RECORD))) {
                         generateEmbeddable(schema, embeddable);
+
+                        // [#17177] Embeddable paths
+                        if (generateEmbeddablePaths())
+                            generateEmbeddablePath(schema, embeddable);
+                    }
                 },
                 () -> "Error while generating embeddable " + embeddable
             );
@@ -9256,6 +9277,115 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("Generating embeddable", out.file().getName());
         generateRecord0(embeddable, out);
         closeJavaWriter(out);
+    }
+
+    @SuppressWarnings("unused")
+    protected void generateEmbeddablePath(SchemaDefinition schema, EmbeddableDefinition embeddable) {
+        JavaWriter out = newJavaWriter(embeddable, Mode.PATH);
+        out.refConflicts(getStrategy().getJavaIdentifiers(embeddable.getColumns()));
+
+        log.info("Generating embeddable path", out.file().getName());
+        generateEmbeddablePath(embeddable, out);
+        closeJavaWriter(out);
+    }
+
+    protected void generateEmbeddablePath(EmbeddableDefinition embeddable, JavaWriter out) {
+        final String className = getStrategy().getJavaClassName(embeddable, Mode.PATH);
+        final String recordType = out.ref(getStrategy().getFullJavaClassName(embeddable, Mode.RECORD));
+        final String classExtends = out.ref(getStrategy().getJavaClassExtends(embeddable, Mode.PATH));
+        final List<String> interfaces = out.ref(getStrategy().getJavaClassImplements(embeddable, Mode.PATH));
+
+        printPackage(out, embeddable, Mode.PATH);
+
+        generateEmbeddablePathClassJavadoc(embeddable, out);
+        printClassAnnotations(out, embeddable, Mode.PATH);
+
+        if (scala) {
+            out.println("%sclass %s[R <: %s](", visibility(), className, Record.class);
+            out.println("name: %s,", Name.class);
+            out.println("recordType: %s[%s],", Class.class, recordType);
+            out.println("replacesFields: %s,", "Boolean");
+            out.println("table: %s[R],", Table.class);
+            out.println("fields: %s[ %s[R, %s] ]", out.ref("scala.Array"), TableField.class, wildcard());
+            out.println(")");
+            out.println("extends %s[R, %s](", classExtends, recordType);
+            out.println("name, recordType, replacesFields, table, fields");
+            if (interfaces.isEmpty())
+                out.println(") {");
+            else
+                out.println(")")
+                   .println("[[before= with ][separator= with ][%s]] {", interfaces);
+        }
+        else if (kotlin) {
+            out.println("%sopen class %s<R : %s>(", visibility(), className, Record.class);
+            out.println("name: %s,", Name.class);
+            out.println("recordType: %s<%s>,", Class.class, recordType);
+            out.println("replacesFields: Boolean,");
+            out.println("table: %s<R>,", Table.class);
+            out.println("fields: Array<%s<R, *>>", TableField.class);
+            out.println(") : %s<R, %s>(", classExtends, recordType);
+            out.println("name, recordType, replacesFields, table, fields");
+            out.println(")[[before=, ][%s]] {", interfaces);
+        }
+        else {
+            out.println("%sclass %s<R extends %s> extends %s<R, %s>[[before= implements ][%s]] {",
+                visibility(), className, Record.class, classExtends, recordType, interfaces);
+            out.printSerial();
+        }
+
+        final List<EmbeddableColumnDefinition> columns = embeddable.getColumns();
+
+        for (int i = 0; i < columns.size(); i++) {
+            final EmbeddableColumnDefinition column = columns.get(i);
+            final String columnTypeFull = getJavaType(column.getType(resolver(out)), out);
+            final String columnType = out.ref(columnTypeFull);
+            final String columnId = out.ref(getStrategy().getJavaIdentifier(column), 2);
+
+            if (!printDeprecationIfUnknownType(out, columnTypeFull))
+                out.javadoc("The embeddable component <code>%s</code>.[[before= ][%s]]", column.getQualifiedOutputName(), list(escapeEntities(comment(column))));
+
+            if (scala)
+                out.println("%sval %s: %s[R, %s] = embeddableField(%s)",
+                    visibility(), scalaWhitespaceSuffix(columnId), TableField.class, columnType, i);
+            else if (kotlin)
+                out.println("%sval %s: %s<R, %s?> = embeddableField(%s)",
+                    visibility(), columnId, TableField.class, columnType, i);
+            else
+                out.println("%sfinal %s<R, %s> %s;", visibility(), TableField.class, columnType, columnId);
+        }
+
+        if (scala || kotlin) {}
+        else {
+            out.println();
+            out.println("%s%s(%s name, %s<%s> recordType, boolean replacesFields, %s<R> table, %s<R, ?>[] fields) {",
+                visibility(), className, Name.class, Class.class, recordType, Table.class, TableField.class);
+            out.println("super(name, recordType, replacesFields, table, fields);");
+            out.println();
+
+            for (int i = 0; i < columns.size(); i++)
+                out.println("this.%s = embeddableField(%s);", out.ref(getStrategy().getJavaIdentifier(columns.get(i)), 2), i);
+
+            out.println("}");
+        }
+
+        generateEmbeddablePathClassFooter(embeddable, out);
+        out.println("}");
+    }
+
+    /**
+     * Subclasses may override this method to provide embeddable path class footer code.
+     */
+    @SuppressWarnings("unused")
+    protected void generateEmbeddablePathClassFooter(EmbeddableDefinition embeddable, JavaWriter out) {}
+
+    /**
+     * Subclasses may override this method to provide their own Javadoc.
+     */
+    protected void generateEmbeddablePathClassJavadoc(EmbeddableDefinition embeddable, JavaWriter out) {
+        if (generateCommentsOnEmbeddables())
+            printClassJavadoc(out, embeddable);
+        else
+            printClassJavadoc(out, embeddable, "The embeddable path for <code>" + embeddable.getQualifiedOutputName() + "</code>.");
     }
 
     protected void generateEmbeddablePojos(SchemaDefinition schema) {

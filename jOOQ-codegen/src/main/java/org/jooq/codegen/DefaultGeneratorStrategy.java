@@ -62,6 +62,7 @@ import org.jooq.impl.AbstractRoutine;
 import org.jooq.impl.CatalogImpl;
 import org.jooq.impl.DAOImpl;
 import org.jooq.impl.EmbeddableRecordImpl;
+import org.jooq.impl.EmbeddableTableField;
 import org.jooq.impl.SchemaImpl;
 import org.jooq.impl.TableImpl;
 import org.jooq.impl.TableRecordImpl;
@@ -385,6 +386,7 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
         }
         else if (definition instanceof EmbeddableDefinition) {
             switch (mode) {
+                case PATH:   return EmbeddableTableField.class.getName();
                 case RECORD: return EmbeddableRecordImpl.class.getName();
             }
         }
@@ -700,8 +702,14 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
             return "tables";
 
         // [#2530] Embeddable types
-        else if (definition instanceof EmbeddableDefinition)
-            return "embeddables";
+        else if (definition instanceof EmbeddableDefinition) {
+
+            // [#17177] Embeddable paths are generated in a separate package
+            if (mode == Mode.PATH)
+                return "embeddables.paths";
+            else
+                return "embeddables";
+        }
 
         // [#799] UDT's are also packages
         else if (definition instanceof UDTDefinition u) {

@@ -377,6 +377,42 @@ public final class Internal {
     }
 
     /**
+     * Factory method for embeddable types that are represented by a generated
+     * embeddable path type.
+     * <p>
+     * [#17177] The generated path type <code>P</code> must provide a public
+     * constructor with the signature
+     * <code>(Name, Class&lt;E&gt;, boolean, Table&lt;R&gt;, TableField&lt;R, ?&gt;[])</code>.
+     */
+    @SafeVarargs
+    @SuppressWarnings("unchecked")
+    @NotNull
+    public static final <R extends Record, E extends EmbeddableRecord<E>, P extends TableField<R, E>> P createEmbeddable(
+        Name name,
+        Class<E> recordType,
+        boolean replacesFields,
+        Table<R> table,
+        Class<P> pathType,
+        TableField<R, ?>... fields
+    ) {
+        if (pathType == null)
+            return (P) createEmbeddable(name, recordType, replacesFields, table, fields);
+
+        try {
+
+            // [#17177] While it would be cleaner to pass around a Function5 constructor reference,
+            //          chances are that the cost on compilation speed is significantly higher than
+            //          if we just use reflection. See also [#228]
+            return pathType
+                .getConstructor(Name.class, Class.class, boolean.class, Table.class, TableField[].class)
+                .newInstance(name, recordType, replacesFields, table, fields);
+        }
+        catch (Exception e) {
+            throw new DataTypeException("Cannot instantiate " + pathType + ".", e);
+        }
+    }
+
+    /**
      * Factory method for indexes.
      */
     @NotNull

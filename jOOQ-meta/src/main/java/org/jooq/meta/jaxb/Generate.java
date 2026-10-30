@@ -111,6 +111,8 @@ public class Generate implements Serializable, XMLAppendable
     @XmlElement(defaultValue = "true")
     protected Boolean embeddables = true;
     @XmlElement(defaultValue = "true")
+    protected Boolean embeddablePaths = true;
+    @XmlElement(defaultValue = "true")
     protected Boolean records = true;
     @XmlJavaTypeAdapter(StringAdapter.class)
     protected String recordsIncludes;
@@ -1245,6 +1247,30 @@ public class Generate implements Serializable, XMLAppendable
      */
     public void setEmbeddables(Boolean value) {
         this.embeddables = value;
+    }
+
+    /**
+     * Generate embeddable path expressions on tables and on embeddables.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isEmbeddablePaths() {
+        return embeddablePaths;
+    }
+
+    /**
+     * Generate embeddable path expressions on tables and on embeddables.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setEmbeddablePaths(Boolean value) {
+        this.embeddablePaths = value;
     }
 
     /**
@@ -4038,6 +4064,15 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
+     * Generate embeddable path expressions on tables and on embeddables.
+     * 
+     */
+    public Generate withEmbeddablePaths(Boolean value) {
+        setEmbeddablePaths(value);
+        return this;
+    }
+
+    /**
      * Generate TableRecord classes.
      * 
      */
@@ -5057,6 +5092,7 @@ public class Generate implements Serializable, XMLAppendable
         builder.append("keys", keys);
         builder.append("tables", tables);
         builder.append("embeddables", embeddables);
+        builder.append("embeddablePaths", embeddablePaths);
         builder.append("records", records);
         builder.append("recordsIncludes", recordsIncludes);
         builder.append("recordsExcludes", recordsExcludes);
@@ -5525,6 +5561,15 @@ public class Generate implements Serializable, XMLAppendable
             }
         } else {
             if (!embeddables.equals(other.embeddables)) {
+                return false;
+            }
+        }
+        if (embeddablePaths == null) {
+            if (other.embeddablePaths!= null) {
+                return false;
+            }
+        } else {
+            if (!embeddablePaths.equals(other.embeddablePaths)) {
                 return false;
             }
         }
@@ -6465,6 +6510,7 @@ public class Generate implements Serializable, XMLAppendable
         result = ((prime*result)+((keys == null)? 0 :keys.hashCode()));
         result = ((prime*result)+((tables == null)? 0 :tables.hashCode()));
         result = ((prime*result)+((embeddables == null)? 0 :embeddables.hashCode()));
+        result = ((prime*result)+((embeddablePaths == null)? 0 :embeddablePaths.hashCode()));
         result = ((prime*result)+((records == null)? 0 :records.hashCode()));
         result = ((prime*result)+((recordsIncludes == null)? 0 :recordsIncludes.hashCode()));
         result = ((prime*result)+((recordsExcludes == null)? 0 :recordsExcludes.hashCode()));

@@ -2947,6 +2947,10 @@ jOOQ API, without adding custom data type bindings to them.]]></jxb:javadoc></jx
       <element name="embeddables" type="boolean" default="true" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate embeddable classes.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+      
+      <element name="embeddablePaths" type="boolean" default="true" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate embeddable path expressions on tables and on embeddables.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
 
       <element name="records" type="boolean" default="true" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate TableRecord classes.]]></jxb:javadoc></jxb:property></appinfo></annotation>

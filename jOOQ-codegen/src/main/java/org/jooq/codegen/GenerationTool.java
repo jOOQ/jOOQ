@@ -780,6 +780,8 @@ public class GenerationTool {
                 generator.setGenerateUDTPaths(g.getGenerate().isUdtPaths());
             if (g.getGenerate().isUdtConstructors() != null)
                 generator.setGenerateUDTConstructors(g.getGenerate().isUdtConstructors());
+            if (g.getGenerate().isEmbeddablePaths() != null)
+                generator.setGenerateEmbeddablePaths(g.getGenerate().isEmbeddablePaths());
             if (g.getGenerate().isImplicitJoinPathsToOne() != null)
                 generator.setGenerateImplicitJoinPathsToOne(g.getGenerate().isImplicitJoinPathsToOne());
             if (g.getGenerate().isImplicitJoinPathsToMany() != null)

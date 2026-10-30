@@ -77,6 +77,7 @@ abstract class AbstractGenerator implements Generator {
     boolean                            generateRelations                                     = true;
     boolean                            generateUDTPaths                                      = true;
     boolean                            generateUDTConstructors                               = true;
+    boolean                            generateEmbeddablePaths                               = true;
     boolean                            generateImplicitJoinPathsToOne                        = true;
     boolean                            generateImplicitJoinPathsToMany                       = true;
     boolean                            generateImplicitJoinPathsManyToMany                   = true;
@@ -368,6 +369,16 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGenerateUDTConstructors(boolean generateUDTConstructors) {
         this.generateUDTConstructors = generateUDTConstructors;
+    }
+
+    @Override
+    public boolean generateEmbeddablePaths() {
+        return generateEmbeddablePaths && generateEmbeddables();
+    }
+
+    @Override
+    public void setGenerateEmbeddablePaths(boolean generateEmbeddablePaths) {
+        this.generateEmbeddablePaths = generateEmbeddablePaths;
     }
 
     @Override

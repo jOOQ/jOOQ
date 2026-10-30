@@ -54,10 +54,19 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.impl.QOM.UNotYetImplemented;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
+ * A common base type for table fields that are embeddables.
+ * <p>
+ * [#17177] Generated embeddable path types extend this type in order to
+ * provide type safe access to the embeddable's component fields, e.g.
+ * <code>CUSTOMER.NAME.FIRST_NAME</code>.
+ *
  * @author Lukas Eder
  */
-final class EmbeddableTableField<R extends Record, E extends EmbeddableRecord<E>>
+@org.jooq.Internal
+public /* non-final */ class EmbeddableTableField<R extends Record, E extends EmbeddableRecord<E>>
 extends
     AbstractField<E>
 implements
@@ -75,7 +84,7 @@ implements
     final TableField<R, ?>[]  fields;
 
 
-    EmbeddableTableField(Name name, Class<E> recordType, boolean replacesFields, Table<R> table, TableField<R, ?>[] fields) {
+    public EmbeddableTableField(Name name, Class<E> recordType, boolean replacesFields, Table<R> table, TableField<R, ?>[] fields) {
         super(name, new RecordDataType<>(Tools.row0(fields), recordType, name.last()));
 
         this.recordType = recordType;
@@ -87,6 +96,25 @@ implements
 
 
 
+    }
+
+    // -------------------------------------------------------------------------
+    // Embeddable path API
+    // -------------------------------------------------------------------------
+
+    /**
+     * [#17177] Access the component field at a given index of this embeddable,
+     * for use in generated embeddable path types.
+     * <p>
+     * The component field is the {@link TableField} of the embeddable's
+     * {@link #getTable()}, which this embeddable represents. If the embeddable
+     * replaces its fields, then the component field may not be publicly
+     * available from the table, otherwise.
+     */
+    @SuppressWarnings("unchecked")
+    @NotNull
+    protected final <T> TableField<R, T> embeddableField(int index) {
+        return (TableField<R, T>) fields[index];
     }
 
     // -------------------------------------------------------------------------

@@ -45,6 +45,8 @@ import static org.jooq.conf.SettingsTools.updatablePrimaryKeys;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.anyMatch;
 import static org.jooq.impl.Tools.converterOrFail;
+import static org.jooq.impl.Tools.convertFrom;
+import static org.jooq.impl.Tools.convertTo;
 import static org.jooq.impl.Tools.converterContext;
 import static org.jooq.impl.Tools.embeddedFields;
 import static org.jooq.impl.Tools.indexFail;
@@ -222,12 +224,12 @@ implements
     @Override
     public final <U> U get(Field<?> field, Class<? extends U> type) {
         Object t = get(field);
-        return (U) converterOrFail(this, t, (Class) field.getType(), type).from(t, converterContext(this));
+        return (U) convertFrom(converterOrFail(this, t, (Class) field.getType(), type), t, this);
     }
 
     @Override
     public final <T, U> U get(Field<T> field, Converter<? super T, ? extends U> converter) {
-        return scoped(converter).from(get(field), converterContext(this));
+        return convertFrom(scoped(converter), get(field), this);
     }
 
     @Override
@@ -238,12 +240,12 @@ implements
     @Override
     public final <U> U get(int index, Class<? extends U> type) {
         Object t = get(index);
-        return (U) converterOrFail(this, t, (Class) field(safeIndex(index)).getType(), type).from(t, converterContext(this));
+        return (U) convertFrom(converterOrFail(this, t, (Class) field(safeIndex(index)).getType(), type), t, this);
     }
 
     @Override
     public final <U> U get(int index, Converter<?, ? extends U> converter) {
-        return (U) ((ContextConverter) scoped(converter)).from(get(index), converterContext(this));
+        return (U) convertFrom((ContextConverter) scoped(converter), get(index), this);
     }
 
     @Override
@@ -360,7 +362,7 @@ implements
 
     @Override
     public final <T, U> void set(Field<T> field, U value, Converter<? extends T, ? super U> converter) {
-        set(field, scoped(converter).to(value, converterContext(this)));
+        set(field, convertTo(scoped(converter), value, this));
     }
 
     @Override

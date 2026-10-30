@@ -45,6 +45,7 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import org.jooq.impl.AbstractContextConverter;
+import org.jooq.impl.Internal;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -131,27 +132,9 @@ public interface ContextConverter<T, U> extends Converter<T, U> {
         if (converter instanceof ContextConverter<T, U> s)
             return s;
         else
-            return new AbstractContextConverter<T, U>(converter.fromType(), converter.toType()) {
-                @Override
-                public boolean fromSupported() {
-                    return converter.fromSupported();
-                }
 
-                @Override
-                public boolean toSupported() {
-                    return converter.toSupported();
-                }
-
-                @Override
-                public U from(T t, ConverterContext scope) {
-                    return converter.from(t);
-                }
-
-                @Override
-                public T to(U u, ConverterContext scope) {
-                    return converter.to(u);
-                }
-            };
+            // [#16243] The resulting converter never accesses its ConverterContext
+            return Internal.contextIndependentConverter(converter);
     }
 
     /**

@@ -43,8 +43,8 @@ import static org.jooq.Converters.nullable;
 import java.io.Serializable;
 import java.util.function.Function;
 
-import org.jooq.impl.AbstractContextConverter;
 import org.jooq.impl.DSL;
+import org.jooq.impl.Internal;
 import org.jooq.impl.SQLDataType;
 
 import org.jetbrains.annotations.NotNull;
@@ -268,28 +268,9 @@ public interface Converter<T, U> extends Serializable {
         boolean fromSupported,
         boolean toSupported
     ) {
-        return new AbstractContextConverter<T, U>(fromType, toType) {
 
-            @Override
-            public final boolean fromSupported() {
-                return fromSupported;
-            }
-
-            @Override
-            public final boolean toSupported() {
-                return toSupported;
-            }
-
-            @Override
-            public final U from(T t, ConverterContext scope) {
-                return from.apply(t);
-            }
-
-            @Override
-            public final T to(U u, ConverterContext scope) {
-                return to.apply(u);
-            }
-        };
+        // [#16243] The resulting converter never accesses its ConverterContext
+        return Internal.contextIndependentConverter(fromType, toType, from, to, fromSupported, toSupported);
     }
 
     /**

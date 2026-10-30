@@ -66,6 +66,7 @@ import org.jooq.Check;
 import org.jooq.Comment;
 import org.jooq.Condition;
 import org.jooq.Configuration;
+import org.jooq.ContextConverter;
 import org.jooq.Converter;
 import org.jooq.ConverterContext;
 import org.jooq.DDLExportConfiguration;
@@ -1284,6 +1285,115 @@ public final class Internal {
         return CONVERTER_SCOPE.get();
     }
 
+    /**
+     * [#16243] Create a {@link ContextConverter} from functions that cannot
+     * access the {@link ConverterContext}, such that jOOQ can avoid creating
+     * {@link ConverterContext} instances for it.
+     * <p>
+     * This is used by {@link Converter#of(Class, Class, Function, Function, boolean, boolean)}.
+     */
+    @NotNull
+    public static final <T, U> ContextConverter<T, U> contextIndependentConverter(
+        Class<T> fromType,
+        Class<U> toType,
+        Function<? super T, ? extends U> from,
+        Function<? super U, ? extends T> to,
+        boolean fromSupported,
+        boolean toSupported
+    ) {
+        return new FunctionConverter<>(fromType, toType, from, to, fromSupported, toSupported);
+    }
+
+    /**
+     * [#16243] Wrap a {@link Converter} that is not a
+     * {@link ContextConverter} in a {@link ContextConverter}, such that jOOQ
+     * can avoid creating {@link ConverterContext} instances for it.
+     * <p>
+     * This is used by {@link ContextConverter#scoped(Converter)}.
+     */
+    @NotNull
+    public static final <T, U> ContextConverter<T, U> contextIndependentConverter(Converter<T, U> converter) {
+        return new ScopedConverter<>(converter);
+    }
+
+    private static final class FunctionConverter<T, U>
+    extends AbstractContextConverter<T, U>
+    implements ContextIndependentConverter {
+
+        private final Function<? super T, ? extends U> from;
+        private final Function<? super U, ? extends T> to;
+        private final boolean                          fromSupported;
+        private final boolean                          toSupported;
+
+        FunctionConverter(
+            Class<T> fromType,
+            Class<U> toType,
+            Function<? super T, ? extends U> from,
+            Function<? super U, ? extends T> to,
+            boolean fromSupported,
+            boolean toSupported
+        ) {
+            super(fromType, toType);
+
+            this.from = from;
+            this.to = to;
+            this.fromSupported = fromSupported;
+            this.toSupported = toSupported;
+        }
+
+        @Override
+        public final boolean fromSupported() {
+            return fromSupported;
+        }
+
+        @Override
+        public final boolean toSupported() {
+            return toSupported;
+        }
+
+        @Override
+        public final U from(T t, ConverterContext scope) {
+            return from.apply(t);
+        }
+
+        @Override
+        public final T to(U u, ConverterContext scope) {
+            return to.apply(u);
+        }
+    }
+
+    private static final class ScopedConverter<T, U>
+    extends AbstractContextConverter<T, U>
+    implements ContextIndependentConverter {
+
+        private final Converter<T, U> converter;
+
+        ScopedConverter(Converter<T, U> converter) {
+            super(converter.fromType(), converter.toType());
+
+            this.converter = converter;
+        }
+
+        @Override
+        public final boolean fromSupported() {
+            return converter.fromSupported();
+        }
+
+        @Override
+        public final boolean toSupported() {
+            return converter.toSupported();
+        }
+
+        @Override
+        public final U from(T t, ConverterContext scope) {
+            return converter.from(t);
+        }
+
+        @Override
+        public final T to(U u, ConverterContext scope) {
+            return converter.to(u);
+        }
+    }
 
 
 

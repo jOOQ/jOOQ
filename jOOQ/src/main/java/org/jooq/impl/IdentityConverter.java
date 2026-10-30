@@ -46,7 +46,13 @@ import org.jooq.ContextConverter;
  *
  * @author Lukas Eder
  */
-public final class IdentityConverter<T> implements ContextConverter<T, T> {
+public final class IdentityConverter<T>
+implements
+    ContextConverter<T, T>,
+
+    // [#16243] This converter never accesses its ConverterContext
+    ContextIndependentConverter
+{
     private final Class<T> type;
 
     public IdentityConverter(Class<T> type) {

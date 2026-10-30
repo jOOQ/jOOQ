@@ -998,6 +998,17 @@ implements
             return type.convert(object);
     }
 
+    /**
+     * [#16243] Whether {@link #convert(Object, ConverterContext)} may access
+     * its {@link ConverterContext} argument.
+     * <p>
+     * Subtypes that override {@link #convert(Object, ConverterContext)} must
+     * override this method as well.
+     */
+    /* non-final */ boolean convertNeedsConverterContext() {
+        return false;
+    }
+
     /* non-final */ T convert(Object object, ConverterContext cc) {
 
         // [#1441] Avoid unneeded type conversions to improve performance

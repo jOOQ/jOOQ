@@ -155,6 +155,12 @@ final class LegacyConvertedDataType<T, U> extends DefaultDataType<U> {
     @Deprecated
     @SuppressWarnings("unchecked")
     @Override
+    final boolean convertNeedsConverterContext() {
+        return !(getConverter() instanceof ContextIndependentConverter)
+            || delegate.convertNeedsConverterContext();
+    }
+
+    @Override
     final U convert(Object object, ConverterContext cc) {
         if (getConverter().toType().isInstance(object))
             return (U) object;

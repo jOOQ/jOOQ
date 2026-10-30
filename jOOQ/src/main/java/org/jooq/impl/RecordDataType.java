@@ -171,6 +171,11 @@ final class RecordDataType<R extends Record> extends DefaultDataType<R> {
 
     @SuppressWarnings("unchecked")
     @Override
+    final boolean convertNeedsConverterContext() {
+        return true;
+    }
+
+    @Override
     final R convert(Object object, ConverterContext cc) {
         return convert0(object, cc, getRecordType(), row, super::convert);
     }

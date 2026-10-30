@@ -145,15 +145,11 @@ public final class Converters<T, U> extends AbstractContextConverter<T, U> {
         // [#11099] Allow instanceof checks on IdentityConverter for performance reasons
         if (converter instanceof IdentityConverter)
             return (ContextConverter<U, T>) converter;
+
+        // [#16243] Retain the information that the converter never accesses
+        //          its ConverterContext
         else
-            return ContextConverter.of(
-                converter.toType(),
-                converter.fromType(),
-                converter::to,
-                converter::from,
-                converter.toSupported(),
-                converter.fromSupported()
-            );
+            return org.jooq.impl.Internal.inverse(converter);
     }
 
     /**

@@ -165,6 +165,11 @@ final class MultisetDataType<R extends Record> extends DefaultDataType<Result<R>
 
     @SuppressWarnings({ "unchecked" })
     @Override
+    final boolean convertNeedsConverterContext() {
+        return true;
+    }
+
+    @Override
     final Result<R> convert(Object object, ConverterContext cc) {
 
         // [#12269] [#13403] Don't re-copy perfectly fine results.

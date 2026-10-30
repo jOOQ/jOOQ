@@ -346,6 +346,12 @@ final class ConvertedDataType<T, U> extends AbstractDataTypeX<U> {
     }
 
     @Override
+    final boolean convertNeedsConverterContext() {
+        return !(getConverter() instanceof ContextIndependentConverter)
+            || Tools.needsConverterContext(delegate(delegate));
+    }
+
+    @Override
     final U convert(Object object, ConverterContext cc) {
         if (getConverter().toType().isInstance(object))
             return (U) object;

@@ -1316,6 +1316,34 @@ public final class Internal {
         return new ScopedConverter<>(converter);
     }
 
+    /**
+     * [#16243] Inverse a {@link ContextConverter}, retaining the information
+     * whether the converter can access its {@link ConverterContext}.
+     * <p>
+     * This is used by {@link org.jooq.Converters#inverse(ContextConverter)}.
+     */
+    @NotNull
+    public static final <T, U> ContextConverter<U, T> inverse(ContextConverter<T, U> converter) {
+        if (converter instanceof ContextIndependentConverter)
+            return new FunctionConverter<>(
+                converter.toType(),
+                converter.fromType(),
+                u -> converter.to(u, null),
+                t -> converter.from(t, null),
+                converter.toSupported(),
+                converter.fromSupported()
+            );
+        else
+            return ContextConverter.of(
+                converter.toType(),
+                converter.fromType(),
+                converter::to,
+                converter::from,
+                converter.toSupported(),
+                converter.fromSupported()
+            );
+    }
+
     private static final class FunctionConverter<T, U>
     extends AbstractContextConverter<T, U>
     implements ContextIndependentConverter {

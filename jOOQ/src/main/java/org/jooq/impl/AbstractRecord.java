@@ -854,12 +854,13 @@ implements
 
     class TransferRecordState<R extends Record> implements ThrowingFunction<R, R, MappingException> {
 
-        final ConverterContext converterContext;
         final Field<?>[]       targetFields;
+
+        // [#16243] Lazily created, as the AbstractRecord target path doesn't need it
+        ConverterContext       converterContext;
 
         TransferRecordState(Field<?>[] targetFields) {
             this.targetFields = targetFields;
-            this.converterContext = converterContext(AbstractRecord.this);
         }
 
         @Override
@@ -889,6 +890,9 @@ implements
                 }
 
                 else {
+                    if (converterContext == null)
+                        converterContext = converterContext(AbstractRecord.this);
+
                     for (Field<?> targetField : target.fields()) {
                         Field<?> sourceField = field(targetField);
 

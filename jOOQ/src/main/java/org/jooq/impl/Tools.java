@@ -7987,6 +7987,26 @@ final class Tools {
     }
 
     /**
+     * [#16243] Convert a database value to a user value, creating a
+     * {@link ConverterContext} only if the converter can observe it.
+     */
+    static final <T, U> U convertFrom(ContextConverter<T, U> converter, T t, Attachable attachable) {
+        return converter instanceof ContextIndependentConverter
+            ? converter.from(t, null)
+            : converter.from(t, converterContext(attachable));
+    }
+
+    /**
+     * [#16243] Convert a user value to a database value, creating a
+     * {@link ConverterContext} only if the converter can observe it.
+     */
+    static final <T, U> T convertTo(ContextConverter<T, U> converter, U u, Attachable attachable) {
+        return converter instanceof ContextIndependentConverter
+            ? converter.to(u, null)
+            : converter.to(u, converterContext(attachable));
+    }
+
+    /**
      * Wrap an expression in a derived table to allow for simplifying
      * referencing it.
      */

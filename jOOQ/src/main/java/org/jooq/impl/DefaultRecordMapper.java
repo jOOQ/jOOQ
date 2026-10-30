@@ -44,6 +44,7 @@ import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.configuration;
+import static org.jooq.impl.Tools.convertFrom;
 import static org.jooq.impl.Tools.converterContext;
 import static org.jooq.impl.Tools.getAnnotatedGetter;
 import static org.jooq.impl.Tools.getAnnotatedMembers;
@@ -743,7 +744,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                 throw new MappingException("Cannot map multi-column record of degree " + size + " to value type " + type);
 
             return converter != null
-                ? ((ContextConverter<Object, E>) converter).from(record.get(0), converterContext(record))
+                ? convertFrom((ContextConverter<Object, E>) converter, record.get(0), record)
                 : record.get(0, type);
         }
     }
@@ -906,7 +907,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
         public final E map(R record) {
             try {
                 final E result = instance != null ? instance : constructor.call();
-                final ConverterContext cc = Tools.converterContext(record);
+                final RecordConverterContext cc = new RecordConverterContext(record);
 
                 for (int i = 0; i < fields.length; i++) {
                     for (MappedMember member : members[i])
@@ -918,7 +919,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                     for (MappedMethod method : methods[i]) {
                         Class<?> mType = method.parameterTypes()[0];
                         Object value = method.converter() != null
-                            ? ((ContextConverter<Object, Object>) method.converter()).from(record.get(i), cc)
+                            ? cc.from((ContextConverter<Object, Object>) method.converter(), record.get(i))
                             : record.get(i, mType);
 
                         // [#3082] [#10910] Try mapping nested collection types
@@ -964,7 +965,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
 
         private final void map(
             Record record,
-            ConverterContext cc,
+            RecordConverterContext cc,
             Object result,
             MappedMember member,
             int index
@@ -992,7 +993,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
 
             else {
                 Object value = member.converter() != null
-                    ? ((ContextConverter<Object, Object>) member.converter()).from(record.get(index), cc)
+                    ? cc.from((ContextConverter<Object, Object>) member.converter(), record.get(index))
                     : record.get(index, mType);
 
                 // [#3082] [#10910] [#11213] Try mapping nested collection types
@@ -1200,7 +1201,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
 
             // [#10425] Initialise array to constructor parameter type init values
             Object[] converted = Tools.map(parameterTypes, c -> Reflect.initValue(c), Object[]::new);
-            ConverterContext cc = Tools.converterContext(record);
+            RecordConverterContext cc = new RecordConverterContext(record);
 
             for (int i = 0; i < record.size(); i++)
                 set(record, cc, i, converted, propertyIndexes[i]);
@@ -1208,12 +1209,12 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
             return converted;
         }
 
-        final void set(Record from, ConverterContext cc, int fromIndex, Object[] to, Integer toIndex) {
+        final void set(Record from, RecordConverterContext cc, int fromIndex, Object[] to, Integer toIndex) {
 
             // TODO: This logic could be applicable to mapNested() as well?
             if (toIndex != null) {
                 to[toIndex] = parameterConverters[toIndex] != null
-                    ? ((ContextConverter<Object, Object>) parameterConverters[toIndex]).from(from.get(fromIndex), cc)
+                    ? cc.from((ContextConverter<Object, Object>) parameterConverters[toIndex], from.get(fromIndex))
                     : from.get(fromIndex, parameterTypes[toIndex]);
             }
             else {
@@ -1222,7 +1223,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
 
                     if (index >= 0)
                         to[index] = member.converter() != null
-                            ? ((ContextConverter<Object, Object>) member.converter()).from(from.get(fromIndex), cc)
+                            ? cc.from((ContextConverter<Object, Object>) member.converter(), from.get(fromIndex))
                             : from.get(fromIndex, member.member().getType());
                 }
 
@@ -1233,7 +1234,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
 
                     if (index >= 0)
                         to[index] = m.converter() != null
-                            ? ((ContextConverter<Object, Object>) m.converter()).from(from.get(fromIndex), cc)
+                            ? cc.from((ContextConverter<Object, Object>) m.converter(), from.get(fromIndex))
                             : from.get(fromIndex, m.method().getReturnType());
 
                 }
@@ -1310,6 +1311,33 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
         @Override
         public String toString() {
             return "NestedMappingInfo " + indexLookup + "; (" + row + ")";
+        }
+    }
+
+    /**
+     * [#16243] The {@link ConverterContext} of a single record mapping.
+     * <p>
+     * The context is shared by all converters involved in mapping the same
+     * record, as before, but it is created only once it is passed to a
+     * converter that can observe it. Many mappings involve no such converter
+     * at all, in case of which creating the context (including its
+     * {@link ConverterContext#creationTime()}) would be wasted effort.
+     */
+    static final class RecordConverterContext {
+        private final Record     record;
+        private ConverterContext cc;
+
+        RecordConverterContext(Record record) {
+            this.record = record;
+        }
+
+        final <T, U> U from(ContextConverter<T, U> converter, T t) {
+            if (converter instanceof ContextIndependentConverter)
+                return converter.from(t, null);
+            else if (cc == null)
+                cc = converterContext(record);
+
+            return converter.from(t, cc);
         }
     }
 

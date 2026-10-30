@@ -1610,9 +1610,20 @@ final class Tools {
             // [#17224] Reset the touched value only if T typed value is null, not U type!
             // [#17272] Read only converters (such as Field.convertFrom()) can't convert back to the T type
             try {
+                ContextConverter converter;
+
                 if (!field.getDataType().nullable() &&
                     field.getConverter().toSupported() &&
-                    scoped(field.getConverter()).to(record.get(i), c == null ? c = converterContext(record) : c) == null
+                    (converter = scoped(field.getConverter())).to(
+                        record.get(i),
+
+                        // [#16243] Create the shared context only if a converter can access it
+                        converter instanceof ContextIndependentConverter
+                            ? null
+                            : c == null
+                            ? c = converterContext(record)
+                            : c
+                    ) == null
                 )
                     record.touched(i, false);
             }
@@ -7984,6 +7995,28 @@ final class Tools {
             return c.converterContext();
         else
             return new DefaultConverterContext(configuration(configuration));
+    }
+
+    /**
+     * [#16243] Whether {@link AbstractDataType#convert0(DataType, Object, ConverterContext)}
+     * may access its {@link ConverterContext} argument for the given type.
+     */
+    static final boolean needsConverterContext(DataType<?> type) {
+
+        // Other DataType implementations are called via DataType::convert(Object)
+        return type instanceof AbstractDataType<?> && ((AbstractDataType<?>) type).convertNeedsConverterContext();
+    }
+
+    /**
+     * [#16243] Whether {@link AbstractDataType#convert0(DataType, Object, ConverterContext)}
+     * may access its {@link ConverterContext} argument for any of the given fields.
+     */
+    static final boolean needsConverterContext(Field<?>[] fields) {
+        for (Field<?> field : fields)
+            if (needsConverterContext(field.getDataType()))
+                return true;
+
+        return false;
     }
 
     /**

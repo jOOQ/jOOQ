@@ -94,7 +94,9 @@ public class DefaultRecordUnmapper<E, R extends Record> implements RecordUnmappe
         this.recordType = Tools.recordType(rowType.size());
         this.fields = rowType.fields();
         this.configuration = configuration;
-        this.converterContext = converterContext(configuration);
+
+        // [#16243] Avoid creating a ConverterContext if no field can access it
+        this.converterContext = Tools.needsConverterContext(fields) ? converterContext(configuration) : null;
 
         init();
     }

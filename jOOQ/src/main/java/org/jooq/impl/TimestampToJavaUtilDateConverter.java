@@ -44,7 +44,14 @@ import org.jooq.ConverterContext;
 /**
  * @author Lukas Eder
  */
-final class TimestampToJavaUtilDateConverter extends AbstractContextConverter<Timestamp, java.util.Date> {
+final class TimestampToJavaUtilDateConverter
+extends
+    AbstractContextConverter<Timestamp, java.util.Date>
+implements
+
+    // [#16243] This converter never accesses its ConverterContext
+    ContextIndependentConverter
+{
 
     static final TimestampToJavaUtilDateConverter INSTANCE = new TimestampToJavaUtilDateConverter();
 

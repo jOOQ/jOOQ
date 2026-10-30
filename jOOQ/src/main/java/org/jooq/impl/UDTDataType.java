@@ -74,6 +74,11 @@ final class UDTDataType<R extends UDTRecord<R>> extends DefaultDataType<R> {
 
     @SuppressWarnings("unchecked")
     @Override
+    final boolean convertNeedsConverterContext() {
+        return true;
+    }
+
+    @Override
     final R convert(Object object, ConverterContext cc) {
 
         // [#18905] Re-use the untyped record conversion logic, mostly for MULTISET usage

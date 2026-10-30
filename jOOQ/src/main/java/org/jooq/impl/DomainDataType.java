@@ -123,6 +123,13 @@ final class DomainDataType<T> extends DefaultDataType<T> {
     }
 
     @Override
+    final boolean convertNeedsConverterContext() {
+        return baseType instanceof AbstractDataType<T> a
+             ? a.convertNeedsConverterContext()
+             : super.convertNeedsConverterContext();
+    }
+
+    @Override
     public final Domain<T> getDomain() {
         return domain;
     }

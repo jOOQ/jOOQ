@@ -135,6 +135,11 @@ final class ArrayDataType<T> extends DefaultDataType<T[]> {
 
     @SuppressWarnings("unchecked")
     @Override
+    final boolean convertNeedsConverterContext() {
+        return true;
+    }
+
+    @Override
     final T[] convert(Object object, ConverterContext cc) {
 
         // [#1441] Avoid unneeded type conversions to improve performance

@@ -72,8 +72,8 @@ class Compile {
             if (compiler == null)
                 throw new ReflectException("No compiler was provided by ToolProvider.getSystemJavaCompiler(). Make sure the jdk.compiler module is available.");
 
-            try {
-                ClassFileManager fileManager = new ClassFileManager(compiler.getStandardFileManager(null, null, null));
+            // [#135] Close the file manager to release the classpath jar files it opened
+            try (ClassFileManager fileManager = new ClassFileManager(compiler.getStandardFileManager(null, null, null))) {
 
                 List<CharSequenceJavaFileObject> files = new ArrayList<>();
                 files.add(new CharSequenceJavaFileObject(className, content));

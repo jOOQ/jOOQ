@@ -524,25 +524,27 @@ public class Reflect {
     private Field field0(String name) throws ReflectException {
         Class<?> t = type();
 
+        // [#137] Scan the fields rather than probing with getField() and
+        //        getDeclaredField(), which throw an exception for every miss.
+        //        getFields() searches public fields in the same order as
+        //        getField(): declared fields, super interfaces, super classes.
+
         // Try getting a public field
-        try {
-            return accessible(t.getField(name));
-        }
+        for (Field field : t.getFields())
+            if (field.getName().equals(name))
+                return accessible(field);
 
         // Try again, getting a non-public field
-        catch (NoSuchFieldException e) {
-            do {
-                try {
-                    return accessible(t.getDeclaredField(name));
-                }
-                catch (NoSuchFieldException ignore) {}
+        do {
+            for (Field field : t.getDeclaredFields())
+                if (field.getName().equals(name))
+                    return accessible(field);
 
-                t = t.getSuperclass();
-            }
-            while (t != null);
-
-            throw new ReflectException(e);
+            t = t.getSuperclass();
         }
+        while (t != null);
+
+        throw new ReflectException(new NoSuchFieldException(name));
     }
 
     /**
@@ -569,8 +571,17 @@ public class Reflect {
                 if (type != object ^ Modifier.isStatic(field.getModifiers())) {
                     String name = field.getName();
 
-                    if (!result.containsKey(name))
-                        result.put(name, field(name));
+                    // [#138] Use the field at hand rather than looking it up
+                    //        again by name, which is slower and may find a
+                    //        different field
+                    if (!result.containsKey(name)) {
+                        try {
+                            result.put(name, on(field.getType(), accessible(field).get(object)));
+                        }
+                        catch (Exception e) {
+                            throw new ReflectException(e);
+                        }
+                    }
                 }
             }
 
@@ -640,21 +651,20 @@ public class Reflect {
 
         // Try invoking the "canonical" method, i.e. the one with exact
         // matching argument types
-        try {
-            Method method = exactMethod(name, types);
-            return on(method, object, args);
-        }
+        Method method = exactMethod(name, types);
 
         // If there is no exact match, try to find a method that has a "similar"
         // signature if primitive argument types are converted to their wrappers
-        catch (NoSuchMethodException e) {
+        if (method == null) {
             try {
-                Method method = similarMethod(name, types);
-                return on(method, object, args);
-            } catch (NoSuchMethodException e1) {
-                throw new ReflectException(e1);
+                method = similarMethod(name, types);
+            }
+            catch (NoSuchMethodException e) {
+                throw new ReflectException(e);
             }
         }
+
+        return on(method, object, args);
     }
 
     /**
@@ -662,30 +672,48 @@ public class Reflect {
      * <p>
      * If a public method is found in the class hierarchy, this method is returned.
      * Otherwise a private method with the exact same signature is returned.
-     * If no exact match could be found, we let the {@code NoSuchMethodException} pass through.
+     * If no exact match could be found, <code>null</code> is returned.
      */
-    private Method exactMethod(String name, Class<?>[] types) throws NoSuchMethodException {
+    private Method exactMethod(String name, Class<?>[] types) {
+
+        // [#136] A null argument can never match a declared parameter type
+        //        exactly, so don't search for it
+        for (Class<?> type : types)
+            if (type == NULL.class)
+                return null;
+
         Class<?> t = type();
 
         // first priority: find a public method with exact signature match in class hierarchy
         try {
             return t.getMethod(name, types);
         }
+        catch (NoSuchMethodException ignore) {}
 
         // second priority: find a private method with exact signature match on declaring class
-        catch (NoSuchMethodException e) {
-            do {
-                try {
-                    return t.getDeclaredMethod(name, types);
+        // [#136] Scan the declared methods rather than probing each class with
+        //        getDeclaredMethod(), which throws an exception for every miss
+        do {
+            Method result = null;
+
+            for (Method method : t.getDeclaredMethods()) {
+                if (method.getName().equals(name) && Arrays.equals(method.getParameterTypes(), types)) {
+
+                    // Like getDeclaredMethod(), prefer the most specific return
+                    // type if there are several matches (e.g. bridge methods)
+                    if (result == null || result.getReturnType().isAssignableFrom(method.getReturnType()))
+                        result = method;
                 }
-                catch (NoSuchMethodException ignore) {}
-
-                t = t.getSuperclass();
             }
-            while (t != null);
 
-            throw new NoSuchMethodException();
+            if (result != null)
+                return result;
+
+            t = t.getSuperclass();
         }
+        while (t != null);
+
+        return null;
     }
 
     /**
@@ -1025,7 +1053,15 @@ public class Reflect {
 
             if (method.getReturnType() == void.class) {
                 method.invoke(object, args);
-                return on(object);
+
+                // [#141] Keep wrapping the class after calling a static method
+                //        on a class, rather than wrapping the Class instance
+                if (Modifier.isStatic(method.getModifiers())
+                        && object instanceof Class
+                        && method.getDeclaringClass().isAssignableFrom((Class<?>) object))
+                    return onClass((Class<?>) object);
+                else
+                    return on(object);
             }
             else {
                 return on(method.invoke(object, args));

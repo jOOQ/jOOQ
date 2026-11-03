@@ -4633,6 +4633,11 @@ final class Tools {
             : f.apply(m, m.getParameterTypes(), m.getGenericParameterTypes());
     }
 
+    // The following lookups cache MappedMember and MappedMethod values, whose
+    // converters depend on the column's type, not just its name. The type
+    // must be part of the cache key, or columns of the same name but of a
+    // different type reuse a converter made for the wrong type.
+
     /**
      * Get all members annotated with a given column name
      */
@@ -4649,7 +4654,7 @@ final class Tools {
                 result.forEach(Reflect::accessible);
 
             return map(result, m -> new MappedMember(m, scoped(configuration.converterProvider().provide(field.getType(), m.getType()))));
-        }, REFLECTION_CACHE_GET_ANNOTATED_MEMBERS, () -> Cache.key(type, field.getName(), makeAccessible));
+        }, REFLECTION_CACHE_GET_ANNOTATED_MEMBERS, () -> Cache.key(type, field.getName(), field.getType(), makeAccessible));
     }
 
     /**
@@ -4675,7 +4680,7 @@ final class Tools {
                     result.add(accessible(member, makeAccessible));
 
             return map(result, m -> new MappedMember(m, scoped(configuration.converterProvider().provide(field.getType(), m.getType()))));
-        }, REFLECTION_CACHE_GET_MATCHING_MEMBERS, () -> Cache.key(type, field.getName(), makeAccessible));
+        }, REFLECTION_CACHE_GET_MATCHING_MEMBERS, () -> Cache.key(type, field.getName(), field.getType(), makeAccessible));
     }
 
     /**
@@ -4694,7 +4699,7 @@ final class Tools {
                 set.add(new SourceMethod(accessible(m, makeAccessible)));
 
             return map(SourceMethod.methods(set), methodParams((m, p, t) -> new MappedMethod(m, p, t, scoped(configuration.converterProvider().provide(field.getType(), p[0])))));
-        }, REFLECTION_CACHE_GET_ANNOTATED_SETTERS, () -> Cache.key(type, field.getName(), makeAccessible));
+        }, REFLECTION_CACHE_GET_ANNOTATED_SETTERS, () -> Cache.key(type, field.getName(), field.getType(), makeAccessible));
     }
 
     /**
@@ -4713,7 +4718,7 @@ final class Tools {
                 result.forEach(Reflect::accessible);
 
             return result.isEmpty() ? null : new MappedMethod(result.get(0), EMPTY_CLASS, EMPTY_TYPE, scoped(configuration.converterProvider().provide(field.getType(), result.get(0).getReturnType())));
-        }, REFLECTION_CACHE_GET_ANNOTATED_GETTER, () -> Cache.key(type, field.getName(), makeAccessible));
+        }, REFLECTION_CACHE_GET_ANNOTATED_GETTER, () -> Cache.key(type, field.getName(), field.getType(), makeAccessible));
     }
 
     /**
@@ -4752,7 +4757,7 @@ final class Tools {
             }
 
             return map(SourceMethod.methods(set), methodParams((m, p, t) -> new MappedMethod(m, p, t, scoped(configuration.converterProvider().provide(field.getType(), p[0])))));
-        }, REFLECTION_CACHE_GET_MATCHING_SETTERS, () -> Cache.key(type, field.getName(), makeAccessible));
+        }, REFLECTION_CACHE_GET_MATCHING_SETTERS, () -> Cache.key(type, field.getName(), field.getType(), makeAccessible));
     }
 
 
@@ -4798,7 +4803,7 @@ final class Tools {
             }
 
             return result == null ? null : new MappedMethod(result, EMPTY_CLASS, EMPTY_TYPE, scoped(configuration.converterProvider().provide(field.getType(), result.getReturnType())));
-        }, REFLECTION_CACHE_GET_MATCHING_GETTER, () -> Cache.key(type, field.getName(), makeAccessible));
+        }, REFLECTION_CACHE_GET_MATCHING_GETTER, () -> Cache.key(type, field.getName(), field.getType(), makeAccessible));
     }
 
     /**

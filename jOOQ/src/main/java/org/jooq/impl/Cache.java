@@ -267,4 +267,85 @@ final class Cache {
             return "Key3 [key1=" + key1 + ", key2=" + key2 + ", key3=" + key3 + "]";
         }
     }
+
+    /**
+     * Create a single-value or multi-value key for caching.
+     */
+    static final Object key(Object key1, Object key2, Object key3, Object key4) {
+        return new Key4(key1, key2, key3, key4);
+    }
+
+    /**
+     * A 4-value key for caching.
+     * <p>
+     * [#18935] Note: A hand-written class with Eclipse-generated
+     * {@link #equals(Object)} and {@link #hashCode()} implementations
+     * significantly outperforms the Java 16 record alternative in a JMH
+     * benchmark.
+     */
+    private static final class Key4 implements Serializable {
+        private final Object key1;
+        private final Object key2;
+        private final Object key3;
+        private final Object key4;
+
+        Key4(Object key1, Object key2, Object key3, Object key4) {
+            this.key1 = key1;
+            this.key2 = key2;
+            this.key3 = key3;
+            this.key4 = key4;
+        }
+
+        @Override
+        public int hashCode() {
+            final int prime = 31;
+            int result = 1;
+            result = prime * result + ((key1 == null) ? 0 : key1.hashCode());
+            result = prime * result + ((key2 == null) ? 0 : key2.hashCode());
+            result = prime * result + ((key3 == null) ? 0 : key3.hashCode());
+            result = prime * result + ((key4 == null) ? 0 : key4.hashCode());
+            return result;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj)
+                return true;
+            if (obj == null)
+                return false;
+            if (getClass() != obj.getClass())
+                return false;
+            Key4 other = (Key4) obj;
+            if (key1 == null) {
+                if (other.key1 != null)
+                    return false;
+            }
+            else if (!key1.equals(other.key1))
+                return false;
+            if (key2 == null) {
+                if (other.key2 != null)
+                    return false;
+            }
+            else if (!key2.equals(other.key2))
+                return false;
+            if (key3 == null) {
+                if (other.key3 != null)
+                    return false;
+            }
+            else if (!key3.equals(other.key3))
+                return false;
+            if (key4 == null) {
+                if (other.key4 != null)
+                    return false;
+            }
+            else if (!key4.equals(other.key4))
+                return false;
+            return true;
+        }
+
+        @Override
+        public String toString() {
+            return "Key4 [key1=" + key1 + ", key2=" + key2 + ", key3=" + key3 + ", key4=" + key4 + "]";
+        }
+    }
 }

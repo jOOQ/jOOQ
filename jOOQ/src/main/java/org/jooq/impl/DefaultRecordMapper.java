@@ -395,7 +395,10 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
 
         if (instance == null) {
             if (Stream.class.isAssignableFrom(type)) {
-                delegate = r -> (E) Stream.of(((FieldsImpl<R>) rowType).mapper(configuration, Object[].class).map(r));
+
+                // Look up the Object[] mapper only once, not for every record
+                RecordMapper<R, Object[]> array = ((FieldsImpl<R>) rowType).mapper(configuration, Object[].class);
+                delegate = r -> (E) Stream.of(array.map(r));
                 return;
             }
 
@@ -972,30 +975,18 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
         ) throws IllegalAccessException {
             Class<?> mType = member.member().getType();
 
+            // Use the converter that was looked up when creating this mapper,
+            // also for primitive types, instead of looking up the same
+            // converter again for every value via Record.get(int, Class)
+            Object value = member.converter() != null
+                ? cc.from((ContextConverter<Object, Object>) member.converter(), record.get(index))
+                : record.get(index, mType);
+
             if (mType.isPrimitive()) {
-                if (mType == byte.class)
-                    map(record.get(index, byte.class), result, member.member());
-                else if (mType == short.class)
-                    map(record.get(index, short.class), result, member.member());
-                else if (mType == int.class)
-                    map(record.get(index, int.class), result, member.member());
-                else if (mType == long.class)
-                    map(record.get(index, long.class), result, member.member());
-                else if (mType == float.class)
-                    map(record.get(index, float.class), result, member.member());
-                else if (mType == double.class)
-                    map(record.get(index, double.class), result, member.member());
-                else if (mType == boolean.class)
-                    map(record.get(index, boolean.class), result, member.member());
-                else if (mType == char.class)
-                    map(record.get(index, char.class), result, member.member());
+                map(value, result, member.member());
             }
 
             else {
-                Object value = member.converter() != null
-                    ? cc.from((ContextConverter<Object, Object>) member.converter(), record.get(index))
-                    : record.get(index, mType);
-
                 // [#3082] [#10910] [#11213] Try mapping nested collection types
                 Object list = tryConvertToListOrSet(value, mType, member.member().getGenericType());
                 if (list != null)
@@ -1179,12 +1170,30 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                 }
             }
 
-            if (!hasNestedFields)
+            if (!hasNestedFields) {
                 for (int i = 0; i < fields.length; i++)
                     if (propertyIndexes[i] != null)
-                        parameterConverters[propertyIndexes[i]] = scoped(configuration.converterProvider().provide((Class) fields[i].getType(), (Class) parameterTypes[propertyIndexes[i]]));
+                        parameterConverters[propertyIndexes[i]] = parameterConverter(i, propertyIndexes[i]);
+            }
+
+            // Columns that aren't nested can use a converter that is looked up
+            // only once, also when other columns are nested
+            else {
+                for (NestedMappingInfo info : nestedMappingInfo) {
+                    if (info.row == null) {
+                        int j = info.indexLookup.get(0);
+
+                        if (propertyIndexes[j] != null)
+                            parameterConverters[propertyIndexes[j]] = parameterConverter(j, propertyIndexes[j]);
+                    }
+                }
+            }
 
             this.nested = hasNestedFields;
+        }
+
+        private final ContextConverter<?, ?> parameterConverter(int fieldIndex, int parameterIndex) {
+            return scoped(configuration.converterProvider().provide((Class) fields[fieldIndex].getType(), (Class) parameterTypes[parameterIndex]));
         }
 
         @Override
@@ -1211,7 +1220,6 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
 
         final void set(Record from, RecordConverterContext cc, int fromIndex, Object[] to, Integer toIndex) {
 
-            // TODO: This logic could be applicable to mapNested() as well?
             if (toIndex != null) {
                 to[toIndex] = parameterConverters[toIndex] != null
                     ? cc.from((ContextConverter<Object, Object>) parameterConverters[toIndex], from.get(fromIndex))
@@ -1243,6 +1251,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
 
         private final Object[] mapNested(final R record) {
             Object[] converted = new Object[parameterTypes.length];
+            RecordConverterContext cc = new RecordConverterContext(record);
 
             for (int i = 0; i < nestedMappingInfo.length; i++) {
                 NestedMappingInfo info = nestedMappingInfo[i];
@@ -1252,7 +1261,9 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
 
                 if (k != null) {
                     if (info.row == null)
-                        converted[k] = record.get(j, parameterTypes[k]);
+                        converted[k] = parameterConverters[k] != null
+                            ? cc.from((ContextConverter<Object, Object>) parameterConverters[k], record.get(j))
+                            : record.get(j, parameterTypes[k]);
                     else
                         converted[k] = info.mappers.get(0).map(info.recordDelegate.operate(rec -> {
                             for (int x = 0; x < indexLookup.size(); x++)

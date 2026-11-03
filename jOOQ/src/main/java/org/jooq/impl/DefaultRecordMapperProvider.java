@@ -74,8 +74,75 @@ public class DefaultRecordMapperProvider implements RecordMapperProvider, Serial
     @Override
     public final <R extends Record, E> RecordMapper<R, E> provide(final RecordType<R> rowType, final Class<? extends E> type) {
         if (configuration != null && TRUE.equals(configuration.settings().isCacheRecordMappers()))
-            return Cache.run(configuration, () -> new DefaultRecordMapper<>(rowType, type, configuration), CACHE_RECORD_MAPPERS, () -> Cache.key(rowType, type));
+            return Cache.run(configuration, () -> new DefaultRecordMapper<>(rowType, type, configuration), CACHE_RECORD_MAPPERS, () -> new Key(rowType, type));
         else
             return new DefaultRecordMapper<>(rowType, type, configuration);
+    }
+
+    /**
+     * The cache key of a {@link DefaultRecordMapper}.
+     * <p>
+     * {@link RecordType#equals(Object)} compares fields by name only, but a
+     * {@link DefaultRecordMapper} depends on the fields' types as well, e.g.
+     * for the converters it looks up. Row types whose fields have the same
+     * names but different types must not share a mapper.
+     * <p>
+     * [#18935] Note: A hand-written class with Eclipse-generated
+     * {@link #equals(Object)} and {@link #hashCode()} implementations
+     * significantly outperforms the Java 16 record alternative in a JMH
+     * benchmark.
+     */
+    private static final class Key implements Serializable {
+        private final RecordType<?> rowType;
+        private final Class<?>      type;
+
+        Key(RecordType<?> rowType, Class<?> type) {
+            this.rowType = rowType;
+            this.type = type;
+        }
+
+        @Override
+        public int hashCode() {
+            final int prime = 31;
+            int result = 1;
+            result = prime * result + ((rowType == null) ? 0 : rowType.hashCode());
+            result = prime * result + ((type == null) ? 0 : type.hashCode());
+            return result;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj)
+                return true;
+            if (obj == null)
+                return false;
+            if (getClass() != obj.getClass())
+                return false;
+            Key other = (Key) obj;
+            if (type == null) {
+                if (other.type != null)
+                    return false;
+            }
+            else if (!type.equals(other.type))
+                return false;
+            if (rowType == null)
+                return other.rowType == null;
+            else if (rowType == other.rowType)
+                return true;
+            else if (!rowType.equals(other.rowType))
+                return false;
+
+            // Equal row types have the same number of fields
+            for (int i = 0; i < rowType.size(); i++)
+                if (rowType.field(i).getType() != other.rowType.field(i).getType())
+                    return false;
+
+            return true;
+        }
+
+        @Override
+        public String toString() {
+            return "Key [rowType=" + rowType + ", type=" + type + "]";
+        }
     }
 }

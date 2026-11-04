@@ -471,10 +471,11 @@ public class GenerationTool {
 
             // For convenience, the catalog configuration can be set also directly in the <database/> element
             if (catalogsEmpty) {
-                if (isBlank(d.getInputCatalog()) && !isBlank(d.getOutputCatalog()))
-                    log(configuration.getOnMisconfiguration(),
-                        () -> "/configuration/generator/database/outputCatalog must be paired with /configuration/generator/database/inputCatalog");
 
+                // [#20273] An <outputCatalog/> without <inputCatalog/> is valid for databases
+                //          whose only catalog is the default catalog "" (e.g. H2, DDLDatabase).
+                //          This can only be validated once the catalogs are known, see
+                //          AbstractDatabase.getInputCatalogs()
                 CatalogMappingType catalog = new CatalogMappingType();
                 catalog.setInputCatalog(trim(d.getInputCatalog()));
                 catalog.setOutputCatalog(trim(d.getOutputCatalog()));

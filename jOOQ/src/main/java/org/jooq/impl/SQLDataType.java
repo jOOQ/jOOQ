@@ -888,6 +888,16 @@ public final class SQLDataType {
         } catch (Exception ignore) {}
     }
 
+    /**
+     * [#19529] Trigger the initialisation of this class, including all
+     * dialect-specific data types.
+     * <p>
+     * Calling this method is a no-op if this class is already initialised, or
+     * if the current thread is initialising it. If another thread is
+     * initialising it, this method blocks until that initialisation completes.
+     */
+    static final void init() {}
+
     private static final void initJSR310Types(SQLDialect family) {
         Configuration configuration = new DefaultConfiguration(family);
 

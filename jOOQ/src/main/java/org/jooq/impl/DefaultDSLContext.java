@@ -5626,18 +5626,12 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
         return delete.execute();
     }
 
-    // -------------------------------------------------------------------------
-    // XXX Static initialisation of dialect-specific data types
-    // -------------------------------------------------------------------------
-
-    static {
-        // Load all dialect-specific data types
-        // TODO [#650] Make this more reliable using a data type registry
-
-        try {
-            Class.forName(SQLDataType.class.getName());
-        } catch (Exception ignore) {}
-    }
+    // [#650] [#19529] Dialect-specific data types used to be loaded eagerly
+    //                here, in DefaultDSLContext.<clinit>. That created a class
+    //                initialisation cycle with SQLDataType.<clinit>, whose
+    //                transitive initialisation may call DSL.using(). The data
+    //                types are now loaded lazily by DefaultDataType when its
+    //                type registries are first accessed.
 
     // -------------------------------------------------------------------------
     // XXX Internals

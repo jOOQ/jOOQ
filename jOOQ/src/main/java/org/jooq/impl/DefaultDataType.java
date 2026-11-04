@@ -316,11 +316,31 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
 
         SQL_DATATYPES_BY_TYPE = new ConcurrentHashMap<>();
 
-        // [#2506] Transitively load all dialect-specific data types
-        try {
-            Class.forName(SQLDataType.class.getName());
-        }
-        catch (Exception ignore) {}
+        // [#2506] [#19529] Dialect-specific data types are loaded transitively
+        //                  by SQLDataType, but that must not happen from here.
+        //                  SQLDataType.<clinit> depends on DefaultDataType being
+        //                  initialised (it's the super class of BuiltInDataType),
+        //                  so forcing SQLDataType.<clinit> from DefaultDataType.<clinit>
+        //                  can deadlock when two threads first-touch these classes
+        //                  concurrently. See registry() instead.
+    }
+
+    /**
+     * [#2506] [#19529] Make sure all dialect-specific data types have been
+     * registered before reading from any of the static type registries.
+     * <p>
+     * This used to be done eagerly in <code>DefaultDataType.&lt;clinit&gt;</code>,
+     * which created a class initialisation cycle with
+     * <code>SQLDataType.&lt;clinit&gt;</code>. Initialising {@link SQLDataType}
+     * lazily from here, once <code>DefaultDataType</code> is fully initialised,
+     * doesn't hold any other class initialisation lock while waiting for
+     * another thread to finish initialising {@link SQLDataType}. If the current
+     * thread is already initialising {@link SQLDataType} (e.g. a registry read
+     * from within the dialect-specific data type initialisation), this is a
+     * no-op, as before.
+     */
+    private static final void registry() {
+        SQLDataType.init();
     }
 
     public DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, String typeName) {
@@ -631,6 +651,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
         // If this is a SQLDataType find the most suited dialect-specific
         // data type
         if (getDialect() == null) {
+            registry();
             DefaultDataType<T> dataType = (DefaultDataType<T>) TYPES_BY_SQL_DATATYPE[configuration.family().ordinal()]
 
                 // Be sure to reset length, precision, and scale, as those
@@ -719,6 +740,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
         if (dialect == null)
             dialect = SQLDialect.DEFAULT;
 
+        registry();
         SQLDialect family = dialect.family();
         int ordinal = family.ordinal();
         String upper = typeName.toUpperCase();
@@ -955,6 +977,7 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
 
         // Base types are registered statically
         else {
+            registry();
             DataType<?> result = null;
 
             if (dialect != null)

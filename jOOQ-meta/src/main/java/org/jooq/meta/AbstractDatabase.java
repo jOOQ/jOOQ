@@ -1064,6 +1064,15 @@ public abstract class AbstractDatabase implements Database {
                     for (CatalogDefinition catalog : sort(getCatalogs0()))
                         inputCatalogs.add(catalog.getName());
                 });
+
+                // [#20273] A standalone <outputCatalog/> maps the default catalog "". It has no
+                //          effect on (and is likely a misconfiguration for) any named catalogs.
+                CatalogMappingType mapping = configuredCatalogs.get(0);
+                if (!StringUtils.isBlank(mapping.getOutputCatalog())
+                        && !TRUE.equals(mapping.isOutputCatalogToDefault())
+                        && inputCatalogs.stream().anyMatch(c -> !StringUtils.isBlank(c)))
+                    Logging.log(onMisconfiguration(),
+                        () -> "/configuration/generator/database/outputCatalog must be paired with /configuration/generator/database/inputCatalog for databases with named catalogs: " + inputCatalogs);
             }
             else {
                 for (CatalogMappingType catalog : configuredCatalogs) {

@@ -421,6 +421,11 @@ public class DefaultDataType<T> extends AbstractDataTypeX<T> {
         // Register data type in static caches
         // -----------------------------------
 
+        // [#19529] Built-in data types must be registered first, as the caches
+        //          are populated with putIfAbsent(). This used to be implied by
+        //          DefaultDataType.<clinit> eagerly initialising SQLDataType.
+        registry();
+
         // Dialect-specific data types
         int ordinal = dialect == null ? SQLDialect.DEFAULT.ordinal() : dialect.family().ordinal();
 

@@ -10029,7 +10029,7 @@ public class JavaGenerator extends AbstractGenerator {
 
     protected void generateSchema(SchemaDefinition schema, JavaWriter out) {
         final String catalogId = generateDefaultCatalog(schema.getCatalog())
-            ? out.ref(getStrategy().getFullJavaIdentifier(schema.getCatalog()), 2)
+            ? getCatalogShortId(out, schema)
             : null;
         final String schemaId = getStrategy().getJavaIdentifier(schema);
         final String schemaName = !schema.getQualifiedOutputName().isEmpty() ? schema.getQualifiedOutputName() : schemaId;
@@ -10177,6 +10177,21 @@ public class JavaGenerator extends AbstractGenerator {
             members.add(getStrategy().getJavaIdentifier(table));
 
         return members;
+    }
+
+    /**
+     * [#20401] Get a reference to the catalog from within a schema class, fully
+     * qualifying it if its class name conflicts with a member of the schema
+     * class (e.g. a table). The check happens before referencing the type, in
+     * order not to import it unnecessarily.
+     */
+    private String getCatalogShortId(JavaWriter out, SchemaDefinition schema) {
+        CatalogDefinition catalog = schema.getCatalog();
+
+        if (getMemberNames(schema).contains(getStrategy().getJavaClassName(catalog)))
+            return getStrategy().getFullJavaIdentifier(catalog);
+        else
+            return out.ref(getStrategy().getFullJavaIdentifier(catalog), 2);
     }
 
     private String getShortId(JavaWriter out, Set<String> memberNames, Definition table) {

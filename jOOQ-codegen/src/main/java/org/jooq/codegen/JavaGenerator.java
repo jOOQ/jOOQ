@@ -345,6 +345,7 @@ public class JavaGenerator extends AbstractGenerator {
     private final String                          emptyparens;
     private final String                          tokenVoid;
     private final Files                           fileCache;
+    private Map<File, Set<String>>                generatedTypeNames;
     private String                                visibility;
 
     static {
@@ -454,6 +455,7 @@ public class JavaGenerator extends AbstractGenerator {
     @Override
     public final void generate0(Database db) {
         this.isoDate = Instant.now().toString();
+        this.generatedTypeNames = null;
         this.schemaVersions = new LinkedHashMap<>();
         this.catalogVersions = new LinkedHashMap<>();
         this.database.addFilter(new AvoidAmbiguousClassesFilter());
@@ -6163,7 +6165,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("}");
         }
         else {
-            out.println("@Override");
+            out.override();
             out.println("%sboolean equals(%s obj) {", visibilityPublic(), Object.class);
             out.println("if (this == obj)");
             out.println("return true;");
@@ -6246,7 +6248,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("}");
         }
         else {
-            out.println("@Override");
+            out.override();
             out.println("%sint hashCode() {", visibilityPublic());
             out.println("final int prime = 31;");
             out.println("int result = 1;");
@@ -6327,8 +6329,8 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("}");
         }
         else {
-            out.println("@Override");
-            out.println("%sString toString() {", visibilityPublic());
+            out.override();
+            out.println("%s%s toString() {", visibilityPublic(), String.class);
             out.println("%s sb = new %s(\"%s (\");", StringBuilder.class, StringBuilder.class, className);
             out.println();
 
@@ -11398,7 +11400,73 @@ public class JavaGenerator extends AbstractGenerator {
             result.newlineString(generateNewline);
 
         result.printMarginForBlockComment(generatePrintMarginForBlockComment);
+
+        // [#4457] Avoid referencing java.lang types by simple name when they're
+        //         shadowed by other generated types in the same package
+        result.samePackageTypes(generatedTypeNames(file.getParentFile()));
         return result;
+    }
+
+    /**
+     * [#4457] The simple names of all types that this generator may produce in
+     * a given directory (i.e. package).
+     * <p>
+     * This is computed eagerly from all definitions and {@link Mode}s, before
+     * the files are actually written, so that a file generated early (e.g.
+     * <code>Book</code>) can know about a type generated later in the same
+     * package (e.g. <code>Class</code>). Including too many names is harmless,
+     * it merely causes additional fully qualified <code>java.lang</code>
+     * references.
+     */
+    private Set<String> generatedTypeNames(File directory) {
+        if (generatedTypeNames == null) {
+            generatedTypeNames = new HashMap<>();
+
+            if (database != null) {
+                List<Definition> definitions = new ArrayList<>();
+
+                for (CatalogDefinition catalog : database.getCatalogs()) {
+                    definitions.add(catalog);
+
+                    for (SchemaDefinition schema : catalog.getSchemata()) {
+                        definitions.add(schema);
+                        definitions.addAll(database.getTables(schema));
+                        definitions.addAll(database.getEmbeddables(schema));
+                        definitions.addAll(database.getEnums(schema));
+                        definitions.addAll(database.getDomains(schema));
+                        definitions.addAll(database.getUDTs(schema));
+                        definitions.addAll(database.getArrays(schema));
+                        definitions.addAll(database.getRoutines(schema));
+
+                        for (PackageDefinition pkg : database.getPackages(schema)) {
+                            definitions.add(pkg);
+                            definitions.addAll(pkg.getUDTs());
+                            definitions.addAll(pkg.getRoutines());
+                        }
+                    }
+                }
+
+                for (Definition definition : definitions) {
+                    for (Mode mode : Mode.values()) {
+                        try {
+                            File f = getFile(definition, mode);
+
+                            if (f != null && f.getParentFile() != null)
+                                generatedTypeNames
+                                    .computeIfAbsent(f.getParentFile(), k -> new HashSet<>())
+                                    .add(f.getName().replaceAll("\\.(java|scala|kt)$", ""));
+                        }
+
+                        // Custom strategies may not support all modes for all definitions
+                        catch (RuntimeException ignore) {}
+                    }
+                }
+            }
+        }
+
+        return directory == null
+            ? Collections.emptySet()
+            : generatedTypeNames.getOrDefault(directory, Collections.emptySet());
     }
 
     protected File getFile(Definition definition) {

@@ -269,6 +269,10 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
             if (isKotlin && imp.startsWith("kotlin.") && !imp.substring("kotlin.".length()).contains("."))
                 continue;
 
+            // [#4457] kotlin.jvm types (e.g. JvmName) are implicitly imported, too
+            if (isKotlin && imp.startsWith("kotlin.jvm.") && !imp.substring("kotlin.jvm.".length()).contains("."))
+                continue;
+
             // Don't import the class itself
             if (imp.endsWith(dotClassName))
                 continue;

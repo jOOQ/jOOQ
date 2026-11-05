@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
@@ -43,6 +44,7 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
     private Pattern                         fullyQualifiedTypesPattern;
     private final boolean                   javadoc;
     private final Set<String>               refConflicts;
+    private final Set<String>               samePackageTypes;
     private final Set<String>               qualifiedTypes   = new TreeSet<>(qualifiedTypeComparator());
     private final Map<String, String>       unqualifiedTypes = new TreeMap<>();
     private final String                    className;
@@ -82,6 +84,7 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
         this.isScala = file.getName().endsWith(".scala");
         this.isKotlin = file.getName().endsWith(".kt");
         this.refConflicts = new HashSet<>();
+        this.samePackageTypes = new HashSet<>();
         this.fullyQualifiedTypes = fullyQualifiedTypes;
         this.fullyQualifiedTypesPattern = fullyQualifiedTypesPattern();
         this.fullyQualifiedTypesPatterns = new HashSet<>();
@@ -312,6 +315,20 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
         return this;
     }
 
+    /**
+     * [#4457] Register the simple names of other types that are generated into
+     * the same package as this writer's type.
+     * <p>
+     * In Java and Kotlin, a type from the same package shadows a
+     * <code>java.lang</code> type of the same simple name (e.g. a generated
+     * <code>Class</code> table shadows {@link java.lang.Class}), so references
+     * to such <code>java.lang</code> types must remain fully qualified.
+     */
+    public JavaWriter samePackageTypes(Collection<String> types) {
+        this.samePackageTypes.addAll(types);
+        return this;
+    }
+
     @Override
     protected List<String> ref(List<String> clazz, int keepSegments) {
         if (ignoreImports)
@@ -356,6 +373,13 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
 
                     // [#10561] Don't import type that conflicts with a local identifier
                     if (refConflicts.contains(unqualifiedType))
+                        break checks;
+
+                    // [#4457] java.lang types are implicitly imported in Java and Kotlin,
+                    //         but shadowed by types of the same name in the same package
+                    if ((isJava || isKotlin)
+                            && samePackageTypes.contains(unqualifiedType)
+                            && qualifiedType.equals("java.lang." + unqualifiedType))
                         break checks;
 
                     // [#10561] Don't import a class that conflicts with a local identifier

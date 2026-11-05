@@ -48,8 +48,6 @@ import static org.jooq.impl.QOM.JoinHint.MERGE;
 import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.map;
 
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -59,11 +57,9 @@ import java.util.function.Function;
 
 import org.jooq.BetweenAndStep;
 import org.jooq.BetweenAndStepR;
-import org.jooq.CloseableResultQuery;
 import org.jooq.Comparator;
 import org.jooq.Condition;
 import org.jooq.Configuration;
-import org.jooq.Cursor;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
@@ -78,8 +74,6 @@ import org.jooq.QuantifiedSelect;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Result;
-import org.jooq.Results;
-import org.jooq.Row;
 import org.jooq.SQL;
 import org.jooq.Select;
 import org.jooq.SelectConditionStep;
@@ -3168,97 +3162,8 @@ implements
     }
 
     @Override
-    public final CloseableResultQuery<R> maxRows(int rows) {
-        return getDelegate().maxRows(rows);
-    }
-
-    @Override
-    public final CloseableResultQuery<R> fetchSize(int rows) {
-        return getDelegate().fetchSize(rows);
-    }
-
-    @Override
-    public final CloseableResultQuery<R> resultSetConcurrency(int resultSetConcurrency) {
-        return getDelegate().resultSetConcurrency(resultSetConcurrency);
-    }
-
-    @Override
-    public final CloseableResultQuery<R> resultSetType(int resultSetType) {
-        return getDelegate().resultSetType(resultSetType);
-    }
-
-    @Override
-    public final CloseableResultQuery<R> resultSetHoldability(int resultSetHoldability) {
-        return getDelegate().resultSetHoldability(resultSetHoldability);
-    }
-
-    @Override
-    public final CloseableResultQuery<R> intern(Field<?>... fields) {
-        return getDelegate().intern(fields);
-    }
-
-    @Override
-    public final CloseableResultQuery<R> intern(int... fieldIndexes) {
-        return getDelegate().intern(fieldIndexes);
-    }
-
-    @Override
-    public final CloseableResultQuery<R> intern(String... fieldNames) {
-        return getDelegate().intern(fieldNames);
-    }
-
-    @Override
-    public final CloseableResultQuery<R> intern(Name... fieldNames) {
-        return getDelegate().intern(fieldNames);
-    }
-
-    @Override
-    public final Class<? extends R> getRecordType() {
-        return getDelegate().getRecordType();
-    }
-
-    @Override
     public final List<Field<?>> getSelect() {
         return getDelegate().getSelect();
-    }
-
-    @Override
-    public final Result<R> getResult() {
-        return getDelegate().getResult();
-    }
-
-    @Override
-    public final Result<R> fetch() {
-        return getDelegate().fetch();
-    }
-
-
-
-    @Override
-    public final void subscribe(Flow.Subscriber<? super R> subscriber) {
-        getDelegate().subscribe(subscriber);
-    }
-
-
-
-    @Override
-    public final void subscribe(org.reactivestreams.Subscriber<? super R> subscriber) {
-        getDelegate().subscribe(subscriber);
-    }
-
-    @Override
-    public final Cursor<R> fetchLazy() {
-        return getDelegate().fetchLazy();
-    }
-
-    @Override
-    public final Cursor<R> fetchLazyNonAutoClosing() {
-        return getDelegate().fetchLazyNonAutoClosing();
-    }
-
-    @Override
-    public final Results fetchMany() {
-        return getDelegate().fetchMany();
     }
 
     @Override
@@ -3354,21 +3259,6 @@ implements
     @Override
     public final <T> Field<T> asField(Function<? super Field<T>, ? extends String> aliasFunction) {
         return getDelegate().asField(aliasFunction);
-    }
-
-    @Override
-    public final Row fieldsRow() {
-        return getDelegate().fieldsRow();
-    }
-
-    @Override
-    public final <X extends Record> CloseableResultQuery<X> coerce(Table<X> table) {
-        return getDelegate().coerce(table);
-    }
-
-    @Override
-    public final CloseableResultQuery<Record> coerce(Collection<? extends Field<?>> fields) {
-        return getDelegate().coerce(fields);
     }
 
     @Override
@@ -3777,16 +3667,6 @@ implements
          * currently being added.
          */
         QUALIFY
-    }
-
-    @Override
-    public final Field<?>[] getFields(ThrowingSupplier<? extends ResultSetMetaData, SQLException> rs) throws SQLException {
-        return getDelegate().getFields(rs);
-    }
-
-    @Override
-    public final Field<?>[] getFields() {
-        return getDelegate().getFields();
     }
 
     // -------------------------------------------------------------------------

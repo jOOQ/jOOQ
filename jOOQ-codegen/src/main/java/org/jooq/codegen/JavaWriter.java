@@ -375,11 +375,11 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
                     if (refConflicts.contains(unqualifiedType))
                         break checks;
 
-                    // [#4457] java.lang types are implicitly imported in Java and Kotlin,
-                    //         but shadowed by types of the same name in the same package
-                    if ((isJava || isKotlin)
-                            && samePackageTypes.contains(unqualifiedType)
-                            && qualifiedType.equals("java.lang." + unqualifiedType))
+                    // [#4457] Implicitly imported types (e.g. java.lang.Class, or kotlin.String)
+                    //         are shadowed by types of the same name in the same package
+                    if (samePackageTypes.contains(unqualifiedType)
+                            && qualifiedType.equals(packageOf(qualifiedType) + "." + unqualifiedType)
+                            && implicitlyImported(packageOf(qualifiedType)))
                         break checks;
 
                     // [#10561] Don't import a class that conflicts with a local identifier
@@ -406,6 +406,37 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
 
         return result;
     }
+
+    private static String packageOf(String qualifiedType) {
+        int i = qualifiedType.lastIndexOf('.');
+        return i < 0 ? "" : qualifiedType.substring(0, i);
+    }
+
+    /**
+     * [#4457] Packages whose types are imported implicitly by the language,
+     * and are thus shadowed by types of the same name in the current package.
+     */
+    private boolean implicitlyImported(String pkg) {
+        if (isJava)
+            return "java.lang".equals(pkg);
+        else if (isKotlin)
+            return KOTLIN_DEFAULT_IMPORTS.contains(pkg);
+        else
+            return false;
+    }
+
+    private static final Set<String> KOTLIN_DEFAULT_IMPORTS = new HashSet<>(Arrays.asList(
+        "java.lang",
+        "kotlin",
+        "kotlin.annotation",
+        "kotlin.collections",
+        "kotlin.comparisons",
+        "kotlin.io",
+        "kotlin.jvm",
+        "kotlin.ranges",
+        "kotlin.sequences",
+        "kotlin.text"
+    ));
 
     private static final Pattern KOTLIN_ARRAY_PATTERN = Pattern.compile("kotlin.Array<(.*)\\?>");
 

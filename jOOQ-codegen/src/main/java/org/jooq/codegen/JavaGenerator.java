@@ -6122,7 +6122,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("}");
         }
         else if (kotlin) {
-            out.println("%soverride fun equals(other: Any?): Boolean {", visibilityPublic());
+            out.println("%soverride fun equals(other: %s?): %s {", visibilityPublic(), Object.class, Boolean.class);
             out.println("if (this === other)");
             out.println("return true");
             out.println("if (other == null)");
@@ -6218,7 +6218,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("}");
         }
         else if (kotlin) {
-            out.println("%soverride fun hashCode(): Int {", visibilityPublic());
+            out.println("%soverride fun hashCode(): %s {", visibilityPublic(), Integer.class);
             out.println("val prime = 31");
             out.println("var result = 1");
 
@@ -6303,7 +6303,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("}");
         }
         else if (kotlin) {
-            out.println("%soverride fun toString(): String {", visibilityPublic());
+            out.println("%soverride fun toString(): %s {", visibilityPublic(), String.class);
             out.println("val sb = %s(\"%s (\")", StringBuilder.class, className);
             out.println();
 

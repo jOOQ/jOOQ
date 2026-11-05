@@ -47,6 +47,7 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
     private final Set<String>               samePackageTypes;
     private final Set<String>               qualifiedTypes   = new TreeSet<>(qualifiedTypeComparator());
     private final Map<String, String>       unqualifiedTypes = new TreeMap<>();
+    private final Map<String, String>       implicitTypes    = new TreeMap<>();
     private final String                    className;
     private String                          packageName;
     private final boolean                   isJava;
@@ -333,6 +334,35 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
         return this;
     }
 
+    /**
+     * [#4457] Reference a type that the language makes available implicitly
+     * (e.g. <code>scala.Unit</code>), without adding an import for it.
+     * <p>
+     * The simple name is returned, unless it is shadowed by a type of the same
+     * name in the same package, by this writer's own type, or by another
+     * (non built-in) type of the same name that this writer already
+     * references, e.g. through an import. In those cases, the fully qualified
+     * name is returned. The simple name is registered, so that subsequent
+     * references to other (non built-in) types of the same name remain
+     * qualified.
+     * <p>
+     * Other built-in types of the same name (e.g. <code>java.lang.Long</code>
+     * vs. <code>scala.Long</code>) don't count as shadowing, to keep the
+     * simple names as they've always been generated.
+     */
+    public String refImplicit(String qualifiedType) {
+        String unqualifiedType = qualifiedType.substring(qualifiedType.lastIndexOf('.') + 1);
+        String existing = unqualifiedTypes.get(unqualifiedType);
+
+        if (samePackageTypes.contains(unqualifiedType)
+                || className.equals(unqualifiedType)
+                || (existing != null && !existing.equals(qualifiedType) && !builtIn(existing)))
+            return qualifiedType;
+
+        implicitTypes.putIfAbsent(unqualifiedType, qualifiedType);
+        return unqualifiedType;
+    }
+
     @Override
     protected List<String> ref(List<String> clazz, int keepSegments) {
         if (ignoreImports)
@@ -379,6 +409,12 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
                     if (refConflicts.contains(unqualifiedType))
                         break checks;
 
+                    // [#4457] Don't import a type that would shadow an implicitly referenced type
+                    if (implicitTypes.containsKey(unqualifiedType)
+                            && !qualifiedType.equals(implicitTypes.get(unqualifiedType))
+                            && !builtIn(qualifiedType))
+                        break checks;
+
                     // [#4457] Implicitly imported types (e.g. java.lang.Class, or kotlin.String)
                     //         are shadowed by types of the same name in the same package
                     if (samePackageTypes.contains(unqualifiedType)
@@ -409,6 +445,11 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
         }
 
         return result;
+    }
+
+    private static boolean builtIn(String qualifiedType) {
+        String pkg = packageOf(qualifiedType);
+        return "java.lang".equals(pkg) || "scala".equals(pkg) || "kotlin".equals(pkg);
     }
 
     private static String packageOf(String qualifiedType) {

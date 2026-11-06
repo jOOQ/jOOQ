@@ -296,6 +296,7 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
             stringLoop:
             for (int i = 0; i < stringLength; i++) {
                 if (peek(string, i, newlineString)) {
+                    trimTrailingWhitespace();
                     sb.append(newlineString).append(indent);
                     lineLength = indentLength;
                     i += newlineStringLength - 1;
@@ -306,6 +307,7 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
                 else if (i > 0 && peek(string, i, "@deprecated")) {
                     final int l = "@deprecated".length();
 
+                    trimTrailingWhitespace();
                     sb.append(newlineString).append(indent).append("@deprecated");
                     lineLength = indentLength + l;
                     i += l - 1;
@@ -322,6 +324,7 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
                             lineLength += (end ? j + 1 : j);
 
                             if (printMarginForBlockComment > 0 && lineLength > printMarginForBlockComment && (!end || whitespaceEncountered)) {
+                                trimTrailingWhitespace();
                                 sb.append(newlineString).append(indent);
                                 lineLength = indentLength + j - 1;
                                 i++;
@@ -345,6 +348,20 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
             sb.append(string.replace(newlineString, newlineString + indent));
     }
 
+    /**
+     * [#14990] Remove trailing whitespace from the current line, e.g. the
+     * <code>" * "</code> prefix of an empty line in a block comment, or
+     * whitespace contained in comments.
+     */
+    private void trimTrailingWhitespace() {
+        int l = sb.length();
+
+        while (l > 0 && (sb.charAt(l - 1) == ' ' || sb.charAt(l - 1) == '\t'))
+            l--;
+
+        sb.setLength(l);
+    }
+
     private boolean peek(String string, int i, String peek) {
         for (int j = 0; j < peek.length(); j++)
             if (i + j >= string.length() || string.charAt(i + j) != peek.charAt(j))
@@ -366,6 +383,11 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
 
         // Don't add empty lines at the beginning of files
         if (sb.length() > 0) {
+
+            // [#14990] Avoid trailing whitespace in generated block comments
+            if (blockComment)
+                trimTrailingWhitespace();
+
             sb.append(newlineString);
             newline = true;
         }

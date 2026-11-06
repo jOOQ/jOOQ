@@ -36,6 +36,8 @@ public class Generate implements Serializable, XMLAppendable
     protected Boolean relations = true;
     @XmlElement(defaultValue = "true")
     protected Boolean sequenceFlags = true;
+    @XmlElement(defaultValue = "false")
+    protected Boolean explicitNullability = false;
     @XmlElement(defaultValue = "true")
     protected Boolean udtPaths = true;
     @XmlElement(defaultValue = "true")
@@ -389,6 +391,30 @@ public class Generate implements Serializable, XMLAppendable
      */
     public void setSequenceFlags(Boolean value) {
         this.sequenceFlags = value;
+    }
+
+    /**
+     * Whether explicit nullability should be generated on data types of nullable columns, attributes, parameters, etc. (i.e. <code>.nullable(true)</code>), instead of leaving them with implicit nullability (<code>Nullability.DEFAULT</code>).
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isExplicitNullability() {
+        return explicitNullability;
+    }
+
+    /**
+     * Whether explicit nullability should be generated on data types of nullable columns, attributes, parameters, etc. (i.e. <code>.nullable(true)</code>), instead of leaving them with implicit nullability (<code>Nullability.DEFAULT</code>).
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setExplicitNullability(Boolean value) {
+        this.explicitNullability = value;
     }
 
     /**
@@ -3728,6 +3754,15 @@ public class Generate implements Serializable, XMLAppendable
     }
 
     /**
+     * Whether explicit nullability should be generated on data types of nullable columns, attributes, parameters, etc. (i.e. <code>.nullable(true)</code>), instead of leaving them with implicit nullability (<code>Nullability.DEFAULT</code>).
+     * 
+     */
+    public Generate withExplicitNullability(Boolean value) {
+        setExplicitNullability(value);
+        return this;
+    }
+
+    /**
      * Generate UDT path expressions on tables and on UDTs.
      * 
      */
@@ -5056,6 +5091,7 @@ public class Generate implements Serializable, XMLAppendable
         builder.append("indexes", indexes);
         builder.append("relations", relations);
         builder.append("sequenceFlags", sequenceFlags);
+        builder.append("explicitNullability", explicitNullability);
         builder.append("udtPaths", udtPaths);
         builder.append("udtConstructors", udtConstructors);
         builder.append("implicitJoinPathsToOne", implicitJoinPathsToOne);
@@ -5237,6 +5273,15 @@ public class Generate implements Serializable, XMLAppendable
             }
         } else {
             if (!sequenceFlags.equals(other.sequenceFlags)) {
+                return false;
+            }
+        }
+        if (explicitNullability == null) {
+            if (other.explicitNullability!= null) {
+                return false;
+            }
+        } else {
+            if (!explicitNullability.equals(other.explicitNullability)) {
                 return false;
             }
         }
@@ -6474,6 +6519,7 @@ public class Generate implements Serializable, XMLAppendable
         result = ((prime*result)+((indexes == null)? 0 :indexes.hashCode()));
         result = ((prime*result)+((relations == null)? 0 :relations.hashCode()));
         result = ((prime*result)+((sequenceFlags == null)? 0 :sequenceFlags.hashCode()));
+        result = ((prime*result)+((explicitNullability == null)? 0 :explicitNullability.hashCode()));
         result = ((prime*result)+((udtPaths == null)? 0 :udtPaths.hashCode()));
         result = ((prime*result)+((udtConstructors == null)? 0 :udtConstructors.hashCode()));
         result = ((prime*result)+((implicitJoinPathsToOne == null)? 0 :implicitJoinPathsToOne.hashCode()));

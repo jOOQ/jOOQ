@@ -108,6 +108,7 @@ abstract class AbstractGenerator implements Generator {
 
     boolean                            generateSequences                                     = true;
     boolean                            generateSequenceFlags                                 = true;
+    boolean                            generateExplicitNullability                           = false;
     boolean                            generateUDTs                                          = true;
     boolean                            generateTables                                        = true;
     boolean                            generateEmbeddables                                   = true;
@@ -710,6 +711,16 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGenerateSequenceFlags(boolean generateSequenceFlags) {
         this.generateSequenceFlags = generateSequenceFlags;
+    }
+
+    @Override
+    public boolean generateExplicitNullability() {
+        return generateExplicitNullability;
+    }
+
+    @Override
+    public void setGenerateExplicitNullability(boolean generateExplicitNullability) {
+        this.generateExplicitNullability = generateExplicitNullability;
     }
 
     @Override

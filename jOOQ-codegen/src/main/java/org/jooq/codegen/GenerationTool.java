@@ -841,6 +841,8 @@ public class GenerationTool {
                 generator.setGenerateSequences(g.getGenerate().isSequences());
             if (g.getGenerate().isSequenceFlags() != null)
                 generator.setGenerateSequenceFlags(g.getGenerate().isSequenceFlags());
+            if (g.getGenerate().isExplicitNullability() != null)
+                generator.setGenerateExplicitNullability(g.getGenerate().isExplicitNullability());
             if (g.getGenerate().isUdts() != null)
                 generator.setGenerateUDTs(g.getGenerate().isUdts());
             if (g.getGenerate().isTables() != null)

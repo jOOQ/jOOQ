@@ -2787,6 +2787,10 @@ This is a prerequisite for various advanced features]]></jxb:javadoc></jxb:prope
       <element name="sequenceFlags" type="boolean" default="true" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Sequence flags should be generated and used.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+
+      <element name="explicitNullability" type="boolean" default="false" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether explicit nullability should be generated on data types of nullable columns, attributes, parameters, etc. (i.e. <code>.nullable(true)</code>), instead of leaving them with implicit nullability (<code>Nullability.DEFAULT</code>).]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
       
       <element name="udtPaths" type="boolean" default="true" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Generate UDT path expressions on tables and on UDTs.]]></jxb:javadoc></jxb:property></appinfo></annotation>

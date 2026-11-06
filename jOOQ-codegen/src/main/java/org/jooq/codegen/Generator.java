@@ -532,6 +532,22 @@ public interface Generator {
     void setGenerateSequenceFlags(boolean generateSequenceFlags);
 
     /**
+     * Whether explicit nullability should be generated on data types of
+     * nullable columns, attributes, parameters, etc. (i.e.
+     * <code>.nullable(true)</code>), instead of leaving them with implicit
+     * nullability ({@link org.jooq.Nullability#DEFAULT}).
+     */
+    boolean generateExplicitNullability();
+
+    /**
+     * Whether explicit nullability should be generated on data types of
+     * nullable columns, attributes, parameters, etc. (i.e.
+     * <code>.nullable(true)</code>), instead of leaving them with implicit
+     * nullability ({@link org.jooq.Nullability#DEFAULT}).
+     */
+    void setGenerateExplicitNullability(boolean generateExplicitNullability);
+
+    /**
      * Whether UDTs should be generated.
      */
     boolean generateUDTs();

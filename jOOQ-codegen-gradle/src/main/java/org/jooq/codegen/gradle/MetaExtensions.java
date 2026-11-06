@@ -1611,6 +1611,10 @@ public class MetaExtensions {
             return isSequenceFlags();
         }
 
+        public Boolean getExplicitNullability() {
+            return isExplicitNullability();
+        }
+
         public Boolean getUdtPaths() {
             return isUdtPaths();
         }

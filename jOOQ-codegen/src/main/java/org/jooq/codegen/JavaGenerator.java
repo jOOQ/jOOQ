@@ -12677,11 +12677,15 @@ public class JavaGenerator extends AbstractGenerator {
             appendTypeReferenceDefault(db, out, sb, defaultValue, sqlDataTypeRefSb.toString(), arrayAppender);
         }
         else if (db.getDomain(schema, u) != null) {
-            final String sqlDataTypeRef = out.ref(getStrategy().getFullJavaIdentifier(db.getDomain(schema, u)), domainRefSegments()) + ".getDataType()";
+            final DomainDefinition domain = db.getDomain(schema, u);
+            final String sqlDataTypeRef = out.ref(getStrategy().getFullJavaIdentifier(domain), domainRefSegments()) + ".getDataType()";
             sb.append(sqlDataTypeRef);
 
             arrayAppender.accept(sb);
-            appendTypeReferenceNullability(db, out, sb, nullable);
+
+            // [#10938] Some dialects report columns of a NOT NULL domain type as nullable.
+            //          Don't override the domain's own nullability with an explicit nullable(true)
+            appendTypeReferenceNullability(db, out, sb, nullable, domain.getType(resolver(out)).isNullable());
             appendTypeReferenceDefault(db, out, sb, defaultValue, sqlDataTypeRef, arrayAppender);
 
 
@@ -12806,7 +12810,7 @@ public class JavaGenerator extends AbstractGenerator {
             }
 
             arrayAppender.accept(sb);
-            appendTypeReferenceNullability(db, out, sb, nullable);
+            appendTypeReferenceNullability(db, out, sb, nullable, true);
 
             if (dataType.identity())
                 if (dataType.identityMode() == GenerationMode.ALWAYS)
@@ -12845,9 +12849,13 @@ public class JavaGenerator extends AbstractGenerator {
             return sb.append(".getDataType()");
     }
 
-    private final void appendTypeReferenceNullability(Database db, JavaWriter out, StringBuilder sb, boolean n) {
+    private final void appendTypeReferenceNullability(Database db, JavaWriter out, StringBuilder sb, boolean n, boolean explicitNullablePossible) {
         if (!n)
             sb.append(".nullable(false)");
+
+        // [#10938] Optionally make nullable types explicitly nullable
+        else if (explicitNullablePossible && generateExplicitNullability())
+            sb.append(".nullable(true)");
     }
 
     private static final Pattern P_TS_EXPRESSION = Pattern.compile("^(?i:current_(date|timestamp).*)$");

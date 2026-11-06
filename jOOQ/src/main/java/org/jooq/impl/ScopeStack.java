@@ -45,6 +45,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.NoSuchElementException;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -175,13 +176,13 @@ final class ScopeStack<K, V> implements Iterable<V> {
 
         @Override
         public boolean hasNext() {
-            return move() != null;
+            return next != null || move() != null;
         }
 
         @Override
         public U next() {
-            if (next == null) {
-                return move();
+            if (next == null && move() == null) {
+                throw new NoSuchElementException();
             }
             else {
                 U result = next;

@@ -1413,6 +1413,10 @@ public class MetaExtensions {
             return isIgnoreUnused();
         }
 
+        public Boolean getIgnoreTypeMismatch() {
+            return isIgnoreTypeMismatch();
+        }
+
         public void fields(Action<EmbeddableFieldListExtension> action) {
             EmbeddableFieldListExtension l = objects.newInstance(EmbeddableFieldListExtension.class, objects);
             action.execute(l);
@@ -1615,10 +1619,6 @@ public class MetaExtensions {
             return isUdtConstructors();
         }
 
-        public Boolean getEmbeddablePaths() {
-            return isEmbeddablePaths();
-        }
-
         public Boolean getImplicitJoinPathsToOne() {
             return isImplicitJoinPathsToOne();
         }
@@ -1737,6 +1737,10 @@ public class MetaExtensions {
 
         public Boolean getEmbeddables() {
             return isEmbeddables();
+        }
+
+        public Boolean getEmbeddablePaths() {
+            return isEmbeddablePaths();
         }
 
         public Boolean getRecords() {

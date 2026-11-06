@@ -51,6 +51,8 @@ public class EmbeddableDefinitionType implements Serializable, XMLAppendable
     protected Boolean replacesFields = false;
     @XmlElement(defaultValue = "false")
     protected Boolean ignoreUnused = false;
+    @XmlElement(defaultValue = "false")
+    protected Boolean ignoreTypeMismatch = false;
     @XmlElementWrapper(name = "fields")
     @XmlElement(name = "field")
     protected List<EmbeddableField> fields;
@@ -215,6 +217,30 @@ public class EmbeddableDefinitionType implements Serializable, XMLAppendable
         this.ignoreUnused = value;
     }
 
+    /**
+     * Set this flag to true if no warning should be logged if two references to this embeddable don't match exactly in their column types (e.g. length, precision, scale, user type, converter, binding).
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isIgnoreTypeMismatch() {
+        return ignoreTypeMismatch;
+    }
+
+    /**
+     * Set this flag to true if no warning should be logged if two references to this embeddable don't match exactly in their column types (e.g. length, precision, scale, user type, converter, binding).
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setIgnoreTypeMismatch(Boolean value) {
+        this.ignoreTypeMismatch = value;
+    }
+
     public List<EmbeddableField> getFields() {
         if (fields == null) {
             fields = new ArrayList<EmbeddableField>();
@@ -307,6 +333,15 @@ public class EmbeddableDefinitionType implements Serializable, XMLAppendable
         return this;
     }
 
+    /**
+     * Set this flag to true if no warning should be logged if two references to this embeddable don't match exactly in their column types (e.g. length, precision, scale, user type, converter, binding).
+     * 
+     */
+    public EmbeddableDefinitionType withIgnoreTypeMismatch(Boolean value) {
+        setIgnoreTypeMismatch(value);
+        return this;
+    }
+
     public EmbeddableDefinitionType withFields(EmbeddableField... values) {
         if (values!= null) {
             for (EmbeddableField value: values) {
@@ -339,6 +374,7 @@ public class EmbeddableDefinitionType implements Serializable, XMLAppendable
         builder.append("tables", tables);
         builder.append("replacesFields", replacesFields);
         builder.append("ignoreUnused", ignoreUnused);
+        builder.append("ignoreTypeMismatch", ignoreTypeMismatch);
         builder.append("fields", "field", fields);
     }
 
@@ -442,6 +478,15 @@ public class EmbeddableDefinitionType implements Serializable, XMLAppendable
                 return false;
             }
         }
+        if (ignoreTypeMismatch == null) {
+            if (other.ignoreTypeMismatch!= null) {
+                return false;
+            }
+        } else {
+            if (!ignoreTypeMismatch.equals(other.ignoreTypeMismatch)) {
+                return false;
+            }
+        }
         if ((fields == null)||fields.isEmpty()) {
             if ((other.fields!= null)&&(!other.fields.isEmpty())) {
                 return false;
@@ -467,6 +512,7 @@ public class EmbeddableDefinitionType implements Serializable, XMLAppendable
         result = ((prime*result)+((tables == null)? 0 :tables.hashCode()));
         result = ((prime*result)+((replacesFields == null)? 0 :replacesFields.hashCode()));
         result = ((prime*result)+((ignoreUnused == null)? 0 :ignoreUnused.hashCode()));
+        result = ((prime*result)+((ignoreTypeMismatch == null)? 0 :ignoreTypeMismatch.hashCode()));
         result = ((prime*result)+(((fields == null)||fields.isEmpty())? 0 :fields.hashCode()));
         return result;
     }

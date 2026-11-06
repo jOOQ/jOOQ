@@ -90,11 +90,13 @@ import java.util.Deque;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.IdentityHashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Properties;
 import java.util.Set;
@@ -3016,6 +3018,10 @@ public abstract class AbstractDatabase implements Database {
         Map<Name, EmbeddableDefinition> result = new LinkedHashMap<>();
         Set<ColumnDefinition> embeddableColumns = new HashSet<>();
 
+        // [#13389] Identity semantics, as EmbeddableDefinition.equals() doesn't
+        //          distinguish between all the configuration flags
+        Set<EmbeddableDefinition> ignoreTypeMismatch = Collections.newSetFromMap(new IdentityHashMap<>());
+
         for (TableDefinition table : getTables()) {
 
             embeddableLoop:
@@ -3070,21 +3076,24 @@ public abstract class AbstractDatabase implements Database {
                                 () -> "Table " + table + " already has embeddable by the same referencingName " + embeddable);
                     }
                     else {
-                        result.put(
-                            key,
-                            new DefaultEmbeddableDefinition(
-                                schema,
-                                embeddable.getName(),
-                                embeddable.getComment(),
-                                table,
-                                names,
-                                referencingName,
-                                referencingComment,
-                                table,
-                                columns,
-                                TRUE.equals(embeddable.isReplacesFields())
-                            )
+                        EmbeddableDefinition e = new DefaultEmbeddableDefinition(
+                            schema,
+                            embeddable.getName(),
+                            embeddable.getComment(),
+                            table,
+                            names,
+                            referencingName,
+                            referencingComment,
+                            table,
+                            columns,
+                            TRUE.equals(embeddable.isReplacesFields())
                         );
+
+                        result.put(key, e);
+
+                        // [#13389] Opt out of type mismatch warnings
+                        if (TRUE.equals(embeddable.isIgnoreTypeMismatch()))
+                            ignoreTypeMismatch.add(e);
 
                         markUsed(embeddable);
                     }
@@ -3249,6 +3258,21 @@ public abstract class AbstractDatabase implements Database {
             .stream()
             .collect(groupingBy(e -> e.getQualifiedInputNamePart()))
             .forEach((n, l) -> {
+
+                // [#13389] Warn about subtle type mismatches between references
+                //          to the same embeddable, which wouldn't otherwise
+                //          produce a compilation error in generated code.
+                //          References whose configuration specifies
+                //          <ignoreTypeMismatch>true</ignoreTypeMismatch>
+                //          are excluded from this check.
+                List<EmbeddableDefinition> checked = new ArrayList<>();
+                for (EmbeddableDefinition e : l)
+                    if (!ignoreTypeMismatch.contains(e))
+                        checked.add(e);
+
+                for (int i = 1; i < checked.size(); i++)
+                    checkEmbeddableTypes(checked.get(0), checked.get(i));
+
                 for (EmbeddableDefinition e1 : l)
                     for (EmbeddableDefinition e2 : l)
                         if (e1 != e2)
@@ -3256,6 +3280,63 @@ public abstract class AbstractDatabase implements Database {
             });
 
         return new ArrayList<>(result.values());
+    }
+
+    /**
+     * [#13389] Check whether two references to the same embeddable match
+     * exactly in terms of their column types, and log a metadata problem if
+     * they don't.
+     * <p>
+     * Differences in nullability are not reported, as they are reconciled by
+     * {@link EmbeddableDefinition#merge(EmbeddableDefinition)} (see [#14991]).
+     * Differences in column count are reported by
+     * {@link EmbeddableDefinition#merge(EmbeddableDefinition)} as well.
+     */
+    private final void checkEmbeddableTypes(EmbeddableDefinition e1, EmbeddableDefinition e2) {
+        List<EmbeddableColumnDefinition> c1 = e1.getColumns();
+        List<EmbeddableColumnDefinition> c2 = e2.getColumns();
+
+        if (c1.size() != c2.size())
+            return;
+
+        for (int i = 0; i < c1.size(); i++) {
+            ColumnDefinition r1 = c1.get(i).getReferencingColumn();
+            ColumnDefinition r2 = c2.get(i).getReferencingColumn();
+            DataTypeDefinition t1 = r1.getType();
+            DataTypeDefinition t2 = r2.getType();
+            List<String> differences = embeddableTypeDifferences(t1, t2);
+
+            if (!differences.isEmpty()) {
+                String column = c1.get(i).getName();
+
+                Logging.log(onMetadataProblem(),
+                    () -> "Embeddable " + e1.getName() + " has two references with non-matching types for column " + column + ": "
+                        + r1.getQualifiedName() + " and "
+                        + r2.getQualifiedName() + " ("
+                        + String.join(", ", differences) + ")");
+            }
+        }
+    }
+
+    private static final List<String> embeddableTypeDifferences(DataTypeDefinition t1, DataTypeDefinition t2) {
+        List<String> result = new ArrayList<>();
+
+        if (!StringUtils.defaultString(t1.getType()).equalsIgnoreCase(StringUtils.defaultString(t2.getType())))
+            result.add("type " + t1.getType() + " vs " + t2.getType());
+        if (t1.getLength() != t2.getLength())
+            result.add("length " + t1.getLength() + " vs " + t2.getLength());
+        if (t1.getPrecision() != t2.getPrecision())
+            result.add("precision " + t1.getPrecision() + " vs " + t2.getPrecision());
+        if (t1.getScale() != t2.getScale())
+            result.add("scale " + t1.getScale() + " vs " + t2.getScale());
+        if (!Objects.equals(t1.getJavaType(), t2.getJavaType()))
+            result.add("Java type " + t1.getJavaType() + " vs " + t2.getJavaType());
+        if (!Objects.equals(t1.getConverter(), t2.getConverter()))
+            result.add("converter " + t1.getConverter() + " vs " + t2.getConverter());
+        if (!Objects.equals(t1.getBinding(), t2.getBinding()))
+            result.add("binding " + t1.getBinding() + " vs " + t2.getBinding());
+
+        return result;
     }
 
     @Override

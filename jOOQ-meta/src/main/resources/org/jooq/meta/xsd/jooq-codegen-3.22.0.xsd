@@ -2517,9 +2517,13 @@ This feature is available in the commercial distribution only.]]></jxb:javadoc><
       <element name="ignoreUnused" type="boolean" default="false" minOccurs="0" maxOccurs="1">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Set this flag to true if no warning should be logged if this object was not used by a code generation run.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
+
+      <element name="ignoreTypeMismatch" type="boolean" default="false" minOccurs="0" maxOccurs="1">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Set this flag to true if no warning should be logged if two references to this embeddable don't match exactly in their column types (e.g. length, precision, scale, user type, converter, binding).]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
     </all>
   </complexType>
-  
+
   <complexType name="EmbeddableFields">
     <sequence>
       <element name="field" type="tns:EmbeddableField" minOccurs="0" maxOccurs="unbounded" />

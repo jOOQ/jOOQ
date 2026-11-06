@@ -79,6 +79,8 @@ public final class JSONB implements Serializable {
 
     private final String     data;
     private transient Object parsed;
+    private transient int    hash;
+    private transient String string;
 
     private JSONB(String data) {
         this.data = String.valueOf(data);
@@ -146,8 +148,15 @@ public final class JSONB implements Serializable {
      */
     @Override
     public int hashCode() {
-        Object p = parsed();
-        return p == null ? 0 : p.hashCode();
+        int h = hash;
+
+        // Benign data race, like in String::hashCode
+        if (h == 0) {
+            Object p = parsed();
+            hash = h = p == null ? 0 : p.hashCode();
+        }
+
+        return h;
     }
 
     /**
@@ -165,7 +174,7 @@ public final class JSONB implements Serializable {
         if (this == obj)
             return true;
         if (obj instanceof JSONB j)
-            return Objects.equals(parsed(), (j.parsed()));
+            return data.equals(j.data) || Objects.equals(parsed(), (j.parsed()));
         return false;
     }
 
@@ -181,6 +190,11 @@ public final class JSONB implements Serializable {
      */
     @Override
     public String toString() {
-        return JSONValue.toJSONString(parsed());
+        String s = string;
+
+        if (s == null)
+            string = s = JSONValue.toJSONString(parsed());
+
+        return s;
     }
 }

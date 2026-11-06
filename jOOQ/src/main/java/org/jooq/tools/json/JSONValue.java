@@ -183,9 +183,27 @@ public class JSONValue {
     public static String escape(String s) {
         if (s == null)
             return null;
-        StringBuffer sb = new StringBuffer();
-        escape(s, sb);
-        return sb.toString();
+
+        // Most strings don't contain any characters that need escaping
+        for (int i = 0; i < s.length(); i++) {
+            if (escaped(s.charAt(i))) {
+                StringBuffer sb = new StringBuffer(s.length() + 16);
+                escape(s, sb);
+                return sb.toString();
+            }
+        }
+
+        return s;
+    }
+
+    /**
+     * Whether {@link #escape(String, StringBuffer)} escapes a character.
+     */
+    private static boolean escaped(char ch) {
+        return ch == '"' || ch == '\\' || ch == '/'
+            || ch <= '\u001F'
+            || (ch >= '\u007F' && ch <= '\u009F')
+            || (ch >= '\u2000' && ch <= '\u20FF');
     }
 
     /**

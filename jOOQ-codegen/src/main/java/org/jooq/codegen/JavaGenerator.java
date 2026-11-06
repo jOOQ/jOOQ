@@ -341,6 +341,17 @@ public class JavaGenerator extends AbstractGenerator {
     private Set<File>                             modifiedFiles                = new LinkedHashSet<>();
 
     /**
+     * All files added by this generator run (a subset of
+     * {@link #modifiedFiles}).
+     */
+    private Set<File>                             addedFiles                   = new LinkedHashSet<>();
+
+    /**
+     * All files deleted by this generator run.
+     */
+    private Set<File>                             deletedFiles                 = new LinkedHashSet<>();
+
+    /**
      * These directories were not modified by this generator, but flagged as not
      * for removal (e.g. because of {@link #schemaVersions} or
      * {@link #catalogVersions}).
@@ -594,12 +605,28 @@ public class JavaGenerator extends AbstractGenerator {
 
         long time = w.split();
 
+        // [#5556] Clean up common parent directory
+        log.info("Removing excess files");
+        empty(getStrategy().getFileRoot(), (scala ? ".scala" : kotlin ? ".kt" : ".java"), affectedFiles, directoriesNotForRemoval, deletedFiles);
+        directoriesNotForRemoval.clear();
+
         // [#10648] Log modified files
         log.info("Affected files: " + affectedFiles.size());
         log.info("Modified files: " + modifiedFiles.size());
 
+        // [#7403] Log added / modified / unmodified / deleted files
+        logFileStatistics(
+            "Files total",
+            affectedFiles.size(),
+            modifiedFiles.size(),
+            addedFiles.size(),
+            deletedFiles.size(),
+            getTargetClean()
+        );
+
         // [#10648] Don't log this info if we're already using schema version providers
-        if (modifiedFiles.isEmpty() && catalogVersions.isEmpty() && schemaVersions.isEmpty()) {
+        //          [#7403] Deleted files are modifications as well
+        if (modifiedFiles.isEmpty() && deletedFiles.isEmpty() && catalogVersions.isEmpty() && schemaVersions.isEmpty()) {
             log.info(
                 "No modified files",
                 "This code generation run has not produced any file modifications.\n"
@@ -612,11 +639,9 @@ public class JavaGenerator extends AbstractGenerator {
               + "- Use gradle tasks and inputs: https://docs.gradle.org/current/userguide/incremental_build.html");
         }
 
-        // [#5556] Clean up common parent directory
-        log.info("Removing excess files");
-        empty(getStrategy().getFileRoot(), (scala ? ".scala" : kotlin ? ".kt" : ".java"), affectedFiles, directoriesNotForRemoval);
-        directoriesNotForRemoval.clear();
         affectedFiles.clear();
+        addedFiles.clear();
+        deletedFiles.clear();
     }
 
     private boolean generateCatalogIfEmpty(CatalogDefinition catalog) {
@@ -687,8 +712,26 @@ public class JavaGenerator extends AbstractGenerator {
             Logging.run(
                 database.onError(),
                 () -> {
-                    if (generateSchemaIfEmpty(schema))
+                    if (generateSchemaIfEmpty(schema)) {
+                        int affectedBefore = affectedFiles.size();
+                        int modifiedBefore = modifiedFiles.size();
+                        int addedBefore = addedFiles.size();
+
                         generate(schema);
+
+                        // [#7403] Log file statistics per schema. Deleted files can only
+                        //         be known at the end of the run, see generate(Database)
+                        int affected = affectedFiles.size() - affectedBefore;
+                        if (affected > 0)
+                            logFileStatistics(
+                                "Files for schema " + schema.getOutputName(),
+                                affected,
+                                modifiedFiles.size() - modifiedBefore,
+                                addedFiles.size() - addedBefore,
+                                0,
+                                false
+                            );
+                    }
                     else
                         log.info("Excluding empty schema", schema);
                 },
@@ -13109,5 +13152,21 @@ public class JavaGenerator extends AbstractGenerator {
 
         if (result.modified)
             modifiedFiles.add(out.file());
+
+        if (result.added)
+            addedFiles.add(out.file());
+    }
+
+    /**
+     * [#7403] Log the number of added / modified / unmodified (and possibly
+     * deleted) files, given the deltas of the respective file sets.
+     */
+    private void logFileStatistics(String message, int affected, int modified, int added, int deleted, boolean logDeleted) {
+        log.info(message,
+            "added: " + added
+          + ", modified: " + (modified - added)
+          + ", unmodified: " + (affected - modified)
+          + (logDeleted ? ", deleted: " + deleted : "")
+        );
     }
 }

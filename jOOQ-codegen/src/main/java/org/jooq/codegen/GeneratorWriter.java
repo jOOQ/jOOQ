@@ -440,9 +440,21 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
          */
         public final boolean modified;
 
+        /**
+         * Whether closing the file added a new file, which didn't exist
+         * before. If <code>true</code>, then {@link #modified} is also
+         * <code>true</code>.
+         */
+        public final boolean added;
+
         CloseResult(boolean affected, boolean modified) {
+            this(affected, modified, false);
+        }
+
+        CloseResult(boolean affected, boolean modified, boolean added) {
             this.affected = affected;
             this.modified = modified;
+            this.added = added;
         }
     }
 
@@ -455,9 +467,12 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
 
         try {
 
+            // [#7403] Remember whether the file existed before this run
+            boolean existed = file.exists();
+
             // [#3756] Regenerate files only if there is a difference
             String oldContent = null;
-            if (file.exists() && file.length() == newContent.getBytes(encoding()).length) {
+            if (existed && file.length() == newContent.getBytes(encoding()).length) {
                 try (RandomAccessFile old = new RandomAccessFile(file, "r")) {
                     byte[] oldBytes = new byte[(int) old.length()];
                     old.readFully(oldBytes);
@@ -479,7 +494,7 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
                 writer.flush();
                 writer.close();
 
-                return new CloseResult(true, true);
+                return new CloseResult(true, true, !existed);
             }
 
             // [#10648] Check all modified files by this run

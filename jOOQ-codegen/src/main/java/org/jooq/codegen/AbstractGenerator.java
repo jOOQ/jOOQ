@@ -1890,6 +1890,17 @@ abstract class AbstractGenerator implements Generator {
      * If file is a file, delete it, except if it is in the list of files to keep.
      */
     protected void empty(File file, String suffix, Set<File> keep, Set<File> ignore) {
+        empty(file, suffix, keep, ignore, null);
+    }
+
+    /**
+     * If file is a directory, recursively empty its children.
+     * If file is a file, delete it, except if it is in the list of files to keep.
+     * <p>
+     * [#7403] If <code>deleted</code> is not <code>null</code>, all deleted
+     * files (not directories) are added to it.
+     */
+    protected void empty(File file, String suffix, Set<File> keep, Set<File> ignore, Set<File> deleted) {
         if (!targetClean)
             return;
 
@@ -1914,7 +1925,7 @@ abstract class AbstractGenerator implements Generator {
 
                 if (children != null)
                     for (File child : children)
-                        empty(child, suffix, keep, ignore);
+                        empty(child, suffix, keep, ignore, deleted);
 
                 File[] childrenAfterDeletion = file.listFiles();
 
@@ -1924,7 +1935,8 @@ abstract class AbstractGenerator implements Generator {
                     file.delete();
             }
             else if (file.getName().endsWith(suffix) && !keep.contains(file))
-                file.delete();
+                if (file.delete() && deleted != null)
+                    deleted.add(file);
         }
     }
 }

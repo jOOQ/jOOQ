@@ -2371,6 +2371,27 @@ public class JavaGenerator extends AbstractGenerator {
         return false;
     }
 
+    /**
+     * [#17759] Whether a Java POJO attribute is inherited from a parent POJO,
+     * in case of which it doesn't need to be redeclared on the child POJO
+     * (fields, getters, non-fluent setters).
+     */
+    private final boolean pojoAttributeInherited(Definition column) {
+        return !scala && !kotlin && supportPojoInheritance() && udtAttributeOverride(column);
+    }
+
+    /**
+     * [#17759] An expression that accesses a POJO attribute on a reference
+     * (e.g. <code>this</code> or <code>other</code>), which is the getter call
+     * if the attribute is inherited (and thus private in the parent POJO), or
+     * the member otherwise.
+     */
+    private final String pojoAttributeAccess(Definition column) {
+        return pojoAttributeInherited(column)
+            ? getStrategy().getJavaGetterName(column, Mode.POJO) + "()"
+            : getStrategy().getJavaMemberName(column, Mode.POJO);
+    }
+
     private boolean supportPojoInheritance() {
         if (scala)
             return !generatePojosAsScalaCaseClasses();
@@ -6124,6 +6145,15 @@ public class JavaGenerator extends AbstractGenerator {
                 if (scala && udtAttributeOverride(column) && supportPojoInheritance())
                     continue;
 
+                // [#17759] Getters, non-fluent setters, and UDT interface conversions are inherited from the parent
+                //          POJO. Fluent setters must be overridden covariantly, and delegate to the parent POJO.
+                if (pojoAttributeInherited(column)) {
+                    if (!generateImmutablePojos() && generateFluentSetters())
+                        generateUDTPojoSetter((TypedElementDefinition<?>) column, i, out);
+
+                    continue;
+                }
+
                 if (!generatePojosAsJavaRecordClasses() || generateInterfaces() || isNonReplacingEmbeddable(column)) {
                     if (tableUdtOrEmbeddable instanceof TableDefinition) {
                         if (column instanceof EmbeddableDefinition e)
@@ -6262,11 +6292,11 @@ public class JavaGenerator extends AbstractGenerator {
                         .filter(this::udtAttributeOverride)
                         .collect(toList());
 
+                    // [#17759] The parent constructor accepts the same argument types, and wraps them itself
                     forEach(overrides, (column, separator) -> {
                         final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
-                        Wrap wrap = wrapInterface(column, out, Mode.POJO);
 
-                        out.println("%s%s%s%s", wrap.prefix(), columnMember, wrap.suffix(), separator);
+                        out.println("%s%s", columnMember, separator);
                     });
 
                     out.println(");");
@@ -6274,6 +6304,11 @@ public class JavaGenerator extends AbstractGenerator {
                 }
 
                 for (Definition column : replacingEmbeddablesAndUnreplacedColumns) {
+
+                    // [#17759] Inherited fields are initialised by the parent constructor
+                    if (pojoAttributeInherited(column))
+                        continue;
+
                     final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
                     final Wrap wrap = wrapInterface(column, out, Mode.POJO);
 
@@ -6399,35 +6434,18 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println(");");
             }
             else {
+                // [#17759] Delegate the inherited attributes to the parent's copy constructor
                 if (udtSupertype(tableUdtOrEmbeddable) != null) {
-                    out.println("super(");
-
-                    List<Definition> overrides = replacingEmbeddablesAndUnreplacedColumns
-                        .stream()
-                        .filter(this::udtAttributeOverride)
-                        .collect(toList());
-
-                    forEach(overrides, (column, separator) -> {
-                        Wrap wrap = wrapInterface(column, out, Mode.POJO);
-
-                        out.println("%svalue.%s%s%s%s",
-                            wrap.prefix(),
-                            generateInterfaces()
-                                ? getStrategy().getJavaGetterName(column, Mode.INTERFACE)
-                                : getStrategy().getJavaMemberName(column, Mode.POJO),
-                            generateInterfaces()
-                                ? "()"
-                                : "",
-                            wrap.suffix(),
-                            separator
-                        );
-                    });
-
-                    out.println(");");
+                    out.println("super(value);");
                     out.println();
                 }
 
                 for (Definition column : replacingEmbeddablesAndUnreplacedColumns) {
+
+                    // [#17759] Inherited fields are initialised by the parent constructor
+                    if (pojoAttributeInherited(column))
+                        continue;
+
                     Wrap wrap = wrapInterface(column, out, Mode.POJO);
 
                     out.println("this.%s = %svalue.%s%s%s;",
@@ -6798,7 +6816,11 @@ public class JavaGenerator extends AbstractGenerator {
         final boolean isUDTOrTable = column.getType(resolver(out)).isUDT() || column.getType(resolver(out)).isTable();
         final boolean isArray = column.getType(resolver(out)).isArray();
         final String name = column.getQualifiedOutputName();
-        final boolean override = generateInterfaces() && !generateImmutableInterfaces() && !isUDTOrTable;
+
+        // [#17759] Inherited attributes have no field in this POJO. Their (fluent) setters merely override the
+        //          parent POJO's setters covariantly, delegating to them.
+        final boolean inherited = pojoAttributeInherited(column);
+        final boolean override = generateInterfaces() && !generateImmutableInterfaces() && !isUDTOrTable || inherited;
 
         // We cannot have covariant setters for arrays because of type erasure
         if (!(generateInterfaces() && (isArray || isUDTOrTable))) {
@@ -6819,7 +6841,11 @@ public class JavaGenerator extends AbstractGenerator {
 
                 out.overrideIf(override);
                 out.println("%s%s %s([[before=@][after= ][%s]]%s %s) {", visibility(), columnSetterReturnType, columnSetter, list(nullableAnnotation), varargsIfArray(columnType), columnMember);
-                out.println("this.%s = %s;", columnMember, columnMember);
+
+                if (inherited)
+                    out.println("super.%s(%s);", columnSetter, columnMember);
+                else
+                    out.println("this.%s = %s;", columnMember, columnMember);
 
                 if (generateFluentSetters())
                     out.println("return this;");
@@ -6849,14 +6875,20 @@ public class JavaGenerator extends AbstractGenerator {
             else {
                 out.overrideIf(override);
                 out.println("%s%s %s(%s %s) {", visibility(), columnSetterReturnType, columnSetter, varargsIfArray(columnTypeInterface), columnMember);
-                out.println("this.%s = to%s(%s);", columnMember, toUC(columnMember, getStrategy().getTargetLocale()), columnMember);
+
+                if (inherited)
+                    out.println("super.%s(%s);", columnSetter, columnMember);
+                else
+                    out.println("this.%s = to%s(%s);", columnMember, toUC(columnMember, getStrategy().getTargetLocale()), columnMember);
 
                 if (generateFluentSetters())
                     out.println("return this;");
 
                 out.println("}");
 
-                generatePojoSetterUdtInterfaceConversion(column, index, out);
+                // [#17759] The conversion is done by the parent POJO
+                if (!inherited)
+                    generatePojoSetterUdtInterfaceConversion(column, index, out);
             }
         }
     }
@@ -6998,7 +7030,9 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("final %s other = (%s) obj;", className, className);
 
             for (Definition column : replacingEmbeddablesAndUnreplacedColumns) {
-                final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
+
+                // [#17759] Inherited attributes are private in the parent POJO
+                final String columnMember = pojoAttributeAccess(column);
 
                 out.println("if (this.%s == null) {", columnMember);
                 out.println("if (other.%s != null)", columnMember);
@@ -7075,7 +7109,9 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("int result = 1;");
 
             for (Definition column : replacingEmbeddablesAndUnreplacedColumns) {
-                final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
+
+                // [#17759] Inherited attributes are private in the parent POJO
+                final String columnMember = pojoAttributeAccess(column);
 
                 if (isObjectArrayType(getJavaType(column, out)))
                     out.println("result = prime * result + ((this.%s == null) ? 0 : %s.deepHashCode(this.%s));", columnMember, Arrays.class, columnMember);
@@ -7158,7 +7194,9 @@ public class JavaGenerator extends AbstractGenerator {
 
             String separator = "";
             for (Definition column : replacingEmbeddablesAndUnreplacedColumns) {
-                final String columnMember = getStrategy().getJavaMemberName(column, Mode.POJO);
+
+                // [#17759] Inherited attributes are private in the parent POJO
+                final String columnMember = pojoAttributeAccess(column);
                 final String columnType = getJavaType(column, out);
                 final boolean array = isArrayType(columnType);
 

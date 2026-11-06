@@ -1479,13 +1479,23 @@ implements
     }
 
     @Override
-    public final Fields internalFieldsRow() {
-        return getDelegate().internalFieldsRow();
+    public final CloseableResultQuery<R> intern(Field<?>... fields) {
+        return getDelegate().intern(fields);
     }
 
     @Override
-    public final Fields fieldsIncludingHidden() {
-        return getDelegate().fieldsIncludingHidden();
+    public final CloseableResultQuery<R> intern(int... fieldIndexes) {
+        return getDelegate().intern(fieldIndexes);
+    }
+
+    @Override
+    public final CloseableResultQuery<R> intern(Name... fieldNames) {
+        return getDelegate().intern(fieldNames);
+    }
+
+    @Override
+    public final CloseableResultQuery<R> intern(String... fieldNames) {
+        return getDelegate().intern(fieldNames);
     }
 
     @Override

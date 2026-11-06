@@ -90,6 +90,7 @@ import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 
 import org.xml.sax.Attributes;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXNotRecognizedException;
 import org.xml.sax.SAXNotSupportedException;
@@ -344,7 +345,18 @@ implements
 
     final Result<R> read(String string) {
         log(string);
+        return read(new InputSource(new ByteArrayInputStream(string.getBytes(ctx.configuration().charsetProvider().provide()))), "Could not read the XML string");
+    }
 
+    /**
+     * [#801] Read a {@link Result} from an arbitrary {@link InputSource}, e.g.
+     * for use by the {@link org.jooq.Loader} API.
+     */
+    final Result<R> read(InputSource source) {
+        return read(source, "Could not read the XML source");
+    }
+
+    private final Result<R> read(InputSource source, String errorMessage) {
         try {
             SAXParserFactory factory = SAXParserFactory.newInstance();
 
@@ -382,11 +394,11 @@ implements
             }
             catch (SAXNotRecognizedException | SAXNotSupportedException ignore) {}
 
-            saxParser.parse(new ByteArrayInputStream(string.getBytes(ctx.configuration().charsetProvider().provide())), this);
+            saxParser.parse(source, this);
             return s.result;
         }
         catch (Exception e) {
-            throw new DataAccessException("Could not read the XML string", e);
+            throw new DataAccessException(errorMessage, e);
         }
     }
 

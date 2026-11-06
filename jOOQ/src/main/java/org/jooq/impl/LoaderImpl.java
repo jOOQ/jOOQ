@@ -88,6 +88,7 @@ import org.jooq.LoaderJSONStep;
 import org.jooq.LoaderOptionsStep;
 import org.jooq.LoaderRowListener;
 import org.jooq.LoaderRowsStep;
+import org.jooq.LoaderXMLOptionsStep;
 import org.jooq.LoaderXMLStep;
 import org.jooq.Record;
 import org.jooq.Result;
@@ -115,6 +116,7 @@ final class LoaderImpl<R extends Record> implements
     LoaderOptionsStep<R>,
     LoaderRowsStep<R>,
     LoaderXMLStep<R>,
+    LoaderXMLOptionsStep<R>,
     LoaderCSVStep<R>,
     LoaderCSVOptionsStep<R>,
     LoaderJSONStep<R>,
@@ -164,6 +166,7 @@ final class LoaderImpl<R extends Record> implements
     private int                          bulkAfter                        = 1;
     private int                          content                          = CONTENT_CSV;
     private Source                       input;
+    private InputSource                  inputSource;
     private Iterator<? extends Object[]> arrays;
 
     // CSV configuration data
@@ -461,14 +464,17 @@ final class LoaderImpl<R extends Record> implements
     @Override
     public final LoaderImpl<R> loadXML(InputSource s) {
         content = CONTENT_XML;
-        throw new UnsupportedOperationException("This is not yet implemented");
+        input = null;
+        inputSource = s;
+        return this;
     }
 
     @Override
     public final LoaderImpl<R> loadXML(Source s) {
         content = CONTENT_XML;
         input = s;
-        throw new UnsupportedOperationException("This is not yet implemented");
+        inputSource = null;
+        return this;
     }
 
     @Override
@@ -631,12 +637,6 @@ final class LoaderImpl<R extends Record> implements
     }
 
     // -------------------------------------------------------------------------
-    // XML configuration
-    // -------------------------------------------------------------------------
-
-    // [...] to be specified
-
-    // -------------------------------------------------------------------------
     // Listening
     // -------------------------------------------------------------------------
 
@@ -668,7 +668,7 @@ final class LoaderImpl<R extends Record> implements
         if (content == CONTENT_CSV)
             executeCSV();
         else if (content == CONTENT_XML)
-            throw new UnsupportedOperationException();
+            executeXML();
         else if (content == CONTENT_JSON)
             executeJSON();
         else if (content == CONTENT_ARRAYS)
@@ -694,6 +694,28 @@ final class LoaderImpl<R extends Record> implements
 
             // The current json format is not designed for streaming. Thats why
             // all records are loaded at once.
+            List<Object[]> allRecords = Arrays.asList(r.intoArrays());
+            executeSQL(allRecords.iterator());
+        }
+        finally {
+            safeClose(reader);
+        }
+    }
+
+    private final void executeXML() throws IOException {
+        Reader reader = null;
+
+        try {
+            InputSource s = inputSource != null
+                ? inputSource
+                : new InputSource(reader = input.reader());
+
+            // [#801] The XML format is the one produced by Result.formatXML()
+            //        and consumed by DSLContext.fetchFromXML()
+            Result<Record> r = new XMLHandler<>(configuration.dsl(), null, null).read(s);
+            source = r.fields();
+
+            // Like the JSON format, the XML format is currently not streamed
             List<Object[]> allRecords = Arrays.asList(r.intoArrays());
             executeSQL(allRecords.iterator());
         }

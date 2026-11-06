@@ -37,12 +37,37 @@
  */
 package org.jooq;
 
+import org.jetbrains.annotations.*;
+
+
+import java.util.Collection;
+
+import org.jooq.LoaderFieldMapper.LoaderFieldContext;
+import org.jooq.exception.LoaderConfigurationException;
 
 /**
  * The <code>Loader</code> API is used for configuring data loads.
  * <p>
  * The step in constructing the {@link Loader} object where you can set the
  * mandatory XML loader options.
+ * <p>
+ * The expected XML format is the one produced by {@link Formattable#formatXML()}
+ * and consumed by {@link DSLContext#fetchFromXML(String)}, e.g.
+ *
+ * <pre><code>
+ * &lt;result xmlns="http://www.jooq.org/xsd/jooq-export-3.10.0.xsd"&gt;
+ *   &lt;fields&gt;
+ *     &lt;field name="ID" type="INTEGER"/&gt;
+ *     &lt;field name="TITLE" type="VARCHAR"/&gt;
+ *   &lt;/fields&gt;
+ *   &lt;records&gt;
+ *     &lt;record&gt;
+ *       &lt;value field="ID"&gt;1&lt;/value&gt;
+ *       &lt;value field="TITLE"&gt;1984&lt;/value&gt;
+ *     &lt;/record&gt;
+ *   &lt;/records&gt;
+ * &lt;/result&gt;
+ * </code></pre>
  * <p>
  * <h3>Referencing <code>XYZ*Step</code> types directly from client code</h3>
  * <p>
@@ -66,6 +91,52 @@ package org.jooq;
  */
 public interface LoaderXMLStep<R extends Record> {
 
-    // [...] This API is not yet defined
+    /**
+     * Specify the fields to be loaded into the table in the correct order.
+     * <p>
+     * The XML column at index <code>i</code> is inserted into the table field
+     * at index <code>i</code>. If <code>fields[i] == null</code> or
+     * <code>fields.length &lt;= i</code>, then the XML column is skipped.
+     */
+    @NotNull @CheckReturnValue
+    @Support
+    LoaderXMLOptionsStep<R> fields(Field<?>... fields);
+
+    /**
+     * Specify the fields to be loaded into the table in the correct order.
+     * <p>
+     * The XML column at index <code>i</code> is inserted into the table field
+     * at index <code>i</code>. If
+     * <code>new ArrayList(fields).get(i) == null</code> or
+     * <code>new ArrayList(fields).size() &lt;= i</code>, then the XML column
+     * is skipped.
+     */
+    @NotNull @CheckReturnValue
+    @Support
+    LoaderXMLOptionsStep<R> fields(Collection<? extends Field<?>> fields);
+
+    /**
+     * Specify a function to apply on each input field to receive the target
+     * table's field.
+     * <p>
+     * The input field obtained from {@link LoaderFieldContext#field()} wraps
+     * the XML column name as declared in the <code>&lt;fields/&gt;</code>
+     * element. The {@link LoaderFieldContext#index()} property corresponds to
+     * the XML column index in declaration order.
+     */
+    @NotNull @CheckReturnValue
+    @Support
+    LoaderXMLOptionsStep<R> fields(LoaderFieldMapper mapper);
+
+    /**
+     * Indicate that all input fields which have a corresponding field in the
+     * target table (with the same name) should be loaded.
+     *
+     * @throws LoaderConfigurationException When the source data does not expose
+     *             field names.
+     */
+    @NotNull @CheckReturnValue
+    @Support
+    LoaderXMLOptionsStep<R> fieldsCorresponding();
 
 }

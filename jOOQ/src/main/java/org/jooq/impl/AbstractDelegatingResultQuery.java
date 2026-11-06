@@ -125,11 +125,6 @@ implements
     }
 
     @Override
-    public final CloseableResultQuery<R> largeMaxRows(long rows) {
-        return getDelegate().largeMaxRows(rows);
-    }
-
-    @Override
     public final CloseableResultQuery<R> fetchSize(int rows) {
         return getDelegate().fetchSize(rows);
     }

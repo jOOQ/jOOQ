@@ -1083,6 +1083,9 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
         final Constructor<E>               constructor;
         final Class<?>[]                   parameterTypes;
         final Converter<?, ?>[]            parameterConverters;
+
+        // [#10425] The constructor parameter type init values
+        private final Object[]             initValues;
         private final boolean              nested;
         private final NestedMappingInfo[]  nestedMappingInfo;
         private final Integer[]            propertyIndexes;
@@ -1102,6 +1105,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
             this.constructor = accessible(constructor);
             this.parameterTypes = parameterTypes;
             this.parameterConverters = new Converter[parameterTypes.length];
+            this.initValues = Tools.map(parameterTypes, c -> Reflect.initValue(c), Object[]::new);
             this.nestedMappingInfo = new NestedMappingInfo[size];
             this.propertyIndexes = new Integer[fields.length];
             this.propertyNames = propertyNames;
@@ -1255,7 +1259,7 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
         private final Object[] mapNonnested(R record, boolean[] assigned, boolean[] nulls) {
 
             // [#10425] Initialise array to constructor parameter type init values
-            Object[] converted = Tools.map(parameterTypes, c -> Reflect.initValue(c), Object[]::new);
+            Object[] converted = initValues.clone();
             RecordConverterContext cc = new RecordConverterContext(record);
 
             for (int i = 0; i < record.size(); i++)

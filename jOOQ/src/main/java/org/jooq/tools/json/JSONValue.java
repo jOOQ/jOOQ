@@ -162,7 +162,7 @@ public class JSONValue {
      *         number.
      */
     public static String toJSONString(Object value) {
-        Writer w = new StringWriter();
+        Writer w = new StringBuilderWriter();
 
         try {
             writeJSONString(value, w);
@@ -173,15 +173,71 @@ public class JSONValue {
     }
 
     /**
+     * An unsynchronized alternative to {@link StringWriter}.
+     */
+    private static final class StringBuilderWriter extends Writer {
+        private final StringBuilder sb = new StringBuilder();
+
+        @Override
+        public void write(int c) {
+            sb.append((char) c);
+        }
+
+        @Override
+        public void write(char[] cbuf, int off, int len) {
+            sb.append(cbuf, off, len);
+        }
+
+        @Override
+        public void write(String str) {
+            sb.append(str);
+        }
+
+        @Override
+        public void write(String str, int off, int len) {
+            sb.append(str, off, off + len);
+        }
+
+        @Override
+        public void flush() {}
+
+        @Override
+        public void close() {}
+
+        @Override
+        public String toString() {
+            return sb.toString();
+        }
+    }
+
+    /**
      * Escape quotes, \, /, \r, \n, \b, \f, \t and other control characters
      * (U+0000 through U+001F).
      */
     public static String escape(String s) {
         if (s == null)
             return null;
-        StringBuffer sb = new StringBuffer();
-        escape(s, sb);
-        return sb.toString();
+
+        // Most strings don't contain any characters that need escaping
+        for (int i = 0; i < s.length(); i++) {
+            if (escaped(s.charAt(i))) {
+                StringBuffer sb = new StringBuffer(s.length() + 16);
+                escape(s, sb);
+                return sb.toString();
+            }
+        }
+
+        return s;
+    }
+
+    /**
+     * Whether {@link #escape(String, StringBuffer)} escapes a character.
+     */
+    private static boolean escaped(char ch) {
+        return ch == '"' || ch == '\\' || ch == '/'
+            || ch <= '\u001F'
+            || (ch >= '\u007F' && ch <= '\u009F')
+            || (ch >= '\u2000' && ch <= '\u20FF');
     }
 
     /**

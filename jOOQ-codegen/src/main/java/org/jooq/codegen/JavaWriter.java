@@ -153,7 +153,12 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
             String escaped = escapeJavadoc(string);
             Object[] escapedArgs = Arrays.copyOf(args, args.length);
             for (int i = 0; i < escapedArgs.length; i++)
-                escapedArgs[i] = escapeJavadoc(escapedArgs[i]);
+
+                // [#17938] String arguments are identifiers (e.g. object names),
+                //          which must be HTML escaped. Comments are passed as
+                //          already escaped List arguments, and are not escaped
+                //          again here.
+                escapedArgs[i] = escapeJavadoc(escapedArgs[i] instanceof String s ? escapeEntities(s) : escapedArgs[i]);
 
             println("/**");
             println(escaped, escapedArgs);
@@ -171,6 +176,17 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
             return ((List<Object>) object).stream().map(JavaWriter::escapeJavadoc).collect(toList());
         else
             return object;
+    }
+
+    static String escapeEntities(String string) {
+        if (string == null)
+            return null;
+
+        // [#5704] [#17938] Do not allow certain HTML entities
+        return string
+            .replace("&", "&amp;")
+            .replace("<", "&lt;")
+            .replace(">", "&gt;");
     }
 
     static String escapeJavadoc(String string) {

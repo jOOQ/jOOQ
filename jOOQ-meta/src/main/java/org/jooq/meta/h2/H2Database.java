@@ -412,8 +412,18 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
                 KEY_COLUMN_USAGE.COLUMN_NAME,
                 KEY_COLUMN_USAGE.ORDINAL_POSITION.coerce(INTEGER))
             .from(KEY_COLUMN_USAGE)
-            .where(KEY_COLUMN_USAGE.tableConstraints().CONSTRAINT_TYPE.in(constraintTypes))
-            .and(KEY_COLUMN_USAGE.tableConstraints().TABLE_SCHEMA.in(schemas))
+
+            // [#perf] Joining INFORMATION_SCHEMA tables on CONSTRAINT_NAME is
+            // O(N^2) in H2 2.x, as only TABLE_NAME lookups are supported by
+            // H2's meta indexes. An uncorrelated semi join is evaluated only
+            // once, and is much faster for large schemas.
+            .where(KEY_COLUMN_USAGE.TABLE_SCHEMA.in(schemas))
+            .and(row(KEY_COLUMN_USAGE.CONSTRAINT_CATALOG, KEY_COLUMN_USAGE.CONSTRAINT_SCHEMA, KEY_COLUMN_USAGE.CONSTRAINT_NAME).in(
+                select(TABLE_CONSTRAINTS.CONSTRAINT_CATALOG, TABLE_CONSTRAINTS.CONSTRAINT_SCHEMA, TABLE_CONSTRAINTS.CONSTRAINT_NAME)
+                .from(TABLE_CONSTRAINTS)
+                .where(TABLE_CONSTRAINTS.CONSTRAINT_TYPE.in(constraintTypes))
+                .and(TABLE_CONSTRAINTS.TABLE_SCHEMA.in(schemas))
+            ))
             .orderBy(
                 KEY_COLUMN_USAGE.TABLE_SCHEMA.asc(),
                 KEY_COLUMN_USAGE.TABLE_NAME.asc(),

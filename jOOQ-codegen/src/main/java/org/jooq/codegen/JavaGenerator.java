@@ -6104,6 +6104,11 @@ public class JavaGenerator extends AbstractGenerator {
 
             if (!generatePojosAsJavaRecordClasses())
                 for (Definition column : replacingEmbeddablesAndUnreplacedColumns) {
+
+                    // [#17759] Don't repeat fields of a parent POJO
+                    if (pojoAttributeInherited(column))
+                        continue;
+
                     out.println("private %s%s %s;",
                         generateImmutablePojos() ? "final " : "",
                         getJavaTypeRef(column, out, Mode.POJO),

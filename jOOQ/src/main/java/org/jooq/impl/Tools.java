@@ -291,6 +291,7 @@ import java.util.function.Function;
 import java.util.function.IntFunction;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
+import java.util.function.ToIntFunction;
 import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -2594,6 +2595,21 @@ final class Tools {
         U[] result = constructor.apply(array.length);
         for (int i = 0; i < array.length; i++)
             result[i] = mapper.apply(array[i]);
+
+        return result;
+    }
+
+    /**
+     * Like <code>Stream.of(array).mapToInt(mapper).toArray()</code> but
+     * without the entire stream pipeline.
+     */
+    static final <T> int[] mapToInt(T[] array, ToIntFunction<? super T> mapper) {
+        if (array == null)
+            return new int[0];
+
+        int[] result = new int[array.length];
+        for (int i = 0; i < array.length; i++)
+            result[i] = mapper.applyAsInt(array[i]);
 
         return result;
     }

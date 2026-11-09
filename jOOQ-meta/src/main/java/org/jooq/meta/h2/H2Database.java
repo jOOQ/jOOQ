@@ -89,7 +89,6 @@ import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -458,100 +457,51 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
     }
 
     private void loadForeignKeys2_0(DefaultRelations relations) {
+        KeyColumnUsage fkKcu = KEY_COLUMN_USAGE.as("fk_kcu");
+        KeyColumnUsage pkKcu = KEY_COLUMN_USAGE.as("pk_kcu");
 
-        // [#perf] Joining INFORMATION_SCHEMA tables on CONSTRAINT_NAME is
-        // O(N^2) in H2 2.x, as only TABLE_NAME lookups are supported by H2's
-        // meta indexes. With thousands of constraints, the 4-way join takes
-        // tens of seconds, so we fetch the individual tables and hash join
-        // them in the client instead.
-        Map<List<String>, Record> referentialConstraints = new HashMap<>();
-        for (Record r : create()
+        for (Record record : create()
             .select(
-                REFERENTIAL_CONSTRAINTS.CONSTRAINT_SCHEMA,
-                REFERENTIAL_CONSTRAINTS.CONSTRAINT_NAME,
-                REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_SCHEMA,
                 REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_NAME,
+                REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_SCHEMA,
+                TABLE_CONSTRAINTS.TABLE_NAME,
+                fkKcu.CONSTRAINT_NAME,
+                fkKcu.TABLE_SCHEMA,
+                fkKcu.TABLE_NAME,
+                fkKcu.COLUMN_NAME,
+                pkKcu.COLUMN_NAME,
                 replace(REFERENTIAL_CONSTRAINTS.DELETE_RULE, inline(" "), inline("_")).as(REFERENTIAL_CONSTRAINTS.DELETE_RULE),
-                replace(REFERENTIAL_CONSTRAINTS.UPDATE_RULE, inline(" "), inline("_")).as(REFERENTIAL_CONSTRAINTS.UPDATE_RULE))
-            .from(REFERENTIAL_CONSTRAINTS))
-            referentialConstraints.put(asList(
-                r.get(REFERENTIAL_CONSTRAINTS.CONSTRAINT_SCHEMA),
-                r.get(REFERENTIAL_CONSTRAINTS.CONSTRAINT_NAME)
-            ), r);
-
-        if (referentialConstraints.isEmpty())
-            return;
-
-        Map<List<String>, String> uniqueKeyTables = new HashMap<>();
-        for (Record r : create()
-            .select(
-                TABLE_CONSTRAINTS.CONSTRAINT_SCHEMA,
-                TABLE_CONSTRAINTS.CONSTRAINT_NAME,
-                TABLE_CONSTRAINTS.TABLE_NAME)
-            .from(TABLE_CONSTRAINTS))
-            uniqueKeyTables.put(asList(
-                r.get(TABLE_CONSTRAINTS.CONSTRAINT_SCHEMA),
-                r.get(TABLE_CONSTRAINTS.CONSTRAINT_NAME)
-            ), r.get(TABLE_CONSTRAINTS.TABLE_NAME));
-
-        Result<?> keyColumnUsage = create()
-            .select(
-                KEY_COLUMN_USAGE.CONSTRAINT_SCHEMA,
-                KEY_COLUMN_USAGE.CONSTRAINT_NAME,
-                KEY_COLUMN_USAGE.TABLE_SCHEMA,
-                KEY_COLUMN_USAGE.TABLE_NAME,
-                KEY_COLUMN_USAGE.COLUMN_NAME,
-                KEY_COLUMN_USAGE.ORDINAL_POSITION.coerce(INTEGER),
-                KEY_COLUMN_USAGE.POSITION_IN_UNIQUE_CONSTRAINT.coerce(INTEGER))
-            .from(KEY_COLUMN_USAGE)
+                replace(REFERENTIAL_CONSTRAINTS.UPDATE_RULE, inline(" "), inline("_")).as(REFERENTIAL_CONSTRAINTS.UPDATE_RULE)
+            )
+            .from(REFERENTIAL_CONSTRAINTS)
+            .join(fkKcu)
+                .on(fkKcu.CONSTRAINT_SCHEMA.equal(REFERENTIAL_CONSTRAINTS.CONSTRAINT_SCHEMA))
+                .and(fkKcu.CONSTRAINT_NAME.equal(REFERENTIAL_CONSTRAINTS.CONSTRAINT_NAME))
+            .join(TABLE_CONSTRAINTS)
+                .on(TABLE_CONSTRAINTS.CONSTRAINT_SCHEMA.eq(REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_SCHEMA))
+                .and(TABLE_CONSTRAINTS.CONSTRAINT_NAME.eq(REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_NAME))
+            .join(pkKcu)
+                .on(pkKcu.CONSTRAINT_SCHEMA.eq(TABLE_CONSTRAINTS.CONSTRAINT_SCHEMA))
+                .and(pkKcu.CONSTRAINT_NAME.eq(TABLE_CONSTRAINTS.CONSTRAINT_NAME))
+                .and(pkKcu.ORDINAL_POSITION.eq(fkKcu.POSITION_IN_UNIQUE_CONSTRAINT))
+            .where(fkKcu.TABLE_SCHEMA.in(getInputSchemata()))
             .orderBy(
-                KEY_COLUMN_USAGE.TABLE_SCHEMA.asc(),
-                KEY_COLUMN_USAGE.TABLE_NAME.asc(),
-                KEY_COLUMN_USAGE.CONSTRAINT_NAME.asc(),
-                KEY_COLUMN_USAGE.ORDINAL_POSITION.asc())
-            .fetch();
+                fkKcu.TABLE_SCHEMA.asc(),
+                fkKcu.TABLE_NAME.asc(),
+                fkKcu.CONSTRAINT_NAME.asc(),
+                fkKcu.ORDINAL_POSITION.asc())
+        ) {
+            SchemaDefinition foreignKeySchema = getSchema(record.get(fkKcu.TABLE_SCHEMA));
+            SchemaDefinition uniqueKeySchema = getSchema(record.get(REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_SCHEMA));
 
-        // (CONSTRAINT_SCHEMA, CONSTRAINT_NAME, ORDINAL_POSITION) -> COLUMN_NAME
-        Map<List<Object>, String> keyColumns = new HashMap<>();
-        for (Record r : keyColumnUsage)
-            keyColumns.put(asList(
-                r.get(KEY_COLUMN_USAGE.CONSTRAINT_SCHEMA),
-                r.get(KEY_COLUMN_USAGE.CONSTRAINT_NAME),
-                r.get(KEY_COLUMN_USAGE.ORDINAL_POSITION.getName(), Integer.class)
-            ), r.get(KEY_COLUMN_USAGE.COLUMN_NAME));
-
-        List<String> inputSchemata = getInputSchemata();
-        for (Record record : keyColumnUsage) {
-            String foreignKeySchemaName = record.get(KEY_COLUMN_USAGE.TABLE_SCHEMA);
-            if (!inputSchemata.contains(foreignKeySchemaName))
-                continue;
-
-            Record rc = referentialConstraints.get(asList(
-                record.get(KEY_COLUMN_USAGE.CONSTRAINT_SCHEMA),
-                record.get(KEY_COLUMN_USAGE.CONSTRAINT_NAME)
-            ));
-            if (rc == null)
-                continue;
-
-            String uniqueKeySchemaName = rc.get(REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_SCHEMA);
-            String uniqueKey = rc.get(REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_NAME);
-            String uniqueKeyTableName = uniqueKeyTables.get(asList(uniqueKeySchemaName, uniqueKey));
-            String uniqueKeyColumn = keyColumns.get(asList(
-                uniqueKeySchemaName,
-                uniqueKey,
-                record.get(KEY_COLUMN_USAGE.POSITION_IN_UNIQUE_CONSTRAINT.getName(), Integer.class)
-            ));
-            if (uniqueKeyTableName == null || uniqueKeyColumn == null)
-                continue;
-
-            SchemaDefinition foreignKeySchema = getSchema(foreignKeySchemaName);
-            SchemaDefinition uniqueKeySchema = getSchema(uniqueKeySchemaName);
-
-            String foreignKey = record.get(KEY_COLUMN_USAGE.CONSTRAINT_NAME);
-            String foreignKeyTableName = record.get(KEY_COLUMN_USAGE.TABLE_NAME);
-            String foreignKeyColumn = record.get(KEY_COLUMN_USAGE.COLUMN_NAME);
-            ForeignKeyRule deleteRule = rc.get(REFERENTIAL_CONSTRAINTS.DELETE_RULE, ForeignKeyRule.class);
-            ForeignKeyRule updateRule = rc.get(REFERENTIAL_CONSTRAINTS.UPDATE_RULE, ForeignKeyRule.class);
+            String foreignKey = record.get(fkKcu.CONSTRAINT_NAME);
+            String foreignKeyTableName = record.get(fkKcu.TABLE_NAME);
+            String foreignKeyColumn = record.get(fkKcu.COLUMN_NAME);
+            String uniqueKey = record.get(REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_NAME);
+            String uniqueKeyTableName = record.get(TABLE_CONSTRAINTS.TABLE_NAME);
+            String uniqueKeyColumn = record.get(pkKcu.COLUMN_NAME);
+            ForeignKeyRule deleteRule = record.get(REFERENTIAL_CONSTRAINTS.DELETE_RULE, ForeignKeyRule.class);
+            ForeignKeyRule updateRule = record.get(REFERENTIAL_CONSTRAINTS.UPDATE_RULE, ForeignKeyRule.class);
 
             TableDefinition foreignKeyTable = getTable(foreignKeySchema, foreignKeyTableName);
             TableDefinition uniqueKeyTable = getTable(uniqueKeySchema, uniqueKeyTableName);

@@ -841,7 +841,15 @@ implements
 
     @Override
     public final <R extends Record> R into(Table<R> table) {
-        return Tools.newRecord(fetched, configuration(), table).operate(new TransferRecordState<>(table.fields()));
+        return into(table, table.fields(), null);
+    }
+
+    /**
+     * [#11058] Allow for re-using a pre-computed index mapping from
+     * <code>targetFields</code> to this record's {@link #fields}.
+     */
+    final <R extends Record> R into(Table<R> table, Field<?>[] targetFields, int[] sourceIndexes) {
+        return Tools.newRecord(fetched, configuration(), table).operate(new TransferRecordState<>(targetFields, sourceIndexes));
     }
 
     final <R extends Record> R intoRecord(R record) {
@@ -855,12 +863,18 @@ implements
     class TransferRecordState<R extends Record> implements ThrowingFunction<R, R, MappingException> {
 
         final Field<?>[]       targetFields;
+        final int[]            sourceIndexes;
 
         // [#16243] Lazily created, as the AbstractRecord target path doesn't need it
         ConverterContext       converterContext;
 
         TransferRecordState(Field<?>[] targetFields) {
+            this(targetFields, null);
+        }
+
+        TransferRecordState(Field<?>[] targetFields, int[] sourceIndexes) {
             this.targetFields = targetFields;
+            this.sourceIndexes = sourceIndexes;
         }
 
         @Override
@@ -877,7 +891,7 @@ implements
                     //         The record doesn't know about aliased tables, for instance.
                     for (int targetIndex = 0; targetIndex < (targetFields != null ? targetFields.length : t.size()); targetIndex++) {
                         Field<?> targetField = (targetFields != null ? targetFields[targetIndex] : t.field(targetIndex));
-                        int sourceIndex = fields.indexOf(targetField);
+                        int sourceIndex = sourceIndexes != null ? sourceIndexes[targetIndex] : fields.indexOf(targetField);
 
                         if (sourceIndex >= 0) {
                             DataType<?> targetType = targetField.getDataType();

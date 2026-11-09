@@ -149,11 +149,17 @@ implements
     }
 
     static final UDTPathField<?, ?, ?> getPathFieldFor(UDT<?> udt, UDTPathField<?, ?, ?> f) {
+
+        loop:
         while (udt.field(f) == null) {
-            if (f instanceof AbstractPathField && ((AbstractPathField<?, ?, ?>) f).getParentPathField() instanceof UDTPathField<?, ?, ?> p)
-                f = p;
-            else
-                throw new IllegalStateException();
+            if (f instanceof AbstractPathField<?, ?, ?> a) {
+                if (a.getParentPathField() instanceof UDTPathField<?, ?, ?> p) {
+                    f = p;
+                    continue loop;
+                }
+            }
+
+            throw new IllegalStateException();
         }
 
         return f;

@@ -420,10 +420,39 @@ class GenerationUtil {
         String result = convertToIdentifier0(literal, language);
 
         // [#4703] [#10866] If an identifier consists only of underscores add one more. _ -> __, __ -> ___
-        if (language == JAVA && UNDERSCORE_PATTERN.matcher(result).matches())
+        if (language == JAVA && isUnderscores(result))
             return result + "_";
         else
             return result;
+    }
+
+    /**
+     * Whether a string matches {@link #UNDERSCORE_PATTERN}, i.e. it consists
+     * only of (at least one) underscores.
+     */
+    private static boolean isUnderscores(String string) {
+        if (string.isEmpty())
+            return false;
+
+        for (int i = 0; i < string.length(); i++)
+            if (string.charAt(i) != '_')
+                return false;
+
+        return true;
+    }
+
+    /**
+     * Whether a (non-keyword) literal can be used as a Java identifier as is.
+     */
+    private static boolean isJavaIdentifier(String literal) {
+        if (literal.isEmpty() || !Character.isJavaIdentifierStart(literal.charAt(0)))
+            return false;
+
+        for (int i = 1; i < literal.length(); i++)
+            if (!Character.isJavaIdentifierPart(literal.charAt(i)))
+                return false;
+
+        return true;
     }
 
     private static String convertToIdentifier0(String literal, Language language) {
@@ -433,6 +462,11 @@ class GenerationUtil {
             return "`" + literal + "`";
         if (language == KOTLIN && KOTLIN_KEYWORDS.contains(literal))
             return "`" + literal + "`";
+
+        // [#perf] Most identifiers don't need any escaping. This method is
+        //         called very frequently by the code generator
+        if (language == JAVA && isJavaIdentifier(literal))
+            return literal;
 
         StringBuilder sb = new StringBuilder();
 

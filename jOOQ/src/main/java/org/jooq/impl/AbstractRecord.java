@@ -215,8 +215,8 @@ implements
             return (T) Tools
                 .newRecord(fetched, configuration(), ((EmbeddableTableField<?, ?>) field).recordType)
                 .operate(new TransferRecordState<>(embeddedFields(field)));
-        else if (field instanceof UDTPathField<?, ?, ?> u)
-            return get(u.getParentField()).get(field);
+        else if (field instanceof AbstractPathField && ((AbstractPathField<?, ?, ?>) field).getParentPathField() != null)
+            return ((Record) get(((AbstractPathField<?, ?, ?>) field).getParentPathField())).get(field);
         else
             throw Tools.indexFail(fields, field);
     }

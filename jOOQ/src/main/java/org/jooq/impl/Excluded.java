@@ -129,7 +129,7 @@ implements
                     ? table(name("t"))
                     : table(N_EXCLUDED);
 
-                if (field instanceof UDTPathField)
+                if (field instanceof AbstractPathField)
                     ctx.scopeRegister(t, false, e).visit(field).scopeRegister(t, false, null);
                 else
                     ctx.visit(e).sql('.').qualify(false, c -> c.visit(field));

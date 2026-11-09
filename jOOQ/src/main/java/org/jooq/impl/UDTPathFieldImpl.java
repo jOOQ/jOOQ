@@ -80,46 +80,39 @@ import org.jooq.impl.QOM.UNotYetImplemented;
 @org.jooq.Internal
 public /* non-final */ class UDTPathFieldImpl<R extends Record, U extends UDTRecord<U>, T>
 extends
-    AbstractField<T>
+    AbstractPathField<R, U, T>
 implements
-    UDTPathField<R, U, T>,
-    SimpleQueryPart,
-    TypedReference<T>,
-    NamedField<T>,
-    ScopeMappable,
-    UEmpty
+    UDTPathField<R, U, T>
 {
 
-    private final RecordQualifier<R> qualifier;
-    private final UDT<U>             udt;
+    private final UDT<U> udt;
 
     UDTPathFieldImpl(Name name, DataType<T> type, RecordQualifier<R> qualifier, UDT<U> udt, Comment comment) {
         this(name, type, qualifier, udt, comment, type.getBinding());
     }
 
     UDTPathFieldImpl(Name name, DataType<T> type, RecordQualifier<R> qualifier, UDT<U> udt, Comment comment, Binding<?, T> binding) {
-        super(qualify(qualifier, name), type, comment, binding);
+        super(name, type, qualifier, udt, comment, binding);
 
-        this.qualifier = qualifier;
         this.udt = udt;
     }
 
     @Override
     public final UDTPathTableField<?, ?, ?> getTableField() {
-        if (getQualifier() instanceof UDTPathTableFieldImpl<?, ?, ?>.UDTPathFieldImplAsQualifier u)
-            return u.getTableField();
+        if (getParentPathField() instanceof UDTPathField<?, ?, ?> p)
+            return p.getTableField();
         else if (this instanceof UDTPathTableField<?, ?, ?> tf)
             return tf;
         else
             throw new IllegalStateException();
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public final UDTPathField<?, ?, ? extends UDTRecord<?>> getParentField() {
-        if (getQualifier() instanceof UDTPathTableFieldImpl<?, ?, ?>.UDTPathFieldImplAsQualifier u)
-            return u.getPathField();
-        else
-            return null;
+        return getParentPathField() instanceof UDTPathField<?, ?, ?> p
+            ? (UDTPathField<?, ?, ? extends UDTRecord<?>>) p
+            : null;
     }
 
     static final <R extends UDTRecord<R>> Field<R> construct(
@@ -157,103 +150,13 @@ implements
 
     static final UDTPathField<?, ?, ?> getPathFieldFor(UDT<?> udt, UDTPathField<?, ?, ?> f) {
         while (udt.field(f) == null) {
-            if (f.getQualifier() instanceof UDTPathTableFieldImpl<?, ?, ?>.UDTPathFieldImplAsQualifier u)
-                f = u.getPathField();
+            if (f instanceof AbstractPathField && ((AbstractPathField<?, ?, ?>) f).getParentPathField() instanceof UDTPathField<?, ?, ?> p)
+                f = p;
             else
                 throw new IllegalStateException();
         }
 
         return f;
-    }
-
-    @Override
-    public final RecordQualifier<R> getQualifier() {
-        return qualifier;
-    }
-
-    @Override
-    public final RecordQualifier<U> asQualifier() {
-        return new UDTPathFieldImplAsQualifier();
-    }
-
-    // [#228] TODO Refactor this logic into UDTImpl
-    final class UDTPathFieldImplAsQualifier
-    extends AbstractNamed
-    implements
-        RecordQualifier<U>,
-        FieldsTrait,
-        UNotYetImplemented
-    {
-        UDTPathFieldImplAsQualifier() {
-            super(UDTPathFieldImpl.this.getQualifiedName(), UDTPathFieldImpl.this.getCommentPart());
-        }
-
-        @SuppressWarnings("unchecked")
-        UDTPathField<?, ?, ? extends UDTRecord<?>> getPathField() {
-            return (UDTPathField<?, ?, ? extends UDTRecord<?>>) UDTPathFieldImpl.this;
-        }
-
-        UDTPathTableField<?, ?, ?> getTableField() {
-            return UDTPathFieldImpl.this.getTableField();
-        }
-
-        RecordQualifier<R> getQualifier() {
-            return UDTPathFieldImpl.this.getQualifier();
-        }
-
-        @Override
-        public final Catalog getCatalog() {
-            return getQualifier() == null ? null : getQualifier().getCatalog();
-        }
-
-        @Override
-        public final Schema getSchema() {
-            return getQualifier() == null ? null : getQualifier().getSchema();
-        }
-
-        @Override
-        public final Schema $schema() {
-            return getSchema();
-        }
-
-        @Override
-        public final Row fieldsRow() {
-            return getNonNullUDT().fieldsRow();
-        }
-
-        @Override
-        public final Package getPackage() {
-            return getUDT() == null ? null : getUDT().getPackage();
-        }
-
-        @Override
-        public final Class<? extends U> getRecordType() {
-            return getNonNullUDT().getRecordType();
-        }
-
-        @Override
-        public final DataType<U> getDataType() {
-            return getNonNullUDT().getDataType();
-        }
-
-        @Override
-        public final U newRecord() {
-            return getNonNullUDT().newRecord();
-        }
-
-        @Override
-        public final void accept(Context<?> ctx) {
-            UDTPathFieldImpl.this.accept(ctx);
-        }
-
-        final UDT<U> getNonNullUDT() {
-            UDT<U> r = UDTPathFieldImpl.this.getUDT();
-
-            if (r == null)
-                throw new MetaDataUnavailableException("UDT meta data is unavailable for UDTPathField: " + this);
-
-            return r;
-        }
     }
 
     @Override
@@ -266,43 +169,8 @@ implements
     // ------------------------------------------------------------------------
 
     @Override
-    final boolean parenthesised(Context<?> ctx) {
-        return true;
-    }
-
-    @Override
     public boolean declaresFields() {
         return  super.declaresFields();
-    }
-
-    @Override
-    public final void accept(Context<?> ctx) {
-        RecordQualifier<R> q = getQualifier();
-
-        // [#228] The disambiguating wrapping in parentheses is only required in references to
-        //        a UDT path identifier expression, not in assignments (where it is disallowed)
-        if (!TRUE.equals(ctx.data(DATA_STORE_ASSIGNMENT)) && isTableFieldOrUnqualified(q)) {
-
-
-
-
-
-            ctx.sql('(').visit(q).sql(").").visit(getUnqualifiedName());
-        }
-        else if (q instanceof Table<?> t)
-            TableFieldImpl.accept2(ctx, t, getUnqualifiedName(), getDataType());
-        else if (q != null)
-            ctx.visit(q).sql('.').visit(getUnqualifiedName());
-        else
-            ctx.visit(getUnqualifiedName());
-    }
-
-    private final boolean isTableFieldOrUnqualified(RecordQualifier<R> q) {
-        if (q instanceof UDTPathFieldImpl<?, ?, ?>.UDTPathFieldImplAsQualifier u) {
-            return u.getQualifier() instanceof Table || u.getQualifier() == null;
-        }
-        else
-            return false;
     }
 
     // -------------------------------------------------------------------------

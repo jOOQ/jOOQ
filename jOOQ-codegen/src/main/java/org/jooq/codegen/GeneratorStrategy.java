@@ -663,7 +663,13 @@ public interface GeneratorStrategy {
          * {@link InverseForeignKeyDefinition}, or a {@link UDTDefinition} is
          * used to generate a path expression.
          */
-        PATH
+        PATH,
+
+        /**
+         * The UDT path mode. This is used when a {@link TableDefinition}'s row
+         * type is used as a UDT (e.g. in PostgreSQL).
+         */
+        UDT_PATH
 
     }
 }

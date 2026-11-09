@@ -65,6 +65,7 @@ import org.jooq.impl.EmbeddableRecordImpl;
 import org.jooq.impl.EmbeddableTableField;
 import org.jooq.impl.SchemaImpl;
 import org.jooq.impl.TableImpl;
+import org.jooq.impl.TablePathTableFieldImpl;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.impl.UDTImpl;
 import org.jooq.impl.UDTPathTableFieldImpl;
@@ -374,6 +375,7 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
             switch (mode) {
                 case DAO:     return DAOImpl.class.getName();
                 case RECORD:  return (t.getPrimaryKey() != null ? UpdatableRecordImpl.class : TableRecordImpl.class).getName();
+                case UDT_PATH: return TablePathTableFieldImpl.class.getName();
                 case DEFAULT: return TableImpl.class.getName();
             }
         }
@@ -691,15 +693,16 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
             result.insert(0, "I");
         else if (mode == Mode.RECORD_TYPE)
             result.append("RecordType");
-        else if (mode == Mode.PATH)
+        else if (mode == Mode.PATH || mode == Mode.UDT_PATH)
             result.append("Path");
 
         return result.toString();
     }
 
     private String getSubPackage(Definition definition, Mode mode) {
+        // [#19262] Tables and types share a namespace in PostgreSQL, so there are no conflicts
         if (definition instanceof TableDefinition)
-            return "tables";
+            return mode == Mode.UDT_PATH ? "udt.paths" : "tables";
 
         // [#2530] Embeddable types
         else if (definition instanceof EmbeddableDefinition) {

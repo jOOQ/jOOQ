@@ -103,6 +103,8 @@ import org.jooq.Support;
 import org.jooq.Table;
 import org.jooq.TableElement;
 import org.jooq.TableField;
+import org.jooq.TablePathField;
+import org.jooq.TablePathTableField;
 // ...
 // ...
 // ...
@@ -230,8 +232,81 @@ public final class Internal {
         return createUDTPathTableField(name, type, table, comment, returnType, null, binding, generator);
     }
 
-    @SuppressWarnings("unchecked")
     public static final <R extends Record, TR extends Table<R>, T, X, U, P extends UDTPathTableField<R, ?, U>> P createUDTPathTableField(
+        Name name,
+        DataType<? extends T> type,
+        TR table,
+        String comment,
+        Class<P> returnType,
+        Converter<X, U> converter,
+        Binding<T, X> binding,
+        Generator<R, TR, U> generator
+    ) {
+        return createPathTableField0(name, type, table, comment, returnType, converter, binding, generator);
+    }
+
+    /**
+     * [#19262] Factory method for table path table fields.
+     */
+    @NotNull
+    public static final <R extends Record, T, P extends TablePathTableField<R, ?, T>> P createTablePathTableField(
+        Name name,
+        DataType<? extends T> type,
+        Table<R> table,
+        String comment,
+        Class<P> returnType
+    ) {
+        return createPathTableField0(name, type, table, comment, returnType, null, null, null);
+    }
+
+    /**
+     * [#19262] Factory method for table path table fields.
+     */
+    @NotNull
+    public static final <R extends Record, T, U, P extends TablePathTableField<R, ?, U>> P createTablePathTableField(
+        Name name,
+        DataType<? extends T> type,
+        Table<R> table,
+        String comment,
+        Class<P> returnType,
+        Converter<T, U> converter
+    ) {
+        return createPathTableField0(name, type, table, comment, returnType, converter, null, null);
+    }
+
+    /**
+     * [#19262] Factory method for table path table fields.
+     */
+    @NotNull
+    public static final <R extends Record, T, U, P extends TablePathTableField<R, ?, U>> P createTablePathTableField(
+        Name name,
+        DataType<? extends T> type,
+        Table<R> table,
+        String comment,
+        Class<P> returnType,
+        Binding<T, U> binding
+    ) {
+        return createPathTableField0(name, type, table, comment, returnType, null, binding, null);
+    }
+
+    /**
+     * [#19262] Factory method for table path table fields.
+     */
+    @NotNull
+    public static final <R extends Record, T, X, U, P extends TablePathTableField<R, ?, U>> P createTablePathTableField(
+        Name name,
+        DataType<? extends T> type,
+        Table<R> table,
+        String comment,
+        Class<P> returnType,
+        Converter<X, U> converter,
+        Binding<T, X> binding
+    ) {
+        return createPathTableField0(name, type, table, comment, returnType, converter, binding, null);
+    }
+
+    @SuppressWarnings("unchecked")
+    private static final <R extends Record, TR extends Table<R>, T, X, U, P extends TableField<R, U>> P createPathTableField0(
         Name name,
         DataType<? extends T> type,
         TR table,
@@ -334,11 +409,83 @@ public final class Internal {
         }
     }
 
+    /**
+     * [#19262] Factory method for table path fields.
+     */
+    @NotNull
+    public static final <T, P extends TablePathField<?, ?, T>> P createTablePathField(
+        Name name,
+        DataType<? extends T> type,
+        TablePathField<?, ?, ?> qualifier,
+        String comment,
+        Class<P> returnType
+    ) {
+        return createTablePathField(name, type, qualifier, comment, returnType, null, null);
+    }
+
+    /**
+     * [#19262] Factory method for table path fields.
+     */
+    @NotNull
+    public static final <T, U, P extends TablePathField<?, ?, U>> P createTablePathField(
+        Name name,
+        DataType<? extends T> type,
+        TablePathField<?, ?, ?> qualifier,
+        String comment,
+        Class<P> returnType,
+        Converter<T, U> converter
+    ) {
+        return createTablePathField(name, type, qualifier, comment, returnType, converter, null);
+    }
+
+    /**
+     * [#19262] Factory method for table path fields.
+     */
+    @NotNull
+    public static final <T, U, P extends TablePathField<?, ?, U>> P createTablePathField(
+        Name name,
+        DataType<? extends T> type,
+        TablePathField<?, ?, ?> qualifier,
+        String comment,
+        Class<P> returnType,
+        Binding<T, U> binding
+    ) {
+        return createTablePathField(name, type, qualifier, comment, returnType, null, binding);
+    }
+
+    /**
+     * [#19262] Factory method for table path fields.
+     */
     @SuppressWarnings("unchecked")
-    private static <T, X, U, P extends UDTField<?, U>> P newInstance(
+    @NotNull
+    public static final <T, X, U, P extends TablePathField<?, ?, U>> P createTablePathField(
+        Name name,
+        DataType<? extends T> type,
+        TablePathField<?, ?, ?> qualifier,
+        String comment,
+        Class<P> returnType,
+        Converter<X, U> converter,
+        Binding<T, X> binding
+    ) {
+        Binding<T, U> actualBinding = DefaultBinding.newBinding(converter, type, binding);
+        DataType<U> actualType =
+            converter == null && binding == null
+          ? (DataType<U>) type
+          : type.asConvertedDataType(actualBinding);
+
+        try {
+            return newInstance(name, null, qualifier, comment, returnType, actualBinding, actualType);
+        }
+        catch (Exception e) {
+            throw new DataTypeException("Cannot instantiate " + returnType + ".", e);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private static <T, X, U, P extends Field<U>> P newInstance(
         Name name,
         RecordQualifier<?> qualifier,
-        UDTPathField<?, ?, ?> path,
+        Field<?> path,
         String comment,
         Class<P> returnType,
         Binding<T, U> actualBinding,
@@ -346,8 +493,12 @@ public final class Internal {
     ) throws Exception {
 
         // [#228] This case only happens in generated UDTPath types, never in generated Table types
-        if (returnType == (Class) UDTField.class)
-            return (P) new UDTPathFieldImpl<>(name, actualType, path.asQualifier(), path.getUDT(), DSL.comment(comment), actualBinding);
+        if (returnType == (Class) UDTField.class && path instanceof UDTPathField<?, ?, ?> p)
+            return (P) new UDTPathFieldImpl<>(name, actualType, p.asQualifier(), p.getUDT(), DSL.comment(comment), actualBinding);
+
+        // [#19262] This case only happens in generated table path types, never in generated Table types
+        else if (returnType == (Class) TablePathField.class && path instanceof TablePathFieldImpl<?, ?, ?> p)
+            return (P) new TablePathFieldImpl<>(name, actualType, p.asQualifier(), p.getPathTable(), DSL.comment(comment), actualBinding);
 
         // [#228] While it would be cleaner to pass around a Function5 constructor reference,
         //        chances are that the cost on compilation speed is significantly higher than
@@ -355,7 +506,7 @@ public final class Internal {
         else
             return returnType
                 .getConstructor(Name.class, DataType.class, RecordQualifier.class, Comment.class, Binding.class)
-                .newInstance(name, actualType, qualifier == null ? path.asQualifier() : qualifier, DSL.comment(comment), actualBinding);
+                .newInstance(name, actualType, qualifier == null ? ((AbstractPathField<?, ?, ?>) path).asQualifier() : qualifier, DSL.comment(comment), actualBinding);
     }
 
     /**

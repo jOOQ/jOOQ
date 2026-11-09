@@ -69,7 +69,7 @@ public class KeepNamesGeneratorStrategy extends DefaultGeneratorStrategy {
 
     @Override
     public String getJavaClassName(Definition definition, Mode mode) {
-        if (mode == Mode.PATH)
+        if (mode == Mode.PATH || mode == Mode.UDT_PATH)
             switch (getCase(definition.getOutputName(), getTargetLocale())) {
                 case MIXED:
                     return definition.getOutputName() + "Path";

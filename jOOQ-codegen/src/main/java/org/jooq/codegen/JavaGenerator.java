@@ -151,6 +151,7 @@ import org.jooq.Stringly;
 // ...
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.TablePathField;
 import org.jooq.TableLike;
 import org.jooq.TableOptions;
 // ...
@@ -368,6 +369,7 @@ public class JavaGenerator extends AbstractGenerator {
     private final Files                           fileCache;
     private Map<File, Set<String>>                generatedTypeNames;
     private String                                visibility;
+    private Set<TableDefinition>                  udtPathTables;
 
     static {
         SQLDATATYPE_LITERAL_LOOKUP = new IdentityHashMap<>();
@@ -486,6 +488,7 @@ public class JavaGenerator extends AbstractGenerator {
     public final void generate0(Database db) {
         this.isoDate = Instant.now().toString();
         this.generatedTypeNames = null;
+        this.udtPathTables = null;
         this.schemaVersions = new LinkedHashMap<>();
         this.catalogVersions = new LinkedHashMap<>();
         this.database.addFilter(new AvoidAmbiguousClassesFilter());
@@ -4211,16 +4214,30 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     protected void generateUDTPath(UDTDefinition udt, JavaWriter out) {
-        final String className = getStrategy().getJavaClassName(udt, Mode.PATH);
+        generateUDTPath(udt, Mode.PATH, udt.getAttributes(), out);
+    }
+
+    /**
+     * [#19262] Generate a UDT path for a UDT, or for a table's row type.
+     */
+    private void generateUDTPath(Definition udt, Mode mode, List<? extends TypedElementDefinition<?>> attributes, JavaWriter out) {
+        final String className = getStrategy().getJavaClassName(udt, mode);
         final String recordType = out.ref(getStrategy().getFullJavaClassName(udt, Mode.RECORD));
-        final String classExtends = out.ref(getStrategy().getJavaClassExtends(udt, Mode.PATH));
-        final List<String> interfaces = out.ref(getStrategy().getJavaClassImplements(udt, Mode.PATH));
+        final String classExtends = out.ref(getStrategy().getJavaClassExtends(udt, mode));
+        final List<String> interfaces = out.ref(getStrategy().getJavaClassImplements(udt, mode));
         final String udtId = out.ref(getStrategy().getFullJavaIdentifier(udt), 2);
+        final boolean tablePath = udt instanceof TableDefinition;
+        final String pathFactory = tablePath ? "createTablePathField" : "createUDTPathField";
+        final String leafRecordType = tablePath ? recordType + ", " + recordType : recordType;
 
-        printPackage(out, udt, Mode.PATH);
+        printPackage(out, udt, mode);
 
-        generateUDTPathClassJavadoc(udt, out);
-        printClassAnnotations(out, udt, Mode.PATH);
+        if (udt instanceof UDTDefinition u)
+            generateUDTPathClassJavadoc(u, out);
+        else
+            printClassJavadoc(out, udt, "The udt path for the row type of table <code>" + escapeEntities(udt.getQualifiedOutputName()) + "</code>.");
+
+        printClassAnnotations(out, udt, mode);
 
         if (scala) {
             out.println("%sclass %s[R <: %s, T](", visibility(), className, Record.class);
@@ -4255,7 +4272,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.printSerial();
         }
 
-        for (AttributeDefinition attribute : udt.getAttributes()) {
+        for (TypedElementDefinition<?> attribute : attributes) {
             final String attrTypeFull = getJavaType(attribute.getType(resolver(out)), out);
             final String attrType = out.ref(attrTypeFull);
             final String attrTypeRef = getJavaTypeReference(attribute.getDatabase(), attribute.getType(resolver(out)), out);
@@ -4263,39 +4280,37 @@ public class JavaGenerator extends AbstractGenerator {
             final String attrName = attribute.getName();
             final List<String> converter = out.ref(list(attribute.getType(resolver(out)).getConverter()));
             final List<String> binding = out.ref(list(attribute.getType(resolver(out)).getBinding()));
-            final boolean udtPath = attribute.getType().isUDT() && !attribute.getDatabase().isArrayType(attribute.getType().getType());
+            final String attrUdtPathType = udtPathType(attribute, out, !tablePath, tablePath);
 
 
             if (!printDeprecationIfUnknownType(out, attrTypeFull))
                 out.javadoc("The attribute <code>%s</code>.[[before= ][%s]]", attribute.getQualifiedOutputName(), list(escapeEntities(comment(attribute))));
 
-            if (udtPath) {
-                final SchemaDefinition attrUdtSchema = attribute.getDatabase().getSchema(attribute.getType().getQualifiedUserType().qualifier().last());
-                final UDTDefinition attrUdt = attribute.getDatabase().getUDT(attrUdtSchema, attribute.getType().getUserType());
-                final String attrPathType = out.ref(getStrategy().getFullJavaClassName(attrUdt, Mode.PATH));
+            if (attrUdtPathType != null) {
+                final String attrPathType = attrUdtPathType;
 
                 if (scala)
-                    out.println("%sval %s: %s[%s, %s] = %s.createUDTPathField[ %s, %s[%s, %s] ](%s.name(\"%s\"), %s, this, \"%s\", classOf[ %s[%s, %s] ]" + converterTemplate(converter) + converterTemplate(binding) + ")",
-                        visibility(), scalaWhitespaceSuffix(attrId), attrPathType, recordType, attrType, Internal.class, attrType, attrPathType, recordType, attrType, DSL.class, escapeString(attrName), attrTypeRef, escapeString(""), attrPathType, recordType, attrType, converter, binding);
+                    out.println("%sval %s: %s[%s, %s] = %s.%s[ %s, %s[%s, %s] ](%s.name(\"%s\"), %s, this, \"%s\", classOf[ %s[%s, %s] ]" + converterTemplate(converter) + converterTemplate(binding) + ")",
+                        visibility(), scalaWhitespaceSuffix(attrId), attrPathType, recordType, attrType, Internal.class, pathFactory, attrType, attrPathType, recordType, attrType, DSL.class, escapeString(attrName), attrTypeRef, escapeString(""), attrPathType, recordType, attrType, converter, binding);
                 else if (kotlin)
-                    out.println("%sval %s: %s<%s, %s> = %s.createUDTPathField(%s.name(\"%s\"), %s, this, \"%s\", %s::class.java as %s<%s<%s, %s>>" + converterTemplate(converter) + converterTemplate(binding) + ")",
-                        visibility(), attrId, attrPathType, recordType, attrType, Internal.class, DSL.class, escapeString(attrName), attrTypeRef, escapeString(""), attrPathType, Class.class, attrPathType, recordType, attrType, converter, binding);
+                    out.println("%sval %s: %s<%s, %s> = %s.%s(%s.name(\"%s\"), %s, this, \"%s\", %s::class.java as %s<%s<%s, %s>>" + converterTemplate(converter) + converterTemplate(binding) + ")",
+                        visibility(), attrId, attrPathType, recordType, attrType, Internal.class, pathFactory, DSL.class, escapeString(attrName), attrTypeRef, escapeString(""), attrPathType, Class.class, attrPathType, recordType, attrType, converter, binding);
                 else
-                    out.println("%sfinal %s<%s, %s> %s = %s.createUDTPathField(%s.name(\"%s\"), %s, this, \"%s\", %s.class" + converterTemplate(converter) + converterTemplate(binding) + ");",
-                        visibility(), attrPathType, recordType, attrType, attrId, Internal.class, DSL.class, escapeString(attrName), attrTypeRef, escapeString(""), attrPathType, converter, binding);
+                    out.println("%sfinal %s<%s, %s> %s = %s.%s(%s.name(\"%s\"), %s, this, \"%s\", %s.class" + converterTemplate(converter) + converterTemplate(binding) + ");",
+                        visibility(), attrPathType, recordType, attrType, attrId, Internal.class, pathFactory, DSL.class, escapeString(attrName), attrTypeRef, escapeString(""), attrPathType, converter, binding);
             }
             else {
-                final String attrPathType = out.ref(UDTField.class);
+                final String attrPathType = out.ref(tablePath ? TablePathField.class : UDTField.class);
 
                 if (scala)
-                    out.println("%sval %s: %s[%s, %s] = %s.createUDTPathField(%s.name(\"%s\"), %s, this, \"%s\", classOf[ %s[%s, %s] ]" + converterTemplate(converter) + converterTemplate(binding) + ")",
-                        visibility(), scalaWhitespaceSuffix(attrId), attrPathType, recordType, attrType, Internal.class, DSL.class, escapeString(attrName), attrTypeRef, escapeString(""), attrPathType, recordType, attrType, converter, binding);
+                    out.println("%sval %s: %s[%s, %s] = %s.%s(%s.name(\"%s\"), %s, this, \"%s\", classOf[ %s[%s, %s] ]" + converterTemplate(converter) + converterTemplate(binding) + ")",
+                        visibility(), scalaWhitespaceSuffix(attrId), attrPathType, leafRecordType, attrType, Internal.class, pathFactory, DSL.class, escapeString(attrName), attrTypeRef, escapeString(""), attrPathType, leafRecordType, attrType, converter, binding);
                 else if (kotlin)
-                    out.println("%sval %s: %s<%s, %s> = %s.createUDTPathField(%s.name(\"%s\"), %s, this, \"%s\", %s::class.java as %s<%s<%s, %s>>" + converterTemplate(converter) + converterTemplate(binding) + ")",
-                        visibility(), attrId, attrPathType, recordType, attrType, Internal.class, DSL.class, escapeString(attrName), attrTypeRef, escapeString(""), attrPathType, Class.class, attrPathType, recordType, attrType, converter, binding);
+                    out.println("%sval %s: %s<%s, %s> = %s.%s(%s.name(\"%s\"), %s, this, \"%s\", %s::class.java as %s<%s<%s, %s>>" + converterTemplate(converter) + converterTemplate(binding) + ")",
+                        visibility(), attrId, attrPathType, leafRecordType, attrType, Internal.class, pathFactory, DSL.class, escapeString(attrName), attrTypeRef, escapeString(""), attrPathType, Class.class, attrPathType, leafRecordType, attrType, converter, binding);
                 else
-                    out.println("%sfinal %s<%s, %s> %s = %s.createUDTPathField(%s.name(\"%s\"), %s, this, \"%s\", %s.class" + converterTemplate(converter) + converterTemplate(binding) + ");",
-                        visibility(), attrPathType, recordType, attrType, attrId, Internal.class, DSL.class, escapeString(attrName), attrTypeRef, escapeString(""), attrPathType, converter, binding);
+                    out.println("%sfinal %s<%s, %s> %s = %s.%s(%s.name(\"%s\"), %s, this, \"%s\", %s.class" + converterTemplate(converter) + converterTemplate(binding) + ");",
+                        visibility(), attrPathType, leafRecordType, attrType, attrId, Internal.class, pathFactory, DSL.class, escapeString(attrName), attrTypeRef, escapeString(""), attrPathType, converter, binding);
             }
         }
 
@@ -4309,9 +4324,48 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("}");
         }
 
-        generateUDTPathClassFooter(udt, out);
+        if (udt instanceof UDTDefinition u)
+            generateUDTPathClassFooter(u, out);
+
         out.println("}");
         closeJavaWriter(out);
+    }
+
+    /**
+     * [#228] [#19262] The UDT path or table path class for a (non-array) UDT
+     * or table row typed column or attribute, or <code>null</code> if there is
+     * none.
+     */
+    private String udtPathType(TypedElementDefinition<?> e, JavaWriter out, boolean udts, boolean tables) {
+        DataTypeDefinition type = e.getType();
+        Database db = e.getDatabase();
+
+        if (db.isArrayType(type.getType()))
+            return null;
+        else if (udts && type.isUDT())
+            return out.ref(getStrategy().getFullJavaClassName(db.getUDT(db.getSchema(type.getQualifiedUserType().qualifier().last()), type.getUserType()), Mode.PATH));
+        else if (tables && type.isTable() && udtPathTables().contains(db.getTable(type.getSchema(), type.getUserType())))
+            return out.ref(getStrategy().getFullJavaClassName(db.getTable(type.getSchema(), type.getUserType()), Mode.UDT_PATH));
+        else
+            return null;
+    }
+
+    /**
+     * [#19262] The tables whose row types are used as (non-array) column
+     * types, and which hence get table path classes.
+     */
+    private Set<TableDefinition> udtPathTables() {
+        if (udtPathTables == null) {
+            udtPathTables = new HashSet<>();
+
+            if (generateUDTPaths() && generateTables() && generateRecords())
+                for (TableDefinition table : database.getTables())
+                    for (ColumnDefinition c : table.getColumns())
+                        if (c.getType().isTable() && !database.isArrayType(c.getType().getType()))
+                            udtPathTables.add(database.getTable(c.getType().getSchema(), c.getType().getUserType()));
+        }
+
+        return udtPathTables;
     }
 
     /**
@@ -7659,6 +7713,12 @@ public class JavaGenerator extends AbstractGenerator {
                     if (generateTables())
                         generateTable(schema, table);
 
+                    // [#19262] Table row types used as column or attribute types get UDT paths
+                    if (udtPathTables().contains(table)) {
+                        log.info("Generating table UDT Path", getStrategy().getFileName(table, Mode.UDT_PATH));
+                        generateUDTPath(table, Mode.UDT_PATH, table.getColumns(), newJavaWriter(table, Mode.UDT_PATH));
+                    }
+
                     if (generateGlobalObjectNames())
                         generateGlobalObjectNames(table, ColumnDefinition.class);
                 },
@@ -7869,10 +7929,11 @@ public class JavaGenerator extends AbstractGenerator {
 
 
             final String columnVisibility;
-            final boolean udtPath = generateUDTPaths()
-                && column.getType().isUDT()
-                && !column.getDatabase().isArrayType(column.getType().getType())
-                && (scala || kotlin || generateInstanceFields());
+            final String columnPathType = generateUDTPaths() && (scala || kotlin || generateInstanceFields())
+                ? udtPathType(column, out, true, true)
+                : null;
+            final boolean udtPath = columnPathType != null;
+            final String columnPathFactory = column.getType().isTable() ? "createTablePathTableField" : "createUDTPathTableField";
 
 
 
@@ -7890,24 +7951,20 @@ public class JavaGenerator extends AbstractGenerator {
                 out.javadocAndAnnotations(column, "The column <code>%s</code>.[[before= ][%s]]", column.getQualifiedOutputName(), list(escapeEntities(comment(column))));
 
             if (udtPath) {
-                final SchemaDefinition columnUdtSchema = column.getDatabase().getSchema(column.getType().getQualifiedUserType().qualifier().last());
-                final UDTDefinition columnUdt = column.getDatabase().getUDT(columnUdtSchema, column.getType().getUserType());
-                final String columnPathType = out.ref(getStrategy().getFullJavaClassName(columnUdt, Mode.PATH));
-
                 if (scala) {
                     if (converter.isEmpty())
-                        out.println("%s%sval %s: %s[%s, %s] = %s.createUDTPathTableField[ %s, %s, %s[%s, %s] ](%s.name(\"%s\"), %s, this, \"%s\", classOf[ %s[%s, %s] ]" + converterTemplate(converter) + converterTemplate(binding) + ")",
-                            columnVisibility, override ? "override " : "", scalaWhitespaceSuffix(columnId), columnPathType, recordType, columnType, Internal.class, recordType, columnType, columnPathType, recordType, columnType, DSL.class, escapeString(columnName), columnTypeRef, escapeString(comment(column)), columnPathType, recordType, columnType, converter, binding);
+                        out.println("%s%sval %s: %s[%s, %s] = %s.%s[ %s, %s, %s[%s, %s] ](%s.name(\"%s\"), %s, this, \"%s\", classOf[ %s[%s, %s] ]" + converterTemplate(converter) + converterTemplate(binding) + ")",
+                            columnVisibility, override ? "override " : "", scalaWhitespaceSuffix(columnId), columnPathType, recordType, columnType, Internal.class, columnPathFactory, recordType, columnType, columnPathType, recordType, columnType, DSL.class, escapeString(columnName), columnTypeRef, escapeString(comment(column)), columnPathType, recordType, columnType, converter, binding);
                     else
-                        out.println("%s%sval %s: %s[%s, %s] = %s.createUDTPathTableField(%s.name(\"%s\"), %s, this, \"%s\", classOf[ %s[%s, %s] ]" + converterTemplate(converter) + converterTemplate(binding) + ")",
-                            columnVisibility, override ? "override " : "", scalaWhitespaceSuffix(columnId), columnPathType, recordType, columnType, Internal.class, DSL.class, escapeString(columnName), columnTypeRef, escapeString(comment(column)), columnPathType, recordType, columnType, converter, binding);
+                        out.println("%s%sval %s: %s[%s, %s] = %s.%s(%s.name(\"%s\"), %s, this, \"%s\", classOf[ %s[%s, %s] ]" + converterTemplate(converter) + converterTemplate(binding) + ")",
+                            columnVisibility, override ? "override " : "", scalaWhitespaceSuffix(columnId), columnPathType, recordType, columnType, Internal.class, columnPathFactory, DSL.class, escapeString(columnName), columnTypeRef, escapeString(comment(column)), columnPathType, recordType, columnType, converter, binding);
                 }
                 else if (kotlin)
-                    out.println("%s%sval %s: %s<%s, %s> = %s.createUDTPathTableField(%s.name(\"%s\"), %s, this, \"%s\", %s::class.java as %s<%s<%s, %s>>" + converterTemplate(converter) + converterTemplate(binding) + ")",
-                        columnVisibility, override ? "override " : "", columnId, columnPathType, recordType, columnType, Internal.class, DSL.class, escapeString(columnName), columnTypeRef, escapeString(comment(column)), columnPathType, Class.class, columnPathType, recordType, columnType, converter, binding);
+                    out.println("%s%sval %s: %s<%s, %s> = %s.%s(%s.name(\"%s\"), %s, this, \"%s\", %s::class.java as %s<%s<%s, %s>>" + converterTemplate(converter) + converterTemplate(binding) + ")",
+                        columnVisibility, override ? "override " : "", columnId, columnPathType, recordType, columnType, Internal.class, columnPathFactory, DSL.class, escapeString(columnName), columnTypeRef, escapeString(comment(column)), columnPathType, Class.class, columnPathType, recordType, columnType, converter, binding);
                 else
-                    out.println("%sfinal %s<%s, %s> %s = %s.createUDTPathTableField(%s.name(\"%s\"), %s, this, \"%s\", %s.class" + converterTemplate(converter) + converterTemplate(binding) + ");",
-                        visibility(), columnPathType, recordType, columnType, columnId, Internal.class, DSL.class, escapeString(columnName), columnTypeRef, escapeString(comment(column)), columnPathType, converter, binding);
+                    out.println("%sfinal %s<%s, %s> %s = %s.%s(%s.name(\"%s\"), %s, this, \"%s\", %s.class" + converterTemplate(converter) + converterTemplate(binding) + ");",
+                        visibility(), columnPathType, recordType, columnType, columnId, Internal.class, columnPathFactory, DSL.class, escapeString(columnName), columnTypeRef, escapeString(comment(column)), columnPathType, converter, binding);
             }
             else {
                 if (scala) {

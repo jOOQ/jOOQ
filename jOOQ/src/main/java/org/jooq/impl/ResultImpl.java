@@ -42,6 +42,7 @@ import static org.jooq.Records.intoList;
 import static org.jooq.Records.intoResultGroups;
 import static org.jooq.impl.Tools.indexFail;
 import static org.jooq.impl.Tools.indexOrFail;
+import static org.jooq.impl.Tools.mapToInt;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -891,8 +892,19 @@ final class ResultImpl<R extends Record> extends AbstractResult<R> implements Re
     public final <Z extends Record> Result<Z> into(Table<Z> table) {
         Result<Z> list = new ResultImpl<>(Tools.configuration(this), (AbstractRow) table.fieldsRow());
 
-        for (R record : this)
-            list.add(record.into(table));
+        // [#11058] Compute the index mapping only once per distinct source row
+        Field<?>[] targetFields = table.fields();
+        AbstractRow<?> row = null;
+        int[] indexes = null;
+
+        for (R record : this) {
+            AbstractRecord r = (AbstractRecord) record;
+
+            if (row != r.fields)
+                indexes = mapToInt(targetFields, (row = r.fields)::indexOf);
+
+            list.add(r.into(table, targetFields, indexes));
+        }
 
         return list;
     }

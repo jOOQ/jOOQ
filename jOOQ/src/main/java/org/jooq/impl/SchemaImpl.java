@@ -419,6 +419,13 @@ implements
     // ------------------------------------------------------------------------
 
     @Override
+    public int hashCode() {
+
+        // [#7172] [#10274] The catalog may not be known yet, so use only the unqualified name
+        return getUnqualifiedName().hashCode();
+    }
+
+    @Override
     public boolean equals(Object that) {
         if (this == that)
             return true;

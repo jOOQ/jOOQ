@@ -260,6 +260,9 @@ abstract class AbstractParam<T> extends AbstractParamX<T> implements SimpleQuery
         if (this == that)
             return true;
 
+        // [#15314] Coercing a field doesn't change its identity
+        that = Tools.uncoerce(that);
+
         if (that instanceof Param<?> p) {
             Object thatValue = p.getValue();
 

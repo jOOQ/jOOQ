@@ -612,7 +612,8 @@ implements
     public int hashCode() {
 
         // [#7172] [#10274] [#14875] Cannot use getQualifiedName() based super implementation yet here
-        return hashCode0(defaultIfNull(getSchema(), DEFAULT_SCHEMA.get()).getQualifiedName(), getUnqualifiedName());
+        // The schema's qualifier may not be known yet, so use only its unqualified name
+        return hashCode0(defaultIfNull(getSchema(), DEFAULT_SCHEMA.get()).getUnqualifiedName(), getUnqualifiedName());
     }
 
     @Override

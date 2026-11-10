@@ -562,12 +562,10 @@ final class R2DBC {
         public final void onComplete() {}
 
         final void cancelSubscription() {
-            subscription.updateAndGet(s -> {
-                if (s != null)
-                    s.cancel();
+            Subscription s = subscription.getAndSet(null);
 
-                return null;
-            });
+            if (s != null)
+                s.cancel();
         }
     }
 

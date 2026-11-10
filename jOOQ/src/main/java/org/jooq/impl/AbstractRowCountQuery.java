@@ -83,7 +83,7 @@ abstract class AbstractRowCountQuery extends AbstractQuery<Record> implements Ro
         Subscriber<? super RowCount> rowCountSubscriber = mapping(subscriber, extract, c.subscriberProvider());
 
         if (!(cf instanceof NoConnectionFactory))
-            subscriber.onSubscribe(new QuerySubscription<>(this, rowCountSubscriber, (t, u, s) -> rowCountSubscriber(u, s)));
+            subscriber.onSubscribe(new QuerySubscription<>(this, rowCountSubscriber, (t, u, s) -> rowCountSubscriber(u)));
         else
             subscriber.onSubscribe(new BlockingRowCountSubscription(this, rowCountSubscriber, large));
     }

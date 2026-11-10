@@ -269,10 +269,25 @@ final class R2DBC {
         final AbstractResultSubscriber<T>   resultSubscriber;
         final AtomicReference<Subscription> subscription;
 
+        // [#16791] Demand requested from upstream, but not yet fulfilled, or -1 once completed
+        final AtomicLong                    outstanding;
+
         Forwarding(int forwarderIndex, AbstractResultSubscriber<T> resultSubscriber) {
             this.forwarderIndex = forwarderIndex;
             this.resultSubscriber = resultSubscriber;
             this.subscription = new AtomicReference<>();
+            this.outstanding = new AtomicLong();
+        }
+
+        final void request() {
+            if (resultSubscriber.downstream.moreRequested()) {
+
+                // [#16791] Don't lose demand if this forwarder has already completed
+                if (outstanding.getAndUpdate(l -> l < 0 ? l : l + 1) < 0)
+                    resultSubscriber.downstream.requested.accumulateAndGet(1, R2DBC::addNoOverflow);
+                else
+                    subscription.get().request(1);
+            }
         }
 
         @Override
@@ -290,14 +305,16 @@ final class R2DBC {
                 s.cancel();
             }
             else
-                resultSubscriber.downstream.request2(s);
+                request();
         }
 
         @Override
         public final void onNext(T value) {
+            outstanding.decrementAndGet();
+
             if (!resultSubscriber.downstream.completed.get()) {
                 resultSubscriber.downstream.subscriber.onNext(value);
-                resultSubscriber.downstream.request2(subscription.get());
+                request();
             }
         }
 
@@ -313,6 +330,12 @@ final class R2DBC {
 
         private final void complete(boolean cancelled, Runnable onComplete) {
             resultSubscriber.downstream.forwarders.remove(forwarderIndex);
+
+            // [#16791] Give back unfulfilled demand, e.g. if a statement didn't
+            //          produce any rows, to the next result's forwarder
+            long unused = outstanding.getAndSet(-1);
+            if (unused > 0)
+                resultSubscriber.downstream.requested.accumulateAndGet(unused, R2DBC::addNoOverflow);
 
             // [#13343] [#13669] Prevent premature completion
             if (resultSubscriber.downstream.forwarders.isEmpty() && (cancelled || resultSubscriber.completionRequested.get()))
@@ -762,12 +785,9 @@ final class R2DBC {
         }
 
         private final void request1() {
-            forAllForwardingSubscriptions(this::request2);
-        }
-
-        final void request2(Subscription s) {
-            if (moreRequested())
-                s.request(1);
+            for (Forwarding<T> f : forwarders.values())
+                if (f.subscription.get() != null)
+                    f.request();
         }
 
         @Override

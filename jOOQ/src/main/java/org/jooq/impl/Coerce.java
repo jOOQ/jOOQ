@@ -37,7 +37,7 @@
  */
 package org.jooq.impl;
 
-import java.util.Objects;
+import static org.jooq.impl.Tools.uncoerce;
 
 import org.jooq.Clause;
 import org.jooq.Context;
@@ -194,13 +194,16 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
+    public int hashCode() {
+
+        // [#15314] Coercing a field doesn't change its identity
+        return field.hashCode();
+    }
+
+    @Override
     public boolean equals(Object that) {
-        if (that instanceof Coerce<?> o) {
-            return
-                Objects.equals($field(), o.$field())
-            ;
-        }
-        else
-            return super.equals(that);
+
+        // [#15314] Coercing a field doesn't change its identity
+        return this == that || field.equals(uncoerce(that));
     }
 }

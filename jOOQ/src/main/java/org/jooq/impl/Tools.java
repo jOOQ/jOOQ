@@ -6707,6 +6707,10 @@ final class Tools {
         return field instanceof Coerce<?> f ? f.field : field;
     }
 
+    static final Object uncoerce(Object o) {
+        return o instanceof Coerce<?> f ? f.field : o;
+    }
+
     static final <R extends Record> Table<R> unwrap(Table<R> table) {
         return unwrap(table, true);
     }

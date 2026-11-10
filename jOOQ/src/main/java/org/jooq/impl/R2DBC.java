@@ -792,18 +792,6 @@ final class R2DBC {
                 request1();
         }
 
-        private final void forAllForwardingSubscriptions(Consumer<? super Subscription> consumer) {
-
-            // Forwarders all forward to the same downstream and are not
-            // expected to be contained in the map at the same time.
-            for (Forwarding<T> f : forwarders.values()) {
-                Subscription s = f.subscription.get();
-
-                if (s != null)
-                    consumer.accept(s);
-            }
-        }
-
         private final void request1() {
             for (Forwarding<T> f : forwarders.values())
                 if (f.subscription.get() != null)
@@ -821,7 +809,14 @@ final class R2DBC {
         final void cancel0(boolean closeAfterTransaction, Runnable onComplete) {
 
             // [#12108] Must pass along cancellation to forwarding subscriptions
-            forAllForwardingSubscriptions(Subscription::cancel);
+            //          Forwarders all forward to the same downstream and are not
+            //          expected to be contained in the map at the same time.
+            for (Forwarding<T> f : forwarders.values()) {
+                Subscription s = f.subscription.get();
+
+                if (s != null)
+                    s.cancel();
+            }
 
             // [#12977] Correctly sequence the delegation to run after close completion
             delegate().connection.updateAndGet(c -> {

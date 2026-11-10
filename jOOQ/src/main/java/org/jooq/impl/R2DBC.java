@@ -267,26 +267,28 @@ final class R2DBC {
 
     private static final class Forwarding<T> implements DownstreamSubscriber<T> {
 
-        final int                           forwarderIndex;
-        final AbstractResultSubscriber<T>   resultSubscriber;
-        final AtomicReference<Subscription> subscription;
+        final int                                        forwarderIndex;
+        final AbstractResultSubscriber<T>                resultSubscriber;
+        final AbstractNonBlockingSubscription<? super T> downstream;
+        final AtomicReference<Subscription>              subscription;
 
         // [#16791] Demand requested from upstream, but not yet fulfilled, or -1 once completed
-        final AtomicLong                    outstanding;
+        final AtomicLong                                 outstanding;
 
         Forwarding(int forwarderIndex, AbstractResultSubscriber<T> resultSubscriber) {
             this.forwarderIndex = forwarderIndex;
             this.resultSubscriber = resultSubscriber;
+            this.downstream = resultSubscriber.downstream;
             this.subscription = new AtomicReference<>();
             this.outstanding = new AtomicLong();
         }
 
         final void request() {
-            if (resultSubscriber.downstream.moreRequested()) {
+            if (downstream.moreRequested()) {
 
                 // [#16791] Don't lose demand if this forwarder has already completed
                 if (outstanding.getAndUpdate(l -> l < 0 ? l : l + 1) < 0)
-                    resultSubscriber.downstream.requested.accumulateAndGet(1, R2DBC::addNoOverflow);
+                    downstream.requested.accumulateAndGet(1, R2DBC::addNoOverflow);
                 else
                     subscription.get().request(1);
             }
@@ -294,7 +296,7 @@ final class R2DBC {
 
         @Override
         public final Subscriber<?> downstream() {
-            return resultSubscriber.downstream.subscriber;
+            return downstream.subscriber;
         }
 
         @Override
@@ -302,7 +304,7 @@ final class R2DBC {
             subscription.set(s);
 
             // [#20112] A query may be cancelled after the connection but before the result have been made available
-            if (resultSubscriber.downstream.completed.get()) {
+            if (downstream.completed.get()) {
                 complete(true, () -> {});
                 s.cancel();
             }
@@ -314,33 +316,33 @@ final class R2DBC {
         public final void onNext(T value) {
             outstanding.decrementAndGet();
 
-            if (!resultSubscriber.downstream.completed.get()) {
-                resultSubscriber.downstream.subscriber.onNext(value);
+            if (!downstream.completed.get()) {
+                downstream.subscriber.onNext(value);
                 request();
             }
         }
 
         @Override
         public final void onError(Throwable t) {
-            complete(true, () -> resultSubscriber.downstream.subscriber.onError(resultSubscriber.downstream.translated(t)));
+            complete(true, () -> downstream.subscriber.onError(downstream.translated(t)));
         }
 
         @Override
         public final void onComplete() {
-            complete(false, () -> resultSubscriber.downstream.subscriber.onComplete());
+            complete(false, () -> downstream.subscriber.onComplete());
         }
 
         private final void complete(boolean cancelled, Runnable onComplete) {
-            resultSubscriber.downstream.forwarders.remove(forwarderIndex);
+            downstream.forwarders.remove(forwarderIndex);
 
             // [#16791] Give back unfulfilled demand, e.g. if a statement didn't
             //          produce any rows, to the next result's forwarder
             long unused = outstanding.getAndSet(-1);
             if (unused > 0)
-                resultSubscriber.downstream.requested.accumulateAndGet(unused, R2DBC::addNoOverflow);
+                downstream.requested.accumulateAndGet(unused, R2DBC::addNoOverflow);
 
             // [#13343] [#13669] Prevent premature completion
-            if (resultSubscriber.downstream.forwarders.isEmpty() && (cancelled || resultSubscriber.completionRequested.get()))
+            if (downstream.forwarders.isEmpty() && (cancelled || resultSubscriber.completionRequested.get()))
                 resultSubscriber.complete(cancelled, onComplete);
         }
     }

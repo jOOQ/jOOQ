@@ -179,7 +179,6 @@ import org.jooq.impl.PackageImpl;
 import org.jooq.impl.QOM.GenerationMode;
 import org.jooq.impl.QOM.GenerationOption;
 import org.jooq.impl.SQLDataType;
-import org.jooq.impl.SchemaImpl;
 import org.jooq.impl.TableImpl;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.impl.UDTImpl;
@@ -3770,6 +3769,11 @@ public class JavaGenerator extends AbstractGenerator {
         final String udtId = out.ref(getStrategy().getJavaIdentifier(udt), 2);
         final String comment = comment(udt);
 
+        // [#7172] Pass a LazySchema reference to the super constructor, in order to
+        //         qualify the UDT's getQualifiedName() without running into class
+        //         initialisation cycles between the UDT and the schema singletons.
+        final String schemaArg = schemaId == null ? "null" : lazySchema(out, schema, schemaId);
+
         printPackage(out, udt);
 
         if (scala) {
@@ -3824,10 +3828,10 @@ public class JavaGenerator extends AbstractGenerator {
 
 
         if (scala) {
-            out.println("%sclass %s extends %s[%s](%s.name(\"%s\"), null, %s, %s.comment(\"[[%s]]\"), %s)[[before= with ][separator= with ][%s]] {", visibility(), className, classExtends, recordType, DSL.class, escapeString(udt.getOutputName()), packageId, DSL.class, asList(escapeString(comment)), synthetic, interfaces);
+            out.println("%sclass %s extends %s[%s](%s.name(\"%s\"), %s, %s, %s.comment(\"[[%s]]\"), %s)[[before= with ][separator= with ][%s]] {", visibility(), className, classExtends, recordType, DSL.class, escapeString(udt.getOutputName()), schemaArg, packageId, DSL.class, asList(escapeString(comment)), synthetic, interfaces);
         }
         else if (kotlin) {
-            out.println("%sopen class %s : %s<%s>(%s.name(\"%s\"), null, %s, %s.comment(\"[[%s]]\"), %s)[[before=, ][%s]] {", visibility(), className, classExtends, recordType, DSL.class, escapeString(udt.getOutputName()), packageId, DSL.class, asList(escapeString(comment)), synthetic, interfaces);
+            out.println("%sopen class %s : %s<%s>(%s.name(\"%s\"), %s, %s, %s.comment(\"[[%s]]\"), %s)[[before=, ][%s]] {", visibility(), className, classExtends, recordType, DSL.class, escapeString(udt.getOutputName()), schemaArg, packageId, DSL.class, asList(escapeString(comment)), synthetic, interfaces);
 
             out.println();
             out.println("%scompanion object {", visibility());
@@ -3955,7 +3959,7 @@ public class JavaGenerator extends AbstractGenerator {
         else {
             out.javadoc(NO_FURTHER_INSTANCES_ALLOWED);
             out.println("private %s() {", className);
-            out.println("super(%s.name(\"%s\"), null, %s, %s.comment(\"[[%s]]\"), %s);", DSL.class, escapeString(udt.getOutputName()), packageId, DSL.class, asList(escapeString(comment)), synthetic);
+            out.println("super(%s.name(\"%s\"), %s, %s, %s.comment(\"[[%s]]\"), %s);", DSL.class, escapeString(udt.getOutputName()), schemaArg, packageId, DSL.class, asList(escapeString(comment)), synthetic);
             out.println("}");
         }
 
@@ -3971,7 +3975,7 @@ public class JavaGenerator extends AbstractGenerator {
             else {
                 out.overrideInherit();
                 out.println("%s%s getSchema() {", visibilityPublic(), Schema.class);
-                out.println("return %s != null ? %s : new %s(%s.name(\"%s\"));", schemaId, schemaId, SchemaImpl.class, DSL.class, escapeString(schema.getOutputName()));
+                out.println("return %s;", schemaId);
                 out.println("}");
             }
         }
@@ -7628,6 +7632,26 @@ public class JavaGenerator extends AbstractGenerator {
         closeJavaWriter(out);
     }
 
+    /**
+     * [#7172] An expression creating a {@link LazySchema} reference to a
+     * generated schema.
+     * <p>
+     * Passing this to table and UDT constructors qualifies their names without
+     * initialising the schema singleton during their own class initialisation,
+     * which would otherwise run into class initialisation cycles.
+     */
+    private String lazySchema(JavaWriter out, SchemaDefinition schema, String schemaId) {
+        final String name = out.ref(DSL.class) + ".name(\"" + escapeString(schema.getOutputName()) + "\")";
+        final String comment = out.ref(DSL.class) + ".comment(\"\")";
+
+        if (scala)
+            return "new " + out.ref(LazySchema.class) + "(" + name + ", " + comment + ", () => " + schemaId + ")";
+        else if (kotlin)
+            return out.ref(LazySchema.class) + "(" + name + ", " + comment + ", " + out.ref(LazySupplier.class) + " { " + schemaId + " })";
+        else
+            return "new " + out.ref(LazySchema.class) + "(" + name + ", " + comment + ", () -> " + schemaId + ")";
+    }
+
     protected void generateTable(TableDefinition table, JavaWriter out) {
         final SchemaDefinition schema = table.getSchema();
         final UniqueKeyDefinition primaryKey = table.getPrimaryKey();
@@ -7702,7 +7726,8 @@ public class JavaGenerator extends AbstractGenerator {
             out.println(")");
             out.println("extends %s[%s](", classExtends, recordType);
             out.println("alias,");
-            out.println("%s,", schemaId);
+            // [#7172] Aliased tables are not schema qualified, see getSchema()
+            out.println("%s,", schemaId == null ? null : "if (aliased == null) " + schemaId + " else null");
             out.println("path,");
             out.println("childPath,");
             out.println("parentPath,");
@@ -7731,7 +7756,8 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("where: %s?", Condition.class);
             out.println("): %s<%s>(", classExtends, recordType);
             out.println("alias,");
-            out.println("%s,", schemaId);
+            // [#7172] Aliased tables are not schema qualified, see getSchema()
+            out.println("%s,", schemaId == null ? null : "if (aliased == null) " + schemaId + " else null");
             out.println("path,");
             out.println("childPath,");
             out.println("parentPath,");
@@ -7979,13 +8005,20 @@ public class JavaGenerator extends AbstractGenerator {
             out.println();
             out.println("private %s(%s alias, %s<%s> aliased, %s<?>[] parameters, %s where) {", className, Name.class, Table.class, recordType, Field.class, Condition.class);
 
+            // [#7172] Pass a LazySchema reference to the super constructor, in order to
+            //         qualify the table's getQualifiedName() without running into class
+            //         initialisation cycles between the table and the schema singletons.
+            //         Aliased tables are not schema qualified, see getSchema().
+            final String schemaArg = schemaId == null
+                ? "null"
+                : "aliased == null ? " + lazySchema(out, schema, schemaId) + " : null";
 
             if ((generateSourcesOnViews() || table.isSynthetic()) && table.isView() && table.getSource() != null)
-                out.println("super(alias, null, aliased, parameters, %s.comment(\"%s\"), %s.%s(%s), where);", DSL.class, escapeString(comment(table)), TableOptions.class, tableType, textBlock(table.getSource()));
+                out.println("super(alias, %s, aliased, parameters, %s.comment(\"%s\"), %s.%s(%s), where);", schemaArg, DSL.class, escapeString(comment(table)), TableOptions.class, tableType, textBlock(table.getSource()));
             else if (table.isSynthetic() && table.isTableValuedFunction() && table.getSource() != null)
-                out.println("super(alias, null, aliased, parameters, %s.comment(\"%s\"), %s.%s(%s), where);", DSL.class, escapeString(comment(table)), TableOptions.class, tableType, textBlock(table.getSource()));
+                out.println("super(alias, %s, aliased, parameters, %s.comment(\"%s\"), %s.%s(%s), where);", schemaArg, DSL.class, escapeString(comment(table)), TableOptions.class, tableType, textBlock(table.getSource()));
             else
-                out.println("super(alias, null, aliased, parameters, %s.comment(\"%s\"), %s.%s(), where);", DSL.class, escapeString(comment(table)), TableOptions.class, tableType);
+                out.println("super(alias, %s, aliased, parameters, %s.comment(\"%s\"), %s.%s(), where);", schemaArg, DSL.class, escapeString(comment(table)), TableOptions.class, tableType);
 
             out.println("}");
         }
@@ -8076,7 +8109,7 @@ public class JavaGenerator extends AbstractGenerator {
                     out.println("private constructor(alias: %s, aliased: %s<%s>): super(alias, aliased)", Name.class, Table.class, recordType);
                     out.println("%soverride fun `as`(alias: %s): %s = %s(%s.name(alias), this)", visibilityPublic(), String.class, pathClassName, pathClassName, DSL.class);
                     out.println("%soverride fun `as`(alias: %s): %s = %s(alias, this)", visibilityPublic(), Name.class, pathClassName, pathClassName);
-                    out.println("%soverride fun `as`(alias: %s<*>): %s = %s(alias.qualifiedName, this)", visibilityPublic(), Table.class, pathClassName, pathClassName);
+                    out.println("%soverride fun `as`(alias: %s<*>): %s = %s(alias.unqualifiedName, this)", visibilityPublic(), Table.class, pathClassName, pathClassName);
                     out.println("}");
                 }
                 else {
@@ -8100,7 +8133,7 @@ public class JavaGenerator extends AbstractGenerator {
                     out.println("}");
                     out.overrideInherit();
                     out.println("%s%s as(%s<?> alias) {", visibilityPublic(), pathClassName, Table.class);
-                    out.println("return new %s(alias.getQualifiedName(), this);", pathClassName);
+                    out.println("return new %s(alias.getUnqualifiedName(), this);", pathClassName);
                     out.println("}");
                     out.println("}");
                 }
@@ -8784,9 +8817,9 @@ public class JavaGenerator extends AbstractGenerator {
                 out.print("%soverride def as(alias: %s[%s]): %s = ", visibilityPublic(), Table.class, wildcard(), className);
 
                 if (table.isTableValuedFunction())
-                    out.println("new %s(alias.getQualifiedName(), null, null, null, this, parameters, null)", className);
+                    out.println("new %s(alias.getUnqualifiedName(), null, null, null, this, parameters, null)", className);
                 else
-                    out.println("new %s(alias.getQualifiedName(), this)", className);
+                    out.println("new %s(alias.getUnqualifiedName(), this)", className);
             }
             else if (kotlin) {
                 out.print("%soverride fun `as`(alias: %s): %s = ", visibilityPublic(), String.class, className);
@@ -8806,9 +8839,9 @@ public class JavaGenerator extends AbstractGenerator {
                 out.print("%soverride fun `as`(alias: %s<*>): %s = ", visibilityPublic(), Table.class, className);
 
                 if (table.isTableValuedFunction())
-                    out.println("%s(alias.qualifiedName, this, parameters)", className);
+                    out.println("%s(alias.unqualifiedName, this, parameters)", className);
                 else
-                    out.println("%s(alias.qualifiedName, this)", className);
+                    out.println("%s(alias.unqualifiedName, this)", className);
             }
 
             // [#117] With instance fields, it makes sense to create a
@@ -8843,9 +8876,9 @@ public class JavaGenerator extends AbstractGenerator {
                 out.println("%s%s as(%s<?> alias) {", visibilityPublic(), className, Table.class);
 
                 if (table.isTableValuedFunction())
-                    out.println("return new %s(alias.getQualifiedName(), this, parameters);", className);
+                    out.println("return new %s(alias.getUnqualifiedName(), this, parameters);", className);
                 else
-                    out.println("return new %s(alias.getQualifiedName(), this);", className);
+                    out.println("return new %s(alias.getUnqualifiedName(), this);", className);
 
                 out.println("}");
             }

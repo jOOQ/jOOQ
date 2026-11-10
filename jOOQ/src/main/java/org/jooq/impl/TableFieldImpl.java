@@ -50,13 +50,11 @@ import static org.jooq.conf.RenderImplicitJoinType.DEFAULT;
 import static org.jooq.conf.RenderImplicitJoinType.SCALAR_SUBQUERY;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DefaultMetaProvider.meta;
-import static org.jooq.impl.QualifiedName.hashCode0;
-import static org.jooq.impl.SchemaImpl.DEFAULT_SCHEMA;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_OMIT_CLAUSE_EVENT_EMISSION;
 import static org.jooq.impl.Tools.BooleanDataKey.DATA_RENDER_IMPLICIT_JOIN;
 import static org.jooq.impl.Tools.ExtendedDataKey.DATA_RENDER_TABLE;
+import static org.jooq.impl.Tools.uncoerce;
 import static org.jooq.impl.UpdateQueryImpl.NO_SUPPORT_UPDATE_JOIN;
-import static org.jooq.tools.StringUtils.defaultIfNull;
 
 import java.util.Objects;
 import java.util.Set;
@@ -294,21 +292,17 @@ implements
     @Override
     public int hashCode() {
 
-        // [#7172] [#10274] [#14875] Cannot use Table.getQualifiedName() based super implementation yet here
-        if (getTable() == null)
-            return getUnqualifiedName().hashCode();
-        else
-            return hashCode0(
-                defaultIfNull(getTable().getSchema(), DEFAULT_SCHEMA.get()).getQualifiedName(),
-                getTable().getUnqualifiedName(),
-                getUnqualifiedName()
-            );
+        // [#10274] [#14875] Consistent with equals(), which is based on getTable()
+        return 31 * Objects.hashCode(getTable()) + getUnqualifiedName().hashCode();
     }
 
     @Override
     public boolean equals(Object that) {
         if (this == that)
             return true;
+
+        // [#15314] Coercing a field doesn't change its identity
+        that = uncoerce(that);
 
         // [#2144] TableFieldImpl equality can be decided without executing the
         // rather expensive implementation of AbstractQueryPart.equals()

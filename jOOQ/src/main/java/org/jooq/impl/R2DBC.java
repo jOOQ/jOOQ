@@ -311,7 +311,7 @@ final class R2DBC {
 
         @Override
         public final void onError(Throwable t) {
-            complete(true, () -> resultSubscriber.downstream.subscriber.onError(translate(resultSubscriber.downstream.configuration.dsl(), resultSubscriber.downstream.sql(), t)));
+            complete(true, () -> resultSubscriber.downstream.subscriber.onError(resultSubscriber.downstream.translated(t)));
         }
 
         @Override
@@ -363,7 +363,7 @@ final class R2DBC {
 
         @Override
         public final void onError(Throwable t) {
-            complete(true, () -> downstream.subscriber.onError(translate(downstream.configuration.dsl(), downstream.sql(), t)));
+            complete(true, () -> downstream.subscriber.onError(downstream.translated(t)));
         }
 
         @Override
@@ -542,7 +542,7 @@ final class R2DBC {
 
         @Override
         public final void onError(Throwable t) {
-            downstream.subscriber.onError(translate(downstream.configuration.dsl(), downstream.sql(), t));
+            downstream.subscriber.onError(downstream.translated(t));
         }
 
         @Override
@@ -743,6 +743,10 @@ final class R2DBC {
         }
 
         abstract String sql();
+
+        final RuntimeException translated(Throwable t) {
+            return translate(configuration.dsl(), sql(), t);
+        }
 
         @Override
         final void request0() {
@@ -1007,11 +1011,11 @@ final class R2DBC {
             return r;
     }
 
-    @SuppressWarnings("unchecked")
     static final <T> T block(Publisher<? extends T> publisher) throws Throwable {
         return block(publisher, CONFIG.get(), null);
     }
 
+    @SuppressWarnings("unchecked")
     static final <T> T block(Publisher<? extends T> publisher, Configuration configuration, Subscriber<?> subscriber) throws Throwable {
         Object complete = new Object();
         LinkedBlockingQueue<Object> queue = new LinkedBlockingQueue<>();

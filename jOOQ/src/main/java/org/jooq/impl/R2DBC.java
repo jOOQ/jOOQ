@@ -534,7 +534,21 @@ final class R2DBC {
         @Override
         public final void onNext(Connection c) {
             connection.set(c);
-            onNext0(c);
+
+            // [#15462] The downstream subscription may have been cancelled
+            //          while the connection was still being acquired. In that
+            //          case, cancel0() has already run and found no connection
+            //          to close, and the ConnectionFactory may still emit the
+            //          connection (cancellation of the acquisition is racy, or
+            //          not supported by the driver). Don't execute anything on
+            //          the connection, and close / release it right away.
+            //          cancel0() resets the reference to null when closing, so
+            //          a concurrent cancel0() call will at worst close the
+            //          connection twice, which R2DBC treats as a no-op.
+            if (downstream.completed.get())
+                downstream.cancel0(true, () -> {});
+            else
+                onNext0(c);
         }
 
         abstract void onNext0(Connection c);

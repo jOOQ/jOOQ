@@ -341,16 +341,11 @@ final class R2DBC {
         final AbstractNonBlockingSubscription<? super T> downstream;
         final AtomicBoolean                              completed;
         final AtomicBoolean                              completionRequested;
-        final R2DBCPreparedStatement                     statement;
 
-        AbstractResultSubscriber(
-            AbstractNonBlockingSubscription<? super T> downstream,
-            R2DBCPreparedStatement statement
-        ) {
+        AbstractResultSubscriber(AbstractNonBlockingSubscription<? super T> downstream) {
             this.downstream = downstream;
             this.completed = new AtomicBoolean();
             this.completionRequested = new AtomicBoolean();
-            this.statement = statement;
         }
 
         @Override
@@ -384,12 +379,9 @@ final class R2DBC {
         }
     }
 
-    static final Subscriber<Result> rowCountSubscriber(
-        AbstractNonBlockingSubscription<? super Integer> downstream,
-        R2DBCPreparedStatement statement
-    ) {
+    static final Subscriber<Result> rowCountSubscriber(AbstractNonBlockingSubscription<? super Integer> downstream) {
         return subscriber(
-            new RowCountSubscriber(downstream, statement),
+            new RowCountSubscriber(downstream),
             downstream.configuration.subscriberProvider(),
             downstream.subscriber
         );
@@ -397,10 +389,9 @@ final class R2DBC {
 
     private static final class RowCountSubscriber extends AbstractResultSubscriber<Integer> {
         RowCountSubscriber(
-            AbstractNonBlockingSubscription<? super Integer> downstream,
-            R2DBCPreparedStatement statement
+            AbstractNonBlockingSubscription<? super Integer> downstream
         ) {
-            super(downstream, statement);
+            super(downstream);
         }
 
         @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -442,16 +433,18 @@ final class R2DBC {
 
     private static final class ResultSubscriber<R extends Record, Q extends ResultQueryTrait<R>> extends AbstractResultSubscriber<R> {
 
-        final Q query;
+        final Q                      query;
+        final R2DBCPreparedStatement statement;
 
         ResultSubscriber(
             Q query,
             AbstractNonBlockingSubscription<? super R> downstream,
             R2DBCPreparedStatement statement
         ) {
-            super(downstream, statement);
+            super(downstream);
 
             this.query = query;
+            this.statement = statement;
         }
 
         @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -660,7 +653,7 @@ final class R2DBC {
                 for (int i = 0; i < batch.queries.length; i++)
                     b = b.add(DSL.using(batch.configuration).renderInlined(batch.queries[i]));
 
-                b.execute().subscribe(rowCountSubscriber(downstream, null));
+                b.execute().subscribe(rowCountSubscriber(downstream));
             }
 
             // [#13343] Cancel the downstream in case of a rendering bug in jOOQ
@@ -714,7 +707,7 @@ final class R2DBC {
                             : fields(bindValues));
                 }
 
-                stmt.execute().subscribe(rowCountSubscriber(downstream, s));
+                stmt.execute().subscribe(rowCountSubscriber(downstream));
             }
 
             // [#13343] Cancel the downstream in case of a rendering bug in jOOQ

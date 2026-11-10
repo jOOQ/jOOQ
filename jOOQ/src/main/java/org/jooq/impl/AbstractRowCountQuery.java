@@ -63,7 +63,7 @@ abstract class AbstractRowCountQuery extends AbstractQuery<Record> implements Ro
         ConnectionFactory cf = configuration().connectionFactory();
 
         if (!(cf instanceof NoConnectionFactory))
-            subscriber.onSubscribe(new QuerySubscription<>(this, subscriber, (t, u, s) -> rowCountSubscriber(u, s)));
+            subscriber.onSubscribe(new QuerySubscription<>(this, subscriber, (t, u, s) -> rowCountSubscriber(u)));
         else
             subscriber.onSubscribe(new BlockingRowCountSubscription(this, subscriber));
     }

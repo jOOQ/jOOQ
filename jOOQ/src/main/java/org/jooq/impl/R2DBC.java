@@ -1003,17 +1003,10 @@ final class R2DBC {
     }
 
     static final void wrapExceptions(Runnable runnable) {
-        try {
+        wrapExceptions(() -> {
             runnable.run();
-        }
-        catch (R2dbcException e) {
-            throw e;
-        }
-
-        // [#15028] Wrap IllegalArgumentException or NoSuchElementException in a more traceable exception
-        catch (Exception e) {
-            throw new R2DBCGenericException(e);
-        }
+            return null;
+        });
     }
 
     static final <T> T wrapExceptions(Callable<T> callable) {

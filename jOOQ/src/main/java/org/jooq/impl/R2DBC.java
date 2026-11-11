@@ -393,6 +393,7 @@ final class R2DBC {
                 try {
                     // TODO: Cache this getFields() call
                     Field<?>[] fields = query.getFields(() -> new R2DBCResultSetMetaData(query.configuration(), meta));
+                    AbstractRow<AbstractRecord> fieldsRow = (AbstractRow<AbstractRecord>) Tools.row0(fields);
 
                     // TODO: This call is duplicated from CursorImpl and related classes.
                     // Refactor this call to make sure code is re-used, especially when
@@ -403,7 +404,7 @@ final class R2DBC {
                         recordFactory(
                             null,
                             (Class<AbstractRecord>) query.getRecordType(),
-                            (AbstractRow<AbstractRecord>) Tools.row0(fields)
+                            fieldsRow
                         )
                     );
 
@@ -416,7 +417,7 @@ final class R2DBC {
 
                     return (R) delegate.operate(new CursorImpl.CursorRecordInitialiser(
                         new DefaultExecuteContext(query.configuration(), query), new DefaultExecuteListener(),
-                        ctx, Tools.row0(fields), 0, new boolean[0]
+                        ctx, fieldsRow, 0, new boolean[0]
                     ));
                 }
                 catch (Throwable t) {

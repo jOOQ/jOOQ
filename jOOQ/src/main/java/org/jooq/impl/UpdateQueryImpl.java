@@ -654,7 +654,13 @@ implements
                 selectFrom(table)
                 .where(hasWhere() ? getWhere() : noCondition())
                 .orderBy(orderBy)
-                .limit(limit != null ? limit : noField(INTEGER)))
+                .limit(limit != null ? limit : noField(INTEGER))
+
+                // [#20471] Acquire exclusive locks right away. Otherwise, the
+                //          SELECT acquires shared locks, which ON DUPLICATE KEY
+                //          UPDATE has to upgrade, causing deadlocks between
+                //          concurrent statements on the same rows.
+                .forUpdate())
             .onDuplicateKeyUpdate()
             .set(updateMap)
             .returning(returning)

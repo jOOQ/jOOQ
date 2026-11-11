@@ -648,9 +648,9 @@
                         <!-- When compilers say false, they mean true ...
                              https://issues.apache.org/jira/browse/MCOMPILER-209 -->
                         <useIncrementalCompilation>false</useIncrementalCompilation>
-                        <fork>true</fork>
-                        <maxmem>2G</maxmem>
-                        <meminitial>256m</meminitial>
+                        <!-- Compile in-process, reusing Maven's already warmed up JVM, instead of
+                             forking a new javac JVM for every compile and testCompile execution.
+                             The compiler's heap is now Maven's heap, see MAVEN_OPTS -->
                         <encoding>UTF-8</encoding>
 
                         <release>25</release>

@@ -38,7 +38,10 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
+import static java.util.stream.Collectors.toList;
 import static org.jooq.conf.SettingsTools.executeStaticStatements;
+import static org.jooq.impl.R2DBC.subscriber;
+import static org.jooq.impl.Tools.EMPTY_QUERY;
 import static org.jooq.impl.Tools.map;
 
 import java.math.BigInteger;
@@ -58,6 +61,7 @@ import org.jooq.Query;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.exception.ControlFlowSignal;
+import org.jooq.impl.R2DBC.RowCount;
 import org.jooq.tools.JooqLogger;
 
 import org.reactivestreams.Subscriber;
@@ -84,10 +88,33 @@ final class BatchCRUD extends AbstractBatch {
     }
 
     @Override
-    public void subscribe0(Subscriber<? super R2DBC.RowCount> s) {
+    final void subscribe0(Subscriber<? super RowCount> subscriber) {
+        List<QueryCollectorSignal> signals = collect();
+        List<Integer> result = new ArrayList<>();
 
-        // [#11700] TODO: Implement this
-        throw new UnsupportedOperationException("BatchCRUD operations are not yet supported in a reactive way. Use ordinary batch operations, instead, or avoid batching. See https://github.com/jOOQ/jOOQ/issues/14874");
+        // [#14874] R2DBC batches are always executed as static statements,
+        //          so we can execute all queries in their requested order.
+        new BatchMultiple(configuration, executable(signals).toArray(EMPTY_QUERY)).subscribe0(subscriber(
+            subscriber::onSubscribe,
+            c -> {
+                result.add(c.rows());
+                subscriber.onNext(c);
+            },
+            subscriber::onError,
+            () -> {
+                try {
+                    postProcess(signals, result);
+                }
+                catch (Throwable t) {
+                    subscriber.onError(t);
+                    return;
+                }
+
+                subscriber.onComplete();
+            },
+            configuration.subscriberProvider(),
+            subscriber
+        ));
     }
 
     @Override
@@ -123,14 +150,15 @@ final class BatchCRUD extends AbstractBatch {
         return local;
     }
 
-    private final int[] executePrepared() {
-        boolean optimisticLocking = TRUE.equals(configuration.settings().isExecuteWithOptimisticLocking());
-        Map<String, List<QueryCollectorSignal>> queries = new LinkedHashMap<>();
+    /**
+     * Collect the queries produced by each record's action, or
+     * <code>null</code> for records that don't produce any query.
+     */
+    private final List<QueryCollectorSignal> collect() {
         List<QueryCollectorSignal> signals = new ArrayList<>();
-        QueryCollector collector = new QueryCollector();
 
         // Add the QueryCollector to intercept query execution after rendering
-        Configuration local = deriveConfiguration(collector);
+        Configuration local = deriveConfiguration(new QueryCollector());
 
         for (int i = 0; i < records.length; i++) {
             Configuration previous = records[i].configuration();
@@ -138,22 +166,37 @@ final class BatchCRUD extends AbstractBatch {
             try {
                 records[i].attach(local);
                 executeAction(i);
-
-                if (optimisticLocking)
-                    signals.add(null);
+                signals.add(null);
             }
             catch (QueryCollectorSignal e) {
-                if (optimisticLocking)
-                    signals.add(e);
-
-                // Aggregate executable queries by identical SQL
-                if (e.getQuery().isExecutable())
-                    queries.computeIfAbsent(e.getSQL(), s -> new ArrayList<>()).add(e);
+                signals.add(e);
             }
             finally {
                 records[i].attach(previous);
             }
         }
+
+        return signals;
+    }
+
+    private static final List<Query> executable(List<QueryCollectorSignal> signals) {
+        List<Query> queries = new ArrayList<>();
+
+        for (QueryCollectorSignal signal : signals)
+            if (signal != null && signal.getQuery().isExecutable())
+                queries.add(signal.getQuery());
+
+        return queries;
+    }
+
+    private final int[] executePrepared() {
+        List<QueryCollectorSignal> signals = collect();
+        Map<String, List<QueryCollectorSignal>> queries = new LinkedHashMap<>();
+
+        // Aggregate executable queries by identical SQL
+        for (QueryCollectorSignal signal : signals)
+            if (signal != null && signal.getQuery().isExecutable())
+                queries.computeIfAbsent(signal.getSQL(), s -> new ArrayList<>()).add(signal);
 
         if (log.isDebugEnabled())
             log.debug("Batch " + action + " of " + records.length + " records using " + queries.size() + " distinct queries (lower is better) with an average number of bind variable sets of " + queries.values().stream().mapToInt(List::size).average().orElse(0.0) + " (higher is better)");
@@ -168,63 +211,31 @@ final class BatchCRUD extends AbstractBatch {
             for (QueryCollectorSignal signal : v)
                 batch.bind(map(signal.getParams(), p -> p.getValue(), Object[]::new));
 
-            int[] array = batch.execute();
-            for (int i : array)
+            for (int i : batch.execute())
                 result.add(i);
         });
 
-        int[] array = new int[result.size()];
-        for (int i = 0; i < result.size(); i++)
-            array[i] = result.get(i);
+        return postProcess(signals, result);
+    }
+
+    private final int[] executeStatic() {
+        List<QueryCollectorSignal> signals = collect();
+
+        // Resulting statements can be batch executed in their requested order
+        int[] result = dsl.batch(executable(signals)).execute();
+        postProcess(signals, IntStream.of(result).boxed().collect(toList()));
+        return result;
+    }
+
+    private final int[] postProcess(List<QueryCollectorSignal> signals, List<Integer> result) {
+        int[] array = result.stream().mapToInt(Integer::intValue).toArray();
 
         // [#8283] Store back optimistic locking values to updated records
-        if (optimisticLocking)
+        if (TRUE.equals(configuration.settings().isExecuteWithOptimisticLocking()))
             updateRecordVersionsAndTimestamps(signals, array);
 
         updateChangedFlag();
         return array;
-    }
-
-    private final int[] executeStatic() {
-        boolean optimisticLocking = TRUE.equals(configuration.settings().isExecuteWithOptimisticLocking());
-        List<Query> queries = new ArrayList<>();
-        List<QueryCollectorSignal> signals = new ArrayList<>();
-        QueryCollector collector = new QueryCollector();
-        Configuration local = deriveConfiguration(collector);
-
-        for (int i = 0; i < records.length; i++) {
-            Configuration previous = records[i].configuration();
-
-            try {
-                records[i].attach(local);
-                executeAction(i);
-
-                if (optimisticLocking)
-                    signals.add(null);
-            }
-            catch (QueryCollectorSignal e) {
-                if (optimisticLocking)
-                    signals.add(e);
-
-                Query query = e.getQuery();
-
-                if (query.isExecutable())
-                    queries.add(query);
-            }
-            finally {
-                records[i].attach(previous);
-            }
-        }
-
-        // Resulting statements can be batch executed in their requested order
-        int[] result = dsl.batch(queries).execute();
-
-        // [#8283] Store back optimistic locking values to updated records
-        if (optimisticLocking)
-            updateRecordVersionsAndTimestamps(signals, result);
-
-        updateChangedFlag();
-        return result;
     }
 
     private final void updateRecordVersionsAndTimestamps(List<QueryCollectorSignal> signals, int[] array) {

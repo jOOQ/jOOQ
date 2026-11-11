@@ -667,6 +667,14 @@ final class R2DBC {
         @Override
         final void onNext0(Connection c) {
             try {
+
+                // [#14874] Empty batches can't be executed by R2DBC
+                if (batch.queries.length == 0) {
+                    Subscriber<Result> s = rowCountSubscriber(downstream);
+                    s.onSubscribe(new NoOpSubscription(s));
+                    return;
+                }
+
                 Batch b = c.createBatch();
 
                 for (int i = 0; i < batch.queries.length; i++)

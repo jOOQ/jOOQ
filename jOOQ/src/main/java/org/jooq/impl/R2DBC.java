@@ -76,10 +76,12 @@ import java.time.LocalTime;
 import java.time.Year;
 import java.util.LinkedHashSet;
 import java.util.Properties;
+import java.util.Queue;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -501,6 +503,15 @@ final class R2DBC {
 
     static abstract class ConnectionSubscriber<T> implements DownstreamSubscriber<Connection> {
 
+        // [#20271] The connection acquisition was cancelled, or has delivered its connection
+        static final Subscription                DONE = new Subscription() {
+            @Override
+            public void request(long n) {}
+
+            @Override
+            public void cancel() {}
+        };
+
         final AbstractNonBlockingSubscription<T> downstream;
         final AtomicReference<Connection>        connection;
         final AtomicReference<Subscription>      subscription;
@@ -520,12 +531,23 @@ final class R2DBC {
         public final void onSubscribe(Subscription s) {
 
             // [#17094] Stores the Subscription that handles the connection establishment.
-            subscription.set(s);
-            s.request(1);
+            // [#20271] Unless the acquisition has already been cancelled
+            if (subscription.compareAndSet(null, s))
+                s.request(1);
+            else
+                s.cancel();
         }
 
         @Override
         public final void onNext(Connection c) {
+
+            // [#20271] Don't cancel the acquisition after delivery. r2dbc-pool
+            //          would release the connection while jOOQ still uses it.
+            subscription.set(DONE);
+            downstream.serialize(() -> onNext1(c));
+        }
+
+        private final void onNext1(Connection c) {
             connection.set(c);
 
             // [#15462] The downstream subscription may have been cancelled
@@ -535,9 +557,6 @@ final class R2DBC {
             //          connection (cancellation of the acquisition is racy, or
             //          not supported by the driver). Don't execute anything on
             //          the connection, and close / release it right away.
-            //          cancel0() resets the reference to null when closing, so
-            //          a concurrent cancel0() call will at worst close the
-            //          connection twice, which R2DBC treats as a no-op.
             if (downstream.completed.get())
                 downstream.cancel0(true, () -> {});
             else
@@ -548,14 +567,16 @@ final class R2DBC {
 
         @Override
         public final void onError(Throwable t) {
-            downstream.subscriber.onError(downstream.translated(t));
+
+            // [#20271] Signal the error after a pending close
+            downstream.serialize(() -> downstream.subscriber.onError(downstream.translated(t)));
         }
 
         @Override
         public final void onComplete() {}
 
         final void cancelSubscription() {
-            Subscription s = subscription.getAndSet(null);
+            Subscription s = subscription.getAndSet(DONE);
 
             if (s != null)
                 s.cancel();
@@ -741,6 +762,8 @@ final class R2DBC {
         final Publisher<? extends Connection>       connection;
         final AtomicInteger                         nextForwarderIndex;
         final ConcurrentMap<Integer, Forwarding<T>> forwarders;
+        final Queue<Runnable>                       actions;
+        final AtomicInteger                         wip;
 
         AbstractNonBlockingSubscription(
             Configuration configuration,
@@ -752,6 +775,8 @@ final class R2DBC {
             this.connection = configuration.connectionFactory().create();
             this.nextForwarderIndex = new AtomicInteger();
             this.forwarders = new ConcurrentHashMap<>();
+            this.actions = new ConcurrentLinkedQueue<>();
+            this.wip = new AtomicInteger();
         }
 
         abstract String sql();
@@ -796,8 +821,26 @@ final class R2DBC {
             return () -> delegate().cancelSubscription();
         }
 
+        /**
+         * [#20271] Run actions one at a time. An action submitted while
+         * another one runs, e.g. a cancellation from another thread while a
+         * statement is being set up on the connection, is run afterwards by
+         * the thread running the other action.
+         */
+        final void serialize(Runnable action) {
+            actions.add(action);
+
+            if (wip.getAndIncrement() == 0)
+                do actions.poll().run();
+                while (wip.decrementAndGet() != 0);
+        }
+
         @Override
         final void cancel0(boolean closeAfterTransaction, Runnable onComplete) {
+            serialize(() -> cancel1(closeAfterTransaction, onComplete));
+        }
+
+        private final void cancel1(boolean closeAfterTransaction, Runnable onComplete) {
 
             // [#12108] Must pass along cancellation to forwarding subscriptions
             //          Forwarders all forward to the same downstream and are not
@@ -931,7 +974,9 @@ final class R2DBC {
                     c.beginTransaction(transactionDefinition()).subscribe(subscriber(
                         s -> s.request(1),
                         v -> {},
-                        subscriber::onError,
+
+                        // [#20271] Close the connection also when BEGIN fails
+                        t -> cancel0(true, () -> subscriber.onError(t)),
 
                         // [#13502] Implement Savepoint logic for nested transactions
                         () -> {

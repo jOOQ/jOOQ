@@ -101,6 +101,7 @@ import org.jooq.Param;
 import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.SQLDialect;
+import org.jooq.SQLDialectCategory;
 import org.jooq.Scope;
 import org.jooq.TransactionalPublishable;
 import org.jooq.XML;
@@ -1411,18 +1412,17 @@ final class R2DBC {
                 return null;
 
             switch (c.family()) {
-                case POSTGRES: {
+                default: {
 
                     // [#16684] If user defined types (e.g. enums) don't have their codecs registered,
                     //          the driver will just return a String
-                    if (o instanceof String s)
+                    // [#19126] The same is true for extension types (e.g. hstore[], ltree[]), and
+                    //          for all dialects that are served by the PostgreSQL R2DBC driver
+                    if (o instanceof String s && c.family().category() == SQLDialectCategory.POSTGRES)
                         o = PostgresUtils.toPGArray(s).toArray();
 
                     return new MockArray<>(c.dialect(), (Object[]) o, Object[].class);
                 }
-
-                default:
-                    return new MockArray<>(c.dialect(), (Object[]) o, Object[].class);
             }
         }
 

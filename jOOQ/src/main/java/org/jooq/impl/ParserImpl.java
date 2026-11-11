@@ -11670,6 +11670,28 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
     }
 
     /**
+     * [#8971] Parse a <code>SECOND</code> single datetime field, which, unlike
+     * other fields, supports both a leading field precision and a fractional
+     * seconds precision: <code>SECOND [ ( p [ , s ] ) ]</code>
+     */
+    private final boolean parseIntervalSecondKeywordIf() {
+        if (parseKeywordIf("SECOND")) {
+            if (parseIf('(')) {
+                parseUnsignedIntegerLiteral();
+
+                if (parseIf(','))
+                    parseUnsignedIntegerLiteral();
+
+                parse(')');
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * Parse an interval literal.
      *
      * @param requireQualifier Whether an explicit interval qualifier (e.g.
@@ -11736,7 +11758,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                 return requireNotNull(DayToSecond.minute(string), message);
         else if (parseKeywordIf("MINUTE_SECOND"))
             return requireNotNull(DayToSecond.minuteToSecond(string), message);
-        else if (parseIntervalPrecisionKeywordIf("SECOND"))
+        else if (parseIntervalSecondKeywordIf())
             return requireNotNull(DayToSecond.second(string), message);
 
         if (requireQualifier) {
@@ -14049,19 +14071,14 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                     parseKeywordOrIdentifierIf("INT64"))
                     return BIGINT;
                 else if (!parseNumericOnly && parseKeywordIf("INTERVAL")) {
-                    if (parseKeywordIf("YEAR")) {
-                        parseDataTypePrecisionIf();
-                        parseKeyword("TO MONTH");
-                        return INTERVALYEARTOMONTH;
-                    }
-                    else if (parseKeywordIf("DAY")) {
-                        parseDataTypePrecisionIf();
-                        parseKeyword("TO SECOND");
-                        parseDataTypePrecisionIf();
-                        return INTERVALDAYTOSECOND;
-                    }
-                    else
-                        return INTERVAL;
+                    DataType<?> result = parseIntervalDataTypeQualifierIf();
+
+                    if (result != null)
+                        return result;
+
+                    // [#8971] PostgreSQL's INTERVAL [ (p) ]
+                    parseDataTypePrecisionIf();
+                    return INTERVAL;
                 }
                 else if (!parseNumericOnly && parseKeywordIf("IDENTITY")) {
                     parseDataTypeIdentityArgsIf();
@@ -14405,6 +14422,61 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         }
 
         return result;
+    }
+
+    /**
+     * [#8971] Parse the SQL standard <code>&lt;interval qualifier&gt;</code> of
+     * an <code>INTERVAL</code> data type:
+     * <p>
+     * <code><pre>
+     * &lt;interval qualifier&gt; ::=
+     *     &lt;start field&gt; TO &lt;end field&gt;
+     *   | &lt;single datetime field&gt;
+     * </pre></code>
+     * <p>
+     * Year-month intervals map to {@link SQLDataType#INTERVALYEARTOMONTH},
+     * day-time intervals map to {@link SQLDataType#INTERVALDAYTOSECOND}.
+     * <p>
+     * TODO [#2230] The leading field precision and the fractional seconds
+     * precision are currently parsed, but not yet retained in the resulting
+     * data type.
+     */
+    private final DataType<?> parseIntervalDataTypeQualifierIf() {
+        if (parseIntervalPrecisionKeywordIf("YEAR")) {
+            if (parseKeywordIf("TO") && !parseIntervalPrecisionKeywordIf("MONTH"))
+                throw expected("MONTH");
+
+            return INTERVALYEARTOMONTH;
+        }
+        else if (parseIntervalPrecisionKeywordIf("MONTH"))
+            return INTERVALYEARTOMONTH;
+        else if (parseIntervalPrecisionKeywordIf("DAY")) {
+            if (parseKeywordIf("TO"))
+                if (!parseIntervalPrecisionKeywordIf("HOUR")
+                    && !parseIntervalPrecisionKeywordIf("MINUTE")
+                    && !parseIntervalPrecisionKeywordIf("SECOND"))
+                    throw expected("HOUR", "MINUTE", "SECOND");
+
+            return INTERVALDAYTOSECOND;
+        }
+        else if (parseIntervalPrecisionKeywordIf("HOUR")) {
+            if (parseKeywordIf("TO"))
+                if (!parseIntervalPrecisionKeywordIf("MINUTE")
+                    && !parseIntervalPrecisionKeywordIf("SECOND"))
+                    throw expected("MINUTE", "SECOND");
+
+            return INTERVALDAYTOSECOND;
+        }
+        else if (parseIntervalPrecisionKeywordIf("MINUTE")) {
+            if (parseKeywordIf("TO") && !parseIntervalPrecisionKeywordIf("SECOND"))
+                throw expected("SECOND");
+
+            return INTERVALDAYTOSECOND;
+        }
+        else if (parseIntervalSecondKeywordIf())
+            return INTERVALDAYTOSECOND;
+
+        return null;
     }
 
     private final DataType<?> parseDataTypeEnum() {

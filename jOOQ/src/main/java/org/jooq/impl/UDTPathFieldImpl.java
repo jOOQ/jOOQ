@@ -325,12 +325,11 @@ implements
 
     @Override
     public int hashCode() {
+
+        // [#10274] [#14875] Must be consistent with TableFieldImpl::hashCode, as both
+        //                   types can be equal to each other, see equals()
         if (getQualifier() instanceof Table)
-            return hashCode0(
-                defaultIfNull(getQualifier().getSchema(), DEFAULT_SCHEMA.get()).getQualifiedName(),
-                getQualifier().getUnqualifiedName(),
-                getUnqualifiedName()
-            );
+            return 31 * getQualifier().hashCode() + getUnqualifiedName().hashCode();
         else if (getQualifier() != null && getUDT() != null)
             return hashCode0(
                 defaultIfNull(getQualifier().getSchema(), DEFAULT_SCHEMA.get()).getQualifiedName(),

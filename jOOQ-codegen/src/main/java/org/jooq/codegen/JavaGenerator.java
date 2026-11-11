@@ -181,6 +181,7 @@ import org.jooq.impl.QOM.GenerationMode;
 import org.jooq.impl.QOM.GenerationOption;
 import org.jooq.impl.QOM.LengthUnit;
 import org.jooq.impl.SQLDataType;
+import org.jooq.impl.SchemaImpl;
 import org.jooq.impl.TableImpl;
 import org.jooq.impl.TableRecordImpl;
 import org.jooq.impl.UDTImpl;
@@ -4042,7 +4043,11 @@ public class JavaGenerator extends AbstractGenerator {
             else {
                 out.overrideInherit();
                 out.println("%s%s getSchema() {", visibilityPublic(), Schema.class);
-                out.println("return %s;", schemaId);
+
+                // [#7172] The schema singleton may not yet be initialised when this is
+                //         called during class initialisation, e.g. when a table's
+                //         UDTDataType eagerly computes its qualified type name.
+                out.println("return %s != null ? %s : new %s(%s.name(\"%s\"));", schemaId, schemaId, SchemaImpl.class, DSL.class, escapeString(schema.getOutputName()));
                 out.println("}");
             }
         }

@@ -4341,8 +4341,10 @@ public class JavaGenerator extends AbstractGenerator {
      * none.
      */
     private String udtPathType(TypedElementDefinition<?> e, JavaWriter out, boolean udts, boolean tables) {
-        DataTypeDefinition type = e.getType();
         Database db = e.getDatabase();
+
+        // [#16102] Domains over UDTs or table row types get the path type of their base type
+        DataTypeDefinition type = domainBaseType(db, e.getType());
 
         if (db.isArrayType(type.getType()))
             return null;
@@ -4362,14 +4364,37 @@ public class JavaGenerator extends AbstractGenerator {
         if (udtPathTables == null) {
             udtPathTables = new HashSet<>();
 
-            if (generateUDTPaths() && generateTables() && generateRecords())
-                for (TableDefinition table : database.getTables())
-                    for (ColumnDefinition c : table.getColumns())
-                        if (c.getType().isTable() && !database.isArrayType(c.getType().getType()))
-                            udtPathTables.add(database.getTable(c.getType().getSchema(), c.getType().getUserType()));
+            if (generateUDTPaths() && generateTables() && generateRecords()) {
+                for (TableDefinition table : database.getTables()) {
+                    for (ColumnDefinition c : table.getColumns()) {
+
+                        // [#16102] Domains over table row types get table path classes as well
+                        DataTypeDefinition type = domainBaseType(database, c.getType());
+
+                        if (type.isTable() && !database.isArrayType(type.getType()))
+                            udtPathTables.add(database.getTable(type.getSchema(), type.getUserType()));
+                    }
+                }
+            }
         }
 
         return udtPathTables;
+    }
+
+    /**
+     * [#16102] Resolve a (possibly nested) domain type to its base type, or
+     * return the argument type if it isn't a domain type.
+     */
+    private static DataTypeDefinition domainBaseType(Database db, DataTypeDefinition type) {
+        Set<DomainDefinition> visited = new HashSet<>();
+        DomainDefinition domain;
+
+        while (type.getQualifiedUserType() != null
+            && (domain = db.getDomain(type.getSchema(), type.getQualifiedUserType())) != null
+            && visited.add(domain))
+            type = domain.getType();
+
+        return type;
     }
 
     /**

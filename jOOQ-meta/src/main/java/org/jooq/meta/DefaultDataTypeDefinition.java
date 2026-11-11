@@ -523,6 +523,8 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
             result.add(getType() + "(" + getPrecision() + ", " + getScale() + ")");
 
             if (getDatabase().isArrayType(getType())) {
+                List<String> arrayNames = new ArrayList<>();
+                arrayNames.add(getType());
 
                 // [#13970] Backwards compatibility for forced types matching _int, etc.
                 switch (getDialect().family()) {
@@ -531,11 +533,24 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
                     case POSTGRES:
                     case YUGABYTEDB:
                         if (getType().startsWith("_"))
-                            result.add(getType().substring(1) + " array");
+                            arrayNames.add(getType().substring(1) + " array");
                         else if (getType().toUpperCase().endsWith(" ARRAY"))
-                            result.add("_" + getType().replaceFirst("(?i: ARRAY)", ""));
+                            arrayNames.add("_" + getType().replaceFirst("(?i: ARRAY)", ""));
 
                         break;
+                }
+
+                result.addAll(arrayNames);
+
+                // [#19617] Array types of (user-defined) types declared in a schema
+                //          can be matched by their qualified names as well, e.g.
+                //          s._my_enum or s.my_enum array
+                Name q = getQualifiedUserType();
+                if (q != null && q.qualified()) {
+                    String qualifier = q.qualifier().unquotedName().toString();
+
+                    for (String arrayName : arrayNames)
+                        result.add(qualifier + "." + arrayName);
                 }
             }
 

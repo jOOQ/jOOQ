@@ -71,7 +71,11 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Year;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Properties;
 import java.util.Queue;
 import java.util.Set;
@@ -222,6 +226,18 @@ final class R2DBC {
 
             // required_spec312_cancelMustMakeThePublisherToEventuallyStopSignaling
             return !completed.get() && requested.getAndUpdate(l -> l == Long.MAX_VALUE ? l : Math.max(0, l - 1)) > 0;
+        }
+
+        /**
+         * [#20486] Emit buffered elements according to downstream demand,
+         * and complete once all of them have been emitted.
+         */
+        final void drain(Iterator<? extends T> it) {
+            while (it.hasNext() && moreRequested())
+                subscriber.onNext(it.next());
+
+            if (!it.hasNext() && !completed.get())
+                subscriber.onComplete();
         }
 
         final void complete(Runnable onComplete) {
@@ -1081,6 +1097,34 @@ final class R2DBC {
         }
     }
 
+    /**
+     * [#20486] Block on a publisher until it completes, collecting all of its
+     * elements, unlike {@link #block(Publisher, Configuration, Subscriber)},
+     * which only requests and returns the first element.
+     */
+    @SuppressWarnings("unchecked")
+    static final <T> List<T> blockAll(Publisher<? extends T> publisher, Configuration configuration, Subscriber<?> subscriber) throws Throwable {
+        Object complete = new Object();
+        LinkedBlockingQueue<Object> queue = new LinkedBlockingQueue<>();
+        publisher.subscribe(subscriber(
+            s -> s.request(Long.MAX_VALUE),
+            queue::add,
+            queue::add,
+            () -> queue.add(complete),
+            configuration.subscriberProvider(),
+            subscriber
+        ));
+
+        List<T> result = new ArrayList<>();
+        for (Object o; (o = queue.take()) != complete;)
+            if (o instanceof Throwable t)
+                throw t;
+            else
+                result.add((T) o);
+
+        return result;
+    }
+
     static final <T> T blockWrappingExceptions(Publisher<? extends T> publisher) {
         try {
             return block(publisher);
@@ -1895,6 +1939,9 @@ final class R2DBC {
         final DSLContext                  ctx;
         final TransactionalPublishable<T> transactional;
 
+        // [#20486] Guarded by this
+        private Iterator<T>               results;
+
         BlockingTransactionSubscription(
             DSLContext ctx,
             Subscriber<? super T> subscriber,
@@ -1907,12 +1954,24 @@ final class R2DBC {
         }
 
         @Override
-        final void request0() {
+        final synchronized void request0() {
             try {
-                subscriber.onNext(ctx.transactionResult(c -> block(transactional.run(c), configuration, subscriber)));
-                subscriber.onComplete();
+
+                // [#20486] Run the transactional publisher to completion and
+                //          buffer all of its elements, emitting them only
+                //          after COMMIT, like the R2DBC backed TransactionSubscription
+                if (results == null)
+                    results = ctx.transactionResult(
+                        c -> blockAll(transactional.run(c), configuration, subscriber)
+                    ).iterator();
+
+                drain(results);
             }
             catch (Throwable t) {
+
+                // [#20486] Don't re-run the transaction on subsequent requests
+                results = Collections.emptyIterator();
+                completed.set(true);
                 subscriber.onError(t);
             }
         }

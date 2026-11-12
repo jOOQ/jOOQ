@@ -842,7 +842,19 @@ final class R2DBC {
             this.delegate = new ConnectionSubscriber<T>(this) {
                 @Override
                 void onNext0(Connection c) {
-                    c.beginTransaction().subscribe(subscriber(
+                    Publisher<Void> begin;
+
+                    // [#20496] Close the connection also when BEGIN fails synchronously,
+                    //          e.g. with an AbstractMethodError from a pre-1.0 driver
+                    try {
+                        begin = c.beginTransaction();
+                    }
+                    catch (Throwable t) {
+                        cancel0(true, () -> subscriber.onError(t));
+                        return;
+                    }
+
+                    begin.subscribe(subscriber(
                         s -> s.request(1),
                         v -> {},
                         subscriber::onError,
@@ -1461,8 +1473,8 @@ final class R2DBC {
                     //          the driver will just return a String
                     // [#19126] The same is true for extension types (e.g. hstore[], ltree[]), and
                     //          for all dialects that are served by the PostgreSQL R2DBC driver
-                    if (o instanceof String s && c.family().category() == SQLDialectCategory.POSTGRES)
-                        o = PostgresUtils.toPGArray(s).toArray();
+                    if (o instanceof String && c.family().category() == SQLDialectCategory.POSTGRES)
+                        o = PostgresUtils.toPGArray((String) o).toArray();
 
                     return new MockArray<>(c.dialect(), (Object[]) o, Object[].class);
                 }

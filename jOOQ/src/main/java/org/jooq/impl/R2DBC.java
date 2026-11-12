@@ -177,7 +177,12 @@ final class R2DBC {
             this.subscriber = subscriber(
                 subscriber::onSubscribe,
                 subscriber::onNext,
-                subscriber::onError,
+
+                // [#20500] Like onComplete, onError terminates the subscription
+                t -> {
+                    completed.set(true);
+                    subscriber.onError(t);
+                },
                 () -> {
 
                     // required_spec107_mustNotEmitFurtherSignalsOnceOnCompleteHasBeenSignalled
@@ -192,7 +197,12 @@ final class R2DBC {
         @Override
         public final void request(long n) {
             if (n <= 0) {
-                subscriber.onError(new IllegalArgumentException("Rule 3.9 non-positive request signals are illegal"));
+
+                // [#20500] Release resources like cancel() would, before terminating the subscription
+                if (!completed.get()) {
+                    cancel();
+                    subscriber.onError(new IllegalArgumentException("Rule 3.9 non-positive request signals are illegal"));
+                }
             }
             else if (!completed.get()) {
                 requested.accumulateAndGet(n, R2DBC::addNoOverflow);

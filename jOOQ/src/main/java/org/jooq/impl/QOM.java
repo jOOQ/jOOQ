@@ -2042,6 +2042,7 @@ public final class QOM {
 
 
 
+
     /**
      * The <code>ALTER DATABASE</code> statement.
      */
@@ -11241,6 +11242,7 @@ public final class QOM {
 
 
 
+
     // -------------------------------------------------------------------------
     // XXX: Utility API
     // -------------------------------------------------------------------------
@@ -11808,6 +11810,8 @@ public final class QOM {
     interface UEmptyStatement extends Statement, UEmpty {}
     interface UEmptyQuery extends Query, UEmpty {}
     interface UNoQueryPart extends QueryPart {}
+
+
 
 
 

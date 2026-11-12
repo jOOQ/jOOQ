@@ -810,7 +810,7 @@ final class R2DBC {
         }
 
         @Override
-        final void request0() {
+        /* non-final */ void request0() {
 
             // Lazy execution of the query
             if (!subscribed.getAndSet(true)) {
@@ -979,6 +979,10 @@ final class R2DBC {
         final ConnectionSubscriber<T>     delegate;
         final Set<TransactionProperty>    properties;
 
+        // [#20490] The buffered results, available after COMMIT. Accessed
+        //          only from within serialize()
+        Iterator<T>                       results;
+
         TransactionSubscription(
             DSLContext ctx,
             Subscriber<? super T> subscriber,
@@ -995,7 +999,19 @@ final class R2DBC {
             this.delegate = new ConnectionSubscriber<T>(this) {
                 @Override
                 void onNext0(Connection c) {
-                    c.beginTransaction(transactionDefinition()).subscribe(subscriber(
+                    Publisher<Void> begin;
+
+                    // [#20496] Close the connection also when BEGIN fails synchronously,
+                    //          e.g. with an AbstractMethodError from a pre-1.0 driver
+                    try {
+                        begin = c.beginTransaction(transactionDefinition());
+                    }
+                    catch (Throwable t) {
+                        cancel0(true, () -> subscriber.onError(t));
+                        return;
+                    }
+
+                    begin.subscribe(subscriber(
                         s -> s.request(1),
                         v -> {},
 
@@ -1019,17 +1035,11 @@ final class R2DBC {
                                         s2 -> s2.request(1),
                                         v -> {},
                                         t -> cancel0(true, () -> subscriber.onError(t)),
-                                        () -> cancel0(true, () -> {
-                                            try {
-                                                while (!q.isEmpty())
-                                                    subscriber.onNext(q.poll());
-
-                                                subscriber.onComplete();
-                                            }
-                                            catch (Throwable t) {
-                                                subscriber.onError(t);
-                                            }
-                                        }),
+                                        // [#20490] Emit buffered results according to downstream demand
+                                        () -> cancel0(true, () -> serialize(() -> {
+                                            results = q.iterator();
+                                            drain0();
+                                        })),
                                         configuration.subscriberProvider(),
                                         subscriber
                                     )),
@@ -1092,6 +1102,27 @@ final class R2DBC {
                     ));
                 }
             };
+        }
+
+        @Override
+        final void request0() {
+            super.request0();
+
+            // [#20490] Emit buffered results that were requested only after COMMIT
+            serialize(this::drain0);
+        }
+
+        private final void drain0() {
+            if (results != null) {
+                try {
+                    drain(results);
+                }
+                catch (Throwable t) {
+                    results = Collections.emptyIterator();
+                    completed.set(true);
+                    subscriber.onError(t);
+                }
+            }
         }
 
         @Override

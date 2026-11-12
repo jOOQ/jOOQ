@@ -788,7 +788,7 @@ final class R2DBC {
         }
 
         @Override
-        final void request0() {
+        /* non-final */ void request0() {
 
             // Lazy execution of the query
             if (!subscribed.getAndSet(true)) {
@@ -956,6 +956,12 @@ final class R2DBC {
         final TransactionalPublishable<T> transactional;
         final ConnectionSubscriber<T>     delegate;
 
+        // [#20490] Results that haven't been requested yet, and whether the
+        //          transaction has been committed. The flag is accessed only
+        //          from within serialize()
+        final Queue<T>                    pending;
+        boolean                           committed;
+
         TransactionSubscription(
             DSLContext ctx,
             Subscriber<? super T> subscriber,
@@ -964,10 +970,23 @@ final class R2DBC {
             super(ctx.configuration(), subscriber);
 
             this.transactional = transactional;
+            this.pending = new ConcurrentLinkedQueue<>();
             this.delegate = new ConnectionSubscriber<T>(this) {
                 @Override
                 void onNext0(Connection c) {
-                    c.beginTransaction().subscribe(subscriber(
+                    Publisher<Void> begin;
+
+                    // [#20496] Close the connection also when BEGIN fails synchronously,
+                    //          e.g. with an AbstractMethodError from a pre-1.0 driver
+                    try {
+                        begin = c.beginTransaction();
+                    }
+                    catch (Throwable t) {
+                        cancel0(true, () -> subscriber.onError(t));
+                        return;
+                    }
+
+                    begin.subscribe(subscriber(
                         s -> s.request(1),
                         v -> {},
 
@@ -981,13 +1000,23 @@ final class R2DBC {
                                         ? configuration
                                         : configuration.derive(new DefaultConnectionFactory(configuration, c))).subscribe(subscriber(
                                     s1 -> s1.request(Long.MAX_VALUE),
-                                    subscriber::onNext,
+
+                                    // [#20490] Emit results according to downstream demand
+                                    t -> {
+                                        if (!completed.get()) {
+                                            pending.offer(t);
+                                            serialize(TransactionSubscription.this::drain0);
+                                        }
+                                    },
                                     e -> rollback(subscriber, c, e),
                                     () -> c.commitTransaction().subscribe(subscriber(
                                         s2 -> s2.request(1),
                                         v -> {},
-                                        t -> cancel0(true, () -> subscriber.onError(t)),
-                                        () -> cancel0(true, () -> subscriber.onComplete()),
+                                        t -> cancel0(true, failing(() -> subscriber.onError(t))),
+                                        () -> cancel0(true, () -> serialize(() -> {
+                                            committed = true;
+                                            drain0();
+                                        })),
                                         configuration.subscriberProvider(),
                                         subscriber
                                     )),
@@ -1011,18 +1040,52 @@ final class R2DBC {
                     c.rollbackTransaction().subscribe(subscriber(
                         s2 -> s2.request(1),
                         v -> {},
-                        t -> cancel0(true, () -> {
+                        t -> cancel0(true, failing(() -> {
 
                             // [#20215] If rollback fails, document original rollback cause
                             t.addSuppressed(e);
                             s.onError(t);
-                        }),
-                        () -> cancel0(true, () -> s.onError(e)),
+                        })),
+                        () -> cancel0(true, failing(() -> s.onError(e))),
                         configuration.subscriberProvider(),
                         s
                     ));
                 }
             };
+        }
+
+        @Override
+        final void request0() {
+            super.request0();
+
+            // [#20490] Emit results that were requested only after they were produced
+            serialize(this::drain0);
+        }
+
+        /**
+         * [#20490] Don't emit pending, uncommitted results concurrently with,
+         * or after an error.
+         */
+        private final Runnable failing(Runnable onError) {
+            return () -> serialize(() -> {
+                pending.clear();
+                onError.run();
+            });
+        }
+
+        private final void drain0() {
+            try {
+                while (!pending.isEmpty() && moreRequested())
+                    subscriber.onNext(pending.poll());
+
+                if (committed && pending.isEmpty() && !completed.get())
+                    subscriber.onComplete();
+            }
+            catch (Throwable t) {
+                pending.clear();
+                completed.set(true);
+                subscriber.onError(t);
+            }
         }
 
         @Override

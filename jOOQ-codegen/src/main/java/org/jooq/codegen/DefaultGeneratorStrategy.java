@@ -223,8 +223,10 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
 
         // [#6307] Some databases work with per-table namespacing for indexes, not per-schema namespacing.
         //         In order to have non-ambiguous identifiers, we need to include the table name.
+        // [#6729] Use a double underscore as a separator, to prevent ambiguities between e.g.
+        //         PASS.VERSION_ID (PASS__VERSION_ID) and PASS_VERSION.ID (PASS_VERSION__ID)
         else if (definition instanceof IndexDefinition && asList(MARIADB, MYSQL).contains(definition.getDatabase().getDialect().family()))
-            return ((IndexDefinition) definition).getTable().getOutputName().toUpperCase(targetLocale) + "_" + definition.getOutputName().toUpperCase(targetLocale);
+            return ((IndexDefinition) definition).getTable().getOutputName().toUpperCase(targetLocale) + "__" + definition.getOutputName().toUpperCase(targetLocale);
 
         // [#5538] [#11286] [#12118] The same is true for unique keys, which are really indexes
         else if (definition instanceof UniqueKeyDefinition && asList(SQLITE).contains(definition.getDatabase().getDialect().family()))

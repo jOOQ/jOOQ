@@ -50,6 +50,7 @@ import java.math.BigInteger;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.BiConsumer;
 
 import org.jooq.Catalog;
 import org.jooq.Check;
@@ -61,6 +62,7 @@ import org.jooq.ForeignKey;
 import org.jooq.Index;
 import org.jooq.Key;
 import org.jooq.Meta;
+import org.jooq.Name;
 import org.jooq.Param;
 import org.jooq.Qualified;
 import org.jooq.Schema;
@@ -246,6 +248,12 @@ final class InformationSchemaExport {
 
             if (type.scaleDefined())
                 ia.setNumericScale(type.scale());
+
+            setUdtName(type, ia,
+                Attribute::setAttributeUdtCatalog,
+                Attribute::setAttributeUdtSchema,
+                Attribute::setAttributeUdtName
+            );
 
             ia.setAttributeDefault(DSL.using(configuration).render(type.defaultValue()));
             ia.setOrdinalPosition(i + 1);
@@ -491,6 +499,12 @@ final class InformationSchemaExport {
             if (type.scaleDefined())
                 ic.setNumericScale(type.scale());
 
+            setUdtName(type, ic,
+                Column::setUdtCatalog,
+                Column::setUdtSchema,
+                Column::setUdtName
+            );
+
             ic.setColumnDefault(DSL.using(configuration).render(type.defaultValue()));
             ic.setIsNullable(type.nullable());
             ic.setOrdinalPosition(i + 1);
@@ -527,6 +541,35 @@ final class InformationSchemaExport {
 
         for (Index index : t.getIndexes())
             exportIndex0(result, t, index);
+    }
+
+    /**
+     * [#18791] Populate the <code>UDT_CATALOG</code>, <code>UDT_SCHEMA</code>,
+     * <code>UDT_NAME</code> references of a UDT (or table type) typed object.
+     */
+    private static final <T> void setUdtName(
+        DataType<?> type,
+        T object,
+        BiConsumer<? super T, ? super String> udtCatalog,
+        BiConsumer<? super T, ? super String> udtSchema,
+        BiConsumer<? super T, ? super String> udtName
+    ) {
+        if (type.isUDT()) {
+            Name name = type.getQualifiedName();
+
+            if (name != null && !isBlank(name.last())) {
+                udtName.accept(object, name.last());
+
+                Name us = name.qualifier();
+                if (us != null && !isBlank(us.last())) {
+                    udtSchema.accept(object, us.last());
+
+                    Name uc = us.qualifier();
+                    if (uc != null && !isBlank(uc.last()))
+                        udtCatalog.accept(object, uc.last());
+                }
+            }
+        }
     }
 
     private static final org.jooq.util.xml.jaxb.LengthUnit lengthUnit(LengthUnit lengthUnit) {

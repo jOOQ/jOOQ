@@ -286,9 +286,15 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
                 continue attributeLoop;
             }
 
+            // [#18791] Attributes may reference other UDTs
+            DataType<?> udtType = udtType(xa.getAttributeUdtCatalog(), xa.getAttributeUdtSchema(), xa.getAttributeUdtName(), false);
+            DataType<?> fieldType = udtType != null
+                ? udtType
+                : type(typeName, length, lengthUnit, precision, scale, null, null, null, null, null, null);
+
             UDTImpl.createField(
                 name(xa.getAttributeName()),
-                type(typeName, length, lengthUnit, precision, scale, null, null, null, null, null, null),
+                fieldType,
                 udt,
                 xa.getComment()
             );
@@ -432,9 +438,15 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
                 continue columnLoop;
             }
 
+            // [#18791] Columns may reference UDTs or table types
+            DataType<?> udtType = udtType(xc.getUdtCatalog(), xc.getUdtSchema(), xc.getUdtName(), true);
+            DataType<?> fieldType = udtType != null
+                ? withFlags(udtType, nullable, hidden, readonly)
+                : type(typeName, length, lengthUnit, precision, scale, nullable, hidden, readonly, identity, generatedAlwaysAs, generationOption);
+
             AbstractTable.createField(
                 name(xc.getColumnName()),
-                type(typeName, length, lengthUnit, precision, scale, nullable, hidden, readonly, identity, generatedAlwaysAs, generationOption),
+                fieldType,
                 table,
                 xc.getComment()
             );
@@ -832,6 +844,48 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
         lookup.computeIfAbsent(key, k -> new ArrayList<>()).add(value);
     }
 
+    /**
+     * [#18791] Look up a UDT (or table type) data type by its
+     * <code>UDT_CATALOG</code>, <code>UDT_SCHEMA</code>,
+     * <code>UDT_NAME</code> reference, if available.
+     * <p>
+     * If the referenced type isn't contained in the {@link InformationSchema}
+     * (e.g. because only tables have been exported), then this returns
+     * <code>null</code>, and callers fall back to the <code>DATA_TYPE</code>.
+     */
+    private final DataType<?> udtType(String udtCatalog, String udtSchema, String udtName, boolean includeTables) {
+        if (StringUtils.isEmpty(udtName))
+            return null;
+
+        Name n = name(udtCatalog, udtSchema, udtName);
+        InformationSchemaUDT udt = udtsByName.get(n);
+
+        if (udt != null)
+            return udt.getDataType();
+
+        if (includeTables) {
+            InformationSchemaTable table = tablesByName.get(n);
+
+            if (table != null)
+                return table.getDataType();
+        }
+
+        return null;
+    }
+
+    private final DataType<?> withFlags(DataType<?> type, boolean nullable, boolean hidden, boolean readonly) {
+
+        // Avoid deriving a new type unless necessary, to keep the UDT reference
+        if (type.nullable() != nullable)
+            type = type.nullable(nullable);
+        if (type.hidden() != hidden)
+            type = type.hidden(hidden);
+        if (type.readonly() != readonly)
+            type = type.readonly(readonly);
+
+        return type;
+    }
+
     @SuppressWarnings("unchecked")
     private final DataType<?> type(
         String typeName,
@@ -1034,6 +1088,12 @@ final class InformationSchemaMetaImpl extends AbstractMeta {
 
         InformationSchemaUDT(Name name, Schema schema, Comment comment) {
             super(name, schema, null, comment, false);
+        }
+
+        // [#18791] Required by UDTDataType, when UDTs are referenced by columns or attributes
+        @Override
+        public Class<UDTRecordN> getRecordType() {
+            return UDTRecordN.class;
         }
     }
 

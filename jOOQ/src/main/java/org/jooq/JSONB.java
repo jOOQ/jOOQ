@@ -37,8 +37,11 @@
  */
 package org.jooq;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.jooq.impl.Internal.toJSONString;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.Objects;
 
 import org.jooq.impl.Internal;
@@ -74,10 +77,24 @@ import org.jetbrains.annotations.Nullable;
  * </ul>
  * <p>
  * The {@link #data()} content, however, is not normalised.
+ * <p>
+ * Some JDBC drivers (e.g. pgjdbc) can produce the JSONB document as UTF-8
+ * encoded bytes. In that case, the {@link String} {@link #data()} is decoded
+ * only when it is first requested, and parsers that work on UTF-8 bytes can
+ * consume the document through {@link #inputStream()} or {@link #bytes()}
+ * without an intermediate {@link String}.
  */
 public final class JSONB implements Data {
 
-    private final String     data;
+    /**
+     * [#20504] Either a {@link String} or a UTF-8 encoded <code>byte[]</code>.
+     * <p>
+     * A <code>byte[]</code> is replaced by its decoded {@link String} once
+     * {@link #data()} is called, to avoid holding both representations in
+     * memory. Concurrent calls may decode the same <code>byte[]</code> more
+     * than once (a benign data race, like in {@link String#hashCode()}).
+     */
+    private Object           data;
     private transient Object parsed;
     private transient int    hash;
     private transient String string;
@@ -86,10 +103,57 @@ public final class JSONB implements Data {
         this.data = String.valueOf(data);
     }
 
+    private JSONB(byte[] data) {
+        this.data = data;
+    }
+
     @Override
     @NotNull
     public final String data() {
-        return data;
+        Object d = data;
+
+        if (d instanceof String s)
+            return s;
+
+        String s = new String((byte[]) d, UTF_8);
+        data = s;
+        return s;
+    }
+
+    /**
+     * Get the UTF-8 encoded {@link #data()} of this JSONB document.
+     * <p>
+     * The returned array is a copy, which can be modified freely. Use
+     * {@link #inputStream()} to read the bytes without copying them, if this
+     * {@link JSONB} value was produced from bytes.
+     */
+    public final byte @NotNull [] bytes() {
+        Object d = data;
+
+        if (d instanceof byte[] b)
+            return b.clone();
+        else
+            return ((String) d).getBytes(UTF_8);
+    }
+
+    /**
+     * Get the UTF-8 encoded {@link #data()} of this JSONB document as an
+     * {@link InputStream}.
+     * <p>
+     * If this {@link JSONB} value was produced from bytes (e.g. by the
+     * PostgreSQL JDBC driver), and its {@link #data()} hasn't been requested
+     * yet, then the stream reads the bytes directly, without decoding them to
+     * a {@link String} or copying them. Otherwise, the {@link String}
+     * {@link #data()} is encoded first.
+     */
+    @NotNull
+    public final InputStream inputStream() {
+        Object d = data;
+
+        if (d instanceof byte[] b)
+            return new ImmutableBytesInputStream(b);
+        else
+            return new ByteArrayInputStream(((String) d).getBytes(UTF_8));
     }
 
     /**
@@ -120,13 +184,26 @@ public final class JSONB implements Data {
         return data == null ? null : jsonb(data);
     }
 
+    /**
+     * Create a new {@link JSONB} instance from UTF-8 encoded byte data input,
+     * or <code>null</code> if the input is <code>null</code>.
+     * <p>
+     * The bytes are decoded to a {@link String} lazily, when {@link #data()}
+     * is first called. The array is not copied, so the caller must not modify
+     * it after calling this method.
+     */
+    @Nullable
+    public static final JSONB jsonbFromBytes(byte[] data) {
+        return data == null ? null : new JSONB(data);
+    }
+
     private final Object parsed() {
         if (parsed == null) {
             try {
-                parsed = Internal.parseJSON(data);
+                parsed = Internal.parseJSON(data());
             }
             catch (ParserException e) {
-                parsed = data;
+                parsed = data();
             }
         }
 
@@ -175,7 +252,7 @@ public final class JSONB implements Data {
         if (this == obj)
             return true;
         if (obj instanceof JSONB j)
-            return data.equals(j.data) || Objects.equals(parsed(), (j.parsed()));
+            return data().equals(j.data()) || Objects.equals(parsed(), (j.parsed()));
         return false;
     }
 

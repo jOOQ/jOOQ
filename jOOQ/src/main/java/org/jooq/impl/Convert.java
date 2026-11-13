@@ -880,6 +880,12 @@ final class Convert {
                     }
                     else if (from instanceof ByteBuffer b)
                         return (U) b.array();
+
+                    // [#20504] Avoid the normalising JSONB::toString call, and decoding bytes to String
+                    else if (from instanceof JSON j)
+                        return (U) j.bytes();
+                    else if (from instanceof JSONB j)
+                        return (U) j.bytes();
                     else
                         return (U) from.toString().getBytes();
                 }

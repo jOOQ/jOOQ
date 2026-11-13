@@ -329,6 +329,7 @@ import org.jooq.exception.MappingException;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.Cast.CastNative;
 import org.jooq.impl.R2DBC.R2DBCPreparedStatement;
+import org.jooq.impl.R2DBC.R2DBCResultSet;
 import org.jooq.impl.Tools.ExtendedDataKey;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.Longs;
@@ -7033,11 +7034,21 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-                default: {
-                    String string = patchSnowflakeJSON(ctx, ctx.resultSet().getString(ctx.index()));
-                    return string == null ? null : JSON.valueOf(string);
-                }
+                case POSTGRES:
+                case YUGABYTEDB:
+                    if (pgJSONBytesSupported(ctx))
+                        return JSON.jsonFromBytes(pgJSONBytes(ctx.resultSet().getBytes(ctx.index())));
+                    else
+                        return getString0(ctx);
+
+                default:
+                    return getString0(ctx);
             }
+        }
+
+        private final JSON getString0(BindingGetResultSetContext<U> ctx) throws SQLException {
+            String string = patchSnowflakeJSON(ctx, ctx.resultSet().getString(ctx.index()));
+            return string == null ? null : JSON.valueOf(string);
         }
 
         @Override
@@ -7061,6 +7072,37 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
+
+        /**
+         * [#20504] Whether {@link ResultSet#getBytes(int)} can be used to read
+         * JSON or JSONB values as UTF-8 encoded bytes, without decoding them to
+         * a {@link String} first.
+         * <p>
+         * pgjdbc's <code>PgResultSet::getBytes</code> returns the raw wire
+         * representation for all non-<code>bytea</code> columns, which for
+         * <code>json</code> and <code>jsonb</code> is UTF-8 JSON text (pgjdbc
+         * requires <code>client_encoding=UTF8</code>). R2DBC drivers make no
+         * such guarantee, so they keep using the {@link String} path.
+         */
+        static final boolean pgJSONBytesSupported(BindingGetResultSetContext<?> ctx) {
+            return !(ctx.resultSet() instanceof R2DBCResultSet);
+        }
+
+        /**
+         * [#20504] Remove the version byte that prefixes the binary wire format
+         * of <code>jsonb</code>, in case <code>binaryTransferEnable</code>
+         * includes <code>jsonb</code>.
+         * <p>
+         * The binary format of <code>json</code> is the same as its text
+         * format. A JSON document in text form can never start with
+         * <code>0x01</code>, so the check is unambiguous.
+         */
+        static final byte[] pgJSONBytes(byte[] bytes) {
+            if (bytes != null && bytes.length > 0 && bytes[0] == 1)
+                return Arrays.copyOfRange(bytes, 1, bytes.length);
+            else
+                return bytes;
+        }
 
         static final String patchSnowflakeJSON(Scope ctx, String json) {
 
@@ -7179,14 +7221,26 @@ public class DefaultBinding<T, U> implements Binding<T, U> {
 
 
 
-                default: {
-                    if (EMULATE_AS_BLOB.contains(ctx.dialect()))
-                        return bytesConverter(ctx.configuration()).from(bytes(ctx.configuration()).get0(ctx), ctx.converterContext());
 
-                    String string = patchSnowflakeJSON(ctx, ctx.resultSet().getString(ctx.index()));
-                    return string == null ? null : JSONB.valueOf(string);
-                }
+
+                case POSTGRES:
+                case YUGABYTEDB:
+                    if (DefaultJSONBinding.pgJSONBytesSupported(ctx))
+                        return JSONB.jsonbFromBytes(DefaultJSONBinding.pgJSONBytes(ctx.resultSet().getBytes(ctx.index())));
+                    else
+                        return getString0(ctx);
+
+                default:
+                    return getString0(ctx);
             }
+        }
+
+        private final JSONB getString0(BindingGetResultSetContext<U> ctx) throws SQLException {
+            if (EMULATE_AS_BLOB.contains(ctx.dialect()))
+                return bytesConverter(ctx.configuration()).from(bytes(ctx.configuration()).get0(ctx), ctx.converterContext());
+
+            String string = patchSnowflakeJSON(ctx, ctx.resultSet().getString(ctx.index()));
+            return string == null ? null : JSONB.valueOf(string);
         }
 
         @Override

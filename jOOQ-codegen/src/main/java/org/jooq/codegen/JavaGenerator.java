@@ -7794,9 +7794,17 @@ public class JavaGenerator extends AbstractGenerator {
      * Passing this to table and UDT constructors qualifies their names without
      * initialising the schema singleton during their own class initialisation,
      * which would otherwise run into class initialisation cycles.
+     * <p>
+     * If the schema's catalog is generated, the {@link LazySchema} name is
+     * qualified with the catalog name as well, so the table and UDT
+     * {@link org.jooq.Named#getQualifiedName()} is fully qualified, and
+     * consistent with the generated schema's {@link Schema#getCatalog()}.
      */
     private String lazySchema(JavaWriter out, SchemaDefinition schema, String schemaId) {
-        final String name = out.ref(DSL.class) + ".name(\"" + escapeString(schema.getOutputName()) + "\")";
+        final CatalogDefinition catalog = schema.getCatalog();
+        final String name = catalog != null && generateDefaultCatalog(catalog) && !isEmpty(catalog.getOutputName())
+            ? out.ref(DSL.class) + ".name(\"" + escapeString(catalog.getOutputName()) + "\", \"" + escapeString(schema.getOutputName()) + "\")"
+            : out.ref(DSL.class) + ".name(\"" + escapeString(schema.getOutputName()) + "\")";
         final String comment = out.ref(DSL.class) + ".comment(\"\")";
 
         if (scala)

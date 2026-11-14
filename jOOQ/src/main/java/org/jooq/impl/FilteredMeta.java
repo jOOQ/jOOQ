@@ -431,7 +431,11 @@ final class FilteredMeta extends AbstractMeta {
 
 
         private FilteredSchema(FilteredCatalog catalog, Schema delegate) {
-            super(delegate.getQualifiedName(), catalog, delegate.getCommentPart());
+
+            // [#7172] The delegate's qualified name may be incomplete (e.g. lacking
+            //         the catalog), so qualify the unqualified name with the
+            //         filtered catalog instead
+            super(delegate.getUnqualifiedName(), catalog, delegate.getCommentPart());
 
             this.delegate = delegate;
         }
@@ -531,7 +535,11 @@ final class FilteredMeta extends AbstractMeta {
 
 
         private FilteredTable(FilteredSchema schema, Table<R> delegate) {
-            super(delegate.getQualifiedName(), schema, null, null, delegate.getCommentPart(), delegate.getOptions());
+
+            // [#7172] Generated tables may be only partially qualified (e.g. "dbo"."t_book",
+            //         lacking the catalog), so qualify the unqualified name with the
+            //         filtered schema instead, which is fully qualified
+            super(delegate.getUnqualifiedName(), schema, null, null, delegate.getCommentPart(), delegate.getOptions());
 
             this.delegate = delegate;
 

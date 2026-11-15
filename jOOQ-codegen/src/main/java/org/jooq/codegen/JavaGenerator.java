@@ -65,6 +65,7 @@ import static org.jooq.impl.QOM.GenerationOption.STORED;
 import static org.jooq.impl.QOM.GenerationOption.VIRTUAL;
 import static org.jooq.meta.AbstractTypedElementDefinition.getDataType;
 import static org.jooq.tools.StringUtils.isBlank;
+import static org.jooq.tools.StringUtils.isEmpty;
 
 import java.io.File;
 import java.io.IOException;

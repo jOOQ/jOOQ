@@ -17,7 +17,7 @@ repositories {
 }
 
 group = "org.jooq"
-version = "3.19.40-SNAPSHOT"
+version = "3.19.40"
 
 dependencies {
     implementation(gradleApi())

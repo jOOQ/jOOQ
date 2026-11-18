@@ -13,4 +13,24 @@
         <packageUrl regex="true">^pkg:maven/com\.google\.protobuf/protobuf-java@.*$</packageUrl>
         <cve>CVE-2026-0994</cve>
     </suppress>
+
+    <!-- Kotlin 1.x support (jOOQ-kotlin, jOOQ-meta-kotlin) is deliberate, and 1.9.25 is the last
+         Kotlin 1.x release, so CVEs fixed only in Kotlin 2.x can't be addressed by an upgrade.
+         Neither CVE affects jOOQ's use of the Kotlin 1.x standard library:
+
+         - CVE-2020-29582: insecure temporary file permissions of the deprecated kotlin.io
+           createTempDir() / createTempFile() functions. jOOQ doesn't call these.
+         - CVE-2026-53914: unsafe deserialization of build cache metadata in the Kotlin build
+           tooling, fixed in Kotlin 2.4.20. This doesn't concern the kotlin-stdlib runtime.
+
+         The suppression is restricted to Kotlin 1.x, so Kotlin 2.x artifacts are still checked. -->
+    <suppress>
+        <notes><![CDATA[
+        Kotlin 1.x support is deliberate, and 1.9.25 is the last 1.x release. CVE-2020-29582 affects
+        deprecated temp file functions jOOQ doesn't use, CVE-2026-53914 affects Kotlin build tooling.
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/org\.jetbrains\.kotlin/kotlin-stdlib(-jdk[78])?@1\..*$</packageUrl>
+        <cve>CVE-2020-29582</cve>
+        <cve>CVE-2026-53914</cve>
+    </suppress>
 </suppressions>

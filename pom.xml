@@ -57,7 +57,7 @@
 
         <!-- Kotlin versions -->
         <kotlin.version>1.9.25</kotlin.version>
-        <kotlin2.version>2.3.0</kotlin2.version>
+        <kotlin2.version>2.4.21</kotlin2.version>
         <kotlinx.coroutines.version>1.11.0</kotlinx.coroutines.version>
 
         <!-- DefaultRecordMapper and jOOQ-meta-extensions can read JPA annotations -->

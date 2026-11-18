@@ -102,7 +102,11 @@ public final class YearToSecond extends Number implements Interval, Comparable<Y
         double abs = Math.abs(milli);
 
         int y = (int) (abs / (365.25 * 86400000.0)); abs = abs % (365.25 * 86400000.0);
-        int m = (int) (abs / (30.0 * 86400000.0)); abs = abs % (30.0 * 86400000.0);
+
+        // [#10929] A year has 365.25 days, but 12 months only have 360 days, so
+        //          the remainder may contain 12 months, which YearToMonth would
+        //          normalise to an additional year. Keep such days in DayToSecond.
+        int m = Math.min(11, (int) (abs / (30.0 * 86400000.0))); abs = abs - m * (30.0 * 86400000.0);
 
         YearToSecond result = new YearToSecond(new YearToMonth(y, m), DayToSecond.valueOf(abs));
 

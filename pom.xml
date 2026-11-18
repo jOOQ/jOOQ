@@ -73,6 +73,7 @@
         <jackson.version>2.22.3</jackson.version>
         <jackson.version.databind>2.22.3</jackson.version.databind>
         <jetbrains.annotations.version>24.1.0</jetbrains.annotations.version>
+        <log4j.version>2.26.1</log4j.version>
         
         <!-- Build plugin versions -->
         <apache.felix.version>6.0.2</apache.felix.version>
@@ -372,14 +373,14 @@
             <dependency>
                 <groupId>org.apache.logging.log4j</groupId>
                 <artifactId>log4j-slf4j2-impl</artifactId>
-                <version>2.25.4</version>
+                <version>${log4j.version}</version>
                 <scope>provided</scope>
                 <optional>true</optional>
             </dependency>
             <dependency>
                 <groupId>org.apache.logging.log4j</groupId>
                 <artifactId>log4j-core</artifactId>
-                <version>2.25.4</version>
+                <version>${log4j.version}</version>
                 <scope>provided</scope>
                 <optional>true</optional>
             </dependency>

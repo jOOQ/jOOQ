@@ -820,6 +820,9 @@
                     <configuration>
                         <failBuildOnCVSS>0</failBuildOnCVSS>
                         <skipTestScope>true</skipTestScope>
+                        <suppressionFiles>
+                            <suppressionFile>${maven.multiModuleProjectDirectory}/dependency-check-suppressions.xml</suppressionFile>
+                        </suppressionFiles>
                     </configuration>
                 </plugin>
             </plugins>

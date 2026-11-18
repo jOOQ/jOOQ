@@ -66,7 +66,7 @@
         <!-- Examples and/or extension modules use these dependencies -->
         <hibernate.version>5.6.15.Final</hibernate.version>
         <liquibase.version>4.33.0</liquibase.version>
-        <checkerframework.version>3.44.0</checkerframework.version>
+        <checkerframework.version>4.4.0</checkerframework.version>
         <spring.version>6.2.19</spring.version>
         <errorprone.version>2.49.0</errorprone.version>
         <testcontainers.version>2.0.5</testcontainers.version>
@@ -874,6 +874,9 @@
                     <configuration>
                         <failBuildOnCVSS>0</failBuildOnCVSS>
                         <skipTestScope>true</skipTestScope>
+                        <suppressionFiles>
+                            <suppressionFile>${maven.multiModuleProjectDirectory}/dependency-check-suppressions.xml</suppressionFile>
+                        </suppressionFiles>
                     </configuration>
                 </plugin>
             </plugins>

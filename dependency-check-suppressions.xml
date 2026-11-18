@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suppressions xmlns="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.3.xsd">
+
+    <!-- [jOOQ/jOOQ#19996]
+         False positive: CVE-2026-0994 affects only the Python protobuf runtime
+         (google.protobuf.json_format.ParseDict(), GHSA-7gcm-g887-7qv7, fixed in PyPI protobuf 6.33.5).
+         protobuf-java is only matched because NVD uses the language agnostic cpe:2.3:a:google:protobuf CPE.
+         protobuf-java is a transitive dependency of the checker framework / error prone in jOOQ-checker. -->
+    <suppress>
+        <notes><![CDATA[
+        [jOOQ/jOOQ#19996] CVE-2026-0994 affects only Python protobuf, not protobuf-java
+        ]]></notes>
+        <packageUrl regex="true">^pkg:maven/com\.google\.protobuf/protobuf-java@.*$</packageUrl>
+        <cve>CVE-2026-0994</cve>
+    </suppress>
+</suppressions>

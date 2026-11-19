@@ -37,10 +37,12 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.DSL.systemName;
 import static org.jooq.impl.Tools.CONFIG;
 
 import java.lang.reflect.Array;
 import java.util.Collection;
+import java.util.function.Function;
 
 import org.jooq.CharacterSet;
 import org.jooq.Collation;
@@ -49,6 +51,7 @@ import org.jooq.ConverterContext;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Generator;
+import org.jooq.Name;
 import org.jooq.Nullability;
 import org.jooq.Record;
 import org.jooq.Row;
@@ -71,12 +74,30 @@ final class ArrayDataType<T> extends DefaultDataType<T[]> {
             null,
             elementType.getArrayType(),
             elementType.getBinding().arrayBinding(),
-            elementType.getTypeName() + " array",
-            elementType.getCastTypeName() + " array",
-            elementType.getDDLTypeName() + " array"
+            qualifiedTypeName(elementType),
+            storedTypeName(elementType, DataType::getTypeName, AbstractDataType::typeName0) + " array",
+            storedTypeName(elementType, DataType::getCastTypeName, AbstractDataType::castTypeName0) + " array",
+            storedTypeName(elementType, DataType::getDDLTypeName, AbstractDataType::ddlTypeName0) + " array",
+            null,
+            null,
+            null,
+            null,
+            Nullability.DEFAULT,
+            null
         );
 
         this.elementType = elementType;
+    }
+
+    /**
+     * [#13103] Avoid rendering qualified element type names eagerly, see
+     * {@link AbstractDataType#storedTypeName(DataType, Function, Function)}.
+     */
+    private static final <T> Name qualifiedTypeName(DataType<T> elementType) {
+        if (isQualifiedUserType(elementType))
+            return new LazyName(() -> systemName(elementType.getTypeName() + " array"));
+        else
+            return systemName(elementType.getTypeName() + " array");
     }
 
     /**

@@ -56,7 +56,13 @@ final class UDTDataType<R extends UDTRecord<R>> extends DefaultDataType<R> {
         super(
             SQLDialect.DEFAULT,
             (Class<R>) udt.getRecordType(),
-            new LazyName(() -> lazyName(udt::getSchema, udt::getUnqualifiedName))
+            new LazyName(() -> lazyName(udt::getSchema, udt::getUnqualifiedName)),
+
+            // [#13103] Like enum types, pass an explicit type name, to avoid
+            //          resolving the LazyName (and initialising the generated
+            //          schema class) eagerly. Rendered type names are derived
+            //          from the qualified name lazily, see [#10277]
+            udt.getUnqualifiedName().last()
         );
 
         this.udt = udt;

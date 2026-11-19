@@ -718,44 +718,41 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
             .orderBy(1, 2, 3);
     }
 
-    private static final Field<String> objDescription(Field<Long> oid, String className) {
-        return DSL.function(unquotedName("obj_description"), VARCHAR, oid, inline(className));
+    /**
+     * Comments of objects in a catalog table, obtained by joining
+     * <code>pg_description</code>.
+     * <p>
+     * [#20531] This is equivalent to filtering on
+     * <code>obj_description(oid, catalogTable) is not null</code>, but doesn't
+     * call the function for every row of the catalog table, which is very slow
+     * especially on YugabyteDB.
+     */
+    private static final Select<Record4<String, String, String, String>> comments(
+        Table<?> table,
+        Field<Long> oid,
+        Field<String> schemaName,
+        Field<String> objectName,
+        String catalogTable
+    ) {
+        return select(
+                schemaName.as("schema_name"),
+                objectName.as("table_name"),
+                inline(null, VARCHAR).as("column_name"),
+                PG_DESCRIPTION.DESCRIPTION.as("remarks"))
+            .from(table)
+            .join(PG_DESCRIPTION)
+                .on(PG_DESCRIPTION.OBJOID.eq(oid))
+                .and(PG_DESCRIPTION.CLASSOID.eq(field("'pg_catalog." + catalogTable + "'::regclass", BIGINT)))
+                .and(PG_DESCRIPTION.OBJSUBID.eq(inline(0)));
     }
 
     @Override
     public ResultQuery<Record5<String, String, String, String, String>> comments(List<String> schemas) {
         Table<?> c =
-            select(
-                PG_CLASS.pgNamespace().NSPNAME.as("schema_name"),
-                PG_CLASS.RELNAME.as("table_name"),
-                inline(null, VARCHAR).as("column_name"),
-                objDescription(PG_CLASS.OID, "pg_class").as("remarks"))
-            .from(PG_CLASS)
-            .where(objDescription(PG_CLASS.OID, "pg_class").isNotNull())
-            .unionAll(
-                select(
-                    PG_NAMESPACE.NSPNAME,
-                    inline(null, VARCHAR),
-                    inline(null, VARCHAR),
-                    objDescription(PG_NAMESPACE.OID, "pg_namespace").as("remarks"))
-                .from(PG_NAMESPACE)
-                .where(objDescription(PG_NAMESPACE.OID, "pg_namespace").isNotNull()))
-            .unionAll(
-                select(
-                    PG_PROC.pgNamespace().NSPNAME,
-                    PG_PROC.PRONAME,
-                    inline(null, VARCHAR),
-                    objDescription(PG_PROC.OID, "pg_proc").as("remarks"))
-                .from(PG_PROC)
-                .where(objDescription(PG_PROC.OID, "pg_proc").isNotNull()))
-            .unionAll(
-                select(
-                    PG_TYPE.pgNamespace().NSPNAME,
-                    PG_TYPE.TYPNAME,
-                    inline(null, VARCHAR),
-                    objDescription(PG_TYPE.OID, "pg_type").as("remarks"))
-                .from(PG_TYPE)
-                .where(objDescription(PG_TYPE.OID, "pg_type").isNotNull()))
+                     comments(PG_CLASS, PG_CLASS.OID, PG_CLASS.pgNamespace().NSPNAME, PG_CLASS.RELNAME, "pg_class")
+            .unionAll(comments(PG_NAMESPACE, PG_NAMESPACE.OID, PG_NAMESPACE.NSPNAME, inline(null, VARCHAR), "pg_namespace"))
+            .unionAll(comments(PG_PROC, PG_PROC.OID, PG_PROC.pgNamespace().NSPNAME, PG_PROC.PRONAME, "pg_proc"))
+            .unionAll(comments(PG_TYPE, PG_TYPE.OID, PG_TYPE.pgNamespace().NSPNAME, PG_TYPE.TYPNAME, "pg_type"))
             .asTable("c");
 
         return create()

@@ -37,7 +37,10 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.DSL.systemName;
 import static org.jooq.impl.Tools.CONFIG;
+
+import java.util.function.Function;
 
 import org.jooq.CharacterSet;
 import org.jooq.Collation;
@@ -45,6 +48,7 @@ import org.jooq.Configuration;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Generator;
+import org.jooq.Name;
 import org.jooq.Nullability;
 import org.jooq.SQLDialect;
 import org.jooq.impl.QOM.GenerationLocation;
@@ -60,9 +64,32 @@ final class ArrayDataType<T> extends DefaultDataType<T[]> {
     final DataType<T> elementType;
 
     public ArrayDataType(DataType<T> elementType) {
-        super(null, elementType.getArrayType(), elementType.getTypeName() + " array", elementType.getCastTypeName() + " array");
+        super(
+            null,
+            null,
+            elementType.getArrayType(),
+            qualifiedTypeName(elementType),
+            storedTypeName(elementType, DataType::getTypeName, AbstractDataType::typeName0) + " array",
+            storedTypeName(elementType, DataType::getCastTypeName, AbstractDataType::castTypeName0) + " array",
+            null,
+            null,
+            null,
+            Nullability.DEFAULT,
+            null
+        );
 
         this.elementType = elementType;
+    }
+
+    /**
+     * [#13103] Avoid rendering qualified element type names eagerly, see
+     * {@link AbstractDataType#storedTypeName(DataType, Function, Function)}.
+     */
+    private static final <T> Name qualifiedTypeName(DataType<T> elementType) {
+        if (isQualifiedUserType(elementType))
+            return new LazyName(() -> systemName(elementType.getTypeName() + " array"));
+        else
+            return systemName(elementType.getTypeName() + " array");
     }
 
     /**

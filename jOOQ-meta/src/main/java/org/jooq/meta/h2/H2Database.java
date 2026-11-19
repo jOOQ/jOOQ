@@ -417,7 +417,6 @@ public class H2Database extends AbstractDatabase implements ResultQueryDatabase 
                 select(TABLE_CONSTRAINTS.CONSTRAINT_CATALOG, TABLE_CONSTRAINTS.CONSTRAINT_SCHEMA, TABLE_CONSTRAINTS.CONSTRAINT_NAME)
                 .from(TABLE_CONSTRAINTS)
                 .where(TABLE_CONSTRAINTS.CONSTRAINT_TYPE.in(constraintTypes))
-                .and(TABLE_CONSTRAINTS.TABLE_SCHEMA.in(schemas))
             ))
             .orderBy(
                 KEY_COLUMN_USAGE.TABLE_SCHEMA.asc(),

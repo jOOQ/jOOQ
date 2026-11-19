@@ -76,7 +76,6 @@ import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.sql;
 import static org.jooq.impl.DSL.substring;
 import static org.jooq.impl.DSL.table;
-import static org.jooq.impl.DSL.unquotedName;
 import static org.jooq.impl.DSL.values;
 import static org.jooq.impl.DSL.when;
 import static org.jooq.impl.SQLDataType.BIGINT;
@@ -97,6 +96,7 @@ import static org.jooq.meta.postgres.information_schema.Tables.SEQUENCES;
 import static org.jooq.meta.postgres.information_schema.Tables.TABLES;
 import static org.jooq.meta.postgres.information_schema.Tables.TRIGGERS;
 import static org.jooq.meta.postgres.information_schema.Tables.VIEWS;
+import static org.jooq.meta.postgres.pg_catalog.Tables.PG_ATTRDEF;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_ATTRIBUTE;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_CLASS;
 import static org.jooq.meta.postgres.pg_catalog.Tables.PG_CONSTRAINT;
@@ -1221,6 +1221,42 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
 
     @Override
     public ResultQuery<Record6<String, String, String, String, String, String>> generators(List<String> schemas) {
+
+        // [#20537] Without pg_attribute.attgenerated, there are no generated columns
+        if (!hasAttgenerated())
+            return null;
+
+        // [#20537] Avoid information_schema.columns, which is expensive to
+        //          evaluate, especially on YugabyteDB
+        Field<String> schema = PG_ATTRIBUTE.pgClass().pgNamespace().NSPNAME;
+        Field<String> table = PG_ATTRIBUTE.pgClass().RELNAME;
+
+        return create()
+            .select(
+                currentCatalog().as(COLUMNS.TABLE_CATALOG),
+                schema.as(COLUMNS.TABLE_SCHEMA),
+                table.as(COLUMNS.TABLE_NAME),
+                PG_ATTRIBUTE.ATTNAME.as(COLUMNS.COLUMN_NAME),
+                field("pg_get_expr({0}, {1})", VARCHAR, PG_ATTRDEF.ADBIN, PG_ATTRDEF.ADRELID).as(COLUMNS.GENERATION_EXPRESSION),
+                when(PG_ATTRIBUTE.ATTGENERATED.eq(inline("s")), inline(GenerationOption.STORED.name()))
+                .when(PG_ATTRIBUTE.ATTGENERATED.eq(inline("v")), inline(GenerationOption.VIRTUAL.name())))
+            .from(PG_ATTRIBUTE)
+            .join(PG_ATTRDEF)
+                .on(PG_ATTRDEF.ADRELID.eq(PG_ATTRIBUTE.ATTRELID))
+                .and(PG_ATTRDEF.ADNUM.eq(PG_ATTRIBUTE.ATTNUM))
+            .where(schema.in(schemas))
+            .and(PG_ATTRIBUTE.ATTGENERATED.in(inline("s"), inline("v")))
+            .and(PG_ATTRIBUTE.ATTNUM.gt(inline((short) 0)))
+            .and(not(PG_ATTRIBUTE.ATTISDROPPED))
+            .orderBy(schema, table, PG_ATTRIBUTE.ATTNUM);
+    }
+
+    /**
+     * The generated columns query based on <code>information_schema.columns</code>,
+     * for dialects whose <code>pg_catalog</code> doesn't support the
+     * {@link #generators(List)} query.
+     */
+    protected final ResultQuery<Record6<String, String, String, String, String, String>> generatorsFromInformationSchema(List<String> schemas) {
         Field<String> generationExpression = COLUMNS.GENERATION_EXPRESSION;
         Field<String> attgenerated = PG_ATTRIBUTE.ATTGENERATED;
 
@@ -1534,6 +1570,14 @@ public class PostgresDatabase extends AbstractDatabase implements ResultQueryDat
 
         // [#6492] CockroachDB doesn't implement the standard exactly
         return is12() ? attgenerated : inline("s");
+    }
+
+    /**
+     * [#20537] Whether <code>pg_attribute.attgenerated</code> is available,
+     * i.e. whether generated columns are supported.
+     */
+    protected boolean hasAttgenerated() {
+        return is12();
     }
 
     boolean canCombineArrays() {

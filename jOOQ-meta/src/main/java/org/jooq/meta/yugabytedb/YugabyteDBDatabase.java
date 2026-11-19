@@ -40,6 +40,7 @@ package org.jooq.meta.yugabytedb;
 
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.unquotedName;
+import static org.jooq.meta.postgres.pg_catalog.Tables.PG_ATTRIBUTE;
 
 import java.util.List;
 
@@ -57,6 +58,7 @@ import org.jooq.meta.postgres.PostgresDatabase;
 public class YugabyteDBDatabase extends PostgresDatabase {
 
     boolean connectionInitialised;
+    Boolean hasAttgenerated;
 
     @Override
     protected DSLContext create0() {
@@ -78,5 +80,23 @@ public class YugabyteDBDatabase extends PostgresDatabase {
 
         // [#18701] YugabyteDB doesn't support the ATTGENERATED property
         return DSL.inline("s");
+    }
+
+    @Override
+    protected boolean hasAttgenerated() {
+        if (hasAttgenerated == null) {
+
+            // [#20537] YugabyteDB 2.25 is based on PostgreSQL 15, which supports
+            //          pg_attribute.attgenerated. Older versions are based on
+            //          PostgreSQL 11, which doesn't support generated columns.
+
+
+
+
+
+                hasAttgenerated = exists(PG_ATTRIBUTE.ATTGENERATED);
+        }
+
+        return hasAttgenerated;
     }
 }

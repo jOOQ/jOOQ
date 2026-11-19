@@ -46,6 +46,7 @@ import static org.jooq.impl.Tools.EMPTY_FIELD;
 import static org.jooq.impl.Tools.configuration;
 import static org.jooq.impl.Tools.convertFrom;
 import static org.jooq.impl.Tools.converterContext;
+import static org.jooq.impl.Tools.first;
 import static org.jooq.impl.Tools.getAnnotatedGetter;
 import static org.jooq.impl.Tools.getAnnotatedMembers;
 import static org.jooq.impl.Tools.getAnnotatedSetters;
@@ -540,11 +541,10 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
                                     valueClassConstructors[i] = new ArrayList<>();
 
                                 valueClassConstructors[i].add(valueClassConstructor.get());
-                                typeClassifier = valueClassConstructor
-                                    .call("getParameters")
 
-                                    // kotlin value classes are required to have exactly 1 parameter
-                                    .call("get", 0)
+                                // kotlin value classes are required to have exactly 1 parameter
+                                // [#20530] Don't call List methods reflectively, see below
+                                typeClassifier = Reflect.on(first(valueClassConstructor.call("getParameters").<List<?>>get()))
                                     .call("getType")
                                     .call("getClassifier")
                                     .get();
@@ -556,10 +556,13 @@ public class DefaultRecordMapper<R extends Record, E> implements RecordMapper<R,
 
                         // [#8578] If the constructor parameter is a KTypeParameter, we need an additional step to
                         //         extract the first upper bounds' classifier, which (hopefully) is a KClass
+                        // [#20530] Don't call List methods reflectively (e.g. Reflect.call("get", 0)), as kotlin-reflect
+                        //          may return non-public JDK List implementations (e.g. Collections.singletonList()),
+                        //          whose methods can't be made accessible since JDK 16, as java.base doesn't open java.util
                         parameterTypes[i] = (Class<?>) getJavaClass.invoke(
                             jvmClassMappingKt.get(),
                             (kTypeParameter.type().isInstance(typeClassifier)
-                                ? Reflect.on(typeClassifier).call("getUpperBounds").call("get", 0).call("getClassifier").get()
+                                ? Reflect.on(first(Reflect.on(typeClassifier).call("getUpperBounds").<List<?>>get())).call("getClassifier").get()
                                 : typeClassifier)
                         );
 

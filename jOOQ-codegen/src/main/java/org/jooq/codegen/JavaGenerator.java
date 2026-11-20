@@ -4998,6 +4998,21 @@ public class JavaGenerator extends AbstractGenerator {
         boolean noSchema = enumHasNoSchema || !generateDefaultSchema(e.getSchema());
         boolean noCatalog = enumHasNoSchema || noSchema || !generateDefaultCatalog(e.getCatalog());
 
+        // [#20545] Return a LazySchema reference, whose name is available
+        //          without initialising the schema singleton, so that data
+        //          types of the enum type can be qualified eagerly during the
+        //          initialisation of a table, which the schema may reference
+        String schemaArg = noSchema
+            ? "null"
+            : lazySchema(out, e.getSchema(),
+
+                // [#10998] The ScalaGenerator's schema reference is a method,
+                //          when Scala code generates Java enums
+                scalaConfigured && !scala
+                    ? getStrategy().getFullJavaIdentifier(e.getSchema()).replaceFirst("^(.*)\\.(.*?)$", "$1\\$.MODULE\\$.$2") + "()"
+                    : out.ref(getStrategy().getFullJavaIdentifier(e.getSchema()), 2)
+            );
+
         if (scala) {
             if (generateEnumsAsScalaEnums()) {
                 out.println("%senum %s(val literal: %s) extends %s[%s] with %s[[before= with ][separator= with ][%s]] {", visibility(), className, String.class, Enum.class, className, EnumType.class, interfaces);
@@ -5010,7 +5025,7 @@ public class JavaGenerator extends AbstractGenerator {
 
                 // [#2135] Only the PostgreSQL database supports schema-scoped enum types
                 out.println("%soverride def getSchema: %s = %s",
-                    visibilityPublic(), Schema.class, noSchema ? "null" : out.ref(getStrategy().getFullJavaIdentifier(e.getSchema()), 2));
+                    visibilityPublic(), Schema.class, schemaArg);
 
                 out.println("%soverride def getName: %s = %s",
                     visibilityPublic(), String.class, e.isSynthetic() ? "null" : "\"" + escapeString(e.getName()) + "\"");
@@ -5060,9 +5075,7 @@ public class JavaGenerator extends AbstractGenerator {
                 // [#2135] Only the PostgreSQL database supports schema-scoped enum types
                 out.println("override def getSchema: %s = %s",
                     Schema.class,
-                    noSchema
-                        ? "null"
-                        : out.ref(getStrategy().getFullJavaIdentifier(e.getSchema()), 2));
+                    schemaArg);
                 out.println("override def getName: %s = %s",
                     String.class,
                     e.isSynthetic() ? "null" : "\"" + escapeString(e.getName()) + "\"");
@@ -5092,7 +5105,7 @@ public class JavaGenerator extends AbstractGenerator {
 
             // [#2135] Only the PostgreSQL database supports schema-scoped enum types
             out.println("%soverride fun getSchema(): %s%s = %s",
-                visibilityPublic(), Schema.class, noSchema ? "?" : "", noSchema ? "null" : out.ref(getStrategy().getFullJavaIdentifier(e.getSchema()), 2));
+                visibilityPublic(), Schema.class, noSchema ? "?" : "", schemaArg);
 
             out.println("%soverride fun getName(): %s%s = %s",
                 visibilityPublic(), String.class, e.isSynthetic() ? "?" : "", e.isSynthetic() ? "null" : "\"" + escapeString(e.getName()) + "\"");
@@ -5131,18 +5144,7 @@ public class JavaGenerator extends AbstractGenerator {
             // [#2135] Only the PostgreSQL database supports schema-scoped enum types
             out.overrideInherit();
             out.println("%s%s getSchema() {", visibilityPublic(), Schema.class);
-
-            // [#10998] The ScalaGenerator's schema reference is a method
-            if (scalaConfigured) {
-                out.println("return %s%s;",
-                    noSchema ? "null" : getStrategy().getFullJavaIdentifier(e.getSchema()).replaceFirst("^(.*)\\.(.*?)$", "$1\\$.MODULE\\$.$2"),
-                    noSchema ? "" : "()"
-                );
-            }
-            else {
-                out.println("return %s;",
-                    noSchema ? "null" : out.ref(getStrategy().getFullJavaIdentifier(e.getSchema()), 2));
-            }
+            out.println("return %s;", schemaArg);
             out.println("}");
 
             out.overrideInherit();

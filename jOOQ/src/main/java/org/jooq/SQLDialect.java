@@ -62,9 +62,7 @@ import org.jetbrains.annotations.ApiStatus.Experimental;
  * <li>{@link #POSTGRES_9_5}</li>
  * <li>{@link #POSTGRES_10}</li>
  * <li>{@link #POSTGRES_11}</li>
- * <li>{@link #POSTGRES_12}</li>
- * <li>{@link #POSTGRES_13}</li>
- * <li>{@link #POSTGRES_14}</li>
+ * <li>... and so on</li>
  * </ul>
  * <p>
  * The open source jOOQ distributions only support the dialect family, which
@@ -437,13 +435,25 @@ public enum SQLDialect {
     /**
      * The PostgreSQL dialect family.
      * <p>
-     * This family behaves like the versioned dialect {@link #POSTGRES_18}.
+     * This family behaves like the versioned dialect {@link #POSTGRES_19}.
      * <p>
      * While this family (and its dialects) have been observed to work to some
      * extent on Amazon RedShift as well, we strongly suggest you use the
      * official {@link #REDSHIFT} support, instead.
      */
-    POSTGRES("Postgres", false, true, new RequiredVersion(18, null, null), SQLDialectCategory.POSTGRES),
+    POSTGRES("Postgres", false, true, new RequiredVersion(19, null, null), SQLDialectCategory.POSTGRES),
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

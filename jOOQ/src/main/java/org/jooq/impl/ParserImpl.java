@@ -709,6 +709,7 @@ import org.jooq.MergeUsingStep;
 import org.jooq.Meta;
 import org.jooq.Name;
 import org.jooq.Name.Quoted;
+import org.jooq.Nullability;
 import org.jooq.OptionallyOrderedAggregateFunction;
 import org.jooq.OrderedAggregateFunction;
 import org.jooq.OrderedAggregateFunctionOfDeferredType;
@@ -5933,7 +5934,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                     if (parseKeywordIf("CONSTRAINT"))
                         return parseAlterTableAlterConstraint(s1);
                     else if ((parseKeywordIf("COLUMN") || true))
-                        return parseAlterTableAlterColumn(tableName, s1);
+                        return parseAlterTableAlterColumn(tableName, s1, false);
 
                 break;
 
@@ -6042,7 +6043,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                     else if (parseKeywordIf("COMMENT"))
                         return s1.comment(parseComment());
                     else if ((parseKeywordIf("COLUMN") || true))
-                        return parseAlterTableAlterColumn(tableName, s1);
+                        return parseAlterTableAlterColumn(tableName, s1, true);
 
                 break;
 
@@ -6225,7 +6226,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         return result;
     }
 
-    private final DDLQuery parseAlterTableAlterColumn(Table<?> table, AlterTableStep s1) {
+    private final DDLQuery parseAlterTableAlterColumn(Table<?> table, AlterTableStep s1, boolean modify) {
         boolean paren = parseIf('(');
 
         // [#5316] TODO: Support this also for non-renames
@@ -6286,13 +6287,21 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
             t1 = t1.nullable(false);
 
         DataType<?> t2 = parseDataTypeFlags(field.getUnqualifiedName(), t1);
+        boolean change = t2 != t1;
+
+        // [#12355] MySQL's MODIFY [ COLUMN ] clause replaces the entire column
+        //          definition, so an absent NOT NULL constraint means NULL.
+        //          Oracle style MODIFY clauses only change what's specified,
+        //          which is also the default behaviour.
+        if (modify && !paren && modifyRedefinesColumn())
+            t2 = implicitNullability(t2);
 
         if (paren)
             parse(')');
 
-        return t2 == t1
-            ? (ifExists ? s1.alterIfExists(field) : s1.alter(field)).set(t2)
-            : (ifExists ? s1.changeIfExists(field, field) : s1.change(field, field)).set(t2);
+        return change
+            ? (ifExists ? s1.changeIfExists(field, field) : s1.change(field, field)).set(t2)
+            : (ifExists ? s1.alterIfExists(field) : s1.alter(field)).set(t2);
     }
 
     private final DDLQuery parseAlterTableChangeColumn(AlterTableStep s1) {
@@ -6307,7 +6316,30 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
             type = type.nullable(false);
 
         type = parseDataTypeFlags(newName.getUnqualifiedName(), type);
+
+        // [#12355] MySQL's CHANGE [ COLUMN ] clause replaces the entire column
+        //          definition, so an absent NOT NULL constraint means NULL.
+        type = implicitNullability(type);
         return (ifExists ? s1.changeIfExists(oldName, newName) : s1.change(oldName, newName)).set(type);
+    }
+
+    /**
+     * [#12355] Whether a <code>MODIFY</code> clause is a MySQL style full
+     * column redefinition (as opposed to e.g. an Oracle style partial change).
+     */
+    private final boolean modifyRedefinesColumn() {
+        return parseCategory() == SQLDialectCategory.MYSQL;
+    }
+
+    /**
+     * [#12355] In a full column redefinition, a column without explicit
+     * nullability is nullable, unless it is an identity, which implies
+     * <code>NOT NULL</code>.
+     */
+    private static final DataType<?> implicitNullability(DataType<?> type) {
+        return type.nullability() == Nullability.DEFAULT && !type.identity()
+            ? type.nullable(true)
+            : type;
     }
 
     private final DataType<?> parseDataTypeFlags(Name fieldName, DataType<?> type) {

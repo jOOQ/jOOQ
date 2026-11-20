@@ -78,7 +78,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
-import java.util.function.Function;
 import java.util.function.Supplier;
 
 // ...
@@ -796,39 +795,6 @@ implements
         // [#10277] The schema may not yet have been initialised in generated code
         Schema s = schema.get();
         return s == null ? name.get() : s.getQualifiedName().append(name.get());
-    }
-
-    /**
-     * [#13103] Get a type name of a base data type, when constructing a
-     * derived data type (e.g. an array, converted, or domain data type).
-     * <p>
-     * The public type name getters of enum and UDT types render their
-     * qualified names, which resolves their {@link LazyName}. When this
-     * happens during the initialisation of a generated table or UDT class, it
-     * may initialise the generated schema class too early, whose references to
-     * not yet initialised tables then remain <code>null</code>. Derived data
-     * types compute their public type names lazily from the base type anyway,
-     * so the base type's stored type name is used for those types, instead.
-     */
-    static final <T> String storedTypeName(
-        DataType<T> type,
-        Function<? super DataType<T>, String> typeName,
-        Function<? super AbstractDataType<T>, String> storedTypeName
-    ) {
-        if (isQualifiedUserType(type) && type instanceof AbstractDataType<T> t)
-            return storedTypeName.apply(t);
-        else
-            return typeName.apply(type);
-    }
-
-    /**
-     * [#13103] Whether a data type is an enum or UDT type, or an array thereof,
-     * whose public type names are rendered from a qualified name.
-     */
-    static final boolean isQualifiedUserType(DataType<?> type) {
-        return type.isEnum()
-            || type.isUDT()
-            || type.isArray() && type.getArrayComponentDataType() != null && isQualifiedUserType(type.getArrayComponentDataType());
     }
 
     @Override

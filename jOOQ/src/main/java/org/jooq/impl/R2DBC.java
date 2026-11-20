@@ -903,14 +903,39 @@ final class R2DBC {
                     return c;
                 }
                 else {
-                    c.close().subscribe(subscriber(
-                        s -> s.request(Long.MAX_VALUE),
-                        t -> {},
-                        t -> {},
-                        onComplete,
-                        configuration.subscriberProvider(),
-                        subscriber
-                    ));
+
+                    // [#20551] The downstream's terminal signal must be emitted
+                    //          exactly once, no matter how closing the connection
+                    //          terminates. Some drivers (e.g. oracle-r2dbc) may fail
+                    //          close() when it races with the driver's own cleanup of
+                    //          statements after an error, e.g. in a batch.
+                    AtomicBoolean done = new AtomicBoolean();
+                    Runnable onClose = () -> {
+                        if (!done.getAndSet(true))
+                            onComplete.run();
+                    };
+
+                    try {
+                        c.close().subscribe(subscriber(
+                            s -> s.request(Long.MAX_VALUE),
+                            t -> {},
+                            t -> {
+                                log.warn("R2DBC", "Error while closing connection", t);
+                                onClose.run();
+                            },
+                            onClose,
+                            configuration.subscriberProvider(),
+                            subscriber
+                        ));
+                    }
+                    catch (Throwable t) {
+                        if (done.get())
+                            throw t;
+
+                        log.warn("R2DBC", "Error while closing connection", t);
+                        onClose.run();
+                    }
+
                     return null;
                 }
             });

@@ -204,6 +204,14 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
             .where(COLUMNS.TABLE_SCHEMA.equal(getSchema().getName()))
             .and(COLUMNS.TABLE_NAME.equal(getName()))
 
+            // [#20550] Redundant with the name based join predicates, but it
+            //          allows for looking up PG_ATTRIBUTE by ATTRELID, which
+            //          some PostgreSQL clones (e.g. CockroachDB) don't do
+            //          otherwise
+            .and(PG_ATTRIBUTE.ATTRELID.eq(field("{0}::regclass", BIGINT,
+                inline(create().render(name(getSchema().getName(), getName())))
+            )))
+
 
 
             .orderBy(COLUMNS.ORDINAL_POSITION)) {

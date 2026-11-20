@@ -37,7 +37,6 @@
  */
 package org.jooq.impl;
 
-import org.jooq.QualifiedRecord;
 import org.jooq.Record;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
@@ -54,16 +53,7 @@ final class TableDataType<R extends Record> extends DefaultDataType<R> {
         super(
             SQLDialect.DEFAULT,
             (Class<R>) table.getRecordType(),
-            new LazyName(() -> lazyName(table::getSchema, table::getUnqualifiedName)),
-
-            // [#13103] Like enum types, pass an explicit type name, to avoid
-            //          resolving the LazyName (and initialising the generated
-            //          schema class) eagerly. Rendered type names of qualified
-            //          records are derived from the qualified name lazily, see
-            //          [#10277]. Other records still use the stored type name.
-            QualifiedRecord.class.isAssignableFrom(table.getRecordType())
-                ? table.getUnqualifiedName().last()
-                : null
+            qualifiedTypeName(table, table instanceof AbstractTable<?> t ? t.constructorSchema() : null)
         );
 
         this.table = table;

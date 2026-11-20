@@ -161,11 +161,17 @@ implements
 
 
             case POSTGRES: {
-                ctx.visit(N_COALESCE).sqlIndentStart('(');
+
+
+
+
+
+
+
+
+
+
                 acceptStandard(ctx);
-                ctx.sql(',').formatSeparator()
-                   .visit(empty())
-                   .sqlIndentEnd(')');
                 break;
             }
 

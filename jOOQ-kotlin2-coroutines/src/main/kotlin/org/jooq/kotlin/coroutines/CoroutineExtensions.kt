@@ -1,5 +1,6 @@
 package org.jooq.kotlin.coroutines
 
+import io.r2dbc.spi.Connection
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 import kotlinx.coroutines.reactive.awaitSingle
@@ -23,6 +24,23 @@ suspend fun <T> DSLContext.transactionCoroutine(context: CoroutineContext, trans
     return transactionPublisher { c ->
         mono(context) {
             Wrap(transactional.invoke(c))
+        }
+    }.awaitSingle().t
+}
+
+
+suspend fun <T> DSLContext.connectionCoroutine(block: suspend (Connection) -> T): T =
+    connectionCoroutine(EmptyCoroutineContext, block)
+
+
+suspend fun <T> DSLContext.connectionCoroutine(context: CoroutineContext, block: suspend (Connection) -> T): T {
+    // [#15495] Wrap values in an auxiliary class in order to allow nulls, which awaitSingle()
+    //          doesn't allow, otherwise
+    data class Wrap<T>(val t: T)
+
+    return connectionPublisher { c ->
+        mono(context) {
+            Wrap(block.invoke(c))
         }
     }.awaitSingle().t
 }

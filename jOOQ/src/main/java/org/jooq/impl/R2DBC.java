@@ -1146,6 +1146,49 @@ final class R2DBC {
         }
     }
 
+    static final class ConnectionSubscription<T> extends AbstractNonBlockingSubscription<T> {
+        final ConnectionSubscriber<T> delegate;
+
+        ConnectionSubscription(
+            Configuration configuration,
+            Subscriber<? super T> subscriber,
+            Function<? super Connection, ? extends Publisher<? extends T>> function
+        ) {
+            super(configuration, subscriber);
+
+            this.delegate = new ConnectionSubscriber<T>(this) {
+                @Override
+                void onNext0(Connection c) {
+
+                    // [#15495] Forward the user Publisher's results, closing the
+                    //          connection after completion, error, or cancellation
+                    AbstractResultSubscriber<T> s = new AbstractResultSubscriber<T>(ConnectionSubscription.this) {
+                        @Override
+                        public void onNext(Result r) {}
+                    };
+                    s.completionRequested.set(true);
+
+                    try {
+                        function.apply(c).subscribe(forwardingSubscriber(s));
+                    }
+                    catch (Throwable t) {
+                        cancel0(true, () -> subscriber.onError(t));
+                    }
+                }
+            };
+        }
+
+        @Override
+        final String sql() {
+            return "ConnectionSubscription";
+        }
+
+        @Override
+        final ConnectionSubscriber<T> delegate() {
+            return delegate;
+        }
+    }
+
     // -------------------------------------------------------------------------
     // Internal R2DBC specific utilities
     // -------------------------------------------------------------------------

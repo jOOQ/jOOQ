@@ -285,7 +285,9 @@ import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.BatchCRUD.Action;
 import org.jooq.impl.QOM.CommentObjectType;
 import org.jooq.impl.QOM.TableScope;
+import org.jooq.impl.R2DBC.AbstractSubscription;
 import org.jooq.impl.R2DBC.BlockingTransactionSubscription;
+import org.jooq.impl.R2DBC.ConnectionSubscription;
 import org.jooq.impl.R2DBC.TransactionSubscription;
 import org.jooq.tools.csv.CSVReader;
 import org.jooq.tools.jdbc.BatchedConnection;
@@ -768,6 +770,18 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
             runnable.run(connection);
             return null;
         });
+    }
+
+    @Override
+    public <T> Publisher<T> connectionPublisher(Function<? super io.r2dbc.spi.Connection, ? extends org.reactivestreams.Publisher<? extends T>> function) {
+        return subscriber -> {
+            if (configuration().connectionFactory() instanceof NoConnectionFactory)
+                subscriber.onSubscribe(AbstractSubscription.onRequest(configuration(), subscriber,
+                    s -> s.onError(new DetachedException("No R2DBC ConnectionFactory configured"))
+                ));
+            else
+                subscriber.onSubscribe(new ConnectionSubscription<>(configuration(), subscriber, function));
+        };
     }
 
     @Override

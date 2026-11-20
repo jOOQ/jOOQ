@@ -872,6 +872,28 @@ public interface DSLContext extends Scope {
     void connection(ConnectionRunnable runnable);
 
     /**
+     * Run a function on an R2DBC {@link io.r2dbc.spi.Connection} in the
+     * context of this <code>DSLContext</code>'s underlying
+     * {@link #configuration()}'s {@link Configuration#connectionFactory()},
+     * reactively.
+     * <p>
+     * The connection is acquired lazily upon subscription, and closed (or
+     * released) once the resulting {@link Publisher} completes, fails, or is
+     * cancelled. When this is called within a
+     * {@link #transactionPublisher(TransactionalPublishable)}, the
+     * transaction's connection is provided, and it is not closed.
+     * <p>
+     * This is the reactive counterpart of
+     * {@link #connectionResult(ConnectionCallable)}.
+     *
+     * @param function The code running statements against the
+     *            <code>connection</code>.
+     * @return The outcome of the function
+     */
+    @NotNull
+    <T> Publisher<T> connectionPublisher(Function<? super io.r2dbc.spi.Connection, ? extends org.reactivestreams.Publisher<? extends T>> function);
+
+    /**
      * Run a {@link MockRunnable} in the context of this <code>DSLContext</code>
      * 's underlying {@link #configuration()}'s, and of a
      * {@link MockDataProvider} and return the <code>mockable</code>'s outcome.

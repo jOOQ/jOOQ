@@ -136,6 +136,7 @@ import org.jooq.Keyword;
 import org.jooq.Name;
 import org.jooq.Nullability;
 // ...
+import org.jooq.Qualified;
 import org.jooq.QualifiedRecord;
 import org.jooq.Record;
 import org.jooq.Result;
@@ -990,6 +991,27 @@ implements
 
     static final <E extends EnumType> Name lazyName(E e) {
         return new LazyName(() -> lazyName(e::getSchema, () -> DSL.name(e.getName())));
+    }
+
+    /**
+     * [#13103] The qualified type name of a table or UDT data type.
+     * <p>
+     * Generated tables and UDTs pass a {@link LazySchema} to their
+     * constructors, whose name is known without initialising the generated
+     * schema class (which may in turn be waiting for the table or UDT class to
+     * be initialised), so the type name can be qualified eagerly. Otherwise,
+     * it has to be qualified lazily from {@link Qualified#getSchema()}, see
+     * [#10277].
+     *
+     * @param q The table or UDT.
+     * @param constructorSchema The schema that was passed to the table or UDT
+     *            constructor, if available, or <code>null</code>.
+     */
+    static final Name qualifiedTypeName(Qualified q, Schema constructorSchema) {
+        if (constructorSchema instanceof LazySchema s)
+            return s.getQualifiedName().append(q.getUnqualifiedName());
+        else
+            return new LazyName(() -> lazyName(q::getSchema, q::getUnqualifiedName));
     }
 
     static final Name lazyName(Supplier<Schema> schema, Supplier<Name> name) {

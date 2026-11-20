@@ -2321,4 +2321,14 @@ implements
     public final Schema $schema() {
         return getSchema();
     }
+
+    /**
+     * [#13103] The schema that was passed to the constructor (e.g. a
+     * {@link LazySchema} in generated code), without calling a possibly
+     * overridden {@link #getSchema()}, which may initialise a generated schema
+     * class.
+     */
+    final Schema constructorSchema() {
+        return tableschema;
+    }
 }

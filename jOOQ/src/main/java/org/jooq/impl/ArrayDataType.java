@@ -72,13 +72,13 @@ final class ArrayDataType<T> extends DefaultDataType<T[]> {
     public ArrayDataType(DataType<T> elementType) {
         super(
             null,
+            null,
             elementType.getArrayType(),
             elementType.getBinding().arrayBinding(),
             qualifiedTypeName(elementType),
             storedTypeName(elementType, DataType::getTypeName, AbstractDataType::typeName0) + " array",
             storedTypeName(elementType, DataType::getCastTypeName, AbstractDataType::castTypeName0) + " array",
             storedTypeName(elementType, DataType::getDDLTypeName, AbstractDataType::ddlTypeName0) + " array",
-            null,
             null,
             null,
             null,

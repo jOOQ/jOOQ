@@ -47,6 +47,7 @@ import static org.jooq.SQLDialect.DUCKDB;
 import static org.jooq.SQLDialect.H2;
 // ...
 // ...
+import static org.jooq.SQLDialect.POSTGRES;
 // ...
 // ...
 // ...
@@ -78,7 +79,7 @@ public interface WindowIgnoreNullsStep<T> extends WindowOverStep<T> {
      * might not be supported by all dialects.
      */
     @NotNull
-    @Support({ DUCKDB, H2, TRINO })
+    @Support({ DUCKDB, H2, POSTGRES, TRINO })
     WindowOverStep<T> ignoreNulls();
 
     /**
@@ -86,6 +87,6 @@ public interface WindowIgnoreNullsStep<T> extends WindowOverStep<T> {
      * might not be supported by all dialects.
      */
     @NotNull
-    @Support({ DUCKDB, H2, TRINO })
+    @Support({ DUCKDB, H2, POSTGRES, TRINO })
     WindowOverStep<T> respectNulls();
 }

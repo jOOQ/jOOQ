@@ -45,6 +45,7 @@ import static org.jooq.tools.StringUtils.isBlank;
 import java.io.File;
 import java.io.Reader;
 import java.sql.SQLException;
+import java.util.Locale;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -57,6 +58,7 @@ import org.jooq.Name.Quoted;
 import org.jooq.Queries;
 import org.jooq.Query;
 import org.jooq.ResultQuery;
+import org.jooq.SQLDialect;
 import org.jooq.Source;
 import org.jooq.VisitContext;
 import org.jooq.VisitListener;
@@ -80,6 +82,10 @@ import org.h2.api.ErrorCode;
  * <p>
  * The SQL scripts are located in the <code>scripts</code> scripts property
  * available from {@link #getProperties()}.
+ * <p>
+ * The SQL dialect of the scripts can be specified using the
+ * <code>parseDialect</code> property, which accepts any {@link SQLDialect}
+ * name, see {@link Settings#getParseDialect()}.
  *
  * @author Lukas Eder
  */
@@ -102,6 +108,7 @@ public class DDLDatabase extends AbstractInterpretingDatabase {
         boolean parseIgnoreComments = !"false".equalsIgnoreCase(getProperties().getProperty("parseIgnoreComments"));
         String parseIgnoreCommentStart = getProperties().getProperty("parseIgnoreCommentStart", defaultSettings.getParseIgnoreCommentStart());
         String parseIgnoreCommentStop = getProperties().getProperty("parseIgnoreCommentStop", defaultSettings.getParseIgnoreCommentStop());
+        SQLDialect parseDialect = parseDialect(getProperties().getProperty("parseDialect"));
         logExecutedQueries = !"false".equalsIgnoreCase(getProperties().getProperty("logExecutedQueries"));
         logExecutionResults = !"false".equalsIgnoreCase(getProperties().getProperty("logExecutionResults"));
 
@@ -117,6 +124,7 @@ public class DDLDatabase extends AbstractInterpretingDatabase {
                 .withParseIgnoreCommentStart(parseIgnoreCommentStart)
                 .withParseIgnoreCommentStop(parseIgnoreCommentStop)
                 .withParseUnknownFunctions(ParseUnknownFunctions.IGNORE)
+                .withParseDialect(parseDialect)
             );
 
             // [#7771] [#8011] Ignore all parsed storage clauses when executing the statements
@@ -168,6 +176,22 @@ public class DDLDatabase extends AbstractInterpretingDatabase {
         catch (ParserException e) {
             log.error("An exception occurred while parsing script source : " + scripts + ". Please report this error to https://jooq.org/bug", e);
             throw e;
+        }
+    }
+
+    /**
+     * [jOOQ/jOOQ#20542] Read the <code>parseDialect</code> property, which
+     * specifies the {@link SQLDialect} in which the DDL scripts are written.
+     */
+    static final SQLDialect parseDialect(String parseDialect) {
+        if (isBlank(parseDialect))
+            return null;
+
+        try {
+            return SQLDialect.valueOf(parseDialect.trim().toUpperCase(Locale.ROOT));
+        }
+        catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Unsupported parseDialect: " + parseDialect + ". Use a SQLDialect name, e.g. MYSQL, POSTGRES.", e);
         }
     }
 

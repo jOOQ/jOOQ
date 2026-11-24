@@ -277,22 +277,39 @@ public class DefaultTransactionProvider implements TransactionProvider {
 
         try {
 
+            Set<TransactionProperty> properties = ctx.properties();
+
             // [#4836] Reset readonly flag at the end of a transaction
-            boolean readonly = readonly(ctx);
+            // [#20135] Access the connection's readonly flag only when needed
+            if (properties.contains(READONLY)) {
 
-            if (ctx.properties().contains(READONLY))
-                connection(ctx).setReadOnly(start ? true : readonly);
+                // Read the previous readonly flag before overriding it
+                boolean readonly = readonly(ctx);
+                connection.setReadOnly(start ? true : readonly);
+            }
 
-            int isolation = isolation(ctx);
+            // [#20135] Calling Connection::getTransactionIsolation can be
+            //          costly (e.g. pgjdbc runs a query to obtain the value),
+            //          so access it only if an isolation level is requested
+            int level;
 
-            if (ctx.properties().contains(READ_COMMITTED))
-                connection(ctx).setTransactionIsolation(start ? TRANSACTION_READ_COMMITTED : isolation);
-            else if (ctx.properties().contains(READ_UNCOMMITTED))
-                connection(ctx).setTransactionIsolation(start ? TRANSACTION_READ_UNCOMMITTED : isolation);
-            else if (ctx.properties().contains(REPEATABLE_READ))
-                connection(ctx).setTransactionIsolation(start ? TRANSACTION_REPEATABLE_READ : isolation);
-            else if (ctx.properties().contains(SERIALIZABLE))
-                connection(ctx).setTransactionIsolation(start ? TRANSACTION_SERIALIZABLE : isolation);
+            if (properties.contains(READ_COMMITTED))
+                level = TRANSACTION_READ_COMMITTED;
+            else if (properties.contains(READ_UNCOMMITTED))
+                level = TRANSACTION_READ_UNCOMMITTED;
+            else if (properties.contains(REPEATABLE_READ))
+                level = TRANSACTION_REPEATABLE_READ;
+            else if (properties.contains(SERIALIZABLE))
+                level = TRANSACTION_SERIALIZABLE;
+            else
+                level = -1;
+
+            if (level != -1) {
+
+                // Read the previous isolation level before overriding it
+                int isolation = isolation(ctx);
+                connection.setTransactionIsolation(start ? level : isolation);
+            }
 
             boolean autoCommit = autoCommit(ctx);
 

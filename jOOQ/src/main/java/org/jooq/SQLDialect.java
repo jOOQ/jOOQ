@@ -132,8 +132,18 @@ public enum SQLDialect {
 
     /**
      * The DuckDB dialect family.
+     * <p>
+     * This family behaves like the versioned dialect {@link #DUCKDB_2_0}.
      */
     DUCKDB("DuckDB", false, true),
+
+
+
+
+
+
+
+
 
 
 

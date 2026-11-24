@@ -121,6 +121,10 @@ implements
 
 
 
+            case DUCKDB:
+                ctx.visit(function(N_JSON_REPLACE, JSONB, field, path, DSL.coalesce(DSL.function(N_TO_JSON, JSONB, value), inline("null"))));
+                break;
+
             default:
                 ctx.visit(function(N_JSON_REPLACE, JSONB, field, path, JSONEntryImpl.jsonCast(ctx, value, true)));
                 break;

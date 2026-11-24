@@ -60,6 +60,7 @@ import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.DUCKDB;
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.FIREBIRD;
 // ...
 // ...
@@ -112,16 +113,9 @@ import static org.jooq.SQLDialect.TRINO;
 import static org.jooq.SQLDialect.YUGABYTEDB;
 // ...
 import static org.jooq.conf.ParamType.INLINED;
-import static org.jooq.impl.Names.N_COUNT;
-import static org.jooq.impl.Names.N_CUME_DIST;
-import static org.jooq.impl.Names.N_DENSE_RANK;
 import static org.jooq.impl.Names.N_E;
 import static org.jooq.impl.Names.N_IF;
 import static org.jooq.impl.Names.N_IIF;
-import static org.jooq.impl.Names.N_PERCENTILE_CONT;
-import static org.jooq.impl.Names.N_PERCENTILE_DISC;
-import static org.jooq.impl.Names.N_PERCENT_RANK;
-import static org.jooq.impl.Names.N_RANK;
 import static org.jooq.impl.Names.N_SYSTEM_TIME;
 import static org.jooq.impl.Names.N_VALUE;
 import static org.jooq.impl.SQLDataType.BIGINT;
@@ -130,7 +124,6 @@ import static org.jooq.impl.SQLDataType.DATE;
 import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.impl.SQLDataType.JSON;
 import static org.jooq.impl.SQLDataType.JSONB;
-import static org.jooq.impl.SQLDataType.OTHER;
 import static org.jooq.impl.SQLDataType.TIME;
 import static org.jooq.impl.SQLDataType.TIMESTAMP;
 import static org.jooq.impl.Tools.CTX;
@@ -220,7 +213,6 @@ import org.jooq.ConstraintTypeStep;
 import org.jooq.Context;
 // ...
 import org.jooq.Converter;
-import org.jooq.CreateTypeStep;
 import org.jooq.CreateViewAsStep;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
@@ -230,7 +222,6 @@ import org.jooq.Delete;
 import org.jooq.DeleteUsingStep;
 import org.jooq.DerivedColumnList;
 import org.jooq.Domain;
-import org.jooq.DropTypeStep;
 // ...
 import org.jooq.False;
 import org.jooq.Field;
@@ -465,7 +456,6 @@ import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.impl.QOM.DocumentOrContent;
 import org.jooq.impl.QOM.Quantifier;
 import org.jooq.impl.QOM.ResultOption;
-import org.jooq.impl.QOM.UNoQueryPart;
 import org.jooq.tools.ClassUtils;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.jdbc.JDBCUtils;
@@ -475,9 +465,9 @@ import org.jooq.types.UInteger;
 import org.jooq.types.ULong;
 import org.jooq.types.UShort;
 
+import org.jetbrains.annotations.ApiStatus.Obsolete;
 import org.jetbrains.annotations.Blocking;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.ApiStatus.Obsolete;
 
 import io.r2dbc.spi.ConnectionFactory;
 
@@ -25972,7 +25962,7 @@ public class DSL {
      * @param value is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, SQLITE })
+    @Support({ DUCKDB, MARIADB, MYSQL, SQLITE })
     public static Field<JSON> jsonSet(Field<JSON> field, @Stringly.Param String path, Object value) {
         return new JSONSet(field, Tools.field(path), Tools.field(value));
     }
@@ -25985,7 +25975,7 @@ public class DSL {
      * @param path is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, SQLITE })
+    @Support({ DUCKDB, MARIADB, MYSQL, SQLITE })
     public static Field<JSON> jsonSet(Field<JSON> field, @Stringly.Param String path, Field<?> value) {
         return new JSONSet(field, Tools.field(path), value);
     }
@@ -25998,7 +25988,7 @@ public class DSL {
      * @param value is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, SQLITE })
+    @Support({ DUCKDB, MARIADB, MYSQL, SQLITE })
     public static Field<JSON> jsonSet(Field<JSON> field, Field<String> path, Object value) {
         return new JSONSet(field, path, Tools.field(value));
     }
@@ -26009,7 +25999,7 @@ public class DSL {
      * Add or replace a JSON value to a JSON field at a given path.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, SQLITE })
+    @Support({ DUCKDB, MARIADB, MYSQL, SQLITE })
     public static Field<JSON> jsonSet(Field<JSON> field, Field<String> path, Field<?> value) {
         return new JSONSet(field, path, value);
     }
@@ -26023,7 +26013,7 @@ public class DSL {
      * @param value is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, SQLITE })
+    @Support({ DUCKDB, MARIADB, MYSQL, SQLITE })
     public static Field<JSONB> jsonbSet(Field<JSONB> field, @Stringly.Param String path, Object value) {
         return new JSONBSet(field, Tools.field(path), Tools.field(value));
     }
@@ -26036,7 +26026,7 @@ public class DSL {
      * @param path is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, SQLITE })
+    @Support({ DUCKDB, MARIADB, MYSQL, SQLITE })
     public static Field<JSONB> jsonbSet(Field<JSONB> field, @Stringly.Param String path, Field<?> value) {
         return new JSONBSet(field, Tools.field(path), value);
     }
@@ -26049,7 +26039,7 @@ public class DSL {
      * @param value is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, SQLITE })
+    @Support({ DUCKDB, MARIADB, MYSQL, SQLITE })
     public static Field<JSONB> jsonbSet(Field<JSONB> field, Field<String> path, Object value) {
         return new JSONBSet(field, path, Tools.field(value));
     }
@@ -26060,7 +26050,7 @@ public class DSL {
      * Add or replace a JSONB value to a JSONB field at a given path.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, SQLITE })
+    @Support({ DUCKDB, MARIADB, MYSQL, SQLITE })
     public static Field<JSONB> jsonbSet(Field<JSONB> field, Field<String> path, Field<?> value) {
         return new JSONBSet(field, path, value);
     }
@@ -26074,7 +26064,7 @@ public class DSL {
      * @param value is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, SQLITE })
+    @Support({ DUCKDB, MARIADB, MYSQL, SQLITE })
     public static Field<JSON> jsonInsert(Field<JSON> field, @Stringly.Param String path, Object value) {
         return new JSONInsert(field, Tools.field(path), Tools.field(value));
     }
@@ -26087,7 +26077,7 @@ public class DSL {
      * @param path is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, SQLITE })
+    @Support({ DUCKDB, MARIADB, MYSQL, SQLITE })
     public static Field<JSON> jsonInsert(Field<JSON> field, @Stringly.Param String path, Field<?> value) {
         return new JSONInsert(field, Tools.field(path), value);
     }
@@ -26100,7 +26090,7 @@ public class DSL {
      * @param value is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, SQLITE })
+    @Support({ DUCKDB, MARIADB, MYSQL, SQLITE })
     public static Field<JSON> jsonInsert(Field<JSON> field, Field<String> path, Object value) {
         return new JSONInsert(field, path, Tools.field(value));
     }
@@ -26111,7 +26101,7 @@ public class DSL {
      * Add (but not replace) a JSON value to a JSON field at a given path.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, SQLITE })
+    @Support({ DUCKDB, MARIADB, MYSQL, SQLITE })
     public static Field<JSON> jsonInsert(Field<JSON> field, Field<String> path, Field<?> value) {
         return new JSONInsert(field, path, value);
     }
@@ -26125,7 +26115,7 @@ public class DSL {
      * @param value is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, SQLITE })
+    @Support({ DUCKDB, MARIADB, MYSQL, SQLITE })
     public static Field<JSONB> jsonbInsert(Field<JSONB> field, @Stringly.Param String path, Object value) {
         return new JSONBInsert(field, Tools.field(path), Tools.field(value));
     }
@@ -26138,7 +26128,7 @@ public class DSL {
      * @param path is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, SQLITE })
+    @Support({ DUCKDB, MARIADB, MYSQL, SQLITE })
     public static Field<JSONB> jsonbInsert(Field<JSONB> field, @Stringly.Param String path, Field<?> value) {
         return new JSONBInsert(field, Tools.field(path), value);
     }
@@ -26151,7 +26141,7 @@ public class DSL {
      * @param value is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, SQLITE })
+    @Support({ DUCKDB, MARIADB, MYSQL, SQLITE })
     public static Field<JSONB> jsonbInsert(Field<JSONB> field, Field<String> path, Object value) {
         return new JSONBInsert(field, path, Tools.field(value));
     }
@@ -26162,7 +26152,7 @@ public class DSL {
      * Add (but not replace) a JSON value to a JSON field at a given path.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, SQLITE })
+    @Support({ DUCKDB, MARIADB, MYSQL, SQLITE })
     public static Field<JSONB> jsonbInsert(Field<JSONB> field, Field<String> path, Field<?> value) {
         return new JSONBInsert(field, path, value);
     }
@@ -26176,7 +26166,7 @@ public class DSL {
      * @param value is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, SQLITE })
+    @Support({ DUCKDB, MARIADB, MYSQL, SQLITE })
     public static Field<JSON> jsonReplace(Field<JSON> field, @Stringly.Param String path, Object value) {
         return new JSONReplace(field, Tools.field(path), Tools.field(value));
     }
@@ -26189,7 +26179,7 @@ public class DSL {
      * @param path is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, SQLITE })
+    @Support({ DUCKDB, MARIADB, MYSQL, SQLITE })
     public static Field<JSON> jsonReplace(Field<JSON> field, @Stringly.Param String path, Field<?> value) {
         return new JSONReplace(field, Tools.field(path), value);
     }
@@ -26202,7 +26192,7 @@ public class DSL {
      * @param value is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, SQLITE })
+    @Support({ DUCKDB, MARIADB, MYSQL, SQLITE })
     public static Field<JSON> jsonReplace(Field<JSON> field, Field<String> path, Object value) {
         return new JSONReplace(field, path, Tools.field(value));
     }
@@ -26213,7 +26203,7 @@ public class DSL {
      * Replace (but not add) a JSON value to a JSON field at a given path.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, SQLITE })
+    @Support({ DUCKDB, MARIADB, MYSQL, SQLITE })
     public static Field<JSON> jsonReplace(Field<JSON> field, Field<String> path, Field<?> value) {
         return new JSONReplace(field, path, value);
     }
@@ -26227,7 +26217,7 @@ public class DSL {
      * @param value is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, SQLITE })
+    @Support({ DUCKDB, MARIADB, MYSQL, SQLITE })
     public static Field<JSONB> jsonbReplace(Field<JSONB> field, @Stringly.Param String path, Object value) {
         return new JSONBReplace(field, Tools.field(path), Tools.field(value));
     }
@@ -26240,7 +26230,7 @@ public class DSL {
      * @param path is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, SQLITE })
+    @Support({ DUCKDB, MARIADB, MYSQL, SQLITE })
     public static Field<JSONB> jsonbReplace(Field<JSONB> field, @Stringly.Param String path, Field<?> value) {
         return new JSONBReplace(field, Tools.field(path), value);
     }
@@ -26253,7 +26243,7 @@ public class DSL {
      * @param value is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, SQLITE })
+    @Support({ DUCKDB, MARIADB, MYSQL, SQLITE })
     public static Field<JSONB> jsonbReplace(Field<JSONB> field, Field<String> path, Object value) {
         return new JSONBReplace(field, path, Tools.field(value));
     }
@@ -26264,7 +26254,7 @@ public class DSL {
      * Replace (but not add) a JSONB value to a JSONB field at a given path.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, SQLITE })
+    @Support({ DUCKDB, MARIADB, MYSQL, SQLITE })
     public static Field<JSONB> jsonbReplace(Field<JSONB> field, Field<String> path, Field<?> value) {
         return new JSONBReplace(field, path, value);
     }
@@ -26277,7 +26267,7 @@ public class DSL {
      * @param path is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, SQLITE })
+    @Support({ DUCKDB, MARIADB, MYSQL, SQLITE })
     public static Field<JSON> jsonRemove(Field<JSON> field, @Stringly.Param String path) {
         return new JSONRemove(field, Tools.field(path));
     }
@@ -26288,7 +26278,7 @@ public class DSL {
      * Remove a JSON value from a JSON field at a given path.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, SQLITE })
+    @Support({ DUCKDB, MARIADB, MYSQL, SQLITE })
     public static Field<JSON> jsonRemove(Field<JSON> field, Field<String> path) {
         return new JSONRemove(field, path);
     }
@@ -26301,7 +26291,7 @@ public class DSL {
      * @param path is wrapped as {@link DSL#val(Object)}.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, SQLITE })
+    @Support({ DUCKDB, MARIADB, MYSQL, SQLITE })
     public static Field<JSONB> jsonbRemove(Field<JSONB> field, @Stringly.Param String path) {
         return new JSONBRemove(field, Tools.field(path));
     }
@@ -26312,7 +26302,7 @@ public class DSL {
      * Remove a JSONB value from a JSONB field at a given path.
      */
     @NotNull
-    @Support({ MARIADB, MYSQL, SQLITE })
+    @Support({ DUCKDB, MARIADB, MYSQL, SQLITE })
     public static Field<JSONB> jsonbRemove(Field<JSONB> field, Field<String> path) {
         return new JSONBRemove(field, path);
     }

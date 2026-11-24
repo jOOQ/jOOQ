@@ -124,8 +124,6 @@ implements
 
 
 
-
-
             case FIREBIRD:
                 ctx.visit(function(N_ASCII_VAL, getDataType(), string));
                 break;

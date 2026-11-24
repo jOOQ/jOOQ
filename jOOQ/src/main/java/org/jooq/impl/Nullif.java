@@ -124,8 +124,6 @@ implements
 
 
 
-
-
             default:
                 ctx.visit(function(N_NULLIF, getDataType(), value, other));
                 break;

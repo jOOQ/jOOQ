@@ -155,8 +155,6 @@ implements
 
 
 
-
-
             case CLICKHOUSE:
             case DERBY:
             case SQLITE:

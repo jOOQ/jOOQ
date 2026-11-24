@@ -146,8 +146,6 @@ implements
 
 
 
-
-
             case POSTGRES:
                 ctx.visit(function(N_GEN_RANDOM_UUID, getDataType()));
                 break;

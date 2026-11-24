@@ -141,8 +141,6 @@ implements
 
 
 
-
-
             case CLICKHOUSE:
                 ctx.visit(function(N_substringIndex, getDataType(), string, delimiter, n));
                 break;

@@ -116,8 +116,6 @@ implements
 
 
 
-
-
             case CUBRID:
             case FIREBIRD:
                 ctx.visit(field.eq(inline(true, field.getDataType())));

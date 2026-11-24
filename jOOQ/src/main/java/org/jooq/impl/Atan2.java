@@ -118,8 +118,6 @@ implements
 
 
 
-
-
             default:
                 ctx.visit(function(N_ATAN2, getDataType(), y, x));
                 break;

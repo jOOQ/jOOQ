@@ -123,8 +123,6 @@ implements
 
 
 
-
-
             case SQLITE:
                 ctx.visit(when(((Field) value).gt(zero()), inline(1))
                 .when(((Field) value).lt(zero()), inline(-1))

@@ -165,8 +165,6 @@ implements
 
 
 
-
-
             case CLICKHOUSE:
                 ctx.visit(function(N_bitTest, getDataType(), value, bit));
                 break;

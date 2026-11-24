@@ -137,8 +137,6 @@ implements
 
 
 
-
-
             case FIREBIRD:
                 ctx.visit(idiv(
                     imul(

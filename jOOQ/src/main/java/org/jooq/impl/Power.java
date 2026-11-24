@@ -128,8 +128,6 @@ implements
 
 
 
-
-
             case CLICKHOUSE:
                 ctx.visit(function(N_POW, getDataType(), base, exponent));
                 break;

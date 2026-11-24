@@ -138,8 +138,6 @@ implements
 
 
 
-
-
             case MARIADB:
             case MYSQL:
                 ctx.visit(function(N_JSON_LENGTH, getDataType(), field));

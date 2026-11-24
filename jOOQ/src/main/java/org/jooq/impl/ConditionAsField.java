@@ -130,8 +130,6 @@ implements
 
 
 
-
-
             case CUBRID: {
                 AbstractCondition.acceptCase(ctx, condition);
                 break;

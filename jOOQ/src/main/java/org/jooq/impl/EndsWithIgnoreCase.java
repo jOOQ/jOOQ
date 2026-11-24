@@ -106,8 +106,6 @@ implements
 
 
 
-
-
             default:
                 ctx.visit(string.lower().endsWith(suffix.lower()));
                 break;

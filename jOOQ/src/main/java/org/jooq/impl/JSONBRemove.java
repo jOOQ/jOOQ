@@ -115,8 +115,6 @@ implements
 
 
 
-
-
             default:
                 ctx.visit(function(N_JSON_REMOVE, JSONB, field, path));
                 break;

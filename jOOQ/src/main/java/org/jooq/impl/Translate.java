@@ -135,8 +135,6 @@ implements
 
 
 
-
-
             default:
                 ctx.visit(function(N_TRANSLATE, getDataType(), string, from, to));
                 break;

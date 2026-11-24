@@ -106,8 +106,6 @@ implements
 
 
 
-
-
             default:
                 ctx.visit(value.lower().contains(content.lower()));
                 break;

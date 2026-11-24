@@ -112,8 +112,6 @@ implements
 
 
 
-
-
             default:
                 ctx.visit(function(N_UPPER, getDataType(), string));
                 break;

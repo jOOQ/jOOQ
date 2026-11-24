@@ -130,8 +130,6 @@ implements
 
 
 
-
-
             default:
                 ctx.visit(function(N_ACOS, getDataType(), value));
                 break;

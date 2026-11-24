@@ -153,8 +153,6 @@ implements
 
 
 
-
-
             case DERBY:
             case FIREBIRD:
                 ctx.visit(values.isEmpty()

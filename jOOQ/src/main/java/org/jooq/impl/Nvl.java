@@ -164,8 +164,6 @@ implements
 
 
 
-
-
             case DERBY:
                 ctx.visit(DSL.coalesce(value, defaultValue));
                 break;

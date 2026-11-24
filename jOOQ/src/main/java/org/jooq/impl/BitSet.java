@@ -217,8 +217,6 @@ implements
 
 
 
-
-
             case CLICKHOUSE:
             case CUBRID:
             case DUCKDB:

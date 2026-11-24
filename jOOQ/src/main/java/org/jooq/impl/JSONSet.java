@@ -118,8 +118,6 @@ implements
 
 
 
-
-
             case DUCKDB:
                 ctx.visit(function(N_JSON_SET, JSON, field, path, DSL.coalesce(DSL.function(N_TO_JSON, JSON, value), inline("null"))));
                 break;

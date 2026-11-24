@@ -141,8 +141,6 @@ implements
 
 
 
-
-
             case SQLITE:
                 ctx.visit(DSL.abs(function(N_RANDOM, DECIMAL)).div(inline(new BigDecimal("9223372036854775808.0"))));
                 break;

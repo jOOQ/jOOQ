@@ -113,8 +113,6 @@ implements
 
 
 
-
-
             default:
                 ctx.visit(function(N_OCTET_LENGTH, getDataType(), bytes));
                 break;

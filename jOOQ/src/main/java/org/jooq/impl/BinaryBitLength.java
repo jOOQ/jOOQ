@@ -122,8 +122,6 @@ implements
 
 
 
-
-
             default:
                 ctx.visit(function(N_BIT_LENGTH, getDataType(), bytes));
                 break;

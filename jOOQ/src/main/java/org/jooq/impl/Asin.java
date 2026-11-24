@@ -126,8 +126,6 @@ implements
 
 
 
-
-
             default:
                 ctx.visit(function(N_ASIN, getDataType(), value));
                 break;

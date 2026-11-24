@@ -150,8 +150,6 @@ implements
 
 
 
-
-
             case DERBY:
             case FIREBIRD:
             case HSQLDB:

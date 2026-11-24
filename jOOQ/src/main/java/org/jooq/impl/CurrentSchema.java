@@ -142,8 +142,6 @@ implements
 
 
 
-
-
             case CUBRID:
             case FIREBIRD:
             case SQLITE:

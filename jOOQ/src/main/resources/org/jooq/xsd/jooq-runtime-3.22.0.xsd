@@ -1495,6 +1495,16 @@ jOOQ queries, for which no specific largeMaxRows value was specified.]]></jxb:ja
 jOOQ queries, for which no specific fetchSize value was specified.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>
 
+      <element name="fetchSizeOnFetchOne" type="boolean" minOccurs="0" maxOccurs="1" default="true">
+        <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[Whether jOOQ should automatically set a JDBC fetchSize of 2 (or 1, if a LIMIT 1 clause guarantees at most one row) on
+{@link org.jooq.ResultQuery#fetchOne()} and {@link org.jooq.ResultQuery#fetchSingle()} calls, unless an explicit
+{@link org.jooq.ResultQuery#fetchSize(int)} was specified on the query.
+<p>
+jOOQ never fetches more than 2 rows in these cases, as it only needs to detect a {@link org.jooq.exception.TooManyRowsException}.
+Passing this information on to the JDBC driver may help reduce driver side buffering and memory consumption in case of
+such an exception. Some JDBC drivers may not handle frequent fetchSize changes well, in case of which this flag can be turned off.]]></jxb:javadoc></jxb:property></appinfo></annotation>
+      </element>
+
       <element name="batchSize" type="int" minOccurs="0" maxOccurs="1" default="2147483647">
         <annotation><appinfo><jxb:property><jxb:javadoc><![CDATA[A property specifying a batch size that should be applied to all automatically created {@link org.jooq.tools.jdbc.BatchedConnection} instances.]]></jxb:javadoc></jxb:property></appinfo></annotation>
       </element>

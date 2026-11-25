@@ -46,6 +46,7 @@ import static org.jooq.impl.Internal.truncateUpdateCount;
 import static org.jooq.impl.Tools.consumeResultSets;
 import static org.jooq.impl.Tools.executeStatementAndGetFirstResultSet;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -67,6 +68,7 @@ import org.jooq.ResultQuery;
 import org.jooq.Results;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
+import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.jdbc.MockResultSet;
@@ -97,6 +99,8 @@ implements
     private transient boolean              many;
     private transient Cursor<R>            cursor;
     private transient boolean              autoclosing                       = true;
+    private transient int                  fetchSizeHint;
+    private transient boolean              fetchSizeHintApplied;
     private Result<R>                      result;
     private ResultsImpl                    results;
 
@@ -208,6 +212,45 @@ implements
         }
     }
 
+    /**
+     * [#8882] Apply a fetch size hint to the statement, if applicable, or reset
+     * a previously applied hint on a statement that has been kept open.
+     */
+    private final void applyFetchSizeHint(ExecuteContext ctx) throws SQLException {
+        PreparedStatement s = ctx.statement();
+
+        if (s == null)
+            return;
+
+        int h = fetchSizeHint(ctx.settings());
+        if (h != 0) {
+            if (log.isDebugEnabled())
+                log.debug("Setting fetch size hint", h);
+
+            s.setFetchSize(h);
+            fetchSizeHintApplied = keepStatement();
+        }
+
+        // [#8882] Statements may be kept open and re-executed with fetch() or
+        //         fetchLazy(), after a fetchOne() or fetchSingle() call
+        else if (fetchSizeHintApplied) {
+            s.setFetchSize(SettingsTools.getFetchSize(fetchSize, ctx.settings()));
+            fetchSizeHintApplied = false;
+        }
+    }
+
+    private final int fetchSizeHint(Settings settings) {
+
+        // [#8882] An explicit fetchSize on the query takes precedence
+        if (fetchSizeHint == 0 || fetchSize != 0 || Boolean.FALSE.equals(settings.isFetchSizeOnFetchOne()))
+            return 0;
+
+        // [#8882] Don't override driver specific (e.g. negative) or smaller
+        //         fetch sizes from Settings.fetchSize
+        int f = SettingsTools.getFetchSize(0, settings);
+        return f == 0 || f > fetchSizeHint ? fetchSizeHint : 0;
+    }
+
     final long maxRows(ExecuteContext ctx) {
         if (maxRows > 0L)
             return maxRows;
@@ -227,6 +270,9 @@ implements
         int f = SettingsTools.getFetchSize(fetchSize, ctx.settings());
         if (REPORT_FETCH_SIZE_WITH_AUTOCOMMIT.contains(ctx.dialect()) && f != 0 && DefaultExecuteContext.connection(ctx).getAutoCommit())
             log.info("Fetch Size", "A fetch size of " + f + " was set on an auto-commit PostgreSQL connection, which is not recommended. See https://jdbc.postgresql.org/documentation/query/#getting-results-based-on-a-cursor");
+
+        // [#8882] fetchOne() and fetchSingle() never fetch more than 2 rows
+        applyFetchSizeHint(ctx);
 
         SQLException e = executeStatementAndGetFirstResultSet(ctx, rendered.skipUpdateCounts);
         listener.executeEnd(ctx);
@@ -319,6 +365,40 @@ implements
         finally {
             autoclosing = previousAutoClosing;
         }
+    }
+
+    /**
+     * [#8882] Like {@link #fetchLazyNonAutoClosing()}, but pass a fetch size
+     * hint to the JDBC driver, if no explicit fetch size was specified.
+     */
+    final Cursor<R> fetchLazyNonAutoClosing(int hint) {
+        final int previousFetchSizeHint = fetchSizeHint;
+
+        // [#3515] TODO: Avoid modifying a Query's per-execution state
+        fetchSizeHint = hint;
+
+        try {
+            return fetchLazyNonAutoClosing();
+        }
+        finally {
+            fetchSizeHint = previousFetchSizeHint;
+        }
+    }
+
+    @Override
+    public final R fetchOne() {
+        boolean l = hasLimit1();
+
+        // [#7001] [#7430] [#8882] At most 1 or 2 rows are fetched
+        return Tools.fetchOne(fetchLazyNonAutoClosing(l ? 1 : 2), l);
+    }
+
+    @Override
+    public final R fetchSingle() {
+        boolean l = hasLimit1();
+
+        // [#7001] [#7430] [#8882] At most 1 or 2 rows are fetched
+        return Tools.fetchSingle(fetchLazyNonAutoClosing(l ? 1 : 2), l);
     }
 
     @Override

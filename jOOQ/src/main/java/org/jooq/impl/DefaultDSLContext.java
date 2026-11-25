@@ -5660,7 +5660,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <R extends Record> R fetchOne(Table<R> table, Condition condition) {
-        return Tools.fetchOne(fetchLazy(table, condition));
+        return selectFrom(table).where(condition).fetchOne();
     }
 
     @Override
@@ -5680,7 +5680,7 @@ public class DefaultDSLContext extends AbstractScope implements DSLContext, Seri
 
     @Override
     public <R extends Record> R fetchSingle(Table<R> table, Condition condition) {
-        return Tools.fetchSingle(fetchLazy(table, condition));
+        return selectFrom(table).where(condition).fetchSingle();
     }
 
     @Override

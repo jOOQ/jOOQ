@@ -449,6 +449,8 @@ public class Settings
     protected Long largeMaxRows = 0L;
     @XmlElement(defaultValue = "0")
     protected Integer fetchSize = 0;
+    @XmlElement(defaultValue = "true")
+    protected Boolean fetchSizeOnFetchOne = true;
     @XmlElement(defaultValue = "2147483647")
     protected Integer batchSize = 2147483647;
     @XmlElement(defaultValue = "true")
@@ -6020,6 +6022,42 @@ public class Settings
     }
 
     /**
+     * Whether jOOQ should automatically set a JDBC fetchSize of 2 (or 1, if a LIMIT 1 clause guarantees at most one row) on
+     * {@link org.jooq.ResultQuery#fetchOne()} and {@link org.jooq.ResultQuery#fetchSingle()} calls, unless an explicit
+     * {@link org.jooq.ResultQuery#fetchSize(int)} was specified on the query.
+     * <p>
+     * jOOQ never fetches more than 2 rows in these cases, as it only needs to detect a {@link org.jooq.exception.TooManyRowsException}.
+     * Passing this information on to the JDBC driver may help reduce driver side buffering and memory consumption in case of
+     * such an exception. Some JDBC drivers may not handle frequent fetchSize changes well, in case of which this flag can be turned off.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isFetchSizeOnFetchOne() {
+        return fetchSizeOnFetchOne;
+    }
+
+    /**
+     * Whether jOOQ should automatically set a JDBC fetchSize of 2 (or 1, if a LIMIT 1 clause guarantees at most one row) on
+     * {@link org.jooq.ResultQuery#fetchOne()} and {@link org.jooq.ResultQuery#fetchSingle()} calls, unless an explicit
+     * {@link org.jooq.ResultQuery#fetchSize(int)} was specified on the query.
+     * <p>
+     * jOOQ never fetches more than 2 rows in these cases, as it only needs to detect a {@link org.jooq.exception.TooManyRowsException}.
+     * Passing this information on to the JDBC driver may help reduce driver side buffering and memory consumption in case of
+     * such an exception. Some JDBC drivers may not handle frequent fetchSize changes well, in case of which this flag can be turned off.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setFetchSizeOnFetchOne(Boolean value) {
+        this.fetchSizeOnFetchOne = value;
+    }
+
+    /**
      * A property specifying a batch size that should be applied to all automatically created {@link org.jooq.tools.jdbc.BatchedConnection} instances.
      * 
      */
@@ -9910,6 +9948,21 @@ public class Settings
     }
 
     /**
+     * Whether jOOQ should automatically set a JDBC fetchSize of 2 (or 1, if a LIMIT 1 clause guarantees at most one row) on
+     * {@link org.jooq.ResultQuery#fetchOne()} and {@link org.jooq.ResultQuery#fetchSingle()} calls, unless an explicit
+     * {@link org.jooq.ResultQuery#fetchSize(int)} was specified on the query.
+     * <p>
+     * jOOQ never fetches more than 2 rows in these cases, as it only needs to detect a {@link org.jooq.exception.TooManyRowsException}.
+     * Passing this information on to the JDBC driver may help reduce driver side buffering and memory consumption in case of
+     * such an exception. Some JDBC drivers may not handle frequent fetchSize changes well, in case of which this flag can be turned off.
+     * 
+     */
+    public Settings withFetchSizeOnFetchOne(Boolean value) {
+        setFetchSizeOnFetchOne(value);
+        return this;
+    }
+
+    /**
      * A property specifying a batch size that should be applied to all automatically created {@link org.jooq.tools.jdbc.BatchedConnection} instances.
      * 
      */
@@ -10835,6 +10888,7 @@ public class Settings
         builder.append("maxRows", maxRows);
         builder.append("largeMaxRows", largeMaxRows);
         builder.append("fetchSize", fetchSize);
+        builder.append("fetchSizeOnFetchOne", fetchSizeOnFetchOne);
         builder.append("batchSize", batchSize);
         builder.append("debugInfoOnStackTrace", debugInfoOnStackTrace);
         builder.append("inListPadding", inListPadding);
@@ -12596,6 +12650,15 @@ public class Settings
                 return false;
             }
         }
+        if (fetchSizeOnFetchOne == null) {
+            if (other.fetchSizeOnFetchOne!= null) {
+                return false;
+            }
+        } else {
+            if (!fetchSizeOnFetchOne.equals(other.fetchSizeOnFetchOne)) {
+                return false;
+            }
+        }
         if (batchSize == null) {
             if (other.batchSize!= null) {
                 return false;
@@ -13463,6 +13526,7 @@ public class Settings
         result = ((prime*result)+((maxRows == null)? 0 :maxRows.hashCode()));
         result = ((prime*result)+((largeMaxRows == null)? 0 :largeMaxRows.hashCode()));
         result = ((prime*result)+((fetchSize == null)? 0 :fetchSize.hashCode()));
+        result = ((prime*result)+((fetchSizeOnFetchOne == null)? 0 :fetchSizeOnFetchOne.hashCode()));
         result = ((prime*result)+((batchSize == null)? 0 :batchSize.hashCode()));
         result = ((prime*result)+((debugInfoOnStackTrace == null)? 0 :debugInfoOnStackTrace.hashCode()));
         result = ((prime*result)+((inListPadding == null)? 0 :inListPadding.hashCode()));

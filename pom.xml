@@ -58,6 +58,14 @@
         <!-- Kotlin versions -->
         <kotlin.version>1.9.25</kotlin.version>
         <kotlin2.version>2.4.21</kotlin2.version>
+
+        <!-- kotlinc runs in the Kotlin daemon, a separate JVM, which inherits Maven's -Xmx but
+             not its GC, and defaults to ParallelGC. With ParallelGC, kotlinc runs into
+             "GC overhead limit exceeded" on the large jOOQ-test-codegen-kotlin sources, so use G1
+             for kotlinc, while Maven (and thus javac) keeps ParallelGC, see MAVEN_OPTS in
+             jOOQ-tools/main-build.sh. The format is a comma separated list of JVM arguments
+             without leading dashes. -->
+        <kotlin.compiler.daemon.jvmArgs>XX:+UseG1GC</kotlin.compiler.daemon.jvmArgs>
         <kotlinx.coroutines.version>1.11.0</kotlinx.coroutines.version>
 
         <!-- DefaultRecordMapper and jOOQ-meta-extensions can read JPA annotations -->

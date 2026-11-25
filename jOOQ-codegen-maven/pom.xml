@@ -86,6 +86,20 @@
                     </archive>
                 </configuration>
             </plugin>
+            <!-- [jOOQ/jOOQ#20522] Since maven-core 3.10, Maven's own artifacts declare
+                          Automatic-Module-Name entries (org.apache.maven.v3.*), so the
+                          javadoc plugin puts them on the module path, where their split
+                          packages (e.g. org.apache.maven.artifact in both maven-core and
+                          maven-artifact) make javadoc fail. legacyMode (available since
+                          maven-javadoc-plugin 3.6.0) documents this module on the classpath
+                          only, as before. -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <configuration>
+                    <legacyMode>true</legacyMode>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 

@@ -44,6 +44,7 @@ import static org.jooq.JoinType.CROSS_JOIN;
 import static org.jooq.JoinType.FULL_OUTER_JOIN;
 import static org.jooq.JoinType.JOIN;
 import static org.jooq.JoinType.LEFT_ANTI_JOIN;
+import static org.jooq.JoinType.LEFT_ASOF_JOIN;
 import static org.jooq.JoinType.LEFT_OUTER_JOIN;
 import static org.jooq.JoinType.LEFT_SEMI_JOIN;
 import static org.jooq.JoinType.NATURAL_FULL_OUTER_JOIN;
@@ -62,6 +63,7 @@ import static org.jooq.SQLDialect.CUBRID;
 // ...
 // ...
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.DUCKDB;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
@@ -88,17 +90,28 @@ import static org.jooq.SQLDialect.TRINO;
 // ...
 import static org.jooq.SQLDialect.YUGABYTEDB;
 import static org.jooq.impl.DSL.exists;
+import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.lateral;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectFrom;
+import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.Keywords.K_ANTI_JOIN;
+import static org.jooq.impl.Keywords.K_ASOF_JOIN;
+import static org.jooq.impl.Keywords.K_ASOF_LEFT_JOIN;
+import static org.jooq.impl.Keywords.K_CROSS_JOIN_NEAREST;
+import static org.jooq.impl.Keywords.K_FROM;
+import static org.jooq.impl.Keywords.K_LEFT_ASOF_JOIN;
+import static org.jooq.impl.Keywords.K_LEFT_JOIN_NEAREST;
+import static org.jooq.impl.Keywords.K_MATCH;
+import static org.jooq.impl.Keywords.K_MATCH_CONDITION;
 import static org.jooq.impl.Keywords.K_ON;
 import static org.jooq.impl.Keywords.K_PARTITION_BY;
 import static org.jooq.impl.Keywords.K_SEMI_JOIN;
 import static org.jooq.impl.Keywords.K_USING;
+import static org.jooq.impl.Keywords.K_WHERE;
 import static org.jooq.impl.Names.N_JOIN;
 import static org.jooq.impl.QueryPartListView.wrap;
 import static org.jooq.impl.TableImpl.path;
@@ -116,6 +129,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
+import org.jooq.Comparator;
 import org.jooq.Condition;
 import org.jooq.Context;
 import org.jooq.Field;
@@ -130,6 +144,7 @@ import org.jooq.Record;
 import org.jooq.RenderContext;
 // ...
 import org.jooq.SQLDialect;
+import org.jooq.SortField;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableLike;
@@ -162,6 +177,7 @@ abstract class JoinTable<J extends JoinTable<J>> extends AbstractJoinTable<J> {
     static final Set<SQLDialect>  EMULATE_APPLY              = SQLDialect.supportedBy(FIREBIRD, POSTGRES, TRINO, YUGABYTEDB);
     static final Set<SQLDialect>  EMULATE_SEMI_ANTI_JOIN     = SQLDialect.supportedBy(CUBRID, DERBY, FIREBIRD, H2, HSQLDB, IGNITE, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB);
     static final Set<SQLDialect>  NO_SUPPORT_NESTED_JOIN     = SQLDialect.supportedBy(CLICKHOUSE);
+    static final Set<SQLDialect>  NATIVE_ASOF_JOIN           = SQLDialect.supportedBy(CLICKHOUSE, DUCKDB, TRINO);
 
     final Table<?>                lhs;
     final Table<?>                rhs;
@@ -172,6 +188,9 @@ abstract class JoinTable<J extends JoinTable<J>> extends AbstractJoinTable<J> {
     final JoinHint                hint;
     final ConditionProviderImpl   condition;
     final QueryPartList<Field<?>> using;
+
+    // [#20146] The ASOF JOIN match condition
+    Condition                     match;
 
     JoinTable(TableLike<?> lhs, TableLike<?> rhs, JoinType type, JoinHint hint) {
         this(lhs, rhs, type, hint, emptyList());
@@ -201,7 +220,7 @@ abstract class JoinTable<J extends JoinTable<J>> extends AbstractJoinTable<J> {
         if (lhs == newLhs && rhs == newRhs && condition == newCondition)
             return (J) this;
 
-        return construct(newLhs, lhsPartitionBy, rhsPartitionBy, newRhs, newCondition, using, hint);
+        return construct(newLhs, lhsPartitionBy, rhsPartitionBy, newRhs, newCondition, using, hint, match);
     }
 
     // ------------------------------------------------------------------------
@@ -231,8 +250,12 @@ abstract class JoinTable<J extends JoinTable<J>> extends AbstractJoinTable<J> {
 
 
 
+        // [#20146] ASOF JOIN have their own syntax and emulations
+        if (this instanceof AsofJoinTable)
+            acceptAsof(ctx);
+
         // [#14985] APPLY or LATERAL with path joins
-        if ((this instanceof CrossApply || this instanceof OuterApply) && rpath)
+        else if ((this instanceof CrossApply || this instanceof OuterApply) && rpath)
             ctx.visit($table2(selectFrom(rhs).asTable(rhs)));
         else if (rhs instanceof Lateral && path(((Lateral<?>) rhs).$arg1()) != null)
             ctx.visit($table2(lateral(selectFrom(((Lateral<?>) rhs).$arg1()).asTable(((Lateral<?>) rhs).$arg1()))));
@@ -258,6 +281,281 @@ abstract class JoinTable<J extends JoinTable<J>> extends AbstractJoinTable<J> {
 
         else
             accept0(ctx);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: [#20146] ASOF JOIN
+    // -------------------------------------------------------------------------
+
+    /**
+     * The normalised match condition of an <code>ASOF JOIN</code>, where
+     * {@link #lhs()} references the left table of the join, and
+     * {@link #rhs()} references the right table of the join.
+     */
+    static final record AsofMatch(Field<?> lhs, Comparator comparator, Field<?> rhs) {
+
+        @SuppressWarnings({ "unchecked", "rawtypes" })
+        final Condition condition() {
+            return ((Field) lhs).compare(comparator, (Field) rhs);
+        }
+
+        /**
+         * The order of the right hand side's operand that produces the
+         * "nearest" row first.
+         */
+        final SortField<?> order() {
+            switch (comparator) {
+                case GREATER:
+                case GREATER_OR_EQUAL:
+                    return rhs.desc();
+
+                default:
+                    return rhs.asc();
+            }
+        }
+    }
+
+    /**
+     * Get the normalised match condition of an <code>ASOF JOIN</code>, or
+     * <code>null</code> if the match condition is not a supported comparison
+     * predicate.
+     */
+    final AsofMatch asofMatch() {
+        Field<?> a1;
+        Field<?> a2;
+        Comparator c;
+
+        if (match instanceof QOM.Gt<?> x) {
+            a1 = x.$arg1();
+            a2 = x.$arg2();
+            c = Comparator.GREATER;
+        }
+        else if (match instanceof QOM.Ge<?> x) {
+            a1 = x.$arg1();
+            a2 = x.$arg2();
+            c = Comparator.GREATER_OR_EQUAL;
+        }
+        else if (match instanceof QOM.Lt<?> x) {
+            a1 = x.$arg1();
+            a2 = x.$arg2();
+            c = Comparator.LESS;
+        }
+        else if (match instanceof QOM.Le<?> x) {
+            a1 = x.$arg1();
+            a2 = x.$arg2();
+            c = Comparator.LESS_OR_EQUAL;
+        }
+        else
+            return null;
+
+        // Most dialects expect the left operand of the match condition to
+        // reference the left table of the join. If users have provided the
+        // inverse order, mirror the comparison.
+        if (references(a1, rhs) && !references(a2, rhs))
+            return new AsofMatch(a2, c.mirror(), a1);
+        else
+            return new AsofMatch(a1, c, a2);
+    }
+
+    private static final boolean references(Field<?> f, Table<?> t) {
+        if (f instanceof TableField<?, ?> tf && tf.getTable() != null)
+            return containsTable(t, tf.getTable(), false);
+
+        Name q = f.getQualifiedName();
+        return q.qualified() && q.qualifier().last().equalsIgnoreCase(t.getName());
+    }
+
+    private final void acceptAsof(Context<?> ctx) {
+        if (match == null)
+            throw new DataAccessException("An ASOF JOIN requires a match condition: " + this);
+
+        boolean left = type == LEFT_ASOF_JOIN;
+        AsofMatch m = asofMatch();
+        Condition mc = m != null ? m.condition() : match;
+
+        switch (ctx.family()) {
+
+            // [#20146] The match condition is part of the ON clause
+            case CLICKHOUSE:
+            case DUCKDB: {
+                Keyword keyword = !left
+                    ? K_ASOF_JOIN
+                    : ctx.family() == DUCKDB
+                    ? K_ASOF_LEFT_JOIN
+                    : K_LEFT_ASOF_JOIN;
+
+                acceptAsofNative(ctx, keyword, null);
+                ctx.formatIndentStart();
+                toSQLJoinCondition(ctx, DSL.and(condition(), mc));
+                ctx.formatIndentEnd()
+                   .formatIndentEnd();
+                break;
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            // [#20146] Trino 481 added support for NEAREST joins
+            case TRINO: {
+                toSQLTable(ctx, lhs);
+                ctx.formatIndentStart()
+                   .formatSeparator()
+                   .visit(left ? K_LEFT_JOIN_NEAREST : K_CROSS_JOIN_NEAREST)
+                   .sql(" (")
+                   .formatIndentStart()
+                   .formatNewLine()
+                   .visit(K_FROM)
+                   .sql(' ');
+
+                toSQLTable(ctx, rhs);
+
+                if (hasCondition())
+                    ctx.formatSeparator()
+                       .visit(K_WHERE)
+                       .sql(' ')
+                       .visit(condition());
+
+                ctx.formatSeparator()
+                   .visit(K_MATCH)
+                   .sql(' ')
+                   .visit(mc)
+                   .formatIndentEnd()
+                   .formatNewLine()
+                   .sql(')');
+
+                if (left)
+                    toSQLJoinCondition(ctx, trueCondition());
+
+                ctx.formatIndentEnd();
+                break;
+            }
+
+            default:
+                acceptAsofLateral(ctx, left, m);
+                break;
+        }
+    }
+
+    private final void acceptAsofNative(Context<?> ctx, Keyword keyword, Condition matchCondition) {
+        toSQLTable(ctx, lhs);
+        ctx.formatIndentStart()
+           .formatSeparator()
+           .visit(keyword)
+           .sql(' ');
+
+        toSQLTable(ctx, rhs);
+
+        if (matchCondition != null)
+            ctx.formatIndentStart()
+               .formatSeparator()
+               .visit(K_MATCH_CONDITION)
+               .sql(" (")
+               .visit(matchCondition)
+               .sql(')')
+               .formatIndentEnd();
+    }
+
+    /**
+     * [#20146] Emulate an <code>ASOF JOIN</code> using a <code>LATERAL</code>
+     * derived table that produces the "nearest" row only, e.g.
+     * <pre><code>
+     * -- Native
+     * FROM l LEFT ASOF JOIN r MATCH_CONDITION (l.ts &gt;= r.ts) ON l.k = r.k
+     *
+     * -- Emulated
+     * FROM l LEFT JOIN LATERAL (
+     *   SELECT r.*
+     *   FROM r
+     *   WHERE l.k = r.k AND l.ts &gt;= r.ts
+     *   ORDER BY r.ts DESC
+     *   FETCH FIRST ROW ONLY
+     * ) r ON TRUE
+     * </code></pre>
+     */
+    private final void acceptAsofLateral(Context<?> ctx, boolean left, AsofMatch m) {
+        if (m == null)
+            throw new DataAccessException("ASOF JOIN emulation requires a match condition of the form [lhs] { < | <= | > | >= } [rhs]. Unsupported match condition: " + match);
+
+        Table<?> t = selectFrom(rhs)
+            .where(condition(), m.condition())
+            .orderBy(m.order())
+            .limit(inline(1))
+            .asTable(rhs);
+
+        if (left)
+            ctx.visit(lhs.leftJoin(lateral(t)).on(noCondition()));
+        else
+            ctx.visit(lhs.crossJoin(lateral(t)));
+    }
+
+    /**
+     * [#20146] The <code>LATERAL</code> emulation of an <code>ASOF JOIN</code>
+     * wraps the right table in a derived table. If that table isn't aliased,
+     * then references to its columns must not be qualified with a schema.
+     */
+    static final void registerAsofJoinMappings(Context<?> ctx, Iterable<? extends Table<?>> tables) {
+        if (
+
+
+
+            !NATIVE_ASOF_JOIN.contains(ctx.dialect())
+        )
+            for (Table<?> t : tables)
+                registerAsofJoinMappings0(ctx, t);
+    }
+
+    private static final void registerAsofJoinMappings0(Context<?> ctx, Table<?> t) {
+        if (t instanceof JoinTable<?> j) {
+            registerAsofJoinMappings0(ctx, j.lhs);
+            registerAsofJoinMappings0(ctx, j.rhs);
+
+            if (j instanceof AsofJoinTable
+                && j.rhs instanceof TableImpl
+                && Tools.alias(j.rhs) == null
+                && j.rhs.getQualifiedName().qualified()
+            )
+                ctx.scopeRegister(j.rhs, true, DSL.table(j.rhs.getUnqualifiedName()));
+        }
+    }
+
+    private static final void collectSemiAntiJoinPredicate(Context<?> ctx, Condition c) {
+        @SuppressWarnings("unchecked")
+        List<Condition> semiAntiJoinPredicates = (List<Condition>) ctx.data(DATA_COLLECTED_SEMI_ANTI_JOIN);
+
+        if (semiAntiJoinPredicates == null) {
+            semiAntiJoinPredicates = new ArrayList<>();
+            ctx.data(DATA_COLLECTED_SEMI_ANTI_JOIN, semiAntiJoinPredicates);
+        }
+
+        semiAntiJoinPredicates.add(c);
     }
 
     private final void accept0(Context<?> ctx) {
@@ -331,6 +629,13 @@ abstract class JoinTable<J extends JoinTable<J>> extends AbstractJoinTable<J> {
         }
         ctx.formatIndentEnd();
     }
+
+
+
+
+
+
+
 
 
 
@@ -964,12 +1269,25 @@ abstract class JoinTable<J extends JoinTable<J>> extends AbstractJoinTable<J> {
         JoinHint hint
     );
 
+    J construct(
+        Table<?> table1,
+        Collection<? extends Field<?>> partitionBy1,
+        Collection<? extends Field<?>> partitionBy2,
+        Table<?> table2,
+        Condition on,
+        Collection<? extends Field<?>> using,
+        JoinHint hint,
+        Condition m
+    ) {
+        return construct(table1, partitionBy1, partitionBy2, table2, on, using, hint);
+    }
+
     public final Table<?> $table1() {
         return lhs;
     }
 
     public final J $table1(Table<?> t1) {
-        return construct(t1, $partitionBy1(), $partitionBy2(), $table2(), $on(), $using(), $hint());
+        return construct(t1, $partitionBy1(), $partitionBy2(), $table2(), $on(), $using(), $hint(), match);
     }
 
     public final UnmodifiableList<Field<?>> $partitionBy1() {
@@ -977,7 +1295,7 @@ abstract class JoinTable<J extends JoinTable<J>> extends AbstractJoinTable<J> {
     }
 
     public final J $partitionBy1(Collection<? extends Field<?>> p1) {
-        return construct($table1(), p1, $partitionBy2(), $table2(), $on(), $using(), $hint());
+        return construct($table1(), p1, $partitionBy2(), $table2(), $on(), $using(), $hint(), match);
     }
 
     public final UnmodifiableList<Field<?>> $partitionBy2() {
@@ -985,7 +1303,7 @@ abstract class JoinTable<J extends JoinTable<J>> extends AbstractJoinTable<J> {
     }
 
     public final J $partitionBy2(Collection<? extends Field<?>> p2) {
-        return construct($table1(), $partitionBy1(), p2, $table2(), $on(), $using(), $hint());
+        return construct($table1(), $partitionBy1(), p2, $table2(), $on(), $using(), $hint(), match);
     }
 
     public final Table<?> $table2() {
@@ -993,7 +1311,7 @@ abstract class JoinTable<J extends JoinTable<J>> extends AbstractJoinTable<J> {
     }
 
     public final J $table2(Table<?> t2) {
-        return construct($table1(), $partitionBy1(), $partitionBy2(), t2, $on(), $using(), $hint());
+        return construct($table1(), $partitionBy1(), $partitionBy2(), t2, $on(), $using(), $hint(), match);
     }
 
     public final JoinHint $hint() {
@@ -1001,7 +1319,7 @@ abstract class JoinTable<J extends JoinTable<J>> extends AbstractJoinTable<J> {
     }
 
     public final J $hint(JoinHint newHint) {
-        return construct($table1(), $partitionBy1(), $partitionBy2(), $table2(), $on(), $using(), newHint);
+        return construct($table1(), $partitionBy1(), $partitionBy2(), $table2(), $on(), $using(), newHint, match);
     }
 
     public final Condition $on() {
@@ -1009,7 +1327,7 @@ abstract class JoinTable<J extends JoinTable<J>> extends AbstractJoinTable<J> {
     }
 
     public final J $on(Condition o) {
-        return construct($table1(), $partitionBy1(), $partitionBy2(), $table2(), o, emptyList(), $hint());
+        return construct($table1(), $partitionBy1(), $partitionBy2(), $table2(), o, emptyList(), $hint(), match);
     }
 
     public final UnmodifiableList<Field<?>> $using() {
@@ -1017,8 +1335,10 @@ abstract class JoinTable<J extends JoinTable<J>> extends AbstractJoinTable<J> {
     }
 
     public final J $using(Collection<? extends Field<?>> u) {
-        return construct($table1(), $partitionBy1(), $partitionBy2(), $table2(), null, u, $hint());
+        return construct($table1(), $partitionBy1(), $partitionBy2(), $table2(), null, u, $hint(), match);
     }
+
+
 
 
 

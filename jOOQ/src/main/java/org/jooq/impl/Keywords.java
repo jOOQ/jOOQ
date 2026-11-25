@@ -66,6 +66,8 @@ final class Keywords {
     static final Keyword K_APPROXIMATE              = keyword("approximate");
     static final Keyword K_ARRAY                    = keyword("array");
     static final Keyword K_AS                       = keyword("as");
+    static final Keyword K_ASOF_JOIN                = keyword("asof join");
+    static final Keyword K_ASOF_LEFT_JOIN           = keyword("asof left join");
     static final Keyword K_AS_OF                    = keyword("as of");
     static final Keyword K_ATOMIC                   = keyword("atomic");
     static final Keyword K_AUTHENTICATION           = keyword("authentication");
@@ -115,6 +117,7 @@ final class Keywords {
     static final Keyword K_COUNT                    = keyword("count");
     static final Keyword K_COUNTER                  = keyword("counter");
     static final Keyword K_CREATE                   = keyword("create");
+    static final Keyword K_CROSS_JOIN_NEAREST       = keyword("cross join nearest");
     static final Keyword K_CUBE                     = keyword("cube");
     static final Keyword K_CURRENT                  = keyword("current");
     static final Keyword K_CURRENT_ROW              = keyword("current row");
@@ -268,6 +271,8 @@ final class Keywords {
     static final Keyword K_LATERAL                  = keyword("lateral");
     static final Keyword K_LEADING                  = keyword("leading");
     static final Keyword K_LEAVE                    = keyword("leave");
+    static final Keyword K_LEFT_ASOF_JOIN           = keyword("left asof join");
+    static final Keyword K_LEFT_JOIN_NEAREST        = keyword("left join nearest");
     static final Keyword K_LET                      = keyword("let");
     static final Keyword K_LIKE                     = keyword("like");
     static final Keyword K_LIKE_REGEX               = keyword("like_regex");
@@ -275,7 +280,9 @@ final class Keywords {
     static final Keyword K_LOCAL                    = keyword("local");
     static final Keyword K_LOCK_IN_SHARE_MODE       = keyword("lock in share mode");
     static final Keyword K_LOOP                     = keyword("loop");
+    static final Keyword K_MATCH                    = keyword("match");
     static final Keyword K_MATCHED                  = keyword("matched");
+    static final Keyword K_MATCH_CONDITION          = keyword("match_condition");
     static final Keyword K_MATERIALIZE              = keyword("materialize");
     static final Keyword K_MATERIALIZED             = keyword("materialized");
     static final Keyword K_MAX                      = keyword("max");

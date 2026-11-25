@@ -2497,6 +2497,9 @@ implements
             if (t instanceof TableImpl || t instanceof TableAlias)
                 context.scopeRegister(t, true);
         });
+
+        // [#20146] Some ASOF JOIN emulations wrap tables in derived tables
+        JoinTable.registerAsofJoinMappings(context, tablelist);
         ConditionProviderImpl where = new ConditionProviderImpl();
 
         if (TRUE.equals(context.data().get(BooleanDataKey.DATA_SELECT_NO_DATA)))

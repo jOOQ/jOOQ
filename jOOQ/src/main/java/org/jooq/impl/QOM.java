@@ -1299,6 +1299,33 @@ public final class QOM {
             QualifiedJoin<R, LeftAntiJoin<R>>
     {}
 
+    /**
+     * The <code>ASOF JOIN</code> or <code>LEFT ASOF JOIN</code> types.
+     */
+    public interface AsofJoinTable<R extends org.jooq.Record, J extends AsofJoinTable<R, J>>
+        extends
+            QualifiedJoin<R, J>
+    {
+        @NotNull Condition $matchCondition();
+        @NotNull J $matchCondition(Condition matchCondition);
+    }
+
+    /**
+     * The <code>ASOF JOIN</code> type.
+     */
+    public interface AsofJoin<R extends org.jooq.Record>
+        extends
+            AsofJoinTable<R, AsofJoin<R>>
+    {}
+
+    /**
+     * The <code>LEFT ASOF JOIN</code> type.
+     */
+    public interface LeftAsofJoin<R extends org.jooq.Record>
+        extends
+            AsofJoinTable<R, LeftAsofJoin<R>>
+    {}
+
     // -------------------------------------------------------------------------
     // XXX: SelectFields, GroupFields and SortFields
     // -------------------------------------------------------------------------

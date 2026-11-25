@@ -4099,6 +4099,76 @@ extends
     @Support
     TableOptionalOnStep<R> leftAntiJoin(Path<?> path);
 
+    /**
+     * <code>ASOF JOIN</code> a table to this table.
+     * <p>
+     * An <code>ASOF JOIN</code> matches each row from the left hand side with
+     * at most one row from the right hand side: The "nearest" row according to
+     * a mandatory {@link TableAsofJoinStep#matchCondition(Condition)}, among
+     * the rows that satisfy the optional <code>ON</code> or <code>USING</code>
+     * clause. Rows from the left hand side that do not have any such match
+     * are removed from the result, as with an <code>INNER JOIN</code>.
+     * <p>
+     * Example:
+     * <pre><code>
+     * // SELECT * FROM trades ASOF JOIN quotes
+     * //   MATCH_CONDITION (trades.ts &gt;= quotes.ts)
+     * //   ON trades.symbol = quotes.symbol
+     * TRADES.asofJoin(QUOTES)
+     *       .matchCondition(TRADES.TS.ge(QUOTES.TS))
+     *       .on(TRADES.SYMBOL.eq(QUOTES.SYMBOL));
+     * </code></pre>
+     * <p>
+     * In dialects that do not support <code>ASOF JOIN</code> natively, this is
+     * emulated using <code>CROSS JOIN LATERAL</code> (or
+     * <code>CROSS APPLY</code>) and a derived table that applies the match
+     * condition, sorts by the right hand side's match expression, and limits
+     * the result to a single row.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    TableAsofJoinStep<Record> asofJoin(TableLike<?> table);
+
+    /**
+     * <code>LEFT ASOF JOIN</code> a table to this table.
+     * <p>
+     * A <code>LEFT ASOF JOIN</code> matches each row from the left hand side
+     * with at most one row from the right hand side: The "nearest" row
+     * according to a mandatory
+     * {@link TableAsofJoinStep#matchCondition(Condition)}, among the rows that
+     * satisfy the optional <code>ON</code> or <code>USING</code> clause. Rows
+     * from the left hand side that do not have any such match are retained, as
+     * with a <code>LEFT OUTER JOIN</code>.
+     * <p>
+     * Example:
+     * <pre><code>
+     * // SELECT * FROM trades LEFT ASOF JOIN quotes
+     * //   MATCH_CONDITION (trades.ts &gt;= quotes.ts)
+     * //   ON trades.symbol = quotes.symbol
+     * TRADES.leftAsofJoin(QUOTES)
+     *       .matchCondition(TRADES.TS.ge(QUOTES.TS))
+     *       .on(TRADES.SYMBOL.eq(QUOTES.SYMBOL));
+     * </code></pre>
+     * <p>
+     * In dialects that do not support <code>ASOF JOIN</code> natively, this is
+     * emulated using <code>LEFT JOIN LATERAL</code> (or
+     * <code>OUTER APPLY</code>) and a derived table that applies the match
+     * condition, sorts by the right hand side's match expression, and limits
+     * the result to a single row.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    TableAsofJoinStep<Record> leftAsofJoin(TableLike<?> table);
+
+    /**
+     * <code>LEFT ASOF JOIN</code> a table to this table.
+     * <p>
+     * This is the same as calling {@link #leftAsofJoin(TableLike)}.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    TableAsofJoinStep<Record> leftOuterAsofJoin(TableLike<?> table);
+
 
 
 

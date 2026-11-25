@@ -754,6 +754,7 @@ import org.jooq.Table;
 import org.jooq.TableElement;
 import org.jooq.TableField;
 import org.jooq.TableLike;
+import org.jooq.TableAsofJoinStep;
 import org.jooq.TableOnStep;
 import org.jooq.TableOptionalOnStep;
 import org.jooq.TableOuterJoinStep;
@@ -8687,6 +8688,23 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         if (join == null)
             return null;
 
+        switch (join.type) {
+            case ASOF_JOIN:
+            case LEFT_ASOF_JOIN:
+                return parseAsofJoin(left, join, forbiddenKeywords);
+
+            case JOIN:
+            case LEFT_OUTER_JOIN:
+            case CROSS_JOIN: {
+                Table<?> nearest = parseNearestJoinIf(left, join);
+
+                if (nearest != null)
+                    return nearest;
+
+                break;
+            }
+        }
+
         Table<?> right = join.type.qualified() ? parseJoinedTable(forbiddenKeywords) : parseLateral(forbiddenKeywords);
 
         TableOptionalOnStep<?> s0;
@@ -8736,6 +8754,117 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
             default:
                 return s0;
         }
+    }
+
+    /**
+     * [#20146] Parse the various <code>ASOF JOIN</code> syntaxes.
+     */
+    private final Table<?> parseAsofJoin(Table<?> left, Join join, BooleanSupplier forbiddenKeywords) {
+        Table<?> right = parseLateral(forbiddenKeywords);
+
+        // Snowflake, Doris: An explicit MATCH_CONDITION. In these dialects, ASOF JOIN is a LEFT JOIN
+        if (parseKeywordIf("MATCH_CONDITION")) {
+            parse('(');
+            Condition match = parseCondition();
+            parse(')');
+
+            TableOptionalOnStep<?> s = asofJoin(left, right, join.asofDefault ? JoinType.LEFT_ASOF_JOIN : join.type).matchCondition(match);
+
+            if (parseKeywordIf("ON"))
+                return s.on(parseCondition());
+            else if (parseKeywordIf("USING"))
+                return parseJoinUsing(s);
+            else
+                return s;
+        }
+
+        // ClickHouse, DuckDB: The match condition is the (last) inequality predicate of the ON clause
+        else if (parseKeywordIf("ON")) {
+            List<Condition> conditions = new ArrayList<>();
+            Condition match = null;
+            asofJoinConjuncts(parseCondition(), conditions);
+
+            for (int i = conditions.size() - 1; match == null && i >= 0; i--) {
+                Condition c = conditions.get(i);
+
+                if (c instanceof QOM.Gt || c instanceof QOM.Ge || c instanceof QOM.Lt || c instanceof QOM.Le)
+                    match = conditions.remove(i);
+            }
+
+            if (match == null)
+                throw exception("ASOF JOIN requires an inequality predicate in its ON clause");
+
+            TableOptionalOnStep<?> s = asofJoin(left, right, join.type).matchCondition(match);
+            return conditions.isEmpty() ? s : s.on(and(conditions));
+        }
+
+        // ClickHouse, DuckDB: The last USING column is compared with >=
+        else if (parseKeywordIf("USING")) {
+            parse('(');
+            List<Name> names = parseIdentifiers();
+            parse(')');
+
+            Name last = names.remove(names.size() - 1);
+            Table<?> l = left;
+
+            while (l instanceof JoinTable<?> j)
+                l = j.lhs;
+
+            Condition match = Tools.qualify(l, field(last)).ge(Tools.qualify(right, field(last)));
+            TableOptionalOnStep<?> s = asofJoin(left, right, join.type).matchCondition(match);
+            return names.isEmpty() ? s : s.using(Tools.fieldsByName(names.toArray(EMPTY_NAME)));
+        }
+        else
+            throw expected("MATCH_CONDITION", "ON", "USING");
+    }
+
+    private static final TableAsofJoinStep<?> asofJoin(Table<?> left, Table<?> right, JoinType type) {
+        return type == JoinType.LEFT_ASOF_JOIN ? left.leftAsofJoin(right) : left.asofJoin(right);
+    }
+
+    private static final void asofJoinConjuncts(Condition c, List<Condition> result) {
+        if (c instanceof QOM.And a) {
+            asofJoinConjuncts(a.$arg1(), result);
+            asofJoinConjuncts(a.$arg2(), result);
+        }
+        else
+            result.add(c);
+    }
+
+    /**
+     * [#20146] Parse Trino's <code>NEAREST</code> join syntax, e.g.
+     * <code>LEFT JOIN NEAREST (FROM t [ WHERE c ] MATCH m) ON TRUE</code>.
+     */
+    private final Table<?> parseNearestJoinIf(Table<?> left, Join join) {
+        int p = position();
+
+        if (!parseKeywordIf("NEAREST") || !parseIf('(') || !parseKeywordIf("FROM")) {
+            position(p);
+            return null;
+        }
+
+        Table<?> right = parseLateral(() -> peekKeyword("WHERE", "MATCH"));
+        Condition where = parseKeywordIf("WHERE") ? parseCondition() : null;
+        parseKeyword("MATCH");
+        Condition match = parseCondition();
+        parse(')');
+
+        TableOptionalOnStep<?> s = asofJoin(left, right, join.type == JoinType.LEFT_OUTER_JOIN ? JoinType.LEFT_ASOF_JOIN : JoinType.ASOF_JOIN).matchCondition(match);
+
+        if (join.type != JoinType.CROSS_JOIN) {
+            parseKeyword("ON");
+            Condition on = parseCondition();
+
+            // Trino requires ON TRUE, which doesn't need to be retained
+            if (on instanceof QOM.True || on instanceof QOM.FieldCondition f && f.$arg1() instanceof Param<?> b && TRUE.equals(b.getValue()))
+                ;
+            else if (where == null)
+                where = on;
+            else
+                where = where.and(on);
+        }
+
+        return where == null ? s : s.on(where);
     }
 
     private final Table<?> parseJoinUsing(TableOnStep<?> join) {
@@ -16002,7 +16131,11 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         }
     }
 
-    private static final record Join(JoinType type, JoinHint hint) {}
+    private static final record Join(JoinType type, JoinHint hint, boolean asofDefault) {
+        Join(JoinType type, JoinHint hint) {
+            this(type, hint, false);
+        }
+    }
 
     private final Join parseJoinTypeIf() {
         JoinHint hint = null;
@@ -16010,6 +16143,17 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
         if (parseKeywordIf("ANTI JOIN"))
             return new Join(JoinType.LEFT_ANTI_JOIN, null);
+
+        // [#20146] ASOF JOIN syntaxes:
+        // - ClickHouse:        [ LEFT ] ASOF JOIN
+        // - DuckDB:            ASOF [ LEFT [ OUTER ] ] JOIN
+        // - Snowflake, Doris:  ASOF [ LEFT | INNER ] JOIN .. MATCH_CONDITION
+        else if (parseKeywordIf("ASOF JOIN"))
+            return new Join(JoinType.ASOF_JOIN, null, true);
+        else if (parseKeywordIf("ASOF INNER JOIN"))
+            return new Join(JoinType.ASOF_JOIN, null);
+        else if (parseKeywordIf("ASOF LEFT JOIN", "ASOF LEFT OUTER JOIN"))
+            return new Join(JoinType.LEFT_ASOF_JOIN, null);
         else if (parseKeywordIf("CROSS")) {
             if (parseKeywordIf("JOIN"))
                 return new Join(JoinType.CROSS_JOIN, null);
@@ -16028,6 +16172,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                 return new Join(JoinType.LEFT_SEMI_JOIN, null);
             else if (parseKeywordIf("ANTI") && parseKeyword("JOIN"))
                 return new Join(JoinType.LEFT_ANTI_JOIN, null);
+            else if (parseKeywordIf("ASOF JOIN", "OUTER ASOF JOIN"))
+                return new Join(JoinType.LEFT_ASOF_JOIN, null);
             else if ((parseKeywordIf("OUTER") || true) && asTrue(hint = parseJoinHintIf()) && parseKeyword("JOIN"))
                 return new Join(JoinType.LEFT_OUTER_JOIN, hint);
         }
@@ -16889,6 +17035,10 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
     private static final String[] KEYWORDS_IN_FROM = {
         "ANTI JOIN",
+        "ASOF INNER JOIN",
+        "ASOF JOIN",
+        "ASOF LEFT JOIN",
+        "ASOF LEFT OUTER JOIN",
         "CROSS APPLY",
         "CROSS JOIN",
         "FULL JOIN",
@@ -16909,17 +17059,20 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         "INNER MERGE JOIN",
         "JOIN",
         "LEFT ANTI JOIN",
+        "LEFT ASOF JOIN",
         "LEFT JOIN",
         "LEFT HASH JOIN",
         "LEFT LOOP JOIN",
         "LEFT LOOKUP JOIN",
         "LEFT MERGE JOIN",
+        "LEFT OUTER ASOF JOIN",
         "LEFT OUTER JOIN",
         "LEFT OUTER HASH JOIN",
         "LEFT OUTER LOOP JOIN",
         "LEFT OUTER LOOKUP JOIN",
         "LEFT OUTER MERGE JOIN",
         "LEFT SEMI JOIN",
+        "MATCH_CONDITION",
         "NATURAL FULL JOIN",
         "NATURAL FULL OUTER JOIN",
         "NATURAL INNER JOIN",

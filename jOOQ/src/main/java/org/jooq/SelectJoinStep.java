@@ -48,6 +48,7 @@ import static org.jooq.SQLDialect.CUBRID;
 // ...
 // ...
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.DUCKDB;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
 // ...
@@ -60,6 +61,7 @@ import static org.jooq.SQLDialect.IGNITE;
 import static org.jooq.SQLDialect.MARIADB;
 // ...
 import static org.jooq.SQLDialect.MYSQL;
+// ...
 // ...
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
@@ -2511,6 +2513,60 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
     @NotNull @CheckReturnValue
     @Support
     SelectOptionalOnStep<R> leftAntiJoin(Path<?> path);
+
+    // -------------------------------------------------------------------------
+    // XXX: ASOF JOIN
+    // -------------------------------------------------------------------------
+
+    /**
+     * Convenience method to <code>ASOF JOIN</code> a table to the last table
+     * added to the <code>FROM</code> clause using
+     * {@link Table#asofJoin(TableLike)}.
+     * <p>
+     * An <code>ASOF JOIN</code> matches each row from the left hand side with
+     * at most one row from the right hand side: The "nearest" row according to
+     * a mandatory {@link SelectAsofJoinStep#matchCondition(Condition)}, among
+     * the rows that satisfy the optional <code>ON</code> or <code>USING</code>
+     * clause. Rows from the left hand side that do not have any such match
+     * are removed from the result, as with an <code>INNER JOIN</code>.
+     *
+     * @see Table#asofJoin(TableLike)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    SelectAsofJoinStep<R> asofJoin(TableLike<?> table);
+
+    /**
+     * Convenience method to <code>LEFT ASOF JOIN</code> a table to the last
+     * table added to the <code>FROM</code> clause using
+     * {@link Table#leftAsofJoin(TableLike)}.
+     * <p>
+     * A <code>LEFT ASOF JOIN</code> matches each row from the left hand side
+     * with at most one row from the right hand side: The "nearest" row
+     * according to a mandatory
+     * {@link SelectAsofJoinStep#matchCondition(Condition)}, among the rows that
+     * satisfy the optional <code>ON</code> or <code>USING</code> clause. Rows
+     * from the left hand side that do not have any such match are retained, as
+     * with a <code>LEFT OUTER JOIN</code>.
+     *
+     * @see Table#leftAsofJoin(TableLike)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    SelectAsofJoinStep<R> leftAsofJoin(TableLike<?> table);
+
+    /**
+     * Convenience method to <code>LEFT ASOF JOIN</code> a table to the last
+     * table added to the <code>FROM</code> clause using
+     * {@link Table#leftOuterAsofJoin(TableLike)}.
+     * <p>
+     * This is the same as calling {@link #leftAsofJoin(TableLike)}.
+     *
+     * @see Table#leftOuterAsofJoin(TableLike)
+     */
+    @NotNull @CheckReturnValue
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    SelectAsofJoinStep<R> leftOuterAsofJoin(TableLike<?> table);
 
     // -------------------------------------------------------------------------
     // XXX: APPLY clauses on tables

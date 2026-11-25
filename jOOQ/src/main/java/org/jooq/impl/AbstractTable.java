@@ -127,6 +127,7 @@ import org.jooq.Schema;
 import org.jooq.Select;
 import org.jooq.SelectField;
 import org.jooq.Table;
+import org.jooq.TableAsofJoinStep;
 import org.jooq.TableField;
 import org.jooq.TableLike;
 import org.jooq.TableOnStep;
@@ -1411,6 +1412,21 @@ implements
         return (TableOptionalOnStep<R>) join(path, LEFT_ANTI_JOIN);
     }
 
+    @Override
+    public final TableAsofJoinStep<Record> asofJoin(TableLike<?> table) {
+        return new AsofJoin(this, table);
+    }
+
+    @Override
+    public final TableAsofJoinStep<Record> leftAsofJoin(TableLike<?> table) {
+        return new LeftAsofJoin(this, table);
+    }
+
+    @Override
+    public final TableAsofJoinStep<Record> leftOuterAsofJoin(TableLike<?> table) {
+        return leftAsofJoin(table);
+    }
+
     // ------------------------------------------------------------------------
     // XXX: WHERE API
     // ------------------------------------------------------------------------
@@ -1507,6 +1523,8 @@ implements
             return join(n.table, type, hint);
 
         switch (type) {
+            case ASOF_JOIN:
+                return new AsofJoin(this, table);
             case CROSS_APPLY:
                 return new CrossApply(this, table);
             case CROSS_JOIN:
@@ -1517,6 +1535,8 @@ implements
                 return new Join(this, table, hint);
             case LEFT_ANTI_JOIN:
                 return new LeftAntiJoin(this, table);
+            case LEFT_ASOF_JOIN:
+                return new LeftAsofJoin(this, table);
             case LEFT_OUTER_JOIN:
                 return new LeftJoin(this, table, hint);
             case LEFT_SEMI_JOIN:

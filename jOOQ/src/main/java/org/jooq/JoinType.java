@@ -49,6 +49,7 @@ import static org.jooq.SQLDialect.CUBRID;
 // ...
 // ...
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.DUCKDB;
 // ...
 import static org.jooq.SQLDialect.FIREBIRD;
 // ...
@@ -61,6 +62,7 @@ import static org.jooq.SQLDialect.IGNITE;
 import static org.jooq.SQLDialect.MARIADB;
 // ...
 import static org.jooq.SQLDialect.MYSQL;
+// ...
 // ...
 // ...
 import static org.jooq.SQLDialect.POSTGRES;
@@ -185,7 +187,27 @@ public enum JoinType {
      */
     @NotNull
     @Support
-    LEFT_ANTI_JOIN("left anti join", true, false)
+    LEFT_ANTI_JOIN("left anti join", true, false),
+
+    /**
+     * <code>ASOF JOIN</code> two tables.
+     * <p>
+     * An <code>ASOF JOIN</code> requires a match condition, which can only be
+     * provided via {@link Table#asofJoin(TableLike)}.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    ASOF_JOIN("asof join", true, false),
+
+    /**
+     * <code>LEFT ASOF JOIN</code> two tables.
+     * <p>
+     * A <code>LEFT ASOF JOIN</code> requires a match condition, which can only
+     * be provided via {@link Table#leftAsofJoin(TableLike)}.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    LEFT_ASOF_JOIN("left asof join", "left outer asof join", "left asof join", true, false)
 
     ;
 

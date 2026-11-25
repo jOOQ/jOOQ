@@ -1,0 +1,195 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *  https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * Other licenses:
+ * -----------------------------------------------------------------------------
+ * Commercial licenses for this work are available. These replace the above
+ * Apache-2.0 license and offer limited warranties, support, maintenance, and
+ * commercial database integrations.
+ *
+ * For more information, please visit: https://www.jooq.org/legal/licensing
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ */
+package org.jooq;
+
+// ...
+import static org.jooq.SQLDialect.CLICKHOUSE;
+// ...
+// ...
+import static org.jooq.SQLDialect.DUCKDB;
+import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.MYSQL;
+// ...
+import static org.jooq.SQLDialect.POSTGRES;
+// ...
+// ...
+// ...
+// ...
+import static org.jooq.SQLDialect.TRINO;
+import static org.jooq.SQLDialect.YUGABYTEDB;
+
+import org.jooq.impl.DSL;
+
+import org.jetbrains.annotations.NotNull;
+
+/**
+ * An intermediate type for the construction of an <code>ASOF JOIN</code>
+ * clause, where a match condition must be added using a
+ * <code>MATCH_CONDITION</code> clause (with a {@link Condition}).
+ * <p>
+ * The match condition must be a single comparison predicate of the form
+ * <code>[lhs expression] [comparator] [rhs expression]</code>, where
+ * <code>[comparator]</code> is any of <code>&lt;</code>, <code>&lt;=</code>,
+ * <code>&gt;</code>, <code>&gt;=</code>. It specifies which row is the
+ * "nearest" row from the right hand side for each row of the left hand side:
+ * <ul>
+ * <li><code>&gt;</code> or <code>&gt;=</code>: The row with the greatest
+ * <code>[rhs expression]</code> that is still less than (or equal to)
+ * <code>[lhs expression]</code>.</li>
+ * <li><code>&lt;</code> or <code>&lt;=</code>: The row with the least
+ * <code>[rhs expression]</code> that is still greater than (or equal to)
+ * <code>[lhs expression]</code>.</li>
+ * </ul>
+ * <p>
+ * Additional (usually equality) predicates can be supplied using
+ * <code>ON</code> or <code>USING</code> after the match condition.
+ * <p>
+ * <h3>Referencing <code>XYZ*Step</code> types directly from client code</h3>
+ * <p>
+ * It is usually not recommended to reference any <code>XYZ*Step</code> types
+ * directly from client code, or assign them to local variables. When writing
+ * dynamic SQL, creating a statement's components dynamically, and passing them
+ * to the DSL API statically is usually a better choice. See the manual's
+ * section about dynamic SQL for details: <a href=
+ * "https://www.jooq.org/doc/latest/manual/sql-building/dynamic-sql">https://www.jooq.org/doc/latest/manual/sql-building/dynamic-sql</a>.
+ * <p>
+ * Drawbacks of referencing the <code>XYZ*Step</code> types directly:
+ * <ul>
+ * <li>They're operating on mutable implementations (as of jOOQ 3.x)</li>
+ * <li>They're less composable and not easy to get right when dynamic SQL gets
+ * complex</li>
+ * <li>They're less readable</li>
+ * <li>They might have binary incompatible changes between minor releases</li>
+ * </ul>
+ *
+ * @author Lukas Eder
+ */
+public interface TableAsofJoinStep<R extends Record> {
+
+    /**
+     * Add a <code>MATCH_CONDITION</code> clause to the <code>ASOF JOIN</code>.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    TableOptionalOnStep<R> matchCondition(Condition condition);
+
+    /**
+     * Add a <code>MATCH_CONDITION</code> clause to the <code>ASOF JOIN</code>.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    TableOptionalOnStep<R> matchCondition(Field<Boolean> condition);
+
+    /**
+     * Add a <code>MATCH_CONDITION</code> clause to the <code>ASOF JOIN</code>.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     * <p>
+     * Plain SQL match conditions cannot be emulated in dialects that do not
+     * support <code>ASOF JOIN</code> natively.
+     *
+     * @see DSL#condition(SQL)
+     * @see SQL
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    @PlainSQL
+    TableOptionalOnStep<R> matchCondition(SQL sql);
+
+    /**
+     * Add a <code>MATCH_CONDITION</code> clause to the <code>ASOF JOIN</code>.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     * <p>
+     * Plain SQL match conditions cannot be emulated in dialects that do not
+     * support <code>ASOF JOIN</code> natively.
+     *
+     * @see DSL#condition(String)
+     * @see SQL
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    @PlainSQL
+    TableOptionalOnStep<R> matchCondition(@Stringly.SQL String sql);
+
+    /**
+     * Add a <code>MATCH_CONDITION</code> clause to the <code>ASOF JOIN</code>.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     * <p>
+     * Plain SQL match conditions cannot be emulated in dialects that do not
+     * support <code>ASOF JOIN</code> natively.
+     *
+     * @see DSL#condition(String, Object...)
+     * @see DSL#sql(String, Object...)
+     * @see SQL
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    @PlainSQL
+    TableOptionalOnStep<R> matchCondition(@Stringly.SQL String sql, Object... bindings);
+
+    /**
+     * Add a <code>MATCH_CONDITION</code> clause to the <code>ASOF JOIN</code>.
+     * <p>
+     * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
+     * guarantee syntax integrity. You may also create the possibility of
+     * malicious SQL injection. Be sure to properly use bind variables and/or
+     * escape literals when concatenated into SQL clauses!
+     * <p>
+     * Plain SQL match conditions cannot be emulated in dialects that do not
+     * support <code>ASOF JOIN</code> natively.
+     *
+     * @see DSL#condition(String, QueryPart...)
+     * @see DSL#sql(String, QueryPart...)
+     * @see SQL
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    @PlainSQL
+    TableOptionalOnStep<R> matchCondition(@Stringly.SQL String sql, QueryPart... parts);
+}

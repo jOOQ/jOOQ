@@ -166,6 +166,11 @@ final class InlineDerivedTable<R extends Record> extends DerivedTable<R> {
                 case LEFT_OUTER_JOIN:
                 case LEFT_ANTI_JOIN:
                 case LEFT_SEMI_JOIN:
+
+                // [#20146] Predicates on the right side of an ASOF JOIN restrict the
+                //          candidate rows, and must not be moved to the WHERE clause
+                case ASOF_JOIN:
+                case LEFT_ASOF_JOIN:
                 case STRAIGHT_JOIN:
                 case CROSS_APPLY:
                 case OUTER_APPLY:

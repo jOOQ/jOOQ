@@ -38,6 +38,7 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.condition;
+import static org.jooq.impl.DSL.noTable;
 import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.noCondition;
 import static org.jooq.impl.DSL.notExists;
@@ -76,6 +77,7 @@ import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SQL;
 import org.jooq.Select;
+import org.jooq.SelectAsofJoinStep;
 import org.jooq.SelectConditionStep;
 // ...
 // ...
@@ -146,6 +148,7 @@ implements
     // Cascading interface implementations for Select behaviour
     SelectSelectStep<R>,
     SelectOptionalOnStep<R>,
+    SelectAsofJoinStep<R>,
     SelectOnConditionStep<R>,
     SelectConditionStep<R>,
 
@@ -222,6 +225,12 @@ implements
      * A temporary member holding a join condition
      */
     private transient ConditionProviderImpl   joinConditions;
+
+    /**
+     * [#20146] A temporary member holding an ASOF JOIN, which can still
+     * receive a USING clause
+     */
+    private transient AsofJoinTable<?>        asofJoin;
 
     /**
      * The step that is currently receiving new conditions
@@ -2281,7 +2290,13 @@ implements
 
     @Override
     public final SelectImpl using(Collection<? extends Field<?>> fields) {
-        if (joinTable != null) {
+
+        // [#20146] The ASOF JOIN has already been added to the FROM clause
+        if (joinTable == null && asofJoin != null) {
+            asofJoin.using(fields);
+            asofJoin = null;
+        }
+        else if (joinTable != null) {
             getQuery().addJoinUsing(joinTable, joinType, joinHint, fields);
             joinTable = null;
             joinPartitionBy = null;
@@ -2651,6 +2666,8 @@ implements
 
     @Override
     public final SelectImpl join(TableLike<?> table, JoinType type, JoinHint hint) {
+        asofJoin = null;
+
         switch (type) {
             case CROSS_JOIN:
             case NATURAL_JOIN:
@@ -2714,6 +2731,78 @@ implements
     @Override
     public final SelectImpl leftSemiJoin(Path<?> path) {
         return join(path, JoinType.LEFT_SEMI_JOIN).on(noCondition());
+    }
+
+    @Override
+    public final SelectImpl asofJoin(TableLike<?> table) {
+        return join(table, JoinType.ASOF_JOIN);
+    }
+
+    @Override
+    public final SelectImpl leftAsofJoin(TableLike<?> table) {
+        return join(table, JoinType.LEFT_ASOF_JOIN);
+    }
+
+    @Override
+    public final SelectImpl leftOuterAsofJoin(TableLike<?> table) {
+        return leftAsofJoin(table);
+    }
+
+    @Override
+    public final SelectImpl matchCondition(Condition condition) {
+        conditionStep = ConditionStep.ON;
+
+        if (joinTable != null) {
+            TableList from = getDelegate().getFrom();
+            int index = from.size() - 1;
+            Table<?> lhs = index >= 0 ? from.get(index) : noTable();
+
+            AsofJoinTable<?> j = (AsofJoinTable<?>) (joinType == JoinType.LEFT_ASOF_JOIN
+                ? lhs.leftAsofJoin(joinTable)
+                : lhs.asofJoin(joinTable)
+            ).matchCondition(condition);
+
+            if (index >= 0)
+                from.set(index, j);
+            else
+                getQuery().addFrom(j);
+
+            // [#20146] The ON clause is optional for ASOF JOIN. If it is
+            //          present, conditions are added to the join directly.
+            joinConditions = j.condition;
+            asofJoin = j;
+            joinTable = null;
+            joinPartitionBy = null;
+            joinType = null;
+            joinHint = null;
+        }
+
+        return this;
+    }
+
+    @Override
+    public final SelectImpl matchCondition(Field<Boolean> condition) {
+        return matchCondition(condition(condition));
+    }
+
+    @Override
+    public final SelectImpl matchCondition(SQL sql) {
+        return matchCondition(condition(sql));
+    }
+
+    @Override
+    public final SelectImpl matchCondition(String sql) {
+        return matchCondition(condition(sql));
+    }
+
+    @Override
+    public final SelectImpl matchCondition(String sql, Object... bindings) {
+        return matchCondition(condition(sql, bindings));
+    }
+
+    @Override
+    public final SelectImpl matchCondition(String sql, QueryPart... parts) {
+        return matchCondition(condition(sql, parts));
     }
 
     @Override

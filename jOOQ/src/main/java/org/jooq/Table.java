@@ -4104,7 +4104,7 @@ extends
      * <p>
      * An <code>ASOF JOIN</code> matches each row from the left hand side with
      * at most one row from the right hand side: The "nearest" row according to
-     * a mandatory {@link TableAsofJoinStep#matchCondition(Condition)}, among
+     * a mandatory {@link TableAsofJoinStep#match(Condition)}, among
      * the rows that satisfy the optional <code>ON</code> or <code>USING</code>
      * clause. Rows from the left hand side that do not have any such match
      * are removed from the result, as with an <code>INNER JOIN</code>.
@@ -4115,7 +4115,7 @@ extends
      * //   MATCH_CONDITION (trades.ts &gt;= quotes.ts)
      * //   ON trades.symbol = quotes.symbol
      * TRADES.asofJoin(QUOTES)
-     *       .matchCondition(TRADES.TS.ge(QUOTES.TS))
+     *       .match(TRADES.TS.ge(QUOTES.TS))
      *       .on(TRADES.SYMBOL.eq(QUOTES.SYMBOL));
      * </code></pre>
      * <p>
@@ -4135,7 +4135,7 @@ extends
      * A <code>LEFT ASOF JOIN</code> matches each row from the left hand side
      * with at most one row from the right hand side: The "nearest" row
      * according to a mandatory
-     * {@link TableAsofJoinStep#matchCondition(Condition)}, among the rows that
+     * {@link TableAsofJoinStep#match(Condition)}, among the rows that
      * satisfy the optional <code>ON</code> or <code>USING</code> clause. Rows
      * from the left hand side that do not have any such match are retained, as
      * with a <code>LEFT OUTER JOIN</code>.
@@ -4146,7 +4146,7 @@ extends
      * //   MATCH_CONDITION (trades.ts &gt;= quotes.ts)
      * //   ON trades.symbol = quotes.symbol
      * TRADES.leftAsofJoin(QUOTES)
-     *       .matchCondition(TRADES.TS.ge(QUOTES.TS))
+     *       .match(TRADES.TS.ge(QUOTES.TS))
      *       .on(TRADES.SYMBOL.eq(QUOTES.SYMBOL));
      * </code></pre>
      * <p>

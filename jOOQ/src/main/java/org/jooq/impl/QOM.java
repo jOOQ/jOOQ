@@ -1306,8 +1306,8 @@ public final class QOM {
         extends
             QualifiedJoin<R, J>
     {
-        @NotNull Condition $matchCondition();
-        @NotNull J $matchCondition(Condition matchCondition);
+        @NotNull Condition $match();
+        @NotNull J $match(Condition match);
     }
 
     /**
@@ -7266,6 +7266,54 @@ public final class QOM {
          */
         @CheckReturnValue
         @NotNull default ArrayReverse<T> $array(Field<T[]> newArray) { return $arg1(newArray); }
+    }
+
+    /**
+     * The <code>ARRAY SLICE</code> function.
+     * <p>
+     * Get a slice of an array, from a start ordinal to an end ordinal (both 1 based and inclusive).
+     */
+    public /*sealed*/ interface ArraySlice<T>
+        extends
+            UReturnsNullOnNullInput,
+            UOperator3<Field<T[]>, Field<Integer>, Field<Integer>, ArraySlice<T>>,
+            org.jooq.Field<T[]>
+        //permits
+        //    ArraySlice
+    {
+
+        /**
+         * The array to be sliced.
+         */
+        @NotNull default Field<T[]> $array() { return $arg1(); }
+
+        /**
+         * The array to be sliced.
+         */
+        @CheckReturnValue
+        @NotNull default ArraySlice<T> $array(Field<T[]> newArray) { return $arg1(newArray); }
+
+        /**
+         * The ordinal (1 based, inclusive) of the first element of the slice.
+         */
+        @NotNull default Field<Integer> $start() { return $arg2(); }
+
+        /**
+         * The ordinal (1 based, inclusive) of the first element of the slice.
+         */
+        @CheckReturnValue
+        @NotNull default ArraySlice<T> $start(Field<Integer> newStart) { return $arg2(newStart); }
+
+        /**
+         * The ordinal (1 based, inclusive) of the last element of the slice.
+         */
+        @NotNull default Field<Integer> $end() { return $arg3(); }
+
+        /**
+         * The ordinal (1 based, inclusive) of the last element of the slice.
+         */
+        @CheckReturnValue
+        @NotNull default ArraySlice<T> $end(Field<Integer> newEnd) { return $arg3(newEnd); }
     }
 
     /**

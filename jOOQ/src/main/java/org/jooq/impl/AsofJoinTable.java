@@ -69,45 +69,45 @@ implements
 
     @SuppressWarnings("unchecked")
     @Override
-    public final J matchCondition(Condition c) {
+    public final J match(Condition c) {
         match = c;
         return (J) this;
     }
 
     @Override
-    public final J matchCondition(Field<Boolean> c) {
-        return matchCondition(DSL.condition(c));
+    public final J match(Field<Boolean> c) {
+        return match(DSL.condition(c));
     }
 
     @Override
-    public final J matchCondition(SQL sql) {
-        return matchCondition(DSL.condition(sql));
+    public final J match(SQL sql) {
+        return match(DSL.condition(sql));
     }
 
     @Override
-    public final J matchCondition(String sql) {
-        return matchCondition(DSL.condition(sql));
+    public final J match(String sql) {
+        return match(DSL.condition(sql));
     }
 
     @Override
-    public final J matchCondition(String sql, Object... bindings) {
-        return matchCondition(DSL.condition(sql, bindings));
+    public final J match(String sql, Object... bindings) {
+        return match(DSL.condition(sql, bindings));
     }
 
     @Override
-    public final J matchCondition(String sql, QueryPart... parts) {
-        return matchCondition(DSL.condition(sql, parts));
+    public final J match(String sql, QueryPart... parts) {
+        return match(DSL.condition(sql, parts));
     }
 
     // -------------------------------------------------------------------------
     // XXX: Query Object Model
     // -------------------------------------------------------------------------
 
-    public final Condition $matchCondition() {
+    public final Condition $match() {
         return match;
     }
 
-    public final J $matchCondition(Condition m) {
+    public final J $match(Condition m) {
         return construct($table1(), $partitionBy1(), $partitionBy2(), $table2(), $on(), $using(), $hint(), m);
     }
 }

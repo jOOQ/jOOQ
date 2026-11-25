@@ -2525,7 +2525,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * <p>
      * An <code>ASOF JOIN</code> matches each row from the left hand side with
      * at most one row from the right hand side: The "nearest" row according to
-     * a mandatory {@link SelectAsofJoinStep#matchCondition(Condition)}, among
+     * a mandatory {@link SelectAsofJoinStep#match(Condition)}, among
      * the rows that satisfy the optional <code>ON</code> or <code>USING</code>
      * clause. Rows from the left hand side that do not have any such match
      * are removed from the result, as with an <code>INNER JOIN</code>.
@@ -2544,7 +2544,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * A <code>LEFT ASOF JOIN</code> matches each row from the left hand side
      * with at most one row from the right hand side: The "nearest" row
      * according to a mandatory
-     * {@link SelectAsofJoinStep#matchCondition(Condition)}, among the rows that
+     * {@link SelectAsofJoinStep#match(Condition)}, among the rows that
      * satisfy the optional <code>ON</code> or <code>USING</code> clause. Rows
      * from the left hand side that do not have any such match are retained, as
      * with a <code>LEFT OUTER JOIN</code>.

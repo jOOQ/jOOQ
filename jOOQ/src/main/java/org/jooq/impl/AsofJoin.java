@@ -89,7 +89,7 @@ implements
         JoinHint h,
         Condition m
     ) {
-        AsofJoin result = new AsofJoin(table1, table2).matchCondition(m);
+        AsofJoin result = new AsofJoin(table1, table2).match(m);
 
         // [#20146] The ON clause is optional, and an empty one must not be
         //          rendered as ON TRUE

@@ -59,8 +59,10 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * An intermediate type for the construction of an <code>ASOF JOIN</code>
- * clause, where a match condition must be added using a
- * <code>MATCH_CONDITION</code> clause (with a {@link Condition}).
+ * clause, where a match condition must be added using
+ * {@link #match(Condition)} (corresponding to e.g. the
+ * <code>MATCH_CONDITION</code> clause in Snowflake, or <code>MATCH</code> in
+ * Trino).
  * <p>
  * The match condition must be a single comparison predicate of the form
  * <code>[lhs expression] [comparator] [rhs expression]</code>, where
@@ -102,21 +104,21 @@ import org.jetbrains.annotations.NotNull;
 public interface SelectAsofJoinStep<R extends Record> {
 
     /**
-     * Add a <code>MATCH_CONDITION</code> clause to the <code>ASOF JOIN</code>.
+     * Add a match condition to the <code>ASOF JOIN</code>.
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
-    SelectOptionalOnStep<R> matchCondition(Condition condition);
+    SelectOptionalOnStep<R> match(Condition condition);
 
     /**
-     * Add a <code>MATCH_CONDITION</code> clause to the <code>ASOF JOIN</code>.
+     * Add a match condition to the <code>ASOF JOIN</code>.
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
-    SelectOptionalOnStep<R> matchCondition(Field<Boolean> condition);
+    SelectOptionalOnStep<R> match(Field<Boolean> condition);
 
     /**
-     * Add a <code>MATCH_CONDITION</code> clause to the <code>ASOF JOIN</code>.
+     * Add a match condition to the <code>ASOF JOIN</code>.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -132,10 +134,10 @@ public interface SelectAsofJoinStep<R extends Record> {
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     @PlainSQL
-    SelectOptionalOnStep<R> matchCondition(SQL sql);
+    SelectOptionalOnStep<R> match(SQL sql);
 
     /**
-     * Add a <code>MATCH_CONDITION</code> clause to the <code>ASOF JOIN</code>.
+     * Add a match condition to the <code>ASOF JOIN</code>.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -151,10 +153,10 @@ public interface SelectAsofJoinStep<R extends Record> {
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     @PlainSQL
-    SelectOptionalOnStep<R> matchCondition(@Stringly.SQL String sql);
+    SelectOptionalOnStep<R> match(@Stringly.SQL String sql);
 
     /**
-     * Add a <code>MATCH_CONDITION</code> clause to the <code>ASOF JOIN</code>.
+     * Add a match condition to the <code>ASOF JOIN</code>.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -171,10 +173,10 @@ public interface SelectAsofJoinStep<R extends Record> {
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     @PlainSQL
-    SelectOptionalOnStep<R> matchCondition(@Stringly.SQL String sql, Object... bindings);
+    SelectOptionalOnStep<R> match(@Stringly.SQL String sql, Object... bindings);
 
     /**
-     * Add a <code>MATCH_CONDITION</code> clause to the <code>ASOF JOIN</code>.
+     * Add a match condition to the <code>ASOF JOIN</code>.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -191,5 +193,5 @@ public interface SelectAsofJoinStep<R extends Record> {
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
     @PlainSQL
-    SelectOptionalOnStep<R> matchCondition(@Stringly.SQL String sql, QueryPart... parts);
+    SelectOptionalOnStep<R> match(@Stringly.SQL String sql, QueryPart... parts);
 }

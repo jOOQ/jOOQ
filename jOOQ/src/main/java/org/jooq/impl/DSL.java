@@ -24196,6 +24196,126 @@ public class DSL {
     }
 
     /**
+     * The <code>ARRAY_SLICE</code> function.
+     * <p>
+     * Get a slice of an array, from a start ordinal to an end ordinal (both 1 based and inclusive).
+     *
+     * @param array The array to be sliced.
+     * @param start The ordinal (1 based, inclusive) of the first element of the slice.
+     * @param end The ordinal (1 based, inclusive) of the last element of the slice.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    public static <T> Field<T[]> arraySlice(T[] array, int start, int end) {
+        return new ArraySlice<>(Tools.field(array), Tools.field(start), Tools.field(end));
+    }
+
+    /**
+     * The <code>ARRAY_SLICE</code> function.
+     * <p>
+     * Get a slice of an array, from a start ordinal to an end ordinal (both 1 based and inclusive).
+     *
+     * @param array The array to be sliced.
+     * @param start The ordinal (1 based, inclusive) of the first element of the slice.
+     * @param end The ordinal (1 based, inclusive) of the last element of the slice.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    public static <T> Field<T[]> arraySlice(T[] array, int start, Field<Integer> end) {
+        return new ArraySlice<>(Tools.field(array), Tools.field(start), end);
+    }
+
+    /**
+     * The <code>ARRAY_SLICE</code> function.
+     * <p>
+     * Get a slice of an array, from a start ordinal to an end ordinal (both 1 based and inclusive).
+     *
+     * @param array The array to be sliced.
+     * @param start The ordinal (1 based, inclusive) of the first element of the slice.
+     * @param end The ordinal (1 based, inclusive) of the last element of the slice.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    public static <T> Field<T[]> arraySlice(T[] array, Field<Integer> start, int end) {
+        return new ArraySlice<>(Tools.field(array), start, Tools.field(end));
+    }
+
+    /**
+     * The <code>ARRAY_SLICE</code> function.
+     * <p>
+     * Get a slice of an array, from a start ordinal to an end ordinal (both 1 based and inclusive).
+     *
+     * @param array The array to be sliced.
+     * @param start The ordinal (1 based, inclusive) of the first element of the slice.
+     * @param end The ordinal (1 based, inclusive) of the last element of the slice.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    public static <T> Field<T[]> arraySlice(T[] array, Field<Integer> start, Field<Integer> end) {
+        return new ArraySlice<>(Tools.field(array), start, end);
+    }
+
+    /**
+     * The <code>ARRAY_SLICE</code> function.
+     * <p>
+     * Get a slice of an array, from a start ordinal to an end ordinal (both 1 based and inclusive).
+     *
+     * @param array The array to be sliced.
+     * @param start The ordinal (1 based, inclusive) of the first element of the slice.
+     * @param end The ordinal (1 based, inclusive) of the last element of the slice.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    public static <T> Field<T[]> arraySlice(Field<T[]> array, int start, int end) {
+        return new ArraySlice<>(array, Tools.field(start), Tools.field(end));
+    }
+
+    /**
+     * The <code>ARRAY_SLICE</code> function.
+     * <p>
+     * Get a slice of an array, from a start ordinal to an end ordinal (both 1 based and inclusive).
+     *
+     * @param array The array to be sliced.
+     * @param start The ordinal (1 based, inclusive) of the first element of the slice.
+     * @param end The ordinal (1 based, inclusive) of the last element of the slice.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    public static <T> Field<T[]> arraySlice(Field<T[]> array, int start, Field<Integer> end) {
+        return new ArraySlice<>(array, Tools.field(start), end);
+    }
+
+    /**
+     * The <code>ARRAY_SLICE</code> function.
+     * <p>
+     * Get a slice of an array, from a start ordinal to an end ordinal (both 1 based and inclusive).
+     *
+     * @param array The array to be sliced.
+     * @param start The ordinal (1 based, inclusive) of the first element of the slice.
+     * @param end The ordinal (1 based, inclusive) of the last element of the slice.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    public static <T> Field<T[]> arraySlice(Field<T[]> array, Field<Integer> start, int end) {
+        return new ArraySlice<>(array, start, Tools.field(end));
+    }
+
+    /**
+     * The <code>ARRAY_SLICE</code> function.
+     * <p>
+     * Get a slice of an array, from a start ordinal to an end ordinal (both 1 based and inclusive).
+     *
+     * @param array The array to be sliced.
+     * @param start The ordinal (1 based, inclusive) of the first element of the slice.
+     * @param end The ordinal (1 based, inclusive) of the last element of the slice.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
+    public static <T> Field<T[]> arraySlice(Field<T[]> array, Field<Integer> start, Field<Integer> end) {
+        return new ArraySlice<>(array, start, end);
+    }
+
+    /**
      * The <code>ARRAY_TO_STRING</code> function.
      * <p>
      * Join array elements into a string.

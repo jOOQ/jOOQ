@@ -81,7 +81,6 @@ final class Names {
     static final Name N_ARRAY_AGG                   = systemName("array_agg");
     static final Name N_ARRAY_CONSTRUCT             = systemName("array_construct");
     static final Name N_ARRAY_CONSTRUCT_COMPACT     = systemName("array_construct_compact");
-    static final Name N_ARRAY_SLICE                 = systemName("array_slice");
     static final Name N_arrayUniq                   = systemName("arrayUniq");
     static final Name N_BIGNUMERIC                  = systemName("bignumeric");
     static final Name N_BITCOUNT                    = systemName("bitcount");
@@ -393,6 +392,7 @@ final class Names {
     static final Name N_ARRAY_REMOVE                = systemName("array_remove");
     static final Name N_ARRAY_REPLACE               = systemName("array_replace");
     static final Name N_ARRAY_REVERSE               = systemName("array_reverse");
+    static final Name N_ARRAY_SLICE                 = systemName("array_slice");
     static final Name N_ARRAY_TO_STRING             = systemName("array_to_string");
     static final Name N_ARRAY_TRANSFORM             = systemName("array_transform");
     static final Name N_ASC                         = systemName("asc");
@@ -647,6 +647,7 @@ final class Names {
     static final Name N_SIGNAL_SQLSTATE             = systemName("signal_sqlstate");
     static final Name N_SIN                         = systemName("sin");
     static final Name N_SINH                        = systemName("sinh");
+    static final Name N_SLICE                       = systemName("slice");
     static final Name N_SPACE                       = systemName("space");
     static final Name N_SPLIT                       = systemName("split");
     static final Name N_SPLIT_PART                  = systemName("split_part");
@@ -764,6 +765,7 @@ final class Names {
     static final Name N_arrayMap                    = systemName("arrayMap");
     static final Name N_arrayPushBack               = systemName("arrayPushBack");
     static final Name N_arrayPushFront              = systemName("arrayPushFront");
+    static final Name N_arraySlice                  = systemName("arraySlice");
     static final Name N_bitAnd                      = systemName("bitAnd");
     static final Name N_bitNot                      = systemName("bitNot");
     static final Name N_bitOr                       = systemName("bitOr");

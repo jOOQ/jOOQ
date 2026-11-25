@@ -66,6 +66,7 @@ import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.SQLITE;
 // ...
 // ...
@@ -96,6 +97,7 @@ import static org.jooq.impl.DSL.arrayPrepend;
 import static org.jooq.impl.DSL.arrayRemove;
 import static org.jooq.impl.DSL.arrayReplace;
 import static org.jooq.impl.DSL.arrayReverse;
+import static org.jooq.impl.DSL.arraySlice;
 import static org.jooq.impl.DSL.ascii;
 import static org.jooq.impl.DSL.asin;
 import static org.jooq.impl.DSL.asinh;
@@ -8768,7 +8770,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
             Condition match = parseCondition();
             parse(')');
 
-            TableOptionalOnStep<?> s = asofJoin(left, right, join.asofDefault ? JoinType.LEFT_ASOF_JOIN : join.type).matchCondition(match);
+            TableOptionalOnStep<?> s = asofJoin(left, right, join.asofDefault ? JoinType.LEFT_ASOF_JOIN : join.type).match(match);
 
             if (parseKeywordIf("ON"))
                 return s.on(parseCondition());
@@ -8794,7 +8796,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
             if (match == null)
                 throw exception("ASOF JOIN requires an inequality predicate in its ON clause");
 
-            TableOptionalOnStep<?> s = asofJoin(left, right, join.type).matchCondition(match);
+            TableOptionalOnStep<?> s = asofJoin(left, right, join.type).match(match);
             return conditions.isEmpty() ? s : s.on(and(conditions));
         }
 
@@ -8811,7 +8813,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                 l = j.lhs;
 
             Condition match = Tools.qualify(l, field(last)).ge(Tools.qualify(right, field(last)));
-            TableOptionalOnStep<?> s = asofJoin(left, right, join.type).matchCondition(match);
+            TableOptionalOnStep<?> s = asofJoin(left, right, join.type).match(match);
             return names.isEmpty() ? s : s.using(Tools.fieldsByName(names.toArray(EMPTY_NAME)));
         }
         else
@@ -8849,7 +8851,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         Condition match = parseCondition();
         parse(')');
 
-        TableOptionalOnStep<?> s = asofJoin(left, right, join.type == JoinType.LEFT_OUTER_JOIN ? JoinType.LEFT_ASOF_JOIN : JoinType.ASOF_JOIN).matchCondition(match);
+        TableOptionalOnStep<?> s = asofJoin(left, right, join.type == JoinType.LEFT_OUTER_JOIN ? JoinType.LEFT_ASOF_JOIN : JoinType.ASOF_JOIN).match(match);
 
         if (join.type != JoinType.CROSS_JOIN) {
             parseKeyword("ON");
@@ -9281,6 +9283,28 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         return finisher.apply(f1, f2, f3);
     }
 
+    private final Field<?> parseArraySlice(Field<?> array, Field<?> start, Field<?> end) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        return arraySlice((Field<Void[]>) array, (Field<Integer>) start, (Field<Integer>) end);
+    }
+
+    private final Field<?> parseArraySliceLength(Field<?> array, Field<?> start, Field<?> length) {
+        return arraySlice((Field<Void[]>) array, (Field<Integer>) start, isub(iadd((Field<Integer>) start, length), one()));
+    }
+
     private final <Q extends QueryPart> Q parseFunctionArgs4(Function4<? super Field, ? super Field, ? super Field, ? super Field, ? extends Q> finisher) {
         parse('(');
         Field<?> f1 = parseField();
@@ -9509,7 +9533,15 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
 
         if (peek('[') && possiblyArrayTyped(r) && parseIf('[')) {
-            r = arrayGet((Field) toField(r), (Field) parseField());
+            Field a = (Field) toField(r);
+            Field i = parseField();
+
+            // [#19334] Array slice syntax: a[start:end] or a[start:]
+            if (parseIf(':'))
+                r = arraySlice(a, i, peek(']') ? cardinality(a) : (Field) parseField());
+            else
+                r = arrayGet(a, i);
+
             parse(']');
         }
 
@@ -9848,6 +9880,10 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                     return parseFunctionArgs3((f1, f2, f3) -> arrayReplace((Field<Void[]>) f1, (Field<Void>) f2, (Field<Void>) f3));
                 else if (parseFunctionNameIf("ARRAY_REVERSE"))
                     return arrayReverse((Field) parseFieldParenthesised());
+                else if (parseFunctionNameIf("ARRAY_SLICE"))
+                    return parseFunctionArgs3(this::parseArraySlice);
+                else if (parseFunctionNameIf("arraySlice"))
+                    return parseFunctionArgs3((f1, f2) -> arraySlice((Field<Void[]>) f1, (Field<Integer>) f2, cardinality(f1)), this::parseArraySliceLength);
                 else if (parseFunctionNameIf("ARRAY_TO_STRING"))
                     return parseFunctionArgs3(DSL::arrayToString, DSL::arrayToString);
                 else if ((field = parseFieldArrayConstructIf()) != null)
@@ -10232,6 +10268,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                     return octetLength((Field) parseFieldParenthesised());
                 else if (parseFunctionNameIf("LIST_CONTAINS"))
                     return parseFunctionArgs2((f1, f2) -> arrayContains((Field<Void[]>) f1, (Field<Void>) f2));
+                else if (parseFunctionNameIf("LIST_SLICE"))
+                    return parseFunctionArgs3(this::parseArraySlice);
                 else if (parseFunctionNameIf("LN", "LOGN"))
                     return ln((Field) parseFieldNumericOpParenthesised());
                 else if (parseFunctionNameIf("LOG10"))
@@ -10481,6 +10519,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                     return square((Field) parseFieldNumericOpParenthesised());
                 else if (parseFunctionNameIf("SINH"))
                     return sinh((Field) parseFieldNumericOpParenthesised());
+                else if (parseFunctionNameIf("SLICE"))
+                    return parseFunctionArgs3(this::parseArraySliceLength);
                 else if (parseFunctionNameIf("SIN"))
                     return sin((Field) parseFieldNumericOpParenthesised());
                 else if (parseKeywordIf("SHL", "SHIFTLEFT"))

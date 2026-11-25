@@ -2749,7 +2749,7 @@ implements
     }
 
     @Override
-    public final SelectImpl matchCondition(Condition condition) {
+    public final SelectImpl match(Condition condition) {
         conditionStep = ConditionStep.ON;
 
         if (joinTable != null) {
@@ -2760,7 +2760,7 @@ implements
             AsofJoinTable<?> j = (AsofJoinTable<?>) (joinType == JoinType.LEFT_ASOF_JOIN
                 ? lhs.leftAsofJoin(joinTable)
                 : lhs.asofJoin(joinTable)
-            ).matchCondition(condition);
+            ).match(condition);
 
             if (index >= 0)
                 from.set(index, j);
@@ -2781,28 +2781,28 @@ implements
     }
 
     @Override
-    public final SelectImpl matchCondition(Field<Boolean> condition) {
-        return matchCondition(condition(condition));
+    public final SelectImpl match(Field<Boolean> condition) {
+        return match(condition(condition));
     }
 
     @Override
-    public final SelectImpl matchCondition(SQL sql) {
-        return matchCondition(condition(sql));
+    public final SelectImpl match(SQL sql) {
+        return match(condition(sql));
     }
 
     @Override
-    public final SelectImpl matchCondition(String sql) {
-        return matchCondition(condition(sql));
+    public final SelectImpl match(String sql) {
+        return match(condition(sql));
     }
 
     @Override
-    public final SelectImpl matchCondition(String sql, Object... bindings) {
-        return matchCondition(condition(sql, bindings));
+    public final SelectImpl match(String sql, Object... bindings) {
+        return match(condition(sql, bindings));
     }
 
     @Override
-    public final SelectImpl matchCondition(String sql, QueryPart... parts) {
-        return matchCondition(condition(sql, parts));
+    public final SelectImpl match(String sql, QueryPart... parts) {
+        return match(condition(sql, parts));
     }
 
     @Override

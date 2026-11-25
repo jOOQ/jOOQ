@@ -8858,7 +8858,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
             Condition on = parseCondition();
 
             // Trino requires ON TRUE, which doesn't need to be retained
-            if (on instanceof QOM.True || on instanceof QOM.FieldCondition f && f.$arg1() instanceof Param<?> b && TRUE.equals(b.getValue()))
+            if (on instanceof QOM.True || on instanceof QOM.FieldCondition && Tools.isVal0(((QOM.FieldCondition) on).$arg1(), v -> TRUE.equals(v.getValue())))
                 ;
             else if (where == null)
                 where = on;

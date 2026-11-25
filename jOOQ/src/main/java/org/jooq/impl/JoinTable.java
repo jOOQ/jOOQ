@@ -358,8 +358,8 @@ abstract class JoinTable<J extends JoinTable<J>> extends AbstractJoinTable<J> {
     }
 
     private static final boolean references(Field<?> f, Table<?> t) {
-        if (f instanceof TableField<?, ?> tf && tf.getTable() != null)
-            return containsTable(t, tf.getTable(), false);
+        if (f instanceof TableField && ((TableField<?, ?>) f).getTable() != null)
+            return containsTable(t, ((TableField<?, ?>) f).getTable(), false);
 
         Name q = f.getQualifiedName();
         return q.qualified() && q.qualifier().last().equalsIgnoreCase(t.getName());

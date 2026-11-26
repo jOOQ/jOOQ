@@ -70,7 +70,7 @@ import java.sql.Date;
 /**
  * The <code>MAKE DATE</code> statement.
  */
-@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+@SuppressWarnings({ "rawtypes", "unused" })
 final class MakeDate
 extends
     AbstractField<Date>

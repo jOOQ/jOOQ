@@ -153,15 +153,19 @@ implements
 
         // [#19335] Work around PostgreSQL's 100 function arguments limit
         if (fields.size() > max) {
-            List<QOM.JSONArray<T>> r = new ArrayList<>();
+            Field<JSONB> r = null;
 
-            for (List<? extends Field<?>> chunk : chunks(fields, max))
-                r.add($arg2(QOM.unmodifiable(chunk)));
+            // [#19345] Concatenate the chunks using JSONB_CONCAT
+            for (List<? extends Field<?>> chunk : chunks(fields, max)) {
+                Field<?> f = $arg2(QOM.unmodifiable(chunk));
+                Field<JSONB> c = f.getDataType().getFromType() == JSON.class ? f.cast(JSONB) : (Field<JSONB>) f;
+                r = r == null ? c : jsonbConcat(r, c);
+            }
 
             if (getDataType().getFromType() == JSON.class)
-                ctx.visit(new JSONConcat<>(r, getDataType()).cast(JSON));
+                ctx.visit(r.cast(JSON));
             else
-                ctx.visit(new JSONConcat<>(r, getDataType()));
+                ctx.visit(r);
         }
         else
             accept0(ctx);

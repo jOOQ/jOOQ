@@ -528,6 +528,7 @@ final class Names {
     static final Name N_JSONArrayLength             = systemName("JSONArrayLength");
     static final Name N_JSONB_ARRAY                 = systemName("jsonb_array");
     static final Name N_JSONB_ARRAY_LENGTH          = systemName("jsonb_array_length");
+    static final Name N_JSONB_CONCAT                = systemName("jsonb_concat");
     static final Name N_JSONB_GET_ATTRIBUTE         = systemName("jsonb_get_attribute");
     static final Name N_JSONB_GET_ATTRIBUTE_AS_TEXT = systemName("jsonb_get_attribute_as_text");
     static final Name N_JSONB_GET_ELEMENT           = systemName("jsonb_get_element");
@@ -547,6 +548,7 @@ final class Names {
     static final Name N_JSON_ARRAY                  = systemName("json_array");
     static final Name N_JSON_ARRAY_INSERT           = systemName("json_array_insert");
     static final Name N_JSON_ARRAY_LENGTH           = systemName("json_array_length");
+    static final Name N_JSON_CONCAT                 = systemName("json_concat");
     static final Name N_JSON_EXTRACT                = systemName("json_extract");
     static final Name N_JSON_EXTRACT_SCALAR         = systemName("json_extract_scalar");
     static final Name N_JSON_GET_ATTRIBUTE          = systemName("json_get_attribute");
@@ -557,6 +559,7 @@ final class Names {
     static final Name N_JSON_KEYS                   = systemName("json_keys");
     static final Name N_JSON_KEY_EXISTS             = systemName("json_key_exists");
     static final Name N_JSON_LENGTH                 = systemName("json_length");
+    static final Name N_JSON_MERGE_PATCH            = systemName("json_merge_patch");
     static final Name N_JSON_MODIFY                 = systemName("json_modify");
     static final Name N_JSON_OBJECT                 = systemName("json_object");
     static final Name N_JSON_OBJECT_KEYS            = systemName("json_object_keys");

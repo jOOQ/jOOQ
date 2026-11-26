@@ -35,74 +35,203 @@
  *
  *
  */
+
 package org.jooq.impl;
 
-import static org.jooq.impl.DSL.inline;
-import static org.jooq.impl.ExpressionOperator.CONCAT;
-import static org.jooq.impl.Names.N_CONCAT;
-import static org.jooq.impl.SQLDataType.JSONB;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.impl.Tools.ExtendedDataKey.*;
+import static org.jooq.impl.Tools.SimpleDataKey.*;
+import static org.jooq.SQLDialect.*;
 
+import org.jooq.*;
+import org.jooq.Function1;
+import org.jooq.Record;
+import org.jooq.conf.ParamType;
+import org.jooq.tools.StringUtils;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
-import org.jooq.Context;
-import org.jooq.DataType;
-import org.jooq.Field;
-import org.jooq.JSON;
-import org.jooq.impl.QOM.UTransient;
+
 
 /**
- * @author Lukas Eder
+ * The <code>JSON CONCAT</code> statement.
  */
-final class JSONConcat<T>
+@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+final class JSONConcat
 extends
-    AbstractField<T>
+    AbstractField<JSON>
 implements
-    UTransient
+    QOM.JSONConcat
 {
 
-    private final List<? extends Field<?>> arguments;
+    final Field<JSON> json1;
+    final Field<JSON> json2;
 
-    JSONConcat(List<? extends Field<?>> arguments, DataType<T> type) {
-        super(N_CONCAT, type);
+    JSONConcat(
+        Field<JSON> json1,
+        Field<JSON> json2
+    ) {
+        super(
+            N_JSON_CONCAT,
+            allNotNull(JSON, json1, json2)
+        );
 
-        this.arguments = arguments;
+        this.json1 = nullSafeNotNull(json1, JSON);
+        this.json2 = nullSafeNotNull(json2, JSON);
     }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
+
     @Override
     public final void accept(Context<?> ctx) {
-        if (arguments.isEmpty()) {
-            ctx.visit(inline(null, getDataType()));
-            return;
-        }
-        else if (arguments.size() == 1) {
-            ctx.visit(arguments.get(0));
-            return;
-        }
+        switch (ctx.family()) {
 
-        ExpressionOperator op = CONCAT;
 
-        ctx.sql('(');
-        Expression.acceptAssociative(
-            ctx,
-            (QOM.UOperator2) toExpression(op, arguments),
-            op.toQueryPart(),
-            c -> c.sql(' '),
-            Expression.Associativity.BOTH
-        );
-        ctx.sql(')');
+
+
+
+
+
+            case MARIADB:
+            case MYSQL:
+                ctx.visit(when(
+                    function(N_JSON_TYPE, VARCHAR, json1).eq(inline("OBJECT")).and(function(N_JSON_TYPE, VARCHAR, json2).eq(inline("OBJECT"))),
+                    function(N_JSON_MERGE_PATCH, getDataType(), json1, json2)
+                ).else_(function(N_JSON_MERGE_PRESERVE, getDataType(), json1, json2)));
+                break;
+
+            case SQLITE:
+                ctx.visit(DSL.field(
+                    "case "
+                  + "when {0} is null or {1} is null then null "
+                  + "when json_type({0}) = 'object' and json_type({1}) = 'object' then ("
+                  +   "select json_group_object(k, case when t in ('true', 'false') then json(t) when t in ('object', 'array') then json(v) else v end) "
+                  +   "from ("
+                  +     "select key k, type t, value v from json_each({0}) where key not in (select key from json_each({1})) "
+                  +     "union all "
+                  +     "select key, type, value from json_each({1})"
+                  +   ") j"
+                  + ") "
+                  + "else ("
+                  +   "select json_group_array(case when t in ('true', 'false') then json(t) when t in ('object', 'array') then json(v) else v end) "
+                  +   "from ("
+                  +     "select 0 g, key k, type t, value v from json_each(case when json_type({0}) = 'array' then {0} else json_array(json({0})) end) "
+                  +     "union all "
+                  +     "select 1, key, type, value from json_each(case when json_type({1}) = 'array' then {1} else json_array(json({1})) end) "
+                  +     "order by g, k"
+                  +   ") j"
+                  + ") "
+                  + "end",
+                    getDataType(), json1, json2
+                ));
+                break;
+
+            case DUCKDB:
+                ctx.visit(DSL.field(
+                    "case "
+                  + "when {0} is null or {1} is null then null "
+                  + "when json_type({0}) = 'OBJECT' and json_type({1}) = 'OBJECT' then json_merge_patch({0}, {1}) "
+                  + "else to_json(list_concat("
+                  +   "cast(case when json_type({0}) = 'ARRAY' then {0} else json_array({0}) end as json[]), "
+                  +   "cast(case when json_type({1}) = 'ARRAY' then {1} else json_array({1}) end as json[])"
+                  + ")) "
+                  + "end",
+                    getDataType(), json1, json2
+                ));
+                break;
+
+            case TRINO:
+                ctx.visit(DSL.field(
+                    "case "
+                  + "when {0} is null or {1} is null then null "
+                  + "when json_array_length({0}) is null and not is_json_scalar({0}) and json_array_length({1}) is null and not is_json_scalar({1}) "
+                  +   "then cast(map_concat(cast({0} as map(varchar, json)), cast({1} as map(varchar, json))) as json) "
+                  + "else cast(concat("
+                  +   "case when json_array_length({0}) is null then array[{0}] else cast({0} as array(json)) end, "
+                  +   "case when json_array_length({1}) is null then array[{1}] else cast({1} as array(json)) end"
+                  + ") as json) "
+                  + "end",
+                    getDataType(), json1, json2
+                ));
+                break;
+
+            default:
+                ctx.visit(jsonbConcat(json1.cast(JSONB), json2.cast(JSONB)).cast(JSON));
+                break;
+        }
     }
 
-    private final Expression<?> toExpression(ExpressionOperator op, List<? extends Field<?>> a) {
-        Expression<?> expression = new Expression<>(op, false, jsonCast(a.get(0)), jsonCast(a.get(1)));
 
-        for (int i = 2; i < a.size(); i++)
-            expression = new Expression<>(op, false, expression, jsonCast(a.get(i)));
 
-        return expression;
+
+
+
+
+
+
+
+
+
+
+
+    // -------------------------------------------------------------------------
+    // XXX: Query Object Model
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Field<JSON> $arg1() {
+        return json1;
     }
 
-    private final Field<?> jsonCast(Field<?> f) {
-        return f.getDataType().getFromType() == JSON.class ? f.cast(JSONB) : f;
+    @Override
+    public final Field<JSON> $arg2() {
+        return json2;
+    }
+
+    @Override
+    public final QOM.JSONConcat $arg1(Field<JSON> newValue) {
+        return $constructor().apply(newValue, $arg2());
+    }
+
+    @Override
+    public final QOM.JSONConcat $arg2(Field<JSON> newValue) {
+        return $constructor().apply($arg1(), newValue);
+    }
+
+    @Override
+    public final Function2<? super Field<JSON>, ? super Field<JSON>, ? extends QOM.JSONConcat> $constructor() {
+        return (a1, a2) -> new JSONConcat(a1, a2);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: The Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public boolean equals(Object that) {
+        if (that instanceof QOM.JSONConcat o) {
+            return
+                Objects.equals($json1(), o.$json1()) &&
+                Objects.equals($json2(), o.$json2())
+            ;
+        }
+        else
+            return super.equals(that);
     }
 }
+

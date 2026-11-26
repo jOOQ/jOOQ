@@ -76,6 +76,7 @@ import static org.jooq.SQLDialect.MARIADB;
 // ...
 // ...
 // ...
+// ...
 import static org.jooq.SQLDialect.MYSQL;
 // ...
 // ...
@@ -26425,6 +26426,222 @@ public class DSL {
     @Support({ DUCKDB, MARIADB, MYSQL, SQLITE })
     public static Field<JSONB> jsonbRemove(Field<JSONB> field, Field<String> path) {
         return new JSONBRemove(field, path);
+    }
+
+    /**
+     * The <code>JSON_CONCAT</code> function.
+     * <p>
+     * Concatenate two JSON documents.
+     * <p>
+     * This works like PostgreSQL's <code>JSONB || JSONB</code> operator:
+     * <ul>
+     * <li>Two arrays are concatenated into a single array.</li>
+     * <li>Two objects are merged into a single object. If both objects
+     * contain the same key, the second object's value is retained.</li>
+     * <li>In all other cases, non-array values are wrapped in an array, and
+     * the resulting arrays are concatenated.</li>
+     * </ul>
+     * Dialects without native support for object merging may emulate it
+     * using <code>JSON_MERGE_PATCH</code> (RFC 7396), which merges nested
+     * objects recursively and removes keys whose value is <code>null</code>
+     * in the second object.
+     *
+     * @param json1 The first JSON document.
+     * @param json2 The second JSON document.
+     */
+    @NotNull
+    @Support({ DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    public static Field<JSON> jsonConcat(JSON json1, JSON json2) {
+        return new JSONConcat(Tools.field(json1), Tools.field(json2));
+    }
+
+    /**
+     * The <code>JSON_CONCAT</code> function.
+     * <p>
+     * Concatenate two JSON documents.
+     * <p>
+     * This works like PostgreSQL's <code>JSONB || JSONB</code> operator:
+     * <ul>
+     * <li>Two arrays are concatenated into a single array.</li>
+     * <li>Two objects are merged into a single object. If both objects
+     * contain the same key, the second object's value is retained.</li>
+     * <li>In all other cases, non-array values are wrapped in an array, and
+     * the resulting arrays are concatenated.</li>
+     * </ul>
+     * Dialects without native support for object merging may emulate it
+     * using <code>JSON_MERGE_PATCH</code> (RFC 7396), which merges nested
+     * objects recursively and removes keys whose value is <code>null</code>
+     * in the second object.
+     *
+     * @param json1 The first JSON document.
+     * @param json2 The second JSON document.
+     */
+    @NotNull
+    @Support({ DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    public static Field<JSON> jsonConcat(JSON json1, Field<JSON> json2) {
+        return new JSONConcat(Tools.field(json1), json2);
+    }
+
+    /**
+     * The <code>JSON_CONCAT</code> function.
+     * <p>
+     * Concatenate two JSON documents.
+     * <p>
+     * This works like PostgreSQL's <code>JSONB || JSONB</code> operator:
+     * <ul>
+     * <li>Two arrays are concatenated into a single array.</li>
+     * <li>Two objects are merged into a single object. If both objects
+     * contain the same key, the second object's value is retained.</li>
+     * <li>In all other cases, non-array values are wrapped in an array, and
+     * the resulting arrays are concatenated.</li>
+     * </ul>
+     * Dialects without native support for object merging may emulate it
+     * using <code>JSON_MERGE_PATCH</code> (RFC 7396), which merges nested
+     * objects recursively and removes keys whose value is <code>null</code>
+     * in the second object.
+     *
+     * @param json1 The first JSON document.
+     * @param json2 The second JSON document.
+     */
+    @NotNull
+    @Support({ DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    public static Field<JSON> jsonConcat(Field<JSON> json1, JSON json2) {
+        return new JSONConcat(json1, Tools.field(json2));
+    }
+
+    /**
+     * The <code>JSON_CONCAT</code> function.
+     * <p>
+     * Concatenate two JSON documents.
+     * <p>
+     * This works like PostgreSQL's <code>JSONB || JSONB</code> operator:
+     * <ul>
+     * <li>Two arrays are concatenated into a single array.</li>
+     * <li>Two objects are merged into a single object. If both objects
+     * contain the same key, the second object's value is retained.</li>
+     * <li>In all other cases, non-array values are wrapped in an array, and
+     * the resulting arrays are concatenated.</li>
+     * </ul>
+     * Dialects without native support for object merging may emulate it
+     * using <code>JSON_MERGE_PATCH</code> (RFC 7396), which merges nested
+     * objects recursively and removes keys whose value is <code>null</code>
+     * in the second object.
+     *
+     * @param json1 The first JSON document.
+     * @param json2 The second JSON document.
+     */
+    @NotNull
+    @Support({ DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    public static Field<JSON> jsonConcat(Field<JSON> json1, Field<JSON> json2) {
+        return new JSONConcat(json1, json2);
+    }
+
+    /**
+     * The <code>JSONB_CONCAT</code> function.
+     * <p>
+     * Concatenate two JSONB documents.
+     * <p>
+     * This works like PostgreSQL's <code>JSONB || JSONB</code> operator:
+     * <ul>
+     * <li>Two arrays are concatenated into a single array.</li>
+     * <li>Two objects are merged into a single object. If both objects
+     * contain the same key, the second object's value is retained.</li>
+     * <li>In all other cases, non-array values are wrapped in an array, and
+     * the resulting arrays are concatenated.</li>
+     * </ul>
+     * Dialects without native support for object merging may emulate it
+     * using <code>JSON_MERGE_PATCH</code> (RFC 7396), which merges nested
+     * objects recursively and removes keys whose value is <code>null</code>
+     * in the second object.
+     *
+     * @param json1 The first JSONB document.
+     * @param json2 The second JSONB document.
+     */
+    @NotNull
+    @Support({ DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    public static Field<JSONB> jsonbConcat(JSONB json1, JSONB json2) {
+        return new JSONBConcat(Tools.field(json1), Tools.field(json2));
+    }
+
+    /**
+     * The <code>JSONB_CONCAT</code> function.
+     * <p>
+     * Concatenate two JSONB documents.
+     * <p>
+     * This works like PostgreSQL's <code>JSONB || JSONB</code> operator:
+     * <ul>
+     * <li>Two arrays are concatenated into a single array.</li>
+     * <li>Two objects are merged into a single object. If both objects
+     * contain the same key, the second object's value is retained.</li>
+     * <li>In all other cases, non-array values are wrapped in an array, and
+     * the resulting arrays are concatenated.</li>
+     * </ul>
+     * Dialects without native support for object merging may emulate it
+     * using <code>JSON_MERGE_PATCH</code> (RFC 7396), which merges nested
+     * objects recursively and removes keys whose value is <code>null</code>
+     * in the second object.
+     *
+     * @param json1 The first JSONB document.
+     * @param json2 The second JSONB document.
+     */
+    @NotNull
+    @Support({ DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    public static Field<JSONB> jsonbConcat(JSONB json1, Field<JSONB> json2) {
+        return new JSONBConcat(Tools.field(json1), json2);
+    }
+
+    /**
+     * The <code>JSONB_CONCAT</code> function.
+     * <p>
+     * Concatenate two JSONB documents.
+     * <p>
+     * This works like PostgreSQL's <code>JSONB || JSONB</code> operator:
+     * <ul>
+     * <li>Two arrays are concatenated into a single array.</li>
+     * <li>Two objects are merged into a single object. If both objects
+     * contain the same key, the second object's value is retained.</li>
+     * <li>In all other cases, non-array values are wrapped in an array, and
+     * the resulting arrays are concatenated.</li>
+     * </ul>
+     * Dialects without native support for object merging may emulate it
+     * using <code>JSON_MERGE_PATCH</code> (RFC 7396), which merges nested
+     * objects recursively and removes keys whose value is <code>null</code>
+     * in the second object.
+     *
+     * @param json1 The first JSONB document.
+     * @param json2 The second JSONB document.
+     */
+    @NotNull
+    @Support({ DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    public static Field<JSONB> jsonbConcat(Field<JSONB> json1, JSONB json2) {
+        return new JSONBConcat(json1, Tools.field(json2));
+    }
+
+    /**
+     * The <code>JSONB_CONCAT</code> function.
+     * <p>
+     * Concatenate two JSONB documents.
+     * <p>
+     * This works like PostgreSQL's <code>JSONB || JSONB</code> operator:
+     * <ul>
+     * <li>Two arrays are concatenated into a single array.</li>
+     * <li>Two objects are merged into a single object. If both objects
+     * contain the same key, the second object's value is retained.</li>
+     * <li>In all other cases, non-array values are wrapped in an array, and
+     * the resulting arrays are concatenated.</li>
+     * </ul>
+     * Dialects without native support for object merging may emulate it
+     * using <code>JSON_MERGE_PATCH</code> (RFC 7396), which merges nested
+     * objects recursively and removes keys whose value is <code>null</code>
+     * in the second object.
+     *
+     * @param json1 The first JSONB document.
+     * @param json2 The second JSONB document.
+     */
+    @NotNull
+    @Support({ DUCKDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    public static Field<JSONB> jsonbConcat(Field<JSONB> json1, Field<JSONB> json2) {
+        return new JSONBConcat(json1, json2);
     }
 
 

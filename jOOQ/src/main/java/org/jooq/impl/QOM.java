@@ -8741,6 +8741,106 @@ public final class QOM {
         @NotNull default JSONBRemove $path(Field<String> newPath) { return $arg2(newPath); }
     }
 
+    /**
+     * The <code>JSON CONCAT</code> function.
+     * <p>
+     * Concatenate two JSON documents.
+     * <p>
+     * This works like PostgreSQL's <code>JSONB || JSONB</code> operator:
+     * <ul>
+     * <li>Two arrays are concatenated into a single array.</li>
+     * <li>Two objects are merged into a single object. If both objects
+     * contain the same key, the second object's value is retained.</li>
+     * <li>In all other cases, non-array values are wrapped in an array, and
+     * the resulting arrays are concatenated.</li>
+     * </ul>
+     * Dialects without native support for object merging may emulate it
+     * using <code>JSON_MERGE_PATCH</code> (RFC 7396), which merges nested
+     * objects recursively and removes keys whose value is <code>null</code>
+     * in the second object.
+     */
+    public /*sealed*/ interface JSONConcat
+        extends
+            UReturnsNullOnNullInput,
+            UOperator2<Field<JSON>, Field<JSON>, JSONConcat>,
+            org.jooq.Field<JSON>
+        //permits
+        //    JSONConcat
+    {
+
+        /**
+         * The first JSON document.
+         */
+        @NotNull default Field<JSON> $json1() { return $arg1(); }
+
+        /**
+         * The first JSON document.
+         */
+        @CheckReturnValue
+        @NotNull default JSONConcat $json1(Field<JSON> newJson1) { return $arg1(newJson1); }
+
+        /**
+         * The second JSON document.
+         */
+        @NotNull default Field<JSON> $json2() { return $arg2(); }
+
+        /**
+         * The second JSON document.
+         */
+        @CheckReturnValue
+        @NotNull default JSONConcat $json2(Field<JSON> newJson2) { return $arg2(newJson2); }
+    }
+
+    /**
+     * The <code>JSONB CONCAT</code> function.
+     * <p>
+     * Concatenate two JSONB documents.
+     * <p>
+     * This works like PostgreSQL's <code>JSONB || JSONB</code> operator:
+     * <ul>
+     * <li>Two arrays are concatenated into a single array.</li>
+     * <li>Two objects are merged into a single object. If both objects
+     * contain the same key, the second object's value is retained.</li>
+     * <li>In all other cases, non-array values are wrapped in an array, and
+     * the resulting arrays are concatenated.</li>
+     * </ul>
+     * Dialects without native support for object merging may emulate it
+     * using <code>JSON_MERGE_PATCH</code> (RFC 7396), which merges nested
+     * objects recursively and removes keys whose value is <code>null</code>
+     * in the second object.
+     */
+    public /*sealed*/ interface JSONBConcat
+        extends
+            UReturnsNullOnNullInput,
+            UOperator2<Field<JSONB>, Field<JSONB>, JSONBConcat>,
+            org.jooq.Field<JSONB>
+        //permits
+        //    JSONBConcat
+    {
+
+        /**
+         * The first JSONB document.
+         */
+        @NotNull default Field<JSONB> $json1() { return $arg1(); }
+
+        /**
+         * The first JSONB document.
+         */
+        @CheckReturnValue
+        @NotNull default JSONBConcat $json1(Field<JSONB> newJson1) { return $arg1(newJson1); }
+
+        /**
+         * The second JSONB document.
+         */
+        @NotNull default Field<JSONB> $json2() { return $arg2(); }
+
+        /**
+         * The second JSONB document.
+         */
+        @CheckReturnValue
+        @NotNull default JSONBConcat $json2(Field<JSONB> newJson2) { return $arg2(newJson2); }
+    }
+
 
 
 

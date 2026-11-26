@@ -23793,6 +23793,126 @@ public class DSL {
         return new DateAdd<>(date, interval);
     }
 
+    /**
+     * The <code>MAKE_DATE</code> function.
+     * <p>
+     * Create a date from a year, a month, and a day of the month.
+     *
+     * @param year The year.
+     * @param month The month of the year (1 = January, 12 = December).
+     * @param day The day of the month (1 based).
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    public static Field<Date> date(int year, int month, int day) {
+        return new MakeDate(Tools.field(year), Tools.field(month), Tools.field(day));
+    }
+
+    /**
+     * The <code>MAKE_DATE</code> function.
+     * <p>
+     * Create a date from a year, a month, and a day of the month.
+     *
+     * @param year The year.
+     * @param month The month of the year (1 = January, 12 = December).
+     * @param day The day of the month (1 based).
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    public static Field<Date> date(int year, int month, Field<? extends Number> day) {
+        return new MakeDate(Tools.field(year), Tools.field(month), day);
+    }
+
+    /**
+     * The <code>MAKE_DATE</code> function.
+     * <p>
+     * Create a date from a year, a month, and a day of the month.
+     *
+     * @param year The year.
+     * @param month The month of the year (1 = January, 12 = December).
+     * @param day The day of the month (1 based).
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    public static Field<Date> date(int year, Field<? extends Number> month, int day) {
+        return new MakeDate(Tools.field(year), month, Tools.field(day));
+    }
+
+    /**
+     * The <code>MAKE_DATE</code> function.
+     * <p>
+     * Create a date from a year, a month, and a day of the month.
+     *
+     * @param year The year.
+     * @param month The month of the year (1 = January, 12 = December).
+     * @param day The day of the month (1 based).
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    public static Field<Date> date(int year, Field<? extends Number> month, Field<? extends Number> day) {
+        return new MakeDate(Tools.field(year), month, day);
+    }
+
+    /**
+     * The <code>MAKE_DATE</code> function.
+     * <p>
+     * Create a date from a year, a month, and a day of the month.
+     *
+     * @param year The year.
+     * @param month The month of the year (1 = January, 12 = December).
+     * @param day The day of the month (1 based).
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    public static Field<Date> date(Field<? extends Number> year, int month, int day) {
+        return new MakeDate(year, Tools.field(month), Tools.field(day));
+    }
+
+    /**
+     * The <code>MAKE_DATE</code> function.
+     * <p>
+     * Create a date from a year, a month, and a day of the month.
+     *
+     * @param year The year.
+     * @param month The month of the year (1 = January, 12 = December).
+     * @param day The day of the month (1 based).
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    public static Field<Date> date(Field<? extends Number> year, int month, Field<? extends Number> day) {
+        return new MakeDate(year, Tools.field(month), day);
+    }
+
+    /**
+     * The <code>MAKE_DATE</code> function.
+     * <p>
+     * Create a date from a year, a month, and a day of the month.
+     *
+     * @param year The year.
+     * @param month The month of the year (1 = January, 12 = December).
+     * @param day The day of the month (1 based).
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    public static Field<Date> date(Field<? extends Number> year, Field<? extends Number> month, int day) {
+        return new MakeDate(year, month, Tools.field(day));
+    }
+
+    /**
+     * The <code>MAKE_DATE</code> function.
+     * <p>
+     * Create a date from a year, a month, and a day of the month.
+     *
+     * @param year The year.
+     * @param month The month of the year (1 = January, 12 = December).
+     * @param day The day of the month (1 based).
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    public static Field<Date> date(Field<? extends Number> year, Field<? extends Number> month, Field<? extends Number> day) {
+        return new MakeDate(year, month, day);
+    }
+
     // -------------------------------------------------------------------------
     // Array functions
     // -------------------------------------------------------------------------
@@ -31750,6 +31870,134 @@ public class DSL {
     @Support({ CUBRID, DERBY, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE })
     public static Field<LocalDate> localDate(Field<LocalDate> field) {
         return new DateOrTime<>(field, SQLDataType.LOCALDATE);
+    }
+
+    /**
+     * Create a <code>DATE</code> from a year, a month, and a day of the month.
+     * <p>
+     * This is the same as {@link #date(Field, Field, Field)}, but produces a
+     * {@link LocalDate} typed field.
+     *
+     * @param year The year.
+     * @param month The month of the year (1 = January, 12 = December).
+     * @param day The day of the month (1 based).
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    public static Field<LocalDate> localDate(int year, int month, int day) {
+        return date(year, month, day).coerce(SQLDataType.LOCALDATE);
+    }
+
+    /**
+     * Create a <code>DATE</code> from a year, a month, and a day of the month.
+     * <p>
+     * This is the same as {@link #date(Field, Field, Field)}, but produces a
+     * {@link LocalDate} typed field.
+     *
+     * @param year The year.
+     * @param month The month of the year (1 = January, 12 = December).
+     * @param day The day of the month (1 based).
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    public static Field<LocalDate> localDate(int year, int month, Field<? extends Number> day) {
+        return date(year, month, day).coerce(SQLDataType.LOCALDATE);
+    }
+
+    /**
+     * Create a <code>DATE</code> from a year, a month, and a day of the month.
+     * <p>
+     * This is the same as {@link #date(Field, Field, Field)}, but produces a
+     * {@link LocalDate} typed field.
+     *
+     * @param year The year.
+     * @param month The month of the year (1 = January, 12 = December).
+     * @param day The day of the month (1 based).
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    public static Field<LocalDate> localDate(int year, Field<? extends Number> month, int day) {
+        return date(year, month, day).coerce(SQLDataType.LOCALDATE);
+    }
+
+    /**
+     * Create a <code>DATE</code> from a year, a month, and a day of the month.
+     * <p>
+     * This is the same as {@link #date(Field, Field, Field)}, but produces a
+     * {@link LocalDate} typed field.
+     *
+     * @param year The year.
+     * @param month The month of the year (1 = January, 12 = December).
+     * @param day The day of the month (1 based).
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    public static Field<LocalDate> localDate(int year, Field<? extends Number> month, Field<? extends Number> day) {
+        return date(year, month, day).coerce(SQLDataType.LOCALDATE);
+    }
+
+    /**
+     * Create a <code>DATE</code> from a year, a month, and a day of the month.
+     * <p>
+     * This is the same as {@link #date(Field, Field, Field)}, but produces a
+     * {@link LocalDate} typed field.
+     *
+     * @param year The year.
+     * @param month The month of the year (1 = January, 12 = December).
+     * @param day The day of the month (1 based).
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    public static Field<LocalDate> localDate(Field<? extends Number> year, int month, int day) {
+        return date(year, month, day).coerce(SQLDataType.LOCALDATE);
+    }
+
+    /**
+     * Create a <code>DATE</code> from a year, a month, and a day of the month.
+     * <p>
+     * This is the same as {@link #date(Field, Field, Field)}, but produces a
+     * {@link LocalDate} typed field.
+     *
+     * @param year The year.
+     * @param month The month of the year (1 = January, 12 = December).
+     * @param day The day of the month (1 based).
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    public static Field<LocalDate> localDate(Field<? extends Number> year, int month, Field<? extends Number> day) {
+        return date(year, month, day).coerce(SQLDataType.LOCALDATE);
+    }
+
+    /**
+     * Create a <code>DATE</code> from a year, a month, and a day of the month.
+     * <p>
+     * This is the same as {@link #date(Field, Field, Field)}, but produces a
+     * {@link LocalDate} typed field.
+     *
+     * @param year The year.
+     * @param month The month of the year (1 = January, 12 = December).
+     * @param day The day of the month (1 based).
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    public static Field<LocalDate> localDate(Field<? extends Number> year, Field<? extends Number> month, int day) {
+        return date(year, month, day).coerce(SQLDataType.LOCALDATE);
+    }
+
+    /**
+     * Create a <code>DATE</code> from a year, a month, and a day of the month.
+     * <p>
+     * This is the same as {@link #date(Field, Field, Field)}, but produces a
+     * {@link LocalDate} typed field.
+     *
+     * @param year The year.
+     * @param month The month of the year (1 = January, 12 = December).
+     * @param day The day of the month (1 based).
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, CUBRID, DUCKDB, FIREBIRD, H2, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE, TRINO, YUGABYTEDB })
+    public static Field<LocalDate> localDate(Field<? extends Number> year, Field<? extends Number> month, Field<? extends Number> day) {
+        return date(year, month, day).coerce(SQLDataType.LOCALDATE);
     }
 
     /**

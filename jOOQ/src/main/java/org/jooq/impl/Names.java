@@ -493,7 +493,11 @@ final class Names {
     static final Name N_CURRENT_USER                = systemName("current_user");
     static final Name N_DATABASE                    = systemName("database");
     static final Name N_DATALENGTH                  = systemName("datalength");
+    static final Name N_DATE                        = systemName("date");
+    static final Name N_DATEFROMPARTS               = systemName("datefromparts");
+    static final Name N_DATESERIAL                  = systemName("dateserial");
     static final Name N_DATE_ADD                    = systemName("date_add");
+    static final Name N_DATE_FROM_PARTS             = systemName("date_from_parts");
     static final Name N_DBINFO                      = systemName("dbinfo");
     static final Name N_DB_NAME                     = systemName("db_name");
     static final Name N_DEGREES                     = systemName("degrees");
@@ -588,10 +592,13 @@ final class Names {
     static final Name N_LPAD                        = systemName("lpad");
     static final Name N_LSHIFT                      = systemName("lshift");
     static final Name N_LTRIM                       = systemName("ltrim");
+    static final Name N_MAKEDATE                    = systemName("makedate");
+    static final Name N_MAKE_DATE                   = systemName("make_date");
     static final Name N_MAP_KEYS                    = systemName("map_keys");
     static final Name N_MAX                         = systemName("max");
     static final Name N_MAX_BY                      = systemName("max_by");
     static final Name N_MD5                         = systemName("md5");
+    static final Name N_MDY                         = systemName("mdy");
     static final Name N_MEDIAN                      = systemName("median");
     static final Name N_MIN                         = systemName("min");
     static final Name N_MIN_BY                      = systemName("min_by");
@@ -761,6 +768,7 @@ final class Names {
     static final Name N_XMLSERIALIZE                = systemName("xmlserialize");
     static final Name N_XMLSERIALIZE_CONTENT        = systemName("xmlserialize_content");
     static final Name N_XOR                         = systemName("xor");
+    static final Name N_YMD                         = systemName("ymd");
     static final Name N_arrayAll                    = systemName("arrayAll");
     static final Name N_arrayConcat                 = systemName("arrayConcat");
     static final Name N_arrayExists                 = systemName("arrayExists");
@@ -781,6 +789,7 @@ final class Names {
     static final Name N_endsWith                    = systemName("endsWith");
     static final Name N_generateUUIDv4              = systemName("generateUUIDv4");
     static final Name N_has                         = systemName("has");
+    static final Name N_makeDate                    = systemName("makeDate");
     static final Name N_startsWith                  = systemName("startsWith");
     static final Name N_substringIndex              = systemName("substringIndex");
 

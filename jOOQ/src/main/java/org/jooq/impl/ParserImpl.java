@@ -10028,6 +10028,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                     return currentCatalog();
                 else if (parseFunctionNameIf("DIGITS"))
                     return digits((Field) parseFieldParenthesised());
+                else if (parseFunctionNameIf("DATEFROMPARTS", "DATE_FROM_PARTS", "DATESERIAL"))
+                    return parseFunctionArgs3((f1, f2, f3) -> date((Field) f1, (Field) f2, (Field) f3));
 
                 else if ((field = parseFieldDateLiteralOrFunctionIf()) != null)
                     return field;
@@ -10313,6 +10315,19 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                     return parseFunctionArgs3(DSL::mid);
                 else if (parseFunctionNameIf("MD5"))
                     return parseFunctionArgs1(f -> binary(f) ? binaryMd5(f) : md5(f));
+                else if (parseFunctionNameIf("MAKE_DATE"))
+                    return parseFunctionArgs3((f1, f2, f3) -> date((Field) f1, (Field) f2, (Field) f3));
+
+                // [#19287] MySQL's MAKEDATE(year, dayofyear) or ClickHouse's makeDate(year, month, day)
+                else if (parseFunctionNameIf("MAKEDATE"))
+                    return parseFunctionArgs3(
+                        (f1, f2) -> dateAdd(date((Field) f1, 1, 1), isub((Field) f2, one())),
+                        (f1, f2, f3) -> date((Field) f1, (Field) f2, (Field) f3)
+                    );
+
+                // [#19287] Informix's MDY(month, day, year)
+                else if (parseFunctionNameIf("MDY"))
+                    return parseFunctionArgs3((f1, f2, f3) -> date((Field) f3, (Field) f1, (Field) f2));
 
                 else if ((field = parseMultisetValueConstructorIf()) != null)
                     return field;
@@ -10905,6 +10920,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
             case 'Y':
                 if (parseFunctionNameIf("YEAR"))
                     return year(parseFieldParenthesised());
+                else if (parseFunctionNameIf("YMD"))
+                    return parseFunctionArgs3((f1, f2, f3) -> date((Field) f1, (Field) f2, (Field) f3));
 
                 break;
 
@@ -12680,6 +12697,16 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                     return currentDate();
 
                 Field<?> f = parseField();
+
+                // [#19287] BigQuery and Spanner's DATE(year, month, day)
+                if (parseIf(',')) {
+                    Field<?> month = parseField();
+                    parse(',');
+                    Field<?> day = parseField();
+                    parse(')');
+                    return date((Field) f, (Field) month, (Field) day);
+                }
+
                 parse(')');
                 return date((Field) f);
             }

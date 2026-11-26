@@ -6939,6 +6939,54 @@ public final class QOM {
     }
 
     /**
+     * The <code>MAKE DATE</code> function.
+     * <p>
+     * Create a date from a year, a month, and a day of the month.
+     */
+    public /*sealed*/ interface MakeDate
+        extends
+            UReturnsNullOnNullInput,
+            UOperator3<Field<? extends Number>, Field<? extends Number>, Field<? extends Number>, MakeDate>,
+            org.jooq.Field<Date>
+        //permits
+        //    MakeDate
+    {
+
+        /**
+         * The year.
+         */
+        @NotNull default Field<? extends Number> $year() { return $arg1(); }
+
+        /**
+         * The year.
+         */
+        @CheckReturnValue
+        @NotNull default MakeDate $year(Field<? extends Number> newYear) { return $arg1(newYear); }
+
+        /**
+         * The month of the year (1 = January, 12 = December).
+         */
+        @NotNull default Field<? extends Number> $month() { return $arg2(); }
+
+        /**
+         * The month of the year (1 = January, 12 = December).
+         */
+        @CheckReturnValue
+        @NotNull default MakeDate $month(Field<? extends Number> newMonth) { return $arg2(newMonth); }
+
+        /**
+         * The day of the month (1 based).
+         */
+        @NotNull default Field<? extends Number> $day() { return $arg3(); }
+
+        /**
+         * The day of the month (1 based).
+         */
+        @CheckReturnValue
+        @NotNull default MakeDate $day(Field<? extends Number> newDay) { return $arg3(newDay); }
+    }
+
+    /**
      * The <code>CARDINALITY</code> function.
      * <p>
      * Calculate the cardinality of an array field.

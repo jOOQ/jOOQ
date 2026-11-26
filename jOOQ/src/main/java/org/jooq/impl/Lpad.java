@@ -135,17 +135,32 @@ implements
 
 
 
-            // This beautiful expression was contributed by "Ludo", here:
-            // http://stackoverflow.com/questions/6576343/how-to-simulate-lpad-rpad-with-sqlite
+            // [#20561] SQLite doesn't support LPAD(). The emulation must truncate
+            //          the string if it is longer than the length argument, and
+            //          produce an empty string if the length argument is <= 0
             case SQLITE:
-                ctx.visit(N_SUBSTR).sql('(')
-                    .visit(N_REPLACE).sql('(')
-                        .visit(N_HEX).sql('(')
-                            .visit(N_ZEROBLOB).sql('(')
-                                .visit(length)
-                        .sql(")), '00', ").visit(characterOrBlank())
-                    .sql("), 1, ").visit(length).sql(" - ").visit(N_LENGTH).sql('(').visit(string)
-                .sql(")) || ").visit(string);
+                if (character == null) {
+
+                    // substr(printf('%*s', max(n - length(s), 0), '') || s, 1, n)
+                    ctx.visit(N_SUBSTR).sql('(')
+                        .visit(N_PRINTF).sql("('%*s', ")
+                            .visit(N_MAX).sql('(').visit(length).sql(" - ").visit(N_LENGTH).sql('(').visit(string).sql("), 0)")
+                        .sql(", '') || ").visit(string)
+                    .sql(", 1, ").visit(length).sql(')');
+                }
+                else {
+
+                    // substr(substr(replace(printf('%*s', n, ''), ' ', c), 1, n - length(s)) || s, 1, n)
+                    ctx.visit(N_SUBSTR).sql('(')
+                        .visit(N_SUBSTR).sql('(')
+                            .visit(N_REPLACE).sql('(')
+                                .visit(N_PRINTF).sql("('%*s', ").visit(length).sql(", '')")
+                            .sql(", ' ', ").visit(character)
+                        .sql("), 1, ").visit(length).sql(" - ").visit(N_LENGTH).sql('(').visit(string)
+                    .sql(")) || ").visit(string)
+                    .sql(", 1, ").visit(length).sql(')');
+                }
+
                 break;
 
             default:

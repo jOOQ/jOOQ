@@ -37,6 +37,11 @@
                     <artifactId>maven-javadoc-plugin</artifactId>
                     <!-- [#9099] later versions up to 3.1.1 don't appear to work (to be tested with 3.1.2) -->
                     <version>3.0.1</version>
+                    <configuration>
+                        <!-- [#20522] Align with the default output directory of later maven-javadoc-plugin versions,
+                             which the parent pom's javadoc jar repackaging expects -->
+                        <outputDirectory>${project.build.directory}/reports/apidocs</outputDirectory>
+                    </configuration>
                 </plugin>
                 
 

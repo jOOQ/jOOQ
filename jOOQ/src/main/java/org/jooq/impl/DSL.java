@@ -24199,7 +24199,8 @@ public class DSL {
     /**
      * The <code>ARRAY_SLICE</code> function.
      * <p>
-     * Get a slice of an array, from a start ordinal to an end ordinal (both 1 based and inclusive).
+     * Get a slice of an array, from a start ordinal to an end ordinal (both 1 based and
+     * inclusive).
      *
      * @param array The array to be sliced.
      * @param start The ordinal (1 based, inclusive) of the first element of the slice.
@@ -24214,7 +24215,8 @@ public class DSL {
     /**
      * The <code>ARRAY_SLICE</code> function.
      * <p>
-     * Get a slice of an array, from a start ordinal to an end ordinal (both 1 based and inclusive).
+     * Get a slice of an array, from a start ordinal to an end ordinal (both 1 based and
+     * inclusive).
      *
      * @param array The array to be sliced.
      * @param start The ordinal (1 based, inclusive) of the first element of the slice.
@@ -24229,7 +24231,8 @@ public class DSL {
     /**
      * The <code>ARRAY_SLICE</code> function.
      * <p>
-     * Get a slice of an array, from a start ordinal to an end ordinal (both 1 based and inclusive).
+     * Get a slice of an array, from a start ordinal to an end ordinal (both 1 based and
+     * inclusive).
      *
      * @param array The array to be sliced.
      * @param start The ordinal (1 based, inclusive) of the first element of the slice.
@@ -24244,7 +24247,8 @@ public class DSL {
     /**
      * The <code>ARRAY_SLICE</code> function.
      * <p>
-     * Get a slice of an array, from a start ordinal to an end ordinal (both 1 based and inclusive).
+     * Get a slice of an array, from a start ordinal to an end ordinal (both 1 based and
+     * inclusive).
      *
      * @param array The array to be sliced.
      * @param start The ordinal (1 based, inclusive) of the first element of the slice.
@@ -24259,7 +24263,8 @@ public class DSL {
     /**
      * The <code>ARRAY_SLICE</code> function.
      * <p>
-     * Get a slice of an array, from a start ordinal to an end ordinal (both 1 based and inclusive).
+     * Get a slice of an array, from a start ordinal to an end ordinal (both 1 based and
+     * inclusive).
      *
      * @param array The array to be sliced.
      * @param start The ordinal (1 based, inclusive) of the first element of the slice.
@@ -24274,7 +24279,8 @@ public class DSL {
     /**
      * The <code>ARRAY_SLICE</code> function.
      * <p>
-     * Get a slice of an array, from a start ordinal to an end ordinal (both 1 based and inclusive).
+     * Get a slice of an array, from a start ordinal to an end ordinal (both 1 based and
+     * inclusive).
      *
      * @param array The array to be sliced.
      * @param start The ordinal (1 based, inclusive) of the first element of the slice.
@@ -24289,7 +24295,8 @@ public class DSL {
     /**
      * The <code>ARRAY_SLICE</code> function.
      * <p>
-     * Get a slice of an array, from a start ordinal to an end ordinal (both 1 based and inclusive).
+     * Get a slice of an array, from a start ordinal to an end ordinal (both 1 based and
+     * inclusive).
      *
      * @param array The array to be sliced.
      * @param start The ordinal (1 based, inclusive) of the first element of the slice.
@@ -24304,7 +24311,8 @@ public class DSL {
     /**
      * The <code>ARRAY_SLICE</code> function.
      * <p>
-     * Get a slice of an array, from a start ordinal to an end ordinal (both 1 based and inclusive).
+     * Get a slice of an array, from a start ordinal to an end ordinal (both 1 based and
+     * inclusive).
      *
      * @param array The array to be sliced.
      * @param start The ordinal (1 based, inclusive) of the first element of the slice.

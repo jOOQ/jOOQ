@@ -7271,7 +7271,8 @@ public final class QOM {
     /**
      * The <code>ARRAY SLICE</code> function.
      * <p>
-     * Get a slice of an array, from a start ordinal to an end ordinal (both 1 based and inclusive).
+     * Get a slice of an array, from a start ordinal to an end ordinal (both 1 based and
+     * inclusive).
      */
     public /*sealed*/ interface ArraySlice<T>
         extends

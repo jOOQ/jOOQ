@@ -146,9 +146,15 @@ implements
             case SQLITE: {
                 // Emulation of REPEAT() for SQLite currently cannot be achieved
                 // using RPAD() above, as RPAD() expects characters, not strings
-                // Another option is documented here, though:
-                // https://stackoverflow.com/a/51792334/521799
-                ctx.visit(N_REPLACE).sql('(').visit(N_HEX).sql('(').visit(N_ZEROBLOB).sql('(').visit(count).sql(")), '00', ").visit(string).sql(')');
+                // [#10157] Create count spaces using PRINTF(), and replace them
+                //          by the string. SUBSTR() produces an empty string
+                //          for count <= 0 (PRINTF() would produce abs(count)
+                //          spaces), and NULL for a NULL count
+                ctx.visit(N_REPLACE).sql('(')
+                    .visit(N_SUBSTR).sql('(')
+                        .visit(N_PRINTF).sql("('%*s', ").visit(count).sql(", '')")
+                    .sql(", 1, ").visit(count).sql(')')
+                .sql(", ' ', ").visit(string).sql(')');
                 break;
             }
 

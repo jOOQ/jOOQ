@@ -287,7 +287,7 @@ implements
     }
 
     private static final Field<String> pad(Field<? extends Number> f, int length) {
-        return DSL.lpad(DSL.cast(f, VARCHAR), length, "0");
+        return DSL.lpad(DSL.cast(f, VARCHAR), inline(length), inline("0"));
     }
 
     // -------------------------------------------------------------------------

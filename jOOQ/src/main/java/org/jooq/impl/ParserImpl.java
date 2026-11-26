@@ -272,6 +272,7 @@ import static org.jooq.impl.DSL.log10;
 // ...
 import static org.jooq.impl.DSL.lower;
 import static org.jooq.impl.DSL.ltrim;
+import static org.jooq.impl.DSL.makeDate;
 import static org.jooq.impl.DSL.max;
 import static org.jooq.impl.DSL.maxBy;
 import static org.jooq.impl.DSL.maxDistinct;
@@ -10029,7 +10030,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                 else if (parseFunctionNameIf("DIGITS"))
                     return digits((Field) parseFieldParenthesised());
                 else if (parseFunctionNameIf("DATEFROMPARTS", "DATE_FROM_PARTS", "DATESERIAL"))
-                    return parseFunctionArgs3((f1, f2, f3) -> date((Field) f1, (Field) f2, (Field) f3));
+                    return parseFunctionArgs3((f1, f2, f3) -> makeDate((Field) f1, (Field) f2, (Field) f3));
 
                 else if ((field = parseFieldDateLiteralOrFunctionIf()) != null)
                     return field;
@@ -10316,18 +10317,18 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                 else if (parseFunctionNameIf("MD5"))
                     return parseFunctionArgs1(f -> binary(f) ? binaryMd5(f) : md5(f));
                 else if (parseFunctionNameIf("MAKE_DATE"))
-                    return parseFunctionArgs3((f1, f2, f3) -> date((Field) f1, (Field) f2, (Field) f3));
+                    return parseFunctionArgs3((f1, f2, f3) -> makeDate((Field) f1, (Field) f2, (Field) f3));
 
                 // [#19287] MySQL's MAKEDATE(year, dayofyear) or ClickHouse's makeDate(year, month, day)
                 else if (parseFunctionNameIf("MAKEDATE"))
                     return parseFunctionArgs3(
-                        (f1, f2) -> dateAdd(date((Field) f1, 1, 1), isub((Field) f2, one())),
-                        (f1, f2, f3) -> date((Field) f1, (Field) f2, (Field) f3)
+                        (f1, f2) -> dateAdd(makeDate((Field) f1, one(), one()), isub((Field) f2, one())),
+                        (f1, f2, f3) -> makeDate((Field) f1, (Field) f2, (Field) f3)
                     );
 
                 // [#19287] Informix's MDY(month, day, year)
                 else if (parseFunctionNameIf("MDY"))
-                    return parseFunctionArgs3((f1, f2, f3) -> date((Field) f3, (Field) f1, (Field) f2));
+                    return parseFunctionArgs3((f1, f2, f3) -> makeDate((Field) f3, (Field) f1, (Field) f2));
 
                 else if ((field = parseMultisetValueConstructorIf()) != null)
                     return field;
@@ -10921,7 +10922,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                 if (parseFunctionNameIf("YEAR"))
                     return year(parseFieldParenthesised());
                 else if (parseFunctionNameIf("YMD"))
-                    return parseFunctionArgs3((f1, f2, f3) -> date((Field) f1, (Field) f2, (Field) f3));
+                    return parseFunctionArgs3((f1, f2, f3) -> makeDate((Field) f1, (Field) f2, (Field) f3));
 
                 break;
 
@@ -12704,7 +12705,7 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                     parse(',');
                     Field<?> day = parseField();
                     parse(')');
-                    return date((Field) f, (Field) month, (Field) day);
+                    return makeDate((Field) f, (Field) month, (Field) day);
                 }
 
                 parse(')');

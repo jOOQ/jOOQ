@@ -42,6 +42,20 @@
                     </archive>
                 </configuration>
             </plugin>
+
+            <!-- [jOOQ/jOOQ#20522] With maven-javadoc-plugin 3.11.2, javadoc runs on the module
+                          path for this automatic module, and can't see org.reactivestreams
+                          (required transitively by org.jooq via SubscriberProvider). On JDK 22+,
+                          javadoc fails when it can't attach type annotations to missing
+                          classes. legacyMode documents this module on the classpath only, as
+                          before. This module has no module-info.java, so nothing is lost. -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <configuration>
+                    <legacyMode>true</legacyMode>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 

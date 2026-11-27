@@ -97,7 +97,30 @@ implements
     // XXX: QueryPart API
     // -------------------------------------------------------------------------
 
+    @Override
+    final boolean parenthesised(Context<?> ctx) {
+        switch (ctx.family()) {
 
+
+
+
+
+
+
+
+
+            case CLICKHOUSE:
+            case DUCKDB:
+            case H2:
+            case POSTGRES:
+            case TRINO:
+            case YUGABYTEDB:
+                return false;
+
+            default:
+                return true;
+        }
+    }
 
     @Override
     public final void accept(Context<?> ctx) {
@@ -129,21 +152,18 @@ implements
 
 
 
-
-
+            case DUCKDB:
+                ctx.visit(function(systemName("sha" + bitLength), getDataType(), string));
+                break;
 
 
             case POSTGRES:
             case YUGABYTEDB:
-                ctx.visit(function(N_ENCODE, getDataType(), function(shaN(), VARBINARY, function(N_CONVERT_TO, VARBINARY, string, inline("UTF8"))), inline("hex")));
+                ctx.visit(function(N_ENCODE, getDataType(), function(systemName("sha" + bitLength), VARBINARY, function(N_CONVERT_TO, VARBINARY, string, inline("UTF8"))), inline("hex")));
                 break;
 
             case CLICKHOUSE:
                 ctx.visit(function(N_LOWER, getDataType(), function(N_HEX, getDataType(), function(systemName("SHA" + bitLength), VARBINARY, string))));
-                break;
-
-            case DUCKDB:
-                ctx.visit(function(shaN(), getDataType(), string));
                 break;
 
             case H2:
@@ -151,7 +171,7 @@ implements
                 break;
 
             case TRINO:
-                ctx.visit(function(N_LOWER, getDataType(), function(N_TO_HEX, getDataType(), function(shaN(), VARBINARY, function(N_TO_UTF8, VARBINARY, string)))));
+                ctx.visit(function(N_LOWER, getDataType(), function(N_TO_HEX, getDataType(), function(systemName("sha" + bitLength), VARBINARY, function(N_TO_UTF8, VARBINARY, string)))));
                 break;
 
             default:
@@ -159,12 +179,6 @@ implements
                 break;
         }
     }
-
-    private final Name shaN() {
-        return systemName("sha" + bitLength);
-    }
-
-
 
 
 

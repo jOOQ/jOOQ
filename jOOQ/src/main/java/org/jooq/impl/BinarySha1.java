@@ -94,12 +94,27 @@ implements
     // XXX: QueryPart API
     // -------------------------------------------------------------------------
 
+    @Override
+    final boolean parenthesised(Context<?> ctx) {
+        switch (ctx.family()) {
 
 
 
 
 
 
+            case CLICKHOUSE:
+            case DUCKDB:
+            case H2:
+            case POSTGRES:
+            case TRINO:
+            case YUGABYTEDB:
+                return false;
+
+            default:
+                return true;
+        }
+    }
 
     @Override
     public final void accept(Context<?> ctx) {
@@ -136,15 +151,22 @@ implements
 
 
 
-            // [#20565] PostgreSQL doesn't support SHA1 natively, only via the pgcrypto extension
             case POSTGRES:
-            case YUGABYTEDB:
+            case YUGABYTEDB: {
+                // [jOOQ/jOOQ#20565] PostgreSQL doesn't support SHA1 natively, only via the pgcrypto extension
                 ctx.visit(function(N_ENCODE, getDataType(), function(N_DIGEST, VARBINARY, bytes, inline("sha1")), inline("hex")));
                 break;
+            }
 
             case CLICKHOUSE:
                 ctx.visit(function(N_LOWER, getDataType(), function(N_HEX, getDataType(), function(systemName("SHA1"), VARBINARY, bytes))));
                 break;
+
+            case DUCKDB: {
+                // [jOOQ/jOOQ#20565] DuckDB's SHA functions return VARCHAR, which the JDBC driver can't read as byte[]
+                ctx.visit(function(N_ENCODE, getDataType(), function(N_SHA1, VARCHAR, bytes)));
+                break;
+            }
 
             case H2:
                 ctx.visit(function(N_LOWER, getDataType(), function(N_RAWTOHEX, getDataType(), function(N_HASH, VARBINARY, inline("SHA-1"), bytes))));
@@ -159,8 +181,6 @@ implements
                 break;
         }
     }
-
-
 
 
 

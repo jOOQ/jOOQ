@@ -97,7 +97,28 @@ implements
     // XXX: QueryPart API
     // -------------------------------------------------------------------------
 
+    @Override
+    final boolean parenthesised(Context<?> ctx) {
+        switch (ctx.family()) {
 
+
+
+
+
+
+
+            case CLICKHOUSE:
+            case DUCKDB:
+            case H2:
+            case POSTGRES:
+            case TRINO:
+            case YUGABYTEDB:
+                return false;
+
+            default:
+                return true;
+        }
+    }
 
     @Override
     public final void accept(Context<?> ctx) {
@@ -130,23 +151,25 @@ implements
 
             case POSTGRES:
             case YUGABYTEDB:
-                ctx.visit(function(N_ENCODE, getDataType(), function(shaN(), VARBINARY, bytes), inline("hex")));
+                ctx.visit(function(N_ENCODE, getDataType(), function(systemName("sha" + bitLength), VARBINARY, bytes), inline("hex")));
                 break;
 
             case CLICKHOUSE:
                 ctx.visit(function(N_LOWER, getDataType(), function(N_HEX, getDataType(), function(systemName("SHA" + bitLength), VARBINARY, bytes))));
                 break;
 
-            case DUCKDB:
-                ctx.visit(function(shaN(), getDataType(), bytes));
+            case DUCKDB: {
+                // [jOOQ/jOOQ#20567] DuckDB's SHA functions return VARCHAR, which the JDBC driver can't read as byte[]
+                ctx.visit(function(N_ENCODE, getDataType(), function(systemName("sha" + bitLength), VARCHAR, bytes)));
                 break;
+            }
 
             case H2:
                 ctx.visit(function(N_LOWER, getDataType(), function(N_RAWTOHEX, getDataType(), function(N_HASH, VARBINARY, inline("SHA-" + bitLength), bytes))));
                 break;
 
             case TRINO:
-                ctx.visit(function(N_LOWER, getDataType(), function(N_TO_HEX, getDataType(), function(shaN(), VARBINARY, bytes))));
+                ctx.visit(function(N_LOWER, getDataType(), function(N_TO_HEX, getDataType(), function(systemName("sha" + bitLength), VARBINARY, bytes))));
                 break;
 
             default:
@@ -154,12 +177,6 @@ implements
                 break;
         }
     }
-
-    private final Name shaN() {
-        return systemName("sha" + bitLength);
-    }
-
-
 
 
 

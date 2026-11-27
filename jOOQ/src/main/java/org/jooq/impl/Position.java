@@ -128,7 +128,6 @@ implements
         if (startIndex != null) {
             switch (ctx.family()) {
 
-                case DATABRICKS:
 
 
                 case DERBY:

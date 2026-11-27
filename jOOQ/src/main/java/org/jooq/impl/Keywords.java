@@ -495,6 +495,7 @@ final class Keywords {
     static final Keyword K_VALID                    = keyword("valid");
     static final Keyword K_VALUE                    = keyword("value");
     static final Keyword K_VALUES                   = keyword("values");
+    static final Keyword K_VARBINARY                = keyword("varbinary");
     static final Keyword K_VARCHAR                  = keyword("varchar");
     static final Keyword K_VERSIONS                 = keyword("versions");
     static final Keyword K_VIEW                     = keyword("view");

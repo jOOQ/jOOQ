@@ -9964,6 +9964,10 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                     return field;
                 else if (parseFunctionNameIf("BIN_TO_UUID"))
                     return parseFunctionArgs1(DSL::binToUuid);
+                else if (parseFunctionNameIf("BASE64", "BASE64_ENCODE", "base64Encode"))
+                    return parseFunctionArgs1(DSL::toBase64);
+                else if (parseFunctionNameIf("BASE64_DECODE", "BASE64_DECODE_BINARY", "base64Decode"))
+                    return parseFunctionArgs1(DSL::fromBase64);
                 else if ((value = parseBitLiteralIf()) != null)
                     return DSL.inline((Boolean) value);
                 else if ((field = parseTypedLiteralIf("BIGINT", BIGINT)) != null)
@@ -10169,6 +10173,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
             case 'F':
                 if (parseFunctionNameIf("FLOOR"))
                     return floor((Field) parseFieldNumericOpParenthesised());
+                else if (parseFunctionNameIf("FROM_BASE64"))
+                    return parseFunctionArgs1(DSL::fromBase64);
 
                 else if ((field = parseFieldFirstValueIf()) != null)
                     return field;
@@ -10889,6 +10895,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                     return parseFunctionArgs2(DSL::toChar, DSL::toChar);
                 else if (parseFunctionNameIf("TO_HEX"))
                     return toHex((Field) parseFieldParenthesised());
+                else if (parseFunctionNameIf("TO_BASE64"))
+                    return parseFunctionArgs1(DSL::toBase64);
 
                 else if (parseFunctionNameIf("TANH"))
                     return tanh((Field) parseFieldNumericOpParenthesised());
@@ -10940,6 +10948,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                     return parseFunctionArgs1(DSL::uuidToBin);
                 else if (parseFunctionNameIf("UUIDNumToString"))
                     return parseFunctionArgs1(DSL::binToUuid);
+                else if (parseFunctionNameIf("UNBASE64"))
+                    return parseFunctionArgs1(DSL::fromBase64);
 
                 else if (parseFunctionNameIf("UNIX_TIMESTAMP"))
                     return epoch(parseFieldParenthesised());

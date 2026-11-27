@@ -6995,6 +6995,42 @@ public final class QOM {
     }
 
     /**
+     * The <code>FROM BASE64</code> function.
+     * <p>
+     * Decode a Base64 encoded string to a binary string.
+     */
+    public /*sealed*/ interface FromBase64
+        extends
+            UReturnsNullOnNullInput,
+            UOperator1<Field<String>, FromBase64>,
+            org.jooq.Field<byte[]>
+        //permits
+        //    FromBase64
+    {
+        @NotNull default Field<String> $string() { return $arg1(); }
+        @CheckReturnValue
+        @NotNull default FromBase64 $string(Field<String> newString) { return $arg1(newString); }
+    }
+
+    /**
+     * The <code>TO BASE64</code> function.
+     * <p>
+     * Encode a binary string to its Base64 representation, without line breaks.
+     */
+    public /*sealed*/ interface ToBase64
+        extends
+            UReturnsNullOnNullInput,
+            UOperator1<Field<byte[]>, ToBase64>,
+            org.jooq.Field<String>
+        //permits
+        //    ToBase64
+    {
+        @NotNull default Field<byte[]> $bytes() { return $arg1(); }
+        @CheckReturnValue
+        @NotNull default ToBase64 $bytes(Field<byte[]> newBytes) { return $arg1(newBytes); }
+    }
+
+    /**
      * The <code>DATE ADD</code> function.
      * <p>
      * Add an interval to a date.

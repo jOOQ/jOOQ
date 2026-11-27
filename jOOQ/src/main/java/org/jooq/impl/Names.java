@@ -328,7 +328,6 @@ final class Names {
     static final Name N_TIMESTAMP_DIFF              = systemName("timestamp_diff");
     static final Name N_TIMESTAMP_SUB               = systemName("timestamp_sub");
     static final Name N_toJSONString                = systemName("toJSONString");
-    static final Name N_TO_BASE64                   = systemName("to_base64");
     static final Name N_TO_BLOB                     = systemName("to_blob");
     static final Name N_TO_BINARY                   = systemName("to_binary");
     static final Name N_TO_CLOB                     = systemName("to_clob");
@@ -413,6 +412,10 @@ final class Names {
     static final Name N_ATN                         = systemName("atn");
     static final Name N_ATN2                        = systemName("atn2");
     static final Name N_AVG                         = systemName("avg");
+    static final Name N_BASE64                      = systemName("base64");
+    static final Name N_BASE64_DECODE               = systemName("base64_decode");
+    static final Name N_BASE64_DECODE_BINARY        = systemName("base64_decode_binary");
+    static final Name N_BASE64_ENCODE               = systemName("base64_encode");
     static final Name N_BINARY_BIT_LENGTH           = systemName("binary_bit_length");
     static final Name N_BINARY_CONCAT               = systemName("binary_concat");
     static final Name N_BINARY_LENGTH               = systemName("binary_length");
@@ -523,6 +526,7 @@ final class Names {
     static final Name N_FILTER                      = systemName("filter");
     static final Name N_FLOOR                       = systemName("floor");
     static final Name N_FORMAT                      = systemName("format");
+    static final Name N_FROM_BASE64                 = systemName("from_base64");
     static final Name N_FROM_HEX                    = systemName("from_hex");
     static final Name N_GENERATE_UUID               = systemName("generate_uuid");
     static final Name N_GENGUID                     = systemName("genguid");
@@ -748,6 +752,7 @@ final class Names {
     static final Name N_TAU                         = systemName("tau");
     static final Name N_TIMESTAMP_ADD               = systemName("timestamp_add");
     static final Name N_TO_BASE                     = systemName("to_base");
+    static final Name N_TO_BASE64                   = systemName("to_base64");
     static final Name N_TO_CHAR                     = systemName("to_char");
     static final Name N_TO_CODE_POINTS              = systemName("to_code_points");
     static final Name N_TO_DATE                     = systemName("to_date");
@@ -760,6 +765,7 @@ final class Names {
     static final Name N_TRUNC                       = systemName("trunc");
     static final Name N_TRY_CAST                    = systemName("try_cast");
     static final Name N_UCASE                       = systemName("ucase");
+    static final Name N_UNBASE64                    = systemName("unbase64");
     static final Name N_UNIQUE                      = systemName("unique");
     static final Name N_UPDATING                    = systemName("updating");
     static final Name N_UPPER                       = systemName("upper");
@@ -790,6 +796,8 @@ final class Names {
     static final Name N_arrayPushBack               = systemName("arrayPushBack");
     static final Name N_arrayPushFront              = systemName("arrayPushFront");
     static final Name N_arraySlice                  = systemName("arraySlice");
+    static final Name N_base64Decode                = systemName("base64Decode");
+    static final Name N_base64Encode                = systemName("base64Encode");
     static final Name N_bitAnd                      = systemName("bitAnd");
     static final Name N_bitNot                      = systemName("bitNot");
     static final Name N_bitOr                       = systemName("bitOr");

@@ -23448,6 +23448,52 @@ public class DSL {
         return new BinaryTrim(bytes, characters);
     }
 
+    /**
+     * The <code>FROM_BASE64</code> function.
+     * <p>
+     * Decode a Base64 encoded string to a binary string.
+     *
+     * @param string is wrapped as {@link DSL#val(Object)}.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    public static Field<byte[]> fromBase64(@Stringly.Param String string) {
+        return new FromBase64(Tools.field(string));
+    }
+
+    /**
+     * The <code>FROM_BASE64</code> function.
+     * <p>
+     * Decode a Base64 encoded string to a binary string.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    public static Field<byte[]> fromBase64(Field<String> string) {
+        return new FromBase64(string);
+    }
+
+    /**
+     * The <code>TO_BASE64</code> function.
+     * <p>
+     * Encode a binary string to its Base64 representation, without line breaks.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    public static Field<String> toBase64(byte[] bytes) {
+        return new ToBase64(Tools.field(bytes));
+    }
+
+    /**
+     * The <code>TO_BASE64</code> function.
+     * <p>
+     * Encode a binary string to its Base64 representation, without line breaks.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, FIREBIRD, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    public static Field<String> toBase64(Field<byte[]> bytes) {
+        return new ToBase64(bytes);
+    }
+
     // -------------------------------------------------------------------------
     // Date functions
     // -------------------------------------------------------------------------

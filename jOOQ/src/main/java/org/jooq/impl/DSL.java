@@ -22025,6 +22025,58 @@ public class DSL {
     }
 
     /**
+     * The <code>SHA1</code> function.
+     * <p>
+     * Calculate a SHA-1 hash from a string, as a lower case hexadecimal string.
+     *
+     * @param string is wrapped as {@link DSL#val(Object)}.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, TRINO })
+    public static Field<String> sha1(@Stringly.Param String string) {
+        return new Sha1(Tools.field(string));
+    }
+
+    /**
+     * The <code>SHA1</code> function.
+     * <p>
+     * Calculate a SHA-1 hash from a string, as a lower case hexadecimal string.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, TRINO })
+    public static Field<String> sha1(Field<String> string) {
+        return new Sha1(string);
+    }
+
+    /**
+     * The <code>SHA2</code> function.
+     * <p>
+     * Calculate a SHA-2 hash from a string, as a lower case hexadecimal string.
+     *
+     * @param string The string to be hashed.
+     * @param bitLength The SHA-2 bit length, one of 224, 256, 384, 512. Not all dialects support all bit lengths.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    public static Field<String> sha2(@Stringly.Param String string, int bitLength) {
+        return new Sha2(Tools.field(string), bitLength);
+    }
+
+    /**
+     * The <code>SHA2</code> function.
+     * <p>
+     * Calculate a SHA-2 hash from a string, as a lower case hexadecimal string.
+     *
+     * @param string The string to be hashed.
+     * @param bitLength The SHA-2 bit length, one of 224, 256, 384, 512. Not all dialects support all bit lengths.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    public static Field<String> sha2(Field<String> string, int bitLength) {
+        return new Sha2(string, bitLength);
+    }
+
+    /**
      * The <code>SPACE</code> function.
      * <p>
      * Get a string of spaces of a given length.

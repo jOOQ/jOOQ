@@ -354,6 +354,8 @@ import static org.jooq.impl.DSL.schema;
 import static org.jooq.impl.DSL.second;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.sequence;
+import static org.jooq.impl.DSL.sha1;
+import static org.jooq.impl.DSL.sha2;
 import static org.jooq.impl.DSL.shl;
 import static org.jooq.impl.DSL.shr;
 import static org.jooq.impl.DSL.sign;
@@ -9223,6 +9225,18 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         return finisher.apply();
     }
 
+    private final Field<String> parseFieldSha2() {
+        parse('(');
+        Field<String> string = (Field) parseField();
+
+        // [#20567] Snowflake's digest size defaults to 256
+        int bitLength = parseIf(',') ? asInt(parseUnsignedIntegerLiteral()) : 256;
+        parse(')');
+
+        // [#20567] MySQL, Snowflake, Databricks interpret 0 as 256
+        return sha2(string, bitLength == 0 ? 256 : bitLength);
+    }
+
     private final <Q extends QueryPart> Q parseFunctionArgs1(Function1<? super Field, ? extends Q> finisher) {
         parse('(');
         Field<?> f1 = parseField();
@@ -10205,6 +10219,12 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                     return parseFunctionArgs2((f1, f2) -> arrayContains((Field<Void[]>) f1, (Field<Void>) f2));
                 else if (parseFunctionNameIf("HASH_MD5"))
                     return parseFunctionArgs1(f -> binary(f) ? binaryMd5(f) : md5(f));
+                else if (parseFunctionNameIf("HASH_SHA1", "HASH_SHA"))
+                    return sha1((Field) parseFieldParenthesised());
+                else if (parseFunctionNameIf("HASH_SHA256"))
+                    return sha2((Field) parseFieldParenthesised(), 256);
+                else if (parseFunctionNameIf("HASH_SHA512"))
+                    return sha2((Field) parseFieldParenthesised(), 512);
                 else if (parseFunctionNameIf("HEX"))
                     return toHex((Field) parseFieldParenthesised());
 
@@ -10536,6 +10556,18 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                     return parseFunctionArgs3(DSL::substringIndex);
                 else if (parseFunctionNameIf("SPACE"))
                     return space((Field) parseFieldParenthesised());
+                else if (parseFunctionNameIf("SHA1", "SHA1_HEX", "SHA"))
+                    return sha1((Field) parseFieldParenthesised());
+                else if (parseFunctionNameIf("SHA224"))
+                    return sha2((Field) parseFieldParenthesised(), 224);
+                else if (parseFunctionNameIf("SHA256"))
+                    return sha2((Field) parseFieldParenthesised(), 256);
+                else if (parseFunctionNameIf("SHA384"))
+                    return sha2((Field) parseFieldParenthesised(), 384);
+                else if (parseFunctionNameIf("SHA512"))
+                    return sha2((Field) parseFieldParenthesised(), 512);
+                else if (parseFunctionNameIf("SHA2", "SHA2_HEX"))
+                    return parseFieldSha2();
                 else if (parseFunctionNameIf("SPLIT_PART"))
                     return parseFunctionArgs3(DSL::splitPart);
                 else if (parseFunctionNameIf("SPLIT", "STRING_TO_ARRAY"))

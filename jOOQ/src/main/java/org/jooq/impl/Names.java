@@ -99,6 +99,7 @@ final class Names {
     static final Name N_COLLECT                     = systemName("collect");
     static final Name N_CONCAT                      = systemName("concat");
     static final Name N_CONVERT                     = systemName("convert");
+    static final Name N_CONVERT_TO                  = systemName("convert_to");
     static final Name N_COUNTIF                     = systemName("countif");
     static final Name N_COUNTSET                    = systemName("countset");
     static final Name N_COUNT_IF                    = systemName("count_if");
@@ -127,6 +128,7 @@ final class Names {
     static final Name N_DECODE_ORACLE               = systemName("decode_oracle");
     static final Name N_DEFAULT                     = systemName("default");
     static final Name N_DELETED                     = systemName("deleted");
+    static final Name N_DIGEST                      = systemName("digest");
     static final Name N_DIV                         = systemName("div");
     static final Name N_DUAL                        = systemName("dual");
     static final Name N_ELEMENT_AT                  = systemName("element_at");
@@ -160,8 +162,12 @@ final class Names {
     static final Name N_groupBitXnor                = systemName("groupBitXnor");
     static final Name N_groupBitXor                 = systemName("groupBitXor");
     static final Name N_HAS                         = systemName("has");
+    static final Name N_HASH                        = systemName("hash");
     static final Name N_HASHBYTES                   = systemName("hashbytes");
     static final Name N_HASH_MD5                    = systemName("hash_md5");
+    static final Name N_HASH_SHA1                   = systemName("hash_sha1");
+    static final Name N_HASH_SHA256                 = systemName("hash_sha256");
+    static final Name N_HASH_SHA512                 = systemName("hash_sha512");
     static final Name N_HEX_TO_BINARY               = systemName("hex_to_binary");
     static final Name N_HEX_TO_INTEGER              = systemName("hex_to_integer");
     static final Name N_IF                          = systemName("if");
@@ -329,6 +335,7 @@ final class Names {
     static final Name N_TO_CLOB                     = systemName("to_clob");
     static final Name N_TO_JSON                     = systemName("to_json");
     static final Name N_TO_NUMBER                   = systemName("to_number");
+    static final Name N_TO_UTF8                     = systemName("to_utf8");
     static final Name N_TO_VARIANT                  = systemName("to_variant");
     static final Name N_TRUNCATE                    = systemName("truncate");
     static final Name N_TRUNCNUM                    = systemName("truncnum");
@@ -653,6 +660,8 @@ final class Names {
     static final Name N_SETBIT                      = systemName("setbit");
     static final Name N_SET_BIT                     = systemName("set_bit");
     static final Name N_SGN                         = systemName("sgn");
+    static final Name N_SHA1                        = systemName("sha1");
+    static final Name N_SHA2                        = systemName("sha2");
     static final Name N_SHIFTLEFT                   = systemName("shiftleft");
     static final Name N_SHIFTRIGHT                  = systemName("shiftright");
     static final Name N_SIGN                        = systemName("sign");

@@ -6027,6 +6027,61 @@ public final class QOM {
     }
 
     /**
+     * The <code>SHA1</code> function.
+     * <p>
+     * Calculate a SHA-1 hash from a string, as a lower case hexadecimal string.
+     */
+    public /*sealed*/ interface Sha1
+        extends
+            UReturnsNullOnNullInput,
+            UOperator1<Field<String>, Sha1>,
+            org.jooq.Field<String>
+        //permits
+        //    Sha1
+    {
+        @NotNull default Field<String> $string() { return $arg1(); }
+        @CheckReturnValue
+        @NotNull default Sha1 $string(Field<String> newString) { return $arg1(newString); }
+    }
+
+    /**
+     * The <code>SHA2</code> function.
+     * <p>
+     * Calculate a SHA-2 hash from a string, as a lower case hexadecimal string.
+     */
+    public /*sealed*/ interface Sha2
+        extends
+            UReturnsNullOnNullInput,
+            UOperator2<Field<String>, Integer, Sha2>,
+            org.jooq.Field<String>
+        //permits
+        //    Sha2
+    {
+
+        /**
+         * The string to be hashed.
+         */
+        @NotNull default Field<String> $string() { return $arg1(); }
+
+        /**
+         * The string to be hashed.
+         */
+        @CheckReturnValue
+        @NotNull default Sha2 $string(Field<String> newString) { return $arg1(newString); }
+
+        /**
+         * The SHA-2 bit length, one of 224, 256, 384, 512. Not all dialects support all bit lengths.
+         */
+        @NotNull default Integer $bitLength() { return $arg2(); }
+
+        /**
+         * The SHA-2 bit length, one of 224, 256, 384, 512. Not all dialects support all bit lengths.
+         */
+        @CheckReturnValue
+        @NotNull default Sha2 $bitLength(Integer newBitLength) { return $arg2(newBitLength); }
+    }
+
+    /**
      * The <code>SPACE</code> function.
      * <p>
      * Get a string of spaces of a given length.

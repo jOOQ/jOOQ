@@ -424,60 +424,6 @@ public class MySQLDSL extends DSL {
     }
 
     /**
-     * Get the MySQL-specific <code>SHA1()</code> function.
-     */
-    @NotNull
-    @Support({ MYSQL })
-    public static Field<String> sha1(String string) {
-        return sha1(val(string));
-    }
-
-    /**
-     * Get the MySQL-specific <code>SHA1()</code> function.
-     */
-    @NotNull
-    @Support({ MYSQL })
-    public static Field<byte[]> sha1(byte[] string) {
-        return sha1(val(string));
-    }
-
-    /**
-     * Get the MySQL-specific <code>SHA1()</code> function.
-     */
-    @NotNull
-    @Support({ MYSQL })
-    public static <T> Field<T> sha1(Field<T> string) {
-        return function("sha1", string.getDataType(), string);
-    }
-
-    /**
-     * Get the MySQL-specific <code>SHA2()</code> function.
-     */
-    @NotNull
-    @Support({ MYSQL })
-    public static Field<String> sha2(String string, int hashLength) {
-        return sha2(val(string), val(hashLength));
-    }
-
-    /**
-     * Get the MySQL-specific <code>SHA2()</code> function.
-     */
-    @NotNull
-    @Support({ MYSQL })
-    public static Field<byte[]> sha2(byte[] string, int hashLength) {
-        return sha2(val(string), val(hashLength));
-    }
-
-    /**
-     * Get the MySQL-specific <code>SHA2()</code> function.
-     */
-    @NotNull
-    @Support({ MYSQL })
-    public static <T> Field<T> sha2(Field<T> string, Field<Integer> hashLength) {
-        return function("sha2", string.getDataType(), string, hashLength);
-    }
-
-    /**
      * Get the MySQL-specific <code>PASSWORD()</code> function.
      *
      * @deprecated - 3.15.0 - [#8611] - This function has been removed from MySQL 8

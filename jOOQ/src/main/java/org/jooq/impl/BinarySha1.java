@@ -94,11 +94,6 @@ implements
     // XXX: QueryPart API
     // -------------------------------------------------------------------------
 
-    @Override
-    final boolean parenthesised(Context<?> ctx) {
-        return true;
-    }
-
 
 
 

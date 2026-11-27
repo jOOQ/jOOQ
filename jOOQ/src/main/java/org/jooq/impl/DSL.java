@@ -24210,36 +24210,6 @@ public class DSL {
      */
     @NotNull
     @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
-    public static <T> Field<Integer> arrayPosition(T[] array, Field<T> value) {
-        return new ArrayPosition<>(Tools.field(array), value);
-    }
-
-    /**
-     * The <code>ARRAY_POSITION</code> function.
-     * <p>
-     * Get the position (1 based) of the first occurrence of a value in an array, or NULL
-     * if the value is not contained in the array.
-     *
-     * @param array The array.
-     * @param value The array element.
-     */
-    @NotNull
-    @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
-    public static <T> Field<Integer> arrayPosition(Field<T[]> array, T value) {
-        return new ArrayPosition<>(array, Tools.field(value));
-    }
-
-    /**
-     * The <code>ARRAY_POSITION</code> function.
-     * <p>
-     * Get the position (1 based) of the first occurrence of a value in an array, or NULL
-     * if the value is not contained in the array.
-     *
-     * @param array The array.
-     * @param value The array element.
-     */
-    @NotNull
-    @Support({ CLICKHOUSE, DUCKDB, H2, HSQLDB, POSTGRES, TRINO, YUGABYTEDB })
     public static <T> Field<Integer> arrayPosition(Field<T[]> array, Field<T> value) {
         return new ArrayPosition<>(array, value);
     }

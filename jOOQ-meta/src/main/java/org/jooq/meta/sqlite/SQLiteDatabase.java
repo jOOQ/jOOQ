@@ -171,6 +171,10 @@ public class SQLiteDatabase extends AbstractDatabase implements ResultQueryDatab
                 table("pragma_index_xinfo(il.name)").as("ii"))
             .where(SQLiteMaster.TYPE.eq(inline("table")))
             .and(field("ii.name").isNotNull())
+
+            // [#20590] pragma_index_xinfo also lists auxiliary columns (the
+            //          rowid or the PRIMARY KEY columns of WITHOUT ROWID tables)
+            .and(field("ii.key").eq(inline(1)))
             .and(getIncludeSystemIndexes()
                 ? noCondition()
                 : field("il.origin", VARCHAR).notIn(inline("pk"), inline("u")))

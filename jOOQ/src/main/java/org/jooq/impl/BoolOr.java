@@ -130,7 +130,7 @@ implements
     @Override
     public final void accept(Context<?> ctx) {
         if (EMULATE.contains(ctx.dialect()))
-            ctx.visit(DSL.field(fo(DSL.max(DSL.when(condition(), one()).otherwise(zero()))).eq(one())));
+            ctx.visit(DSL.field(fo(DSL.max(BoolAnd.emulationArgument(condition()))).eq(one())));
         else
             super.accept(ctx);
     }

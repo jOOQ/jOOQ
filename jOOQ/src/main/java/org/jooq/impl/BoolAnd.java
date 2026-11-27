@@ -129,9 +129,25 @@ implements
     @Override
     public final void accept(Context<?> ctx) {
         if (EMULATE.contains(ctx.dialect()))
-            ctx.visit(DSL.field(fo(DSL.min(DSL.when(condition(), one()).otherwise(zero()))).eq(one())));
+            ctx.visit(DSL.field(fo(DSL.min(emulationArgument(condition()))).eq(one())));
         else
             super.accept(ctx);
+    }
+
+    /**
+     * [#20562] The <code>BOOL_AND()</code> and <code>BOOL_OR()</code>
+     * emulation argument, which must ignore <code>NULL</code> values just like
+     * the native aggregate functions do.
+     */
+    static final Field<Integer> emulationArgument(Condition condition) {
+
+        // [#10179] Avoid 3VL when not necessary
+        if (condition instanceof AbstractCondition && !((AbstractCondition) condition).isNullable())
+            return DSL.when(condition, one()).otherwise(zero());
+
+        // [#20562] Map NULL to NULL, so the aggregate function ignores it
+        else
+            return DSL.when(condition, one()).when(DSL.not(condition), zero());
     }
 
 

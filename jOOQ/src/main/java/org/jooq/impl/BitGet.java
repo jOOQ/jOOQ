@@ -199,7 +199,7 @@ implements
             case SQLITE:
             case TRINO:
             case YUGABYTEDB:
-                ctx.visit(value.bitAnd((Field) one().shl(bit)).shr(bit));
+                ctx.visit(ctx.family() == HSQLDB ? value.bitAnd((Field) one().shl(bit)).shr(bit) : value.shr(bit).bitAnd((Field) one()));
                 break;
 
             default:

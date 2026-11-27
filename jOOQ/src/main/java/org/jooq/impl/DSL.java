@@ -115,8 +115,6 @@ import static org.jooq.SQLDialect.YUGABYTEDB;
 // ...
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.Names.N_E;
-import static org.jooq.impl.Names.N_IF;
-import static org.jooq.impl.Names.N_IIF;
 import static org.jooq.impl.Names.N_SYSTEM_TIME;
 import static org.jooq.impl.Names.N_VALUE;
 import static org.jooq.impl.SQLDataType.BIGINT;
@@ -18159,7 +18157,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Field<T> if_(Condition condition, T ifTrue, T ifFalse) {
-        return iif0(N_IF, condition, Tools.field(ifTrue), Tools.field(ifFalse));
+        return iif0(condition, Tools.field(ifTrue), Tools.field(ifFalse));
     }
 
     /**
@@ -18168,7 +18166,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Field<T> if_(Condition condition, T ifTrue, Field<T> ifFalse) {
-        return iif0(N_IF, condition, Tools.field(ifTrue), Tools.nullSafe(ifFalse));
+        return iif0(condition, Tools.field(ifTrue), Tools.nullSafe(ifFalse));
     }
 
     /**
@@ -18177,7 +18175,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Field<T> if_(Condition condition, Field<T> ifTrue, T ifFalse) {
-        return iif0(N_IF, condition, Tools.nullSafe(ifTrue), Tools.field(ifFalse));
+        return iif0(condition, Tools.nullSafe(ifTrue), Tools.field(ifFalse));
     }
 
     /**
@@ -18186,7 +18184,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Field<T> if_(Condition condition, Field<T> ifTrue, Field<T> ifFalse) {
-        return iif0(N_IF, condition, Tools.nullSafe(ifTrue), Tools.nullSafe(ifFalse));
+        return iif0(condition, Tools.nullSafe(ifTrue), Tools.nullSafe(ifFalse));
     }
 
     /**
@@ -19160,7 +19158,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Field<T> iif(Condition condition, T ifTrue, T ifFalse) {
-        return iif0(N_IIF, condition, Tools.field(ifTrue), Tools.field(ifFalse));
+        return iif0(condition, Tools.field(ifTrue), Tools.field(ifFalse));
     }
 
     /**
@@ -19171,7 +19169,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Field<T> iif(Condition condition, T ifTrue, Field<T> ifFalse) {
-        return iif0(N_IIF, condition, Tools.field(ifTrue, ifFalse), Tools.nullSafe(ifFalse));
+        return iif0(condition, Tools.field(ifTrue, ifFalse), Tools.nullSafe(ifFalse));
     }
 
     /**
@@ -19182,7 +19180,7 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Field<T> iif(Condition condition, Field<T> ifTrue, T ifFalse) {
-        return iif0(N_IIF, condition, Tools.nullSafe(ifTrue), Tools.field(ifFalse, ifTrue));
+        return iif0(condition, Tools.nullSafe(ifTrue), Tools.field(ifFalse, ifTrue));
     }
 
     /**
@@ -19191,14 +19189,13 @@ public class DSL {
     @NotNull
     @Support
     public static <T> Field<T> iif(Condition condition, Field<T> ifTrue, Field<T> ifFalse) {
-        return iif0(N_IIF, condition, ifTrue, ifFalse);
+        return iif0(condition, ifTrue, ifFalse);
     }
 
     // Java 8 is stricter than Java 7 with respect to generics and overload
     // resolution (http://stackoverflow.com/q/5361513/521799)
-    static <T> Field<T> iif0(Name name, Condition condition, Field<T> ifTrue, Field<T> ifFalse) {
+    static <T> Field<T> iif0(Condition condition, Field<T> ifTrue, Field<T> ifFalse) {
         return new Iif<>(
-            name,
             condition,
             Tools.nullSafe(ifTrue, ifFalse.getDataType()),
             Tools.nullSafe(ifFalse, ifTrue.getDataType())

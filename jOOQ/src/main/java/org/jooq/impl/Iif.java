@@ -35,44 +35,89 @@
  *
  *
  */
+
 package org.jooq.impl;
 
-import static org.jooq.impl.Names.N_IF;
-import static org.jooq.impl.Names.N_IIF;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.impl.Tools.ExtendedDataKey.*;
+import static org.jooq.impl.Tools.SimpleDataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import org.jooq.Condition;
-import org.jooq.Context;
-import org.jooq.Field;
-import org.jooq.Function3;
-import org.jooq.Name;
+import org.jooq.*;
+import org.jooq.Function1;
+import org.jooq.Record;
+import org.jooq.conf.ParamType;
+import org.jooq.tools.StringUtils;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+
+
 
 /**
- * @author Lukas Eder
+ * The <code>IIF</code> statement.
  */
-final class Iif<T> extends AbstractField<T> implements QOM.Iif<T> {
+@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+final class Iif<T>
+extends
+    AbstractField<T>
+implements
+    QOM.Iif<T>
+{
 
-    private final Condition condition;
-    private final Field<T>  ifTrue;
-    private final Field<T>  ifFalse;
+    final Condition condition;
+    final Field<T>  ifTrue;
+    final Field<T>  ifFalse;
 
-    Iif(Name name, Condition condition, Field<T> ifTrue, Field<T> ifFalse) {
-        super(name, ifTrue.getDataType());
+    Iif(
+        Condition condition,
+        Field<T> ifTrue,
+        Field<T> ifFalse
+    ) {
+        super(
+            N_IIF,
+            allNotNull((DataType) dataType(ifTrue), ifTrue, ifFalse)
+        );
 
         this.condition = condition;
-        this.ifTrue = ifTrue;
-        this.ifFalse = ifFalse;
+        this.ifTrue = nullSafeNotNull(ifTrue, (DataType) OTHER);
+        this.ifFalse = nullSafeNotNull(ifFalse, (DataType) OTHER);
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
 
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
 
-            case CLICKHOUSE:
 
+
+
+
+
+
+
+            case CLICKHOUSE:
             case MARIADB:
-            case MYSQL:
+            case MYSQL: {
                 ctx.visit(N_IF).sql('(').visit(condition).sql(", ").visit(ifTrue).sql(", ").visit(ifFalse).sql(')');
                 break;
+            }
+
 
 
 
@@ -86,6 +131,20 @@ final class Iif<T> extends AbstractField<T> implements QOM.Iif<T> {
                 break;
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // -------------------------------------------------------------------------
     // XXX: Query Object Model
@@ -107,7 +166,40 @@ final class Iif<T> extends AbstractField<T> implements QOM.Iif<T> {
     }
 
     @Override
+    public final QOM.Iif<T> $arg1(Condition newValue) {
+        return $constructor().apply(newValue, $arg2(), $arg3());
+    }
+
+    @Override
+    public final QOM.Iif<T> $arg2(Field<T> newValue) {
+        return $constructor().apply($arg1(), newValue, $arg3());
+    }
+
+    @Override
+    public final QOM.Iif<T> $arg3(Field<T> newValue) {
+        return $constructor().apply($arg1(), $arg2(), newValue);
+    }
+
+    @Override
     public final Function3<? super Condition, ? super Field<T>, ? super Field<T>, ? extends QOM.Iif<T>> $constructor() {
-        return (c, f1, f2) -> new Iif<>(getQualifiedName(), c, f1, f2);
+        return (a1, a2, a3) -> new Iif<>(a1, a2, a3);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: The Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public boolean equals(Object that) {
+        if (that instanceof QOM.Iif<?> o) {
+            return
+                Objects.equals($condition(), o.$condition()) &&
+                Objects.equals($ifTrue(), o.$ifTrue()) &&
+                Objects.equals($ifFalse(), o.$ifFalse())
+            ;
+        }
+        else
+            return super.equals(that);
     }
 }
+

@@ -171,7 +171,6 @@ final class Names {
     static final Name N_HEX_TO_BINARY               = systemName("hex_to_binary");
     static final Name N_HEX_TO_INTEGER              = systemName("hex_to_integer");
     static final Name N_IF                          = systemName("if");
-    static final Name N_IIF                         = systemName("iif");
     static final Name N_INSERT                      = systemName("insert");
     static final Name N_INSERTED                    = systemName("inserted");
     static final Name N_IS_FIRST                    = systemName("is_first");
@@ -535,6 +534,7 @@ final class Names {
     static final Name N_GOTO                        = systemName("goto");
     static final Name N_HEX                         = systemName("hex");
     static final Name N_IFNULL                      = systemName("ifnull");
+    static final Name N_IIF                         = systemName("iif");
     static final Name N_INSERTING                   = systemName("inserting");
     static final Name N_INSTR                       = systemName("instr");
     static final Name N_ISJSON                      = systemName("isjson");

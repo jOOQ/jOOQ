@@ -7818,53 +7818,6 @@ public final class QOM {
     }
 
     /**
-     * The <code>IIF</code> function.
-     * <p>
-     * Return the second argument if the condition is true, or the third argument otherwise.
-     */
-    public /*sealed*/ interface Iif<T>
-        extends
-            UOperator3<Condition, Field<T>, Field<T>, Iif<T>>,
-            org.jooq.Field<T>
-        //permits
-        //    Iif
-    {
-
-        /**
-         * The condition.
-         */
-        @NotNull default Condition $condition() { return $arg1(); }
-
-        /**
-         * The condition.
-         */
-        @CheckReturnValue
-        @NotNull default Iif<T> $condition(Condition newCondition) { return $arg1(newCondition); }
-
-        /**
-         * The result value if the condition is true.
-         */
-        @NotNull default Field<T> $ifTrue() { return $arg2(); }
-
-        /**
-         * The result value if the condition is true.
-         */
-        @CheckReturnValue
-        @NotNull default Iif<T> $ifTrue(Field<T> newIfTrue) { return $arg2(newIfTrue); }
-
-        /**
-         * The result value if the condition is false or null.
-         */
-        @NotNull default Field<T> $ifFalse() { return $arg3(); }
-
-        /**
-         * The result value if the condition is false or null.
-         */
-        @CheckReturnValue
-        @NotNull default Iif<T> $ifFalse(Field<T> newIfFalse) { return $arg3(newIfFalse); }
-    }
-
-    /**
      * The <code>NVL</code> function.
      * <p>
      * Return the first non-null argument.
@@ -7980,6 +7933,53 @@ public final class QOM {
          */
         @CheckReturnValue
         @NotNull default Nullif<T> $other(Field<T> newOther) { return $arg2(newOther); }
+    }
+
+    /**
+     * The <code>IIF</code> function.
+     * <p>
+     * Return the second argument if the condition is true, or the third argument otherwise.
+     */
+    public /*sealed*/ interface Iif<T>
+        extends
+            UOperator3<Condition, Field<T>, Field<T>, Iif<T>>,
+            org.jooq.Field<T>
+        //permits
+        //    Iif
+    {
+
+        /**
+         * The condition.
+         */
+        @NotNull default Condition $condition() { return $arg1(); }
+
+        /**
+         * The condition.
+         */
+        @CheckReturnValue
+        @NotNull default Iif<T> $condition(Condition newCondition) { return $arg1(newCondition); }
+
+        /**
+         * The result value if the condition is true.
+         */
+        @NotNull default Field<T> $ifTrue() { return $arg2(); }
+
+        /**
+         * The result value if the condition is true.
+         */
+        @CheckReturnValue
+        @NotNull default Iif<T> $ifTrue(Field<T> newIfTrue) { return $arg2(newIfTrue); }
+
+        /**
+         * The result value if the condition is false or null.
+         */
+        @NotNull default Field<T> $ifFalse() { return $arg3(); }
+
+        /**
+         * The result value if the condition is false or null.
+         */
+        @CheckReturnValue
+        @NotNull default Iif<T> $ifFalse(Field<T> newIfFalse) { return $arg3(newIfFalse); }
     }
 
     /**

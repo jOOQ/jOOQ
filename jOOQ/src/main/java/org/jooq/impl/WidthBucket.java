@@ -109,9 +109,32 @@ implements
     public void accept(Context<?> ctx) {
         switch (ctx.family()) {
 
+            // [#20588] Where GREATEST() and LEAST() are supported natively,
+            // the bucket can be clamped to [0, buckets + 1] without repeating
+            // any arguments. This requires:
+            // - Native GREATEST() and LEAST() support (not a CASE or VALUES
+            //   emulation)
+            // - NULL on NULL input for GREATEST() and LEAST(), unlike e.g.
+            //   DuckDB, Redshift, SQL Server, which ignore NULL arguments
+            // - Non-truncating integer division, unlike e.g. Db2, Firebird,
+            //   H2, HSQLDB, SQLite, where -1 < x < 0 would truncate to 0
+            //   rather than floor to -1, producing bucket 1 instead of 0 for
+            //   values slightly below low
 
 
 
+
+
+            case MARIADB:
+            case MYSQL:
+                ctx.visit(DSL.greatest(
+                    zero(),
+                    DSL.least(
+                        iadd(buckets, one()),
+                        bucket()
+                    )
+                ));
+                break;
 
 
 
@@ -131,19 +154,11 @@ implements
             case H2:
             case HSQLDB:
             case IGNITE:
-            case MARIADB:
-            case MYSQL:
             case SQLITE:
                 ctx.visit(
                     DSL.when(field.lt(low), zero())
                        .when(field.ge(high), iadd(buckets, one()))
-                       .otherwise((Field<Integer>) iadd(
-                           DSL.floor(idiv(
-                               imul(isub(field, low), buckets),
-                               isub(high, low)
-                           )),
-                           one()
-                       ))
+                       .otherwise(bucket())
                 );
                 break;
 
@@ -151,6 +166,19 @@ implements
                 ctx.visit(N_WIDTH_BUCKET).sql('(').visit(field).sql(", ").visit(low).sql(", ").visit(high).sql(", ").visit(buckets).sql(')');
                 break;
         }
+    }
+
+    /**
+     * The unclamped bucket: <code>FLOOR((field - low) * buckets / (high - low)) + 1</code>.
+     */
+    private final Field<Integer> bucket() {
+        return (Field<Integer>) iadd(
+            DSL.floor(idiv(
+                imul(isub(field, low), buckets),
+                isub(high, low)
+            )),
+            one()
+        );
     }
 
 

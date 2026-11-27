@@ -142,39 +142,25 @@ implements
         final Field<Integer> f = (Field) arguments.get(0);
         final Field<Integer> negatives = DSL.when(f.lt(zero()), inline(-1));
 
-        Field<BigDecimal> negativesSum = CustomField.of("sum", NUMERIC, c -> {
-            c.visit(distinct
-                ? DSL.sumDistinct(negatives)
-                : DSL.sum(negatives));
-
-            acceptFilterClause(c);
-            acceptOverClause(c);
-        });
-
-        Field<BigDecimal> zerosSum = CustomField.of("sum", NUMERIC, c -> {
-            c.visit(DSL.sum(choose(f).when(zero(), one())));
-
-            acceptFilterClause(c);
-            acceptOverClause(c);
-        });
-
-        Field<BigDecimal> logarithmsSum = CustomField.of("sum", NUMERIC, c -> {
-            Field<Integer> abs = DSL.abs(DSL.nullif(f, zero()));
-            Field<BigDecimal> ln =
+        final Field<Integer> abs = DSL.abs(DSL.nullif(f, zero()));
+        final Field<BigDecimal> ln =
 
 
 
 
 
-                DSL.ln(abs);
+            DSL.ln(abs);
 
-            c.visit(distinct
-                ? DSL.sumDistinct(ln)
-                : DSL.sum(ln));
-
-            acceptFilterClause(c);
-            acceptOverClause(c);
-        });
+        // [#20591] Apply this function's FILTER and OVER clauses to the
+        //          auxiliary aggregate functions, rather than rendering them
+        //          verbatim, in order to profit from FILTER emulations
+        final Field<BigDecimal> negativesSum = fo(distinct
+            ? DSL.sumDistinct(negatives)
+            : DSL.sum(negatives));
+        final Field<BigDecimal> zerosSum = fo(DSL.sum(choose(f).when(zero(), one())));
+        final Field<BigDecimal> logarithmsSum = fo(distinct
+            ? DSL.sumDistinct(ln)
+            : DSL.sum(ln));
 
         ctx.visit(imul(
              when(zerosSum.gt(inline(BigDecimal.ZERO)), zero())

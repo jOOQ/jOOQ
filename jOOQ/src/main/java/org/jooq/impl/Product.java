@@ -141,34 +141,55 @@ implements
 
         @SuppressWarnings({ "unchecked" })
         final Field<Integer> f = (Field) arguments.get(0);
-        final Field<Integer> negatives = DSL.when(f.lt(zero()), inline(-1));
-
-        final Field<Integer> abs = DSL.abs(DSL.nullif(f, zero()));
-        final Field<BigDecimal> ln =
-
-
-
-
-
-            DSL.ln(abs);
 
         // [#20591] Apply this function's FILTER and OVER clauses to the
         //          auxiliary aggregate functions, rather than rendering them
         //          verbatim, in order to profit from FILTER emulations
-        final Field<BigDecimal> negativesSum = fo(distinct
-            ? DSL.sumDistinct(negatives)
-            : DSL.sum(negatives));
         final Field<BigDecimal> zerosSum = fo(DSL.sum(choose(f).when(zero(), one())));
-        final Field<BigDecimal> logarithmsSum = fo(distinct
-            ? DSL.sumDistinct(ln)
-            : DSL.sum(ln));
+        final Condition negative;
+        final Field<BigDecimal> logarithmsSum;
+
+        // [#20608] DISTINCT must be applied to the argument values, not to
+        //          derived values, which may collapse distinct arguments:
+        //          - All negative values map to the same sign marker
+        //          - x and -x map to the same LN(ABS(x)) value
+        if (distinct) {
+            final Field<Integer> negatives = fo(DSL.countDistinct(DSL.when(f.lt(zero()), f)));
+            final Field<BigDecimal> positiveLogarithmsSum = fo(DSL.sumDistinct(DSL.when(f.gt(zero()), ln(ctx, f))));
+            final Field<BigDecimal> negativeLogarithmsSum = fo(DSL.sumDistinct(DSL.when(f.lt(zero()), ln(ctx, f.neg()))));
+
+            negative = negatives.mod(inline(2)).eq(inline(1));
+
+            // NULL only if both sums are NULL, i.e. if there are no non-zero, non-NULL values
+            logarithmsSum = DSL.coalesce(
+                positiveLogarithmsSum.plus(negativeLogarithmsSum),
+                positiveLogarithmsSum,
+                negativeLogarithmsSum
+            );
+        }
+        else {
+            final Field<BigDecimal> negativesSum = fo(DSL.sum(DSL.when(f.lt(zero()), inline(-1))));
+
+            negative = negativesSum.mod(inline(2)).lt(inline(BigDecimal.ZERO));
+            logarithmsSum = fo(DSL.sum(ln(ctx, DSL.abs(DSL.nullif(f, zero())))));
+        }
 
         ctx.visit(imul(
              when(zerosSum.gt(inline(BigDecimal.ZERO)), zero())
-            .when(negativesSum.mod(inline(2)).lt(inline(BigDecimal.ZERO)), inline(-1))
+            .when(negative, inline(-1))
             .otherwise(one()),
             DSL.exp(logarithmsSum)
         ));
+    }
+
+    private static final Field<BigDecimal> ln(Context<?> ctx, Field<Integer> f) {
+        return
+
+
+
+
+
+            DSL.ln(f);
     }
 
 

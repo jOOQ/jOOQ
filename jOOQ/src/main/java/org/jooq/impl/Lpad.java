@@ -120,6 +120,26 @@ implements
         return character == null ? inline(" ") : character;
     }
 
+    /**
+     * [#20577] Whether the padding string is known to consist of a single
+     * character.
+     * <p>
+     * This can only be checked in the client if the padding string is a
+     * {@link Param}. Any other expression must be assumed to produce a padding
+     * string of length <code>&gt; 1</code>.
+     */
+    static final boolean isSingleCharacterPadding(Field<String> character) {
+        if (character instanceof Param<String> p) {
+            String c = p.getValue();
+
+            // NULL padding strings produce NULL in both the native function
+            // and the emulation, so there's no need to emulate them
+            return c == null || c.length() == 1;
+        }
+        else
+            return false;
+    }
+
     @Override
     public final void accept(Context<?> ctx) {
         switch (ctx.family()) {
@@ -160,6 +180,19 @@ implements
                         .sql("), 1, ").visit(length).sql(" - ").visit(N_LENGTH).sql('(').visit(string)
                     .sql(")) || ").visit(string)
                     .sql(", 1, ").visit(length).sql(')');
+                }
+
+                break;
+
+            // [#20577] H2 only uses the first character of the padding string
+            case H2:
+                if (isSingleCharacterPadding(characterOrBlank()))
+                    ctx.visit(function(N_LPAD, getDataType(), string, length, characterOrBlank()));
+
+                // left(repeat(c, n - length(s)), n - length(s)) || left(s, n)
+                else {
+                    Field<? extends Number> l = isub(length, DSL.length(string));
+                    ctx.visit(DSL.concat(DSL.left(DSL.repeat(characterOrBlank(), l), l), DSL.left(string, length)));
                 }
 
                 break;

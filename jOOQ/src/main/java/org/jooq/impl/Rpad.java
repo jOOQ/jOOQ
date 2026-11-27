@@ -159,6 +159,17 @@ implements
 
                 break;
 
+            // [#20577] H2 only uses the first character of the padding string
+            case H2:
+                if (Lpad.isSingleCharacterPadding(characterOrBlank()))
+                    ctx.visit(function(N_RPAD, getDataType(), string, length, characterOrBlank()));
+
+                // left(s || repeat(c, n - length(s)), n)
+                else
+                    ctx.visit(DSL.left(DSL.concat(string, DSL.repeat(characterOrBlank(), isub(length, DSL.length(string)))), length));
+
+                break;
+
             case CLICKHOUSE:
                 ctx.visit(function(N_rightPad, getDataType(), string, length, characterOrBlank()));
                 break;

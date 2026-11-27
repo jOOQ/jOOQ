@@ -587,6 +587,7 @@ final class Names {
     static final Name N_LOCAL_DATE_TIME_ADD         = systemName("local_date_time_add");
     static final Name N_LOG                         = systemName("log");
     static final Name N_LOG10                       = systemName("log10");
+    static final Name N_LOG2                        = systemName("log2");
     static final Name N_LOGN                        = systemName("logn");
     static final Name N_LOWER                       = systemName("lower");
     static final Name N_LPAD                        = systemName("lpad");

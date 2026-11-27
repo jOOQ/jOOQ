@@ -20200,6 +20200,30 @@ public class DSL {
     }
 
     /**
+     * The <code>LOG2</code> function.
+     * <p>
+     * Get the logarithm of a value for base 2.
+     *
+     * @param value is wrapped as {@link DSL#val(Object)}.
+     */
+    @NotNull
+    @Support
+    public static Field<BigDecimal> log2(Number value) {
+        return new Log2(Tools.field(value));
+    }
+
+    /**
+     * The <code>LOG2</code> function.
+     * <p>
+     * Get the logarithm of a value for base 2.
+     */
+    @NotNull
+    @Support
+    public static Field<BigDecimal> log2(Field<? extends Number> value) {
+        return new Log2(value);
+    }
+
+    /**
      * The <code>PI</code> function.
      * <p>
      * The π literal.

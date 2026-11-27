@@ -269,6 +269,7 @@ import static org.jooq.impl.DSL.listAggDistinct;
 import static org.jooq.impl.DSL.ln;
 import static org.jooq.impl.DSL.log;
 import static org.jooq.impl.DSL.log10;
+import static org.jooq.impl.DSL.log2;
 // ...
 import static org.jooq.impl.DSL.lower;
 import static org.jooq.impl.DSL.ltrim;
@@ -10277,6 +10278,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                     return ln((Field) parseFieldNumericOpParenthesised());
                 else if (parseFunctionNameIf("LOG10"))
                     return log10((Field) parseFieldNumericOpParenthesised());
+                else if (parseFunctionNameIf("LOG2"))
+                    return log2((Field) parseFieldNumericOpParenthesised());
                 else if ((field = parseFieldLogIf()) != null)
                     return field;
                 else if ((field = parseFieldLocateIf()) != null)

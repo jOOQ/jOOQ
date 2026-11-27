@@ -4792,6 +4792,24 @@ public final class QOM {
     }
 
     /**
+     * The <code>LOG2</code> function.
+     * <p>
+     * Get the logarithm of a value for base 2.
+     */
+    public /*sealed*/ interface Log2
+        extends
+            UReturnsNullOnNullInput,
+            UOperator1<Field<? extends Number>, Log2>,
+            org.jooq.Field<BigDecimal>
+        //permits
+        //    Log2
+    {
+        @NotNull default Field<? extends Number> $value() { return $arg1(); }
+        @CheckReturnValue
+        @NotNull default Log2 $value(Field<? extends Number> newValue) { return $arg1(newValue); }
+    }
+
+    /**
      * The <code>MOD</code> operator.
      */
     public /*sealed*/ interface Mod<T extends Number>

@@ -124,11 +124,16 @@ implements
 
 
 
-            case SQLITE:
-                ctx.visit(when(((Field) value).gt(zero()), inline(1))
-                .when(((Field) value).lt(zero()), inline(-1))
-                .when(((Field) value).eq(zero()), inline(0)));
+            case SQLITE: {
+
+
+
+
+
+
+                ctx.visit(function(N_SIGN, getDataType(), value));
                 break;
+            }
 
             default:
                 ctx.visit(function(N_SIGN, getDataType(), value));

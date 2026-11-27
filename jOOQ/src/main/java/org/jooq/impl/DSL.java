@@ -24085,7 +24085,8 @@ public class DSL {
     /**
      * The <code>ARRAY_POSITION</code> function.
      * <p>
-     * Get the position (1 based) of the first occurrence of a value in an array, or NULL if the value is not contained in the array.
+     * Get the position (1 based) of the first occurrence of a value in an array, or NULL
+     * if the value is not contained in the array.
      *
      * @param array The array.
      * @param value The array element.
@@ -24099,7 +24100,8 @@ public class DSL {
     /**
      * The <code>ARRAY_POSITION</code> function.
      * <p>
-     * Get the position (1 based) of the first occurrence of a value in an array, or NULL if the value is not contained in the array.
+     * Get the position (1 based) of the first occurrence of a value in an array, or NULL
+     * if the value is not contained in the array.
      *
      * @param array The array.
      * @param value The array element.
@@ -24113,7 +24115,8 @@ public class DSL {
     /**
      * The <code>ARRAY_POSITION</code> function.
      * <p>
-     * Get the position (1 based) of the first occurrence of a value in an array, or NULL if the value is not contained in the array.
+     * Get the position (1 based) of the first occurrence of a value in an array, or NULL
+     * if the value is not contained in the array.
      *
      * @param array The array.
      * @param value The array element.
@@ -24127,7 +24130,8 @@ public class DSL {
     /**
      * The <code>ARRAY_POSITION</code> function.
      * <p>
-     * Get the position (1 based) of the first occurrence of a value in an array, or NULL if the value is not contained in the array.
+     * Get the position (1 based) of the first occurrence of a value in an array, or NULL
+     * if the value is not contained in the array.
      *
      * @param array The array.
      * @param value The array element.

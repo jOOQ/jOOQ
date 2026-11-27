@@ -1894,18 +1894,6 @@ public final class QOM {
             FieldFunction*/
     {}
 
-    public /*sealed*/ interface Nvl2<T>
-        extends
-            Field<T>,
-            UOperator3<Field<?>, Field<T>, Field<T>, Nvl2<T>>
-        /*permits
-            Nvl2*/
-    {
-        @NotNull default Field<?> $value() { return $arg1(); }
-        @NotNull default Field<T> $ifNotNull() { return $arg2(); }
-        @NotNull default Field<T> $ifIfNull() { return $arg3(); }
-    }
-
     public /*sealed*/ interface Iif<T>
         extends
             Field<T>,
@@ -7192,7 +7180,8 @@ public final class QOM {
     /**
      * The <code>ARRAY POSITION</code> function.
      * <p>
-     * Get the position (1 based) of the first occurrence of a value in an array, or NULL if the value is not contained in the array.
+     * Get the position (1 based) of the first occurrence of a value in an array, or NULL
+     * if the value is not contained in the array.
      */
     public /*sealed*/ interface ArrayPosition<T>
         extends
@@ -7728,6 +7717,54 @@ public final class QOM {
          */
         @CheckReturnValue
         @NotNull default Nvl<T> $defaultValue(Field<T> newDefaultValue) { return $arg2(newDefaultValue); }
+    }
+
+    /**
+     * The <code>NVL2</code> function.
+     * <p>
+     * Return the second argument if the first argument is not null, or the third argument
+     * otherwise.
+     */
+    public /*sealed*/ interface Nvl2<T>
+        extends
+            UOperator3<Field<?>, Field<T>, Field<T>, Nvl2<T>>,
+            org.jooq.Field<T>
+        //permits
+        //    Nvl2
+    {
+
+        /**
+         * The nullable value.
+         */
+        @NotNull default Field<?> $value() { return $arg1(); }
+
+        /**
+         * The nullable value.
+         */
+        @CheckReturnValue
+        @NotNull default Nvl2<T> $value(Field<?> newValue) { return $arg1(newValue); }
+
+        /**
+         * The result value if the other value is not null.
+         */
+        @NotNull default Field<T> $ifNotNull() { return $arg2(); }
+
+        /**
+         * The result value if the other value is not null.
+         */
+        @CheckReturnValue
+        @NotNull default Nvl2<T> $ifNotNull(Field<T> newIfNotNull) { return $arg2(newIfNotNull); }
+
+        /**
+         * The result value if the other value is null.
+         */
+        @NotNull default Field<T> $ifNull() { return $arg3(); }
+
+        /**
+         * The result value if the other value is null.
+         */
+        @CheckReturnValue
+        @NotNull default Nvl2<T> $ifNull(Field<T> newIfNull) { return $arg3(newIfNull); }
     }
 
     /**

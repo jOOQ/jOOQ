@@ -35,32 +35,102 @@
  *
  *
  */
+
 package org.jooq.impl;
 
-import static org.jooq.SQLDialect.MARIADB;
-import static org.jooq.impl.DSL.function;
-import static org.jooq.impl.DSL.iif;
-import static org.jooq.impl.Names.N_NVL2;
+import static org.jooq.impl.DSL.*;
+import static org.jooq.impl.Internal.*;
+import static org.jooq.impl.Keywords.*;
+import static org.jooq.impl.Names.*;
+import static org.jooq.impl.SQLDataType.*;
+import static org.jooq.impl.Tools.*;
+import static org.jooq.impl.Tools.BooleanDataKey.*;
+import static org.jooq.impl.Tools.ExtendedDataKey.*;
+import static org.jooq.impl.Tools.SimpleDataKey.*;
+import static org.jooq.SQLDialect.*;
 
-import org.jooq.Context;
-import org.jooq.Field;
-import org.jooq.Function3;
+import org.jooq.*;
+import org.jooq.Function1;
+import org.jooq.Record;
+import org.jooq.conf.ParamType;
+import org.jooq.tools.StringUtils;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+
+
 
 /**
- * @author Lukas Eder
+ * The <code>NVL2</code> statement.
  */
-final class Nvl2<T> extends AbstractField<T> implements QOM.Nvl2<T> {
+@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
+final class Nvl2<T>
+extends
+    AbstractField<T>
+implements
+    QOM.Nvl2<T>
+{
 
-    private final Field<?> arg1;
-    private final Field<T> arg2;
-    private final Field<T> arg3;
+    final Field<?> value;
+    final Field<T> ifNotNull;
+    final Field<T> ifNull;
 
-    Nvl2(Field<?> arg1, Field<T> arg2, Field<T> arg3) {
-        super(N_NVL2, !arg1.getDataType().nullable() ? arg2.getDataType() : Tools.allNotNull(arg2.getDataType(), arg2, arg3));
+    Nvl2(
+        Field<?> value,
+        Field<T> ifNotNull,
+        Field<T> ifNull
+    ) {
+        super(
+            N_NVL2,
+            nvl2NotNull((DataType) dataType(ifNotNull), value, ifNotNull, ifNull)
+        );
 
-        this.arg1 = arg1;
-        this.arg2 = arg2;
-        this.arg3 = arg3;
+        this.value = nullSafeNotNull(value, OTHER);
+        this.ifNotNull = nullSafeNotNull(ifNotNull, (DataType) OTHER);
+        this.ifNull = nullSafeNotNull(ifNull, (DataType) OTHER);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // -------------------------------------------------------------------------
+
+    @Override
+    final boolean parenthesised(Context<?> ctx) {
+        switch (ctx.family()) {
+
+
+
+
+
+
+
+
+
+
+
+
+            case CLICKHOUSE:
+            case CUBRID:
+            case DERBY:
+            case DUCKDB:
+            case FIREBIRD:
+            case MARIADB:
+            case MYSQL:
+            case POSTGRES:
+            case SQLITE:
+            case TRINO:
+            case YUGABYTEDB:
+                return false;
+
+            default:
+                return true;
+        }
     }
 
     @Override
@@ -73,14 +143,19 @@ final class Nvl2<T> extends AbstractField<T> implements QOM.Nvl2<T> {
 
 
 
-            case MARIADB:
+
+
+
+
+            case MARIADB: {
 
 
 
 
 
-                acceptDefault(ctx);
+                ctx.visit(function(N_NVL2, getDataType(), value, ifNotNull, ifNull));
                 break;
+            }
 
 
 
@@ -102,22 +177,28 @@ final class Nvl2<T> extends AbstractField<T> implements QOM.Nvl2<T> {
             case SQLITE:
             case TRINO:
             case YUGABYTEDB:
-                acceptCase(ctx);
+                ctx.visit(DSL.when(value.isNotNull(), ifNotNull).otherwise(ifNull));
                 break;
 
             default:
-                acceptDefault(ctx);
+                ctx.visit(function(N_NVL2, getDataType(), value, ifNotNull, ifNull));
                 break;
         }
     }
 
-    private void acceptCase(Context<?> ctx) {
-        ctx.visit(DSL.when(arg1.isNotNull(), arg2).otherwise(arg3));
-    }
 
-    private final void acceptDefault(Context<?> ctx) {
-        ctx.visit(function(N_NVL2, getDataType(), arg1, arg2, arg3));
-    }
+
+
+
+
+
+
+
+
+
+
+
+
 
     // -------------------------------------------------------------------------
     // XXX: Query Object Model
@@ -125,21 +206,54 @@ final class Nvl2<T> extends AbstractField<T> implements QOM.Nvl2<T> {
 
     @Override
     public final Field<?> $arg1() {
-        return arg1;
+        return value;
     }
 
     @Override
     public final Field<T> $arg2() {
-        return arg2;
+        return ifNotNull;
     }
 
     @Override
     public final Field<T> $arg3() {
-        return arg3;
+        return ifNull;
+    }
+
+    @Override
+    public final QOM.Nvl2<T> $arg1(Field<?> newValue) {
+        return $constructor().apply(newValue, $arg2(), $arg3());
+    }
+
+    @Override
+    public final QOM.Nvl2<T> $arg2(Field<T> newValue) {
+        return $constructor().apply($arg1(), newValue, $arg3());
+    }
+
+    @Override
+    public final QOM.Nvl2<T> $arg3(Field<T> newValue) {
+        return $constructor().apply($arg1(), $arg2(), newValue);
     }
 
     @Override
     public final Function3<? super Field<?>, ? super Field<T>, ? super Field<T>, ? extends QOM.Nvl2<T>> $constructor() {
         return (a1, a2, a3) -> new Nvl2<>(a1, a2, a3);
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: The Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public boolean equals(Object that) {
+        if (that instanceof QOM.Nvl2<?> o) {
+            return
+                Objects.equals($value(), o.$value()) &&
+                Objects.equals($ifNotNull(), o.$ifNotNull()) &&
+                Objects.equals($ifNull(), o.$ifNull())
+            ;
+        }
+        else
+            return super.equals(that);
+    }
 }
+

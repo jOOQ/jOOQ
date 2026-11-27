@@ -7809,6 +7809,18 @@ final class Tools {
         return result;
     }
 
+    /**
+     * The nullability of <code>NVL2(value, ifNotNull, ifNull)</code>: If
+     * <code>value</code> is known to be not null, then the result has the
+     * nullability of <code>ifNotNull</code>, otherwise, the result is nullable
+     * if any of <code>ifNotNull</code> or <code>ifNull</code> is nullable.
+     */
+    static final <T> DataType<T> nvl2NotNull(DataType<T> defaultType, Field<?> value, Field<?> ifNotNull, Field<?> ifNull) {
+        return dataType(value).nullable()
+             ? allNotNull(defaultType, ifNotNull, ifNull)
+             : defaultType;
+    }
+
     static final <T> DataType<T> nullable(DataType<T> defaultType, Field<?> f1) {
         return dataType(defaultType, f1, false).null_();
     }

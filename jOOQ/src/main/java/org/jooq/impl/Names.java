@@ -238,7 +238,6 @@ final class Names {
     static final Name N_NULL                        = systemName("null");
     static final Name N_NUMBERS                     = systemName("numbers");
     static final Name N_NUMERIC                     = systemName("numeric");
-    static final Name N_NVL2                        = systemName("nvl2");
     static final Name N_O                           = systemName("o");
     static final Name N_OBJECT_AGG                  = systemName("object_agg");
     static final Name N_OBJECT_CONSTRUCT            = systemName("object_construct");
@@ -608,6 +607,7 @@ final class Names {
     static final Name N_NONE_MATCH                  = systemName("none_match");
     static final Name N_NULLIF                      = systemName("nullif");
     static final Name N_NVL                         = systemName("nvl");
+    static final Name N_NVL2                        = systemName("nvl2");
     static final Name N_OBJECT_KEYS                 = systemName("object_keys");
     static final Name N_OCTET_LENGTH                = systemName("octet_length");
     static final Name N_OTRANSLATE                  = systemName("otranslate");

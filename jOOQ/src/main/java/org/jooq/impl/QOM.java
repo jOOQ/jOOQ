@@ -7190,6 +7190,43 @@ public final class QOM {
     }
 
     /**
+     * The <code>ARRAY POSITION</code> function.
+     * <p>
+     * Get the position (1 based) of the first occurrence of a value in an array, or NULL if the value is not contained in the array.
+     */
+    public /*sealed*/ interface ArrayPosition<T>
+        extends
+            UReturnsNullOnNullInput,
+            UOperator2<Field<T[]>, Field<T>, ArrayPosition<T>>,
+            org.jooq.Field<Integer>
+        //permits
+        //    ArrayPosition
+    {
+
+        /**
+         * The array.
+         */
+        @NotNull default Field<T[]> $array() { return $arg1(); }
+
+        /**
+         * The array.
+         */
+        @CheckReturnValue
+        @NotNull default ArrayPosition<T> $array(Field<T[]> newArray) { return $arg1(newArray); }
+
+        /**
+         * The array element.
+         */
+        @NotNull default Field<T> $value() { return $arg2(); }
+
+        /**
+         * The array element.
+         */
+        @CheckReturnValue
+        @NotNull default ArrayPosition<T> $value(Field<T> newValue) { return $arg2(newValue); }
+    }
+
+    /**
      * The <code>ARRAY OVERLAP</code> function.
      * <p>
      * Check if 2 arrays overlap.

@@ -388,6 +388,7 @@ final class Names {
     static final Name N_ARRAY_MAP                   = systemName("array_map");
     static final Name N_ARRAY_NONE_MATCH            = systemName("array_none_match");
     static final Name N_ARRAY_OVERLAP               = systemName("array_overlap");
+    static final Name N_ARRAY_POSITION              = systemName("array_position");
     static final Name N_ARRAY_PREPEND               = systemName("array_prepend");
     static final Name N_ARRAY_REMOVE                = systemName("array_remove");
     static final Name N_ARRAY_REPLACE               = systemName("array_replace");
@@ -790,6 +791,7 @@ final class Names {
     static final Name N_endsWith                    = systemName("endsWith");
     static final Name N_generateUUIDv4              = systemName("generateUUIDv4");
     static final Name N_has                         = systemName("has");
+    static final Name N_indexOf                     = systemName("indexOf");
     static final Name N_makeDate                    = systemName("makeDate");
     static final Name N_startsWith                  = systemName("startsWith");
     static final Name N_substringIndex              = systemName("substringIndex");

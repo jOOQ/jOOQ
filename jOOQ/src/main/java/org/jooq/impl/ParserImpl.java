@@ -93,6 +93,7 @@ import static org.jooq.impl.DSL.arrayConcat;
 import static org.jooq.impl.DSL.arrayContains;
 import static org.jooq.impl.DSL.arrayGet;
 import static org.jooq.impl.DSL.arrayOverlap;
+import static org.jooq.impl.DSL.arrayPosition;
 import static org.jooq.impl.DSL.arrayPrepend;
 import static org.jooq.impl.DSL.arrayRemove;
 import static org.jooq.impl.DSL.arrayReplace;
@@ -9303,6 +9304,29 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         return arraySlice((Field<Void[]>) array, (Field<Integer>) start, (Field<Integer>) end);
     }
 
+    private final Field<?> parseArrayPosition(Field<?> array, Field<?> value) {
+        switch (parseFamily()) {
+
+
+
+
+
+
+
+
+
+            case TRINO:
+                return parseArrayPositionOrZero(array, value);
+
+            default:
+                return arrayPosition((Field<Void[]>) array, (Field<Void>) value);
+        }
+    }
+
+    private final Field<?> parseArrayPositionOrZero(Field<?> array, Field<?> value) {
+        return coalesce(arrayPosition((Field<Void[]>) array, (Field<Void>) value), zero());
+    }
+
     private final Field<?> parseArraySliceLength(Field<?> array, Field<?> start, Field<?> length) {
         return arraySlice((Field<Void[]>) array, (Field<Integer>) start, isub(iadd((Field<Integer>) start, length), one()));
     }
@@ -9872,6 +9896,10 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                     return parseArrayLambdaFunction(DSL::arrayNoneMatch);
                 else if (parseFunctionNameIf("ARRAY_OVERLAP", "ARRAYS_OVERLAP"))
                     return parseFunctionArgs2((f1, f2) -> arrayOverlap((Field<Void[]>) f1, (Field<Void[]>) f2));
+                else if (parseFunctionNameIf("ARRAY_POSITION"))
+                    return parseFunctionArgs2(this::parseArrayPosition);
+                else if (parseFunctionNameIf("ARRAY_INDEXOF"))
+                    return parseFunctionArgs2((f1, f2) -> arrayPosition((Field<Void[]>) f1, (Field<Void>) f2));
                 else if (parseFunctionNameIf("ARRAY_PREPEND"))
                     return parseFunctionArgs2((f1, f2) -> arrayPrepend((Field<Void>) f1, (Field<Void[]>) f2));
                 else if (parseFunctionNameIf("arrayPushFront"))
@@ -10189,6 +10217,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                     return field;
                 else if (parseFunctionNameIf("ISO_DAY_OF_WEEK"))
                     return isoDayOfWeek(parseFieldParenthesised());
+                else if (parseFunctionNameIf("indexOf"))
+                    return parseFunctionArgs2(this::parseArrayPositionOrZero);
                 else if (parseFunctionNameIf("INSTR"))
                     return parseFunctionArgs3(
                         (f1, f2) -> binary(f1, f2) ? DSL.binaryPosition(f1, f2) : DSL.position(f1, f2),
@@ -10272,6 +10302,8 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                     return octetLength((Field) parseFieldParenthesised());
                 else if (parseFunctionNameIf("LIST_CONTAINS"))
                     return parseFunctionArgs2((f1, f2) -> arrayContains((Field<Void[]>) f1, (Field<Void>) f2));
+                else if (parseFunctionNameIf("LIST_POSITION", "LIST_INDEXOF"))
+                    return parseFunctionArgs2((f1, f2) -> arrayPosition((Field<Void[]>) f1, (Field<Void>) f2));
                 else if (parseFunctionNameIf("LIST_SLICE"))
                     return parseFunctionArgs3(this::parseArraySlice);
                 else if (parseFunctionNameIf("LN", "LOGN"))
@@ -10413,7 +10445,9 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                 break;
 
             case 'P':
-                if ((field = parseFieldPositionIf()) != null)
+                if ((field = parseFieldPositionArrayIf()) != null)
+                    return field;
+                else if ((field = parseFieldPositionIf()) != null)
                     return field;
                 else if ((field = parseFieldPercentRankIf()) != null)
                     return field;
@@ -13208,6 +13242,23 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
 
     private final boolean binary(Field<?> f1, Field<?> f2) {
         return f1.getDataType().isBinary() || f2.getDataType().isBinary();
+    }
+
+    private final Field<?> parseFieldPositionArrayIf() {
+        if (parseFunctionNameIf("POSITION_ARRAY")) {
+            parse('(');
+            forbidden.add(FK_IN);
+            Field f1 = parseField();
+            parseKeyword("IN");
+            forbidden.remove(FK_IN);
+            Field f2 = parseField();
+            parse(')');
+
+            // [#20564] HSQLDB returns 0, not NULL, if the value isn't found
+            return parseArrayPositionOrZero(f2, f1);
+        }
+
+        return null;
     }
 
     private final Field<?> parseFieldPositionIf() {

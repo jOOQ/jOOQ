@@ -423,6 +423,8 @@ final class Names {
     static final Name N_BINARY_OVERLAY              = systemName("binary_overlay");
     static final Name N_BINARY_POSITION             = systemName("binary_position");
     static final Name N_BINARY_RTRIM                = systemName("binary_rtrim");
+    static final Name N_BINARY_SHA1                 = systemName("binary_sha1");
+    static final Name N_BINARY_SHA2                 = systemName("binary_sha2");
     static final Name N_BINARY_SUBSTRING            = systemName("binary_substring");
     static final Name N_BINARY_TRIM                 = systemName("binary_trim");
     static final Name N_BIN_AND                     = systemName("bin_and");

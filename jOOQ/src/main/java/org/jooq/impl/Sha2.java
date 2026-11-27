@@ -161,13 +161,7 @@ implements
     }
 
     private final Name shaN() {
-        switch (bitLength) {
-            case 224: return N_SHA224;
-            case 256: return N_SHA256;
-            case 384: return N_SHA384;
-            case 512: return N_SHA512;
-            default:  return systemName("sha" + bitLength);
-        }
+        return systemName("sha" + bitLength);
     }
 
 

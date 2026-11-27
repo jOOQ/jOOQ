@@ -6867,6 +6867,61 @@ public final class QOM {
     }
 
     /**
+     * The <code>BINARY SHA1</code> function.
+     * <p>
+     * Calculate a SHA-1 hash from a binary string.
+     */
+    public /*sealed*/ interface BinarySha1
+        extends
+            UReturnsNullOnNullInput,
+            UOperator1<Field<byte[]>, BinarySha1>,
+            org.jooq.Field<byte[]>
+        //permits
+        //    BinarySha1
+    {
+        @NotNull default Field<byte[]> $bytes() { return $arg1(); }
+        @CheckReturnValue
+        @NotNull default BinarySha1 $bytes(Field<byte[]> newBytes) { return $arg1(newBytes); }
+    }
+
+    /**
+     * The <code>BINARY SHA2</code> function.
+     * <p>
+     * Calculate a SHA-2 hash from a binary string.
+     */
+    public /*sealed*/ interface BinarySha2
+        extends
+            UReturnsNullOnNullInput,
+            UOperator2<Field<byte[]>, Integer, BinarySha2>,
+            org.jooq.Field<byte[]>
+        //permits
+        //    BinarySha2
+    {
+
+        /**
+         * The binary string to be hashed.
+         */
+        @NotNull default Field<byte[]> $bytes() { return $arg1(); }
+
+        /**
+         * The binary string to be hashed.
+         */
+        @CheckReturnValue
+        @NotNull default BinarySha2 $bytes(Field<byte[]> newBytes) { return $arg1(newBytes); }
+
+        /**
+         * The SHA-2 bit length, one of 224, 256, 384, 512. Not all dialects support all bit lengths.
+         */
+        @NotNull default Integer $bitLength() { return $arg2(); }
+
+        /**
+         * The SHA-2 bit length, one of 224, 256, 384, 512. Not all dialects support all bit lengths.
+         */
+        @CheckReturnValue
+        @NotNull default BinarySha2 $bitLength(Integer newBitLength) { return $arg2(newBitLength); }
+    }
+
+    /**
      * The <code>BINARY SUBSTRING</code> function.
      * <p>
      * Get a substring of a binary string, from a given position.

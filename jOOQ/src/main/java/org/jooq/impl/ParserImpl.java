@@ -114,6 +114,8 @@ import static org.jooq.impl.DSL.binaryListAgg;
 import static org.jooq.impl.DSL.binaryListAggDistinct;
 import static org.jooq.impl.DSL.binaryLtrim;
 import static org.jooq.impl.DSL.binaryMd5;
+import static org.jooq.impl.DSL.binarySha1;
+import static org.jooq.impl.DSL.binarySha2;
 import static org.jooq.impl.DSL.binaryOctetLength;
 import static org.jooq.impl.DSL.binaryOverlay;
 import static org.jooq.impl.DSL.binaryRtrim;
@@ -9225,16 +9227,20 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
         return finisher.apply();
     }
 
-    private final Field<String> parseFieldSha2() {
+    private final Field<?> parseFieldSha2() {
         parse('(');
-        Field<String> string = (Field) parseField();
+        Field<?> f = parseField();
 
         // [#20567] Snowflake's digest size defaults to 256
         int bitLength = parseIf(',') ? asInt(parseUnsignedIntegerLiteral()) : 256;
         parse(')');
 
         // [#20567] MySQL, Snowflake, Databricks interpret 0 as 256
-        return sha2(string, bitLength == 0 ? 256 : bitLength);
+        return parseFieldSha2(f, bitLength == 0 ? 256 : bitLength);
+    }
+
+    private final Field<?> parseFieldSha2(Field<?> f, int bitLength) {
+        return binary(f) ? binarySha2((Field) f, bitLength) : sha2((Field) f, bitLength);
     }
 
     private final <Q extends QueryPart> Q parseFunctionArgs1(Function1<? super Field, ? extends Q> finisher) {
@@ -10557,15 +10563,15 @@ final class DefaultParseContext extends AbstractParseContext implements ParseCon
                 else if (parseFunctionNameIf("SPACE"))
                     return space((Field) parseFieldParenthesised());
                 else if (parseFunctionNameIf("SHA1", "SHA1_HEX", "SHA"))
-                    return sha1((Field) parseFieldParenthesised());
+                    return parseFunctionArgs1(f -> binary(f) ? binarySha1(f) : sha1(f));
                 else if (parseFunctionNameIf("SHA224"))
-                    return sha2((Field) parseFieldParenthesised(), 224);
+                    return parseFieldSha2(parseFieldParenthesised(), 224);
                 else if (parseFunctionNameIf("SHA256"))
-                    return sha2((Field) parseFieldParenthesised(), 256);
+                    return parseFieldSha2(parseFieldParenthesised(), 256);
                 else if (parseFunctionNameIf("SHA384"))
-                    return sha2((Field) parseFieldParenthesised(), 384);
+                    return parseFieldSha2(parseFieldParenthesised(), 384);
                 else if (parseFunctionNameIf("SHA512"))
-                    return sha2((Field) parseFieldParenthesised(), 512);
+                    return parseFieldSha2(parseFieldParenthesised(), 512);
                 else if (parseFunctionNameIf("SHA2", "SHA2_HEX"))
                     return parseFieldSha2();
                 else if (parseFunctionNameIf("SPLIT_PART"))

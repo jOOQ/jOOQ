@@ -23258,6 +23258,56 @@ public class DSL {
     }
 
     /**
+     * The <code>BINARY_SHA1</code> function.
+     * <p>
+     * Calculate a SHA-1 hash from a binary string.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, TRINO })
+    public static Field<byte[]> binarySha1(byte[] bytes) {
+        return new BinarySha1(Tools.field(bytes));
+    }
+
+    /**
+     * The <code>BINARY_SHA1</code> function.
+     * <p>
+     * Calculate a SHA-1 hash from a binary string.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, TRINO })
+    public static Field<byte[]> binarySha1(Field<byte[]> bytes) {
+        return new BinarySha1(bytes);
+    }
+
+    /**
+     * The <code>BINARY_SHA2</code> function.
+     * <p>
+     * Calculate a SHA-2 hash from a binary string.
+     *
+     * @param bytes The binary string to be hashed.
+     * @param bitLength The SHA-2 bit length, one of 224, 256, 384, 512. Not all dialects support all bit lengths.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    public static Field<byte[]> binarySha2(byte[] bytes, int bitLength) {
+        return new BinarySha2(Tools.field(bytes), bitLength);
+    }
+
+    /**
+     * The <code>BINARY_SHA2</code> function.
+     * <p>
+     * Calculate a SHA-2 hash from a binary string.
+     *
+     * @param bytes The binary string to be hashed.
+     * @param bitLength The SHA-2 bit length, one of 224, 256, 384, 512. Not all dialects support all bit lengths.
+     */
+    @NotNull
+    @Support({ CLICKHOUSE, DUCKDB, H2, MARIADB, MYSQL, POSTGRES, TRINO, YUGABYTEDB })
+    public static Field<byte[]> binarySha2(Field<byte[]> bytes, int bitLength) {
+        return new BinarySha2(bytes, bitLength);
+    }
+
+    /**
      * The <code>BINARY_SUBSTRING</code> function.
      * <p>
      * Get a substring of a binary string, from a given position.

@@ -142,10 +142,25 @@ implements
         if (startIndex != null) {
             switch (ctx.family()) {
 
+
+
+
                 case DERBY:
                 case H2:
+                case HSQLDB:
+                case MARIADB:
+                case MYSQL:
                     ctx.visit(N_LOCATE).sql('(').visit(search).sql(", ").visit(in).sql(", ").visit(startIndex).sql(')');
                     break;
+
+
+                case FIREBIRD:
+                    ctx.visit(N_POSITION).sql('(').visit(search).sql(", ").visit(in).sql(", ").visit(startIndex).sql(')');
+                    break;
+
+
+
+
 
 
 

@@ -139,7 +139,7 @@ extends
 
     static final Set<SQLDialect> CASTS_NEEDED                      = SQLDialect.supportedBy(POSTGRES, TRINO, YUGABYTEDB);
     static final Set<SQLDialect> NO_SUPPORT_QUALIFY                = SQLDialect.supportedBy(CLICKHOUSE, DUCKDB, POSTGRES, SQLITE, YUGABYTEDB);
-    static final Set<SQLDialect> EMULATE_RVE_SET_QUERY             = SQLDialect.supportedBy(CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, IGNITE, MARIADB, MYSQL, SQLITE);
+    static final Set<SQLDialect> EMULATE_RVE_SET_QUERY             = SQLDialect.supportedBy(CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, IGNITE, MARIADB, MYSQL);
 
 
 
@@ -148,7 +148,7 @@ extends
 
 
 
-    static final Set<SQLDialect> NO_SUPPORT_RVE_SET                = SQLDialect.supportedBy(CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, IGNITE, MARIADB, MYSQL, SQLITE);
+    static final Set<SQLDialect> NO_SUPPORT_RVE_SET                = SQLDialect.supportedBy(CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, IGNITE, MARIADB, MYSQL);
     static final Set<SQLDialect> NO_SUPPORT_RVE_SET_IN_MERGE       = SQLDialect.supportedBy(CLICKHOUSE, CUBRID, DERBY, FIREBIRD, IGNITE, MARIADB, MYSQL, SQLITE);
     static final Set<SQLDialect> REQUIRE_RVE_ROW_CLAUSE            = SQLDialect.supportedBy(POSTGRES, YUGABYTEDB);
 
@@ -315,6 +315,9 @@ extends
 
             // [#10523] Generic SET ROW = (SELECT ..) emulation that works
             //          everywhere, but inefficiently duplicates the subquery
+            // [#20592] DuckDB 2.0 still requires this, as it supports neither
+            //          SET ROW = (SELECT ..), nor correlated derived tables in
+            //          UPDATE .. FROM, which the UPDATE .. FROM emulation needs
             else if (multiSelect != null
                 && (EMULATE_RVE_SET_QUERY.contains(ctx.dialect())
                         || (NO_SUPPORT_RVE_SET_IN_MERGE.contains(ctx.dialect()) && setClause == SetClause.MERGE))

@@ -190,6 +190,10 @@ implements
 
 
 
+            case HSQLDB:
+                ctx.visit(value.bitAnd((Field) one().shl(bit)).shr(bit));
+                break;
+
 
 
 
@@ -203,14 +207,13 @@ implements
             case CUBRID:
             case DUCKDB:
             case FIREBIRD:
-            case HSQLDB:
             case MARIADB:
             case MYSQL:
             case POSTGRES:
             case SQLITE:
             case TRINO:
             case YUGABYTEDB:
-                ctx.visit(value.bitAnd((Field) one().shl(bit)).shr(bit));
+                ctx.visit(value.shr(bit).bitAnd((Field) one()));
                 break;
 
             default:

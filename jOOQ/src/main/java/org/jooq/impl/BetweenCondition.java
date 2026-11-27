@@ -68,6 +68,8 @@ import static org.jooq.SQLDialect.SQLITE;
 // ...
 import static org.jooq.SQLDialect.TRINO;
 // ...
+import static org.jooq.impl.DSL.greatest;
+import static org.jooq.impl.DSL.least;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.Keywords.K_AND;
@@ -97,6 +99,15 @@ import org.jooq.impl.QOM.Between;
 final class BetweenCondition<T> extends AbstractCondition implements BetweenAndStep<T>, Between<T> {
 
     private static final Set<SQLDialect> NO_SUPPORT_SYMMETRIC          = SQLDialect.supportedBy(CLICKHOUSE, CUBRID, DERBY, DUCKDB, FIREBIRD, H2, IGNITE, MARIADB, MYSQL, SQLITE, TRINO);
+
+    // [jOOQ/jOOQ#20587] Dialects with native support for GREATEST() and LEAST()
+    //                   (or MAX() / MIN(), MAXVALUE() / MINVALUE()), which return
+    //                   NULL if any argument is NULL. In these dialects,
+    //                   BETWEEN SYMMETRIC can be emulated without repeating the
+    //                   field. Dialects whose GREATEST() and LEAST() ignore NULL
+    //                   values, or where they are emulated using CASE, must not
+    //                   be listed here.
+    private static final Set<SQLDialect> EMULATE_SYMMETRIC_WITH_LEAST_GREATEST = SQLDialect.supportedBy(FIREBIRD, MARIADB, MYSQL, SQLITE);
 
     private final boolean                symmetric;
     private final boolean                not;
@@ -154,6 +165,14 @@ final class BetweenCondition<T> extends AbstractCondition implements BetweenAndS
 
 
 
+        else if (symmetric && EMULATE_SYMMETRIC_WITH_LEAST_GREATEST.contains(ctx.dialect())) {
+            Field<T> lo = least(minValue, maxValue);
+            Field<T> hi = greatest(minValue, maxValue);
+
+            ctx.visit(not
+                ? field.notBetween(lo, hi)
+                : field.between(lo, hi));
+        }
         else if (symmetric && NO_SUPPORT_SYMMETRIC.contains(ctx.dialect())) {
             ctx.visit(not
                 ? field.notBetween(minValue, maxValue).and(field.notBetween(maxValue, minValue))
